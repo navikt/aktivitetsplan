@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../../api/utils';
-import { Aktivitet } from '../../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinjeBase from '../../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
@@ -18,7 +18,7 @@ import LestKnapp from './LestKnapp';
 import Tittel from './Tittel';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     erArenaAktivitet: boolean;
     startAapen?: boolean;
 }

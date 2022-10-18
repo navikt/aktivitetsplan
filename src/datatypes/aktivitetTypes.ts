@@ -1,36 +1,33 @@
 import {
-    BEHANDLING_AKTIVITET_TYPE,
-    EGEN_AKTIVITET_TYPE,
-    GRUPPE_AKTIVITET_TYPE,
-    IJOBB_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-    SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
-    STILLING_AKTIVITET_TYPE,
-    STILLING_FRA_NAV_TYPE,
-    TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE,
 } from '../constant';
+import { ArenaAktivitet } from './arenaAktivitetTypes';
+import { Etikett, LenkeMedType, OppgaveLenke } from './eksternAktivitetTypes';
+import { Forhaandsorientering } from './forhaandsorienteringTypes';
 
-type StringOrNull = string | null;
+export enum AktivitetType {
+    EGEN_AKTIVITET_TYPE = 'EGEN',
+    STILLING_AKTIVITET_TYPE = 'STILLING',
+    TILTAK_AKTIVITET_TYPE = 'TILTAKSAKTIVITET',
+    GRUPPE_AKTIVITET_TYPE = 'GRUPPEAKTIVITET',
+    UTDANNING_AKTIVITET_TYPE = 'UTDANNINGSAKTIVITET',
+    SOKEAVTALE_AKTIVITET_TYPE = 'SOKEAVTALE',
+    IJOBB_AKTIVITET_TYPE = 'IJOBB',
+    BEHANDLING_AKTIVITET_TYPE = 'BEHANDLING',
+    MOTE_TYPE = 'MOTE',
+    SAMTALEREFERAT_TYPE = 'SAMTALEREFERAT',
+    STILLING_FRA_NAV_TYPE = 'STILLING_FRA_NAV',
+    EKSTERN_AKTIVITET_TYPE = 'EKSTERN_AKTIVITET',
+}
 
-export type AktivitetType =
-    | typeof EGEN_AKTIVITET_TYPE
-    | typeof STILLING_AKTIVITET_TYPE
-    | typeof TILTAK_AKTIVITET_TYPE
-    | typeof GRUPPE_AKTIVITET_TYPE
-    | typeof UTDANNING_AKTIVITET_TYPE
-    | typeof SOKEAVTALE_AKTIVITET_TYPE
-    | typeof IJOBB_AKTIVITET_TYPE
-    | typeof BEHANDLING_AKTIVITET_TYPE
-    | typeof MOTE_TYPE
-    | typeof SAMTALEREFERAT_TYPE
-    | typeof STILLING_FRA_NAV_TYPE;
+export enum EksternAktivitetType {
+    ARENA_TILTAK_TYPE = 'ARENA_TILTAK',
+    MIDL_LONNSTILSKUDD_TYPE = 'MIDL_LONNSTILSKUDD',
+}
 
 export type AktivitetStatus =
     | typeof STATUS_AVBRUTT
@@ -87,45 +84,58 @@ interface AktivitetRequiredProps {
     tittel: string;
     opprettetDato: string;
     status: AktivitetStatus;
-    type: AktivitetType;
     lagtInnAv: BrukerType;
+    forhaandsorientering?: Forhaandsorientering;
     endretAv: string;
     avtalt: boolean;
+    etikett?: StillingsStatus;
     transaksjonsType: TransaksjonsType;
-    stillingFraNavData: StillingFraNavAktivitetData | null;
+    historisk: boolean;
+    fraDato?: string;
+    tilDato?: string;
+    arenaAktivitet?: false;
+    avsluttetBegrunnelse?: string; // TODO sjekk ut det her
 }
 
-export type AlleAktiviteter = Aktivitet | ArenaAktivitet;
+interface EksternAktivitet extends AktivitetRequiredProps {
+    type: AktivitetType.EKSTERN_AKTIVITET_TYPE;
+    eksternAktivitet: EksternAktivitetData;
+}
+
+export type AlleAktiviteter = InternAktivitet | ArenaAktivitet;
 
 export function isArenaAktivitet(aktivitet: AlleAktiviteter): aktivitet is ArenaAktivitet {
     return !!aktivitet.arenaAktivitet;
 }
 
-export function isVeilarbAktivitetAktivitet(aktivitet: AlleAktiviteter): aktivitet is Aktivitet {
+export function isVeilarbAktivitetAktivitet(aktivitet: AlleAktiviteter): aktivitet is InternAktivitet {
     return !aktivitet.arenaAktivitet;
 }
 
-export interface Aktivitet extends AktivitetRequiredProps {
-    fraDato?: string;
-    tilDato?: string;
-    endretDato?: string;
-    avsluttetKommentar?: string;
-    etikett?: StillingsStatus;
-    historisk?: boolean;
-    forhaandsorientering?: Forhaandsorientering;
-    detaljer?: object;
-    beskrivelse?: string;
-    erReferatPublisert?: boolean;
-    nesteStatus?: AktivitetStatus;
-    referat?: string;
-    arbeidsgiver?: StringOrNull;
-    antallStillingerSokes?: number;
-    antallStillingerIUken?: number;
-    arenaAktivitet?: false;
-    avsluttetBegrunnelse?: string;
-}
+export type InternAktivitet = SamtalereferatAktivitet | MoteAktivitet | MedisinskBehandlingAktivitet;
+
+// export interface Aktivitet extends AktivitetRequiredProps {
+//     fraDato?: string;
+//     tilDato?: string;
+//     endretDato?: string;
+//     avsluttetKommentar?: string;
+//     etikett?: StillingsStatus;
+//     historisk?: boolean;
+//     forhaandsorientering?: Forhaandsorientering;
+//     detaljer?: object;
+//     beskrivelse?: string;
+//     erReferatPublisert?: boolean;
+//     nesteStatus?: AktivitetStatus;
+//     referat?: string;
+//     arbeidsgiver?: StringOrNull;
+//     antallStillingerSokes?: number;
+//     antallStillingerIUken?: number;
+//     arenaAktivitet?: false;
+//     avsluttetBegrunnelse?: string;
+// }
 
 export interface SamtalereferatAktivitet extends AktivitetRequiredProps {
+    type: AktivitetType.SAMTALEREFERAT_TYPE;
     fraDato: string;
     varighet: string;
     kanal: string;
@@ -136,6 +146,7 @@ export interface SamtalereferatAktivitet extends AktivitetRequiredProps {
 }
 
 export interface MoteAktivitet extends AktivitetRequiredProps {
+    type: AktivitetType.MOTE_TYPE;
     fraDato: string;
     tilDato: string;
     klokkeslett: string;
@@ -148,6 +159,7 @@ export interface MoteAktivitet extends AktivitetRequiredProps {
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
+    type: AktivitetType.BEHANDLING_AKTIVITET_TYPE;
     fraDato: string;
     tilDato: string;
     behandlingType: string;
@@ -157,14 +169,6 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
     beskrivelse: string;
 }
 
-export interface CvKanDelesData {
-    kanDeles: boolean;
-    endretTidspunkt: Date;
-    avtaltDato: Date;
-    endretAv: string;
-    endretAvType: BrukerType;
-}
-
 export interface KontaktInfo {
     navn: string;
     tittel: string;
@@ -172,6 +176,7 @@ export interface KontaktInfo {
 }
 
 export interface StillingFraNavAktivitetData {
+    type: AktivitetType.STILLING_FRA_NAV_TYPE;
     cvKanDelesData: CvKanDelesData;
     soknadsfrist: string;
     svarfrist: string;
@@ -187,68 +192,18 @@ export interface StillingFraNavAktivitetData {
     ikkefattjobbendetaljer: string;
 }
 
-export enum ArenaEtikett {
-    AKTUELL = 'AKTUELL',
-    AVSLAG = 'AVSLAG',
-    IKKAKTUELL = 'IKKAKTUELL',
-    IKKEM = 'IKKEM',
-    INFOMOETE = 'INFOMOETE',
-    JATAKK = 'JATAKK',
-    NEITAKK = 'NEITAKK',
-    TILBUD = 'TILBUD',
-    VENTELISTE = 'VENTELISTE',
+export interface CvKanDelesData {
+    kanDeles: boolean;
+    endretTidspunkt: Date;
+    avtaltDato: Date;
+    endretAv: string;
+    endretAvType: BrukerType;
 }
 
-enum ArenaAktivitetType {
-    TILTAKSAKTIVITET = 'TILTAKSAKTIVITET',
-    GRUPPEAKTIVITET = 'GRUPPEAKTIVITET',
-    UTDANNINGSAKTIVITET = 'UTDANNINGSAKTIVITET',
-}
-
-interface Moteplan {
-    startDato: string;
-    sluttDato: string;
-    sted: string;
-}
-
-//Flere av disse kan muligens være null
-export interface ArenaAktivitet {
-    //Felles
-    id: string;
-    status: AktivitetStatus;
-    type: ArenaAktivitetType;
-    tittel: string;
-    beskrivelse: string;
-    fraDato: string;
-    tilDato: string;
-    opprettetDato: string;
-    avtalt: boolean;
-    etikett: ArenaEtikett;
-    arenaAktivitet: true;
-
-    forhaandsorientering?: Forhaandsorientering;
-
-    // Tiltaksaktivitet
-    deltakelseProsent: number;
-    tiltaksnavn: string;
-    tiltakLokaltNavn: string;
-    arrangoer: string;
-    bedriftsnummer: string;
-    antallDagerPerUke: number;
-    statusSistEndret: string;
-
-    // Gruppeaktivitet
-    moeteplanListe: Moteplan[];
-}
-
-export enum ForhaandsorienteringType {
-    SEND_STANDARD = 'SEND_FORHAANDSORIENTERING',
-    SEND_PARAGRAF_11_9 = 'SEND_PARAGRAF_11_9',
-    IKKE_SEND = 'IKKE_SEND_FORHAANDSORIENTERING',
-}
-
-export interface Forhaandsorientering {
-    type: ForhaandsorienteringType;
-    tekst: string;
-    lestDato?: string;
+export interface EksternAktivitetData {
+    type: EksternAktivitetType;
+    oppgave: OppgaveLenke;
+    handlinger: LenkeMedType[];
+    detaljer: Record<string, string>[];
+    etiketter: Etikett[];
 }

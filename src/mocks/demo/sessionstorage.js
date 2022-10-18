@@ -17,6 +17,7 @@ export const SessionStorageElement = {
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
     TEST_AKTIVITETER: 'testaktiviteter',
     ARENA_AKTIVITETER: 'arena_aktiviteter',
+    EKSTERNE_AKTIVITETER: 'eksterne_aktiviteter',
     TEST_DIALOGER: 'test_dialoger',
     INGEN_MAL: 'ingen_mal',
     ULESTE_DIALOGER: 'uleste_dialoger',
@@ -57,6 +58,8 @@ export const visAutomatiskeAktiviteter = () => erSatt(SessionStorageElement.AUTO
 export const visTestAktiviteter = () => !erSkrudAv(SessionStorageElement.TEST_AKTIVITETER);
 
 export const visArenaAktiviteter = () => erSatt(SessionStorageElement.ARENA_AKTIVITETER);
+
+export const visEksterneAktiviteter = () => erSatt(SessionStorageElement.EKSTERNE_AKTIVITETER);
 
 export const visDialoger = () => erSatt(SessionStorageElement.TEST_DIALOGER);
 

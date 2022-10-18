@@ -4,7 +4,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../../api/utils';
-import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import { InternAktivitet } from '../../../../../datatypes/aktivitetTypes';
+import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
@@ -16,7 +17,7 @@ import AvtaltForm, { Handler } from './AvtaltForm';
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;
-    aktivitet: Aktivitet;
+    aktivitet: InternAktivitet;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
@@ -30,7 +31,7 @@ const AvtaltFormContainer = (props: Props) => {
     const sendMetrikker = useSendAvtaltMetrikker();
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
 
-    const doSettAktivitetTilAvtalt = (avtaltAktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
+    const doSettAktivitetTilAvtalt = (avtaltAktivitet: InternAktivitet, forhaandsorientering: Forhaandsorientering) =>
         dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering));
 
     const onSubmit: Handler = (avtaltFormMapped: Values<ForhaandsorienteringDialogProps>) => {

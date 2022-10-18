@@ -1,5 +1,5 @@
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 
 export interface ForhaandsorienteringDialogProps {
     avtaltText: string;

@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
+import { eksterneAktiviteter } from './eksterneAktiviteter';
 import { enStillingAktivitet } from './fixtures/stillingFixtures';
 import {
     enStillingFraNavAktivitet,
@@ -411,12 +412,12 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
 const ekstraVersjoner = !visTestAktiviteter()
     ? []
     : [
-          wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
-              status: 'PLANLAGT',
-              transaksjonsType: 'OPPRETTET',
-              stillingFraNavData: enStillingFraNavData,
-          }),
+          // wrapAktivitet({
+          //     ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
+          //     status: 'PLANLAGT',
+          //     transaksjonsType: 'OPPRETTET',
+          //     stillingFraNavData: enStillingFraNavData,
+          // }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
               status: 'PLANLAGT',
@@ -425,7 +426,7 @@ const ekstraVersjoner = !visTestAktiviteter()
           }),
       ];
 
-const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter);
+const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter).concat(eksterneAktiviteter);
 
 function valueOrNull(potentialValue) {
     if (potentialValue) {
@@ -455,7 +456,7 @@ function valueAsNumberOrNull(potentialValue) {
     return null;
 }
 
-function wrapAktivitet(aktivitet) {
+export function wrapAktivitet(aktivitet) {
     return {
         id: valueOrNull(aktivitet.id),
         versjon: valueOrNull(aktivitet.versjon),
@@ -498,6 +499,7 @@ function wrapAktivitet(aktivitet) {
         erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
         forhaandsorientering: valueOrNull(aktivitet.forhaandsorientering),
         stillingFraNavData: valueOrNull(aktivitet.stillingFraNavData),
+        eksternAktivitetData: valueOrNull(aktivitet.eksternAktivitetData),
     };
 }
 

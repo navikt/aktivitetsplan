@@ -6,7 +6,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';

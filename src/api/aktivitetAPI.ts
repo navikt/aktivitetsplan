@@ -1,4 +1,5 @@
-import { Aktivitet, ArenaAktivitet, Forhaandsorientering } from '../datatypes/aktivitetTypes';
+import { Aktivitet, Forhaandsorientering } from '../datatypes/aktivitetTypes';
+import { ArenaAktivitet } from '../datatypes/arenaAktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 

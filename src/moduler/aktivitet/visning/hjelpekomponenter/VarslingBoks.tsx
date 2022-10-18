@@ -3,7 +3,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE } from '../../../../constant';
-import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
@@ -12,7 +13,7 @@ import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/iden
 
 interface Props {
     className: string;
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
 }
 
 const VarslingBoks = ({ className, aktivitet }: Props) => {
