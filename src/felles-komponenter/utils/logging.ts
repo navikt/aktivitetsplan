@@ -1,6 +1,7 @@
 import shajs from 'sha.js';
 
-import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
 import { AKTIVITET_BASE_URL } from '../../environment';
 
@@ -102,7 +103,7 @@ export function metrikkTidForsteAvtalte(tid: number) {
     });
 }
 
-export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivitet, nyStatus: AktivitetStatus) {
+export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: VeilarbAktivitet, nyStatus: AktivitetStatus) {
     loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,

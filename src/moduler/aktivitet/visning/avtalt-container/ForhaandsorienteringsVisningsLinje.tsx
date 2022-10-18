@@ -1,23 +1,21 @@
 import React from 'react';
 
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
 import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorientering/Forhaandsorienteringsvisning';
 import { skalMarkereForhaandsorienteringSomLest } from './utilsForhaandsorientering';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     erBruker: boolean;
-    erArenaAktivitet: boolean;
 }
 
-const ForhaandsorienteringsVisningsLinje = ({ aktivitet, erBruker, erArenaAktivitet }: Props) => (
+const ForhaandsorienteringsVisningsLinje = ({ aktivitet, erBruker }: Props) => (
     <>
         <DeleLinje />
         <Forhaandsorienteringsvisning
             aktivitet={aktivitet}
             startAapen={skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet)}
-            erArenaAktivitet={erArenaAktivitet}
         />
         <DeleLinje />
     </>

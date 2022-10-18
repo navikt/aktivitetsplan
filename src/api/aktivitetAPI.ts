@@ -1,17 +1,18 @@
-import { Aktivitet, Forhaandsorientering } from '../datatypes/aktivitetTypes';
 import { ArenaAktivitet } from '../datatypes/arenaAktivitetTypes';
+import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
+import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 
-export const hentAktivitet = (aktivitetId: string): Promise<Aktivitet> =>
+export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
 
-export const hentAktiviteter = (): Promise<Aktivitet[]> => fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
+export const hentAktiviteter = (): Promise<VeilarbAktivitet[]> => fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
 
-export const lagNyAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
+export const lagNyAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/ny`, aktivitet);
 
-export const oppdaterAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
+export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 
 export const settAktivitetTilAvtalt = (
@@ -24,7 +25,10 @@ export const settAktivitetTilAvtalt = (
         forhaandsorientering,
     });
 
-export const markerForhaandsorienteringSomLest = (aktivitetId: string, aktivitetVersjon: string): Promise<Aktivitet> =>
+export const markerForhaandsorienteringSomLest = (
+    aktivitetId: string,
+    aktivitetVersjon: string
+): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/avtaltMedNav/lest`, {
         aktivitetId,
         aktivitetVersion: aktivitetVersjon,
@@ -35,7 +39,7 @@ export const oppdaterCvKanDelesSvar = (
     aktivitetVersjon: string,
     kanDeles: boolean,
     avtaltDato?: string
-): Promise<Aktivitet> => {
+): Promise<VeilarbAktivitet> => {
     return putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/kanDeleCV?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
         kanDeles,
@@ -43,26 +47,26 @@ export const oppdaterCvKanDelesSvar = (
     });
 };
 
-export const oppdaterAktivitetStatus = (aktivitet: Aktivitet): Promise<Aktivitet> =>
+export const oppdaterAktivitetStatus = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
 
-export const oppdaterAktivitetEtikett = (aktivitet: Aktivitet): Promise<Aktivitet> =>
+export const oppdaterAktivitetEtikett = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet);
 
-export const publiserReferat = (aktivitet: Aktivitet): Promise<Aktivitet> =>
+export const publiserReferat = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`, aktivitet);
 
-export const oppdaterReferat = (aktivitet: Aktivitet): Promise<Aktivitet> =>
+export const oppdaterReferat = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet);
 
-export const hentVersjonerTilAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
+export const hentVersjonerTilAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
 
 export const oppdaterStillingFraNavSoknadsstatus = (
     aktivitetId: string,
     aktivitetVersjon: string,
     soknadsstatus: string
-): Promise<Aktivitet> =>
+): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/soknadStatus?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
         soknadsstatus,

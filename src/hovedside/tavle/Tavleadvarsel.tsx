@@ -11,11 +11,11 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
-import { Aktivitet } from '../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
 import styles from './Tavleadvarsel.module.less';
 
-const getAdvarseltekst = (aktivitet: Aktivitet, erVeileder: boolean) => {
+const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     if (aktivitet.status === STATUS_FULLFOERT) {
         return 'Aktiviteten er fullført og kan ikke endres.';
     } else if (aktivitet.status === STATUS_AVBRUTT) {
@@ -36,7 +36,7 @@ const getAdvarseltekst = (aktivitet: Aktivitet, erVeileder: boolean) => {
 
 interface Props {
     hidden: boolean;
-    draggingAktivitet: Aktivitet | undefined;
+    draggingAktivitet: AlleAktiviteter | undefined;
     erVeileder: boolean;
 }
 

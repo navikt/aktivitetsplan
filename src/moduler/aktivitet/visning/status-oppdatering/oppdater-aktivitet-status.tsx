@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { Aktivitet, AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
@@ -13,7 +14,7 @@ import EndreLinje from '../endre-linje/endre-linje';
 import AktivitetStatusForm from './AktivitetStatusForm';
 import StatusVisning from './status-visning';
 
-const useDisableStatusEndring = (aktivitet: Aktivitet) => {
+const useDisableStatusEndring = (aktivitet: VeilarbAktivitet) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const kanEndreAktivitet = useSelector((state) => selectKanEndreAktivitetStatus(state, aktivitet));
@@ -24,7 +25,7 @@ const useDisableStatusEndring = (aktivitet: Aktivitet) => {
 const lagreStatusEndringer = (
     dispatch: Dispatch,
     values: { aktivitetstatus: AktivitetStatus; begrunnelse?: string },
-    aktivitet: Aktivitet
+    aktivitet: VeilarbAktivitet
 ) => {
     if (values.aktivitetstatus === aktivitet.status) {
         return Promise.resolve();
@@ -35,7 +36,7 @@ const lagreStatusEndringer = (
 };
 
 interface OppdaterAktivitetStatusProps {
-    aktivitet: Aktivitet;
+    aktivitet: VeilarbAktivitet;
 }
 
 function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {

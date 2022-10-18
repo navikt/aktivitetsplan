@@ -2,14 +2,21 @@ import 'moment-duration-format';
 
 import moment, { DurationInputArg1 } from 'moment';
 
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import {
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
-    STILLING_FRA_NAV_TYPE,
-} from '../../constant';
-import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+    AktivitetStatus,
+    AktivitetType,
+    AlleAktiviteter,
+    Lest,
+    isArenaAktivitet,
+} from '../../datatypes/aktivitetTypes';
+import {
+    MoteAktivitet,
+    SamtalereferatAktivitet,
+    StillingFraNavAktivitet,
+    VeilarbAktivitet,
+    VeilarbAktivitetType,
+} from '../../datatypes/internAktivitetTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
 
 interface MoteTid {
@@ -34,8 +41,8 @@ interface NoeSomKanHaEnEndretdato {
 }
 
 interface GamleNyeAktiviteter {
-    nyereAktiviteter: Aktivitet[];
-    eldreAktiviteter: Aktivitet[];
+    nyereAktiviteter: AlleAktiviteter[];
+    eldreAktiviteter: AlleAktiviteter[];
 }
 
 function compareUndefindedOrNull(a: any, b: any): number {
@@ -57,14 +64,14 @@ function sammenlignDato(a?: string, b?: string): number {
     return b.localeCompare(a);
 }
 
-export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
-    const aDato = a.endretDato ? a.endretDato : a.fraDato;
-    const bDato = b.endretDato ? b.endretDato : b.fraDato;
+export function compareAktivitet(a: AlleAktiviteter, b: AlleAktiviteter): number {
+    const aDato = isArenaAktivitet(a) ? a.fraDato : a.endretDato;
+    const bDato = isArenaAktivitet(b) ? b.fraDato : b.endretDato;
     return sammenlignDato(aDato, bDato);
 }
 
-export function delCvikkeSvartSkalVises(aktivitet: Aktivitet): boolean {
-    const erStillingFraNav = aktivitet.type === STILLING_FRA_NAV_TYPE;
+export function delCvikkeSvartSkalVises(aktivitet: StillingFraNavAktivitet): boolean {
+    const erStillingFraNav = aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;
     const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
     const status = aktivitet.status;
     const historisk = aktivitet.historisk;
@@ -73,7 +80,7 @@ export function delCvikkeSvartSkalVises(aktivitet: Aktivitet): boolean {
     return erStillingFraNav && harIkkeSvart && !ikkeAktiv;
 }
 
-export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Lest, me: Me): boolean {
+export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasjon: Lest, me: Me): boolean {
     const sisteEndringVarFraMeg =
         (aktivitet.lagtInnAv === 'BRUKER' && me.erBruker) ||
         (aktivitet.lagtInnAv === 'NAV' && me.erVeileder && aktivitet.endretAv === me.id);
@@ -99,7 +106,7 @@ export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Les
     return false;
 }
 
-export function beregnKlokkeslettVarighet(aktivitet: Aktivitet): MoteTid {
+export function beregnKlokkeslettVarighet(aktivitet: MoteAktivitet): MoteTid {
     const { fraDato } = aktivitet;
     const { tilDato } = aktivitet;
     if (fraDato && tilDato) {
@@ -153,14 +160,17 @@ export function formatterTelefonnummer(telefonnummer: string): string {
 }
 
 function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {
-    return type === MOTE_TYPE && !erReferatPublisert;
+    return type === VeilarbAktivitetType.MOTE_TYPE && !erReferatPublisert;
 }
 
 function samtalreferatManglerPublisering(type: AktivitetType, erReferatPublisert?: boolean) {
-    return type === SAMTALEREFERAT_TYPE && !erReferatPublisert;
+    return type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE && !erReferatPublisert;
 }
 
-export function manglerPubliseringAvSamtaleReferat(aktivitet: Aktivitet, status: AktivitetStatus) {
+export function manglerPubliseringAvSamtaleReferat(
+    aktivitet: MoteAktivitet | SamtalereferatAktivitet,
+    status: AktivitetStatus
+) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
@@ -191,9 +201,13 @@ export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, a
     );
 }
 
-export function sorterAktiviteter(aktiviteter: Aktivitet[], status: AktivitetStatus): Aktivitet[] {
+export function sorterAktiviteter(
+    aktiviteter: (AlleAktiviteter & { nesteStatus?: string })[],
+    status: AktivitetStatus
+): AlleAktiviteter[] {
     return aktiviteter
         .filter((a) => {
+            // TODO: Look into this
             if (a.nesteStatus) {
                 return a.nesteStatus === status;
             }
@@ -202,12 +216,18 @@ export function sorterAktiviteter(aktiviteter: Aktivitet[], status: AktivitetSta
         .sort(compareAktivitet);
 }
 
-export function endretSenereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato): boolean {
-    let endretDato = moment(aktivitet.endretDato);
-    return endretDato.isValid() && endretDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd');
+export function endretSenereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
+    const sorteringsDato = [moment(aktivitet.endretDato), moment(aktivitet.tilDato), moment(aktivitet.fraDato)].find(
+        (possibleDate) => possibleDate.isValid()
+    );
+    return (
+        sorteringsDato !== undefined &&
+        sorteringsDato!!.isValid() &&
+        sorteringsDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd')
+    );
 }
 
-export const splitIEldreOgNyereAktiviteter = (aktiviteter: Aktivitet[]): GamleNyeAktiviteter =>
+export const splitIEldreOgNyereAktiviteter = (aktiviteter: AlleAktiviteter[]): GamleNyeAktiviteter =>
     aktiviteter.reduce<GamleNyeAktiviteter>(
         (forrige, aktivitet) =>
             endretSenereEnnEnManedSiden(aktivitet)

@@ -13,7 +13,7 @@ export enum ArenaEtikett {
     VENTELISTE = 'VENTELISTE',
 }
 
-enum ArenaAktivitetType {
+export enum ArenaAktivitetType {
     TILTAKSAKTIVITET = 'TILTAKSAKTIVITET',
     GRUPPEAKTIVITET = 'GRUPPEAKTIVITET',
     UTDANNINGSAKTIVITET = 'UTDANNINGSAKTIVITET',
@@ -33,7 +33,7 @@ export interface ArenaAktivitet {
     type: ArenaAktivitetType;
     tittel: string;
     beskrivelse: string;
-    fraDato: string;
+    fraDato?: string;
     tilDato: string;
     opprettetDato: string;
     avtalt: boolean;

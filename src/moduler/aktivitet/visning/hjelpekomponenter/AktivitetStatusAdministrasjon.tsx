@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { STILLING_AKTIVITET_TYPE, STILLING_FRA_NAV_TYPE } from '../../../../constant';
-import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import DeleLinje from '../delelinje/delelinje';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/OppdaterAktivitetEtikett';
@@ -9,24 +8,27 @@ import OppdaterSoknadsstatus from '../soknadsstatus-oppdatering/OppdaterSoknadss
 import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
 
 interface Props {
-    type: AktivitetType;
-    aktivitet: Aktivitet;
+    aktivitet: VeilarbAktivitet;
 }
 
-const AktivitetStatusAdministrasjon = (props: Props) => {
-    const svartJaPaaStillingFraNav = !!props.aktivitet.stillingFraNavData?.cvKanDelesData?.kanDeles;
+const AktivitetStatusAdministrasjon = ({ aktivitet }: Props) => {
+    const type = aktivitet.type;
+    const svartJaPaaStillingFraNav =
+        type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE
+            ? aktivitet.stillingFraNavData.cvKanDelesData?.kanDeles
+            : false;
 
     return (
         <div>
-            <VisibleIfDiv visible={props.type === STILLING_AKTIVITET_TYPE}>
-                <OppdaterAktivitetEtikett aktivitet={props.aktivitet} />
+            <VisibleIfDiv visible={type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE}>
+                <OppdaterAktivitetEtikett aktivitet={aktivitet} />
                 <DeleLinje />
             </VisibleIfDiv>
-            <VisibleIfDiv visible={props.type === STILLING_FRA_NAV_TYPE && svartJaPaaStillingFraNav}>
-                <OppdaterSoknadsstatus aktivitet={props.aktivitet} />
+            <VisibleIfDiv visible={type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE && svartJaPaaStillingFraNav}>
+                <OppdaterSoknadsstatus aktivitet={aktivitet} />
                 <DeleLinje />
             </VisibleIfDiv>
-            <OppdaterAktivitetStatus aktivitet={props.aktivitet} />
+            <OppdaterAktivitetStatus aktivitet={aktivitet} />
             <DeleLinje />
         </div>
     );

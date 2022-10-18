@@ -4,7 +4,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
-import { SamtalereferatAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';

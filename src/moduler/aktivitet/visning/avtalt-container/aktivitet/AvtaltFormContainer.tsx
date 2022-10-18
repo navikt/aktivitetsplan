@@ -4,7 +4,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../../api/utils';
-import { InternAktivitet } from '../../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';

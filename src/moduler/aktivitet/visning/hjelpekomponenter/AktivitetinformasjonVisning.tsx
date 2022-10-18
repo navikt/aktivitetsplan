@@ -8,9 +8,11 @@ import {
     SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { isSamtaleOrMøte } from '../../../../datatypes/internAktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
+import { aktivitet } from '../../../../proptypes';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltFerdigMarkering, {
@@ -36,7 +38,7 @@ const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) =
 };
 
 interface Props {
-    valgtAktivitet: Aktivitet;
+    valgtAktivitet: AlleAktiviteter;
     tillatEndring: boolean;
     laster: boolean;
     underOppfolging: boolean;
@@ -44,9 +46,11 @@ interface Props {
 
 const AktivitetinformasjonVisning = (props: Props) => {
     const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
-    const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
+    const { id, tittel, type, avtalt } = valgtAktivitet;
 
-    const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet);
+    const deltFerdigMarkeringSkalVises = isSamtaleOrMøte(valgtAktivitet)
+        ? SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet)
+        : false;
 
     return (
         <div>
@@ -58,7 +62,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     <InternLenke
                         className="endreknapp"
                         role="button"
-                        hidden={!tillatEndring || arenaAktivitet}
+                        hidden={!tillatEndring || isArenaAktivitet(props.valgtAktivitet)}
                         href={endreAktivitetRoute(id)}
                         onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}

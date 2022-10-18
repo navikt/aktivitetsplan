@@ -5,7 +5,8 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
-import { Aktivitet, AktivitetStatus } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
@@ -18,8 +19,8 @@ interface Props {
     children: ReactNode;
 }
 
-interface DragItem {
-    aktivitet: Aktivitet;
+interface DragItem<AktivitetsType> {
+    aktivitet: AktivitetsType;
     type: string;
 }
 
@@ -34,9 +35,9 @@ function DropTargetKolonne({ status, children }: Props) {
 
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,
-        canDrop: ({ aktivitet }: DragItem) =>
+        canDrop: ({ aktivitet }: DragItem<AlleAktiviteter>) =>
             status !== aktivitet.status && erDroppbar(aktivitet, erBruker, erUnderOppfolging),
-        drop: ({ aktivitet }: DragItem) => {
+        drop: ({ aktivitet }: DragItem<VeilarbAktivitet>) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
                 history.push(fullforAktivitetRoute(aktivitet.id));

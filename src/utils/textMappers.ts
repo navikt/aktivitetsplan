@@ -1,19 +1,7 @@
-import { Aktivitet } from '../datatypes/aktivitetTypes';
+import { AktivitetType } from '../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../datatypes/arenaAktivitetTypes';
 
-export const getAktivitetTypeTekst = (aktivitet: Aktivitet) => {
-    if (aktivitet.eksternAktivitetData) {
-        return eksternAktivitetTypeMap[aktivitet.eksternAktivitetData.type];
-    }
-    return aktivitetTypeMap[aktivitet.type];
-};
-
-export const eksternAktivitetTypeMap = {
-    ARENA_TILTAK: 'Tiltak gjennom NAV',
-    MIDL_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
-};
-
-export const aktivitetTypeMap = {
+export const aktivitetTypeMap: Record<AktivitetType, string> = {
     EGEN: 'Jobbrettet egenaktivitet',
     STILLING: 'Stilling',
     TILTAKSAKTIVITET: 'Tiltak gjennom NAV',

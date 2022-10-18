@@ -3,7 +3,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
-import { Aktivitet, MedisinskBehandlingAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { MedisinskBehandlingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import PeriodeValidering, {
     validerPeriodeFelt,
@@ -54,12 +54,12 @@ interface Props {
 const MedisinskBehandlingForm = (props: Props) => {
     const { onSubmit, aktivitet, isDirtyRef } = props;
 
-    const validator = useFormstate<ValideringsProps, Aktivitet>({
+    const validator = useFormstate<ValideringsProps, MedisinskBehandlingAktivitet>({
         tittel: () => undefined,
         behandlingType: (val, values, aktivitet) => validateBehandlingType(aktivitet.avtalt, val),
         behandlingSted: (val, values, aktivitet) => validateBehandlingSted(aktivitet.avtalt, val),
-        fraDato: (val, values, aktivitet: Aktivitet) => validateFraDato(aktivitet.avtalt, aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet: Aktivitet) => validateTilDato(aktivitet.fraDato, val),
+        fraDato: (val, values, aktivitet) => validateFraDato(aktivitet.avtalt, aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
         effekt: (val, values, aktivitet) => validateFeltForLangt(aktivitet.avtalt, val),
         beskrivelse: (val, values, aktivitet) => validateBeskrivelse(aktivitet.avtalt, val),
         behandlingOppfolging: (val, values, aktivitet) => validateFeltForLangt(aktivitet.avtalt, val),
