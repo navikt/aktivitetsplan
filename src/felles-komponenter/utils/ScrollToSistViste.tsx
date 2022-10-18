@@ -2,15 +2,12 @@ import React, { ReactElement, useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
 
-import { Aktivitet } from '../../datatypes/aktivitetTypes';
+import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 
 const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<any>> => {
     let sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
-        (state) =>
-            `aktivitetskort-` +
-            state?.view?.visteAktiviteterMedEndringer?.reduce((a: Aktivitet | null, b: Aktivitet) => b, null)?.id
+        (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
     );
-    console.log(`Rendrer ScrollToSistViste med ${{ props }}`);
 
     useEffect(() => {
         document.getElementById(sistVisteAktivitetId)?.scrollIntoView({
