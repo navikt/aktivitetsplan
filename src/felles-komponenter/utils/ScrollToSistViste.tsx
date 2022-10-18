@@ -6,11 +6,13 @@ import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-
 import { useEventListener } from '../hooks/useEventListner';
 
 function doScroll(id: string) {
-    document.getElementById(id)?.scrollIntoView({
-        behavior: 'auto',
-        block: 'center',
-        inline: 'center',
-    });
+    setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center',
+        });
+    }, 400);
 }
 const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<any>> => {
     let sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
