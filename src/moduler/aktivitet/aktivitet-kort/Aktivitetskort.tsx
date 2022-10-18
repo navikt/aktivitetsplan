@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
@@ -30,12 +30,8 @@ interface Props {
 }
 
 export const genererAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
-const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest' };
 
 const Aktivitetskort = (props: Props) => {
-    const ref = useRef<HTMLDivElement | null>(null);
-    const [firstTime, setFirstTime] = useState<boolean>(true);
-
     const { aktivitet, className } = props;
     const { id, type } = aktivitet;
     const dispatch = useDispatch();
@@ -62,17 +58,6 @@ const Aktivitetskort = (props: Props) => {
     const datoId = `aktivitetskort__dato__${id}`;
     const ariaLabel = `${aktivitetTypeMap[type]}: ${aktivitet.tittel}`;
 
-    useEffect(() => {
-        const dialogElement: HTMLElement | null | undefined = ref?.current?.parentElement;
-        if (aktivitetBleVistSist)
-            console.log(`Sist vist, scroll til?(${firstTime} ${!!dialogElement} ${aktivitetBleVistSist})`);
-        if (firstTime && dialogElement && aktivitetBleVistSist) {
-            dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
-            setFirstTime(false);
-            console.log('I did it');
-        }
-    }, [ref, aktivitetBleVistSist, firstTime]);
-
     return (
         <LinkAsDiv
             id={genererAktivtetskortId(aktivitet)}
@@ -95,7 +80,6 @@ const Aktivitetskort = (props: Props) => {
                 ) : null}
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
-            <div ref={ref}></div>
         </LinkAsDiv>
     );
 };
