@@ -49,7 +49,7 @@ const Aktivitetstavle = () => {
 
     let [skalScrolleTil, setSkalScrolleTil] = useState(false);
 
-    useEventListener('veilarbpersonflatefs.tab-clicked', () => setSkalScrolleTil(true));
+    useEventListener('visAktivitetsplan', () => setSkalScrolleTil(true));
 
     useEffect(() => {
         if (skalScrolleTil) {
