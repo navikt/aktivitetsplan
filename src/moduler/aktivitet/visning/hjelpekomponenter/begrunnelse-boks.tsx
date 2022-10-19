@@ -1,11 +1,13 @@
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import PT from 'prop-types';
 import React from 'react';
 
-import visibleIfHOC from '../../../../hocs/visible-if';
+interface Props {
+    begrunnelse: string;
+    className: string;
+}
 
-function BegrunnelseBoks({ begrunnelse, className }) {
+const BegrunnelseBoks = ({ begrunnelse, className }: Props) => {
     return (
         <div className={className}>
             <AlertStripeInfo>
@@ -13,15 +15,6 @@ function BegrunnelseBoks({ begrunnelse, className }) {
             </AlertStripeInfo>
         </div>
     );
-}
-
-BegrunnelseBoks.defaultProps = {
-    className: '',
 };
 
-BegrunnelseBoks.propTypes = {
-    begrunnelse: PT.string.isRequired,
-    className: PT.string,
-};
-
-export default visibleIfHOC(BegrunnelseBoks);
+export default BegrunnelseBoks;

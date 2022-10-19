@@ -8,11 +8,10 @@ import {
     SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import { Aktivitet, AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { isSamtaleOrMøte } from '../../../../datatypes/internAktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
-import { aktivitet } from '../../../../proptypes';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltFerdigMarkering, {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
@@ -14,7 +14,7 @@ import OppdaterReferatForm from './OppdaterReferatForm';
 import ReferatVisning from './ReferatVisning';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: MoteAktivitet | SamtalereferatAktivitet;
 }
 
 const ReferatContainer = (props: Props) => {
@@ -60,7 +60,7 @@ const ReferatContainer = (props: Props) => {
                     erVeileder={erVeileder}
                     dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
                     publiserer={publiserer}
-                    erReferatPublisert={!!erReferatPublisert}
+                    erReferatPublisert={erReferatPublisert}
                     startOppdaterReferat={() => setOppdaterReferat(true)}
                 />
                 <DeleLinje />

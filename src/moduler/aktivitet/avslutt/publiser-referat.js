@@ -23,7 +23,7 @@ function PubliserReferat({ aktivitet, nyStatus, children }) {
 PubliserReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     nyStatus: PT.string,
-    children: PT.node.isRequired,
+    children: PT.node,
 };
 
 PubliserReferat.defaultProps = {

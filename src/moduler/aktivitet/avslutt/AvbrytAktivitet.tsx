@@ -1,11 +1,13 @@
+import Spinner from 'nav-frontend-spinner';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { STATUS } from '../../../api/utils';
 import { STATUS_AVBRUTT } from '../../../constant';
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
+import Innholdslaster from '../../../felles-komponenter/utils/Innholdslaster';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
@@ -32,12 +34,12 @@ const AvbrytAktivitet = (props: Props) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const lagreBegrunnelse = (aktivitet: Aktivitet, begrunnelseTekst: string | null) =>
+    const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
         dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst));
 
     const lagrer = aktivitetListeStatus !== STATUS.OK;
 
-    const begrunnelse = (
+    const begrunnelse = valgtAktivitet ? (
         <BegrunnelseAktivitet
             headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseLabel}
@@ -47,9 +49,9 @@ const AvbrytAktivitet = (props: Props) => {
                 return lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
         />
-    );
+    ) : null;
 
-    const advarsel = (
+    const advarsel = valgtAktivitet ? (
         <VisAdvarsel
             headerTekst={headerTekst}
             onSubmit={() => {
@@ -57,15 +59,20 @@ const AvbrytAktivitet = (props: Props) => {
                 history.replace('/');
             }}
         />
-    );
+    ) : null;
 
-    const maaBegrunnes = trengerBegrunnelse(valgtAktivitet.avtalt, STATUS_AVBRUTT, valgtAktivitet.type);
+    const maaBegrunnes =
+        valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, STATUS_AVBRUTT, valgtAktivitet.type);
 
     return (
         <Modal contentLabel="avbryt-aktivitet">
-            <PubliserReferat aktivitet={valgtAktivitet} nyStatus={STATUS_AVBRUTT}>
-                {maaBegrunnes ? begrunnelse : advarsel}
-            </PubliserReferat>
+            {valgtAktivitet ? (
+                <PubliserReferat aktivitet={valgtAktivitet} nyStatus={STATUS_AVBRUTT}>
+                    {maaBegrunnes ? begrunnelse : advarsel}
+                </PubliserReferat>
+            ) : (
+                <Spinner /> // TODO test at det her funker
+            )}
         </Modal>
     );
 };

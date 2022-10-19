@@ -1,6 +1,6 @@
 import { isBefore, isWithinInterval } from 'date-fns';
 
-import { isArenaAktivitet, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
+import { isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import {
     selectAktivitetAvtaltMedNavFilter,
@@ -51,10 +51,7 @@ export function aktivitetFilter(aktivitet: any, state: any) {
     }
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
-    if (
-        erAktivtFilter(etikettFilter) &&
-        (!etikettFilter[aktivitet.etikett] || !isVeilarbAktivitetAktivitet(aktivitet))
-    ) {
+    if (erAktivtFilter(etikettFilter) && (!etikettFilter[aktivitet.etikett] || !isVeilarbAktivitet(aktivitet))) {
         return false;
     }
 

@@ -4,21 +4,21 @@ import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
 
 const validateEtikettStatus = (): string | undefined => undefined;
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: StillingAktivitet;
     disabled?: boolean;
     onSubmit(val: { etikettstatus: string }): Promise<any>;
 }
 
 type FormType = {
-    etikettstatus: string
-}
+    etikettstatus: string;
+};
 
 const StillingEtikettForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;

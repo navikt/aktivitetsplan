@@ -1,17 +1,19 @@
-import { aktivitet } from '../proptypes';
 import {
     AktivitetBaseProps,
-    AktivitetType,
     AlleAktiviteter,
     BrukerType,
+    FellesTransaksjonsTyper,
     Livslopsstatus,
+    SpesifikkTransaksjonsTyper,
     StillingFraNavSoknadsstatus,
+    TransaksjonsType,
 } from './aktivitetTypes';
-import { Etikett, LenkeMedType, OppgaveLenke } from './eksternAktivitetTypes';
 
 export type VeilarbAktivitet =
     | SamtalereferatAktivitet
     | MoteAktivitet
+    | StillingAktivitet
+    | SokeavtaleAktivitet
     | MedisinskBehandlingAktivitet
     | StillingFraNavAktivitet;
 
@@ -25,6 +27,21 @@ export enum VeilarbAktivitetType {
     SAMTALEREFERAT_TYPE = 'SAMTALEREFERAT',
     STILLING_FRA_NAV_TYPE = 'STILLING_FRA_NAV',
     // EKSTERN_AKTIVITET_TYPE = 'EKSTERN_AKTIVITET',
+}
+
+export interface SokeavtaleAktivitet extends AktivitetBaseProps {
+    type: VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE;
+    antallStillingerSokes?: number;
+    antallStillingerIUken?: number;
+    avtaleOppfolging?: string;
+}
+
+export interface StillingAktivitet extends AktivitetBaseProps {
+    type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
+    arbeidsgiver?: string;
+    kontaktperson?: string;
+    arbeidssted?: string;
+    stillingsTittel?: string;
 }
 
 export interface SamtalereferatAktivitet extends AktivitetBaseProps {
@@ -78,10 +95,15 @@ export interface CvKanDelesData {
     endretAvType: BrukerType;
 }
 
-export interface StillingFraNavAktivitet extends AktivitetBaseProps {
+export type StillingFraNavAktivitet = AktivitetBaseProps & {
     type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;
     stillingFraNavData: StillingFraNavAktivitetData;
-}
+    transaksjonsType:
+        | FellesTransaksjonsTyper
+        | SpesifikkTransaksjonsTyper.DEL_CV_SVART
+        | SpesifikkTransaksjonsTyper.SOKNADSSTATUS_ENDRET
+        | SpesifikkTransaksjonsTyper.IKKE_FATT_JOBBEN;
+};
 
 export interface StillingFraNavAktivitetData {
     type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;

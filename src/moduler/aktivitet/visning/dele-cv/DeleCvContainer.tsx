@@ -2,7 +2,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT, STILLING_FRA_NAV_TYPE } from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
 import { DeleCVAvbruttVisning } from './DeleCVAvbruttVisning';
 import styles from './DeleCvContainer.module.less';
@@ -10,7 +10,7 @@ import { DeleCvSvarVisning } from './DeleCvSvarVisning';
 import { MeldInteresseForStilling } from './MeldInteresseForStilling';
 
 interface PropTypes {
-    aktivitet: Aktivitet;
+    aktivitet: StillingFraNavAktivitet;
 }
 
 export const Ingress = () => (
@@ -22,12 +22,8 @@ export const Ingress = () => (
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     const stillingFraNavData = aktivitet.stillingFraNavData;
     const cvKanDelesSvar = stillingFraNavData && stillingFraNavData?.cvKanDelesData;
-    const erHistorisk = !!aktivitet.historisk;
+    const erHistorisk = aktivitet.historisk;
     const [startCvSvarVisningAapen] = useState(!cvKanDelesSvar);
-
-    if (aktivitet.type !== STILLING_FRA_NAV_TYPE || !stillingFraNavData) {
-        return null;
-    }
 
     if (cvKanDelesSvar) {
         return (

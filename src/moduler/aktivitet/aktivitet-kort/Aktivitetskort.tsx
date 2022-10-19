@@ -3,8 +3,8 @@ import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
-import { AlleAktiviteter, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
+import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { StillingAktivitet, VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
 import { aktivitetTypeMap } from '../../../utils/textMappers';
@@ -45,7 +45,7 @@ const Aktivitetskort = (props: Props) => {
 
     const harEndringerIAktivitet =
         lestStatus === STATUS.OK &&
-        isVeilarbAktivitetAktivitet(aktivitet) &&
+        isVeilarbAktivitet(aktivitet) &&
         erNyEndringIAktivitet(aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
 
@@ -64,9 +64,11 @@ const Aktivitetskort = (props: Props) => {
             <article>
                 <Aktivitetstype type={type} />
                 <Aktivitetskorttittel id={headerId} aktivitet={aktivitet} harEndring={harEndringerIAktivitet} />
-                <Arbeidsgiver aktivitet={aktivitet} />
+                {type === VeilarbAktivitetType.STILLING_AKTIVITET_TYPE ? <Arbeidsgiver aktivitet={aktivitet} /> : null}
                 <AktiviteskortPeriodeVisning id={datoId} aktivitet={aktivitet} />
-                <SokeAvtaleAntall aktivitet={aktivitet} />
+                {type === VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE ? (
+                    <SokeAvtaleAntall aktivitet={aktivitet} />
+                ) : null}
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
         </LinkAsDiv>

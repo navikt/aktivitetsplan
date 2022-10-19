@@ -20,14 +20,18 @@ const AktivitetStatusAdministrasjon = ({ aktivitet }: Props) => {
 
     return (
         <div>
-            <VisibleIfDiv visible={type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE}>
-                <OppdaterAktivitetEtikett aktivitet={aktivitet} />
-                <DeleLinje />
-            </VisibleIfDiv>
-            <VisibleIfDiv visible={type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE && svartJaPaaStillingFraNav}>
-                <OppdaterSoknadsstatus aktivitet={aktivitet} />
-                <DeleLinje />
-            </VisibleIfDiv>
+            {type === VeilarbAktivitetType.STILLING_AKTIVITET_TYPE ? (
+                <>
+                    <OppdaterAktivitetEtikett aktivitet={aktivitet} />
+                    <DeleLinje />
+                </>
+            ) : null}
+            {type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE && svartJaPaaStillingFraNav ? (
+                <>
+                    <OppdaterSoknadsstatus aktivitet={aktivitet} />
+                    <DeleLinje />
+                </>
+            ) : null}
             <OppdaterAktivitetStatus aktivitet={aktivitet} />
             <DeleLinje />
         </div>

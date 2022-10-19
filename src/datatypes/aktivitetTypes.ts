@@ -7,7 +7,8 @@ import {
 } from '../constant';
 import { ArenaAktivitet, ArenaAktivitetType } from './arenaAktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
-import { VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
+import { StillingFraNavAktivitetData, VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
+import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
@@ -34,24 +35,6 @@ export type Livslopsstatus =
     | 'AVBRUTT_AV_SYSTEM'
     | 'AVBRUTT_AV_BRUKER';
 
-export enum TransaksjonsType {
-    OPPRETTET = 'OPPRETTET',
-    STATUS_ENDRET = 'STATUS_ENDRET',
-    DETALJER_ENDRET = 'DETALJER_ENDRET',
-    AVTALT = 'AVTALT',
-    AVTALT_DATO_ENDRET = 'AVTALT_DATO_ENDRET',
-    ETIKETT_ENDRET = 'ETIKETT_ENDRET',
-    MOTE_TID_OG_STED_ENDRET = 'MOTE_TID_OG_STED_ENDRET',
-    REFERAT_OPPRETTET = 'REFERAT_OPPRETTET',
-    REFERAT_ENDRET = 'REFERAT_ENDRET',
-    REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
-    BLE_HISTORISK = 'BLE_HISTORISK',
-    FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
-    DEL_CV_SVART = 'DEL_CV_SVART',
-    SOKNADSSTATUS_ENDRET = 'SOKNADSSTATUS_ENDRET',
-    IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
-}
-
 export type BrukerType = 'NAV' | 'BRUKER';
 
 export interface Lest {
@@ -72,7 +55,7 @@ export interface AktivitetBaseProps {
     endretDato?: string;
     avtalt: boolean;
     etikett?: StillingsStatus;
-    transaksjonsType: TransaksjonsType;
+    transaksjonsType: FellesTransaksjonsTyper;
     historisk: boolean;
     fraDato?: string;
     tilDato?: string;
@@ -91,7 +74,7 @@ export function isArenaAktivitet(aktivitet: AlleAktiviteter): aktivitet is Arena
     ).includes(aktivitet.type);
 }
 
-export function isVeilarbAktivitetAktivitet(aktivitet: AlleAktiviteter): aktivitet is VeilarbAktivitet {
+export function isVeilarbAktivitet(aktivitet: AlleAktiviteter): aktivitet is VeilarbAktivitet {
     return !isArenaAktivitet(aktivitet);
 }
 /*
@@ -99,22 +82,23 @@ export function isHistorisk(aktivitet): boolean {
 
 }*/
 
-// export interface Aktivitet extends AktivitetRequiredProps {
-//     fraDato?: string;
-//     tilDato?: string;
-//     endretDato?: string;
-//     avsluttetKommentar?: string;
-//     etikett?: StillingsStatus;
-//     historisk?: boolean;
-//     forhaandsorientering?: Forhaandsorientering;
-//     detaljer?: object;
-//     beskrivelse?: string;
-//     erReferatPublisert?: boolean;
-//     nesteStatus?: AktivitetStatus;
-//     referat?: string;
-//     arbeidsgiver?: StringOrNull;
-//     antallStillingerSokes?: number;
-//     antallStillingerIUken?: number;
-//     arenaAktivitet?: false;
-//     avsluttetBegrunnelse?: string;
-// }
+export interface Aktivitet extends AktivitetRequiredProps {
+    fraDato?: string;
+    tilDato?: string;
+    endretDato?: string;
+    avsluttetKommentar?: string;
+    etikett?: StillingsStatus;
+    historisk?: boolean;
+    forhaandsorientering?: Forhaandsorientering;
+    detaljer?: object;
+    beskrivelse?: string;
+    erReferatPublisert?: boolean;
+    nesteStatus?: AktivitetStatus;
+    referat?: string;
+    arbeidsgiver?: StringOrNull;
+    antallStillingerSokes?: number;
+    antallStillingerIUken?: number;
+    arenaAktivitet?: false;
+    avsluttetBegrunnelse?: string;
+    stillingFraNavData: StillingFraNavAktivitetData | null;
+}

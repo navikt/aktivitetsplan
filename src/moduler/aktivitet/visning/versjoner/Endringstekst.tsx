@@ -2,7 +2,7 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Aktivitet, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { formaterDatoKortManed } from '../../../../utils';
 import {
     aktivitetStatusMap,
@@ -14,8 +14,8 @@ import { hentBrukeravhengigTekst } from './brukeravhengigTekst';
 import styles from './Endringstekst.module.less';
 
 interface Props {
-    aktivitet: Aktivitet;
-    forrigeAktivitet?: Aktivitet;
+    aktivitet: VeilarbAktivitet;
+    forrigeAktivitet?: VeilarbAktivitet;
 }
 
 const Endringstekst = (props: Props) => {
@@ -83,6 +83,7 @@ const Endringstekst = (props: Props) => {
             );
         }
         case TransaksjonsType.DEL_CV_SVART: {
+            // case SpesifikkTransaksjonstyper.DEL_CV_SVART: {
             const svar = aktivitet.stillingFraNavData?.cvKanDelesData.kanDeles ? 'Ja' : 'Nei';
             return (
                 <>
