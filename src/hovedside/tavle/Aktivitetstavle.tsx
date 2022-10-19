@@ -47,7 +47,7 @@ const Aktivitetstavle = () => {
         (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
     );
 
-    let [skalScrolleTil, setSkalScrolleTil] = useState(false);
+    let [skalScrolleTil, setSkalScrolleTil] = useState(true);
 
     useEventListener('visAktivitetsplan', () => setSkalScrolleTil(true));
 
