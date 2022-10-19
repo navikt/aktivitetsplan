@@ -49,27 +49,18 @@ const Aktivitetstavle = () => {
 
     let [skalScrolleTil, setSkalScrolleTil] = useState(false);
 
-    console.log('Rendered Aktivitetstavle');
-    useEventListener('veilarbpersonflatefs.tab-clicked', () => {
-        console.log('Oppdaget event tab-clicked fra veilarbpersonflatefs - setter skal SCrolle TRUE');
-        setSkalScrolleTil(true);
-    });
+    useEventListener('veilarbpersonflatefs.tab-clicked', () => setSkalScrolleTil(true));
 
     useEffect(() => {
-        console.log(`Sjekker om vi skal scrolle: skalScrolleTil = ${skalScrolleTil}`);
         if (skalScrolleTil) {
-            console.log('Scroller og setter skalScrolleTil FALSE');
             const element = document.getElementById(sistVisteAktivitetId);
             if (element) {
-                console.log(`scroller til element `, element);
-                element?.scrollIntoView({
+                element.scrollIntoView({
                     behavior: 'auto',
                     block: 'center',
                     inline: 'center',
                 });
                 setSkalScrolleTil(false);
-            } else {
-                console.log('Scroller IKKE fordi HTML-elementet ikke er truthy: ', element);
             }
         }
     }, [sistVisteAktivitetId, skalScrolleTil]);
