@@ -9,7 +9,7 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
-import { isSamtaleOrMøte } from '../../../../datatypes/internAktivitetTypes';
+import { isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
@@ -47,7 +47,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
     const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
     const { id, tittel, type, avtalt } = valgtAktivitet;
 
-    const deltFerdigMarkeringSkalVises = isSamtaleOrMøte(valgtAktivitet)
+    const deltFerdigMarkeringSkalVises = isSamtaleOrMote(valgtAktivitet)
         ? SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet)
         : false;
 

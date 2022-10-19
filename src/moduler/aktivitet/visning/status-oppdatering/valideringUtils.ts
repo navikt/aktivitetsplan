@@ -1,6 +1,6 @@
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet, isSamtaleOrMøte } from '../../../../datatypes/internAktivitetTypes';
+import { VeilarbAktivitet, isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
 import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
 import { ValideringsProps } from './AktivitetStatusForm';
 
@@ -8,7 +8,7 @@ export const kanOppdatereStatus = (aktivitet: VeilarbAktivitet, values: Valideri
     const status = values.aktivitetstatus as AktivitetStatus;
     const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
     const ferdigOgManglerPubliseringAvSamtaleReferat =
-        isSamtaleOrMøte(aktivitet) && ferdigStatus && manglerPubliseringAvSamtaleReferat(aktivitet, status);
+        isSamtaleOrMote(aktivitet) && ferdigStatus && manglerPubliseringAvSamtaleReferat(aktivitet, status);
 
     if (ferdigOgManglerPubliseringAvSamtaleReferat) {
         return 'Samtalereferatet må deles før du kan sette aktiviteten til denne statusen';
