@@ -2,18 +2,26 @@ import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import * as AppPT from '../../../../proptypes';
 import { formaterDatoManed } from '../../../../utils';
 import Informasjonsfelt, { HiddenIfInformasjonsfelt } from './Informasjonsfelt';
 
-const formatertDato = (dato, visIkkeSatt) => {
+const formatertDato = (dato: string | undefined, visIkkeSatt: boolean) => {
     if (visIkkeSatt && !dato) {
         return 'Dato ikke satt';
     }
     return formaterDatoManed(dato);
 };
 
-export const FraDato = ({ aktivitet, tittel, visIkkeSatt, hidden }) => (
+interface Props {
+    aktivitet: AlleAktiviteter;
+    tittel: string;
+    visIkkeSatt: boolean;
+    hidden: boolean;
+}
+
+export const FraDato = ({ aktivitet, tittel, visIkkeSatt, hidden }: Props) => (
     <HiddenIfInformasjonsfelt
         key="fradato"
         tittel={tittel}
@@ -35,7 +43,7 @@ FraDato.defaultProps = {
     hidden: false,
 };
 
-export const TilDato = ({ aktivitet, tittel, visIkkeSatt, hidden }) => (
+export const TilDato = ({ aktivitet, tittel, visIkkeSatt, hidden }: Props) => (
     <HiddenIfInformasjonsfelt
         key="tildato"
         tittel={tittel}
@@ -57,7 +65,7 @@ TilDato.defaultProps = {
     hidden: false,
 };
 
-export const Beskrivelse = ({ aktivitet }) => (
+export const Beskrivelse = ({ aktivitet }: { aktivitet: AlleAktiviteter }) => (
     <Informasjonsfelt
         tittel={<FormattedMessage id="aktivitetvisning.beskrivelse-label" />}
         innhold={aktivitet.beskrivelse}

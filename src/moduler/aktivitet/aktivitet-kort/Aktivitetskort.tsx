@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
-import { StillingAktivitet, VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
 import { aktivitetTypeMap } from '../../../utils/textMappers';

@@ -7,8 +7,8 @@ import {
 } from '../constant';
 import { ArenaAktivitet, ArenaAktivitetType } from './arenaAktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
-import { StillingFraNavAktivitetData, VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
-import { FellesTransaksjonsTyper, TransaksjonsType } from './transaksjonstyperTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
+import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
@@ -60,6 +60,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     fraDato?: string;
     tilDato?: string;
     avsluttetKommentar?: string;
+    beskrivelse?: string;
 }
 
 export type AlleAktiviteter = VeilarbAktivitet | ArenaAktivitet;
@@ -77,28 +78,3 @@ export function isArenaAktivitet(aktivitet: AlleAktiviteter): aktivitet is Arena
 export function isVeilarbAktivitet(aktivitet: AlleAktiviteter): aktivitet is VeilarbAktivitet {
     return !isArenaAktivitet(aktivitet);
 }
-/*
-export function isHistorisk(aktivitet): boolean {
-
-}*/
-
-// export interface Aktivitet extends AktivitetRequiredProps {
-//     fraDato?: string;
-//     tilDato?: string;
-//     endretDato?: string;
-//     avsluttetKommentar?: string;
-//     etikett?: StillingsStatus;
-//     historisk?: boolean;
-//     forhaandsorientering?: Forhaandsorientering;
-//     detaljer?: object;
-//     beskrivelse?: string;
-//     erReferatPublisert?: boolean;
-//     nesteStatus?: AktivitetStatus;
-//     referat?: string;
-//     arbeidsgiver?: StringOrNull;
-//     antallStillingerSokes?: number;
-//     antallStillingerIUken?: number;
-//     arenaAktivitet?: false;
-//     avsluttetBegrunnelse?: string;
-//     stillingFraNavData: StillingFraNavAktivitetData | null;
-// }

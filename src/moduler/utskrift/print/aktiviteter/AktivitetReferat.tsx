@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import DeleLinje from '../delelinje/delelinje';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/OppdaterAktivitetEtikett';
 import OppdaterSoknadsstatus from '../soknadsstatus-oppdatering/OppdaterSoknadsstatus';

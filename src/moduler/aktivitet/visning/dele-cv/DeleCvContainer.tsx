@@ -1,7 +1,7 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT, STILLING_FRA_NAV_TYPE } from '../../../../constant';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
 import { DeleCVAvbruttVisning } from './DeleCVAvbruttVisning';

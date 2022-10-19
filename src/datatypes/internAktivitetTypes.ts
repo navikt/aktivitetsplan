@@ -132,7 +132,7 @@ export interface StillingFraNavAktivitetData {
 
 export function isSamtaleOrMøte(aktivitet: AlleAktiviteter): aktivitet is SamtalereferatAktivitet | MoteAktivitet {
     return (
-        aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE || aktivitet.type == VeilarbAktivitetType.MOTE_TYPE
+        aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE || aktivitet.type === VeilarbAktivitetType.MOTE_TYPE
     );
 }
 

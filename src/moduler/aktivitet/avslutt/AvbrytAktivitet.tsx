@@ -7,7 +7,6 @@ import { STATUS } from '../../../api/utils';
 import { STATUS_AVBRUTT } from '../../../constant';
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import Innholdslaster from '../../../felles-komponenter/utils/Innholdslaster';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';

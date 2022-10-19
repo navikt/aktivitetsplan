@@ -3,7 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import * as statuser from '../../../../constant';
 import { StillingsStatus } from '../../../../datatypes/aktivitetTypes';
-import { StillingAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
