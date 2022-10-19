@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { RootStateOrAny, shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
@@ -11,10 +11,12 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../constant';
+import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
+import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
@@ -41,6 +43,40 @@ const Aktivitetstavle = () => {
         statusAktiviteter === STATUS.NOT_STARTED && statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
+    let sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
+        (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
+    );
+
+    let [skalScrolleTil, setSkalScrolleTil] = useState(false);
+
+    function doScroll() {
+        const element = document.getElementById(sistVisteAktivitetId);
+        if (element) {
+            console.log(`scroller til element `, element);
+            element?.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+                inline: 'center',
+            });
+            setSkalScrolleTil(false);
+        } else {
+            console.log('Scroller IKKE fordi HTML-elementet ikke er truthy: ', element);
+        }
+    }
+
+    console.log('Rendered Aktivitetstavle');
+    useEventListener('veilarbpersonflatefs.tab-clicked', () => {
+        console.log('Oppdaget event tab-clicked fra veilarbpersonflatefs - setter skal SCrolle TRUE');
+        setSkalScrolleTil(true);
+    });
+
+    useEffect(() => {
+        console.log(`Sjekker om vi skal scrolle: skalScrolleTil = ${skalScrolleTil}`);
+        if (skalScrolleTil) {
+            console.log('Scroller og setter skalScrolleTil FALSE');
+            doScroll();
+        }
+    }, [sistVisteAktivitetId, skalScrolleTil]);
 
     useEffect(() => {
         if (aktivitetNotStarted) {

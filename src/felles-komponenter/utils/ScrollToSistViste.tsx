@@ -1,9 +1,8 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
 
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
-import { useEventListener } from '../hooks/useEventListner';
 
 function doScroll(id: string) {
     document.getElementById(id)?.scrollIntoView({
@@ -12,24 +11,17 @@ function doScroll(id: string) {
         inline: 'center',
     });
 }
+
 const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<any>> => {
+    console.log('Rendrer ScrollToSistViste');
     let sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
         (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
     );
-    let [skalScrolleTil, setSkalScrolleTil] = useState(false);
-
-    if (skalScrolleTil && !!sistVisteAktivitetId) {
-        doScroll(sistVisteAktivitetId);
-        (() => setSkalScrolleTil(false))();
-    }
 
     useEffect(() => {
-        setSkalScrolleTil(true);
+        console.log('ScrollToSistViste props.location er endret - scroller til element med Id ', sistVisteAktivitetId);
+        doScroll(sistVisteAktivitetId);
     }, [props.location]);
-
-    useEventListener('veilarbpersonflatefs.tab-clicked', () => {
-        setSkalScrolleTil(true);
-    });
 
     return <>{props.children}</>;
 };
