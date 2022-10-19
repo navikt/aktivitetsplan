@@ -4,14 +4,6 @@ import { RouteComponentProps, RouteProps, withRouter } from 'react-router-dom';
 
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 
-function doScroll(id: string) {
-    document.getElementById(id)?.scrollIntoView({
-        behavior: 'auto',
-        block: 'center',
-        inline: 'center',
-    });
-}
-
 const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<any>> => {
     console.log('Rendrer ScrollToSistViste');
     let sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
@@ -19,9 +11,17 @@ const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<
     );
 
     useEffect(() => {
-        console.log('ScrollToSistViste props.location er endret - scroller til element med Id ', sistVisteAktivitetId);
-        doScroll(sistVisteAktivitetId);
-    }, [props.location]);
+        console.log(
+            'ScrollToSistViste props.location eller sistVisteAktiivtetsId er endret - scroller til element med Id ',
+            sistVisteAktivitetId,
+            '(Hvis det finnes)'
+        );
+        document.getElementById(sistVisteAktivitetId)?.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center',
+        });
+    }, [props.location, sistVisteAktivitetId]);
 
     return <>{props.children}</>;
 };
