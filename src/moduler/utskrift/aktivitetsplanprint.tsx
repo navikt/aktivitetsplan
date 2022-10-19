@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
-import { Aktivitet } from '../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../datatypes/types';
@@ -54,7 +54,7 @@ interface Props {
     dialoger?: Dialog[];
     mittMal?: Mal;
     erVeileder?: boolean;
-    aktiviteter?: Aktivitet[];
+    aktiviteter?: AlleAktiviteter[];
     erManuell?: boolean;
 }
 

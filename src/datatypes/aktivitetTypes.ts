@@ -8,7 +8,7 @@ import {
 import { ArenaAktivitet, ArenaAktivitetType } from './arenaAktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
 import { StillingFraNavAktivitetData, VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
-import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
+import { FellesTransaksjonsTyper, TransaksjonsType } from './transaksjonstyperTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
@@ -43,7 +43,7 @@ export interface Lest {
     ressurs: string;
 }
 
-export interface AktivitetBaseProps {
+export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     id: string;
     versjon: string;
     tittel: string;
@@ -55,7 +55,7 @@ export interface AktivitetBaseProps {
     endretDato?: string;
     avtalt: boolean;
     etikett?: StillingsStatus;
-    transaksjonsType: FellesTransaksjonsTyper;
+    transaksjonsType: T;
     historisk: boolean;
     fraDato?: string;
     tilDato?: string;
@@ -82,23 +82,23 @@ export function isHistorisk(aktivitet): boolean {
 
 }*/
 
-export interface Aktivitet extends AktivitetRequiredProps {
-    fraDato?: string;
-    tilDato?: string;
-    endretDato?: string;
-    avsluttetKommentar?: string;
-    etikett?: StillingsStatus;
-    historisk?: boolean;
-    forhaandsorientering?: Forhaandsorientering;
-    detaljer?: object;
-    beskrivelse?: string;
-    erReferatPublisert?: boolean;
-    nesteStatus?: AktivitetStatus;
-    referat?: string;
-    arbeidsgiver?: StringOrNull;
-    antallStillingerSokes?: number;
-    antallStillingerIUken?: number;
-    arenaAktivitet?: false;
-    avsluttetBegrunnelse?: string;
-    stillingFraNavData: StillingFraNavAktivitetData | null;
-}
+// export interface Aktivitet extends AktivitetRequiredProps {
+//     fraDato?: string;
+//     tilDato?: string;
+//     endretDato?: string;
+//     avsluttetKommentar?: string;
+//     etikett?: StillingsStatus;
+//     historisk?: boolean;
+//     forhaandsorientering?: Forhaandsorientering;
+//     detaljer?: object;
+//     beskrivelse?: string;
+//     erReferatPublisert?: boolean;
+//     nesteStatus?: AktivitetStatus;
+//     referat?: string;
+//     arbeidsgiver?: StringOrNull;
+//     antallStillingerSokes?: number;
+//     antallStillingerIUken?: number;
+//     arenaAktivitet?: false;
+//     avsluttetBegrunnelse?: string;
+//     stillingFraNavData: StillingFraNavAktivitetData | null;
+// }

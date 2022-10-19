@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
+import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import Informasjonsfelt from '../../../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: MoteAktivitet | SamtalereferatAktivitet;
     dialog?: Dialog;
 }
 

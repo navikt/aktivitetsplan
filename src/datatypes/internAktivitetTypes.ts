@@ -2,12 +2,16 @@ import {
     AktivitetBaseProps,
     AlleAktiviteter,
     BrukerType,
-    FellesTransaksjonsTyper,
     Livslopsstatus,
-    SpesifikkTransaksjonsTyper,
     StillingFraNavSoknadsstatus,
-    TransaksjonsType,
 } from './aktivitetTypes';
+import {
+    FellesTransaksjonsTyper,
+    MoteTransaksjonsType,
+    SamtaleReferatTransaksjonsType,
+    StillingFraNavTransaksjonsType,
+    StillingTransaksjonsType,
+} from './transaksjonstyperTypes';
 
 export type VeilarbAktivitet =
     | SamtalereferatAktivitet
@@ -15,7 +19,8 @@ export type VeilarbAktivitet =
     | StillingAktivitet
     | SokeavtaleAktivitet
     | MedisinskBehandlingAktivitet
-    | StillingFraNavAktivitet;
+    | StillingFraNavAktivitet
+    | EgenAktivitet;
 
 export enum VeilarbAktivitetType {
     EGEN_AKTIVITET_TYPE = 'EGEN',
@@ -29,6 +34,12 @@ export enum VeilarbAktivitetType {
     // EKSTERN_AKTIVITET_TYPE = 'EKSTERN_AKTIVITET',
 }
 
+export interface EgenAktivitet extends AktivitetBaseProps {
+    type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE;
+    hensikt?: string;
+    oppfolging?: string;
+}
+
 export interface SokeavtaleAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE;
     antallStillingerSokes?: number;
@@ -36,7 +47,7 @@ export interface SokeavtaleAktivitet extends AktivitetBaseProps {
     avtaleOppfolging?: string;
 }
 
-export interface StillingAktivitet extends AktivitetBaseProps {
+export interface StillingAktivitet extends AktivitetBaseProps<FellesTransaksjonsTyper | StillingTransaksjonsType> {
     type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
     arbeidsgiver?: string;
     kontaktperson?: string;
@@ -44,7 +55,8 @@ export interface StillingAktivitet extends AktivitetBaseProps {
     stillingsTittel?: string;
 }
 
-export interface SamtalereferatAktivitet extends AktivitetBaseProps {
+export interface SamtalereferatAktivitet
+    extends AktivitetBaseProps<FellesTransaksjonsTyper | SamtaleReferatTransaksjonsType> {
     type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE;
     fraDato: string;
     varighet: string;
@@ -56,7 +68,7 @@ export interface SamtalereferatAktivitet extends AktivitetBaseProps {
     erReferatPublisert: boolean;
 }
 
-export interface MoteAktivitet extends AktivitetBaseProps {
+export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsTyper | MoteTransaksjonsType> {
     type: VeilarbAktivitetType.MOTE_TYPE;
     fraDato: string;
     tilDato: string;
@@ -95,15 +107,11 @@ export interface CvKanDelesData {
     endretAvType: BrukerType;
 }
 
-export type StillingFraNavAktivitet = AktivitetBaseProps & {
+export interface StillingFraNavAktivitet
+    extends AktivitetBaseProps<FellesTransaksjonsTyper | StillingFraNavTransaksjonsType> {
     type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;
     stillingFraNavData: StillingFraNavAktivitetData;
-    transaksjonsType:
-        | FellesTransaksjonsTyper
-        | SpesifikkTransaksjonsTyper.DEL_CV_SVART
-        | SpesifikkTransaksjonsTyper.SOKNADSSTATUS_ENDRET
-        | SpesifikkTransaksjonsTyper.IKKE_FATT_JOBBEN;
-};
+}
 
 export interface StillingFraNavAktivitetData {
     type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;

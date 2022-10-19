@@ -1,7 +1,7 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../../datatypes/types';
@@ -20,7 +20,7 @@ interface Props {
     bruker: Bruker;
     adresse: Postadresse | null;
     printMelding?: string;
-    aktiviteter?: Aktivitet[];
+    aktiviteter?: AlleAktiviteter[];
     mittMal?: Mal;
     erVeileder?: boolean;
     utskriftPlanType?: string;
