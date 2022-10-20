@@ -217,9 +217,12 @@ export function sorterAktiviteter(
 }
 
 export function endretSenereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
-    const sorteringsDato = [moment(aktivitet.endretDato), moment(aktivitet.tilDato), moment(aktivitet.fraDato)].find(
-        (possibleDate) => possibleDate.isValid()
-    );
+    const sorteringsDatoString = [aktivitet.endretDato, aktivitet.tilDato, aktivitet.fraDato]
+        .filter((possibleDate) => possibleDate !== undefined && possibleDate !== null)
+        .find((possibleDate) => moment(possibleDate).isValid());
+
+    const sorteringsDato = sorteringsDatoString ? moment(sorteringsDatoString) : undefined;
+
     return (
         sorteringsDato !== undefined &&
         sorteringsDato!!.isValid() &&
