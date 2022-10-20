@@ -61,6 +61,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     tilDato?: string;
     avsluttetKommentar?: string;
     beskrivelse?: string;
+    lenke?: string;
 }
 
 export type AlleAktiviteter = VeilarbAktivitet | ArenaAktivitet;

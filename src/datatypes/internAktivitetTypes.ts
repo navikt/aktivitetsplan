@@ -114,7 +114,6 @@ export interface StillingFraNavAktivitet
 }
 
 export interface StillingFraNavAktivitetData {
-    type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;
     cvKanDelesData?: CvKanDelesData;
     soknadsfrist: string;
     svarfrist: string;
@@ -122,12 +121,10 @@ export interface StillingFraNavAktivitetData {
     bestillingsId: string;
     stillingsId: string;
     arbeidssted: string;
-    varselId: string;
-    lenke: string; //mangler i backend
     kontaktpersonData: KontaktInfo;
-    soknadsstatus: StillingFraNavSoknadsstatus;
+    soknadsstatus?: StillingFraNavSoknadsstatus;
+    ikkefattjobbendetaljer?: string;
     livslopsstatus: Livslopsstatus;
-    ikkefattjobbendetaljer: string;
 }
 
 export function isSamtaleOrMote(aktivitet: AlleAktiviteter): aktivitet is SamtalereferatAktivitet | MoteAktivitet {

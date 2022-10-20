@@ -1,6 +1,24 @@
 import moment from 'moment';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
+import { BrukerType, StillingFraNavSoknadsstatus } from '../datatypes/aktivitetTypes';
+import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
+import {
+    CvKanDelesData,
+    MoteAktivitet,
+    SamtalereferatAktivitet,
+    StillingAktivitet,
+    StillingFraNavAktivitet,
+    VeilarbAktivitet,
+    VeilarbAktivitetType,
+} from '../datatypes/internAktivitetTypes';
+import {
+    FellesTransaksjonsTyper,
+    MoteTransaksjonsType,
+    SamtaleReferatTransaksjonsType,
+    StillingFraNavTransaksjonsType,
+    StillingTransaksjonsType,
+} from '../datatypes/transaksjonstyperTypes';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import { eksterneAktiviteter } from './eksterneAktiviteter';
 import { enStillingAktivitet } from './fixtures/stillingFixtures';
@@ -18,9 +36,9 @@ import { enSokeAktivitet } from './sokeAktivitetFixtures';
 import { rndId } from './utils';
 
 const eksternBruker = erEksternBruker();
-const bruker = eksternBruker ? 'BRUKER' : 'NAV';
+const bruker: BrukerType = eksternBruker ? 'BRUKER' : 'NAV';
 
-const testAktiviteter = !visTestAktiviteter()
+const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
     ? []
     : [
           wrapAktivitet({
@@ -214,8 +232,11 @@ const testAktiviteter = !visTestAktiviteter()
           }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2020 }),
-              arbeidsgiver: 'Har svart innen fristen',
-              stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles },
+              stillingFraNavData: {
+                  ...enStillingFraNavData,
+                  cvKanDelesData: jaCvKanDeles,
+                  arbeidsgiver: 'Har svart innen fristen',
+              },
           }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Assisterende skipskokk', arstall: 2020 }),
@@ -278,7 +299,7 @@ const testAktiviteter = !visTestAktiviteter()
           }),
       ];
 
-const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
+const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
     ? []
     : [
           {
@@ -288,7 +309,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               beskrivelse:
                   'Hvilke jobber kan du ta og hvilke bransjer kan du jobbe i? Er jobbene der du bor eller andre steder i landet? Velg geografisk område og bransje og se om jobbene finnes. Hvis du mener denne aktiviteten ikke passer for deg, kan du sette den til avbrutt.',
               lenke: 'https://mia-q.nav.no',
-              type: 'EGEN',
+              type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
               status: 'BRUKER_ER_INTERESSERT',
               fraDato: '2019-06-13T10:00:36.255+02:00',
               tilDato: '2019-09-13T10:00:36.255+02:00',
@@ -296,33 +317,13 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               endretDato: '2019-06-13T10:00:36.632+02:00',
               endretAv: 'srvveilarbdirigent',
               historisk: false,
-              avsluttetKommentar: null,
+              avsluttetKommentar: undefined,
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
-              malid: null,
-              etikett: null,
-              kontaktperson: null,
-              arbeidsgiver: null,
-              arbeidssted: null,
-              stillingsTittel: null,
+              transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+              etikett: undefined,
               hensikt: 'Bli bedre kjent med arbeidsmarkedet',
-              oppfolging: null,
-              antallStillingerSokes: null,
-              avtaleOppfolging: null,
-              jobbStatus: null,
-              ansettelsesforhold: null,
-              arbeidstid: null,
-              behandlingType: null,
-              behandlingSted: null,
-              effekt: null,
-              behandlingOppfolging: null,
-              adresse: null,
-              forberedelser: null,
-              kanal: null,
-              referat: null,
-              erReferatPublisert: false,
-              stillingFraNavData: null,
+              oppfolging: undefined,
           },
           {
               id: '141439',
@@ -331,7 +332,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               beskrivelse:
                   'Når du registrerer CV-en og jobbprofilen din, kan vi følge deg opp på en god måte. Du gjør deg synlig for arbeidsgivere som leter etter nye medarbeidere. NAV samarbeider med mange arbeidsgivere og bemanningsbransjen.',
               lenke: 'https://arbeidsplassen-q.nav.no/minside',
-              type: 'EGEN',
+              type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
               status: 'GJENNOMFORES',
               fraDato: '2021-06-13T10:00:36.699+02:00',
               tilDato: '2021-06-21T10:00:36.699+02:00',
@@ -339,32 +340,13 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               endretDato: '2019-06-13T10:00:36.742+02:00',
               endretAv: 'srvveilarbdirigent',
               historisk: false,
-              avsluttetKommentar: null,
+              avsluttetKommentar: undefined,
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
-              malid: null,
-              etikett: null,
-              kontaktperson: null,
-              arbeidsgiver: null,
-              arbeidssted: null,
-              stillingsTittel: null,
+              transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+              etikett: undefined,
               hensikt: 'Bli synlig for arbeidsgivere',
-              oppfolging: null,
-              antallStillingerSokes: null,
-              avtaleOppfolging: null,
-              jobbStatus: null,
-              ansettelsesforhold: null,
-              arbeidstid: null,
-              behandlingType: null,
-              behandlingSted: null,
-              effekt: null,
-              behandlingOppfolging: null,
-              adresse: null,
-              forberedelser: null,
-              kanal: null,
-              referat: null,
-              erReferatPublisert: false,
+              oppfolging: undefined,
           },
           {
               id: '141440',
@@ -373,7 +355,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               beskrivelse:
                   'Svar på noen spørsmål om hvordan du søker på jobber. Få råd og tips til søknaden, CV-en, intervjuet og hvordan du finner jobbene.',
               lenke: 'https://jobbsokerkompetanse-q.nav.no/',
-              type: 'EGEN',
+              type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
               status: 'BRUKER_ER_INTERESSERT',
               fraDato: '2019-06-13T10:00:36.785+02:00',
               tilDato: '2019-06-27T10:00:36.785+02:00',
@@ -381,32 +363,13 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               endretDato: '2019-06-13T10:00:36.988+02:00',
               endretAv: 'srvveilarbdirigent',
               historisk: false,
-              avsluttetKommentar: null,
+              avsluttetKommentar: undefined,
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
-              malid: null,
-              etikett: null,
-              kontaktperson: null,
-              arbeidsgiver: null,
-              arbeidssted: null,
-              stillingsTittel: null,
+              transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+              etikett: undefined,
               hensikt: 'Få råd og tips når du søker jobber',
-              oppfolging: null,
-              antallStillingerSokes: null,
-              avtaleOppfolging: null,
-              jobbStatus: null,
-              ansettelsesforhold: null,
-              arbeidstid: null,
-              behandlingType: null,
-              behandlingSted: null,
-              effekt: null,
-              behandlingOppfolging: null,
-              adresse: null,
-              forberedelser: null,
-              kanal: null,
-              referat: null,
-              erReferatPublisert: false,
+              oppfolging: undefined,
           },
       ];
 const ekstraVersjoner = !visTestAktiviteter()
@@ -428,35 +391,35 @@ const ekstraVersjoner = !visTestAktiviteter()
 
 const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter).concat(eksterneAktiviteter);
 
-function valueOrNull(potentialValue) {
+function valueOrNull(potentialValue: any) {
     if (potentialValue) {
         return potentialValue;
     }
     return null;
 }
 
-function valueOrNow(potentialValue) {
+function valueOrNow(potentialValue: any) {
     if (potentialValue) {
         return potentialValue;
     }
     return moment.now().toString();
 }
 
-function valueOrFalse(potentialValue) {
+function valueOrFalse(potentialValue: any) {
     if (potentialValue) {
         return potentialValue;
     }
     return false;
 }
 
-function valueAsNumberOrNull(potentialValue) {
+function valueAsNumberOrNull(potentialValue: any) {
     if (potentialValue) {
         return parseInt(potentialValue);
     }
     return null;
 }
 
-export function wrapAktivitet(aktivitet) {
+export function wrapAktivitet(aktivitet: any) {
     return {
         id: valueOrNull(aktivitet.id),
         versjon: valueOrNull(aktivitet.versjon),
@@ -503,15 +466,19 @@ export function wrapAktivitet(aktivitet) {
     };
 }
 
-export function getAktivitet({ aktivitetId }) {
+interface AktivitetWithId {
+    aktivitetId: string;
+}
+
+export function getAktivitet({ aktivitetId }: AktivitetWithId) {
     return aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
 }
 
-export function getAktivitetVersjoner({ aktivitetId }) {
+export function getAktivitetVersjoner({ aktivitetId }: AktivitetWithId) {
     return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
 }
 
-export function opprettAktivitet(_pathParams, body) {
+export function opprettAktivitet(_pathParams: never, body: Record<any, any>) {
     const nyAktivitet = wrapAktivitet({
         id: rndId(),
         opprettetDato: new Date(),
@@ -529,24 +496,27 @@ export function opprettAktivitet(_pathParams, body) {
     return nyAktivitet;
 }
 
-function doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter) {
+function doOppdaterInternMockStateOgReturnerNyAktivitet(
+    aktivitetId: string,
+    nyeAktivitetAttributter: Partial<VeilarbAktivitet>
+) {
     // Hent den gamle aktiviteten
-    const gammelAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
+    const gammelAktivitet = aktiviteter.find((a) => a.id === aktivitetId) as VeilarbAktivitet;
     // Merge de nye attributtene og den originale aktiviteten inn i en ny aktivitet
-    const nyAktivitet = {
+    const nyAktivitet: VeilarbAktivitet = {
         ...gammelAktivitet,
-        ...lagNyVersion({ ...nyeAktivitetAttributter, versjon: gammelAktivitet.versjon }),
+        ...lagNyVersion({ ...(nyeAktivitetAttributter as VeilarbAktivitet), versjon: gammelAktivitet!!.versjon }),
     };
 
     // Legg til ny versjon i historikk
     versjoner.push(nyAktivitet);
     // Overskriv den gamle aktiviteten i aktiviteterData
-    Object.assign(gammelAktivitet, nyAktivitet);
+    Object.assign(gammelAktivitet!!, nyAktivitet);
 
     return nyAktivitet;
 }
 
-function lagNyVersion(aktivitet) {
+function lagNyVersion(aktivitet: VeilarbAktivitet): VeilarbAktivitet {
     return {
         ...aktivitet,
         // versjon er typet som string, men er et løpenummer (egentlig global sekvens for alle aktiviteter), derfor denne hacken.
@@ -557,44 +527,53 @@ function lagNyVersion(aktivitet) {
     };
 }
 
-export function oppdaterAktivitet({ aktivitetId }, aktivitetPayload) {
+export function oppdaterAktivitet({ aktivitetId }: AktivitetWithId, aktivitetPayload: VeilarbAktivitet) {
     const nyeAktivitetAttributter = {
         ...aktivitetPayload,
-        transaksjonsType: 'DETALJER_ENDRET',
+        transaksjonsType: FellesTransaksjonsTyper.DETALJER_ENDRET,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterAktivitetStatus({ aktivitetId }, aktivitetPayload) {
+export function oppdaterAktivitetStatus({ aktivitetId }: AktivitetWithId, aktivitetPayload: VeilarbAktivitet) {
     const nyeAktivitetAttributter = {
         ...aktivitetPayload,
-        transaksjonsType: 'STATUS_ENDRET',
+        transaksjonsType: FellesTransaksjonsTyper.STATUS_ENDRET,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterEtikett({ aktivitetId }, aktivitetPayload) {
-    const nyeAktivitetAttributter = {
+export function oppdaterEtikett({ aktivitetId }: AktivitetWithId, aktivitetPayload: StillingAktivitet) {
+    const nyeAktivitetAttributter: StillingAktivitet = {
         ...aktivitetPayload,
-        transaksjonsType: 'ETIKETT_ENDRET',
+        transaksjonsType: StillingTransaksjonsType.ETIKETT_ENDRET,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktivitetId }) {
-    const nyeAktivitetAttributter = {
+export function oppdaterAvtaltMedNav(
+    __params: never,
+    { forhaandsorientering }: { forhaandsorientering: Forhaandsorientering },
+    { aktivitetId }: AktivitetWithId
+) {
+    const nyeAktivitetAttributter: Partial<VeilarbAktivitet> = {
         forhaandsorientering: forhaandsorientering,
         avtalt: true,
-        transaksjonsType: 'AVTALT',
+        transaksjonsType: FellesTransaksjonsTyper.AVTALT,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterCVKanDelesSvar(__params, { _aktivitetVersjon, kanDeles, avtaltDato }, { aktivitetId }) {
-    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
-    const nyeAktivitetAttributter = {
+export function oppdaterCVKanDelesSvar(
+    __params: never,
+    { kanDeles, avtaltDato }: CvKanDelesData,
+    { aktivitetId }: AktivitetWithId
+) {
+    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as StillingFraNavAktivitet;
+    const nyeAktivitetAttributter: StillingFraNavAktivitet = {
+        ...gammelAktivitet,
         status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
-        transaksjonsType: 'DEL_CV_SVART',
+        transaksjonsType: StillingFraNavTransaksjonsType.DEL_CV_SVART,
         stillingFraNavData: {
             ...gammelAktivitet.stillingFraNavData,
             cvKanDelesData: {
@@ -604,48 +583,53 @@ export function oppdaterCVKanDelesSvar(__params, { _aktivitetVersjon, kanDeles, 
                 endretAv: bruker ? '843029483' : 'z123',
                 endretAvType: bruker,
             },
-            soknadsstatus: kanDeles ? 'VENTER' : null,
+            soknadsstatus: kanDeles ? 'VENTER' : undefined,
         },
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterStillingFraNavSoknadsstatus(__params, { _aktivitetVersjon, soknadsstatus }, { aktivitetId }) {
+export function oppdaterStillingFraNavSoknadsstatus(
+    __params: never,
+    { soknadsstatus }: { soknadsstatus: StillingFraNavSoknadsstatus },
+    { aktivitetId }: AktivitetWithId
+) {
     const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         stillingFraNavData: {
-            ...gammelAktivitet.stillingFraNavData,
+            ...(gammelAktivitet as StillingFraNavAktivitet).stillingFraNavData,
             soknadsstatus: soknadsstatus,
         },
-        transaksjonsType: 'SOKNADSSTATUS_ENDRET',
+        transaksjonsType: StillingFraNavTransaksjonsType.SOKNADSSTATUS_ENDRET,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterLestFho(__params, { aktivitetId }) {
-    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
-    const nyeAktivitetAttributter = {
+export function oppdaterLestFho(__params: never, { aktivitetId }: AktivitetWithId) {
+    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as VeilarbAktivitet;
+    const nyeAktivitetAttributter: VeilarbAktivitet = {
+        ...gammelAktivitet,
         forhaandsorientering: {
-            ...gammelAktivitet.forhaandsorientering,
+            ...gammelAktivitet!!.forhaandsorientering!!,
             lestDato: moment().toISOString(),
         },
-        transaksjonsType: 'FORHAANDSORIENTERING_LEST',
+        transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function publiserReferat({ aktivitetId }) {
+export function publiserReferat({ aktivitetId }: AktivitetWithId) {
     const nyeAktivitetAttributter = {
         erReferatPublisert: true,
-        transaksjonsType: 'REFERAT_PUBLISERT',
+        transaksjonsType: MoteTransaksjonsType.REFERAT_PUBLISERT,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function endreReferat({ aktivitetId }, aktivitetPayload) {
+export function endreReferat({ aktivitetId }: AktivitetWithId, aktivitetPayload: MoteAktivitet) {
     const nyeAktivitetAttributter = {
         ...aktivitetPayload,
-        transaksjonsType: 'REFERAT_ENDRET',
+        transaksjonsType: MoteTransaksjonsType.REFERAT_ENDRET,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
@@ -653,4 +637,6 @@ export function endreReferat({ aktivitetId }, aktivitetPayload) {
 export const aktiviteterData = {
     aktiviteter,
 };
-export const versjoner = aktiviteter.concat(ekstraVersjoner).map((aktivitet) => wrapAktivitet(aktivitet));
+export const versjoner: VeilarbAktivitet[] = aktiviteter
+    .concat(ekstraVersjoner)
+    .map((aktivitet) => wrapAktivitet(aktivitet));

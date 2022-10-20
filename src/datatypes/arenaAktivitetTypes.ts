@@ -38,7 +38,6 @@ export interface ArenaAktivitet {
     opprettetDato: string;
     avtalt: boolean;
     etikett: ArenaEtikett;
-    arenaAktivitet: true;
 
     forhaandsorientering?: Forhaandsorientering;
 
