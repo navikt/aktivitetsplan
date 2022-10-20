@@ -47,14 +47,11 @@ const AktivitetvisningModal = (props: Props) => {
     const dirty = useContext(DirtyContext);
     const history = useHistory();
 
-    const selector =
-        aktivitet === undefined
-            ? emptySelector
-            : isArenaAktivitet(aktivitet)
-            ? selectArenaFeilmeldinger
-            : selectAktivitetFeilmeldinger;
+    const selectFeilMeldinger = (a: AlleAktiviteter) =>
+        isArenaAktivitet(a) ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
+    const aktivitetFeilSelector = aktivitet === undefined ? emptySelector : selectFeilMeldinger(aktivitet);
 
-    const aktivitetFeil = useSelector(selector, shallowEqual);
+    const aktivitetFeil = useSelector(aktivitetFeilSelector, shallowEqual);
     const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
     const alleFeil = aktivitetFeil.concat(dialogFeil).concat(nivaa4Feil);
