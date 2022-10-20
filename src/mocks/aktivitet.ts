@@ -503,7 +503,7 @@ function doOppdaterInternMockStateOgReturnerNyAktivitet(
     // Merge de nye attributtene og den originale aktiviteten inn i en ny aktivitet
     const nyAktivitet: VeilarbAktivitet = {
         ...gammelAktivitet,
-        ...lagNyVersion({ ...(nyeAktivitetAttributter as VeilarbAktivitet), versjon: gammelAktivitet!!.versjon }),
+        ...lagNyVersion({ ...(nyeAktivitetAttributter as VeilarbAktivitet), versjon: gammelAktivitet.versjon }),
     };
 
     // Legg til ny versjon i historikk

@@ -1,6 +1,3 @@
-import moment from 'moment/moment';
-
-import { endretNyereEnnEnManedSiden } from './moduler/aktivitet/aktivitet-util';
 import * as Utils from './utils';
 
 describe('app utils', () => {
