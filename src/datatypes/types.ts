@@ -45,6 +45,5 @@ export enum TabId {
 
 export type TabChangeEvent = { tabId: string };
 
-export const isTabEvent = (toBeDetermined: Event): toBeDetermined is CustomEvent<TabChangeEvent> => {
-    return !!(toBeDetermined as CustomEvent<TabChangeEvent>).type;
-};
+export const isTabEvent = (toBeDetermined: Event): toBeDetermined is CustomEvent<TabChangeEvent> =>
+    !!(toBeDetermined as CustomEvent<TabChangeEvent>).type;
