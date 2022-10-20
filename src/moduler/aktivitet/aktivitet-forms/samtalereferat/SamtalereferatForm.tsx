@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
-import { SamtalereferatAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { selectVeilederStatus } from '../../../veileder/veilederSelector';
 import InnerSamtalereferatForm from './InnerSamtalereferatForm';
 

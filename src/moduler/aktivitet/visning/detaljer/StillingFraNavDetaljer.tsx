@@ -2,7 +2,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { StillingFraNavAktivitetData } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitetData } from '../../../../datatypes/internAktivitetTypes';
 import { loggStillingFraNavStillingslenkeKlikk } from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';

@@ -1,16 +1,16 @@
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 
 const START = `DRAG/START`;
 const STOP = `DRAG/STOP`;
 
 interface Action {
     type: string;
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
 }
 
 interface State {
     dragging: boolean;
-    aktivitet?: Aktivitet;
+    aktivitet?: AlleAktiviteter;
 }
 
 const initalState: State = {
@@ -37,7 +37,7 @@ export default function dragAndDropReducer(state = initalState, action: Action) 
     }
 }
 
-export function startDragging(aktivitet: Aktivitet) {
+export function startDragging(aktivitet: AlleAktiviteter) {
     return { type: START, aktivitet };
 }
 

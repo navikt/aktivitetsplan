@@ -1,25 +1,25 @@
 import React from 'react';
 
-import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import AvtaltFormContainer from './aktivitet/AvtaltFormContainer';
 import ArenaForhaandsorienteringFormKomponent from './arena-aktivitet/ArenaForhaandsorienteringFormKomponent';
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;
-    aktivitet: Aktivitet;
-    erArenaAktivitet: boolean;
+    aktivitet: AlleAktiviteter;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
 const FormContainer = (props: Props) => {
-    const { erArenaAktivitet, ...rest } = props;
+    const { aktivitet, ...rest } = props;
 
     //TODO kan vi slå sammen ArenaForhaandsorienteringFormKomponent og AvtaltFormContainer
-    if (erArenaAktivitet) {
-        return <ArenaForhaandsorienteringFormKomponent {...rest} />;
+    if (isArenaAktivitet(aktivitet)) {
+        return <ArenaForhaandsorienteringFormKomponent aktivitet={aktivitet} {...rest} />;
     }
 
-    return <AvtaltFormContainer {...rest} />;
+    return <AvtaltFormContainer aktivitet={aktivitet} {...rest} />;
 };
 
 export default FormContainer;

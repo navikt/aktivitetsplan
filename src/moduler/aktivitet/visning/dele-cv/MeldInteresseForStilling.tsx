@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
 import { formaterDatoManed } from '../../../../utils';
@@ -26,7 +26,7 @@ enum SvarType {
 }
 
 interface PropTypes {
-    aktivitet: Aktivitet;
+    aktivitet: StillingFraNavAktivitet;
 }
 
 type KanDeles = {

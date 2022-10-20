@@ -4,12 +4,12 @@ import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: StillingFraNavAktivitet;
     disabled?: boolean;
     onSubmit(val: { soknadsstatus: string }): Promise<any>;
 }

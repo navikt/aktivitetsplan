@@ -2,7 +2,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 
-import { CvKanDelesData } from '../../../../datatypes/aktivitetTypes';
+import { CvKanDelesData } from '../../../../datatypes/internAktivitetTypes';
 import EkspanderbarLinjeBase from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { formaterDatoManed } from '../../../../utils';
 import { Ingress } from './DeleCvContainer';

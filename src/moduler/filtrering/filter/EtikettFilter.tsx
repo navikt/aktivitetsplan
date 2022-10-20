@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { ETIKETT_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { stillingsEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
@@ -22,15 +22,13 @@ const EtikettFilter = () => {
         dispatch(toggleAktivitetsEtikett(aktivitetsType));
     };
 
-    const aktivitetEtiketter = aktiviteter
-        .filter(isVeilarbAktivitetAktivitet)
-        .reduce((etiketter: FilterType, aktivitet) => {
-            const { etikett } = aktivitet;
-            if (etikett) {
-                etiketter[etikett] = aktivitetEtiketterFilter[etikett];
-            }
-            return etiketter;
-        }, {});
+    const aktivitetEtiketter = aktiviteter.filter(isVeilarbAktivitet).reduce((etiketter: FilterType, aktivitet) => {
+        const { etikett } = aktivitet;
+        if (etikett) {
+            etiketter[etikett] = aktivitetEtiketterFilter[etikett];
+        }
+        return etiketter;
+    }, {});
 
     return (
         <FilterVisningsKomponent

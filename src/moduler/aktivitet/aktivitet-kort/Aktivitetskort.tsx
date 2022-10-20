@@ -3,7 +3,8 @@ import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
 import { aktivitetTypeMap } from '../../../utils/textMappers';
@@ -20,11 +21,11 @@ import Arbeidsgiver from './Arbeidsgiver';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     className: string;
 }
 
-export const genererAktivtetskortId = (aktivitet: Aktivitet) => `aktivitetskort-${aktivitet.id}`;
+export const genererAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
 
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
@@ -37,13 +38,16 @@ const Aktivitetskort = (props: Props) => {
     const aktiviteterSomHarBlittVist = useSelector(selectAktiviteterSomHarBlittVist, shallowEqual);
 
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
-        (vistAktivitet: Aktivitet) => aktivitet.id === vistAktivitet.id
+        (vistAktivitet: VeilarbAktivitet) => aktivitet.id === vistAktivitet.id
     );
 
     const me = useSelector(selectIdentitetData, shallowEqual);
 
     const harEndringerIAktivitet =
-        lestStatus === STATUS.OK && erNyEndringIAktivitet(aktivitet, lest, me) && aktivitetHarIkkeBlittVist;
+        lestStatus === STATUS.OK &&
+        isVeilarbAktivitet(aktivitet) &&
+        erNyEndringIAktivitet(aktivitet, lest, me) &&
+        aktivitetHarIkkeBlittVist;
 
     const headerId = `aktivitetskort__header__${id}`;
     const datoId = `aktivitetskort__dato__${id}`;
@@ -60,9 +64,11 @@ const Aktivitetskort = (props: Props) => {
             <article>
                 <Aktivitetstype type={type} />
                 <Aktivitetskorttittel id={headerId} aktivitet={aktivitet} harEndring={harEndringerIAktivitet} />
-                <Arbeidsgiver aktivitet={aktivitet} />
+                {type === VeilarbAktivitetType.STILLING_AKTIVITET_TYPE ? <Arbeidsgiver aktivitet={aktivitet} /> : null}
                 <AktiviteskortPeriodeVisning id={datoId} aktivitet={aktivitet} />
-                <SokeAvtaleAntall aktivitet={aktivitet} />
+                {type === VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE ? (
+                    <SokeAvtaleAntall aktivitet={aktivitet} />
+                ) : null}
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
         </LinkAsDiv>

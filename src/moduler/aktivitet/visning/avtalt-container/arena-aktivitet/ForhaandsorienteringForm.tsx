@@ -5,7 +5,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../../api/utils';
-import { Aktivitet, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
@@ -35,16 +36,16 @@ const validate = (val: string) => {
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;
-    aktivitet: Aktivitet;
+    aktivitet: ArenaAktivitet;
     hidden: boolean;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
 type FormType = {
-    tekst: string,
-    checked: string,
-    forhaandsorienteringType: string
-}
+    tekst: string;
+    checked: string;
+    forhaandsorienteringType: string;
+};
 
 const ForhaandsorienteringForm = (props: Props) => {
     const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;

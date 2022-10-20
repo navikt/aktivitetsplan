@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { Aktivitet, AktivitetStatus } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { sorterAktiviteter, splitIEldreOgNyereAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
@@ -20,7 +20,7 @@ function KolonneSomSkjulerEldreAktiviteter({ status }: Props) {
 
     const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(sorterteAktiviter);
 
-    const aktivitetsListe = nyereAktiviteter.map((aktivitet: Aktivitet) => (
+    const aktivitetsListe = nyereAktiviteter.map((aktivitet: AlleAktiviteter) => (
         <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
     ));
 

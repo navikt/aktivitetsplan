@@ -1,6 +1,7 @@
-import { ArenaEtikett } from '../datatypes/aktivitetTypes';
+import { AktivitetType } from '../datatypes/aktivitetTypes';
+import { ArenaEtikett } from '../datatypes/arenaAktivitetTypes';
 
-export const aktivitetTypeMap = {
+export const aktivitetTypeMap: Record<AktivitetType, string> = {
     EGEN: 'Jobbrettet egenaktivitet',
     STILLING: 'Stilling',
     TILTAKSAKTIVITET: 'Tiltak gjennom NAV',

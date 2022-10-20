@@ -30,6 +30,7 @@ import {
     ulesteDialoger,
     visArenaAktiviteter,
     visAutomatiskeAktiviteter,
+    visEksterneAktiviteter,
     visTestAktiviteter,
 } from './sessionstorage';
 
@@ -153,6 +154,11 @@ class DemoDashboard extends React.Component {
                             label: 'Testaktiviteter',
                             id: SessionStorageElement.TEST_AKTIVITETER,
                             checked: visTestAktiviteter(),
+                        },
+                        {
+                            label: 'Eksterne aktiviteter',
+                            id: SessionStorageElement.EKSTERNE_AKTIVITETER,
+                            checked: visEksterneAktiviteter(),
                         },
                     ]}
                     onChange={this.endreTilstand}

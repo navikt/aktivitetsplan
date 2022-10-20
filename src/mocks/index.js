@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import fetchMock from 'yet-another-fetch-mock';
+import fetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 
 import {
     aktiviteterData,
@@ -47,7 +47,11 @@ import { veilederTilgang } from './veilederTilgang';
 
 const mock = fetchMock.configure({
     enableFallback: false,
-    middleware: fetchmockMiddleware,
+    middleware: MiddlewareUtils.combine(
+        // MiddlewareUtils.delayMiddleware(2000),
+        // MiddlewareUtils.failurerateMiddleware(0.05),
+        fetchmockMiddleware
+    ),
 });
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();

@@ -1,10 +1,10 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { StillingAktivitet } from '../../../datatypes/internAktivitetTypes';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: StillingAktivitet;
 }
 
 export default function Arbeidsgiver({ aktivitet }: Props) {

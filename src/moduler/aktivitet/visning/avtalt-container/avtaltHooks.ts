@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
 
-import { Aktivitet, AktivitetType, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
 import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
@@ -17,7 +19,7 @@ export const useKanSendeVarsel = () => {
 
 export const useSendAvtaltMetrikker = () => {
     const harAvtalteAktiviteter =
-        useSelector<any, Aktivitet[]>(selectAktiviteterData)
+        useSelector<any, VeilarbAktivitet[]>(selectAktiviteterData)
             .filter((aktivitet) => aktivitet.avtalt)
             .filter((a) => !a.historisk).length !== 0;
 

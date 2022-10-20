@@ -7,12 +7,12 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import Gruppe from './Gruppe';
 
 interface Props {
-    aktiviteter?: Aktivitet[];
+    aktiviteter?: AlleAktiviteter[];
     dialoger?: Dialog[];
 }
 
@@ -23,15 +23,18 @@ const Aktiviteter = (props: Props) => {
         return null;
     }
 
-    const gruperteAktiviteter = aktiviteter.reduce((acc: { [key: string]: Aktivitet[] | undefined }, a: Aktivitet) => {
-        const status = acc[a.status];
-        if (status) {
-            status.push(a);
-        } else {
-            acc[a.status] = [a];
-        }
-        return acc;
-    }, {});
+    const gruperteAktiviteter = aktiviteter.reduce(
+        (acc: { [key: string]: AlleAktiviteter[] | undefined }, a: AlleAktiviteter) => {
+            const status = acc[a.status];
+            if (status) {
+                status.push(a);
+            } else {
+                acc[a.status] = [a];
+            }
+            return acc;
+        },
+        {}
+    );
 
     return (
         <>

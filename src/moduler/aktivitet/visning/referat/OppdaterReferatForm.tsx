@@ -6,7 +6,7 @@ import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
@@ -26,7 +26,7 @@ const validate = (val: string) => {
 };
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: MoteAktivitet | SamtalereferatAktivitet;
     onFerdig: () => void;
 }
 

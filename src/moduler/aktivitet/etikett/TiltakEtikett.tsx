@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { AlleAktiviteter, ArenaEtikett, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
+import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import { tiltakEtikettMapper } from '../../../utils/textMappers';
 import styles from './etikett.module.less';

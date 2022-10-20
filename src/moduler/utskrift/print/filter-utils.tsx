@@ -1,10 +1,10 @@
 import { isAfter, isBefore } from 'date-fns';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 
-function aktivitetIKvpPeriode(aktivitet: Aktivitet, kvpPeriode: KvpPeriode) {
+function aktivitetIKvpPeriode(aktivitet: AlleAktiviteter, kvpPeriode: KvpPeriode) {
     const aktivitetDato = new Date(aktivitet.opprettetDato);
     const kvpFraDato = new Date(kvpPeriode.opprettetDato);
 
@@ -14,7 +14,7 @@ function aktivitetIKvpPeriode(aktivitet: Aktivitet, kvpPeriode: KvpPeriode) {
     );
 }
 
-function aktivitetUtenforKvp(aktivitet: Aktivitet, kvpPerioder: KvpPeriode[]) {
+function aktivitetUtenforKvp(aktivitet: AlleAktiviteter, kvpPerioder: KvpPeriode[]) {
     return kvpPerioder.every((kvp) => !aktivitetIKvpPeriode(aktivitet, kvp));
 }
 
@@ -22,8 +22,8 @@ export function filtrerAktiviteter(
     utskriftType: string | undefined,
     kvpPerioder: KvpPeriode[] | undefined,
     valgtKvpPeriode: KvpPeriode | undefined,
-    aktiviteter: Aktivitet[] | undefined
-): Aktivitet[] | undefined {
+    aktiviteter: AlleAktiviteter[] | undefined
+): AlleAktiviteter[] | undefined {
     if (!aktiviteter) {
         return;
     }

@@ -11,7 +11,8 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../../../constant';
-import { Aktivitet, AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
@@ -40,7 +41,7 @@ export type ValideringsProps = {
 type Handler = SubmitHandler<ValideringsProps>;
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: VeilarbAktivitet;
     disabled: boolean;
     onSubmit: Handler;
 }
@@ -48,7 +49,7 @@ interface Props {
 const AktivitetStatusForm = (props: Props) => {
     const { aktivitet, onSubmit, disabled } = props;
 
-    const validator = useFormstate<ValideringsProps, Aktivitet>({
+    const validator = useFormstate<ValideringsProps, VeilarbAktivitet>({
         aktivitetstatus: () => undefined,
         begrunnelse: (val, values, valgtAktivitet) => validateBegrunnelse(val, values, valgtAktivitet),
         statusValidering: (val, values, validerStatusAktivitet) => kanOppdatereStatus(validerStatusAktivitet, values),
@@ -56,7 +57,7 @@ const AktivitetStatusForm = (props: Props) => {
 
     const initalValue = {
         aktivitetstatus: aktivitet.status || '',
-        begrunnelse: aktivitet.avsluttetBegrunnelse || '',
+        begrunnelse: aktivitet.avsluttetKommentar || '',
         statusValidering: '',
     };
 

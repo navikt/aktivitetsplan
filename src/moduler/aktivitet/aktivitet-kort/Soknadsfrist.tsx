@@ -1,7 +1,7 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { StillingAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { dagerTil, formaterDatoKortManed } from '../../../utils';
 import styles from './Aktivitetskort.module.less';
 
@@ -22,7 +22,7 @@ function getTekst(frist: number, tilDato: string) {
 }
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: StillingAktivitet;
 }
 
 function Soknadfrist({ aktivitet }: Props) {

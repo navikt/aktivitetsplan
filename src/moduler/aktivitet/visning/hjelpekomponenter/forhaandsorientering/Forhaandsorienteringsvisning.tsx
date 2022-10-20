@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../../api/utils';
-import { Aktivitet } from '../../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinjeBase from '../../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
@@ -18,13 +18,13 @@ import LestKnapp from './LestKnapp';
 import Tittel from './Tittel';
 
 interface Props {
-    aktivitet: Aktivitet;
-    erArenaAktivitet: boolean;
+    aktivitet: AlleAktiviteter;
     startAapen?: boolean;
 }
 
 const Forhaandsorienteringsvisning = (props: Props) => {
-    const { aktivitet, erArenaAktivitet, startAapen = false } = props;
+    const { aktivitet, startAapen = false } = props;
+    const erArenaAktivitet = isArenaAktivitet(aktivitet);
 
     const forhaandsorientering = aktivitet.forhaandsorientering;
     const forhaandsorienteringTekst = forhaandsorientering?.tekst;

@@ -2,7 +2,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import Select from '../../../../../felles-komponenter/skjema/input/Select';
 import Textarea from '../../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { IKKE_FATT_JOBBEN } from '../../../../constant';
-import { Aktivitet, StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
@@ -14,7 +15,7 @@ import styles from '../dele-cv/DeleCvSvarVisning.module.less';
 import EndreLinje from '../endre-linje/endre-linje';
 import SoknadsstatusForm from './SoknadsstatusForm';
 
-const useDisableSoknadsstatusEndring = (aktivitet: Aktivitet) => {
+const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
     const { historisk } = aktivitet;
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
     const erUnderOppfolging = useSelector(selectErUnderOppfolging);
@@ -23,7 +24,11 @@ const useDisableSoknadsstatusEndring = (aktivitet: Aktivitet) => {
     return lasterAktivitet || !erUnderOppfolging || !kanEndreAktivitet;
 };
 
-const lagreSoknadsstatus = (dispatch: Dispatch, value: SoknadsstatusValue, aktivitet: Aktivitet): Promise<any> => {
+const lagreSoknadsstatus = (
+    dispatch: Dispatch,
+    value: SoknadsstatusValue,
+    aktivitet: StillingFraNavAktivitet
+): Promise<any> => {
     const { soknadsstatus } = value;
 
     if (soknadsstatus === aktivitet.stillingFraNavData?.soknadsstatus) {
@@ -34,7 +39,7 @@ const lagreSoknadsstatus = (dispatch: Dispatch, value: SoknadsstatusValue, aktiv
 };
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: StillingFraNavAktivitet;
 }
 
 interface SoknadsstatusValue {

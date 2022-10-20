@@ -8,27 +8,28 @@ import {
     STATUS_FULLFOERT,
     STILLING_FRA_NAV_TYPE,
 } from '../../constant';
-import { Aktivitet } from '../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterSlice } from './aktivitet-selector';
 import { selectArenaAktiviteterData, selectArenaAktiviteterSlice } from './arena-aktivitet-selector';
 
-export const selectAlleAktiviter = createSelector(
+export const selectAlleAktiviter: (state: any) => AlleAktiviteter[] = createSelector(
     selectAktiviteterData,
     selectArenaAktiviteterData,
     (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter)
 );
 
-export const selectAktiviterForAktuellePerioden = (state: any): Aktivitet[] =>
-    selectAlleAktiviter(state).filter((a: Aktivitet) => selectDatoErIPeriode(a.opprettetDato, state));
+export const selectAktiviterForAktuellePerioden = (state: any): AlleAktiviteter[] =>
+    selectAlleAktiviter(state).filter((a: AlleAktiviteter) => selectDatoErIPeriode(a.opprettetDato, state));
 
 export const selectAktivitetListe = (state: any) =>
-    selectAktiviterForAktuellePerioden(state).filter((a: Aktivitet) => aktivitetFilter(a, state));
+    selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetFilter(a, state));
 
 export const selectAktivitetMedId = (state: any, aktivitetId: string) =>
-    selectAlleAktiviter(state).find((aktivitet: Aktivitet) => aktivitet.id === aktivitetId);
+    selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => aktivitet.id === aktivitetId);
 
 export const selectAktivitetListeSlice = (state: any) => {
     const status = aggregerStatus(
@@ -44,7 +45,7 @@ export const selectAktivitetListeSlice = (state: any) => {
 
 export const selectAktivitetListeStatus = (state: any) => selectAktivitetListeSlice(state).status;
 
-export const selectKanEndreAktivitetStatus = (state: any, aktivitet: Aktivitet) => {
+export const selectKanEndreAktivitetStatus = (state: any, aktivitet: VeilarbAktivitet) => {
     if (!aktivitet) {
         return false;
     }
@@ -57,7 +58,7 @@ export const selectKanEndreAktivitetStatus = (state: any, aktivitet: Aktivitet) 
     );
 };
 
-export const selectKanEndreAktivitetEtikett = (state: any, aktivitet: Aktivitet) => {
+export const selectKanEndreAktivitetEtikett = (state: any, aktivitet: VeilarbAktivitet) => {
     if (!aktivitet) {
         return false;
     }
@@ -66,7 +67,7 @@ export const selectKanEndreAktivitetEtikett = (state: any, aktivitet: Aktivitet)
     return !historisk && (selectErVeileder(state) || type !== MOTE_TYPE);
 };
 
-export const selectKanEndreAktivitetDetaljer = (state: any, aktivitet: Aktivitet) => {
+export const selectKanEndreAktivitetDetaljer = (state: any, aktivitet: VeilarbAktivitet) => {
     if (!aktivitet) {
         return false;
     }

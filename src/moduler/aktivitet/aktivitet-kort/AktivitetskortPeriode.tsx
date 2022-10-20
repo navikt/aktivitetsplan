@@ -1,30 +1,25 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import {
-    GRUPPE_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-    STILLING_AKTIVITET_TYPE,
-    STILLING_FRA_NAV_TYPE,
-} from '../../../constant';
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { formaterDatoKortManed } from '../../../utils';
 import Soknadfrist from './Soknadsfrist';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     id: string;
 }
 
 function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
     const { type, fraDato, tilDato } = aktivitet;
 
-    if (type === STILLING_FRA_NAV_TYPE) {
+    if (type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE) {
         return null;
     }
 
-    if (type === STILLING_AKTIVITET_TYPE) {
+    if (type === VeilarbAktivitetType.STILLING_AKTIVITET_TYPE) {
         return <Soknadfrist aktivitet={aktivitet} />;
     }
 

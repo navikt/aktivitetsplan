@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import * as statuskoder from '../../../constant';
-import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import styles from './etikett.module.less';
 
@@ -43,7 +43,7 @@ export interface Props {
 const StillingEtikett = (props: Props) => {
     const { aktivitet, className } = props;
 
-    if (!isVeilarbAktivitetAktivitet(aktivitet)) {
+    if (!isVeilarbAktivitet(aktivitet)) {
         return null;
     }
 
