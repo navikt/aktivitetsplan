@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { RootStateOrAny, shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
@@ -51,7 +51,10 @@ const Aktivitetstavle = () => {
 
     useEventListener('visAktivitetsplan', () => setSkalScrolleTil(true));
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+        console.log(
+            `layout effect aktivitetstavle skalScrolleTil${skalScrolleTil}, sistVisteAktivitetId${sistVisteAktivitetId}`
+        );
         if (skalScrolleTil) {
             const element = document.getElementById(sistVisteAktivitetId);
             if (element) {
