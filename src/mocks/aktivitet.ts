@@ -6,7 +6,6 @@ import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import {
     CvKanDelesData,
     MoteAktivitet,
-    SamtalereferatAktivitet,
     StillingAktivitet,
     StillingFraNavAktivitet,
     VeilarbAktivitet,
@@ -15,7 +14,6 @@ import {
 import {
     FellesTransaksjonsTyper,
     MoteTransaksjonsType,
-    SamtaleReferatTransaksjonsType,
     StillingFraNavTransaksjonsType,
     StillingTransaksjonsType,
 } from '../datatypes/transaksjonstyperTypes';
@@ -511,7 +509,7 @@ function doOppdaterInternMockStateOgReturnerNyAktivitet(
     // Legg til ny versjon i historikk
     versjoner.push(nyAktivitet);
     // Overskriv den gamle aktiviteten i aktiviteterData
-    Object.assign(gammelAktivitet!!, nyAktivitet);
+    Object.assign(gammelAktivitet, nyAktivitet);
 
     return nyAktivitet;
 }
@@ -610,7 +608,7 @@ export function oppdaterLestFho(__params: never, { aktivitetId }: AktivitetWithI
     const nyeAktivitetAttributter: VeilarbAktivitet = {
         ...gammelAktivitet,
         forhaandsorientering: {
-            ...gammelAktivitet!!.forhaandsorientering!!,
+            ...gammelAktivitet.forhaandsorientering!!,
             lestDato: moment().toISOString(),
         },
         transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,

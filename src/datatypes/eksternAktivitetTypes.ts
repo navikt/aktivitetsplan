@@ -1,12 +1,12 @@
 interface RequiredLenkeProps {
-    tekst: String;
-    subtekst: String;
+    tekst: string;
+    subtekst: string;
     url: URL;
 }
 
 interface URL {
     params: Map<string, string>;
-    path: String;
+    path: string;
 }
 
 type LenkeType = 'EKSTERN' | 'INTERN' | 'FELLES';
@@ -23,7 +23,7 @@ export interface OppgaveLenke {
 }
 
 export interface Etikett {
-    kode: String;
+    kode: string;
 }
 
 export interface Detalj {

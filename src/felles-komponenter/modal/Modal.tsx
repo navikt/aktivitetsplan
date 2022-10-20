@@ -9,7 +9,7 @@ import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
 import ModalHeader from './ModalHeader';
 
 interface Props extends RouteComponentProps {
-    className?: String;
+    className?: string;
     header?: ReactNode;
     feilmeldinger?: FeilmeldingType[];
     children: ReactNode;

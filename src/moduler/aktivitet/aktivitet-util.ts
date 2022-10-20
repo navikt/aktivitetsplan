@@ -225,7 +225,7 @@ export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & 
 
     return (
         sorteringsDato === undefined ||
-        (sorteringsDato!!.isValid() && sorteringsDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd'))
+        (sorteringsDato.isValid() && sorteringsDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd'))
     );
 }
 
