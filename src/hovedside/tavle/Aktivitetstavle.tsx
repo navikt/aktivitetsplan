@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootStateOrAny, shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
@@ -11,6 +11,7 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../constant';
+import { TabId, isTabEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
@@ -49,12 +50,14 @@ const Aktivitetstavle = () => {
 
     let [skalScrolleTil, setSkalScrolleTil] = useState(true);
 
-    useEventListener('visAktivitetsplan', () => setSkalScrolleTil(true));
+    useEventListener('veilarbpersonflatefs.tab-clicked', (event) => {
+        if (!isTabEvent(event)) {
+            return;
+        }
+        if (event.detail.tabId === TabId.AKTIVITETSPLAN) setSkalScrolleTil(true);
+    });
 
-    useLayoutEffect(() => {
-        console.log(
-            `layout effect aktivitetstavle skalScrolleTil${skalScrolleTil}, sistVisteAktivitetId${sistVisteAktivitetId}`
-        );
+    useEffect(() => {
         if (skalScrolleTil) {
             const element = document.getElementById(sistVisteAktivitetId);
             if (element) {
