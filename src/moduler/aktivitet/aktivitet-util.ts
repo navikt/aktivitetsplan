@@ -216,7 +216,7 @@ export function sorterAktiviteter(
         .sort(compareAktivitet);
 }
 
-export function endretSenereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
+export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
     const sorteringsDatoString = [aktivitet.endretDato, aktivitet.tilDato, aktivitet.fraDato]
         .filter((possibleDate) => possibleDate !== undefined && possibleDate !== null)
         .find((possibleDate) => moment(possibleDate).isValid());
@@ -224,16 +224,15 @@ export function endretSenereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato &
     const sorteringsDato = sorteringsDatoString ? moment(sorteringsDatoString) : undefined;
 
     return (
-        sorteringsDato !== undefined &&
-        sorteringsDato!!.isValid() &&
-        sorteringsDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd')
+        sorteringsDato === undefined ||
+        (sorteringsDato!!.isValid() && sorteringsDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd'))
     );
 }
 
 export const splitIEldreOgNyereAktiviteter = (aktiviteter: AlleAktiviteter[]): GamleNyeAktiviteter =>
     aktiviteter.reduce<GamleNyeAktiviteter>(
         (forrige, aktivitet) =>
-            endretSenereEnnEnManedSiden(aktivitet)
+            endretNyereEnnEnManedSiden(aktivitet)
                 ? { ...forrige, nyereAktiviteter: [...forrige.nyereAktiviteter, aktivitet] }
                 : { ...forrige, eldreAktiviteter: [...forrige.eldreAktiviteter, aktivitet] },
         { nyereAktiviteter: [], eldreAktiviteter: [] }
