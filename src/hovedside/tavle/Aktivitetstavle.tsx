@@ -10,8 +10,8 @@ import {
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
+    TabId,
 } from '../../constant';
-import { TabId, isTabEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
@@ -25,6 +25,7 @@ import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolgin
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
+import { isTabEvent } from '../../utils/UpdateHandler';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';

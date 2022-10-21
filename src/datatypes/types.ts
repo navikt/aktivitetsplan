@@ -35,15 +35,6 @@ export interface VeilederInfo {
     etternavn: string;
 }
 
-export enum TabId {
-    AKTIVITETSPLAN = 'AKTIVITETSPLAN',
-    DIALOG = 'DIALOG',
-    VEDTAKSSTOTTE = 'VEDTAKSSTOTTE',
-    DETALJER = 'DETALJER',
-    ARBEIDSMARKEDSTILTAK = 'ARBEIDSMARKEDSTILTAK',
+export interface TabChangeEvent {
+    tabId: string;
 }
-
-export type TabChangeEvent = { tabId: string };
-
-export const isTabEvent = (toBeDetermined: Event): toBeDetermined is CustomEvent<TabChangeEvent> =>
-    !!(toBeDetermined as CustomEvent<TabChangeEvent>).type;

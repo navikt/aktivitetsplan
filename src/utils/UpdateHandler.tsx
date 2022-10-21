@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { TabChangeEvent } from '../datatypes/types';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
@@ -25,13 +26,11 @@ export function widowEvent(update: UpdateTypes) {
     );
 }
 
-function isUpdateEvent(toBeDetermined: Event): toBeDetermined is CustomEvent<UpdateEventType> {
-    if ((toBeDetermined as CustomEvent<UpdateEventType>).type) {
-        return true;
-    }
+const isUpdateEvent = (toBeDetermined: Event): toBeDetermined is CustomEvent<UpdateEventType> =>
+    !!(toBeDetermined as CustomEvent<UpdateEventType>).type;
 
-    return false;
-}
+export const isTabEvent = (toBeDetermined: Event): toBeDetermined is CustomEvent<TabChangeEvent> =>
+    !!(toBeDetermined as CustomEvent<TabChangeEvent>).type;
 
 export function UppdateEventHandler() {
     const dispatch = useDispatch();
