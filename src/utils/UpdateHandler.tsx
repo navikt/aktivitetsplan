@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { TabChangeEvent } from '../datatypes/types';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
@@ -26,24 +25,21 @@ export function widowEvent(update: UpdateTypes) {
     );
 }
 
-const isUpdateEvent = (toBeDetermined: Event): toBeDetermined is CustomEvent<UpdateEventType> =>
-    !!(toBeDetermined as CustomEvent<UpdateEventType>).type;
+export const isEventOfType = <T extends any>(toBeDetermined: Event): toBeDetermined is CustomEvent<T> =>
+    !!(toBeDetermined as CustomEvent<T>).type;
 
-export const isTabEvent = (toBeDetermined: Event): toBeDetermined is CustomEvent<TabChangeEvent> =>
-    !!(toBeDetermined as CustomEvent<TabChangeEvent>).type;
-
-export function UppdateEventHandler() {
+export function UpdateEventHandler() {
     const dispatch = useDispatch();
 
     useEventListener(eventName, (event) => {
-        if (!isUpdateEvent(event)) {
+        if (!isEventOfType<UpdateEventType>(event)) {
             return;
         }
 
         const updateType = event.detail.uppdate;
-        const avsennder = event.detail.avsender;
+        const avsender = event.detail.avsender;
 
-        if (avsennder === 'aktivitetsplan') {
+        if (avsender === 'aktivitetsplan') {
             return;
         }
 

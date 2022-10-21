@@ -11,7 +11,7 @@ import createHistory from './history';
 import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
 import { HiddenIf, getContextPath } from './utils';
-import { UppdateEventHandler } from './utils/UpdateHandler';
+import { UpdateEventHandler } from './utils/UpdateHandler';
 
 function isValueOrGetDefault(value, defaultValue) {
     return value === undefined ? defaultValue : value;
@@ -53,7 +53,7 @@ function App({ fnr, key }) {
                         </HiddenIf>
                     </div>
                 </div>
-                <UppdateEventHandler />
+                <UpdateEventHandler />
             </Provider>
         </div>
     );

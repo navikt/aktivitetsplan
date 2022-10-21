@@ -12,6 +12,7 @@ import {
     STATUS_PLANLAGT,
     TabId,
 } from '../../constant';
+import { TabChangeEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
@@ -25,7 +26,7 @@ import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolgin
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
-import { isTabEvent } from '../../utils/UpdateHandler';
+import { isEventOfType } from '../../utils/UpdateHandler';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
@@ -52,7 +53,7 @@ const Aktivitetstavle = () => {
     let [skalScrolleTil, setSkalScrolleTil] = useState(true);
 
     useEventListener('veilarbpersonflatefs.tab-clicked', (event) => {
-        if (!isTabEvent(event)) {
+        if (!isEventOfType<TabChangeEvent>(event)) {
             return;
         }
         if (event.detail.tabId === TabId.AKTIVITETSPLAN) setSkalScrolleTil(true);
