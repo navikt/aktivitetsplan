@@ -10,6 +10,7 @@ import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorie
 import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
+import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import styles from './ForhaandsorienteringForm.module.less';
@@ -51,6 +52,7 @@ const ForhaandsorienteringForm = (props: Props) => {
     const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;
 
     const dialogStatus = useSelector(selectDialogStatus);
+    const arenaAktivitetRequestStatus = useSelector(selectArenaAktivitetStatus);
     const dispatch = useDispatch();
 
     const validator = useFormstate<FormType>({
@@ -85,7 +87,10 @@ const ForhaandsorienteringForm = (props: Props) => {
         });
     };
 
-    const lasterData = dialogStatus !== STATUS.OK;
+    const lasterData =
+        dialogStatus !== STATUS.OK ||
+        arenaAktivitetRequestStatus === STATUS.RELOADING ||
+        arenaAktivitetRequestStatus === STATUS.PENDING;
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
