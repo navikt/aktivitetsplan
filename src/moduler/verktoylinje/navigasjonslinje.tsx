@@ -12,7 +12,7 @@ import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import styles from './navigasjonslinje.module.less';
 
-const DITTNAV_PATH = '/minside/';
+const DITTNAV_PATH = '/dittnav/';
 const DIALOG_PATH = '/arbeidsrettet-dialog';
 
 function Navigasjonslinje() {

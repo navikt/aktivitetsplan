@@ -73,8 +73,8 @@ spec:
               "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
             },
             {
-              "from": "/minside",
-              "to": "{{MINSIDE_URL}}"
+              "from": "/dittnav",
+              "to": "{{DITTNAV_URL}}"
             },
             {
               "from": "/veientilarbeid",
