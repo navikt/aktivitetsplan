@@ -12,7 +12,7 @@ import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import styles from './navigasjonslinje.module.less';
 
-const DITTNAV_PATH = '/dittnav/';
+const MINSIDE_PATH = '/minside/';
 const DIALOG_PATH = '/arbeidsrettet-dialog';
 
 function Navigasjonslinje() {
@@ -51,7 +51,7 @@ function Navigasjonslinje() {
     } else {
         return (
             <div className={styles.navigasjonslinje}>
-                <LenkepanelBase className={styles.tilDittNav} href={DITTNAV_PATH}>
+                <LenkepanelBase className={styles.tilDittNav} href={MINSIDE_PATH}>
                     <span className={styles.tilDittNavTekst}>Min side</span>
                 </LenkepanelBase>
                 <Undertittel className={styles.tittel} tag="h1">
