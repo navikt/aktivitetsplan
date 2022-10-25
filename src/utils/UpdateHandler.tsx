@@ -25,17 +25,10 @@ export function widowEvent(update: UpdateTypes) {
     );
 }
 
-export const isEventOfType = <T extends any>(toBeDetermined: Event): toBeDetermined is CustomEvent<T> =>
-    !!(toBeDetermined as CustomEvent<T>).type;
-
 export function UpdateEventHandler() {
     const dispatch = useDispatch();
 
-    useEventListener(eventName, (event) => {
-        if (!isEventOfType<UpdateEventType>(event)) {
-            return;
-        }
-
+    useEventListener<UpdateEventType>(eventName, (event) => {
         const updateType = event.detail.uppdate;
         const avsender = event.detail.avsender;
 

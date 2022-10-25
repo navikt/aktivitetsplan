@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { RootStateOrAny, shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
@@ -26,7 +26,6 @@ import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolgin
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
-import { isEventOfType } from '../../utils/UpdateHandler';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
@@ -46,32 +45,22 @@ const Aktivitetstavle = () => {
         statusAktiviteter === STATUS.NOT_STARTED && statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
-    let sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
+    const sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
         (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
     );
 
-    let [skalScrolleTil, setSkalScrolleTil] = useState(true);
+    useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', (event) => {
+        if (event.detail.tabId !== TabId.AKTIVITETSPLAN) return;
 
-    useEventListener('veilarbpersonflatefs.tab-clicked', (event) => {
-        if (!isEventOfType<TabChangeEvent>(event)) {
-            return;
+        const element = document.getElementById(sistVisteAktivitetId);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+                inline: 'center',
+            });
         }
-        if (event.detail.tabId === TabId.AKTIVITETSPLAN) setSkalScrolleTil(true);
     });
-
-    useEffect(() => {
-        if (skalScrolleTil) {
-            const element = document.getElementById(sistVisteAktivitetId);
-            if (element) {
-                element.scrollIntoView({
-                    behavior: 'auto',
-                    block: 'center',
-                    inline: 'center',
-                });
-                setSkalScrolleTil(false);
-            }
-        }
-    }, [sistVisteAktivitetId, skalScrolleTil]);
 
     useEffect(() => {
         if (aktivitetNotStarted) {
