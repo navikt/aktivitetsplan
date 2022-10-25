@@ -25,26 +25,14 @@ export function widowEvent(update: UpdateTypes) {
     );
 }
 
-function isUpdateEvent(toBeDetermined: Event): toBeDetermined is CustomEvent<UpdateEventType> {
-    if ((toBeDetermined as CustomEvent<UpdateEventType>).type) {
-        return true;
-    }
-
-    return false;
-}
-
-export function UppdateEventHandler() {
+export function UpdateEventHandler() {
     const dispatch = useDispatch();
 
-    useEventListener(eventName, (event) => {
-        if (!isUpdateEvent(event)) {
-            return;
-        }
-
+    useEventListener<UpdateEventType>(eventName, (event) => {
         const updateType = event.detail.uppdate;
-        const avsennder = event.detail.avsender;
+        const avsender = event.detail.avsender;
 
-        if (avsennder === 'aktivitetsplan') {
+        if (avsender === 'aktivitetsplan') {
             return;
         }
 
