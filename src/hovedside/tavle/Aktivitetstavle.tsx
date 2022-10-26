@@ -13,6 +13,7 @@ import {
     STATUS_PLANLAGT,
     TabId,
 } from '../../constant';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
@@ -67,8 +68,8 @@ const Aktivitetstavle = () => {
 
     // SCROLLING //
     const sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>((state) => {
-        const id = selectSistVisteAktivitet(state)?.id;
-        return !!id ? prefixAktivtetskortId(id) : 'no-element';
+        const aktivitet: AlleAktiviteter = selectSistVisteAktivitet(state);
+        return !!aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
     });
     const appIsVisible = useIsVisible(document.getElementById(AKTIVITETSPLAN_ROOT_NODE_ID));
     console.log({ appIsVisible });
