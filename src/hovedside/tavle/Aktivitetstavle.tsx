@@ -75,10 +75,12 @@ const Aktivitetstavle = () => {
     const [skalScrolle, setSkalScrolle] = useState(false);
     useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', (event) => {
         if (TabId.AKTIVITETSPLAN !== event.detail?.tabId) return;
+        console.log('Setter skal scrolle true');
         setSkalScrolle(true);
     });
     useEffect(() => {
         const element = document.getElementById(sistVisteAktivitetId);
+        console.log({ sistVisteAktivitetId, element, skalScrolle });
         if (element && skalScrolle && appIsVisible) {
             element.scrollIntoView({
                 behavior: 'auto',
