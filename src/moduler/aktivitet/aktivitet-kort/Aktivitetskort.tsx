@@ -29,7 +29,7 @@ interface Props {
     className: string;
 }
 
-export const genererAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
+export const prefixAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
 
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
@@ -60,7 +60,7 @@ const Aktivitetskort = (props: Props) => {
 
     return (
         <LinkAsDiv
-            id={genererAktivtetskortId(aktivitet)}
+            id={prefixAktivtetskortId(aktivitet)}
             className={
                 aktivitetBleVistSist
                     ? classNames(styles.aktivitetskort, styles.sistVist, className)
