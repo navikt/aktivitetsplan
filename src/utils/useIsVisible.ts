@@ -13,6 +13,7 @@ const useIsVisible = (element: HTMLElement | null) => {
         return () => {
             observer.disconnect();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return isIntersecting;
