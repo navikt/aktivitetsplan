@@ -45,22 +45,6 @@ const Aktivitetstavle = () => {
         statusAktiviteter === STATUS.NOT_STARTED && statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
-    const sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
-        (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
-    );
-
-    useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', (event) => {
-        if (event.detail.tabId !== TabId.AKTIVITETSPLAN) return;
-
-        const element = document.getElementById(sistVisteAktivitetId);
-        if (element) {
-            element.scrollIntoView({
-                behavior: 'auto',
-                block: 'center',
-                inline: 'center',
-            });
-        }
-    });
 
     useEffect(() => {
         if (aktivitetNotStarted) {
