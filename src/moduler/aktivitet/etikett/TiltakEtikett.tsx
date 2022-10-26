@@ -17,7 +17,7 @@ const getCls = (etikettnavn: ArenaEtikett): string => {
             return styles.navLysBlaLighten60;
         case ArenaEtikett.AVSLAG:
         case ArenaEtikett.IKKAKTUELL:
-            return styles.navGra20;
+            return styles.gray200;
         case ArenaEtikett.IKKEM:
         case ArenaEtikett.NEITAKK:
             return styles.navOransjeLighten60;

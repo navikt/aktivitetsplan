@@ -16,7 +16,7 @@ const getCls = (etikettnavn: StillingsStatus): string => {
             return styles.navOransjeLighten60;
         case statuskoder.AVSLAG:
         case statuskoder.INGEN_VALGT:
-            return styles.navGra20;
+            return styles.gray200;
     }
 };
 

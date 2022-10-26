@@ -19,7 +19,7 @@ const getCls = (etikettnavn: StillingFraNavSoknadsstatus): string => {
         case statuskoder.AVSLAG:
         case statuskoder.IKKE_FATT_JOBBEN:
         case undefined:
-            return styles.navGra20;
+            return styles.gray200;
     }
 };
 
