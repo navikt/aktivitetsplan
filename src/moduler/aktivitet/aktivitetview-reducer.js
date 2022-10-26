@@ -25,3 +25,5 @@ export function settAktivitetSomVist(aktivitet) {
 export function selectAktiviteterSomHarBlittVist(state) {
     return state.view.visteAktiviteterMedEndringer;
 }
+
+export const selectSistVisteAktivitet = (state) => state?.view?.visteAktiviteterMedEndringer?.reduce((a, b) => b, null);
