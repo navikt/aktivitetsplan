@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { RootStateOrAny, shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
@@ -10,11 +10,15 @@ import {
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
+    TabId,
 } from '../../constant';
+import { TabChangeEvent } from '../../datatypes/types';
+import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
+import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
@@ -41,6 +45,22 @@ const Aktivitetstavle = () => {
         statusAktiviteter === STATUS.NOT_STARTED && statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
+    const sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
+        (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
+    );
+
+    useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', (event) => {
+        if (event.detail.tabId !== TabId.AKTIVITETSPLAN) return;
+
+        const element = document.getElementById(sistVisteAktivitetId);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+                inline: 'center',
+            });
+        }
+    });
 
     useEffect(() => {
         if (aktivitetNotStarted) {

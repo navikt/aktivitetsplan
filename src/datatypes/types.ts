@@ -34,3 +34,7 @@ export interface VeilederInfo {
     fornavn: string;
     etternavn: string;
 }
+
+export interface TabChangeEvent {
+    tabId: string;
+}

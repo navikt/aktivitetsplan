@@ -11,7 +11,11 @@ import { aktivitetTypeMap } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
-import { selectAktiviteterSomHarBlittVist, settAktivitetSomVist } from '../aktivitetview-reducer';
+import {
+    selectAktiviteterSomHarBlittVist,
+    selectSistVisteAktivitet,
+    settAktivitetSomVist,
+} from '../aktivitetview-reducer';
 import styles from './Aktivitetskort.module.less';
 import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import AktivitetskortTillegg from './AktivitetskortTillegg';
@@ -30,7 +34,6 @@ export const genererAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitet
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
     const { id, type } = aktivitet;
-
     const dispatch = useDispatch();
 
     const lest = useSelector(selectLestAktivitetsplan, shallowEqual);
@@ -40,6 +43,8 @@ const Aktivitetskort = (props: Props) => {
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
         (vistAktivitet: VeilarbAktivitet) => aktivitet.id === vistAktivitet.id
     );
+
+    const aktivitetBleVistSist: boolean = aktivitet.id === useSelector((state) => selectSistVisteAktivitet(state))?.id;
 
     const me = useSelector(selectIdentitetData, shallowEqual);
 
@@ -56,7 +61,11 @@ const Aktivitetskort = (props: Props) => {
     return (
         <LinkAsDiv
             id={genererAktivtetskortId(aktivitet)}
-            className={classNames(styles.aktivitetskort, className)}
+            className={
+                aktivitetBleVistSist
+                    ? classNames(styles.aktivitetskort, styles.sistVist, className)
+                    : classNames(styles.aktivitetskort, className)
+            }
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
