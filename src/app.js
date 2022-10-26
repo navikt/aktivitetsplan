@@ -4,7 +4,6 @@ import PT from 'prop-types';
 import React from 'react';
 import { Router } from 'react-router-dom';
 
-import { useEventListener } from './felles-komponenter/hooks/useEventListner';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import ScrollToSistViste from './felles-komponenter/utils/ScrollToSistViste';
 import createHistory from './history';
@@ -16,6 +15,8 @@ import { UpdateEventHandler } from './utils/UpdateHandler';
 function isValueOrGetDefault(value, defaultValue) {
     return value === undefined ? defaultValue : value;
 }
+
+export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
 function App({ fnr, key }) {
     // NOTE: This is bad, don't use it if you dont HAVE to.
@@ -31,15 +32,8 @@ function App({ fnr, key }) {
 
     const history = createHistory();
 
-    useEventListener('visAktivitetsplan', (event) => {
-        const aktivitetId = event.detail;
-        if (aktivitetId) {
-            history.replace('aktivitet/vis/' + aktivitetId);
-        }
-    });
-
     return (
-        <div className="aktivitetsplanfs">
+        <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <Provider key={fnr + key}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
