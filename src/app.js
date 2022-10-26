@@ -1,12 +1,9 @@
 import './index.less';
 
 import PT from 'prop-types';
-import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Router } from 'react-router-dom';
 
-import { useEventListener } from './felles-komponenter/hooks/useEventListner';
-import { useReduxDispatch } from './felles-komponenter/hooks/useReduxDispatch';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import ScrollToSistViste from './felles-komponenter/utils/ScrollToSistViste';
 import createHistory from './history';
@@ -14,11 +11,12 @@ import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
 import { HiddenIf, getContextPath } from './utils';
 import { UpdateEventHandler } from './utils/UpdateHandler';
-import useIsVisible from './utils/useIsVisible';
 
 function isValueOrGetDefault(value, defaultValue) {
     return value === undefined ? defaultValue : value;
 }
+
+export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
 function App({ fnr, key }) {
     // NOTE: This is bad, don't use it if you dont HAVE to.
@@ -34,22 +32,8 @@ function App({ fnr, key }) {
 
     const history = createHistory();
 
-    useEventListener('visAktivitetsplan', (event) => {
-        const aktivitetId = event.detail;
-        if (aktivitetId) {
-            history.replace('aktivitet/vis/' + aktivitetId);
-        }
-    });
-
-    const aktivitetsplanref = useRef();
-    const elementIsVisible = useIsVisible(aktivitetsplanref.current);
-
-    const dispatch = useReduxDispatch();
-
-    useEffect(() => {}, [elementIsVisible]);
-
     return (
-        <div className="aktivitetsplanfs" ref={aktivitetsplanref}>
+        <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <Provider key={fnr + key}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">

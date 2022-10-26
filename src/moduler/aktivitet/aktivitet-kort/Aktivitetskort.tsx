@@ -1,17 +1,13 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
-import { RootStateOrAny, shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
-import { TabId } from '../../../constant';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
-import { TabChangeEvent } from '../../../datatypes/types';
-import { useEventListener } from '../../../felles-komponenter/hooks/useEventListner';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
 import { aktivitetTypeMap } from '../../../utils/textMappers';
-import useIsVisible from '../../../utils/useIsVisible';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
@@ -33,7 +29,7 @@ interface Props {
     className: string;
 }
 
-export const genererAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
+export const prefixAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
 
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
@@ -49,9 +45,6 @@ const Aktivitetskort = (props: Props) => {
     );
 
     const aktivitetBleVistSist: boolean = aktivitet.id === useSelector((state) => selectSistVisteAktivitet(state))?.id;
-    const sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>(
-        (state) => `aktivitetskort-` + selectSistVisteAktivitet(state)?.id
-    );
 
     const me = useSelector(selectIdentitetData, shallowEqual);
 
@@ -65,30 +58,9 @@ const Aktivitetskort = (props: Props) => {
     const datoId = `aktivitetskort__dato__${id}`;
     const ariaLabel = `${aktivitetTypeMap[type]}: ${aktivitet.tittel}`;
 
-    const element = document.getElementById(sistVisteAktivitetId);
-
-    const elementIsVisible = useIsVisible(element);
-    const [skalScrolle, setSkalScrolle] = useState(false);
-
-    useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', (event) => {
-        if (TabId.AKTIVITETSPLAN !== event.detail?.tabId) return;
-        setSkalScrolle(true);
-    });
-
-    useEffect(() => {
-        if (element && skalScrolle && elementIsVisible) {
-            element.scrollIntoView({
-                behavior: 'auto',
-                block: 'center',
-                inline: 'center',
-            });
-            setSkalScrolle(false);
-        }
-    }, [element, skalScrolle, elementIsVisible]);
-
     return (
         <LinkAsDiv
-            id={genererAktivtetskortId(aktivitet)}
+            id={prefixAktivtetskortId(aktivitet)}
             className={
                 aktivitetBleVistSist
                     ? classNames(styles.aktivitetskort, styles.sistVist, className)
