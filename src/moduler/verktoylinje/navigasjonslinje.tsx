@@ -12,14 +12,15 @@ import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import styles from './navigasjonslinje.module.less';
 
-const DITTNAV_PATH = '/dittnav/';
+const MINSIDE_PATH = '/minside/';
 const DIALOG_PATH = '/arbeidsrettet-dialog';
 
 function Navigasjonslinje() {
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
-    const antallUlesteDialoger: number = useSelector(selectDialoger, shallowEqual).filter((d: Dialog) => !d.lest)
-        .length;
+    const antallUlesteDialoger: number = useSelector(selectDialoger, shallowEqual).filter(
+        (d: Dialog) => !d.lest
+    ).length;
 
     const dispatch = useDispatch();
 
@@ -50,8 +51,8 @@ function Navigasjonslinje() {
     } else {
         return (
             <div className={styles.navigasjonslinje}>
-                <LenkepanelBase className={styles.tilDittNav} href={DITTNAV_PATH}>
-                    <span className={styles.tilDittNavTekst}>Ditt NAV</span>
+                <LenkepanelBase className={styles.tilDittNav} href={MINSIDE_PATH}>
+                    <span className={styles.tilDittNavTekst}>Min side</span>
                 </LenkepanelBase>
                 <Undertittel className={styles.tittel} tag="h1">
                     Aktivitetsplan
