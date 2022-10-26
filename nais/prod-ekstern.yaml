@@ -73,7 +73,7 @@ spec:
               "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
             },
             {
-              "from": "/dittnav",
+              "from": "/minside",
               "to": "{{DITTNAV_URL}}"
             },
             {
