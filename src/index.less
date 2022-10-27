@@ -109,12 +109,8 @@
 }
 
 .ReactModal__Body--open {
-    overflow: hidden;
-
-    // Hack for webkit bug: https://bugs.webkit.org/show_bug.cgi?id=176896
-    height: 100%;
-    width: 100%;
-    position: fixed;
+    // Compensate for scrollbar appearing when opening modal
+    margin-right: 15px;
 
     .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']) {
         display: none;
@@ -151,7 +147,7 @@
 
 @media print {
     .ReactModal__Body--open {
-        position: relative;
+        // position: relative;
     }
 
     .aktivitetsplanfs [href]:after {

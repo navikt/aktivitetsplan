@@ -5,7 +5,6 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
-import ScrollToSistViste from './felles-komponenter/utils/ScrollToSistViste';
 import createHistory from './history';
 import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
@@ -38,9 +37,7 @@ function App({ fnr, key }) {
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <Router history={history}>
-                            <ScrollToSistViste>
-                                <Hovedside />
-                            </ScrollToSistViste>
+                            <Hovedside />
                         </Router>
                         <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
