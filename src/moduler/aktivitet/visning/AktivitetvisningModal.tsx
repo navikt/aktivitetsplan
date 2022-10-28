@@ -7,7 +7,7 @@ import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetT
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
-import { aktivitetStatusMap, aktivitetTypeMap } from '../../../utils/textMappers';
+import { aktivitetStatusMap, getAktivitetTypeBeskrivelse } from '../../../utils/textMappers';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { selectErBruker } from '../../identitet/identitet-selector';
@@ -25,7 +25,9 @@ const header = (valgtAktivitet?: AlleAktiviteter) => {
 
     return (
         <ModalHeader
-            headerTekst={`${aktivitetStatusMap[valgtAktivitet.status]} / ${aktivitetTypeMap[valgtAktivitet.type]}`}
+            headerTekst={`${aktivitetStatusMap[valgtAktivitet.status]} / ${getAktivitetTypeBeskrivelse(
+                valgtAktivitet
+            )}`}
             aria-describedby="modal-aktivitetsvisning-header"
             aktivitetErLaast={aktivitetErLaast}
         />

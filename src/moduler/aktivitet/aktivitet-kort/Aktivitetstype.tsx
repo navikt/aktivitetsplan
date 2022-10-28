@@ -1,17 +1,17 @@
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { AktivitetType } from '../../../datatypes/aktivitetTypes';
-import { aktivitetTypeMap } from '../../../utils/textMappers';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { getAktivitetTypeBeskrivelse } from '../../../utils/textMappers';
 import styles from './Aktivitetskort.module.less';
 
 interface Props {
-    type: AktivitetType;
+    aktivitet: AlleAktiviteter;
 }
 
-const Aktivitetstype = ({ type }: Props) => (
-    <Undertekst tag="p" className={styles.type} data-testid={type}>
-        {aktivitetTypeMap[type]}
+const Aktivitetstype = ({ aktivitet }: Props) => (
+    <Undertekst tag="p" className={styles.type} data-testid={aktivitet.type}>
+        {getAktivitetTypeBeskrivelse(aktivitet)}
     </Undertekst>
 );
 

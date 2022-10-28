@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import AktivitetStatusAdministrasjon from './AktivitetStatusAdministrasjon';
 import ArenaStatusAdministrasjon from './ArenaStatusAdministrasjon';
@@ -16,6 +17,10 @@ const Statusadministrasjon = (props: Props) => {
     const { type } = aktivitet;
 
     const erBruker = useSelector(selectErBruker);
+
+    if (type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
+        return null;
+    }
 
     if ([SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker) {
         return null;
