@@ -1,15 +1,9 @@
 import { createSelector } from 'reselect';
 
 import { STATUS, aggregerStatus } from '../../api/utils';
-import {
-    BEHANDLING_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
-    STILLING_FRA_NAV_TYPE,
-} from '../../constant';
+import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
@@ -74,7 +68,8 @@ export const selectKanEndreAktivitetDetaljer = (state: any, aktivitet: VeilarbAk
     const { avtalt, type } = aktivitet;
     return (
         selectKanEndreAktivitetStatus(state, aktivitet) &&
-        type !== STILLING_FRA_NAV_TYPE &&
+        type !== VeilarbAktivitetType.STILLING_FRA_NAV_TYPE &&
+        type !== VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
         // @ts-ignore
         (avtalt !== true || !!window.appconfig.TILLAT_SET_AVTALT || type === BEHANDLING_AKTIVITET_TYPE)
     );

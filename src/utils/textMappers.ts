@@ -1,7 +1,15 @@
-import { AktivitetType } from '../datatypes/aktivitetTypes';
+import { AktivitetType, AlleAktiviteter } from '../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../datatypes/arenaAktivitetTypes';
+import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 
-export const aktivitetTypeMap: Record<AktivitetType, string> = {
+export const getAktivitetTypeBeskrivelse = (aktivitet: AlleAktiviteter): string => {
+    if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
+        return eksternAktivitetTypeMap[aktivitet.eksternAktivitetData.subtype];
+    }
+    return aktivitetTypeMap[aktivitet.type];
+};
+
+const aktivitetTypeMap: Record<Exclude<AktivitetType, VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE>, string> = {
     EGEN: 'Jobbrettet egenaktivitet',
     STILLING: 'Stilling',
     TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
@@ -13,6 +21,11 @@ export const aktivitetTypeMap: Record<AktivitetType, string> = {
     MOTE: 'Møte med NAV',
     SAMTALEREFERAT: 'Samtalereferat',
     STILLING_FRA_NAV: 'Stilling fra NAV',
+};
+
+export const eksternAktivitetTypeMap: Record<EksternAktivitetType, string> = {
+    MIDL_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
+    ARENA_TILTAK: 'Tiltak gjennom NAV',
 };
 
 export const aktivitetStatusMap = {

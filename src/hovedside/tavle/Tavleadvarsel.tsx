@@ -12,6 +12,7 @@ import {
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
 import styles from './Tavleadvarsel.module.less';
 
@@ -28,6 +29,12 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
         if (erVeileder) {
             return 'For å endre aktiviteten må du gå til Arena.';
         }
+        return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
+    } else if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
+        if (erVeileder) {
+            // TODO finn bedre tekst
+            return 'Denne aktiviteten er opprettet av et annet team. Ta kontakt med relevant team dersom endringer er nødvendig';
+        } // TODO bedre tekst
         return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
     }
 

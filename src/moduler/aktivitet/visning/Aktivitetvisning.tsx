@@ -8,6 +8,7 @@ import styles from './Aktivitetsvisning.module.less';
 import { DeleCvContainer } from './dele-cv/DeleCvContainer';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
+import HandlingContainer from './hjelpekomponenter/HandlingContainer';
 import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
 import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/ReferatContainer';
@@ -50,6 +51,9 @@ function Aktivitetvisning(props: Props) {
                 {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
                 aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
                     <ReferatContainer aktivitet={aktivitet} />
+                ) : null}
+                {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
+                    <HandlingContainer aktivitet={aktivitet} />
                 ) : null}
                 <Statusadministrasjon aktivitet={aktivitet} />
                 <DialogLenke aktivitet={aktivitet} />

@@ -4,6 +4,7 @@ import React from 'react';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
+    EKSTERN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
@@ -26,9 +27,13 @@ import styles from './AktivitetinformasjonVisning.module.less';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (
-        [EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE, BEHANDLING_AKTIVITET_TYPE].includes(
-            aktivitetstype
-        )
+        [
+            EGEN_AKTIVITET_TYPE,
+            IJOBB_AKTIVITET_TYPE,
+            STILLING_AKTIVITET_TYPE,
+            BEHANDLING_AKTIVITET_TYPE,
+            EKSTERN_AKTIVITET_TYPE,
+        ].includes(aktivitetstype)
     ) {
         return null;
     }
