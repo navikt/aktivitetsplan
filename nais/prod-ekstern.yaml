@@ -74,7 +74,7 @@ spec:
             },
             {
               "from": "/minside",
-              "to": "{{DITTNAV_URL}}"
+              "to": "{{MINSIDE_URL}}"
             },
             {
               "from": "/veientilarbeid",
