@@ -1,4 +1,4 @@
-import { AktivitetStatus } from './aktivitetTypes';
+import { AktivitetStatus, FilterTag } from './aktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
 
 export enum ArenaEtikett {
@@ -40,6 +40,8 @@ export interface ArenaAktivitet {
     etikett: ArenaEtikett;
 
     forhaandsorientering?: Forhaandsorientering;
+
+    filterTags: FilterTag[];
 
     // Tiltaksaktivitet
     deltakelseProsent: number;

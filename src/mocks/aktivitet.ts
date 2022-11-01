@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
-import { BrukerType, StillingFraNavSoknadsstatus } from '../datatypes/aktivitetTypes';
+import { AlleAktiviteter, BrukerType, FilterTag, StillingFraNavSoknadsstatus } from '../datatypes/aktivitetTypes';
 import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import {
     CvKanDelesData,
@@ -19,6 +19,8 @@ import {
 } from '../datatypes/transaksjonstyperTypes';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import { eksterneAktiviteter } from './eksterneAktiviteter';
+import { etSamtalereferat } from './fixtures/samtalereferatFixtures';
+import { enSokeAktivitet } from './fixtures/sokeAktivitetFixtures';
 import { enStillingAktivitet } from './fixtures/stillingFixtures';
 import {
     enStillingFraNavAktivitet,
@@ -29,8 +31,6 @@ import {
     navAnsatt2,
 } from './fixtures/stillingFraNavFixtures';
 import { enLestForhaandsorientering, enUlestForhaandsorientering } from './forhaandsorienteringFixtures';
-import { etSamtalereferat } from './samtalereferatFixtures';
-import { enSokeAktivitet } from './sokeAktivitetFixtures';
 import { rndId } from './utils';
 
 const eksternBruker = erEksternBruker();
@@ -81,8 +81,9 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               tittel: 'Ta et webkurs',
               beskrivelse: 'Jeg skal bli awesome i html. Sjørøvere trenger å være awesome i html',
               lenke: 'www.nav.no',
-              type: 'EGEN',
+              type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
               status: 'BRUKER_ER_INTERESSERT',
+              historisk: false,
               fraDato: '2020-01-01T12:00:00+01:00',
               tilDato: '2020-12-01T12:00:00+01:00',
               opprettetDato: '2018-02-26T15:51:44.197+01:00',
@@ -90,18 +91,16 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               endretAv: 'Z123456',
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
+              transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
               hensikt: 'Lære meg HTML',
               oppfolging: 'Bli en bedre sjørøver',
-              erReferatPublisert: false,
           }),
           wrapAktivitet({
               id: '6871',
               versjon: '9389',
               tittel: 'Beste møtet ever',
               beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
-              lenke: null,
-              type: 'MOTE',
+              type: VeilarbAktivitetType.MOTE_TYPE,
               status: 'PLANLAGT',
               fraDato: '2030-08-21T08:00:00+02:00',
               tilDato: '2030-08-21T12:15:00+02:00',
@@ -109,26 +108,12 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               endretDato: '2018-08-21T11:57:57.636+02:00',
               endretAv: 'z990207',
               historisk: false,
-              avsluttetKommentar: null,
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
-              etikett: null,
-              kontaktperson: null,
-              arbeidsgiver: null,
-              arbeidssted: null,
-              stillingsTittel: null,
-              hensikt: null,
-              oppfolging: null,
-              antallStillingerSokes: null,
-              avtaleOppfolging: null,
-              jobbStatus: null,
-              ansettelsesforhold: null,
-              arbeidstid: null,
-              behandlingType: null,
-              behandlingSted: null,
-              effekt: null,
-              behandlingOppfolging: null,
+              forberedelser: 'forberedelser',
+              refereat: 'referet',
+              transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+              etikett: undefined,
               kanal: 'TELEFON',
               adresse: 'Ditt nærmeste NAV kontor',
               erReferatPublisert: false,
@@ -139,7 +124,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               tittel: 'Gamelt Beste møtet ever',
               beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
               lenke: null,
-              type: 'MOTE',
+              type: VeilarbAktivitetType.MOTE_TYPE,
               status: 'PLANLAGT',
               fraDato: '2017-02-16T00:00:00+01:00',
               tilDato: '2017-02-16T00:00:00+02:00',
@@ -151,7 +136,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               avtalt: true,
               lagtInnAv: 'NAV',
               transaksjonsType: 'BLE_HISTORISK',
-              etikett: null,
+              etikett: undefined,
               kontaktperson: null,
               arbeidsgiver: null,
               arbeidssted: null,
@@ -258,7 +243,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse:
                   'CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager.',
               lenke: null,
-              type: 'BEHANDLING',
+              type: VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE,
               status: 'PLANLAGT',
               fraDato: '2022-09-13T14:13:49.000+02:00',
               tilDato: '2022-09-14T14:13:58.000+02:00',
@@ -270,7 +255,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               avtalt: true,
               lagtInnAv: 'BRUKER',
               transaksjonsType: 'OPPRETTET',
-              etikett: null,
+              etikett: undefined,
               kontaktperson: null,
               arbeidsgiver: null,
               arbeidssted: null,
@@ -292,12 +277,11 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               kanal: null,
               referat: null,
               erReferatPublisert: false,
-              forhaandsorientering: null,
               stillingFraNavData: null,
           }),
       ];
 
-const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
+const automatiskeAktiviteter: Partial<VeilarbAktivitet>[] = !visAutomatiskeAktiviteter()
     ? []
     : [
           {
@@ -387,13 +371,13 @@ const ekstraVersjoner = !visTestAktiviteter()
           }),
       ];
 
-const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter).concat(eksterneAktiviteter);
+const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter as any).concat(eksterneAktiviteter);
 
-function valueOrNull(potentialValue: any) {
+function valueOrUndefined(potentialValue: any) {
     if (potentialValue) {
         return potentialValue;
     }
-    return null;
+    return undefined;
 }
 
 function valueOrNow(potentialValue: any) {
@@ -417,51 +401,68 @@ function valueAsNumberOrNull(potentialValue: any) {
     return null;
 }
 
-export function wrapAktivitet(aktivitet: any) {
+function filterTagsOrEmptyList(aktivitet: any) {
+    const filterTags: FilterTag[] = [];
+
+    if (aktivitet.type) {
+        filterTags.push({ kategori: 'type', value: aktivitet.type });
+    }
+
+    if (aktivitet.status) {
+        filterTags.push({ kategori: 'status', value: aktivitet.status });
+    }
+
+    return filterTags;
+}
+
+export function wrapAktivitet<T extends Omit<AlleAktiviteter, 'filterTags'>>(a: T): T & { filterTags: FilterTag[] } {
+    const aktivitet: any = a;
+
     return {
-        id: valueOrNull(aktivitet.id),
-        versjon: valueOrNull(aktivitet.versjon),
-        tittel: valueOrNull(aktivitet.tittel),
-        beskrivelse: valueOrNull(aktivitet.beskrivelse),
-        lenke: valueOrNull(aktivitet.lenke),
-        type: valueOrNull(aktivitet.type),
-        status: valueOrNull(aktivitet.status),
-        fraDato: valueOrNull(aktivitet.fraDato),
-        tilDato: valueOrNull(aktivitet.tilDato),
-        opprettetDato: valueOrNull(aktivitet.opprettetDato),
-        endretDato: valueOrNull(aktivitet.endretDato),
+        id: valueOrUndefined(aktivitet.id),
+        versjon: valueOrUndefined(aktivitet.versjon),
+        tittel: valueOrUndefined(aktivitet.tittel),
+        beskrivelse: valueOrUndefined(aktivitet.beskrivelse),
+        lenke: valueOrUndefined(aktivitet.lenke),
+        type: valueOrUndefined(aktivitet.type),
+        status: valueOrUndefined(aktivitet.status),
+        fraDato: valueOrUndefined(aktivitet.fraDato),
+        tilDato: valueOrUndefined(aktivitet.tilDato),
+        opprettetDato: valueOrUndefined(aktivitet.opprettetDato),
+        endretDato: valueOrUndefined(aktivitet.endretDato),
         endretAv: valueOrNow(aktivitet.endretAv),
         historisk: valueOrFalse(aktivitet.historisk),
-        avsluttetKommentar: valueOrNull(aktivitet.avsluttetKommentar),
+        avsluttetKommentar: valueOrUndefined(aktivitet.avsluttetKommentar),
         avtalt: valueOrFalse(aktivitet.avtalt),
-        lagtInnAv: valueOrNull(aktivitet.lagtInnAv),
-        transaksjonsType: valueOrNull(aktivitet.transaksjonsType),
-        etikett: valueOrNull(aktivitet.etikett),
-        kontaktperson: valueOrNull(aktivitet.kontaktperson),
-        arbeidsgiver: valueOrNull(aktivitet.arbeidsgiver),
-        arbeidssted: valueOrNull(aktivitet.arbeidssted),
-        stillingsTittel: valueOrNull(aktivitet.stillingsTittel),
-        hensikt: valueOrNull(aktivitet.hensikt),
-        oppfolging: valueOrNull(aktivitet.oppfolging),
+        lagtInnAv: valueOrUndefined(aktivitet.lagtInnAv),
+        transaksjonsType: valueOrUndefined(aktivitet.transaksjonsType),
+        etikett: valueOrUndefined(aktivitet.etikett),
+        kontaktperson: valueOrUndefined(aktivitet.kontaktperson),
+        arbeidsgiver: valueOrUndefined(aktivitet.arbeidsgiver),
+        arbeidssted: valueOrUndefined(aktivitet.arbeidssted),
+        stillingsTittel: valueOrUndefined(aktivitet.stillingsTittel),
+        hensikt: valueOrUndefined(aktivitet.hensikt),
+        oppfolging: valueOrUndefined(aktivitet.oppfolging),
         antallStillingerSokes: valueAsNumberOrNull(aktivitet.antallStillingerSokes),
         antallStillingerIUken: valueAsNumberOrNull(aktivitet.antallStillingerIUken),
-        avtaleOppfolging: valueOrNull(aktivitet.avtaleOppfolging),
-        jobbStatus: valueOrNull(aktivitet.jobbStatus),
-        ansettelsesforhold: valueOrNull(aktivitet.ansettelsesforhold),
-        arbeidstid: valueOrNull(aktivitet.arbeidstid),
-        behandlingType: valueOrNull(aktivitet.behandlingType),
-        behandlingSted: valueOrNull(aktivitet.behandlingSted),
-        effekt: valueOrNull(aktivitet.effekt),
-        behandlingOppfolging: valueOrNull(aktivitet.behandlingOppfolging),
-        adresse: valueOrNull(aktivitet.adresse),
-        forberedelser: valueOrNull(aktivitet.forberedelser),
-        kanal: valueOrNull(aktivitet.kanal),
-        referat: valueOrNull(aktivitet.referat),
+        avtaleOppfolging: valueOrUndefined(aktivitet.avtaleOppfolging),
+        jobbStatus: valueOrUndefined(aktivitet.jobbStatus),
+        ansettelsesforhold: valueOrUndefined(aktivitet.ansettelsesforhold),
+        arbeidstid: valueOrUndefined(aktivitet.arbeidstid),
+        behandlingType: valueOrUndefined(aktivitet.behandlingType),
+        behandlingSted: valueOrUndefined(aktivitet.behandlingSted),
+        effekt: valueOrUndefined(aktivitet.effekt),
+        behandlingOppfolging: valueOrUndefined(aktivitet.behandlingOppfolging),
+        adresse: valueOrUndefined(aktivitet.adresse),
+        forberedelser: valueOrUndefined(aktivitet.forberedelser),
+        kanal: valueOrUndefined(aktivitet.kanal),
+        referat: valueOrUndefined(aktivitet.referat),
         erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
-        forhaandsorientering: valueOrNull(aktivitet.forhaandsorientering),
-        stillingFraNavData: valueOrNull(aktivitet.stillingFraNavData),
-        eksternAktivitetData: valueOrNull(aktivitet.eksternAktivitetData),
-    };
+        forhaandsorientering: valueOrUndefined(aktivitet.forhaandsorientering),
+        stillingFraNavData: valueOrUndefined(aktivitet.stillingFraNavData),
+        eksternAktivitetData: valueOrUndefined(aktivitet.eksternAktivitetData),
+        filterTags: filterTagsOrEmptyList(aktivitet),
+    } as unknown as T & { filterTags: FilterTag[] };
 }
 
 interface AktivitetWithId {
