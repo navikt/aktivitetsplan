@@ -29,7 +29,7 @@ export const enEksternAktivitet = ({
         type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE,
         status,
         fraDato: '2020-08-21T08:00:00+02:00',
-        tilDato: '2022-10-30T12:15:00+02:00',
+        tilDato: '2022-11-30T12:15:00+02:00',
         opprettetDato: '2018-08-21T11:55:14.044+02:00',
         endretDato: '2018-08-21T11:57:57.636+02:00',
         endretAv: 'z990207',

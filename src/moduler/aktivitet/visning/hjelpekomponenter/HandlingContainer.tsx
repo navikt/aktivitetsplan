@@ -22,7 +22,7 @@ const LenkeSeksjon = (handling: LenkeMedType, erVeileder: boolean, i: number) =>
             <a target="_blank" rel="noopener noreferrer" href={handling.url} className={styles.dialogLinke}>
                 <div>
                     <Element>{handling.tekst}</Element>
-                    <Normaltekst>{handling.subtekst}</Normaltekst>
+                    {handling.subtekst && <Normaltekst>{handling.subtekst}</Normaltekst>}
                 </div>
                 <div className={styles.dialogPil} aria-hidden>
                     <HoyreChevron />
