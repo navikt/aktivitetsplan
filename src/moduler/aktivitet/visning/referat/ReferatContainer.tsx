@@ -1,10 +1,10 @@
-import moment from 'moment';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { isBeforeNow } from '../../../../utils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
@@ -30,8 +30,7 @@ const ReferatContainer = (props: Props) => {
     const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
 
     const kanHaReferat =
-        (aktivitetType === MOTE_TYPE && moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
-        aktivitetType === SAMTALEREFERAT_TYPE;
+        (aktivitetType === MOTE_TYPE && isBeforeNow(aktivitet.fraDato)) || aktivitetType === SAMTALEREFERAT_TYPE;
 
     const erAktivAktivitet =
         !aktivitet.historisk &&

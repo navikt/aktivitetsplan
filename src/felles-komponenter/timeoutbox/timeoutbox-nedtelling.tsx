@@ -1,14 +1,19 @@
-import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import PT from 'prop-types';
 import React, { Component } from 'react';
 
+import { diffFromNowInSeconds, formatMMSS } from '../../utils';
 import ModalContainer from '../modal/ModalContainer';
 import ModalFooter from '../modal/ModalFooter';
 import TimeoutboxLoggetUt from './TimeoutboxLoggetUt';
 
-class TimeoutboxNedtelling extends Component {
+interface Props {
+    utlopsTidspunkt: string;
+}
+
+class TimeoutboxNedtelling extends Component<Props> {
+    rerender: NodeJS.Timeout | undefined;
+
     componentDidMount() {
         this.rerender = setInterval(() => {
             this.forceUpdate();
@@ -16,19 +21,18 @@ class TimeoutboxNedtelling extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.rerender);
+        clearInterval(this.rerender!!);
     }
 
     render() {
         const { utlopsTidspunkt } = this.props;
-        const sekunderIgjen = moment(utlopsTidspunkt).diff(moment(), 'seconds');
-        const durationLeft = moment.duration(sekunderIgjen, 'seconds');
+        const sekunderIgjen = diffFromNowInSeconds(utlopsTidspunkt);
 
         if (sekunderIgjen <= 0) {
             return <TimeoutboxLoggetUt />;
         }
 
-        const tid = durationLeft.format('mm:ss', { trim: false });
+        const tid = formatMMSS(sekunderIgjen);
         return (
             <div>
                 <ModalContainer>
@@ -45,7 +49,10 @@ class TimeoutboxNedtelling extends Component {
                     <Hovedknapp className="modal-footer__knapp" onClick={() => window.location.reload()}>
                         Last siden på nytt
                     </Hovedknapp>
-                    <Knapp className="modal-footer__knapp" onClick={() => document.querySelector('#logout').click()}>
+                    <Knapp
+                        className="modal-footer__knapp"
+                        onClick={() => (document.querySelector('#logout') as HTMLButtonElement)?.click()}
+                    >
                         Logg ut
                     </Knapp>
                 </ModalFooter>
@@ -53,9 +60,5 @@ class TimeoutboxNedtelling extends Component {
         );
     }
 }
-
-TimeoutboxNedtelling.propTypes = {
-    utlopsTidspunkt: PT.string.isRequired,
-};
 
 export default TimeoutboxNedtelling;

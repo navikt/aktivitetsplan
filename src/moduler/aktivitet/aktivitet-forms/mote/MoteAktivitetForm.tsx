@@ -1,5 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import moment, { now } from 'moment';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
@@ -13,6 +12,7 @@ import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-s
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
+import { now } from '../../../../utils';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
@@ -133,12 +133,7 @@ const MoteAktivitetForm = (props: Props) => {
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <DatoField
-                        limitations={{ minDate: moment(now()).toISOString() }}
-                        label="Dato *"
-                        {...state.fields.dato}
-                        required
-                    />
+                    <DatoField limitations={{ minDate: now() }} label="Dato *" {...state.fields.dato} required />
                     <Input bredde="S" label="Klokkeslett *" {...state.fields.klokkeslett} type="time" step="300" />
                     <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
                 </div>

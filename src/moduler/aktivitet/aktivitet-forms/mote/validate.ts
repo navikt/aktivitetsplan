@@ -1,6 +1,5 @@
-import moment, { now } from 'moment';
-
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
+import { isBeforeNowWithGranularity } from '../../../../utils';
 
 const TITTEL_MAKS_LENGDE = 100;
 const TITTEL_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
@@ -49,13 +48,9 @@ export const validateMoteDato = (value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut dato for møtet';
     }
-
-    const fraDato = moment(value);
-
-    if (fraDato.isBefore(moment(now()), 'day')) {
+    if (isBeforeNowWithGranularity(value, 'day')) {
         return 'Datoen må tidligst være i dag';
     }
-
     return validerDato(value);
 };
 

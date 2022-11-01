@@ -1,15 +1,12 @@
-import moment from 'moment';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { ReactNode } from 'react';
 
-import { erGyldigISODato } from '../../../utils';
+import { erGyldigISODato, isSameOrAfter } from '../../../utils';
 import styles from './PeriodeValidering.module.less';
 
 export const validerPeriode = (fradato: string, tildato: string) => {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {
-        const momentTilDato = moment(tildato).startOf('day');
-        const momentFraDato = moment(fradato).startOf('day');
-        return momentTilDato.isSameOrAfter(momentFraDato);
+        isSameOrAfter(tildato, fradato);
     }
     return true;
 };

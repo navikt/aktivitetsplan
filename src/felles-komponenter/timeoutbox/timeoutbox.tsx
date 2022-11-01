@@ -1,15 +1,26 @@
-import moment from 'moment';
 import NavFrontendModal from 'nav-frontend-modal';
-import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { diffFromNowInMillis, isAfterNow, minusMinutes } from '../../utils';
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
 
-class Timeoutbox extends Component {
-    constructor(props) {
+import Timeout = NodeJS.Timeout;
+
+interface Props {
+    doHentGjenstaendeInnloggetTid: () => void;
+    expirationTime: string | null;
+}
+interface State {
+    manueltLukket: boolean;
+}
+
+class Timeoutbox extends Component<Props, State> {
+    expirationPoll: Timeout | undefined;
+
+    constructor(props: Props) {
         super(props);
         const { doHentGjenstaendeInnloggetTid } = this.props;
         doHentGjenstaendeInnloggetTid();
@@ -19,27 +30,29 @@ class Timeoutbox extends Component {
     }
 
     componentDidUpdate() {
-        const { expirationTime } = this.props;
-        if (!this.timeout && expirationTime) {
-            const expirationInMillis = this.visningsTidspunkt().diff(moment(), 'ms');
-            this.timeout = setTimeout(() => {
-                this.forceUpdate();
-            }, expirationInMillis + 100);
-        }
+        const visningsTidspunkt = this.visningsTidspunkt();
+        if (!visningsTidspunkt || this.expirationPoll) return;
+        const expirationInMillis = diffFromNowInMillis(visningsTidspunkt);
+        this.expirationPoll = setTimeout(() => {
+            this.forceUpdate();
+        }, expirationInMillis + 100);
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timeout);
+        if (!this.expirationPoll) return;
+        clearTimeout(this.expirationPoll);
     }
 
-    skalViseModal() {
+    skalViseModal(): boolean {
         const { manueltLukket } = this.state;
-        return moment().isAfter(this.visningsTidspunkt()) && !manueltLukket;
+        const visningsTidspunkt = this.visningsTidspunkt();
+        return !!visningsTidspunkt && isAfterNow(visningsTidspunkt) && !manueltLukket;
     }
 
-    visningsTidspunkt() {
+    visningsTidspunkt(): string | null {
         const { expirationTime } = this.props;
-        return moment(expirationTime).subtract(5, 'minutes');
+        if (expirationTime === null) return null;
+        return minusMinutes(expirationTime, 5);
     }
 
     render() {
@@ -69,20 +82,11 @@ class Timeoutbox extends Component {
     }
 }
 
-Timeoutbox.propTypes = {
-    doHentGjenstaendeInnloggetTid: PT.func.isRequired,
-    expirationTime: PT.string,
-};
-
-Timeoutbox.defaultProps = {
-    expirationTime: null,
-};
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
     expirationTime: selectExpirationTime(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
     doHentGjenstaendeInnloggetTid: () => dispatch(hentGjenstaendeInnloggetTid()),
 });
 

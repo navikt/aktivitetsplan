@@ -17,6 +17,7 @@ import {
     StillingFraNavTransaksjonsType,
     StillingTransaksjonsType,
 } from '../datatypes/transaksjonstyperTypes';
+import { now } from '../utils';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import { eksterneAktiviteter } from './eksterneAktiviteter';
 import { enStillingAktivitet } from './fixtures/stillingFixtures';
@@ -481,7 +482,7 @@ export function opprettAktivitet(_pathParams: never, body: Record<any, any>) {
         id: rndId(),
         opprettetDato: new Date(),
         lagtInnAv: bruker,
-        endretDato: moment().toISOString(),
+        endretDato: now(),
         endretAv: bruker,
         versjon: '1',
         erLestAvBruker: eksternBruker,
@@ -609,7 +610,7 @@ export function oppdaterLestFho(__params: never, { aktivitetId }: AktivitetWithI
         ...gammelAktivitet,
         forhaandsorientering: {
             ...gammelAktivitet.forhaandsorientering!!,
-            lestDato: moment().toISOString(),
+            lestDato: now(),
         },
         transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,
     };

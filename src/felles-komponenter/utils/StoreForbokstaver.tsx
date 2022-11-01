@@ -10,7 +10,7 @@ function StoreForbokstaver(props: Props) {
 
 interface Props {
     tag?: string;
-    children: string | Array<string>;
+    children: string;
 }
 
 export default StoreForbokstaver;
