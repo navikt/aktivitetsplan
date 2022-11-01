@@ -62,6 +62,12 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     avsluttetKommentar?: string;
     beskrivelse?: string;
     lenke?: string;
+    filterTags: FilterTag[];
+}
+
+export interface FilterTag {
+    kategori: string;
+    value: boolean | string;
 }
 
 export type AlleAktiviteter = VeilarbAktivitet | ArenaAktivitet;

@@ -1,7 +1,10 @@
+import { StillingAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
+
 let id = 12000;
 let versjon = 6000000;
 
-export const enStillingAktivitet = ({ tittel }) => {
+export const enStillingAktivitet = ({ tittel }: { tittel: string }): StillingAktivitet => {
     versjon += 1000;
     id += 10;
 
@@ -11,7 +14,7 @@ export const enStillingAktivitet = ({ tittel }) => {
         tittel: `${tittel}`,
         beskrivelse: 'Ærlig arbeid',
         lenke: 'www.nav.no',
-        type: 'STILLING',
+        type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         status: 'PLANLAGT',
         fraDato: '2018-01-24T12:00:00+01:00',
         tilDato: '2030-01-24T12:00:00+01:00',
@@ -21,7 +24,7 @@ export const enStillingAktivitet = ({ tittel }) => {
         historisk: false,
         avtalt: false,
         lagtInnAv: 'NAV',
-        transaksjonsType: 'OPPRETTET',
-        erReferatPublisert: false,
+        transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+        filterTags: [],
     };
 };
