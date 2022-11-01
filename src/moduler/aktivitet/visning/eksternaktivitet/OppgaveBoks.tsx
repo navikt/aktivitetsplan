@@ -1,5 +1,4 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -17,8 +16,8 @@ const customAlertStripe = (oppgave: Oppgave) => (
     <AlertStripe type="advarsel" className={styles.oppgave}>
         <h3 className={styles.tekst}>{oppgave.tekst}</h3>
         {oppgave.subtekst && <Tekstomrade className={styles.subtekst}>{oppgave.subtekst}</Tekstomrade>}
-        <a target="_blank" rel="noopener noreferrer" href={oppgave.url}>
-            <Hovedknapp>{oppgave.knapptekst}</Hovedknapp>
+        <a href={oppgave.url} target="_blank" rel="noopener noreferrer" className="knapp knapp--hoved">
+            {oppgave.knapptekst}
         </a>
     </AlertStripe>
 );

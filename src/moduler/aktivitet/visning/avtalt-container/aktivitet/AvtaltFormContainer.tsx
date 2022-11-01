@@ -6,15 +6,18 @@ import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../../api/utils';
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import { VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../../datatypes/internAktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
 import aktivitetvisningStyles from './../../Aktivitetsvisning.module.less';
+import aktivitetsvisningStyles from '../../Aktivitetsvisning.module.less';
 import DeleLinje from '../../delelinje/delelinje';
+import KanIkkeLeggeTilForhaandsorienteringInfotekst from '../arena-aktivitet/KanIkkeLeggeTilForhaandsorienteringInfotekst';
 import { useSendAvtaltMetrikker } from '../avtaltHooks';
 import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from '../utilsForhaandsorientering';
 import AvtaltForm, { Handler } from './AvtaltForm';
+import ForhaandsorienteringForm from './ForhaandsorienteringForm';
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;
@@ -52,14 +55,26 @@ const AvtaltFormContainer = (props: Props) => {
     return (
         <>
             <DeleLinje />
-            <AvtaltForm
-                className={classNames(aktivitetvisningStyles.underseksjon, 'avtalt-container')}
-                oppdaterer={bekreftStatus === STATUS.RELOADING}
-                mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
-                manglerTilDato={!aktivitet.tilDato}
-                lasterData={nettverksStatus !== STATUS.OK}
-                onSubmit={onSubmit}
-            />
+            {aktivitet.avtalt && aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
+                <div className={aktivitetsvisningStyles.underseksjon}>
+                    <KanIkkeLeggeTilForhaandsorienteringInfotekst merEnnSyvDagerTil={!mindreEnnSyvDagerTil} />
+                    <ForhaandsorienteringForm
+                        setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
+                        aktivitet={aktivitet}
+                        hidden={mindreEnnSyvDagerTil}
+                        setForhandsorienteringType={setForhandsorienteringType}
+                    />
+                </div>
+            ) : (
+                <AvtaltForm
+                    className={classNames(aktivitetvisningStyles.underseksjon, 'avtalt-container')}
+                    oppdaterer={bekreftStatus === STATUS.RELOADING}
+                    mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
+                    manglerTilDato={!aktivitet.tilDato}
+                    lasterData={nettverksStatus !== STATUS.OK}
+                    onSubmit={onSubmit}
+                />
+            )}
             <DeleLinje />
         </>
     );
