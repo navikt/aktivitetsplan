@@ -2,8 +2,9 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { getAktivitetTypeBeskrivelse } from '../../../utils/textMappers';
+import { aktivitetTypeMap } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
@@ -15,10 +16,9 @@ function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType 
             harAktiviteter={harAktivitetTyper}
             filter={aktivitetTyper}
             tekst="Aktivitetstype"
-            filterTekst="aktivitet.type."
             metrikkNavn={AKTIVITESTYPE_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsType}
-            textMapper={getAktivitetTypeBeskrivelse}
+            textMapper={aktivitetTypeMap}
         />
     );
 }
@@ -34,7 +34,12 @@ const mapStateToProps = (state) => {
     const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
         const { type } = aktivitet;
-        typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
+        if (type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
+            typer[aktivitet.eksternAktivitetData.subtype] =
+                aktivitetTyperFilter[aktivitet.eksternAktivitetData.subtype];
+        } else {
+            typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
+        }
         return typer;
     }, {});
 

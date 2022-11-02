@@ -1,6 +1,7 @@
 import { isBefore, isWithinInterval } from 'date-fns';
 
-import { isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import {
     selectAktivitetAvtaltMedNavFilter,
@@ -44,21 +45,29 @@ export function datoErIPeriode(dato: string, valgtHistoriskPeriode?: Periode, si
     return !sistePeriodeSluttDato || isAfterOrEqual(datoDate, new Date(sistePeriodeSluttDato));
 }
 
-export function aktivitetFilter(aktivitet: any, state: any) {
+export function aktivitetFilter(aktivitet: AlleAktiviteter, state: any) {
     const aktivitetTypeFilter = selectAktivitetTyperFilter(state);
     if (erAktivtFilter(aktivitetTypeFilter) && !aktivitetTypeFilter[aktivitet.type]) {
-        return false;
+        if (
+            aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
+            !aktivitetTypeFilter[aktivitet.eksternAktivitetData.subtype]
+        ) {
+            return false;
+        }
+        if (aktivitet.type !== VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE && !aktivitetTypeFilter[aktivitet.type]) {
+            return false;
+        }
     }
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
-    if (erAktivtFilter(etikettFilter) && (!etikettFilter[aktivitet.etikett] || !isVeilarbAktivitet(aktivitet))) {
+    if (erAktivtFilter(etikettFilter) && (!etikettFilter[aktivitet.etikett!!] || !isVeilarbAktivitet(aktivitet))) {
         return false;
     }
 
     const arenaEtikettFilter = selectArenaAktivitetEtiketterFilter(state);
     if (
         erAktivtFilter(arenaEtikettFilter) &&
-        (!arenaEtikettFilter[aktivitet.etikett] || !isArenaAktivitet(aktivitet))
+        (!isArenaAktivitet(aktivitet) || !arenaEtikettFilter[aktivitet.etikett])
     ) {
         return false;
     }
