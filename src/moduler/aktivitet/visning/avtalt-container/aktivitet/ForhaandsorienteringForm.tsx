@@ -5,7 +5,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../../api/utils';
-import { EKSTERN_AKTIVITET_TYPE } from '../../../../../constant';
 import { AlleAktiviteter } from '../../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../../../../../datatypes/internAktivitetTypes';

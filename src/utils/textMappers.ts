@@ -4,12 +4,14 @@ import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internA
 
 export const getAktivitetTypeBeskrivelse = (aktivitet: AlleAktiviteter): string => {
     if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
-        return eksternAktivitetTypeMap[aktivitet.eksternAktivitetData.subtype];
+        return aktivitetTypeMap[aktivitet.eksternAktivitetData.subtype];
     }
     return aktivitetTypeMap[aktivitet.type];
 };
 
-const aktivitetTypeMap: Record<Exclude<AktivitetType, VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE>, string> = {
+type AlleAktivitetTyper = Exclude<AktivitetType, VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE> | EksternAktivitetType;
+
+export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     EGEN: 'Jobbrettet egenaktivitet',
     STILLING: 'Stilling',
     TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
@@ -21,12 +23,28 @@ const aktivitetTypeMap: Record<Exclude<AktivitetType, VeilarbAktivitetType.EKSTE
     MOTE: 'Møte med NAV',
     SAMTALEREFERAT: 'Samtalereferat',
     STILLING_FRA_NAV: 'Stilling fra NAV',
+    ARENA_TILTAK: 'Tiltak gjennom NAV',
+    MIDL_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
 };
 
-export const eksternAktivitetTypeMap: Record<EksternAktivitetType, string> = {
-    MIDL_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
-    ARENA_TILTAK: 'Tiltak gjennom NAV',
-};
+// const aktivitetTypeMap: Record<Exclude<AktivitetType, VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE>, string> = {
+//     EGEN: 'Jobbrettet egenaktivitet',
+//     STILLING: 'Stilling',
+//     TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
+//     GRUPPEAKTIVITET: 'Gruppeaktivitet',
+//     UTDANNINGSAKTIVITET: 'Utdanning',
+//     SOKEAVTALE: 'Jobbsøking',
+//     IJOBB: 'Jobb jeg har nå',
+//     BEHANDLING: 'Behandling',
+//     MOTE: 'Møte med NAV',
+//     SAMTALEREFERAT: 'Samtalereferat',
+//     STILLING_FRA_NAV: 'Stilling fra NAV',
+// };
+//
+// export const eksternAktivitetTypeMap: Record<EksternAktivitetType, string> = {
+//     ARENA_TILTAK: 'Tiltak gjennom NAV',
+//     MIDL_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
+// };
 
 export const aktivitetStatusMap = {
     PLANLAGT: 'Planlegger',
