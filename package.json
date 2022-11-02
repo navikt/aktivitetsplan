@@ -25,7 +25,7 @@
     "@nutgaard/use-formstate": "^3.0.1",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
-    "date-fns": "^2.28.0",
+    "date-fns": "^2.29.3",
     "dayjs": "^1.11.3",
     "history": "^4.10.1",
     "intl": "^1.2.5",
