@@ -149,6 +149,6 @@ export interface EksternAktivitetData {
 }
 
 export enum EksternAktivitetType {
-    TILTAKSAKTIVITET_TYPE = 'ARENA_TILTAK',
+    ARENA_TILTAK_TYPE = 'ARENA_TILTAK',
     MIDL_LONNSTILSKUDD_TYPE = 'MIDL_LONNSTILSKUDD',
 }

@@ -7,7 +7,7 @@ import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivite
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
-import { getAktivitetTypeBeskrivelse } from '../../../utils/textMappers';
+import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
@@ -56,7 +56,7 @@ const Aktivitetskort = (props: Props) => {
 
     const headerId = `aktivitetskort__header__${id}`;
     const datoId = `aktivitetskort__dato__${id}`;
-    const ariaLabel = `${getAktivitetTypeBeskrivelse(aktivitet)}: ${aktivitet.tittel}`;
+    const ariaLabel = `${getAktivitetType(aktivitet)}: ${aktivitet.tittel}`;
 
     return (
         <LinkAsDiv
