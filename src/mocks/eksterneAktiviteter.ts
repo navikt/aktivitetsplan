@@ -14,14 +14,14 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   avtalt: true,
                   beskrivelse: 'Denne aktiviteten har blitt overført fra Arena og ligger nå i veilarbaktivitet',
                   eksternAktivitetData: {
-                      subtype: EksternAktivitetType.TILTAKSAKTIVITET_TYPE,
+                      subtype: EksternAktivitetType.ARENA_TILTAK_TYPE,
                       oppgave: undefined,
                       handlinger: undefined,
                       detaljer: [
                           { label: 'Deltakelse', verdi: '95.6%' },
                           { label: 'Antall dager per uke', verdi: '5' },
                       ],
-                      etiketter: [{ kode: 'AVSLAG' }],
+                      etiketter: [{ kode: 'AKTUELL' }, { kode: 'AVSLAG' }],
                   },
               }),
           }),

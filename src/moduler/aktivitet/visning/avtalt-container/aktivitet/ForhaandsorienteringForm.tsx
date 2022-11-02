@@ -95,7 +95,7 @@ const ForhaandsorienteringForm = (props: Props) => {
 
     const isGammelArenaAktivitet =
         aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
-        [EksternAktivitetType.TILTAKSAKTIVITET_TYPE].includes(aktivitet.eksternAktivitetData.subtype);
+        [EksternAktivitetType.ARENA_TILTAK_TYPE].includes(aktivitet.eksternAktivitetData.subtype);
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
