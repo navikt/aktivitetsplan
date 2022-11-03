@@ -13,6 +13,7 @@ import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import Routing, { PublicRouting } from '../routing';
 import { hentFnrFraUrl } from '../utils/fnr-util';
+import MidlertidigVarsel from './midlertidigVarsel/MidlertidigVarsel';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
@@ -27,6 +28,7 @@ const Hovedside = () => {
     return (
         <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">
+                <MidlertidigVarsel />
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
                 <OppfolgingStatus>
