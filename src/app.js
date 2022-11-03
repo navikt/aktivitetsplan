@@ -17,6 +17,8 @@ function isValueOrGetDefault(value, defaultValue) {
 
 export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
+const history = createHistory();
+
 function App({ fnr, key }) {
     // NOTE: This is bad, don't use it if you dont HAVE to.
     window.appconfig = window.appconfig || {};
@@ -28,8 +30,6 @@ function App({ fnr, key }) {
         VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
         TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
     };
-
-    const history = createHistory();
 
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
