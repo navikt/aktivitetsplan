@@ -1,7 +1,7 @@
 import './index.less';
 
 import PT from 'prop-types';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Router } from 'react-router-dom';
 
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
@@ -17,8 +17,6 @@ function isValueOrGetDefault(value, defaultValue) {
 
 export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
-const history = createHistory();
-
 function App({ fnr, key }) {
     // NOTE: This is bad, don't use it if you dont HAVE to.
     window.appconfig = window.appconfig || {};
@@ -30,6 +28,10 @@ function App({ fnr, key }) {
         VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
         TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
     };
+
+    const history = useMemo(() => {
+        return createHistory();
+    }, []);
 
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
