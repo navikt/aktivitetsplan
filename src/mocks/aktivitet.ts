@@ -233,7 +233,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               stillingFraNavData: {
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
-                  arbeidsgiver: 'Har svart innen fristen',
+                  arbeidsgiver: 'Har Svart Innen Fristen AS',
               },
           }),
           wrapAktivitet({
