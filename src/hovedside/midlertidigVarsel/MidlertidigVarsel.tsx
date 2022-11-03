@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import AlertStripe from 'nav-frontend-alertstriper';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
