@@ -1,7 +1,7 @@
 import './index.less';
 
 import PT from 'prop-types';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Router } from 'react-router-dom';
 
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
@@ -29,7 +29,9 @@ function App({ fnr, key }) {
         TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
     };
 
-    const history = createHistory();
+    const history = useMemo(() => {
+        return createHistory();
+    }, []);
 
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
