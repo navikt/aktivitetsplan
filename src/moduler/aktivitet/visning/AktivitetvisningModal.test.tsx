@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import create from '../../../store';
 import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../../dialog/dialog-reducer';
@@ -9,6 +9,13 @@ import Feilmelding from '../../feilmelding/Feilmelding';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
 const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: {} });
+
+function Router(props: { children?: React.ReactNode }) {
+    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
+        return <HashRouter>{props.children}</HashRouter>;
+    }
+    return <BrowserRouter basename={process.env.PUBLIC_URL}>{props.children}</BrowserRouter>;
+}
 
 const AktivitetsvisningModalWrapped = (props: { store: any }) => (
     <Router>
