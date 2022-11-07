@@ -37,7 +37,8 @@ const getEtikettByKode = (type: EksternAktivitetType, kode: string): EksternEtik
         case EksternAktivitetType.ARENA_TILTAK_TYPE:
             return arenaTiltakEtikettKodeMapper(kode);
         case EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE:
-            return undefined; // todo
+        default:
+            return undefined;
     }
 };
 
@@ -48,21 +49,21 @@ export interface Props {
 
 const EksterneEtiketter = (props: Props) => {
     const { aktivitet, className } = props;
-    const { etiketter } = aktivitet.eksternAktivitetData;
+    const { etiketter, subtype } = aktivitet.eksternAktivitetData;
 
     if (!etiketter) return null;
 
     return (
         <>
-            {etiketter.map((etikett, i) => {
-                const e = getEtikettByKode(aktivitet.eksternAktivitetData.subtype, etikett.kode);
-                if (!e) return null;
-                return (
-                    <EtikettBase className={classNames(e[1], className)} key={i}>
-                        {e[0]}
-                    </EtikettBase>
-                );
-            })}
+            {etiketter
+                .map((etikett) => getEtikettByKode(subtype, etikett.kode))
+                .map((eksternEtikett, i) => {
+                    return !!eksternEtikett ? (
+                        <EtikettBase className={classNames(eksternEtikett[1], className)} key={i}>
+                            {eksternEtikett[0]}
+                        </EtikettBase>
+                    ) : null;
+                })}
         </>
     );
 };

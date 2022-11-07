@@ -19,9 +19,9 @@ const EksternAktivitetDetaljer = ({ aktivitet }: Props) => {
     return (
         <>
             <div className={styles.detaljer}>
+                <OppgaveBoks oppgave={aktivitet.eksternAktivitetData.oppgave} />
                 <FraDato aktivitet={aktivitet} />
                 <TilDato aktivitet={aktivitet} />
-                <OppgaveBoks oppgave={aktivitet.eksternAktivitetData.oppgave} />
                 <Detaljer detaljer={aktivitet.eksternAktivitetData.detaljer} />
                 <Beskrivelse aktivitet={aktivitet} />
             </div>

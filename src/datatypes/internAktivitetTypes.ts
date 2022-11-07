@@ -33,7 +33,7 @@ export enum VeilarbAktivitetType {
     MOTE_TYPE = 'MOTE',
     SAMTALEREFERAT_TYPE = 'SAMTALEREFERAT',
     STILLING_FRA_NAV_TYPE = 'STILLING_FRA_NAV',
-    EKSTERN_AKTIVITET_TYPE = 'EKSTERN_AKTIVITET',
+    EKSTERN_AKTIVITET_TYPE = 'EKSTERNAKTIVITET',
 }
 
 export interface EgenAktivitet extends AktivitetBaseProps {
