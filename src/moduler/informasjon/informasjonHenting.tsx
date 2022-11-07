@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
+import { AnyAction } from 'redux';
 
 import { fetchHarFlereAktorId } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
@@ -22,7 +23,7 @@ function InformasjonsHenting() {
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder, shallowEqual);
 
     const dispatch = useDispatch();
-    const doHentLest = useCallback(() => dispatch(hentLest()), [dispatch]);
+    const doHentLest = useCallback(() => dispatch(hentLest() as unknown as AnyAction), [dispatch]);
     const setBack = (path: string) => dispatch(setBackPath(path));
 
     useEffect(() => {

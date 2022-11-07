@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { STATUS } from '../../api/utils';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
@@ -22,7 +23,7 @@ function AktiverDigitalOppfolging() {
             <HiddenIfHovedknapp
                 disabled={lasterOppfolging}
                 hidden={reservertKrr}
-                onClick={() => dispatch(settDigital())}
+                onClick={() => dispatch(settDigital() as unknown as AnyAction)}
                 autoDisableVedSpinner
             >
                 <FormattedMessage id="sett-digital.manuell-oppfolging.aktiver-digital-knapp" />

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
@@ -19,8 +20,8 @@ const Hovedside = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(hentDialog());
-        dispatch(hentEskaleringsvarsel());
+        dispatch(hentDialog() as unknown as AnyAction);
+        dispatch(hentEskaleringsvarsel() as unknown as AnyAction);
     }, [dispatch]);
 
     const fnr = hentFnrFraUrl();

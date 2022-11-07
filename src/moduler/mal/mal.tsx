@@ -4,6 +4,7 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { AnyAction } from 'redux';
 
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
@@ -29,8 +30,8 @@ function Mal() {
     const history = useHistory();
 
     useEffect(() => {
-        dispatch(hentMal());
-        dispatch(hentMalListe());
+        dispatch(hentMal() as unknown as AnyAction);
+        dispatch(hentMalListe() as unknown as AnyAction);
     }, [dispatch]);
 
     const avhengigheter = [malStatus, malListeStatus];
