@@ -9,21 +9,21 @@ type EksternEtikett = readonly [string, string] | undefined;
 
 const arenaTiltakEtikettKodeMapper = (kode: string): EksternEtikett => {
     switch (kode) {
-        case 'AKTUELL':
+        case 'SOKT_INN':
             return ['Søkt inn på tiltaket', styles.navLysBlaLighten60] as const;
         case 'AVSLAG':
             return ['Fått avslag', styles.navLysBlaLighten60] as const;
-        case 'IKKEAKTUELL':
+        case 'IKKE_AKTUELL':
             return ['Ikke aktuell for tiltaket', styles.gray200] as const;
-        case 'IKKEM':
+        case 'IKKE_MOETT':
             return ['Ikke møtt på tiltaket', styles.navOransjeLighten60] as const;
         case 'INFOMOETE':
             return ['Infomøte før tiltaket', styles.navLysBlaLighten60] as const;
-        case 'JATAKK':
+        case 'TAKKET_JA':
             return ['Takket ja til tilbud', styles.navLysBlaLighten60] as const;
-        case 'NEITAKK':
+        case 'TAKKET_NEI':
             return ['Takket nei til tilbud', styles.navOransjeLighten60] as const;
-        case 'TILBUD':
+        case 'FATT_PLASS':
             return ['Fått plass på tiltaket', styles.navLysBlaLighten60] as const;
         case 'VENTELISTE':
             return ['På venteliste', styles.navLysBlaLighten60] as const;
