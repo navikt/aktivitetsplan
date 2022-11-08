@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import { RootStateOrAny, shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
@@ -54,11 +55,11 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
-                dispatch(hentNivaa4(hentFnrFraUrl()));
-                dispatch(hentVeilederInfo());
+                dispatch(hentNivaa4(hentFnrFraUrl()) as unknown as AnyAction);
+                dispatch(hentVeilederInfo() as unknown as AnyAction);
             }
-            dispatch(hentAktiviteter());
-            dispatch(hentArenaAktiviteter());
+            dispatch(hentAktiviteter() as unknown as AnyAction);
+            dispatch(hentArenaAktiviteter() as unknown as AnyAction);
         }
     }, [aktivitetNotStarted, erVeileder, dispatch]);
 
@@ -67,7 +68,7 @@ const Aktivitetstavle = () => {
     const skjulAdvarsel = !dragging || droppable;
 
     // SCROLLING //
-    const sistVisteAktivitetId: string = useSelector<RootStateOrAny, string>((state) => {
+    const sistVisteAktivitetId: string = useSelector<Record<string, any>, string>((state) => {
         const aktivitet: AlleAktiviteter = selectSistVisteAktivitet(state);
         return !!aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
     });

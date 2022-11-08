@@ -2,6 +2,7 @@ import Spinner from 'nav-frontend-spinner';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../api/utils';
 import { STATUS_AVBRUTT } from '../../../constant';
@@ -34,7 +35,7 @@ const AvbrytAktivitet = (props: Props) => {
     const dispatch = useDispatch();
 
     const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
-        dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst));
+        dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst) as unknown as AnyAction);
 
     const lagrer = aktivitetListeStatus !== STATUS.OK;
 

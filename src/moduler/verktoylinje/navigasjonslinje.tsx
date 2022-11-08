@@ -3,6 +3,7 @@ import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
 import { Undertittel } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { Dialog } from '../../datatypes/dialogTypes';
@@ -25,7 +26,7 @@ function Navigasjonslinje() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const doHentDialog = () => dispatch(hentDialog());
+        const doHentDialog = () => dispatch(hentDialog() as unknown as AnyAction);
 
         if (!erVeileder) {
             let interval: NodeJS.Timeout;

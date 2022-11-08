@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { AnyAction } from 'redux';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
@@ -44,7 +45,7 @@ function DropTargetKolonne({ status, children }: Props) {
             } else if (status === STATUS_AVBRUTT) {
                 history.push(avbrytAktivitetRoute(aktivitet.id));
             } else {
-                dispatch(flyttAktivitet(aktivitet, status));
+                dispatch(flyttAktivitet(aktivitet, status) as unknown as AnyAction);
             }
         },
         collect: (monitor) => ({

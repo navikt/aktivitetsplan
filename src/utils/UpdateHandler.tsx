@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
@@ -38,11 +39,11 @@ export function UpdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return dispatch(hentAktiviteter());
+                return dispatch(hentAktiviteter() as unknown as AnyAction);
             case UpdateTypes.Dialog:
-                return dispatch(hentDialog());
+                return dispatch(hentDialog() as unknown as AnyAction);
             case UpdateTypes.Oppfolging:
-                return dispatch(hentOppfolging());
+                return dispatch(hentOppfolging() as unknown as AnyAction);
         }
     });
 

@@ -22,9 +22,9 @@ function prependBasePath(fn) {
     };
 }
 
-export default function createHistory() {
+export default function createHistory(contextPath) {
     const routerHistory = createBrowserHistory({
-        basename: window.appconfig.CONTEXT_PATH,
+        basename: contextPath
     });
 
     routerHistory.push = prependBasePath(routerHistory.push);

@@ -8,6 +8,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { Lest } from '../../datatypes/aktivitetTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
@@ -69,7 +70,7 @@ function MittMaal() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(hentMal());
+        dispatch(hentMal() as unknown as AnyAction);
     }, [dispatch]);
 
     const avhengigheter = useSelector(selectMalStatus, shallowEqual);
