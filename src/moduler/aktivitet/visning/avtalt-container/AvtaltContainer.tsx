@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-    EKSTERN_AKTIVITET_TYPE,
-    SAMTALEREFERAT_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
-    STILLING_FRA_NAV_TYPE,
-} from '../../../../constant';
+import { SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT, STILLING_FRA_NAV_TYPE } from '../../../../constant';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { selectErBruker, selectErVeileder } from '../../../identitet/identitet-selector';
 import ForhaandsorienteringsVisningsLinje from './ForhaandsorienteringsVisningsLinje';
 import FormContainer from './FormContainer';
@@ -41,7 +36,9 @@ const AvtaltContainer = (props: Props) => {
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
     const aktivAktivitet = !historisk && underOppfolging && status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT;
     const harForhaandsorientering =
-        erArenaAktivitet || aktivitet.type === EKSTERN_AKTIVITET_TYPE ? aktivitet.forhaandsorientering : avtalt;
+        erArenaAktivitet || aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE
+            ? aktivitet.forhaandsorientering
+            : avtalt;
 
     const aktivitetTypeKanAvtales = type !== STILLING_FRA_NAV_TYPE && type !== SAMTALEREFERAT_TYPE;
 
