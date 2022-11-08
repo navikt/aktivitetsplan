@@ -37,6 +37,9 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const svartMarkeringSkalVises = isStillingFraNav ? SkalDelCvIkkeSvartVises(aktivitet) : false;
     const stillingFraNavSoknadsstatus = isStillingFraNav ? aktivitet.stillingFraNavData.soknadsstatus : undefined;
 
+    const isEksternAktivitet = aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
+    const eksterneEtiketter = isEksternAktivitet ? aktivitet.eksternAktivitet.etiketter : undefined;
+
     if (
         !(
             avtalt ||
@@ -44,7 +47,8 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
             !!dialog ||
             deltFerdigMarkeringSkalVises ||
             svartMarkeringSkalVises ||
-            !!stillingFraNavSoknadsstatus
+            !!stillingFraNavSoknadsstatus ||
+            !!eksterneEtiketter
         )
     ) {
         return null;
