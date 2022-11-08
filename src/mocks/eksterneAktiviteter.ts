@@ -1,4 +1,4 @@
-import { STATUS_GJENNOMFOERT } from '../constant';
+import { STATUS_GJENNOMFOERT, STATUS_PLANLAGT } from '../constant';
 import { EksternAktivitetType, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { wrapAktivitet } from './aktivitet';
 import { visEksterneAktiviteter } from './demo/sessionstorage';
@@ -10,7 +10,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Nå kan han lukte gull, derfor ror vi inn mot land',
-                  status: STATUS_GJENNOMFOERT,
+                  status: STATUS_PLANLAGT,
                   avtalt: true,
                   beskrivelse: 'Denne aktiviteten har blitt overført fra Arena og ligger nå i veilarbaktivitet',
                   eksternAktivitet: {
@@ -22,6 +22,24 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                           { label: 'Antall dager per uke', verdi: '5' },
                       ],
                       etiketter: [{ kode: 'AKTUELL' }, { kode: 'AVSLAG' }],
+                  },
+              }),
+          }),
+          wrapAktivitet({
+              ...enEksternAktivitet({
+                  tittel: 'testestestest',
+                  status: STATUS_PLANLAGT,
+                  avtalt: false,
+                  beskrivelse: 'Denne aktiviteten har blitt overført fra Arena og ligger nå i veilarbaktivitet',
+                  eksternAktivitet: {
+                      type: EksternAktivitetType.ARENA_TILTAK_TYPE,
+                      oppgave: undefined,
+                      handlinger: undefined,
+                      detaljer: [
+                          { label: 'Deltakelse', verdi: '95.6%' },
+                          { label: 'Antall dager per uke', verdi: '5' },
+                      ],
+                      etiketter: [{ kode: 'AKTUELL' }],
                   },
               }),
           }),
