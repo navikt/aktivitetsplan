@@ -137,7 +137,7 @@ export function isSamtaleOrMote(aktivitet: AlleAktiviteter): aktivitet is Samtal
 
 export interface EksternAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
-    eksternAktivitetData: EksternAktivitetData;
+    eksternAktivitet: EksternAktivitetData;
 }
 
 export interface EksternAktivitetData {

@@ -10,13 +10,13 @@ export const enEksternAktivitet = ({
     status,
     avtalt,
     beskrivelse,
-    eksternAktivitetData,
+    eksternAktivitet,
 }: {
     tittel: string;
     status: AktivitetStatus;
     avtalt: boolean;
     beskrivelse: string;
-    eksternAktivitetData: EksternAktivitetData;
+    eksternAktivitet: EksternAktivitetData;
 }): EksternAktivitet => {
     id += 1000;
     versjon += 1000;
@@ -40,6 +40,6 @@ export const enEksternAktivitet = ({
         transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         etikett: undefined,
         forhaandsorientering: undefined,
-        eksternAktivitetData,
+        eksternAktivitet,
     };
 };

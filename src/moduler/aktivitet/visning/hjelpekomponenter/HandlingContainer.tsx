@@ -34,7 +34,7 @@ const LenkeSeksjon = (handling: LenkeMedType, erVeileder: boolean, i: number) =>
 };
 
 const HandlingContainer = ({ aktivitet }: Props) => {
-    const { handlinger } = aktivitet.eksternAktivitetData;
+    const { handlinger } = aktivitet.eksternAktivitet;
 
     const erVeileder = useSelector(selectErVeileder);
 

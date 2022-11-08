@@ -13,7 +13,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   status: STATUS_GJENNOMFOERT,
                   avtalt: true,
                   beskrivelse: 'Denne aktiviteten har blitt overført fra Arena og ligger nå i veilarbaktivitet',
-                  eksternAktivitetData: {
+                  eksternAktivitet: {
                       type: EksternAktivitetType.ARENA_TILTAK_TYPE,
                       oppgave: undefined,
                       handlinger: undefined,
@@ -31,7 +31,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   status: STATUS_GJENNOMFOERT,
                   avtalt: false,
                   beskrivelse: 'Beskrivelse asdasdasdsasd',
-                  eksternAktivitetData: {
+                  eksternAktivitet: {
                       type: EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE,
                       oppgave: undefined,
                       handlinger: undefined,
@@ -47,7 +47,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   avtalt: true,
                   beskrivelse:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce blandit sollicitudin odio, nec eleifend nibh pulvinar ac. Donec sed sem.',
-                  eksternAktivitetData: {
+                  eksternAktivitet: {
                       type: EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE,
                       oppgave: {
                           ekstern: {

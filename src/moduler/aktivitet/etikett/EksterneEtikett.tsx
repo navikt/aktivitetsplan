@@ -49,7 +49,7 @@ export interface Props {
 
 const EksterneEtiketter = (props: Props) => {
     const { aktivitet, className } = props;
-    const { etiketter, type } = aktivitet.eksternAktivitetData;
+    const { etiketter, type } = aktivitet.eksternAktivitet;
 
     if (!etiketter) return null;
 
