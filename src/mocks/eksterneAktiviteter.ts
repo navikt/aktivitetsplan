@@ -14,7 +14,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   avtalt: true,
                   beskrivelse: 'Denne aktiviteten har blitt overført fra Arena og ligger nå i veilarbaktivitet',
                   eksternAktivitetData: {
-                      subtype: EksternAktivitetType.ARENA_TILTAK_TYPE,
+                      type: EksternAktivitetType.ARENA_TILTAK_TYPE,
                       oppgave: undefined,
                       handlinger: undefined,
                       detaljer: [
@@ -32,7 +32,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   avtalt: false,
                   beskrivelse: 'Beskrivelse asdasdasdsasd',
                   eksternAktivitetData: {
-                      subtype: EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE,
+                      type: EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE,
                       oppgave: undefined,
                       handlinger: undefined,
                       detaljer: undefined,
@@ -48,7 +48,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   beskrivelse:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce blandit sollicitudin odio, nec eleifend nibh pulvinar ac. Donec sed sem.',
                   eksternAktivitetData: {
-                      subtype: EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE,
+                      type: EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE,
                       oppgave: {
                           ekstern: {
                               tekst: 'Du må godkjenne avtalen',

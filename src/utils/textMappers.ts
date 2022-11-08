@@ -4,7 +4,7 @@ import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internA
 
 export const getAktivitetType = (aktivitet: AlleAktiviteter): string => {
     if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
-        return aktivitetTypeMap[aktivitet.eksternAktivitetData.subtype];
+        return aktivitetTypeMap[aktivitet.eksternAktivitetData.type];
     }
     return aktivitetTypeMap[aktivitet.type];
 };

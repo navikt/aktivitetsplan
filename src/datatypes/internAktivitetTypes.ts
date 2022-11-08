@@ -141,7 +141,7 @@ export interface EksternAktivitet extends AktivitetBaseProps {
 }
 
 export interface EksternAktivitetData {
-    subtype: EksternAktivitetType;
+    type: EksternAktivitetType;
     oppgave?: OppgaveLenke;
     handlinger?: LenkeMedType[];
     detaljer?: Detalj[];
