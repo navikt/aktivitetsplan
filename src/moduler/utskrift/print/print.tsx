@@ -1,10 +1,10 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../../datatypes/oppfolgingTypes';
-import { Bruker } from '../../../datatypes/types';
+import { Bruker, Postadresse } from '../../../datatypes/types';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
 import { formaterDatoKortManed } from '../../../utils';
@@ -18,8 +18,9 @@ import MalPrint from './malPrint';
 interface Props {
     dialoger?: Dialog[];
     bruker: Bruker;
+    adresse: Postadresse | null;
     printMelding?: string;
-    aktiviteter?: Aktivitet[];
+    aktiviteter?: AlleAktiviteter[];
     mittMal?: Mal;
     erVeileder?: boolean;
     utskriftPlanType?: string;
@@ -31,6 +32,7 @@ function Print(props: Props) {
     const {
         aktiviteter,
         bruker,
+        adresse,
         printMelding,
         mittMal,
         erVeileder,
@@ -62,7 +64,7 @@ function Print(props: Props) {
                 <div className="printmodal-body__adresse">
                     <HiddenIfDiv hidden={!erVeileder}>
                         <StoreForbokstaver>{`${fornavn} ${etternavn}`}</StoreForbokstaver>
-                        <Adresse bruker={bruker} />
+                        {adresse && <Adresse adresse={adresse} />}
                     </HiddenIfDiv>
                 </div>
                 <div className="printmodal-body__dato">

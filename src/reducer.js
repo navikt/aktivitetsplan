@@ -7,7 +7,6 @@ import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
-import brukerReducer from './moduler/bruker/bruker-reducer';
 import dialogReducer from './moduler/dialog/dialog-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import identitetReducer from './moduler/identitet/identitet-reducer';
@@ -25,7 +24,6 @@ const combinedReducers = combineReducers({
     data: combineReducers({
         aktiviteter: aktiviteterReducer,
         arenaAktiviteter: arenaAktiviteterReducer,
-        bruker: brukerReducer,
         dialog: dialogReducer,
         filter: filterReducer,
         identitet: identitetReducer,

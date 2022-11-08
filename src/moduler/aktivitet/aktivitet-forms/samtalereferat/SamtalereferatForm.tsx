@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
+import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { selectVeilederStatus } from '../../../veileder/veilederSelector';
 import InnerSamtalereferatForm from './InnerSamtalereferatForm';
 
 interface Props {
+    aktivitet?: SamtalereferatAktivitet;
     onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
     isDirtyRef?: { current: boolean };
 }

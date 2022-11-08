@@ -31,14 +31,18 @@ const Tavle = (props: Props) => {
     };
 
     const visNeste = () => {
-        const clientWidth = scrollbars.current?.getClientWidth();
-        const scrollLeft = scrollbars.current?.getScrollLeft();
-        const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
-        const nesteIndex = Math.floor((clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE);
-        const newClickIndex = Math.max(nesteIndex, clickIndex) + 1;
-        const scrollTo = newClickIndex * KOLONNEBREDDE - clientWidthWithOffset;
-        scrollbars.current?.scrollLeft(scrollTo);
-        setClickIndex(newClickIndex);
+        if (!scrollbars.current) {
+            return;
+        } else {
+            const clientWidth = scrollbars.current.getClientWidth();
+            const scrollLeft = scrollbars.current.getScrollLeft();
+            const clientWidthWithOffset = clientWidth!! + KOLONNEMARGIN;
+            const nesteIndex = Math.floor((clientWidthWithOffset + scrollLeft!!) / KOLONNEBREDDE);
+            const newClickIndex = Math.max(nesteIndex, clickIndex) + 1;
+            const scrollTo = newClickIndex * KOLONNEBREDDE - clientWidthWithOffset;
+            scrollbars.current?.scrollLeft(scrollTo);
+            setClickIndex(newClickIndex);
+        }
     };
 
     const updateState = (values: { scrollLeft: number; left: number }) => {
@@ -88,14 +92,7 @@ const Tavle = (props: Props) => {
     return (
         <section className={tavleClassname(className)} tabIndex={-1}>
             {venstreKnapp}
-            <SprettendeScrollbars
-                renderTrackHorizontal={() => <div />}
-                className="tavle__scrollarea"
-                autoHeight
-                autoHeightMax={9999}
-                onScrollFrame={updateState}
-                ref={scrollbars}
-            >
+            <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
                 <div className="kolonner">{kolonner}</div>
             </SprettendeScrollbars>
             {hoyreKnapp}

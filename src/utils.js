@@ -91,7 +91,7 @@ export const datePickerToISODate = (dato) => {
 function formatter(dato, format) {
     if (dato) {
         const datoVerdi = moment(dato);
-        return datoVerdi.isValid() ? datoVerdi.format(format) : undefined;
+        return datoVerdi.isValid() ? datoVerdi.format(format).toLowerCase() : undefined;
     }
     return undefined;
 }
@@ -101,15 +101,15 @@ export function formaterDatoTid(dato) {
 }
 
 export function formaterDatoManed(dato) {
-    return formatter(dato, 'Do MMMM YYYY');
+    return formatter(dato, 'DD. MMMM YYYY');
 }
 
 export function formaterDatoKortManed(dato) {
-    return formatter(dato, 'Do MMM YYYY');
+    return formatter(dato, 'DD. MMM YYYY');
 }
 
 export function formaterDatoKortManedTid(dato) {
-    return formatter(dato, 'Do MMM YYYY [kl] HH:mm');
+    return formatter(dato, 'DD. MMM YYYY [kl] HH:mm');
 }
 
 export function formaterTid(dato) {
@@ -161,8 +161,10 @@ export function formaterDatoEllerTidSidenUtenKlokkeslett(dato) {
 }
 
 export function datoComparator(a, b) {
-    return a && b ? moment(a).diff(b) : (a ? 1 : 0) - (b ? 1 : 0);
+    return a && b ? moment(a).diff(b) : oneIfPresent(a) - oneIfPresent(b);
 }
+
+const oneIfPresent = (x) => (x ? 1 : 0);
 
 export function HiddenIf({ hidden, children }) {
     if (hidden) {
@@ -173,4 +175,12 @@ export function HiddenIf({ hidden, children }) {
 
 export function dagerTil(dato) {
     return moment(dato).startOf('day').diff(moment().startOf('day'), 'day');
+}
+
+function erGCP() {
+    return window.location.hostname.endsWith('intern.nav.no');
+}
+
+export function getContextPath() {
+    return erGCP() ? '' : '/veilarbpersonflatefs';
 }

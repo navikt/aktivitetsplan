@@ -25,9 +25,16 @@
     }
 
     .kolonner {
-        display: block;
         padding-bottom: 2rem;
         min-height: 300px;
+    }
+}
+
+@media (max-width: @screen-xs-max) {
+    .tavle {
+        .kolonner {
+            display: block;
+        }
     }
 }
 
@@ -110,7 +117,8 @@
         }
 
         .tavle-kolonne {
-            min-width: 18%;
+            flex: 1;
+            min-width: unset;
         }
     }
 }

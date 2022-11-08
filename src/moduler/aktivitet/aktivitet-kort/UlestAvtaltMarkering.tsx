@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { selectErBruker } from '../../identitet/identitet-selector';
 import AvtaltMarkering from '../avtalt-markering/AvtaltMarkering';
 import UlestMarkering from '../ulest-markering/UlestMarkering';
@@ -9,7 +9,7 @@ import { skalMarkereForhaandsorienteringSomLest } from '../visning/avtalt-contai
 import styles from './UlestAvtaltMarkering.module.less';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
 }
 
 const UlestAvtaltMarkering = (props: Props) => {

@@ -1,27 +1,36 @@
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
+import { AKTIVITETSPLAN_ROOT_NODE_ID } from '../../app';
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
+    TabId,
 } from '../../constant';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { TabChangeEvent } from '../../datatypes/types';
+import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
+import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
+import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
-import { getFodselsnummer } from '../../utils/fnr-util';
+import { hentFnrFraUrl } from '../../utils/fnr-util';
+import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
@@ -46,17 +55,40 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
-                dispatch(hentNivaa4(getFodselsnummer()));
-                dispatch(hentVeilederInfo());
+                dispatch(hentNivaa4(hentFnrFraUrl()) as unknown as AnyAction);
+                dispatch(hentVeilederInfo() as unknown as AnyAction);
             }
-            dispatch(hentAktiviteter());
-            dispatch(hentArenaAktiviteter());
+            dispatch(hentAktiviteter() as unknown as AnyAction);
+            dispatch(hentArenaAktiviteter() as unknown as AnyAction);
         }
     }, [aktivitetNotStarted, erVeileder, dispatch]);
 
     const dragging = !!draggingAktivitet;
     const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, underOppfolging);
     const skjulAdvarsel = !dragging || droppable;
+
+    // SCROLLING //
+    const sistVisteAktivitetId: string = useSelector<Record<string, any>, string>((state) => {
+        const aktivitet: AlleAktiviteter = selectSistVisteAktivitet(state);
+        return !!aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
+    });
+    const appIsVisible = useIsVisible(document.getElementById(AKTIVITETSPLAN_ROOT_NODE_ID));
+    const [skalScrolle, setSkalScrolle] = useState(false);
+    useEventListener<TabChangeEvent>('veilarbpersonflatefs.tab-clicked', (event) => {
+        if (TabId.AKTIVITETSPLAN !== event.detail?.tabId) return;
+        setSkalScrolle(true);
+    });
+    useEffect(() => {
+        const element = document.getElementById(sistVisteAktivitetId);
+        if (element && skalScrolle && appIsVisible) {
+            element.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+                inline: 'center',
+            });
+            setSkalScrolle(false);
+        }
+    }, [sistVisteAktivitetId, skalScrolle, appIsVisible]);
 
     return (
         <Innholdslaster minstEn avhengigheter={avhengigheter}>

@@ -8,7 +8,7 @@ import * as AppPT from '../../../proptypes';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { hentAktivitet } from '../aktivitet-actions';
-import { genererAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
+import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetlisteSelector';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
@@ -31,7 +31,7 @@ class AktivitetvisningContainer extends Component {
 
     componentWillUnmount() {
         const { valgtAktivitet } = this.props;
-        const aktivitetskort = valgtAktivitet && document.querySelector(`#${genererAktivtetskortId(valgtAktivitet)}`);
+        const aktivitetskort = valgtAktivitet && document.querySelector(`#${prefixAktivtetskortId(valgtAktivitet)}`);
         if (aktivitetskort) {
             aktivitetskort.focus();
         }

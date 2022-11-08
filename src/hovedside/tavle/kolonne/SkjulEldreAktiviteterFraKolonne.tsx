@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
@@ -11,7 +11,7 @@ const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
 
 interface Props {
-    aktiviteteterTilDatoMerEnnToManederSiden: Aktivitet[];
+    aktiviteteterTilDatoMerEnnToManederSiden: AlleAktiviteter[];
 }
 
 const SkjulEldreAktiviteterFraKolonne = (props: Props) => {

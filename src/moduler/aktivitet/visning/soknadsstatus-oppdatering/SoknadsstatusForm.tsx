@@ -4,12 +4,12 @@ import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: StillingFraNavAktivitet;
     disabled?: boolean;
     onSubmit(val: { soknadsstatus: string }): Promise<any>;
 }
@@ -52,6 +52,12 @@ const SoknadsstatusForm = (props: Props) => {
                     {...state.fields.soknadsstatus}
                 />
                 <Radio
+                    label="CV er delt med arbeidsgiver"
+                    value={konstanter.CV_DELT}
+                    disabled={disable}
+                    {...state.fields.soknadsstatus}
+                />
+                <Radio
                     label="Skal på intervju"
                     value={konstanter.SKAL_PAA_INTERVJU}
                     disabled={disable}
@@ -64,7 +70,7 @@ const SoknadsstatusForm = (props: Props) => {
                     {...state.fields.soknadsstatus}
                 />
                 <Radio
-                    label="Fått avslag"
+                    label="Ikke fått jobben"
                     value={konstanter.AVSLAG}
                     disabled={disable}
                     {...state.fields.soknadsstatus}

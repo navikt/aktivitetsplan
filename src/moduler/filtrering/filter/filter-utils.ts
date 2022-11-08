@@ -1,7 +1,7 @@
 import { isBefore, isWithinInterval } from 'date-fns';
 
-import { isArenaAktivitet, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
-import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
+import { isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
@@ -21,7 +21,7 @@ export interface Periode {
     til: string;
 }
 
-export function selectDatoErIPeriode(dato: string, state: any): boolean {
+export function selectDatoErIPeriode(dato: string, state: { sluttDato: any }[]): boolean {
     const historiskPeriode = selectHistoriskPeriode(state);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
@@ -51,10 +51,7 @@ export function aktivitetFilter(aktivitet: any, state: any) {
     }
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
-    if (
-        erAktivtFilter(etikettFilter) &&
-        (!etikettFilter[aktivitet.etikett] || !isVeilarbAktivitetAktivitet(aktivitet))
-    ) {
+    if (erAktivtFilter(etikettFilter) && (!etikettFilter[aktivitet.etikett] || !isVeilarbAktivitet(aktivitet))) {
         return false;
     }
 

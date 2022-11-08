@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import DelCvIkkeSvart, { SkalDelCvIkkeSvartVises } from '../del-cv-ikke-svart/DelCvIkkeSvart';
@@ -17,7 +18,7 @@ import styles from './Aktivitetskort.module.less';
 import UlestAvtaltMarkering from './UlestAvtaltMarkering';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
 }
 
 const AktivitetskortTillegg = ({ aktivitet }: Props) => {
@@ -25,9 +26,15 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const dialog = useSelector((state) => selectDialogForAktivitetId(state, id), shallowEqual);
     const henvendelser = dialog ? dialog.henvendelser : [];
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
-    const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(aktivitet);
-    const svartMarkeringSkalVises = SkalDelCvIkkeSvartVises(aktivitet);
-    const stillingFraNavSoknadsstatus = aktivitet.stillingFraNavData?.soknadsstatus;
+
+    const hasReferat =
+        aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ||
+        aktivitet.type === VeilarbAktivitetType.MOTE_TYPE;
+    const deltFerdigMarkeringSkalVises = hasReferat ? SkalIkkeDeltFerdigMarkeringVises(aktivitet) : false;
+
+    const isStillingFraNav = aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;
+    const svartMarkeringSkalVises = isStillingFraNav ? SkalDelCvIkkeSvartVises(aktivitet) : false;
+    const stillingFraNavSoknadsstatus = isStillingFraNav ? aktivitet.stillingFraNavData.soknadsstatus : undefined;
 
     if (
         !(

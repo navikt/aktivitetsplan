@@ -43,7 +43,7 @@ const ReferatVisning = (props: Props) => {
                     <AlertStripeSuksess className="oppdater-referat-status">Delt med bruker</AlertStripeSuksess>
                 </HiddenIfDiv>
                 <Flatknapp kompakt onClick={startOppdaterReferat}>
-                    Endre
+                    Endre referat
                 </Flatknapp>
             </HiddenIfDiv>
         </div>

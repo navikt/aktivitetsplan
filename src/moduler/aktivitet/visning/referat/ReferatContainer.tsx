@@ -1,10 +1,11 @@
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
@@ -14,7 +15,7 @@ import OppdaterReferatForm from './OppdaterReferatForm';
 import ReferatVisning from './ReferatVisning';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: MoteAktivitet | SamtalereferatAktivitet;
 }
 
 const ReferatContainer = (props: Props) => {
@@ -58,9 +59,9 @@ const ReferatContainer = (props: Props) => {
                     referat={referat}
                     erAktivAktivitet={erAktivAktivitet}
                     erVeileder={erVeileder}
-                    dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
+                    dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
                     publiserer={publiserer}
-                    erReferatPublisert={!!erReferatPublisert}
+                    erReferatPublisert={erReferatPublisert}
                     startOppdaterReferat={() => setOppdaterReferat(true)}
                 />
                 <DeleLinje />

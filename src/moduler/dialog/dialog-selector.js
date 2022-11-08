@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { STATUS } from '../../api/utils';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
-import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
+import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selectorts';
 
 function erViktigMelding(dialog) {
     return dialog.egenskaper.length > 0;

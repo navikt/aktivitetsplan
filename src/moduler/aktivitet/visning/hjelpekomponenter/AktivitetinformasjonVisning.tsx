@@ -1,14 +1,15 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
+    SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
@@ -36,7 +37,7 @@ const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) =
 };
 
 interface Props {
-    valgtAktivitet: Aktivitet;
+    valgtAktivitet: AlleAktiviteter;
     tillatEndring: boolean;
     laster: boolean;
     underOppfolging: boolean;
@@ -44,9 +45,11 @@ interface Props {
 
 const AktivitetinformasjonVisning = (props: Props) => {
     const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
-    const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
+    const { id, tittel, type, avtalt } = valgtAktivitet;
 
-    const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet);
+    const deltFerdigMarkeringSkalVises = isSamtaleOrMote(valgtAktivitet)
+        ? SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet)
+        : false;
 
     return (
         <div>
@@ -58,12 +61,13 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     <InternLenke
                         className="endreknapp"
                         role="button"
-                        hidden={!tillatEndring || arenaAktivitet}
+                        hidden={!tillatEndring || isArenaAktivitet(props.valgtAktivitet)}
                         href={endreAktivitetRoute(id)}
                         onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}
                     >
-                        <FormattedMessage id="aktivitetvisning.endre-knapp" />
+                        {/* Endrer for samtalereferat nå, vi faser over til å bruke teksten "Endre detaljer" for flere typer etter hvert*/}
+                        {SAMTALEREFERAT_TYPE === type ? 'Endre detaljer' : 'Endre'}
                     </InternLenke>
                 </div>
                 <VisningIngress aktivitetstype={type} />

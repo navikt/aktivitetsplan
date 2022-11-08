@@ -1,14 +1,14 @@
 import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import { compareAktivitet } from '../../../aktivitet/aktivitet-util';
 import AktivitetPrint from './AktivitetPrint';
 
 interface Props {
     tittel: string;
-    aktiviteter?: Aktivitet[];
+    aktiviteter?: AlleAktiviteter[];
     dialoger?: Dialog[];
 }
 

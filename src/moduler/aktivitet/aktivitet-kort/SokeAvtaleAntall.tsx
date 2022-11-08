@@ -1,19 +1,14 @@
 import React from 'react';
 
-import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../constant';
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { SokeavtaleAktivitet } from '../../../datatypes/internAktivitetTypes';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: SokeavtaleAktivitet;
 }
 
 export default function SokeAvtaleAntall({ aktivitet }: Props) {
-    const { antallStillingerSokes, antallStillingerIUken, type } = aktivitet;
-
-    if (type !== SOKEAVTALE_AKTIVITET_TYPE) {
-        return null;
-    }
+    const { antallStillingerSokes, antallStillingerIUken } = aktivitet;
 
     return (
         <div>

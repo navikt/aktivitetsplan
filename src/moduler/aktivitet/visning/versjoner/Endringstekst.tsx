@@ -2,7 +2,14 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Aktivitet, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import {
+    FellesTransaksjonsTyper,
+    MoteTransaksjonsType,
+    SamtaleReferatTransaksjonsType,
+    StillingFraNavTransaksjonsType,
+    StillingTransaksjonsType,
+} from '../../../../datatypes/transaksjonstyperTypes';
 import { formaterDatoKortManed } from '../../../../utils';
 import {
     aktivitetStatusMap,
@@ -14,8 +21,8 @@ import { hentBrukeravhengigTekst } from './brukeravhengigTekst';
 import styles from './Endringstekst.module.less';
 
 interface Props {
-    aktivitet: Aktivitet;
-    forrigeAktivitet?: Aktivitet;
+    aktivitet: VeilarbAktivitet;
+    forrigeAktivitet?: VeilarbAktivitet;
 }
 
 const Endringstekst = (props: Props) => {
@@ -29,23 +36,26 @@ const Endringstekst = (props: Props) => {
     );
 
     switch (aktivitet.transaksjonsType) {
-        case TransaksjonsType.MOTE_TID_OG_STED_ENDRET:
+        case MoteTransaksjonsType.MOTE_TID_OG_STED_ENDRET:
             return <>{brukeravhengigTekst} endret tid eller sted for møtet</>;
-        case TransaksjonsType.REFERAT_OPPRETTET:
+        case MoteTransaksjonsType.REFERAT_OPPRETTET:
+        case SamtaleReferatTransaksjonsType.REFERAT_OPPRETTET:
             return <>{brukeravhengigTekst} opprettet referat</>;
-        case TransaksjonsType.REFERAT_ENDRET:
+        case MoteTransaksjonsType.REFERAT_ENDRET:
+        case SamtaleReferatTransaksjonsType.REFERAT_ENDRET:
             return <>{brukeravhengigTekst} endret referatet</>;
-        case TransaksjonsType.REFERAT_PUBLISERT:
+        case MoteTransaksjonsType.REFERAT_PUBLISERT:
+        case SamtaleReferatTransaksjonsType.REFERAT_PUBLISERT:
             return <>{brukeravhengigTekst} delte referatet</>;
-        case TransaksjonsType.BLE_HISTORISK:
+        case FellesTransaksjonsTyper.BLE_HISTORISK:
             return <>Aktiviteten ble automatisk arkivert</>;
-        case TransaksjonsType.DETALJER_ENDRET:
+        case FellesTransaksjonsTyper.DETALJER_ENDRET:
             return <>{brukeravhengigTekst} endret detaljer på aktiviteten</>;
-        case TransaksjonsType.AVTALT:
+        case FellesTransaksjonsTyper.AVTALT:
             return <>{brukeravhengigTekst} merket aktiviteten som "Avtalt med NAV"</>;
-        case TransaksjonsType.OPPRETTET:
+        case FellesTransaksjonsTyper.OPPRETTET:
             return <>{brukeravhengigTekst} opprettet aktiviteten</>;
-        case TransaksjonsType.FORHAANDSORIENTERING_LEST: {
+        case FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST: {
             const sittEllerDitt = erBruker ? 'ditt' : 'sitt';
             return (
                 <>
@@ -53,7 +63,7 @@ const Endringstekst = (props: Props) => {
                 </>
             );
         }
-        case TransaksjonsType.AVTALT_DATO_ENDRET: {
+        case FellesTransaksjonsTyper.AVTALT_DATO_ENDRET: {
             const fraDatoString = formaterDatoKortManed(
                 forrigeAktivitet?.tilDato ? forrigeAktivitet.tilDato : 'ingen dato'
             );
@@ -64,7 +74,7 @@ const Endringstekst = (props: Props) => {
                 </>
             );
         }
-        case TransaksjonsType.STATUS_ENDRET: {
+        case FellesTransaksjonsTyper.STATUS_ENDRET: {
             const fraStatus = forrigeAktivitet ? aktivitetStatusMap[forrigeAktivitet?.status] : 'ingen';
             const tilStatus = aktivitetStatusMap[aktivitet?.status];
             return (
@@ -74,7 +84,7 @@ const Endringstekst = (props: Props) => {
             );
         }
 
-        case TransaksjonsType.ETIKETT_ENDRET: {
+        case StillingTransaksjonsType.ETIKETT_ENDRET: {
             const tilStatus = aktivitet.etikett ? stillingsEtikettMapper[aktivitet.etikett] : 'Ingen';
             return (
                 <>
@@ -82,21 +92,32 @@ const Endringstekst = (props: Props) => {
                 </>
             );
         }
-        case TransaksjonsType.DEL_CV_SVART: {
-            const svar = aktivitet.stillingFraNavData?.cvKanDelesData.kanDeles ? 'Ja' : 'Nei';
+        case StillingFraNavTransaksjonsType.DEL_CV_SVART: {
+            const svar = aktivitet.stillingFraNavData.cvKanDelesData?.kanDeles ? 'Ja' : 'Nei';
             return (
                 <>
                     {brukeravhengigTekst} svarte "{svar}" på spørsmålet "Er du interessert i denne stillingen?"
                 </>
             );
         }
-        case TransaksjonsType.SOKNADSSTATUS_ENDRET: {
+        case StillingFraNavTransaksjonsType.SOKNADSSTATUS_ENDRET: {
             const tilStatus = aktivitet.stillingFraNavData?.soknadsstatus
                 ? stillingFraNavSoknadsstatusMapper[aktivitet.stillingFraNavData.soknadsstatus]
                 : 'Ingen';
             return (
                 <>
                     {brukeravhengigTekst} endret tilstand til {tilStatus}
+                </>
+            );
+        }
+        case StillingFraNavTransaksjonsType.IKKE_FATT_JOBBEN: {
+            // Denne transaksjonen endrer også på aktivitetsstatus, som settes til fullført
+            const tilStatus = aktivitet.stillingFraNavData?.soknadsstatus
+                ? stillingFraNavSoknadsstatusMapper[aktivitet.stillingFraNavData.soknadsstatus]
+                : 'Ingen';
+            return (
+                <>
+                    {brukeravhengigTekst} avsluttet aktiviteten fordi kandidaten har {tilStatus}
                 </>
             );
         }

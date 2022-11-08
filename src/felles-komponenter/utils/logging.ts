@@ -1,20 +1,29 @@
 import shajs from 'sha.js';
 
-import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { AKTIVITET_BASE_URL } from '../../environment';
 
-interface Frontendlogger {
-    event: (name: string, fields: object, tags: object) => void;
+interface FrontendEvent {
+    name: string;
+    fields?: {};
+    tags?: {};
 }
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
-    const frontendlogger: Frontendlogger = (window as any).frontendlogger;
-    if (frontendlogger && frontendlogger.event) {
-        frontendlogger.event(eventNavn, feltObjekt || {}, tagObjekt || {});
-    } else {
-        // eslint-disable-next-line
-        console.log(eventNavn, { feltObjekt, tagObjekt });
-    }
+    const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
+    const url = `${AKTIVITET_BASE_URL}/logger/event`;
+    const config = {
+        headers: {
+            'Nav-Consumer-Id': 'aktivitetsplan',
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin' as const,
+        method: 'post',
+        body: JSON.stringify(event),
+    };
+    return fetch(url, config);
 }
 
 const FORHANDSORIENTERING_LOGGEVENT = 'aktivitetsplan.forhandsorientering';
@@ -94,7 +103,7 @@ export function metrikkTidForsteAvtalte(tid: number) {
     });
 }
 
-export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivitet, nyStatus: AktivitetStatus) {
+export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: VeilarbAktivitet, nyStatus: AktivitetStatus) {
     loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,

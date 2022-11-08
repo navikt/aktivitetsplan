@@ -1,14 +1,14 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { formaterDatoEllerTidSiden } from '../../../../utils';
 import Endringstekst from './Endringstekst';
 import styles from './VersjonInnslag.module.less';
 
 interface Props {
-    aktivitet: Aktivitet;
-    forrigeAktivitet?: Aktivitet;
+    aktivitet: VeilarbAktivitet;
+    forrigeAktivitet?: VeilarbAktivitet;
 }
 
 const VersjonInnslag = (props: Props) => {

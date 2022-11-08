@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../../constant';
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import styles from './Aktivitetsvisning.module.less';
@@ -15,7 +15,7 @@ import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
 import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     tillatEndring: boolean;
     laster: boolean;
     underOppfolging: boolean;
@@ -24,9 +24,7 @@ interface Props {
 function Aktivitetvisning(props: Props) {
     const { aktivitet, tillatEndring, laster, underOppfolging } = props;
 
-    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
-        aktivitet.type
-    );
+    const erArenaAktivitet = isArenaAktivitet(aktivitet);
 
     const visBegrunnelse = !erArenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
@@ -35,11 +33,9 @@ function Aktivitetvisning(props: Props) {
             <ModalContainer className="aktivitetvisning">
                 <VarslingBoks className={styles.underseksjon} aktivitet={aktivitet} />
 
-                <BegrunnelseBoks
-                    className={styles.underseksjon}
-                    begrunnelse={aktivitet.avsluttetKommentar}
-                    visible={visBegrunnelse}
-                />
+                {visBegrunnelse && aktivitet.avsluttetKommentar !== undefined ? (
+                    <BegrunnelseBoks className={styles.underseksjon} begrunnelse={aktivitet.avsluttetKommentar} />
+                ) : null}
 
                 <AktivitetinformasjonVisning
                     valgtAktivitet={aktivitet}
@@ -48,11 +44,16 @@ function Aktivitetvisning(props: Props) {
                     laster={laster}
                 />
 
-                <DeleCvContainer aktivitet={aktivitet} />
-                <ReferatContainer aktivitet={aktivitet} />
-                <Statusadministrasjon aktivitet={aktivitet} erArenaAktivitet={erArenaAktivitet} />
-                <DialogLenke aktivitet={aktivitet} skulDelelingje={erArenaAktivitet} />
-                <EndringsLogg aktivitet={aktivitet} hidden={erArenaAktivitet} />
+                {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
+                    <DeleCvContainer aktivitet={aktivitet} />
+                ) : null}
+                {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
+                aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
+                    <ReferatContainer aktivitet={aktivitet} />
+                ) : null}
+                <Statusadministrasjon aktivitet={aktivitet} />
+                <DialogLenke aktivitet={aktivitet} />
+                {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
             </ModalContainer>
         </div>
     );

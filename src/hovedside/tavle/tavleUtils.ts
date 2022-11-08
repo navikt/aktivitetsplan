@@ -1,17 +1,14 @@
-import {
-    GRUPPE_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
-    TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE,
-} from '../../constant';
-import { Aktivitet } from '../../datatypes/aktivitetTypes';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 
-export function erDroppbar(aktivitet: Aktivitet, erBruker: boolean, underOppfolging: boolean) {
-    const { type, status, nesteStatus, historisk } = aktivitet;
-    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
+export function erDroppbar(
+    aktivitet: AlleAktiviteter & { nesteStatus?: string },
+    erBruker: boolean,
+    underOppfolging: boolean
+) {
+    const { type, status, nesteStatus } = aktivitet;
+    const erArenaAktivitet = isArenaAktivitet(aktivitet);
+    const historisk = !erArenaAktivitet ? aktivitet.historisk : false;
     const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
     const brukerKanOppdater = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
     return underOppfolging && !nesteStatus && !historisk && !erFerdig && !erArenaAktivitet && !brukerKanOppdater;

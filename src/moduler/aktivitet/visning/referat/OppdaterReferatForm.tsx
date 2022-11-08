@@ -4,9 +4,10 @@ import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../api/utils';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
@@ -26,7 +27,7 @@ const validate = (val: string) => {
 };
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: MoteAktivitet | SamtalereferatAktivitet;
     onFerdig: () => void;
 }
 
@@ -76,7 +77,7 @@ const OppdaterReferatForm = (props: Props) => {
     const oppdaterOgPubliser = state.onSubmit((values) => {
         return onSubmit(values).then((response: { data: any }) => {
             if (response.data) {
-                dispatch(publiserReferat(response.data));
+                dispatch(publiserReferat(response.data) as unknown as AnyAction);
             }
         });
     });

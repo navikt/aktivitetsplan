@@ -1,6 +1,6 @@
 import { createBrowserHistory } from 'history';
 
-import { getFodselsnummer } from './utils/fnr-util';
+import { hentFnrFraUrl } from './utils/fnr-util';
 
 function nyURLHarQueryString(url) {
     return url.indexOf('?') !== -1;
@@ -9,7 +9,7 @@ function nyURLHarQueryString(url) {
 function prependBasePath(fn) {
     return (urlObj) => {
         const url = typeof urlObj === 'object' ? urlObj.pathname : urlObj;
-        const fodselsnummer = getFodselsnummer();
+        const fodselsnummer = hentFnrFraUrl();
         const urlParams = nyURLHarQueryString(url) ? '' : window.location.search;
         const fodselsnummerPath = `/${fodselsnummer}`;
         return fn.call(this, {
@@ -22,9 +22,9 @@ function prependBasePath(fn) {
     };
 }
 
-export default function createHistory() {
+export default function createHistory(contextPath) {
     const routerHistory = createBrowserHistory({
-        basename: window.appconfig.CONTEXT_PATH,
+        basename: contextPath
     });
 
     routerHistory.push = prependBasePath(routerHistory.push);

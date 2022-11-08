@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
@@ -25,36 +26,24 @@ export function widowEvent(update: UpdateTypes) {
     );
 }
 
-function isUpdateEvent(toBeDetermined: Event): toBeDetermined is CustomEvent<UpdateEventType> {
-    if ((toBeDetermined as CustomEvent<UpdateEventType>).type) {
-        return true;
-    }
-
-    return false;
-}
-
-export function UppdateEventHandler() {
+export function UpdateEventHandler() {
     const dispatch = useDispatch();
 
-    useEventListener(eventName, (event) => {
-        if (!isUpdateEvent(event)) {
-            return;
-        }
-
+    useEventListener<UpdateEventType>(eventName, (event) => {
         const updateType = event.detail.uppdate;
-        const avsennder = event.detail.avsender;
+        const avsender = event.detail.avsender;
 
-        if (avsennder === 'aktivitetsplan') {
+        if (avsender === 'aktivitetsplan') {
             return;
         }
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return dispatch(hentAktiviteter());
+                return dispatch(hentAktiviteter() as unknown as AnyAction);
             case UpdateTypes.Dialog:
-                return dispatch(hentDialog());
+                return dispatch(hentDialog() as unknown as AnyAction);
             case UpdateTypes.Oppfolging:
-                return dispatch(hentOppfolging());
+                return dispatch(hentOppfolging() as unknown as AnyAction);
         }
     });
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
@@ -12,18 +13,18 @@ import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import Routing, { PublicRouting } from '../routing';
-import { getFodselsnummer } from '../utils/fnr-util';
+import { hentFnrFraUrl } from '../utils/fnr-util';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(hentDialog());
-        dispatch(hentEskaleringsvarsel());
+        dispatch(hentDialog() as unknown as AnyAction);
+        dispatch(hentEskaleringsvarsel() as unknown as AnyAction);
     }, [dispatch]);
 
-    const fnr = getFodselsnummer();
+    const fnr = hentFnrFraUrl();
     return (
         <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">

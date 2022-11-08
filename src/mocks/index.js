@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import fetchMock from 'yet-another-fetch-mock';
+import fetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 
 import {
     aktiviteterData,
@@ -39,7 +39,7 @@ import { hentMalverkMedType } from './malverk';
 import { me } from './me';
 import { oppfoelgingsstatus } from './oppfoelgingsstatus';
 import getOppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
-import getPerson from './person';
+import getPerson, { getPostadresse } from './person';
 import getNivaa4 from './tilgang';
 import { fetchmockMiddleware, jsonResponse } from './utils';
 import { veilederMe } from './Veileder';
@@ -47,7 +47,11 @@ import { veilederTilgang } from './veilederTilgang';
 
 const mock = fetchMock.configure({
     enableFallback: false,
-    middleware: fetchmockMiddleware,
+    middleware: MiddlewareUtils.combine(
+        // MiddlewareUtils.delayMiddleware(2000),
+        // MiddlewareUtils.failurerateMiddleware(0.05),
+        fetchmockMiddleware
+    ),
 });
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
@@ -86,7 +90,7 @@ mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }, res, c
 mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }, res, ctx) =>
     res(ctx.json(stoppEskalering(body)))
 );
-mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(200)));
+mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204)));
 
 mock.post('/veilarboppfolging/api/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital));
 
@@ -183,8 +187,15 @@ mock.put(
     failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
 );
 
+mock.post('/veilarbaktivitet/api/logger/event', (req, res, ctx) => {
+    const { name, fields, tags } = req.body;
+    console.log('Event', name, 'Fields:', fields, 'Tags:', tags);
+    return res(ctx.status(200));
+});
+
 //veilarbperson-api
-mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }, res, ctx) => res(ctx.json(getPerson(pathParams.fnr))));
+mock.get('/veilarbperson/api/v2/person', ({ queryParams }, res, ctx) => res(ctx.json(getPerson(queryParams.fnr))));
+mock.get('/veilarbperson/api/v2/person/postadresse', ({ queryParams }, res, ctx) => res(ctx.json(getPostadresse())));
 mock.get('/veilarbperson/api/person/:fnr/harNivaa4', failOrGetResponse(nivaa4Feilet, getNivaa4));
 
 //veilarbmalverk-api

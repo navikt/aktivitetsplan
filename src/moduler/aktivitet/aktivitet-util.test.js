@@ -68,15 +68,29 @@ describe('aktivitet-util', () => {
         expect(formatterTelefonnummer('04545')).toEqual('04545');
     });
 
-    it('skallSplitteRiktigt', () => {
-        const mangladeTilDato = [{ tilDato: null }];
-        const tilDatoMerEnnToManederSiden = {
-            tilDato: moment().subtract(3, 'month').format(),
-        };
-        const tilDatoMindreEnnToManederSiden = { tilDato: moment().format() };
-        const aktiviteter = [mangladeTilDato, tilDatoMerEnnToManederSiden, tilDatoMindreEnnToManederSiden];
+    it('skal splitte basert på sorteringsdato hvor sorteringsdato er endretDato > tilDato > fraDato', () => {
+        const treManederSiden = moment().subtract(3, 'month').format();
+        const now = moment().format();
+
+        const manglerAlleDatoer = { endretDato: null, tilDato: null, fraDato: null };
+        const manglendeEndretDato = { endretDato: null, tilDato: null, fraDato: treManederSiden };
+        const bareNyereTilDato = { endretDato: null, tilDato: now, fraDato: null };
+        const bareEldreTilDato = { endretDato: null, tilDato: treManederSiden, fraDato: null };
+        const endretDatoMerEnnToManederSiden = { endretDato: treManederSiden, tilDato: now, fraDato: undefined };
+        const endretDatoMindreEnnToManederSiden = { endretDato: now, tilDato: treManederSiden, fraDato: null };
+
+        const aktiviteter = [
+            manglerAlleDatoer,
+            bareNyereTilDato,
+            bareEldreTilDato,
+            manglendeEndretDato,
+            endretDatoMerEnnToManederSiden,
+            endretDatoMindreEnnToManederSiden,
+        ];
+
         const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(aktiviteter);
-        expect(nyereAktiviteter).toEqual([mangladeTilDato, tilDatoMindreEnnToManederSiden]);
-        expect(eldreAktiviteter).toEqual([tilDatoMerEnnToManederSiden]);
+
+        expect(nyereAktiviteter).toEqual([manglerAlleDatoer, bareNyereTilDato, endretDatoMindreEnnToManederSiden]);
+        expect(eldreAktiviteter).toEqual([bareEldreTilDato, manglendeEndretDato, endretDatoMerEnnToManederSiden]);
     });
 });

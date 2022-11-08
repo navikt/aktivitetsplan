@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Aktivitet, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import aktivitetsvisningStyles from '../../Aktivitetsvisning.module.less';
 import DeleLinje from '../../delelinje/delelinje';
@@ -10,7 +11,7 @@ import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForha
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;
-    aktivitet: Aktivitet;
+    aktivitet: ArenaAktivitet;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 

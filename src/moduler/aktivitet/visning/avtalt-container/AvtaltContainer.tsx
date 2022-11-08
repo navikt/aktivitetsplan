@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-    GRUPPE_AKTIVITET_TYPE,
-    SAMTALEREFERAT_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
-    STILLING_FRA_NAV_TYPE,
-    TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE,
-} from '../../../../constant';
-import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT, STILLING_FRA_NAV_TYPE } from '../../../../constant';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import { selectErBruker, selectErVeileder } from '../../../identitet/identitet-selector';
 import ForhaandsorienteringsVisningsLinje from './ForhaandsorienteringsVisningsLinje';
 import FormContainer from './FormContainer';
@@ -18,13 +11,14 @@ import SattTilAvtaltVisning from './SattTilAvtaltVisning';
 
 interface Props {
     underOppfolging: boolean;
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     className: string;
 }
 
 const AvtaltContainer = (props: Props) => {
     const { underOppfolging, aktivitet } = props;
-    const { type, status, historisk, avtalt } = aktivitet;
+    const { type, status, avtalt } = aktivitet;
+    const historisk = 'historisk' in aktivitet ? aktivitet.historisk : false;
 
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState<ForhaandsorienteringType>(
@@ -38,7 +32,7 @@ const AvtaltContainer = (props: Props) => {
         aktivitet.forhaandsorientering && aktivitet.forhaandsorientering.type !== ForhaandsorienteringType.IKKE_SEND;
     const skalViseSattTilAvtalt = sendtAtErAvtaltMedNav;
 
-    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
+    const erArenaAktivitet = isArenaAktivitet(aktivitet);
     const aktivAktivitet = !historisk && underOppfolging && status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT;
     const harForhaandsorientering = erArenaAktivitet ? aktivitet.forhaandsorientering : avtalt;
 
@@ -57,27 +51,14 @@ const AvtaltContainer = (props: Props) => {
                 setSendtAtErAvtaltMedNav={() => setSendtAtErAvtaltMedNav(true)}
                 aktivitet={aktivitet}
                 setForhandsorienteringType={setForhandsorienteringType}
-                erArenaAktivitet={erArenaAktivitet}
             />
         );
     }
     if (skalViseSattTilAvtalt) {
-        return (
-            <SattTilAvtaltVisning
-                forhaandsorienteringstype={forhandsorienteringType}
-                aktivitet={aktivitet}
-                erArenaAktivitet={erArenaAktivitet}
-            />
-        );
+        return <SattTilAvtaltVisning forhaandsorienteringstype={forhandsorienteringType} aktivitet={aktivitet} />;
     }
 
-    return (
-        <ForhaandsorienteringsVisningsLinje
-            aktivitet={aktivitet}
-            erBruker={erBruker}
-            erArenaAktivitet={erArenaAktivitet}
-        />
-    );
+    return <ForhaandsorienteringsVisningsLinje aktivitet={aktivitet} erBruker={erBruker} />;
 };
 
 export default AvtaltContainer;

@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { STILLING_FRA_NAV_TYPE } from '../../../../../constant';
-import { Aktivitet } from '../../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../../datatypes/dialogTypes';
 import { createSelectDialogForAktivitetId } from '../../../../dialog/dialog-selector';
 import LenkeTilDialog from '../../../../dialog/DialogLink';
@@ -15,9 +15,8 @@ import DialogLenkeInnhold from './DialogLenkeInnhold';
 import styles from './Dialogunderelement.module.less';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     hidden?: boolean;
-    skulDelelingje: boolean;
 }
 
 function DialogPil(props: { antallUleste: number }) {
@@ -30,20 +29,21 @@ function DialogPil(props: { antallUleste: number }) {
 }
 
 function DialogLenke(props: Props) {
-    const { aktivitet, hidden, skulDelelingje } = props;
+    const { aktivitet, hidden } = props;
     const aktivitetId = aktivitet.id;
     const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitetId));
     const erVeileder: boolean = !!useSelector(selectErVeileder);
     const manuellBruker: boolean = useSelector(selectErBrukerManuell);
     const reservertKrr = useSelector(selectReservasjonKRR);
 
-    const skulVisIkkeDialog = manuellBruker || aktivitet.historisk || reservertKrr;
+    const historisk = isVeilarbAktivitet(aktivitet) ? aktivitet.historisk : false;
+    const skjulNyDialogLenke = manuellBruker ?? historisk ?? reservertKrr;
 
     if (hidden) {
         return null;
     }
 
-    if (skulVisIkkeDialog && !dialog) {
+    if (skjulNyDialogLenke && !dialog) {
         return null;
     }
 
@@ -65,7 +65,7 @@ function DialogLenke(props: Props) {
                 <DialogPil antallUleste={uleste} />
             </LenkeTilDialog>
 
-            <DeleLinje hidden={skulDelelingje} />
+            <DeleLinje hidden={isArenaAktivitet(aktivitet)} />
         </>
     );
 }

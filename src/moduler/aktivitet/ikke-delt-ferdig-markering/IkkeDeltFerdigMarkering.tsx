@@ -3,13 +3,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet } from '../../../datatypes/internAktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import visibleIfHOC from '../../../hocs/visible-if';
 import { selectErBruker } from '../../identitet/identitet-selector';
 import styles from './ikke-delt-ferdig-markering.module.less';
 
-export const SkalIkkeDeltFerdigMarkeringVises = ({ type, erReferatPublisert, referat }: Aktivitet): boolean => {
+export const SkalIkkeDeltFerdigMarkeringVises = (aktivitet: SamtalereferatAktivitet | MoteAktivitet): boolean => {
+    const { type, referat, erReferatPublisert } = aktivitet;
     const harIkkeDeltSamtalereferat = type === SAMTALEREFERAT_TYPE && !erReferatPublisert;
     const harMoteReferat = Boolean(referat);
     const harIkkedeltReferatFraMote = type === MOTE_TYPE && harMoteReferat && !erReferatPublisert;

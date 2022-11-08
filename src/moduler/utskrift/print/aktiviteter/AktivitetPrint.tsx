@@ -1,8 +1,9 @@
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { aktivitetTypeMap } from '../../../../utils/textMappers';
 import AvtaltMarkering from '../../../aktivitet/avtalt-markering/AvtaltMarkering';
 import StillingEtikett from '../../../aktivitet/etikett/StillingEtikett';
@@ -13,7 +14,7 @@ import AktivitetReferat from './AktivitetReferat';
 import ForhaandsorienteringPrint from './ForhaandsorienteringPrint';
 
 interface Props {
-    aktivitet: Aktivitet;
+    aktivitet: AlleAktiviteter;
     dialog?: Dialog;
 }
 
@@ -29,7 +30,10 @@ const AktivitetPrint = (props: Props) => {
                 {tittel}
             </Undertittel>
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
-            <AktivitetReferat aktivitet={aktivitet} />
+            {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
+            aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
+                <AktivitetReferat aktivitet={aktivitet} />
+            ) : null}
             <AvtaltMarkering hidden={!aktivitet.avtalt} className="etikett-print" />
             <ForhaandsorienteringPrint
                 forhaandsorienteringTekst={forhaandsorientering?.tekst}

@@ -1,4 +1,5 @@
 import { mount, shallow } from 'enzyme';
+import moment from 'moment';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
@@ -37,9 +38,8 @@ describe('MoteAktivitetForm', () => {
     it('Skal ikke vise feil når obligatoriske felter er oppgitt', () => {
         const aktivitet = {
             tittel: 'Dette er en test',
-            opprettetDato: '2019-08-31T05:00:00.000Z',
-            fraDato: '2019-08-31T05:00:00.000Z',
-            tilDato: '2019-08-31T06:00:00.000Z',
+            fraDato: moment().add(1, 'days').toISOString(),
+            tilDato: moment().add(1, 'days').add(45, 'minutes').toISOString(),
             type: MOTE_TYPE,
             adresse: 'Slottet',
             kanal: 'OPPMOTE',
@@ -59,6 +59,35 @@ describe('MoteAktivitetForm', () => {
         wrapper.simulate('submit');
         expect(wrapper.find('Feiloppsummering').length).toEqual(0);
     });
+
+    it('Skal vise feil når dato er tidligere enn i dag', () => {
+        const aktivitet = {
+            tittel: 'Anakromisme',
+            fraDato: moment().add(-1, 'years').toISOString(),
+            tilDato: moment().add(-1, 'years').add(45, 'minutes').toISOString(),
+            adresse: 'Fortiden',
+            erAvtalt: false,
+        };
+        const wrapper = mountWithIntl(
+            <MoteAktivitetForm
+                onSubmit={() => new Promise(() => null)}
+                isDirtyRef={dirtyRef}
+                aktivitet={aktivitet}
+                endre
+            />
+        );
+
+        wrapper.simulate('submit');
+
+        let feilmeldinger = wrapper
+            .find('Feiloppsummering')
+            .find(`ul.feiloppsummering__liste`)
+            .find('a')
+            .map((a) => a.text());
+
+        expect(feilmeldinger).toEqual(['Datoen må tidligst være i dag']);
+    });
+
     it('Skal populere felter når aktivitet er satt', () => {
         const aktivitet = {
             tittel: 'Dette er en test',

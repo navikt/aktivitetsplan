@@ -1,6 +1,7 @@
-import { ArenaEtikett } from '../datatypes/aktivitetTypes';
+import { AktivitetType } from '../datatypes/aktivitetTypes';
+import { ArenaEtikett } from '../datatypes/arenaAktivitetTypes';
 
-export const aktivitetTypeMap = {
+export const aktivitetTypeMap: Record<AktivitetType, string> = {
     EGEN: 'Jobbrettet egenaktivitet',
     STILLING: 'Stilling',
     TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
@@ -37,9 +38,11 @@ export const stillingsEtikettMapper = {
 
 export const stillingFraNavSoknadsstatusMapper = {
     VENTER: 'Venter på å bli kontaktet',
+    CV_DELT: 'CV er delt med arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
-    AVSLAG: 'Fått avslag',
+    AVSLAG: 'Ikke fått jobben',
+    IKKE_FATT_JOBBEN: 'Ikke fått jobben',
 };
 
 export const tiltakEtikettMapper = {

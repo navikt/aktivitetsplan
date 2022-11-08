@@ -1,4 +1,4 @@
-import { getFodselsnummer } from '../utils/fnr-util';
+import { hentFnrFraUrl } from '../utils/fnr-util';
 
 /* eslint-env browser */
 export const STATUS = {
@@ -78,18 +78,6 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                         melding: parseError(data),
                     },
                 });
-                const errorData = JSON.parse(data);
-
-                if (window.frontendlogger) {
-                    window.frontendlogger.error({
-                        message: [
-                            error.stack,
-                            `Id: ${errorData.id}`,
-                            `Type: ${errorData.type} ${errorData.detaljer ? errorData.detaljer.detaljertType : ''}`,
-                            errorData.detaljer ? errorData.detaljer.stackTrace : '',
-                        ].join('\n'),
-                    });
-                }
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
@@ -117,10 +105,15 @@ const defaultHeaders = {
     'Nav-Consumer-Id': 'aktivitetsplan',
 };
 
+export function fetchToJsonPlain(url, config = { headers: defaultHeaders }) {
+    const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
+    return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
+}
+
 export function fetchToJson(url, config = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 
-    const fodselsnummer = getFodselsnummer();
+    const fodselsnummer = hentFnrFraUrl();
     let fetchUrl = url;
     if (fodselsnummer) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fodselsnummer}`;

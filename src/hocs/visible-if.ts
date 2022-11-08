@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentClass, FunctionComponent } from 'react';
 
 import { fn } from '../utils';
 
@@ -9,15 +9,17 @@ interface Props {
 }
 
 // Todo deprecate it
-export default function visibleIfHOC<P>(Component: React.ComponentType<P>) {
-    return class WithVisibleIf extends React.Component<P & Props> {
+export default function visibleIfHOC<PropsType extends {}>(
+    Component: FunctionComponent<PropsType> | ComponentClass<PropsType, any>
+) {
+    return class WithVisibleIf extends React.Component<PropsType & Props> {
         render() {
             const { visible, ...props } = this.props;
 
             // This fn is a bad idea. Never do this
             const isVisible = fn(visible)(props);
             if (isVisible || isVisible === undefined) {
-                return React.createElement(Component, props as P);
+                return React.createElement<PropsType>(Component, props as PropsType);
             }
             return null;
         }

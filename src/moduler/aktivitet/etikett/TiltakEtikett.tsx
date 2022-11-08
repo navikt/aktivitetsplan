@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { AlleAktiviteter, ArenaEtikett, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
+import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import { tiltakEtikettMapper } from '../../../utils/textMappers';
 import styles from './etikett.module.less';
@@ -16,7 +17,7 @@ const getCls = (etikettnavn: ArenaEtikett): string => {
             return styles.navLysBlaLighten60;
         case ArenaEtikett.AVSLAG:
         case ArenaEtikett.IKKAKTUELL:
-            return styles.navGra20;
+            return styles.gray200;
         case ArenaEtikett.IKKEM:
         case ArenaEtikett.NEITAKK:
             return styles.navOransjeLighten60;

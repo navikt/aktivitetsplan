@@ -5,8 +5,9 @@ import { RadioGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
 import { formaterDatoManed } from '../../../../utils';
@@ -26,7 +27,7 @@ enum SvarType {
 }
 
 interface PropTypes {
-    aktivitet: Aktivitet;
+    aktivitet: StillingFraNavAktivitet;
 }
 
 type KanDeles = {
@@ -74,7 +75,14 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     };
 
     const onSubmit = (data: KanDeles) => {
-        dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, data.kanDeles === SvarType.JA, data.avtaltDato));
+        dispatch(
+            oppdaterCVSvar(
+                aktivitet.id,
+                aktivitet.versjon,
+                data.kanDeles === SvarType.JA,
+                data.avtaltDato
+            ) as unknown as AnyAction
+        );
         return Promise.resolve();
     };
 
