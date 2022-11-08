@@ -50,7 +50,7 @@ export function aktivitetFilter(aktivitet: AlleAktiviteter, state: any) {
     if (erAktivtFilter(aktivitetTypeFilter) && !aktivitetTypeFilter[aktivitet.type]) {
         if (
             aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
-            !aktivitetTypeFilter[aktivitet.eksternAktivitetData.type]
+            !aktivitetTypeFilter[aktivitet.eksternAktivitet.type]
         ) {
             return false;
         }

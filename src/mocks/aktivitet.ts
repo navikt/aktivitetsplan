@@ -460,7 +460,7 @@ export function wrapAktivitet(aktivitet: any) {
         erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
         forhaandsorientering: valueOrNull(aktivitet.forhaandsorientering),
         stillingFraNavData: valueOrNull(aktivitet.stillingFraNavData),
-        eksternAktivitetData: valueOrNull(aktivitet.eksternAktivitetData),
+        eksternAktivitet: valueOrNull(aktivitet.eksternAktivitet),
     };
 }
 

@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
         const { type } = aktivitet;
         if (type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
-            typer[aktivitet.eksternAktivitetData.type] = aktivitetTyperFilter[aktivitet.eksternAktivitetData.type];
+            typer[aktivitet.eksternAktivitet.type] = aktivitetTyperFilter[aktivitet.eksternAktivitet.type];
         } else {
             typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
         }
