@@ -49,14 +49,14 @@ export interface Props {
 
 const EksterneEtiketter = (props: Props) => {
     const { aktivitet, className } = props;
-    const { etiketter, subtype } = aktivitet.eksternAktivitetData;
+    const { etiketter, type } = aktivitet.eksternAktivitetData;
 
     if (!etiketter) return null;
 
     return (
         <>
             {etiketter
-                .map((etikett) => getEtikettByKode(subtype, etikett.kode))
+                .map((etikett) => getEtikettByKode(type, etikett.kode))
                 .map((eksternEtikett, i) => {
                     return !!eksternEtikett ? (
                         <EtikettBase className={classNames(eksternEtikett[1], className)} key={i}>
