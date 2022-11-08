@@ -34,7 +34,7 @@ function Aktivitetvisning(props: Props) {
             <ModalContainer className="aktivitetvisning">
                 <VarslingBoks className={styles.underseksjon} aktivitet={aktivitet} />
 
-                {visBegrunnelse && aktivitet.avsluttetKommentar !== undefined ? (
+                {visBegrunnelse && aktivitet.avsluttetKommentar ? (
                     <BegrunnelseBoks className={styles.underseksjon} begrunnelse={aktivitet.avsluttetKommentar} />
                 ) : null}
 
