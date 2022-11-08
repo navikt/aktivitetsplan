@@ -1,6 +1,7 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../../api/utils';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
@@ -48,9 +49,9 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const onMarkerSomLest = () => {
         if (erArenaAktivitet) {
-            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet));
+            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet) as unknown as AnyAction);
         } else {
-            dispatch(markerForhaandsorienteringSomLest(aktivitet));
+            dispatch(markerForhaandsorienteringSomLest(aktivitet) as unknown as AnyAction);
         }
         loggForhaandsorienteringLest(aktivitet.type, true);
     };

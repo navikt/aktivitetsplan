@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useDrag } from 'react-dnd';
+import { DragSourceMonitor, useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
@@ -18,19 +18,19 @@ function DragbartAktivitetskort(props: Props) {
     const dispatch = useDispatch();
 
     const [collectedProps, drag] = useDrag({
-        item: { aktivitet, type: DROP_TYPE },
-        begin: () => {
+        type: DROP_TYPE,
+        item: () => {
             // Trenger dette fordi uten så går det ikke å dra noe bak advarsel-popup
             setTimeout(() => dispatch(startDragging(aktivitet)));
             return { aktivitet, type: DROP_TYPE };
         },
         end: () => dispatch(stopDragging()),
-        collect: (monitor) => ({
+        collect: (monitor: DragSourceMonitor<unknown, unknown>) => ({
             isDragging: monitor.isDragging(),
         }),
     });
 
-    const className = classNames(collectedProps.isDragging && styles.drag, styles.flyttbar);
+    const className = classNames((collectedProps as any).isDragging && styles.drag, styles.flyttbar);
 
     return (
         <div ref={drag}>

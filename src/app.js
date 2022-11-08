@@ -17,20 +17,19 @@ function isValueOrGetDefault(value, defaultValue) {
 
 export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
+const history = createHistory(getContextPath())
+// NOTE: This is bad, don't use it if you dont HAVE to.
+window.appconfig = window.appconfig || {};
+const path = window.appconfig.CONTEXT_PATH === '' ? '' : getContextPath();
+window.appconfig = {
+    CONTEXT_PATH: path,
+    TILLAT_SET_AVTALT: isValueOrGetDefault(window.appconfig.TILLAT_SET_AVTALT, true),
+    FNR_I_URL: isValueOrGetDefault(window.appconfig.FNR_I_URL, true),
+    VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
+    TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
+};
+
 function App({ fnr, key }) {
-    // NOTE: This is bad, don't use it if you dont HAVE to.
-    window.appconfig = window.appconfig || {};
-    const path = window.appconfig.CONTEXT_PATH === '' ? '' : getContextPath();
-    window.appconfig = {
-        CONTEXT_PATH: path,
-        TILLAT_SET_AVTALT: isValueOrGetDefault(window.appconfig.TILLAT_SET_AVTALT, true),
-        FNR_I_URL: isValueOrGetDefault(window.appconfig.FNR_I_URL, true),
-        VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
-        TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
-    };
-
-    const history = createHistory();
-
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <Provider key={fnr + key}>

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
@@ -58,7 +59,7 @@ const ReferatContainer = (props: Props) => {
                     referat={referat}
                     erAktivAktivitet={erAktivAktivitet}
                     erVeileder={erVeileder}
-                    dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
+                    dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
                     publiserer={publiserer}
                     erReferatPublisert={erReferatPublisert}
                     startOppdaterReferat={() => setOppdaterReferat(true)}

@@ -2,6 +2,7 @@ import { Values } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../../api/utils';
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
@@ -35,7 +36,7 @@ const AvtaltFormContainer = (props: Props) => {
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) =>
-        dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering));
+        dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering) as unknown as AnyAction);
 
     const onSubmit: Handler = (avtaltFormMapped: Values<ForhaandsorienteringDialogProps>) => {
         const avtaltForm: ForhaandsorienteringDialogProps = avtaltFormMapped as ForhaandsorienteringDialogProps;
