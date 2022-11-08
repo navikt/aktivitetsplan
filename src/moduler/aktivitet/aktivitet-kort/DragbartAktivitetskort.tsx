@@ -18,8 +18,8 @@ function DragbartAktivitetskort(props: Props) {
     const dispatch = useDispatch();
 
     const [collectedProps, drag] = useDrag({
-        item: { aktivitet, type: DROP_TYPE },
-        begin: () => {
+        type: DROP_TYPE,
+        item: () => {
             // Trenger dette fordi uten så går det ikke å dra noe bak advarsel-popup
             setTimeout(() => dispatch(startDragging(aktivitet)));
             return { aktivitet, type: DROP_TYPE };
@@ -28,7 +28,7 @@ function DragbartAktivitetskort(props: Props) {
         collect: (monitor: DragSourceMonitor<unknown, unknown>) => ({
             isDragging: monitor.isDragging(),
         }),
-    } as any);
+    });
 
     const className = classNames((collectedProps as any).isDragging && styles.drag, styles.flyttbar);
 

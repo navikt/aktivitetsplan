@@ -16,7 +16,8 @@
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
     "format-all": "prettier --write 'src/'",
-    "lint": "echo \"Not implemented\""
+    "lint": "echo \"Not implemented\"",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@navikt/ds-icons": "^1.5.4",
@@ -28,7 +29,7 @@
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.6",
-    "history": "^5.3.0",
+    "history": "^4.10.1",
     "intl": "^1.2.5",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.29.4",
