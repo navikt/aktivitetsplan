@@ -28,19 +28,19 @@ moment.updateLocale('nb', {
 
 if (process.env.REACT_APP_MOCK === 'true') {
     const path = window.location.pathname;
-    const fnr = 12345678910;
+    const fnr = "12345678910";
 
     console.log({path});
     console.log(`${window.location.href}`);
 
     if (erEksternBruker()) {
         if (path.includes(fnr)) {
-            window.history.replaceState({}, '', `${process.env.PUBLIC_URL}/`);
+            window.history.replaceState({}, '', `/`);
         }
         window.appconfig = eksternBrukerConfig;
     } else if (!erEksternBruker()) {
         if (!path.includes(fnr)) {
-            window.history.replaceState({}, '', `${process.env.PUBLIC_URL}/${fnr}/`);
+            window.history.replaceState({}, '', `${fnr}/`);
         }
         window.appconfig = veilederConfig;
     }
