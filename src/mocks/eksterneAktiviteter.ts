@@ -21,7 +21,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                           { label: 'Deltakelse', verdi: '95.6%' },
                           { label: 'Antall dager per uke', verdi: '5' },
                       ],
-                      etiketter: [{ kode: 'AKTUELL' }, { kode: 'AVSLAG' }],
+                      etiketter: [{ kode: 'SOKT_INN' }, { kode: 'AVSLAG' }],
                   },
               }),
           }),

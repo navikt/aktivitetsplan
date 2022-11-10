@@ -5,34 +5,37 @@ import { EksternAktivitet, EksternAktivitetType } from '../../../datatypes/inter
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import styles from './etikett.module.less';
 
-type EksternEtikett = readonly [string, string] | undefined;
+interface EksternEtikett {
+    tekst: string;
+    style: string;
+}
 
-const arenaTiltakEtikettKodeMapper = (kode: string): EksternEtikett => {
+const arenaTiltakEtikettKodeMapper = (kode: string): EksternEtikett | undefined => {
     switch (kode) {
         case 'SOKT_INN':
-            return ['Søkt inn på tiltaket', styles.navLysBlaLighten60] as const;
+            return { tekst: 'Søkt inn på tiltaket', style: styles.navLysBlaLighten60 };
         case 'AVSLAG':
-            return ['Fått avslag', styles.navLysBlaLighten60] as const;
+            return { tekst: 'Fått avslag', style: styles.navLysBlaLighten60 };
         case 'IKKE_AKTUELL':
-            return ['Ikke aktuell for tiltaket', styles.gray200] as const;
+            return { tekst: 'Ikke aktuell for tiltaket', style: styles.gray200 };
         case 'IKKE_MOETT':
-            return ['Ikke møtt på tiltaket', styles.navOransjeLighten60] as const;
+            return { tekst: 'Ikke møtt på tiltaket', style: styles.navOransjeLighten60 };
         case 'INFOMOETE':
-            return ['Infomøte før tiltaket', styles.navLysBlaLighten60] as const;
+            return { tekst: 'Infomøte før tiltaket', style: styles.navLysBlaLighten60 };
         case 'TAKKET_JA':
-            return ['Takket ja til tilbud', styles.navLysBlaLighten60] as const;
+            return { tekst: 'Takket ja til tilbud', style: styles.navLysBlaLighten60 };
         case 'TAKKET_NEI':
-            return ['Takket nei til tilbud', styles.navOransjeLighten60] as const;
+            return { tekst: 'Takket nei til tilbud', style: styles.navOransjeLighten60 };
         case 'FATT_PLASS':
-            return ['Fått plass på tiltaket', styles.navLysBlaLighten60] as const;
+            return { tekst: 'Fått plass på tiltaket', style: styles.navLysBlaLighten60 };
         case 'VENTELISTE':
-            return ['På venteliste', styles.navLysBlaLighten60] as const;
+            return { tekst: 'På venteliste', style: styles.navLysBlaLighten60 };
         default:
             return undefined;
     }
 };
 
-const getEtikettByKode = (type: EksternAktivitetType, kode: string): EksternEtikett => {
+const getEtikettByKode = (type: EksternAktivitetType, kode: string): EksternEtikett | undefined => {
     switch (type) {
         case EksternAktivitetType.ARENA_TILTAK_TYPE:
             return arenaTiltakEtikettKodeMapper(kode);
@@ -59,8 +62,8 @@ const EksterneEtiketter = (props: Props) => {
                 .map((etikett) => getEtikettByKode(type, etikett.kode))
                 .map((eksternEtikett, i) => {
                     return !!eksternEtikett ? (
-                        <EtikettBase className={classNames(eksternEtikett[1], className)} key={i}>
-                            {eksternEtikett[0]}
+                        <EtikettBase className={classNames(eksternEtikett.style, className)} key={i}>
+                            {eksternEtikett.tekst}
                         </EtikettBase>
                     ) : null;
                 })}
