@@ -40,7 +40,7 @@ if (process.env.REACT_APP_MOCK === 'true') {
         window.appconfig = eksternBrukerConfig;
     } else if (!erEksternBruker()) {
         if (!path.includes(fnr)) {
-            window.history.replaceState({}, '', `${process.env.PUBLIC_URL}/${fnr}`);
+            window.history.replaceState({}, '', `${process.env.PUBLIC_URL}/${fnr}/`);
         }
         window.appconfig = veilederConfig;
     }
