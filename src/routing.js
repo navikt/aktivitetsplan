@@ -7,27 +7,19 @@ import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 
-function getPathWithBase(path) {
-    console.log("getPathWithBase");
-    console.log({path});
-
-    const fnriurl = window.appconfig.FNR_I_URL;
-
-    console.log({fnriurl});
-
-    if (fnriurl) {
-        return `/:fnr${path}`;
-    }
-    return path;
+const Fallback = (props) => {
+    console.log({ fallback: props })
+    return <div>lol</div>
 }
 
-const Routing = ({ location }) => (
-    <Switch location={location}>
-        <Route path={getPathWithBase('/mal')} component={Aktivitetsmal} />
-        <Route path={getPathWithBase('/aktivitet')} component={AktivitetRoutes} />
-        <Route path={getPathWithBase('/utskrift')} component={AktivitetsplanPrint} />
-    </Switch>
-);
+const Routing = () => {
+    return (<Switch>
+        <Route path={'/mal'} component={Aktivitetsmal}/>
+        <Route path={'/aktivitet'} component={AktivitetRoutes}/>
+        <Route path={'/utskrift'} component={AktivitetsplanPrint}/>
+        <Route path={"/12345678910"} component={Fallback} />
+    </Switch>)
+};
 
 Routing.propTypes = {
     location: PT.object.isRequired,
@@ -36,7 +28,7 @@ Routing.propTypes = {
 function Public({ location }) {
     return (
         <Switch location={location}>
-            <Route path={getPathWithBase('/informasjon')} component={InformasjonModal} />
+            <Route path={'/informasjon'} component={InformasjonModal} />
         </Switch>
     );
 }

@@ -26,8 +26,5 @@ export default function createHistory(contextPath) {
     const routerHistory = createBrowserHistory({
         basename: contextPath
     });
-
-    routerHistory.push = prependBasePath(routerHistory.push);
-    routerHistory.replace = prependBasePath(routerHistory.replace);
     return routerHistory;
 }
