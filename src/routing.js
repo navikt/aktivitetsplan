@@ -8,7 +8,14 @@ import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 
 function getPathWithBase(path) {
-    if (window.appconfig.FNR_I_URL) {
+    console.log("getPathWithBase");
+    console.log({path});
+
+    const fnriurl = window.appconfig.FNR_I_URL;
+
+    console.log({fnriurl});
+
+    if (fnriurl) {
         return `/:fnr${path}`;
     }
     return path;

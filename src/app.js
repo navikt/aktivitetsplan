@@ -2,7 +2,7 @@ import './index.less';
 
 import PT from 'prop-types';
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { Router, HashRouter } from 'react-router-dom';
 
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import createHistory from './history';
@@ -29,15 +29,26 @@ window.appconfig = {
     TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
 };
 
+function HashRouterIfGHPages(props) {
+
+
+    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
+        const generertbasename = props.fnr ?? undefined;
+        console.log({generertbasename})
+        return <HashRouter basename={generertbasename}>{props.children}</HashRouter>
+    }
+    return <Router history={history}>{props.children}</Router>;
+}
+
 function App({ fnr, key }) {
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <Provider key={fnr + key}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
-                        <Router basename={process.env.PUBLIC_URL} history={history}>
+                        <HashRouterIfGHPages fnr={fnr}>
                             <Hovedside />
-                        </Router>
+                        </HashRouterIfGHPages>
                         <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
                         </HiddenIf>
