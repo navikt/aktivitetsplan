@@ -2,6 +2,10 @@ import * as Api from '../../api/aktivitetAPI';
 import { doThenDispatch } from '../../api/utils';
 import * as statuskoder from '../../constant';
 import * as AT from './aktivitet-action-types';
+import {SamtalereferatAktivitet, VeilarbAktivitet} from "../../datatypes/internAktivitetTypes";
+import {AktivitetStatus, StillingFraNavSoknadsstatus} from "../../datatypes/aktivitetTypes";
+import {ReduxDispatch} from "../../felles-komponenter/hooks/useReduxDispatch";
+import {Forhaandsorientering} from "../../datatypes/forhaandsorienteringTypes";
 
 export function hentAktiviteter() {
     return doThenDispatch(() => Api.hentAktiviteter(), {
@@ -11,7 +15,7 @@ export function hentAktiviteter() {
     });
 }
 
-export function hentAktivitet(aktivitetId) {
+export function hentAktivitet(aktivitetId: string) {
     return doThenDispatch(() => Api.hentAktivitet(aktivitetId), {
         OK: AT.HENT_AKTIVITET_OK,
         FEILET: AT.HENT_AKTIVITET_FEILET,
@@ -19,8 +23,8 @@ export function hentAktivitet(aktivitetId) {
     });
 }
 
-export function flyttAktivitet(aktivitet, status) {
-    return (dispatch) => {
+export function flyttAktivitet(aktivitet: VeilarbAktivitet, status: AktivitetStatus) {
+    return (dispatch: ReduxDispatch) => {
         dispatch({ type: AT.FLYTTER, data: { aktivitet, status } });
         return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
             .then((response) => {
@@ -34,7 +38,7 @@ export function flyttAktivitet(aktivitet, status) {
     };
 }
 
-export function oppdaterAktivitetEtikett(aktivitet) {
+export function oppdaterAktivitetEtikett(aktivitet: VeilarbAktivitet) {
     return doThenDispatch(() => Api.oppdaterAktivitetEtikett(aktivitet), {
         OK: AT.OPPDATER_OK,
         FEILET: AT.OPPDATER_FEILET,
@@ -42,7 +46,7 @@ export function oppdaterAktivitetEtikett(aktivitet) {
     });
 }
 
-export function oppdaterAktivitet(aktivitet) {
+export function oppdaterAktivitet(aktivitet: VeilarbAktivitet) {
     return doThenDispatch(() => Api.oppdaterAktivitet(aktivitet), {
         OK: AT.OPPDATER_OK,
         FEILET: AT.OPPDATER_FEILET,
@@ -50,7 +54,7 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
-export function settAktivitetTilAvtalt(aktivitet, forhaandsorientering) {
+export function settAktivitetTilAvtalt(aktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) {
     return doThenDispatch(() => Api.settAktivitetTilAvtalt(aktivitet.id, aktivitet.versjon, forhaandsorientering), {
         OK: AT.FHO_BEKREFT_OK,
         FEILET: AT.FHO_BEKREFT_FEILET,
@@ -58,7 +62,7 @@ export function settAktivitetTilAvtalt(aktivitet, forhaandsorientering) {
     });
 }
 
-export function markerForhaandsorienteringSomLest(aktivitet) {
+export function markerForhaandsorienteringSomLest(aktivitet: VeilarbAktivitet) {
     return doThenDispatch(() => Api.markerForhaandsorienteringSomLest(aktivitet.id, aktivitet.versjon), {
         OK: AT.FHO_LEST_OK,
         FEILET: AT.FHO_LEST_FEILET,
@@ -66,22 +70,22 @@ export function markerForhaandsorienteringSomLest(aktivitet) {
     });
 }
 
-export function flyttAktivitetMedBegrunnelse(aktivitet, status, avsluttetKommentar) {
+export function flyttAktivitetMedBegrunnelse(aktivitet: VeilarbAktivitet, status: AktivitetStatus, avsluttetKommentar: string) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, status);
 }
 
-export function avbrytAktivitet(aktivitet, avsluttetKommentar) {
+export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);
 }
 
-export function fullforAktivitet(aktivitet, avsluttetKommentar) {
+export function fullforAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, statuskoder.STATUS_FULLFOERT);
 }
 
-export function oppdaterCVSvar(aktivitetId, aktivitetVersjon, kanDeles, avtaltDato) {
+export function oppdaterCVSvar(aktivitetId: string, aktivitetVersjon: string, kanDeles: boolean, avtaltDato: string) {
     return doThenDispatch(() => Api.oppdaterCvKanDelesSvar(aktivitetId, aktivitetVersjon, kanDeles, avtaltDato), {
         OK: AT.OPPDATER_CV_SVAR_OK,
         PENDING: AT.OPPDATER_CV_SVAR_PENDING,
@@ -89,7 +93,7 @@ export function oppdaterCVSvar(aktivitetId, aktivitetVersjon, kanDeles, avtaltDa
     });
 }
 
-export function oppdaterStillingFraNavSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus) {
+export function oppdaterStillingFraNavSoknadsstatus(aktivitetId: string, aktivitetVersjon: string, soknadsstatus: StillingFraNavSoknadsstatus) {
     return doThenDispatch(() => Api.oppdaterStillingFraNavSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus), {
         OK: AT.OPPDATER_OK,
         FEILET: AT.OPPDATER_FEILET,
@@ -97,7 +101,7 @@ export function oppdaterStillingFraNavSoknadsstatus(aktivitetId, aktivitetVersjo
     });
 }
 
-export function lagNyAktivitet(aktivitet) {
+export function lagNyAktivitet(aktivitet: Partial<VeilarbAktivitet>) {
     return doThenDispatch(() => Api.lagNyAktivitet(aktivitet), {
         OK: AT.OPPRETTET,
         FEILET: AT.OPPRETT_FEILET,
@@ -105,7 +109,7 @@ export function lagNyAktivitet(aktivitet) {
     });
 }
 
-export function oppdaterReferat(aktivitet) {
+export function oppdaterReferat(aktivitet: SamtalereferatAktivitet) {
     return doThenDispatch(() => Api.oppdaterReferat(aktivitet), {
         OK: AT.OPPDATER_REFERAT_OK,
         FEILET: AT.OPPDATER_REFERAT_FEILET,
@@ -113,7 +117,7 @@ export function oppdaterReferat(aktivitet) {
     });
 }
 
-export function publiserReferat(aktivitet) {
+export function publiserReferat(aktivitet: SamtalereferatAktivitet) {
     return doThenDispatch(() => Api.publiserReferat({ ...aktivitet, erReferatPublisert: true }), {
         OK: AT.PUBLISER_REFERAT_OK,
         FEILET: AT.PUBLISER_REFERAT_FEILET,

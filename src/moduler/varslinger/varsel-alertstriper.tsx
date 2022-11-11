@@ -7,7 +7,12 @@ import { FormattedMessage } from 'react-intl';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
 
-export function Varsling({ tekstId, className }) {
+interface VarslingProps {
+    tekstId: string,
+    className: string
+}
+
+export function Varsling({ tekstId, className }: VarslingProps) {
     return (
         <AlertStripeInfo className={className}>
             <FormattedMessage id={tekstId} />
@@ -24,7 +29,13 @@ Varsling.propTypes = {
     className: PT.string,
 };
 
-export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className, onClick }) {
+interface VarslingMedLenkeProps extends VarslingProps {
+    lenkeTekstId: string,
+    href: string,
+    onClick: () => void
+}
+
+export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className, onClick }: VarslingMedLenkeProps) {
     return (
         <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} />
@@ -49,7 +60,12 @@ VarslingMedLenke.propTypes = {
     onClick: PT.func,
 };
 
-export function AdvarselVarsling({ tekst, className }) {
+interface AdvarselVarslingProps {
+    tekst: string,
+    className: string
+}
+
+export function AdvarselVarsling({ tekst, className }: AdvarselVarslingProps) {
     return <AlertStripeAdvarsel className={className}>{tekst}</AlertStripeAdvarsel>;
 }
 
@@ -62,7 +78,11 @@ AdvarselVarsling.propTypes = {
     className: PT.string,
 };
 
-export function AdvarselMedLenkeVarsling({ tekstId, lenkeTekstId, href, className, onClick, values }) {
+interface AdvarselMedLenkeVarsling extends VarslingMedLenkeProps {
+    values: Record<string, string>
+}
+
+export function AdvarselMedLenkeVarsling({ tekstId, lenkeTekstId, href, className, onClick, values }: AdvarselMedLenkeVarsling) {
     return (
         <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} values={values} />
@@ -91,5 +111,4 @@ AdvarselMedLenkeVarsling.propTypes = {
     values: PT.object,
 };
 
-export const HiddenIfVarslingMedLenke = hiddenIf(VarslingMedLenke);
 export const HiddenIfAdvarselMedLenke = hiddenIf(AdvarselMedLenkeVarsling);

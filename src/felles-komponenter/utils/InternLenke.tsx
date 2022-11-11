@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ReactNode } from 'react';
+import React, {MouseEventHandler, ReactNode} from 'react';
 import { Link } from 'react-router-dom';
 
 import { hentFnrFraUrl } from '../../utils/fnr-util';
@@ -15,7 +15,7 @@ interface InternLenkeProps {
     className?: string;
     skipLenkeStyling?: boolean;
     children?: ReactNode;
-    onClick?: () => void;
+    onClick?: MouseEventHandler;
     role?: string;
     hidden?: boolean;
     disabled?: boolean;

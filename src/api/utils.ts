@@ -1,3 +1,6 @@
+import { AnyAction, Dispatch } from 'redux';
+
+import { ReduxDispatch } from '../felles-komponenter/hooks/useReduxDispatch';
 import { hentFnrFraUrl } from '../utils/fnr-util';
 
 /* eslint-env browser */
@@ -9,36 +12,38 @@ export const STATUS = {
     ERROR: 'ERROR',
 };
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: RequestInit = {
     credentials: 'same-origin',
 };
 
-const statusPrioritet = {
-    ERROR: 5,
-    NOT_STARTED: 4,
-    PENDING: 3,
-    RELOADING: 2,
-    OK: 1,
-};
+enum StatusPrioritet {
+    ERROR = 5,
+    NOT_STARTED = 4,
+    PENDING = 3,
+    RELOADING = 2,
+    OK = 1,
+}
 
-export function aggregerStatus(...reducereEllerStatuser) {
+export function aggregerStatus(...reducereEllerStatuser: (StatusPrioritet | { status: StatusPrioritet })[]) {
+    // TODO: Make sure this works
     return reducereEllerStatuser.reduce((a, b) => {
-        const aStatus = a && (a.status || a);
-        const bStatus = b && (b.status || b);
-        return (statusPrioritet[aStatus] || 0) > (statusPrioritet[bStatus] || 0) ? aStatus : bStatus;
+        const aStatus = typeof a !== 'number' ? a.status : a;
+        const bStatus = typeof b !== 'number' ? b.status : b;
+        return (StatusPrioritet[aStatus] || 0) > (StatusPrioritet[bStatus] || 0) ? aStatus : bStatus;
     });
 }
 
-export function sjekkStatuskode(response) {
+export function sjekkStatuskode(response: Response) {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
     const error = new Error(response.statusText || response.type);
-    error.response = response;
+    // IKKJE BRA!
+    (error as any).response = response;
     throw error;
 }
 
-export function toJson(response) {
+export function toJson(response: Response) {
     if (response.status !== 204) {
         // No content
         return response.json();
@@ -46,8 +51,8 @@ export function toJson(response) {
     return response;
 }
 
-export function sendResultatTilDispatch(dispatch, action) {
-    return (...data) => {
+export function sendResultatTilDispatch(dispatch: ReduxDispatch, action: AnyAction) {
+    return (...data: any[]) => {
         if (data.length === 1) {
             return dispatch({ type: action, data: data[0] });
         }
@@ -55,7 +60,7 @@ export function sendResultatTilDispatch(dispatch, action) {
     };
 }
 
-function parseError(errorData) {
+function parseError(errorData: string) {
     try {
         return JSON.parse(errorData);
     } catch (e) {
@@ -64,11 +69,11 @@ function parseError(errorData) {
     }
 }
 
-export function handterFeil(dispatch, FEILET_TYPE) {
-    return (error) => {
+export function handterFeil(dispatch: ReduxDispatch, FEILET_TYPE: string) {
+    return (error: { response?: Response; stack: any }) => {
         const { response } = error;
         if (response) {
-            response.text().then((data) => {
+            response.text().then((data: any) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
                 dispatch({
                     type: FEILET_TYPE,
@@ -93,7 +98,7 @@ export function handterFeil(dispatch, FEILET_TYPE) {
     };
 }
 
-export const getCookie = (name) => {
+export const getCookie = (name: string) => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
@@ -105,13 +110,13 @@ const defaultHeaders = {
     'Nav-Consumer-Id': 'aktivitetsplan',
 };
 
-export function fetchToJsonPlain(url, config = { headers: defaultHeaders }) {
+export function fetchToJsonPlain(url: string, config: RequestInit = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
     return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-export function fetchToJson(url, config = { headers: defaultHeaders }) {
-    const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
+export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
+    const configMedCredentials: RequestInit = { ...DEFAULT_CONFIG, ...config };
 
     const fodselsnummer = hentFnrFraUrl();
     let fetchUrl = url;
@@ -122,7 +127,7 @@ export function fetchToJson(url, config = { headers: defaultHeaders }) {
     return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-function methodToJson(method, url, data, config) {
+function methodToJson(method: 'post' | 'get' | 'put' | 'delete', url: string, data: any, config: RequestInit) {
     // prettier-ignore
     return fetchToJson(url, {
         ...{
@@ -134,23 +139,28 @@ function methodToJson(method, url, data, config) {
     });
 }
 
-export function deleteAsJson(url, config = {}) {
+export function deleteAsJson(url: string, config = {}) {
     return methodToJson('delete', url, null, config);
 }
 
-export function postAsJson(url, data = {}, config = {}) {
+export function postAsJson(url: string, data = {}, config = {}) {
     return methodToJson('post', url, data, config);
 }
 
-export function putAsJson(url, data = {}, config = {}) {
+export function putAsJson(url: string, data = {}, config = {}) {
     return methodToJson('put', url, data, config);
 }
 
-export function doThenDispatch(fn, { OK, FEILET, PENDING }) {
-    return (dispatch) => {
+export function doThenDispatch(
+    fn: () => Promise<any>,
+    { OK, FEILET, PENDING }: { OK: string; FEILET: string; PENDING?: string }
+) {
+    return (dispatch: Dispatch) => {
         if (PENDING) {
             dispatch({ type: PENDING });
         }
-        return fn().then(sendResultatTilDispatch(dispatch, OK)).catch(handterFeil(dispatch, FEILET));
+        return fn()
+            .then(sendResultatTilDispatch(dispatch, OK as unknown as AnyAction))
+            .catch(handterFeil(dispatch, FEILET));
     };
 }

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 
 import VisibleIfSpan from '../utils/visible-if-span';
 import HengeLasIkon from './HengelaasIkon';
@@ -9,7 +9,7 @@ import Tilbakeknapp from './Tilbakeknapp';
 interface Props {
     tilbakeTekst?: string;
     headerTekst?: string;
-    onTilbakeClick?(): string;
+    onTilbakeClick?: MouseEventHandler;
     className?: string;
     aktivitetErLaast?: boolean;
 }

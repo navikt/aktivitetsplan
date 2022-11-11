@@ -9,7 +9,7 @@ export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
 
 export const hentAktiviteter = (): Promise<VeilarbAktivitet[]> => fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
 
-export const lagNyAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
+export const lagNyAktivitet = (aktivitet: Partial<VeilarbAktivitet>): Promise<VeilarbAktivitet> =>
     postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/ny`, aktivitet);
 
 export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>

@@ -29,9 +29,10 @@ import {
     validateTittel,
     validateVarighet,
 } from './validate';
+import {AktivitetStatus} from "../../../../datatypes/aktivitetTypes";
 
 interface Props {
-    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
+    onSubmit: (data: Partial<MoteAktivitet>) => Promise<any>;
     isDirtyRef?: { current: boolean };
     aktivitet: MoteAktivitet;
 }

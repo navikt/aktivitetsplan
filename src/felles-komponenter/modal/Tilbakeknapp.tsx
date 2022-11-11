@@ -1,11 +1,11 @@
 import { VenstreChevron } from 'nav-frontend-chevron';
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 
 import InternLenke from '../utils/InternLenke';
 
 interface TilbakeknappType {
     tekst: string;
-    onClick: () => void;
+    onClick: MouseEventHandler;
 }
 
 const Tilbakeknapp = (props: TilbakeknappType) => {
