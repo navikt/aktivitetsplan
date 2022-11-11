@@ -7,7 +7,7 @@ import React from 'react';
 import { ALL_FEATURES } from '../../felles-komponenter/feature/feature';
 import Hurtigfilter from './hurtigfilter';
 import {
-    SessionStorageElement,
+    LocalStorageElement,
     aktivitetFeilet,
     arenaFeilet,
     dialogFeilet,
@@ -17,7 +17,7 @@ import {
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
-    fetureStatus,
+    featureStatus,
     ikkeLoggetInnNivaa4,
     ingenMal,
     ingenOppfPerioder,
@@ -26,7 +26,7 @@ import {
     oppdateringKunFeiler,
     oppfFeilet,
     setFeatureTogle,
-    settSessionStorage,
+    settLocalStorage,
     ulesteDialoger,
     visArenaAktiviteter,
     visAutomatiskeAktiviteter,
@@ -47,10 +47,10 @@ class DemoDashboard extends React.Component {
 
     endreTilstand = (e) => {
         const checkbox = e.currentTarget;
-        const saveInSessionStorage = Object.values(SessionStorageElement).indexOf(checkbox.id) > -1;
+        const saveInSessionStorage = Object.values(LocalStorageElement).indexOf(checkbox.id) > -1;
 
         if (saveInSessionStorage) {
-            settSessionStorage(checkbox.id, checkbox.checked);
+            settLocalStorage(checkbox.id, checkbox.checked);
             window.location.reload();
         }
     };
@@ -59,7 +59,7 @@ class DemoDashboard extends React.Component {
         const element = e.currentTarget;
         const erVeileder = element.id === brukertype.veileder;
 
-        settSessionStorage(SessionStorageElement.EKSTERN_BRUKER, !erVeileder);
+        settLocalStorage(LocalStorageElement.EKSTERN_BRUKER, !erVeileder);
         window.location.reload();
     };
 
@@ -96,42 +96,42 @@ class DemoDashboard extends React.Component {
                     checkboxes={[
                         {
                             label: 'Ikke under oppfølging',
-                            id: SessionStorageElement.PRIVAT_BRUKER,
+                            id: LocalStorageElement.PRIVAT_BRUKER,
                             checked: erPrivatBruker(),
                         },
                         {
                             label: 'Manuell',
-                            id: SessionStorageElement.MANUELL_BRUKER,
+                            id: LocalStorageElement.MANUELL_BRUKER,
                             checked: erManuellBruker(),
                         },
                         {
                             label: 'KRR',
-                            id: SessionStorageElement.KRR_BRUKER,
+                            id: LocalStorageElement.KRR_BRUKER,
                             checked: erKRRBruker(),
                         },
                         {
                             label: 'Ikke innlogget med nivå 4',
-                            id: SessionStorageElement.INNLOGGET_NIVAA4,
+                            id: LocalStorageElement.INNLOGGET_NIVAA4,
                             checked: ikkeLoggetInnNivaa4(),
                         },
                         {
                             label: 'Ingen oppfølgingsperioder',
-                            id: SessionStorageElement.INGEN_OPPF_PERIODER,
+                            id: LocalStorageElement.INGEN_OPPF_PERIODER,
                             checked: ingenOppfPerioder(),
                         },
                         {
                             label: 'Gammel eskaleringsvarsel',
-                            id: SessionStorageElement.GAMMEL_ESKALERT_BRUKER,
+                            id: LocalStorageElement.GAMMEL_ESKALERT_BRUKER,
                             checked: erEskalertBrukerGammel(),
                         },
                         {
                             label: 'Eskaleringsvarsel',
-                            id: SessionStorageElement.ESKALERT_BRUKER,
+                            id: LocalStorageElement.ESKALERT_BRUKER,
                             checked: erEskalertBruker(),
                         },
                         {
                             label: 'Uleste dialoger',
-                            id: SessionStorageElement.ULESTE_DIALOGER,
+                            id: LocalStorageElement.ULESTE_DIALOGER,
                             checked: ulesteDialoger(),
                         },
                     ]}
@@ -142,22 +142,22 @@ class DemoDashboard extends React.Component {
                     checkboxes={[
                         {
                             label: 'Automatiske aktiviteter',
-                            id: SessionStorageElement.AUTOMATISKE_AKTIVITETER,
+                            id: LocalStorageElement.AUTOMATISKE_AKTIVITETER,
                             checked: visAutomatiskeAktiviteter(),
                         },
                         {
                             label: 'Arenaaktiviteter',
-                            id: SessionStorageElement.ARENA_AKTIVITETER,
+                            id: LocalStorageElement.ARENA_AKTIVITETER,
                             checked: visArenaAktiviteter(),
                         },
                         {
                             label: 'Testaktiviteter',
-                            id: SessionStorageElement.TEST_AKTIVITETER,
+                            id: LocalStorageElement.TEST_AKTIVITETER,
                             checked: visTestAktiviteter(),
                         },
                         {
                             label: 'Eksterne aktiviteter',
-                            id: SessionStorageElement.EKSTERNE_AKTIVITETER,
+                            id: LocalStorageElement.EKSTERNE_AKTIVITETER,
                             checked: visEksterneAktiviteter(),
                         },
                     ]}
@@ -170,7 +170,7 @@ class DemoDashboard extends React.Component {
                             label: name,
                             id: name,
                             value: name,
-                            checked: fetureStatus(name),
+                            checked: featureStatus(name),
                         };
                     })}
                     onChange={this.setFeature}
@@ -180,7 +180,7 @@ class DemoDashboard extends React.Component {
                     checkboxes={[
                         {
                             label: 'Ingen mål',
-                            id: SessionStorageElement.INGEN_MAL,
+                            id: LocalStorageElement.INGEN_MAL,
                             checked: ingenMal(),
                         },
                     ]}
@@ -191,37 +191,37 @@ class DemoDashboard extends React.Component {
                     checkboxes={[
                         {
                             label: 'Oppfølging feiler',
-                            id: SessionStorageElement.OPPF_FEILET,
+                            id: LocalStorageElement.OPPF_FEILET,
                             checked: oppfFeilet(),
                         },
                         {
                             label: 'Dialog feiler',
-                            id: SessionStorageElement.DIALOG_FEILET,
+                            id: LocalStorageElement.DIALOG_FEILET,
                             checked: dialogFeilet(),
                         },
                         {
                             label: 'Aktivitet feiler',
-                            id: SessionStorageElement.AKTIVITET_FEILET,
+                            id: LocalStorageElement.AKTIVITET_FEILET,
                             checked: aktivitetFeilet(),
                         },
                         {
                             label: 'Arena feiler',
-                            id: SessionStorageElement.ARENA_FEILET,
+                            id: LocalStorageElement.ARENA_FEILET,
                             checked: arenaFeilet(),
                         },
                         {
                             label: 'Mål feiler',
-                            id: SessionStorageElement.MAAL_FEILET,
+                            id: LocalStorageElement.MAAL_FEILET,
                             checked: maalFeilet(),
                         },
                         {
                             label: 'Kun oppdatering feiler',
-                            id: SessionStorageElement.OPPDATERING_KUN_FEILER,
+                            id: LocalStorageElement.OPPDATERING_KUN_FEILER,
                             checked: oppdateringKunFeiler(),
                         },
                         {
                             label: 'Nivå 4 feiler',
-                            id: SessionStorageElement.NIVAA4_FEILET,
+                            id: LocalStorageElement.NIVAA4_FEILET,
                             checked: nivaa4Feilet(),
                         },
                     ]}

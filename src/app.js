@@ -2,7 +2,7 @@ import './index.less';
 
 import PT from 'prop-types';
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { HashRouter, BrowserRouter } from 'react-router-dom';
 
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import createHistory from './history';
@@ -24,10 +24,31 @@ const path = window.appconfig.CONTEXT_PATH === '' ? '' : getContextPath();
 window.appconfig = {
     CONTEXT_PATH: path,
     TILLAT_SET_AVTALT: isValueOrGetDefault(window.appconfig.TILLAT_SET_AVTALT, true),
-    FNR_I_URL: isValueOrGetDefault(window.appconfig.FNR_I_URL, true),
     VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
     TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
 };
+
+const getBasename = (fnr) => {
+    const pathnamePrefix = process.env.PUBLIC_URL
+    if (fnr && !pathnamePrefix) {
+        return fnr
+    } else if (fnr && pathnamePrefix) {
+        return `${pathnamePrefix}/${fnr}`.replace('/', "") // Replace prepending slash
+    } else if (pathnamePrefix) {
+        return pathnamePrefix
+    } else {
+        return undefined
+    }
+}
+
+function HashRouterIfGHPages({ fnr, children }) {
+    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
+        return <HashRouter basename={fnr}>{children}</HashRouter>
+    }
+
+    const basename = getBasename(fnr)
+    return <BrowserRouter basename={basename} history={history}>{children}</BrowserRouter>;
+}
 
 function App({ fnr, key }) {
     return (
@@ -35,9 +56,9 @@ function App({ fnr, key }) {
             <Provider key={fnr + key}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
-                        <Router history={history}>
+                        <HashRouterIfGHPages fnr={fnr}>
                             <Hovedside />
-                        </Router>
+                        </HashRouterIfGHPages>
                         <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
                         </HiddenIf>

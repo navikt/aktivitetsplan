@@ -2,8 +2,6 @@ import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-import { hentFnrFraUrl } from '../../utils/fnr-util';
-
 const cls = (className?: string, brukLenkestyling?: boolean) =>
     classNames(className, {
         lenke: brukLenkestyling,
@@ -23,15 +21,12 @@ interface InternLenkeProps {
 
 const InternLenke = (props: InternLenkeProps) => {
     const { id, href, className, skipLenkeStyling, children, onClick, role, hidden } = props;
-    const fodselsnummer = hentFnrFraUrl();
-    const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
-
     if (hidden) {
         return null;
     }
 
     return (
-        <Link id={id} to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
+        <Link id={id} to={href} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
             {children}
         </Link>
     );

@@ -10,9 +10,9 @@ import * as ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
 
 import App from './app';
-import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
+import {eksternBrukerConfig, veilederConfig} from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
-import { erEksternBruker } from './mocks/demo/sessionstorage';
+import {erEksternBruker} from './mocks/demo/sessionstorage';
 
 /* eslint-disable global-require */
 if (!global.Intl) {
@@ -26,19 +26,18 @@ moment.updateLocale('nb', {
     monthsShort: ['jan.', 'feb.', 'mar.', 'apr.', 'mai', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'des.'],
 });
 
+const usingHashRouting = process.env.REACT_APP_USE_HASH_ROUTER === "true";
+
+export const mockfnr = "12345678910";
 if (process.env.REACT_APP_MOCK === 'true') {
-    const fnr = '/12345678910';
-    const path = window.location.pathname;
+    const fnr = mockfnr;
+    const pathnamePrefix = `${process.env.PUBLIC_URL}/${usingHashRouting ? "#/" : ""}`
 
     if (erEksternBruker()) {
-        if (path.includes(fnr)) {
-            window.history.replaceState({}, '', '/');
-        }
+        window.history.replaceState({}, '', pathnamePrefix);
         window.appconfig = eksternBrukerConfig;
     } else if (!erEksternBruker()) {
-        if (!path.includes(fnr)) {
-            window.history.replaceState({}, '', fnr);
-        }
+        window.history.replaceState({}, '', pathnamePrefix + fnr);
         window.appconfig = veilederConfig;
     }
 
@@ -47,10 +46,14 @@ if (process.env.REACT_APP_MOCK === 'true') {
     console.log('=========================='); // eslint-disable-line no-console
     require('./mocks'); // eslint-disable-line global-require
 
-    ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
+    ReactDOM.render(<DemoBanner/>, document.getElementById('demo'));
 }
 
 function AppWrapper(props) {
+    if (process.env.REACT_APP_MOCK === "true") {
+        props = {...props, fnr: erEksternBruker() ? undefined : mockfnr}
+    }
+
     // Må settes etter at dokumentet er parset
     const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
     ReactModal.setAppElement(id);

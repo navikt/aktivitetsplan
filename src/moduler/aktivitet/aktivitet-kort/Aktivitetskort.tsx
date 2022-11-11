@@ -58,6 +58,8 @@ const Aktivitetskort = (props: Props) => {
     const datoId = `aktivitetskort__dato__${id}`;
     const ariaLabel = `${aktivitetTypeMap[type]}: ${aktivitet.tittel}`;
 
+    console.log(aktivitetRoute(id))
+
     return (
         <LinkAsDiv
             id={prefixAktivtetskortId(aktivitet)}

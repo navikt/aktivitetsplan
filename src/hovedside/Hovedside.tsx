@@ -12,8 +12,7 @@ import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselRe
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import Routing, { PublicRouting } from '../routing';
-import { hentFnrFraUrl } from '../utils/fnr-util';
+import AktivitetsplanRouting, { PublicRouting } from '../aktivitetsplanRouting';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
@@ -24,9 +23,8 @@ const Hovedside = () => {
         dispatch(hentEskaleringsvarsel() as unknown as AnyAction);
     }, [dispatch]);
 
-    const fnr = hentFnrFraUrl();
     return (
-        <div className="hovedside" key={fnr}>
+        <div className="hovedside">
             <div className="hovedsideinnhold">
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
@@ -39,7 +37,7 @@ const Hovedside = () => {
                         <Verktoylinje />
                     </div>
                     <Aktivitetstavle />
-                    <Routing />
+                    <AktivitetsplanRouting />
                 </OppfolgingStatus>
                 <PublicRouting />
             </div>
