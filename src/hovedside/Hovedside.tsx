@@ -12,7 +12,7 @@ import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselRe
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import Routing, { PublicRouting } from '../routing';
+import AktivitetsplanRouting, { PublicRouting } from '../aktivitetsplanRouting';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
@@ -37,7 +37,7 @@ const Hovedside = () => {
                         <Verktoylinje />
                     </div>
                     <Aktivitetstavle />
-                    <Routing />
+                    <AktivitetsplanRouting />
                 </OppfolgingStatus>
                 <PublicRouting />
             </div>
