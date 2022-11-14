@@ -24,6 +24,7 @@ const Nivaa4Feilmelding = () => {
     const erManuell = useSelector(selectErBrukerManuell);
     const erVeileder = useSelector(selectErVeileder);
 
+    // todo fjern dette etter innsikt er gjort
     useEffect(() => {
         if (erVeileder) {
             loggHarBruktNivaa4(niva4);
