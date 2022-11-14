@@ -1,4 +1,4 @@
-export const SessionStorageElement = {
+export const LocalStorageElement = {
     PRIVAT_BRUKER: 'privatbruker',
     MANUELL_BRUKER: 'manuellbruker',
     KRR_BRUKER: 'krrbruker',
@@ -23,64 +23,64 @@ export const SessionStorageElement = {
     ULESTE_DIALOGER: 'uleste_dialoger',
 };
 
-export const settSessionStorage = (key, value) => {
+export const settLocalStorage = (key, value) => {
     window.localStorage.setItem(key, value);
 };
 
-export const hentFraSessionStorage = (key) => {
+export const hentFraLocalStorage = (key) => {
     return window.localStorage.getItem(key);
 };
 
-const erSatt = (sessionStorageElement) => {
-    return hentFraSessionStorage(sessionStorageElement) === 'true';
+const erSatt = (localStorageElement) => {
+    return hentFraLocalStorage(localStorageElement) === 'true';
 };
 
-const erSkrudAv = (sessionStorageElement) => hentFraSessionStorage(sessionStorageElement) === 'false';
+const erSkrudAv = (localStorageElement) => hentFraLocalStorage(localStorageElement) === 'false';
 
-export const erEksternBruker = () => erSatt(SessionStorageElement.EKSTERN_BRUKER);
+export const erEksternBruker = () => erSatt(LocalStorageElement.EKSTERN_BRUKER);
 
-export const erPrivatBruker = () => erSatt(SessionStorageElement.PRIVAT_BRUKER);
+export const erPrivatBruker = () => erSatt(LocalStorageElement.PRIVAT_BRUKER);
 
-export const erManuellBruker = () => erSatt(SessionStorageElement.MANUELL_BRUKER);
+export const erManuellBruker = () => erSatt(LocalStorageElement.MANUELL_BRUKER);
 
-export const erKRRBruker = () => erSatt(SessionStorageElement.KRR_BRUKER);
+export const erKRRBruker = () => erSatt(LocalStorageElement.KRR_BRUKER);
 
-export const erEskalertBrukerGammel = () => erSatt(SessionStorageElement.GAMMEL_ESKALERT_BRUKER);
+export const erEskalertBrukerGammel = () => erSatt(LocalStorageElement.GAMMEL_ESKALERT_BRUKER);
 
-export const erEskalertBruker = () => erSatt(SessionStorageElement.ESKALERT_BRUKER);
+export const erEskalertBruker = () => erSatt(LocalStorageElement.ESKALERT_BRUKER);
 
-export const ikkeLoggetInnNivaa4 = () => erSatt(SessionStorageElement.INNLOGGET_NIVAA4);
+export const ikkeLoggetInnNivaa4 = () => erSatt(LocalStorageElement.INNLOGGET_NIVAA4);
 
-export const ingenOppfPerioder = () => erSatt(SessionStorageElement.INGEN_OPPF_PERIODER);
+export const ingenOppfPerioder = () => erSatt(LocalStorageElement.INGEN_OPPF_PERIODER);
 
-export const visAutomatiskeAktiviteter = () => erSatt(SessionStorageElement.AUTOMATISKE_AKTIVITETER);
+export const visAutomatiskeAktiviteter = () => erSatt(LocalStorageElement.AUTOMATISKE_AKTIVITETER);
 
-export const visTestAktiviteter = () => !erSkrudAv(SessionStorageElement.TEST_AKTIVITETER);
+export const visTestAktiviteter = () => !erSkrudAv(LocalStorageElement.TEST_AKTIVITETER);
 
-export const visArenaAktiviteter = () => erSatt(SessionStorageElement.ARENA_AKTIVITETER);
+export const visArenaAktiviteter = () => erSatt(LocalStorageElement.ARENA_AKTIVITETER);
 
-export const visEksterneAktiviteter = () => erSatt(SessionStorageElement.EKSTERNE_AKTIVITETER);
+export const visEksterneAktiviteter = () => erSatt(LocalStorageElement.EKSTERNE_AKTIVITETER);
 
-export const visDialoger = () => erSatt(SessionStorageElement.TEST_DIALOGER);
+export const visDialoger = () => erSatt(LocalStorageElement.TEST_DIALOGER);
 
-export const oppfFeilet = () => erSatt(SessionStorageElement.OPPF_FEILET);
+export const oppfFeilet = () => erSatt(LocalStorageElement.OPPF_FEILET);
 
-export const dialogFeilet = () => erSatt(SessionStorageElement.DIALOG_FEILET);
+export const dialogFeilet = () => erSatt(LocalStorageElement.DIALOG_FEILET);
 
-export const aktivitetFeilet = () => erSatt(SessionStorageElement.AKTIVITET_FEILET);
+export const aktivitetFeilet = () => erSatt(LocalStorageElement.AKTIVITET_FEILET);
 
-export const arenaFeilet = () => erSatt(SessionStorageElement.ARENA_FEILET);
+export const arenaFeilet = () => erSatt(LocalStorageElement.ARENA_FEILET);
 
-export const maalFeilet = () => erSatt(SessionStorageElement.MAAL_FEILET);
+export const maalFeilet = () => erSatt(LocalStorageElement.MAAL_FEILET);
 
-export const nivaa4Feilet = () => erSatt(SessionStorageElement.NIVAA4_FEILET);
+export const nivaa4Feilet = () => erSatt(LocalStorageElement.NIVAA4_FEILET);
 
-export const oppdateringKunFeiler = () => erSatt(SessionStorageElement.OPPDATERING_KUN_FEILER);
+export const oppdateringKunFeiler = () => erSatt(LocalStorageElement.OPPDATERING_KUN_FEILER);
 
-export const ulesteDialoger = () => erSatt(SessionStorageElement.ULESTE_DIALOGER);
+export const ulesteDialoger = () => erSatt(LocalStorageElement.ULESTE_DIALOGER);
 
-const fetureprefix = 'mock_feature__';
-export const setFeatureTogle = (name, value) => settSessionStorage(fetureprefix + name, value);
-export const fetureStatus = (name) => hentFraSessionStorage(fetureprefix + name) !== 'false';
+const featureprefix = 'mock_feature__';
+export const setFeatureTogle = (name, value) => settLocalStorage(featureprefix + name, value);
+export const featureStatus = (name) => hentFraLocalStorage(featureprefix + name) !== 'false';
 
-export const ingenMal = () => erSatt(SessionStorageElement.INGEN_MAL);
+export const ingenMal = () => erSatt(LocalStorageElement.INGEN_MAL);

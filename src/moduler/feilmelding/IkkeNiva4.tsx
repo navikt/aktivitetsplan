@@ -1,9 +1,11 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+import { loggHarBruktNivaa4 } from '../../felles-komponenter/utils/logging';
+import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectErBrukerManuell, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector';
 import styles from './Feilmelding.module.less';
@@ -20,6 +22,14 @@ const Nivaa4Feilmelding = () => {
     const lastetOk = useSelector(selectNivaa4LastetOk);
     const erreservertKRR = useSelector(selectReservasjonKRR);
     const erManuell = useSelector(selectErBrukerManuell);
+    const erVeileder = useSelector(selectErVeileder);
+
+    // todo fjern dette etter innsikt er gjort
+    useEffect(() => {
+        if (erVeileder) {
+            loggHarBruktNivaa4(niva4);
+        }
+    }, [niva4, erVeileder]);
 
     if (niva4 || !lastetOk || erManuell || erreservertKRR) {
         return null;
