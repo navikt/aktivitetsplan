@@ -2,10 +2,9 @@ import './index.less';
 
 import PT from 'prop-types';
 import React from 'react';
-import { HashRouter, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
-import createHistory from './history';
 import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
 import { HiddenIf, getContextPath } from './utils';
@@ -17,7 +16,6 @@ function isValueOrGetDefault(value, defaultValue) {
 
 export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
-const history = createHistory(getContextPath())
 // NOTE: This is bad, don't use it if you dont HAVE to.
 window.appconfig = window.appconfig || {};
 const path = window.appconfig.CONTEXT_PATH === '' ? '' : getContextPath();
@@ -29,25 +27,25 @@ window.appconfig = {
 };
 
 const getBasename = (fnr) => {
-    const pathnamePrefix = process.env.PUBLIC_URL
+    const pathnamePrefix = process.env.PUBLIC_URL;
     if (fnr && !pathnamePrefix) {
-        return fnr
+        return fnr;
     } else if (fnr && pathnamePrefix) {
-        return `${pathnamePrefix}/${fnr}`.replace('/', "") // Replace prepending slash
+        return `${pathnamePrefix}/${fnr}`.replace('/', ''); // Replace prepending slash
     } else if (pathnamePrefix) {
-        return pathnamePrefix
+        return pathnamePrefix;
     } else {
-        return undefined
+        return undefined;
     }
-}
+};
 
 function HashRouterIfGHPages({ fnr, children }) {
     if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
-        return <HashRouter basename={fnr}>{children}</HashRouter>
+        return <HashRouter basename={fnr}>{children}</HashRouter>;
     }
 
-    const basename = getBasename(fnr)
-    return <BrowserRouter basename={basename} history={history}>{children}</BrowserRouter>;
+    const basename = getBasename(fnr);
+    return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
 }
 
 function App({ fnr, key }) {
