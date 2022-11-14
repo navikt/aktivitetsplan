@@ -29,7 +29,7 @@ interface Props {
     className: string;
 }
 
-export const prefixAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
+export const prefixAktivtetskortId = (aktivitet: AlleAktiviteter | undefined) => `aktivitetskort-${aktivitet?.id}`;
 
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
