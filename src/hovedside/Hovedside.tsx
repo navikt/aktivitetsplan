@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { RouterProps, useHistory, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import AktivitetsplanRouting, { PublicRouting } from '../aktivitetsplanRouting';
