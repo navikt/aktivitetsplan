@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
+import AktivitetsplanRouting, { PublicRouting } from '../aktivitetsplanRouting';
+import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
@@ -12,11 +15,17 @@ import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselRe
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import Routing, { PublicRouting } from '../routing';
-import { hentFnrFraUrl } from '../utils/fnr-util';
+import { aktivitetRoute } from '../routes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
+    const history = useHistory();
+    useEventListener('visAktivitetsplan', (event) => {
+        const aktivitetId = event.detail as string | undefined;
+        if (!aktivitetId) return;
+        history.replace(aktivitetRoute(aktivitetId));
+    });
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -24,9 +33,8 @@ const Hovedside = () => {
         dispatch(hentEskaleringsvarsel() as unknown as AnyAction);
     }, [dispatch]);
 
-    const fnr = hentFnrFraUrl();
     return (
-        <div className="hovedside" key={fnr}>
+        <div className="hovedside">
             <div className="hovedsideinnhold">
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
@@ -39,7 +47,7 @@ const Hovedside = () => {
                         <Verktoylinje />
                     </div>
                     <Aktivitetstavle />
-                    <Routing />
+                    <AktivitetsplanRouting />
                 </OppfolgingStatus>
                 <PublicRouting />
             </div>

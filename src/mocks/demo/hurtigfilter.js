@@ -1,30 +1,30 @@
 import Select from 'nav-frontend-skjema/lib/select';
 import React from 'react';
 
-import { SessionStorageElement, settSessionStorage } from './sessionstorage';
+import { LocalStorageElement, settLocalStorage } from './sessionstorage';
 
 const hurtigfilterType = [
     {
         id: 'nyBrukerStdOrd',
         name: 'Ny bruker - Standard innsats',
         avskrudd: [
-            SessionStorageElement.INGEN_OPPF_PERIODER,
-            SessionStorageElement.PRIVAT_BRUKER,
-            SessionStorageElement.MANUELL_BRUKER,
-            SessionStorageElement.ARENA_AKTIVITETER,
-            SessionStorageElement.TEST_AKTIVITETER,
+            LocalStorageElement.INGEN_OPPF_PERIODER,
+            LocalStorageElement.PRIVAT_BRUKER,
+            LocalStorageElement.MANUELL_BRUKER,
+            LocalStorageElement.ARENA_AKTIVITETER,
+            LocalStorageElement.TEST_AKTIVITETER,
         ],
-        paskrudd: [SessionStorageElement.AUTOMATISKE_AKTIVITETER],
+        paskrudd: [LocalStorageElement.AUTOMATISKE_AKTIVITETER],
     },
 ];
 
 class Hurtigfilter extends React.Component {
     markerValg = (tilstander) => {
-        tilstander.forEach((x) => settSessionStorage(x, true));
+        tilstander.forEach((x) => settLocalStorage(x, true));
     };
 
     skruAvValg = (tilstander) => {
-        tilstander.forEach((x) => settSessionStorage(x, false));
+        tilstander.forEach((x) => settLocalStorage(x, false));
     };
 
     filterValg = () => {
