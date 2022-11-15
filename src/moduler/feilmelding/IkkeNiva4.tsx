@@ -8,7 +8,6 @@ import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-kompone
 import { selectErVeileder } from '../identitet/identitet-selector';
 import {
     selectErBrukerManuell,
-    selectKanVarsles,
     selectOppfolgingSlice,
     selectReservasjonKRR,
 } from '../oppfolging-status/oppfolging-selector';
