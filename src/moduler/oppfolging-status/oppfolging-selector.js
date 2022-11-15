@@ -57,6 +57,10 @@ export function selectErBrukerManuell(state) {
     return selectOppfolgingData(state).manuell;
 }
 
+export function selectKanVarsles(state) {
+    return selectOppfolgingData(state).kanVarsles;
+}
+
 export function selectAktorId(state) {
     return selectOppfolgingData(state).aktorId;
 }
