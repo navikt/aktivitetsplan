@@ -4,11 +4,13 @@ import { PopoverOrientering } from 'nav-frontend-popover';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { STATUS } from '../../api/utils';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import {
     selectErBrukerManuell,
     selectOppfolgingSlice,
+    selectOppfolgingStatus,
     selectReservasjonKRR,
 } from '../oppfolging-status/oppfolging-selector';
 import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector';
@@ -28,22 +30,26 @@ const Nivaa4Feilmelding = () => {
     const erVeileder = useSelector(selectErVeileder);
     const erManuell = useSelector(selectErBrukerManuell);
     const oppfolging = useSelector(selectOppfolgingSlice).data;
-    const [sendt, setSendt] = useState(false);
+    const oppfolgingLastetOk = useSelector(selectOppfolgingStatus) == STATUS.OK;
 
     // todo fjern dette etter innsikt er gjort
     useEffect(() => {
-        if (sendt) return;
+        if (!oppfolgingLastetOk) return;
         if (erVeileder) {
-            loggHarBruktNivaa4(niva4);
-
             const { reservasjonKRR, manuell, kanVarsles } = oppfolging;
             const ikkeRegistrertIKRR = !reservasjonKRR && !manuell && !kanVarsles;
             if (ikkeRegistrertIKRR) {
                 loggIkkeRegistrertIKrr();
             }
-            setSendt(true);
         }
-    }, [niva4, oppfolging, erVeileder, sendt]);
+    }, [oppfolging, erVeileder]);
+
+    useEffect(() => {
+        if (!lastetOk) return;
+        if (erVeileder) {
+            loggHarBruktNivaa4(niva4);
+        }
+    }, [niva4, erVeileder]);
 
     if (niva4 || !lastetOk || erManuell || erreservertKRR) {
         return null;
