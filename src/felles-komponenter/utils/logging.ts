@@ -36,7 +36,6 @@ const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
 const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
 const STILLING_FRA_NAV_AAPNE_STILLINGSLENKE = 'aktivitetsplan.stillingfranav.stillingslenke.klikk';
-const HAR_BRUKT_NIVAA_4 = 'aktivitetsplan.tilgang.harBruktNivaa4';
 
 export const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallSluttBrukere';
 export const ANTALL_VEILEDERE = 'aktivitetsplan.antallVeiledere';
@@ -152,8 +151,15 @@ export function loggStillingFraNavStillingslenkeKlikk(veileder: boolean) {
     loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, { erVeileder: veileder });
 }
 
+const HAR_BRUKT_NIVAA_4 = 'aktivitetsplan.tilgang.harBruktNivaa4';
+const IKKE_REGISTRERT_I_KRR = 'aktivitetsplan.oppfolging.ikkeRegistrertIKrr';
+
 export function loggHarBruktNivaa4(harBruktNivaa4: boolean) {
     loggEvent(HAR_BRUKT_NIVAA_4, { harBruktNivaa4: harBruktNivaa4 });
+}
+
+export function loggIkkeRegistrertIKrr() {
+    loggEvent(IKKE_REGISTRERT_I_KRR);
 }
 
 function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
