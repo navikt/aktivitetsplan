@@ -1,19 +1,21 @@
 import { createSelector } from 'reselect';
 
+import { AvsluttetOppfolgingsPeriode, OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { State } from '../../reducer';
 import { selectOppfolgingsPerioder } from './oppfolging-selector';
 
-export const selectHistoriskeOppfolgingsPerioder: (
-    oppfolgingsPerioder: { sluttDato: string }[]
-) => { sluttDato: string }[] = createSelector(selectOppfolgingsPerioder, (oppfolgingsPerioder) =>
-    oppfolgingsPerioder.filter((p: { sluttDato: Date }) => p.sluttDato)
-);
+const erAvsluttet = (periode: OppfolgingsPeriode): periode is AvsluttetOppfolgingsPeriode => {
+    return !!periode.sluttDato;
+};
 
-export const selectForrigeHistoriskeSluttDato: (oppfolgingsPerioder: { sluttDato: string }[]) => string =
-    createSelector(
-        selectHistoriskeOppfolgingsPerioder,
-        (historiskeOppfolgingsPerioder) =>
-            historiskeOppfolgingsPerioder
-                .map((p: { sluttDato: string }) => p.sluttDato)
-                .sort()
-                .reverse()[0]
-    );
+export const selectHistoriskeOppfolgingsPerioder: (oppfolgingsPerioder: State) => AvsluttetOppfolgingsPeriode[] =
+    createSelector(selectOppfolgingsPerioder, (oppfolgingsPerioder) => oppfolgingsPerioder.filter(erAvsluttet));
+
+export const selectForrigeHistoriskeSluttDato: (oppfolgingsPerioder: State) => string | undefined = createSelector(
+    selectHistoriskeOppfolgingsPerioder,
+    (historiskeOppfolgingsPerioder) =>
+        historiskeOppfolgingsPerioder
+            .map((periode) => periode.sluttDato)
+            .sort()
+            .reverse()[0]
+);

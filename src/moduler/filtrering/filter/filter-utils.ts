@@ -3,6 +3,7 @@ import { Store } from 'redux';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
+import { State } from '../../../reducer';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
@@ -25,8 +26,8 @@ export interface Periode {
     til: string;
 }
 
-export function selectDatoErIPeriode(dato: string, state: { sluttDato: any }[]): boolean {
-    const historiskPeriode = selectHistoriskPeriode(state as unknown as Store);
+export function selectDatoErIPeriode(dato: string, state: State): boolean {
+    const historiskPeriode = selectHistoriskPeriode(state);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);

@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { AnyAction, combineReducers } from 'redux';
 
 import featureReducer from './felles-komponenter/feature/feature-reducer';
 import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
@@ -46,9 +46,8 @@ const combinedReducers = combineReducers({
     }),
 });
 
-export type State = Parameters<typeof combinedReducers>[0];
-export type Action = Parameters<typeof combinedReducers>[1];
+export type State = ReturnType<typeof combinedReducers>;
 
-export default function reducer(state: State, action: Action) {
+export default function reducer(state: State, action: AnyAction) {
     return combinedReducers(state, action);
 }

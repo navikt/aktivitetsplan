@@ -1,22 +1,14 @@
-/* eslint-env browser */
-import { applyMiddleware, compose, createStore } from 'redux';
-import freeze from 'redux-freeze';
-import thunkMiddleware from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 
+/* eslint-env browser */
 import reducer, { State } from './reducer';
 
-declare const window: {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: typeof compose;
-};
-
 /* eslint-disable no-underscore-dangle */
-function getStoreCompose() {
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-    return composeEnhancers(applyMiddleware(thunkMiddleware, freeze));
-}
 /* eslint-enable */
-
-export default function create(preloadedState: State = {} as State) {
-    return getStoreCompose()(createStore)(reducer, preloadedState);
+export default function create(preloadedState: State | undefined = undefined) {
+    return configureStore({
+        reducer: reducer,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+        preloadedState,
+    });
 }

@@ -25,6 +25,7 @@
     "@navikt/navspa": "^5.0.1",
     "@navikt/textparser": "^2.2.1",
     "@nutgaard/use-formstate": "^3.0.1",
+    "@reduxjs/toolkit": "^1.9.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",

@@ -5,12 +5,13 @@ import { hentFnrFraUrl } from '../utils/fnr-util';
 
 /* eslint-env browser */
 export const STATUS = {
-    NOT_STARTED: 'NOT_STARTED',
-    PENDING: 'PENDING',
-    OK: 'OK',
-    RELOADING: 'RELOADING',
-    ERROR: 'ERROR',
+    NOT_STARTED: 'NOT_STARTED' as const,
+    PENDING: 'PENDING' as const,
+    OK: 'OK' as const,
+    RELOADING: 'RELOADING' as const,
+    ERROR: 'ERROR' as const,
 };
+export type RequestStatus = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
 
 const DEFAULT_CONFIG: RequestInit = {
     credentials: 'same-origin',
@@ -51,12 +52,12 @@ export function toJson(response: Response) {
     return response;
 }
 
-export function sendResultatTilDispatch(dispatch: ReduxDispatch, action: AnyAction) {
+export function sendResultatTilDispatch(dispatch: ReduxDispatch, actionType: ActionTypeOrCreator) {
     return (...data: any[]) => {
         if (data.length === 1) {
-            return dispatch({ type: action, data: data[0] });
+            return dispatch(createAction(actionType, data[0]));
         }
-        return dispatch({ type: action, data });
+        return dispatch(createAction(actionType, data));
     };
 }
 
@@ -69,30 +70,28 @@ function parseError(errorData: string) {
     }
 }
 
-export function handterFeil(dispatch: ReduxDispatch, FEILET_TYPE: string) {
+export function handterFeil(dispatch: ReduxDispatch, FEILET_TYPE: ActionTypeOrCreator) {
     return (error: { response?: Response; stack: any }) => {
         const { response } = error;
         if (response) {
             response.text().then((data: any) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({
-                    type: FEILET_TYPE,
-                    data: {
+                dispatch(
+                    createAction(FEILET_TYPE, {
                         type: FEILET_TYPE,
                         httpStatus: response.status,
                         melding: parseError(data),
-                    },
-                });
+                    })
+                );
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
-            dispatch({
-                type: FEILET_TYPE,
-                data: {
+            dispatch(
+                createAction(FEILET_TYPE, {
                     type: FEILET_TYPE,
                     tekst: error.toString(),
-                },
-            });
+                })
+            );
         }
         return Promise.reject(error);
     };
@@ -151,16 +150,21 @@ export function putAsJson(url: string, data = {}, config = {}) {
     return methodToJson('put', url, data, config);
 }
 
+export type ActionTypeOrCreator = string | ((payload: any) => AnyAction);
+export const createAction = <T>(typeOrCreator: ActionTypeOrCreator, payload: T | undefined = undefined): AnyAction => {
+    // New actionCreators use "payload" field, type relies on "data" field
+    if (typeof typeOrCreator === 'string') return { type: typeOrCreator, data: payload };
+    return typeOrCreator(payload);
+};
+
 export function doThenDispatch(
     fn: () => Promise<any>,
-    { OK, FEILET, PENDING }: { OK: string; FEILET: string; PENDING?: string }
+    { OK, FEILET, PENDING }: { OK: ActionTypeOrCreator; FEILET: ActionTypeOrCreator; PENDING?: ActionTypeOrCreator }
 ) {
     return (dispatch: Dispatch) => {
         if (PENDING) {
-            dispatch({ type: PENDING });
+            dispatch(createAction(PENDING));
         }
-        return fn()
-            .then(sendResultatTilDispatch(dispatch, OK as unknown as AnyAction))
-            .catch(handterFeil(dispatch, FEILET));
+        return fn().then(sendResultatTilDispatch(dispatch, OK)).catch(handterFeil(dispatch, FEILET));
     };
 }

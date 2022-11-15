@@ -35,6 +35,7 @@ export interface OppfolgingsPeriode {
     startDato: string;
     veileder?: string | null;
 }
+export type AvsluttetOppfolgingsPeriode = OppfolgingsPeriode & { sluttDato: string };
 
 export interface KvpPeriode {
     opprettetDato: string;
