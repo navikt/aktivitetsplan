@@ -1,7 +1,7 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { STATUS } from '../../api/utils';
@@ -30,7 +30,7 @@ const Nivaa4Feilmelding = () => {
     const erVeileder = useSelector(selectErVeileder);
     const erManuell = useSelector(selectErBrukerManuell);
     const oppfolging = useSelector(selectOppfolgingSlice).data;
-    const oppfolgingLastetOk = useSelector(selectOppfolgingStatus) == STATUS.OK;
+    const oppfolgingLastetOk = useSelector(selectOppfolgingStatus) === STATUS.OK;
 
     // todo fjern dette etter innsikt er gjort
     useEffect(() => {
@@ -42,14 +42,14 @@ const Nivaa4Feilmelding = () => {
                 loggIkkeRegistrertIKrr();
             }
         }
-    }, [oppfolging, erVeileder]);
+    }, [oppfolging, erVeileder, oppfolgingLastetOk]);
 
     useEffect(() => {
         if (!lastetOk) return;
         if (erVeileder) {
             loggHarBruktNivaa4(niva4);
         }
-    }, [niva4, erVeileder]);
+    }, [niva4, erVeileder, lastetOk]);
 
     if (niva4 || !lastetOk || erManuell || erreservertKRR) {
         return null;
