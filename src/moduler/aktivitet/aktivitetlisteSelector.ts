@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { STATUS, aggregerStatus } from '../../api/utils';
 import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
@@ -23,7 +23,13 @@ export const selectAktivitetListe = (state: any) =>
     selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetFilter(a, state));
 
 export const selectAktivitetMedId = (state: any, aktivitetId: string) =>
-    selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => aktivitet.id === aktivitetId);
+    selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => {
+        if (isArenaAktivitet(aktivitet)) {
+            return aktivitet.id === aktivitetId || aktivitet.aktivitetId.toString() === aktivitetId;
+        } else {
+            return aktivitet.id === aktivitetId;
+        }
+    });
 
 export const selectAktivitetListeSlice = (state: any) => {
     const status = aggregerStatus(
