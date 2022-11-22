@@ -25,7 +25,7 @@ export const selectAktivitetListe = (state: any) =>
 export const selectAktivitetMedId = (state: any, aktivitetId: string) =>
     selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => {
         if (isArenaAktivitet(aktivitet)) {
-            return aktivitet.id === aktivitetId || aktivitet.aktivitetId.toString() === aktivitetId;
+            return aktivitet.id === aktivitetId || aktivitet?.aktivitetId?.toString() === aktivitetId;
         } else {
             return aktivitet.id === aktivitetId;
         }
