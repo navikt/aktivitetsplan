@@ -14,7 +14,6 @@ interface Props {
 const FormContainer = (props: Props) => {
     const { aktivitet, ...rest } = props;
 
-    //TODO kan vi slå sammen ArenaForhaandsorienteringFormKomponent og AvtaltFormContainer
     if (isArenaAktivitet(aktivitet)) {
         return <ArenaForhaandsorienteringFormKomponent aktivitet={aktivitet} {...rest} />;
     }

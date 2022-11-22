@@ -7,6 +7,7 @@ import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import DelCvIkkeSvart, { SkalDelCvIkkeSvartVises } from '../del-cv-ikke-svart/DelCvIkkeSvart';
+import EksterneEtiketter from '../etikett/EksterneEtikett';
 import StillingEtikett from '../etikett/StillingEtikett';
 import StillingFraNavEtikett from '../etikett/StillingFraNavEtikett';
 import TiltakEtikett from '../etikett/TiltakEtikett';
@@ -36,6 +37,9 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const svartMarkeringSkalVises = isStillingFraNav ? SkalDelCvIkkeSvartVises(aktivitet) : false;
     const stillingFraNavSoknadsstatus = isStillingFraNav ? aktivitet.stillingFraNavData.soknadsstatus : undefined;
 
+    const isEksternAktivitet = aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
+    const eksterneEtiketter = isEksternAktivitet ? aktivitet.eksternAktivitet.etiketter : undefined;
+
     if (
         !(
             avtalt ||
@@ -43,7 +47,8 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
             !!dialog ||
             deltFerdigMarkeringSkalVises ||
             svartMarkeringSkalVises ||
-            !!stillingFraNavSoknadsstatus
+            !!stillingFraNavSoknadsstatus ||
+            !!eksterneEtiketter
         )
     ) {
         return null;
@@ -63,6 +68,9 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                         etikett={stillingFraNavSoknadsstatus}
                         className={styles.etikett}
                     />
+                    {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
+                        <EksterneEtiketter aktivitet={aktivitet} className={styles.etikett} />
+                    ) : null}
                 </div>
             </div>
 

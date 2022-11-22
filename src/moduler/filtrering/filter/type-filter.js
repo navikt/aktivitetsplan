@@ -2,6 +2,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { aktivitetTypeMap } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
@@ -15,7 +16,6 @@ function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType 
             harAktiviteter={harAktivitetTyper}
             filter={aktivitetTyper}
             tekst="Aktivitetstype"
-            filterTekst="aktivitet.type."
             metrikkNavn={AKTIVITESTYPE_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsType}
             textMapper={aktivitetTypeMap}
@@ -34,7 +34,11 @@ const mapStateToProps = (state) => {
     const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
         const { type } = aktivitet;
-        typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
+        if (type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
+            typer[aktivitet.eksternAktivitet.type] = aktivitetTyperFilter[aktivitet.eksternAktivitet.type];
+        } else {
+            typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
+        }
         return typer;
     }, {});
 

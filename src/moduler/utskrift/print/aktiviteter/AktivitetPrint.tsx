@@ -4,7 +4,7 @@ import React from 'react';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { aktivitetTypeMap } from '../../../../utils/textMappers';
+import { getAktivitetType } from '../../../../utils/textMappers';
 import AvtaltMarkering from '../../../aktivitet/avtalt-markering/AvtaltMarkering';
 import StillingEtikett from '../../../aktivitet/etikett/StillingEtikett';
 import TiltakEtikett from '../../../aktivitet/etikett/TiltakEtikett';
@@ -20,12 +20,12 @@ interface Props {
 
 const AktivitetPrint = (props: Props) => {
     const { aktivitet, dialog } = props;
-    const { id, type, tittel } = aktivitet;
+    const { id, tittel } = aktivitet;
     const forhaandsorientering = aktivitet.forhaandsorientering;
 
     return (
         <div key={id} className="printmodal-body__statusgruppe">
-            <p className="printmodal-body__statusgruppe--type">{aktivitetTypeMap[type]}</p>
+            <p className="printmodal-body__statusgruppe--type">{getAktivitetType(aktivitet)}</p>
             <Undertittel tag="h2" className="printmodal-body__statusgruppe--overskrift">
                 {tittel}
             </Undertittel>

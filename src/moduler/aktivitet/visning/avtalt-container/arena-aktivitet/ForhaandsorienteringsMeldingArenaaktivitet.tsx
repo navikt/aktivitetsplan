@@ -29,6 +29,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                 label="Velg type forhåndsorientering"
                 disabled={lasterData}
                 noBlankOption
+                className={styles.selectType}
                 {...state.fields.forhaandsorienteringType}
             >
                 <option value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</option>

@@ -5,16 +5,17 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../../api/utils';
-import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
+import { AlleAktiviteter } from '../../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
+import { EksternAktivitetType, VeilarbAktivitetType } from '../../../../../datatypes/internAktivitetTypes';
 import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
+import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
-import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
+import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
 import styles from './ForhaandsorienteringForm.module.less';
-import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
 const avtaltTekst =
     'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
@@ -37,7 +38,7 @@ const validate = (val: string) => {
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;
-    aktivitet: ArenaAktivitet;
+    aktivitet: AlleAktiviteter;
     hidden: boolean;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
@@ -76,9 +77,9 @@ const ForhaandsorienteringForm = (props: Props) => {
             data.forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD ? avtaltTekst : data.tekst;
 
         setForhandsorienteringType(data.forhaandsorienteringType as ForhaandsorienteringType);
-        return sendForhaandsorienteringArenaAktivitet(aktivitet, {
-            tekst,
+        return settAktivitetTilAvtalt(aktivitet, {
             type: data.forhaandsorienteringType,
+            tekst,
         })(dispatch).then(() => {
             setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();
@@ -92,14 +93,28 @@ const ForhaandsorienteringForm = (props: Props) => {
         arenaAktivitetRequestStatus === STATUS.RELOADING ||
         arenaAktivitetRequestStatus === STATUS.PENDING;
 
+    const isGammelArenaAktivitet =
+        aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
+        [EksternAktivitetType.ARENA_TILTAK_TYPE].includes(aktivitet.eksternAktivitet.type);
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <ForNavAnsattMarkeringWrapper>
-                <Normaltekst className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
-            </ForNavAnsattMarkeringWrapper>
-
             <SkjemaGruppe>
-                <Checkbox label="Legg til forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
+                <ForNavAnsattMarkeringWrapper>
+                    {isGammelArenaAktivitet && (
+                        <Normaltekst className={styles.tittel}>
+                            Tiltaket er automatisk merket "Avtalt med NAV"
+                        </Normaltekst>
+                    )}
+                    <div className={styles.checkbox}>
+                        <Checkbox
+                            label="Legg til forhåndsorientering"
+                            disabled={lasterData}
+                            {...state.fields.checked}
+                            className={styles.checkboxNoSpace}
+                        />
+                    </div>
+                </ForNavAnsattMarkeringWrapper>
 
                 <ForhaandsorienteringsMeldingArenaaktivitet
                     visible={state.fields.checked.input.value === 'true'}

@@ -4,6 +4,7 @@ import React from 'react';
 import * as AppPT from '../../../../proptypes';
 import BehandlingsDetaljer from './behandlings-detaljer';
 import EgenAktivitetDetaljer from './egenAktivitet-detaljer';
+import EksternAktivitetDetaljer from './EksternAktivitetDetaljer';
 import GruppeDetaljer from './gruppe-detaljer';
 import IJobbDetaljer from './ijob-detaljer';
 import MoteDetaljer from './mote-detaljer';
@@ -28,6 +29,7 @@ function Aktivitetsdetaljer({ valgtAktivitet }) {
             <TiltakDetaljer aktivitet={valgtAktivitet} />
             <UtdanningDetaljer aktivitet={valgtAktivitet} />
             <StillingFraNavDetaljer stillingFraNavData={valgtAktivitet.stillingFraNavData} />
+            <EksternAktivitetDetaljer aktivitet={valgtAktivitet} />
         </section>
     );
 }

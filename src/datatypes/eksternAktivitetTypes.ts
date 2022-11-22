@@ -1,25 +1,24 @@
 interface RequiredLenkeProps {
     tekst: string;
-    subtekst: string;
-    url: URL;
-}
-
-interface URL {
-    params: Map<string, string>;
-    path: string;
+    subtekst?: string;
+    url: string;
 }
 
 type LenkeType = 'EKSTERN' | 'INTERN' | 'FELLES';
 
 interface Lenke extends RequiredLenkeProps {}
 
+export interface Oppgave extends Lenke {
+    knapptekst: string;
+}
+
 export interface LenkeMedType extends RequiredLenkeProps {
     type: LenkeType;
 }
 
 export interface OppgaveLenke {
-    ekstern: Lenke;
-    intern: Lenke;
+    ekstern?: Oppgave;
+    intern?: Oppgave;
 }
 
 export interface Etikett {
@@ -27,5 +26,6 @@ export interface Etikett {
 }
 
 export interface Detalj {
-    [key: string]: [value: string];
+    label: string;
+    verdi: string;
 }

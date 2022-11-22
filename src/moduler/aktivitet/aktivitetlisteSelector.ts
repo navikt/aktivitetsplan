@@ -1,15 +1,9 @@
 import { createSelector } from 'reselect';
 
 import { STATUS, aggregerStatus } from '../../api/utils';
-import {
-    BEHANDLING_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
-    STILLING_FRA_NAV_TYPE,
-} from '../../constant';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
+import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
@@ -29,7 +23,13 @@ export const selectAktivitetListe = (state: any) =>
     selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetFilter(a, state));
 
 export const selectAktivitetMedId = (state: any, aktivitetId: string) =>
-    selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => aktivitet.id === aktivitetId);
+    selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => {
+        if (isArenaAktivitet(aktivitet)) {
+            return aktivitet.id === aktivitetId || aktivitet.aktivitetId.toString() === aktivitetId;
+        } else {
+            return aktivitet.id === aktivitetId;
+        }
+    });
 
 export const selectAktivitetListeSlice = (state: any) => {
     const status = aggregerStatus(
@@ -74,7 +74,8 @@ export const selectKanEndreAktivitetDetaljer = (state: any, aktivitet: VeilarbAk
     const { avtalt, type } = aktivitet;
     return (
         selectKanEndreAktivitetStatus(state, aktivitet) &&
-        type !== STILLING_FRA_NAV_TYPE &&
+        type !== VeilarbAktivitetType.STILLING_FRA_NAV_TYPE &&
+        type !== VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
         // @ts-ignore
         (avtalt !== true || !!window.appconfig.TILLAT_SET_AVTALT || type === BEHANDLING_AKTIVITET_TYPE)
     );

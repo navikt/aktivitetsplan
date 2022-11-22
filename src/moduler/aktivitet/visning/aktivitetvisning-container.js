@@ -72,9 +72,9 @@ const mapStateToProps = (state, props) => {
     const aktivitetId = props.match.params.id;
     const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
 
-    const erArenaAktivitet = aktivitetId.startsWith('ARENA');
-    const aktivitetDataStatus = erArenaAktivitet ? selectArenaAktivitetStatus(state) : selectAktivitetStatus(state);
-    const laster = aktivitetDataStatus !== STATUS.OK;
+    const arenaDataStatus = selectArenaAktivitetStatus(state);
+    const aktivitetDataStatus = selectAktivitetStatus(state);
+    const laster = arenaDataStatus !== STATUS.OK || aktivitetDataStatus !== STATUS.OK;
 
     return {
         avhengigheter: [

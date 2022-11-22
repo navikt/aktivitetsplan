@@ -5,6 +5,7 @@ import {
     Livslopsstatus,
     StillingFraNavSoknadsstatus,
 } from './aktivitetTypes';
+import { Detalj, Etikett, LenkeMedType, OppgaveLenke } from './eksternAktivitetTypes';
 import {
     FellesTransaksjonsTyper,
     MoteTransaksjonsType,
@@ -20,7 +21,8 @@ export type VeilarbAktivitet =
     | SokeavtaleAktivitet
     | MedisinskBehandlingAktivitet
     | StillingFraNavAktivitet
-    | EgenAktivitet;
+    | EgenAktivitet
+    | EksternAktivitet;
 
 export enum VeilarbAktivitetType {
     EGEN_AKTIVITET_TYPE = 'EGEN',
@@ -31,7 +33,7 @@ export enum VeilarbAktivitetType {
     MOTE_TYPE = 'MOTE',
     SAMTALEREFERAT_TYPE = 'SAMTALEREFERAT',
     STILLING_FRA_NAV_TYPE = 'STILLING_FRA_NAV',
-    // EKSTERN_AKTIVITET_TYPE = 'EKSTERN_AKTIVITET',
+    EKSTERN_AKTIVITET_TYPE = 'EKSTERNAKTIVITET',
 }
 
 export interface EgenAktivitet extends AktivitetBaseProps {
@@ -133,22 +135,20 @@ export function isSamtaleOrMote(aktivitet: AlleAktiviteter): aktivitet is Samtal
     );
 }
 
-/*
-interface EksternAktivitet extends AktivitetBaseProps {
+export interface EksternAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
     eksternAktivitet: EksternAktivitetData;
 }
 
 export interface EksternAktivitetData {
     type: EksternAktivitetType;
-    oppgave: OppgaveLenke;
-    handlinger: LenkeMedType[];
-    detaljer: Record<string, string>[];
-    etiketter: Etikett[];
+    oppgave?: OppgaveLenke;
+    handlinger?: LenkeMedType[];
+    detaljer?: Detalj[];
+    etiketter?: Etikett[];
 }
 
 export enum EksternAktivitetType {
     ARENA_TILTAK_TYPE = 'ARENA_TILTAK',
     MIDL_LONNSTILSKUDD_TYPE = 'MIDL_LONNSTILSKUDD',
 }
-*/
