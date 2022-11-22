@@ -1,6 +1,7 @@
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import { STATUS } from '../../../api/utils';
@@ -14,7 +15,6 @@ import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivi
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './Aktivitetvisning';
-import { AktivitetvisningIkkeFunnet } from './AktivitetvisningIkkeFunnet';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
 class AktivitetvisningContainer extends Component {
@@ -46,7 +46,7 @@ class AktivitetvisningContainer extends Component {
                     {valgtAktivitet ? (
                         <Aktivitetvisning aktivitet={valgtAktivitet} {...props} />
                     ) : (
-                        <AktivitetvisningIkkeFunnet />
+                        <Redirect to={'/'} />
                     )}
                 </AktivitetvisningModal>
             </DirtyProvider>
