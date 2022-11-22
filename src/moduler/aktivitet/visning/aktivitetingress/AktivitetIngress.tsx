@@ -3,7 +3,7 @@ import React from 'react';
 
 import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
 
-const aktivitetingress: { [key: string]: string } = {
+const aktivitetingress: Record<string, string> = {
     BEHANDLING:
         'Her kan du legge inn medisinsk behandling som påvirker muligheten din til å jobbe eller være på kurs og tiltak.\n\n' +
         'Eksempler:\n' +
