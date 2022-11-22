@@ -10,11 +10,22 @@ import Provider from './provider';
 import { HiddenIf, getContextPath } from './utils';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 
-function isValueOrGetDefault(value, defaultValue) {
+function isValueOrGetDefault(value: any, defaultValue: any) {
     return value === undefined ? defaultValue : value;
 }
 
 export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
+
+export interface AppConfig {
+    CONTEXT_PATH: string;
+    TILLAT_SET_AVTALT: boolean;
+    VIS_MALER: boolean;
+    TIMEOUTBOX: boolean;
+}
+
+declare const window: {
+    appconfig: AppConfig;
+};
 
 // NOTE: This is bad, don't use it if you dont HAVE to.
 window.appconfig = window.appconfig || {};
@@ -26,7 +37,7 @@ window.appconfig = {
     TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
 };
 
-const getBasename = (fnr) => {
+const getBasename = (fnr: string) => {
     const pathnamePrefix = process.env.PUBLIC_URL;
     if (fnr && !pathnamePrefix) {
         return fnr;
@@ -39,7 +50,7 @@ const getBasename = (fnr) => {
     }
 };
 
-function HashRouterIfGHPages({ fnr, children }) {
+function HashRouterIfGHPages({ fnr, children }: { fnr: string; children: React.ReactNode }) {
     if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
         return <HashRouter basename={fnr}>{children}</HashRouter>;
     }
@@ -48,7 +59,7 @@ function HashRouterIfGHPages({ fnr, children }) {
     return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
 }
 
-function App({ fnr, key }) {
+function App({ fnr, key }: { fnr: string; key: string }) {
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <Provider key={fnr + key}>
