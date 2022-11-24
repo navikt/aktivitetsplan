@@ -3,7 +3,9 @@ import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { Store } from 'redux';
 
+import { ReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
@@ -16,8 +18,10 @@ import { selectFilterSlice } from './filter/filter-selector';
 import { PeriodeLabel } from './filter/periode-filter';
 import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
+type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
+
 //TODO se på det her, trengs kanskje ikke. hvis nødvendig, skriv det bort fra FormattedMessage
-function VisValgtFilter(props) {
+function VisValgtFilter(props: Props) {
     const {
         filterSlice,
         doToggleAktivitetsEtikett,
@@ -26,9 +30,8 @@ function VisValgtFilter(props) {
         doToggleAktivitetsType,
         doVelgHistoriskPeriode,
         doToggleAktivitetAvtaltMedNav,
-        className,
     } = props;
-    const setFilterValues = (filterType, filterVerdi) => {
+    const setFilterValues = (filterType: string, filterVerdi: string) => {
         switch (filterType) {
             case 'aktivitetTyper':
                 return {
@@ -60,7 +63,7 @@ function VisValgtFilter(props) {
         }
     };
     return (
-        <div className={classNames('filtrering-label-container', className)}>
+        <div className={classNames('filtrering-label-container')}>
             {Object.keys(filterSlice).map((filterKey) => {
                 const filterValue = filterSlice[filterKey];
 
@@ -81,6 +84,7 @@ function VisValgtFilter(props) {
                     .filter((f) => filterValue[f])
                     .map((f) => {
                         const filterValues = setFilterValues(filterKey, f);
+                        if (typeof filterValues === 'string') return null;
                         return (
                             <FiltreringLabel
                                 key={f}
@@ -96,11 +100,11 @@ function VisValgtFilter(props) {
     );
 }
 
-VisValgtFilter.defaultProps = {
+(VisValgtFilter as any).defaultProps = {
     className: '',
 };
 
-VisValgtFilter.propTypes = {
+(VisValgtFilter as any).propTypes = {
     filterSlice: PT.object.isRequired,
     doToggleAktivitetsEtikett: PT.func.isRequired,
     doToggleArenaAktivitetsEtikett: PT.func.isRequired,
@@ -111,17 +115,19 @@ VisValgtFilter.propTypes = {
     className: PT.string,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: Store) => ({
     filterSlice: selectFilterSlice(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doToggleAktivitetsEtikett: (aktivitetsEtikett) => dispatch(toggleAktivitetsEtikett(aktivitetsEtikett)),
-    doToggleArenaAktivitetsEtikett: (aktivitetsEtikett) => dispatch(toggleArenaAktivitetsEtikett(aktivitetsEtikett)),
-    doToggleAktivitetsStatus: (aktivitetsStatus) => dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
-    doToggleAktivitetsType: (aktivitetsType) => dispatch(toggleAktivitetsType(aktivitetsType)),
-    doVelgHistoriskPeriode: (historiskPeriode) => dispatch(velgHistoriskPeriode(historiskPeriode)),
-    doToggleAktivitetAvtaltMedNav: (aktivitetsStatus) => dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
+const mapDispatchToProps = (dispatch: ReduxDispatch) => ({
+    doToggleAktivitetsEtikett: (aktivitetsEtikett: string) => dispatch(toggleAktivitetsEtikett(aktivitetsEtikett)),
+    doToggleArenaAktivitetsEtikett: (aktivitetsEtikett: string) =>
+        dispatch(toggleArenaAktivitetsEtikett(aktivitetsEtikett)),
+    doToggleAktivitetsStatus: (aktivitetsStatus: string) => dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
+    doToggleAktivitetsType: (aktivitetsType: string) => dispatch(toggleAktivitetsType(aktivitetsType)),
+    doVelgHistoriskPeriode: (historiskPeriode: string | null) => dispatch(velgHistoriskPeriode(historiskPeriode)),
+    doToggleAktivitetAvtaltMedNav: (aktivitetsStatus: string) =>
+        dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VisValgtFilter);

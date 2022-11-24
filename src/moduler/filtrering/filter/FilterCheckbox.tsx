@@ -7,9 +7,9 @@ import { Filter } from './FilterVisning';
 interface Props {
     filterTekst: string;
     filter: Filter;
-    nokkel: string;
+    nokkel: keyof Filter;
     metrikkNavn: string;
-    doToggle(key: string): void;
+    doToggle(key: keyof Filter): void;
 }
 
 const FilterCheckbox = (props: Props) => {

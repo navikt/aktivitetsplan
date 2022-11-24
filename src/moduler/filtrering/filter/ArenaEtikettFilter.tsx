@@ -1,44 +1,47 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
-import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
+import { ArenaAktivitet } from '../../../datatypes/arenaAktivitetTypes';
+import { EksternAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { ARENA_ETIKETT_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { tiltakEtikettMapper } from '../../../utils/textMappers';
+import { eksternAktivitetFilterTextMappings, tiltakEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
-import { toggleArenaAktivitetsEtikett } from './filter-reducer';
-import { selectArenaAktivitetEtiketterFilter } from './filter-selector';
-import FilterVisningsKomponent from './FilterVisning';
+import FilterVisningsKomponent, { ArenaEtikettFilterType, FilterValueExtractor } from './FilterVisning';
 
-type FilterType = {
-    [key in ArenaEtikett]?: boolean;
+const isEksternAktivitet = (aktivitet: AlleAktiviteter): aktivitet is EksternAktivitet => {
+    return aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
+};
+
+export const getEksternFilterableFields: FilterValueExtractor<EksternAktivitet, string> = (
+    aktivitet: EksternAktivitet
+) => {
+    return aktivitet.eksternAktivitet?.etiketter?.map((etikett) => etikett.kode) || [];
+};
+export const getArenaFilterableFields: FilterValueExtractor<ArenaAktivitet, keyof ArenaEtikettFilterType> = (
+    aktivitet: ArenaAktivitet
+) => {
+    return [aktivitet.etikett].filter((it) => !!it);
 };
 
 const ArenaEtikettFilter = () => {
-    const dispatch = useDispatch();
     const aktiviteter: AlleAktiviteter[] = useSelector(selectAktiviterForAktuellePerioden);
-    const aktivitetEtiketterFilter = useSelector(selectArenaAktivitetEtiketterFilter);
+    const eksternFields = aktiviteter.filter(isEksternAktivitet).flatMap(getEksternFilterableFields);
+    const arenaFields = aktiviteter.filter(isArenaAktivitet).flatMap(getArenaFilterableFields);
+    const alleEtiketter = new Set([...eksternFields, ...arenaFields]);
 
-    const doToggleArenaAktivitetsEtikett = (aktivitetsType: string) => {
-        dispatch(toggleArenaAktivitetsEtikett(aktivitetsType));
+    const textMappers = {
+        ...tiltakEtikettMapper,
+        ...eksternAktivitetFilterTextMappings,
     };
-
-    const aktivitetEtiketter = aktiviteter.filter(isArenaAktivitet).reduce((etiketter: FilterType, aktivitet) => {
-        const { etikett } = aktivitet;
-        if (etikett) {
-            etiketter[etikett] = aktivitetEtiketterFilter[etikett];
-        }
-        return etiketter;
-    }, {});
 
     return (
         <FilterVisningsKomponent
-            harAktiviteter={Object.keys(aktivitetEtiketter).length >= 1}
-            filter={aktivitetEtiketter}
+            filters={Array.from(alleEtiketter)}
+            filterKategori={'arenaEtikett'}
             tekst="Tiltaksstatus"
             metrikkNavn={ARENA_ETIKETT_FILTER_METRIKK}
-            doToggleFunction={doToggleArenaAktivitetsEtikett}
-            textMapper={tiltakEtikettMapper}
+            textMapper={textMappers}
         />
     );
 };

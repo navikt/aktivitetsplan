@@ -1,42 +1,30 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { ETIKETT_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { stillingsEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
-import { toggleAktivitetsEtikett } from './filter-reducer';
-import { selectAktivitetEtiketterFilter } from './filter-selector';
-import FilterVisningsKomponent from './FilterVisning';
+import FilterVisningsKomponent, { EtikettFilterType, FilterValueExtractor } from './FilterVisning';
 
-type FilterType = {
-    [key in StillingsStatus]?: boolean;
+function notNull<T>(thing: T | null | undefined): thing is T {
+    return !!thing;
+}
+const getFilterableFields: FilterValueExtractor<VeilarbAktivitet, keyof EtikettFilterType> = (aktvitet) => {
+    return [aktvitet.etikett].filter(notNull);
 };
 
 const EtikettFilter = () => {
-    const dispatch = useDispatch();
     const aktiviteter: AlleAktiviteter[] = useSelector(selectAktiviterForAktuellePerioden);
-    const aktivitetEtiketterFilter = useSelector(selectAktivitetEtiketterFilter);
-
-    const doToggleAktivitetsEtikett = (aktivitetsType: string) => {
-        dispatch(toggleAktivitetsEtikett(aktivitetsType));
-    };
-
-    const aktivitetEtiketter = aktiviteter.filter(isVeilarbAktivitet).reduce((etiketter: FilterType, aktivitet) => {
-        const { etikett } = aktivitet;
-        if (etikett) {
-            etiketter[etikett] = aktivitetEtiketterFilter[etikett];
-        }
-        return etiketter;
-    }, {});
+    const filters = Array.from(new Set(aktiviteter.filter(isVeilarbAktivitet).flatMap(getFilterableFields)));
 
     return (
         <FilterVisningsKomponent
-            harAktiviteter={Object.keys(aktivitetEtiketter).length >= 1}
-            filter={aktivitetEtiketter}
+            filters={filters}
+            filterKategori={'etikett'}
             tekst="Stillingsstatus"
             metrikkNavn={ETIKETT_FILTER_METRIKK}
-            doToggleFunction={doToggleAktivitetsEtikett}
             textMapper={stillingsEtikettMapper}
         />
     );
