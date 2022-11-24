@@ -2,32 +2,45 @@ import classNames from 'classnames';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Store } from 'redux';
 
+import { AktivitetType, StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
+import { EksternAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import {
+    toggleAktivitetAvtaltMedNav,
+    toggleAktivitetsEtikett,
+    toggleAktivitetsStatus,
+    toggleAktivitetsType,
+    toggleArenaAktivitetsEtikett,
+} from './filter-reducer';
+import {
+    selectAktivitetAvtaltMedNavFilter,
+    selectAktivitetEtiketterFilter,
+    selectAktivitetStatusFilter,
+    selectAktivitetTyperFilter,
+    selectArenaAktivitetEtiketterFilter,
+} from './filter-selector';
 import FilterCheckbox from './FilterCheckbox';
 
-type FilterType = { [key: string]: boolean | undefined };
-
-interface AvtaltFilterType extends FilterType {
+export interface AvtaltFilterType {
     avtaltMedNav: boolean;
     ikkeAvtaltMedNav: boolean;
 }
 
-interface StatusFilterType extends FilterType {
+export interface StatusFilterType {
     BRUKER_ER_INTERESSERT: boolean;
     FULLFORT: boolean;
     GJENNOMFORES: boolean;
     PLANLAGT: boolean;
+    AVBRUTT: boolean;
 }
 
-interface AktivitetFilterType extends FilterType {
-    EGEN: boolean;
-    MOTE: boolean;
-    SOKEAVTALE: boolean;
-    STILLING: boolean;
-}
+export type AktivitetFilterType = Record<AktivitetType, boolean> & Record<EksternAktivitetType, boolean>;
 
-interface ArenaEtikettFilterType extends FilterType {
+export interface ArenaEtikettFilterType {
     AKTUELL: boolean;
     AVSLAG: boolean;
     IKKAKTUELL: boolean;
@@ -39,39 +52,72 @@ interface ArenaEtikettFilterType extends FilterType {
     VENTELISTE: boolean;
 }
 
-export interface EtikettType extends FilterType {
-    SOKNAD_SENDT?: boolean;
-    INNKALT_TIL_INTERVJU?: boolean;
-    JOBBTILBUD?: boolean;
-    AVSLAG?: boolean;
-}
+export type EtikettFilterType = Record<ArenaEtikett | StillingsStatus, boolean>;
 
-export type Filter = AvtaltFilterType | StatusFilterType | AktivitetFilterType | EtikettType | ArenaEtikettFilterType;
+export type FilterKategori = 'avtalt' | 'status' | 'aktivitet' | 'etikett' | 'arenaEtikett';
+export type FilterValueExtractor<AktivitetType, FilterValueType> = (aktvitet: AktivitetType) => FilterValueType[];
+export type Filter =
+    | AvtaltFilterType
+    | StatusFilterType
+    | AktivitetFilterType
+    | EtikettFilterType
+    | ArenaEtikettFilterType;
 
 interface FilterVisningTypes {
-    harAktiviteter: boolean;
-    filter: Filter;
+    filterKategori: FilterKategori;
     tekst: string;
     metrikkNavn: string;
-    doToggleFunction: (key: string) => void;
     className?: string;
     textMapper: any;
+    filters: string[];
 }
+
+const selectorMap: Record<FilterKategori, (store: Store) => Filter> = {
+    avtalt: selectAktivitetAvtaltMedNavFilter,
+    aktivitet: selectAktivitetTyperFilter,
+    arenaEtikett: selectArenaAktivitetEtiketterFilter,
+    etikett: selectAktivitetEtiketterFilter,
+    status: selectAktivitetStatusFilter,
+};
+const togglerMap = {
+    avtalt: toggleAktivitetAvtaltMedNav,
+    aktivitet: toggleAktivitetsType,
+    arenaEtikett: toggleArenaAktivitetsEtikett,
+    etikett: toggleAktivitetsEtikett,
+    status: toggleAktivitetsStatus,
+};
+
+const useFilterType = (
+    filterKategori: FilterKategori
+): { filterState: Filter; toggle: (filterKey: string) => void } => {
+    // get selector for filterKategori
+    const filterState = useSelector(selectorMap[filterKategori]); //useSelector(selectArenaAktivitetEtiketterFilter);
+    // get dispatcher for filterKategori
+    const dispatch = useDispatch();
+    const toggleForKategori = togglerMap[filterKategori];
+    const toggle = (filterKode: string) => dispatch(toggleForKategori(filterKode));
+    return {
+        filterState,
+        toggle,
+    };
+};
 
 //TODO: Refaktorer. Denne er bare konvertert til ts i forsøk på å gjøre det mulig å forstå hvordan den fungerer.
 // Filter er ikke bare et objekt hvor den boolske verdien bestemmer om filteret er påskrudd eller ikke,
 // det sier også noe om selve filtercheckboksen skal vises eller ikke(ved at noen av Filter propertiene kan mangle fra objektet).
-const FilterVisning = (props: FilterVisningTypes) => {
-    const { harAktiviteter, filter, tekst, metrikkNavn, doToggleFunction, className, textMapper } = props;
+function FilterVisning(props: FilterVisningTypes) {
+    const { tekst, metrikkNavn, className, textMapper, filterKategori, filters } = props;
+    const { toggle, filterState } = useFilterType(filterKategori);
+    const harAktiviteter = (filters || []).length > 0;
 
-    const checkboxes = Object.keys(filter).map((nokkel, i) => (
+    const checkboxes = (filters || []).map((nokkel: string, i: number) => (
         <FilterCheckbox
             key={i}
             filterTekst={textMapper[nokkel]}
-            filter={filter}
-            nokkel={nokkel}
+            filter={filterState}
+            nokkel={nokkel as keyof Filter}
             metrikkNavn={metrikkNavn}
-            doToggle={doToggleFunction}
+            doToggle={toggle}
         />
     ));
 
@@ -83,6 +129,6 @@ const FilterVisning = (props: FilterVisningTypes) => {
             </SkjemaGruppe>
         </VisibleIfDiv>
     );
-};
+}
 
 export default FilterVisning;

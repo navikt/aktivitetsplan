@@ -5,7 +5,7 @@ import { AppConfig } from '../../app';
 import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
-import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
+import { aktivitetMatchesFilters, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterSlice } from './aktivitet-selector';
@@ -21,7 +21,7 @@ export const selectAktiviterForAktuellePerioden = (state: any): AlleAktiviteter[
     selectAlleAktiviter(state).filter((a: AlleAktiviteter) => selectDatoErIPeriode(a.opprettetDato, state));
 
 export const selectAktivitetListe = (state: any) =>
-    selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetFilter(a, state));
+    selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetMatchesFilters(a, state));
 
 export const selectAktivitetMedId = (state: any, aktivitetId: string) =>
     selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => {

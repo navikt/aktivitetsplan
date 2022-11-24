@@ -134,6 +134,9 @@ export function isSamtaleOrMote(aktivitet: AlleAktiviteter): aktivitet is Samtal
         aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE || aktivitet.type === VeilarbAktivitetType.MOTE_TYPE
     );
 }
+export const isEksternAktivitet = (aktivitet: AlleAktiviteter): aktivitet is EksternAktivitet => {
+    return aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
+};
 
 export interface EksternAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;

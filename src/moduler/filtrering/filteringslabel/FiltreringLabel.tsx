@@ -1,8 +1,8 @@
 import { Close } from '@navikt/ds-icons';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface Props {
-    label: string;
+    label: ReactNode;
     slettFilter(): void;
 }
 
