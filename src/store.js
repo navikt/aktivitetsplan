@@ -9,10 +9,10 @@ import reducer from './reducer';
 function getStoreCompose() {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-    return composeEnhancers(applyMiddleware(thunkMiddleware /*, freeze*/));
+    return composeEnhancers(applyMiddleware(thunkMiddleware, freeze));
 }
 /* eslint-enable */
 
-export default function create(initialState = {}) {
-    return getStoreCompose()(createStore)(reducer, initialState);
+export default function create() {
+    return getStoreCompose()(createStore)(reducer, {});
 }
