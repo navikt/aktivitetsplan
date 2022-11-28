@@ -23,8 +23,8 @@ interface Props {
 }
 
 const AktivitetskortTillegg = ({ aktivitet }: Props) => {
-    const { avtalt, id, etikett } = aktivitet;
-    const dialog = useSelector((state) => selectDialogForAktivitetId(state, id), shallowEqual);
+    const { avtalt, etikett } = aktivitet;
+    const dialog = useSelector((state) => selectDialogForAktivitetId(state, aktivitet), shallowEqual);
     const henvendelser = dialog ? dialog.henvendelser : [];
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
 
