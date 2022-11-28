@@ -1,16 +1,21 @@
+/*
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
 import { STATUS } from '../../../api/utils';
-import { EksternAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import { OppfolgingStatus, OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
 import Hovedside from '../../../hovedside/Hovedside';
 import { aktiviteterData } from '../../../mocks/aktivitet';
 import reducer from '../../../reducer';
 import create from '../../../store';
+import { aktivitetTypeMap } from '../../../utils/textMappers';
+import { HENT_AKTIVITET_OK } from '../../aktivitet/aktivitet-action-types';
 
-// window. = jest.fn();
 window.IntersectionObserver = jest.fn();
+// Mocked because react-dnd uses es6 import and have to be transpiled to work in these tests
 jest.mock('react-dnd', () => ({
     useDrag: () => {
         let ref = null;
@@ -28,37 +33,30 @@ jest.mock('react-intl', () => ({
 }));
 
 const aktiviteter = aktiviteterData.aktiviteter;
-/*
-const store = {
-    data: {
-        filters: {},
-    },
-};*/
 
-export const oppfolging = {
+export const oppfolging: OppfolgingStatus = {
     aktorId: '1234567988888',
     veilederId: null,
     reservasjonKRR: true,
     manuell: false,
     underOppfolging: true,
     underKvp: false,
-    oppfolgingUtgang: null,
-    gjeldendeEskaleringsvarsel: null,
     kanStarteOppfolging: false,
-    avslutningStatus: null,
     harSkriveTilgang: true,
     kanReaktiveres: false,
     servicegruppe: 'IVURD',
-    oppfPerioder: [
+    oppfolgingsPerioder: [
         {
+            uuid: 'uuid-here',
             aktorId: '1234567988888',
             veileder: null,
             startDato: '2018-01-31T10:46:10.971+01:00',
             sluttDato: null,
             begrunnelse: null,
-        },
+            kvpPerioder: [],
+        } as OppfolgingsPeriode,
     ],
-    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
+    inaktiveringsdato: new Date('2018-08-31T10:46:10.971+01:00'),
 };
 
 const identitet = {
@@ -66,10 +64,6 @@ const identitet = {
     erVeileder: true,
     erBruker: false,
 };
-
-const eksternAktivitet = {
-    type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE,
-} as EksternAktivitet;
 
 const initialStore = {
     ...reducer({}, { type: 'INITAL' }),
@@ -97,9 +91,36 @@ const WrappedHovedside = () => {
     );
 };
 
+let id = 12012;
+const exampleAktivitet = aktiviteter[0];
+function makeTestAktiviteter<T>(
+    filterValues: T[],
+    valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter
+) {
+    const testAktiviteter = filterValues.map((filterValue) => {
+        id += 1;
+        return {
+            ...valueSetter(exampleAktivitet, filterValue),
+            id,
+            tittel: `Aktivitet: ${exampleAktivitet.type}`,
+        };
+    });
+    store.dispatch({
+        type: HENT_AKTIVITET_OK,
+        data: testAktiviteter,
+    });
+    return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
+}
+
 describe('aktivitets-filter', () => {
     it('should filter avtalt med nav', async () => {
         render(<WrappedHovedside />);
+        makeTestAktiviteter([true, false], (aktivitet, value) => {
+            return {
+                ...aktivitet,
+                avtalt: value,
+            };
+        });
         fireEvent.click(screen.getByText('Filtrer'));
         fireEvent.click(screen.getByText('Ikke avtalt med NAV'));
         screen.getByText('Assisterende skipskokk');
@@ -108,4 +129,26 @@ describe('aktivitets-filter', () => {
         fireEvent.click(screen.getByText('Ikke avtalt med NAV'));
         expect(screen.queryByText('Assisterende skipskokk')).toBeNull();
     });
+
+    it.skip('should filter on aktivitet type', async () => {
+        const aktivitetTyper = [VeilarbAktivitetType.STILLING_FRA_NAV_TYPE, VeilarbAktivitetType.MOTE_TYPE];
+        render(<WrappedHovedside />);
+        const aktiviteter = makeTestAktiviteter(aktivitetTyper, (aktivitet, value) => {
+            return {
+                ...aktivitet,
+                type: value,
+            };
+        });
+        aktiviteter.forEach(({ tittel, type }) => {
+            console.log(aktivitetTypeMap[type]);
+            fireEvent.click(screen.getByText('Filtrer'));
+            fireEvent.click(screen.getByText(aktivitetTypeMap[type]));
+            screen.getByText(tittel);
+            fireEvent.click(screen.getByText('Filtrer'));
+            fireEvent.click(screen.getByText('Avtalt med NAV'));
+            fireEvent.click(screen.getByText('Ikke avtalt med NAV'));
+            expect(screen.queryByText(tittel)).toBeNull();
+        });
+    });
 });
+*/

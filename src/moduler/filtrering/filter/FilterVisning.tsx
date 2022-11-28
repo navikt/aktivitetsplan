@@ -38,6 +38,11 @@ export interface StatusFilterType {
     AVBRUTT: boolean;
 }
 
+interface FilterValue<T> {
+    label: string;
+    value: T;
+}
+
 export type AktivitetFilterType = Record<AktivitetType, boolean> & Record<EksternAktivitetType, boolean>;
 
 export interface ArenaEtikettFilterType {
@@ -91,7 +96,7 @@ const useFilterType = (
     filterKategori: FilterKategori
 ): { filterState: Filter; toggle: (filterKey: string) => void } => {
     // get selector for filterKategori
-    const filterState = useSelector(selectorMap[filterKategori]); //useSelector(selectArenaAktivitetEtiketterFilter);
+    const filterState = useSelector(selectorMap[filterKategori]);
     // get dispatcher for filterKategori
     const dispatch = useDispatch();
     const toggleForKategori = togglerMap[filterKategori];

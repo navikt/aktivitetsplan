@@ -10,11 +10,11 @@ import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../proptypes';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
+import AktivitetStatusFilter from './filter/AktivitetStatusFilter';
+import AktivitetTypeFilter from './filter/AktivitetTypeFilter';
 import ArenaEtikettFilter from './filter/ArenaEtikettFilter';
-import AvtaltMedNavFilter from './filter/avtalt-filter';
+import AvtaltMedNavFilter from './filter/AvtaltFilter';
 import EtikettFilter from './filter/EtikettFilter';
-import StatusFilter from './filter/status-filter';
-import TypeFilter from './filter/type-filter';
 
 function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     const muligeFilterKombinasjoner = aktivitetsListe.reduce(
@@ -66,8 +66,8 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                         <AvtaltMedNavFilter />
                         <EtikettFilter />
                         <ArenaEtikettFilter />
-                        <StatusFilter />
-                        <TypeFilter />
+                        <AktivitetStatusFilter />
+                        <AktivitetTypeFilter />
                     </div>
                 </Dropdown>
             </VisibleIfDiv>

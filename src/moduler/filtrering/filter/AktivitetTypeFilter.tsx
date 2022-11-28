@@ -18,7 +18,7 @@ export const getTypeFilterValue: FilterValueExtractor<AlleAktiviteter, keyof Akt
     return [getType(aktivitet)];
 };
 
-function TypeFilter() {
+function AktivitetTypeFilter() {
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
     const filters = Array.from(new Set(aktiviteter.flatMap(getTypeFilterValue)));
     return (
@@ -32,4 +32,4 @@ function TypeFilter() {
     );
 }
 
-export default TypeFilter;
+export default AktivitetTypeFilter;
