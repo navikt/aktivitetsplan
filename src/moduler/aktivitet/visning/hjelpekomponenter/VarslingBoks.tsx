@@ -22,7 +22,7 @@ const VarslingBoks = ({ className, aktivitet }: Props) => {
     const avhengigheter = [identitetStatus, dialogStatus];
 
     const erVeileder = useSelector(selectErVeileder);
-    const dialogForAktivitetId = useSelector((state) => selectDialogForAktivitetId(state, aktivitet.id));
+    const dialogForAktivitetId = useSelector((state) => selectDialogForAktivitetId(state, aktivitet));
     const erDigital = useErBrukerDigital();
     const erAlleredeVarslet =
         aktivitet.avtalt &&
