@@ -4,6 +4,7 @@ import { Store } from 'redux';
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
+import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
 import {
     selectAktivitetAvtaltMedNavFilter,
@@ -13,7 +14,6 @@ import {
     selectArenaAktivitetEtiketterFilter,
     selectHistoriskPeriode,
 } from './filter-selector';
-import { getType } from './type-filter';
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;

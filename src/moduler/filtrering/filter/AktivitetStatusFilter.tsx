@@ -27,7 +27,7 @@ const getType: FilterValueExtractor<AlleAktiviteter, keyof StatusFilterType> = (
 };
 const getOrder = (filterName: string) => filtreringsRekkefolge.indexOf(filterName);
 
-function StatusFilter({ className }: { className: string }) {
+function AktivitetStatusFilter({ className }: { className: string }) {
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
     const filters = Array.from(new Set(aktiviteter.flatMap(getType))).sort((a, b) => getOrder(a) - getOrder(b));
     return (
@@ -42,8 +42,8 @@ function StatusFilter({ className }: { className: string }) {
     );
 }
 
-StatusFilter.defaultProps = {
+AktivitetStatusFilter.defaultProps = {
     className: '',
 };
 
-export default StatusFilter;
+export default AktivitetStatusFilter;

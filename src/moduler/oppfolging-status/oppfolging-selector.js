@@ -57,27 +57,8 @@ export function selectErBrukerManuell(state) {
     return selectOppfolgingData(state).manuell;
 }
 
-export function selectKanVarsles(state) {
-    return selectOppfolgingData(state).kanVarsles;
-}
-
 export function selectAktorId(state) {
     return selectOppfolgingData(state).aktorId;
-}
-
-export function selectGjeldendeEskaleringsVarsel(state) {
-    return selectOppfolgingData(state).gjeldendeEskaleringsvarsel;
-}
-
-export function selectErEskalert(state) {
-    return !!selectGjeldendeEskaleringsVarsel(state);
-}
-
-export function selectTilHorendeDialogId(state) {
-    if (selectGjeldendeEskaleringsVarsel(state)) {
-        return selectGjeldendeEskaleringsVarsel(state).tilhorendeDialogId;
-    }
-    return null;
 }
 
 export function selectUnderOppfolging(state) {
