@@ -30,8 +30,8 @@ function DialogPil(props: { antallUleste: number }) {
 
 function DialogLenke(props: Props) {
     const { aktivitet, hidden } = props;
-    const aktivitetId = aktivitet.id;
-    const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitetId));
+    const aktivitetId = aktivitet.id; // If arenaAktivitet -> arenaid, else tekniskId
+    const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
     const erVeileder: boolean = !!useSelector(selectErVeileder);
     const manuellBruker: boolean = useSelector(selectErBrukerManuell);
     const reservertKrr = useSelector(selectReservasjonKRR);
