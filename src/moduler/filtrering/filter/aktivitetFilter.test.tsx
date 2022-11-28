@@ -1,4 +1,3 @@
-/*
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -113,7 +112,7 @@ function makeTestAktiviteter<T>(
 }
 
 describe('aktivitets-filter', () => {
-    it('should filter avtalt med nav', async () => {
+    it.skip('should filter avtalt med nav', async () => {
         render(<WrappedHovedside />);
         makeTestAktiviteter([true, false], (aktivitet, value) => {
             return {
@@ -151,4 +150,3 @@ describe('aktivitets-filter', () => {
         });
     });
 });
-*/
