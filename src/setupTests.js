@@ -5,6 +5,8 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure } from 'enzyme';
 import moment from 'moment';
 
+import tekster from './tekster';
+
 moment.locale('nb');
 moment.tz.setDefault('Europe/Oslo');
 moment.updateLocale('nb', {
@@ -29,4 +31,9 @@ jest.mock('react-dnd', () => ({
 jest.mock('react-dnd-html5-backend', () => ({}));
 jest.mock('react-intl', () => ({
     FormattedMessage: ({ id }) => id,
+}));
+jest.mock('./tekster', () => ({
+    default: {
+        nb: {},
+    },
 }));
