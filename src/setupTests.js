@@ -12,3 +12,21 @@ moment.updateLocale('nb', {
 });
 
 configure({ adapter: new Adapter() });
+
+window.IntersectionObserver = jest.fn();
+// Mocked because react-dnd uses es6 import and have to be transpiled to work in these tests
+jest.mock('react-dnd', () => ({
+    useDrag: () => {
+        let ref = null;
+        return [{}, ref];
+    },
+    useDrop: () => {
+        let ref = null;
+        return [{}, ref];
+    },
+    DndProvider: ({ children }) => <>{children}</>,
+}));
+jest.mock('react-dnd-html5-backend', () => ({}));
+jest.mock('react-intl', () => ({
+    FormattedMessage: ({ id }) => id,
+}));

@@ -38,11 +38,6 @@ export interface StatusFilterType {
     AVBRUTT: boolean;
 }
 
-interface FilterValue<T> {
-    label: string;
-    value: T;
-}
-
 export type AktivitetFilterType = Record<AktivitetType, boolean> & Record<EksternAktivitetType, boolean>;
 
 export interface ArenaEtikettFilterType {

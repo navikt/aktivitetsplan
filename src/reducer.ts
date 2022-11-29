@@ -46,6 +46,9 @@ const combinedReducers = combineReducers({
     }),
 });
 
-export default function reducer(state, action) {
+export type State = Parameters<typeof combinedReducers>[0];
+export type Action = Parameters<typeof combinedReducers>[1];
+
+export default function reducer(state: State, action: Action) {
     return combinedReducers(state, action);
 }

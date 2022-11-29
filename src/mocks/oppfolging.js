@@ -60,6 +60,7 @@ const oppfolging = {
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
+export const mockOppfolging = oppfolging;
 
 export default function getOppfolging(queryParams) {
     const { fnr } = queryParams;
