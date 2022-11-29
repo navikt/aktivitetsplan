@@ -50,3 +50,5 @@ export enum TabId {
     DETALJER = 'DETALJER',
     ARBEIDSMARKEDSTILTAK = 'ARBEIDSMARKEDSTILTAK',
 }
+
+export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
