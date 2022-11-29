@@ -1,10 +1,4 @@
-import {
-    erEskalertBrukerGammel,
-    erKRRBruker,
-    erManuellBruker,
-    erPrivatBruker,
-    ingenOppfPerioder,
-} from './demo/sessionstorage';
+import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from './demo/sessionstorage';
 
 const oppfPerioder = [
     {
@@ -58,11 +52,6 @@ const oppfolging = {
     underOppfolging: !erPrivatBruker(),
     underKvp: false,
     oppfolgingUtgang: null,
-    gjeldendeEskaleringsvarsel: erEskalertBrukerGammel()
-        ? {
-              tilhorendeDialogId: 2,
-          }
-        : null,
     kanStarteOppfolging: false,
     avslutningStatus: null,
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,
@@ -71,6 +60,7 @@ const oppfolging = {
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
+export const mockOppfolging = oppfolging;
 
 export default function getOppfolging(queryParams) {
     const { fnr } = queryParams;
@@ -78,26 +68,9 @@ export default function getOppfolging(queryParams) {
     return oppfolging;
 }
 
-export function startEskalering(update) {
-    oppfolging.gjeldendeEskaleringsvarsel = {
-        aktorId: '1234567988888',
-        avsluttetDato: null,
-        opprettetAv: 'Z123456',
-        opprettetDato: new Date(),
-        tilhorendeDialogId: parseInt(update.dialogId),
-        varselId: 1,
-    };
-    return {};
-}
-
 export function settDigital() {
     oppfolging.manuell = false;
     return oppfolging;
-}
-
-export function stoppEskalering(update) {
-    oppfolging.gjeldendeEskaleringsvarsel = null;
-    return {};
 }
 
 export function avslutningStatus(update) {

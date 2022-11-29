@@ -7,14 +7,13 @@ export interface Me {
 export interface OppfolgingStatus {
     fnr: string;
     aktorId: string;
-    veilederId: string;
+    veilederId: string | null;
     reservasjonKRR: boolean;
     kanVarsles: boolean;
     manuell: boolean;
     underOppfolging: boolean;
     underKvp: boolean;
 
-    gjeldendeEskaleringsvarsel: EskaleringsvarselGammel;
     kanStarteOppfolging: boolean;
 
     oppfolgingsPerioder: OppfolgingsPeriode;
@@ -29,21 +28,12 @@ export interface OppfolgingStatus {
 }
 
 export interface OppfolgingsPeriode {
-    string: string;
-    begrunnelse: string;
+    uuid: string;
+    begrunnelse: string | null;
     kvpPerioder?: KvpPeriode[];
-    sluttDato?: string;
+    sluttDato?: string | null;
     startDato: string;
-    veileder?: string;
-}
-
-interface EskaleringsvarselGammel {
-    varselId: string;
-    aktorId: string;
-    opprettetAv: string;
-    opprettetDato: string;
-    avsluttetDato: string;
-    tilhorendeDialogId: string;
+    veileder?: string | null;
 }
 
 export interface KvpPeriode {

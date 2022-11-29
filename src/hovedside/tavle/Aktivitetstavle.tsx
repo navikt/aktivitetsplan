@@ -5,8 +5,8 @@ import { AnyAction } from 'redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
-import { AKTIVITETSPLAN_ROOT_NODE_ID } from '../../app';
 import {
+    AKTIVITETSPLAN_ROOT_NODE_ID,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,

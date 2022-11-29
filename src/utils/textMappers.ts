@@ -68,3 +68,14 @@ export const tiltakEtikettMapper = {
     [ArenaEtikett.TILBUD]: 'Fått plass på tiltaket',
     [ArenaEtikett.VENTELISTE]: 'På venteliste',
 };
+export const eksternAktivitetFilterTextMappings = {
+    SOKT_INN: 'Søkt inn på tiltaket',
+    AVSLAG: 'Fått avslag',
+    IKKE_AKTUELL: 'Ikke aktuell for tiltaket',
+    IKKE_MOETT: 'Ikke møtt på tiltaket',
+    INFOMOETE: 'Infomøte før tiltaket',
+    TAKKET_JA: 'Takket ja til tilbud',
+    TAKKET_NEI: 'Takket nei til tilbud',
+    FATT_PLASS: 'Fått plass på tiltaket',
+    VENTELISTE: 'På venteliste',
+};

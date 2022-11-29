@@ -38,7 +38,7 @@ import { malListe, opprettMal, sisteMal } from './mal';
 import { hentMalverkMedType } from './malverk';
 import { me } from './me';
 import { oppfoelgingsstatus } from './oppfoelgingsstatus';
-import getOppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
+import getOppfolging, { avslutningStatus, settDigital } from './oppfolging';
 import getPerson, { getPostadresse } from './person';
 import getNivaa4 from './tilgang';
 import { fetchmockMiddleware, jsonResponse } from './utils';
@@ -83,13 +83,7 @@ mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', jsonResponse(veile
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }, res, ctx) =>
     res(ctx.json(avslutningStatus(body)))
 );
-mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }, res, ctx) =>
-    res(ctx.json(startEskalering(body)))
-);
 
-mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }, res, ctx) =>
-    res(ctx.json(stoppEskalering(body)))
-);
 mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204)));
 
 mock.post('/veilarboppfolging/api/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital));

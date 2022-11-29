@@ -1,8 +1,11 @@
 import { isBefore, isWithinInterval } from 'date-fns';
+import { Store } from 'redux';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
+import { getType } from './AktivitetTypeFilter';
+import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
 import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
@@ -23,7 +26,7 @@ export interface Periode {
 }
 
 export function selectDatoErIPeriode(dato: string, state: { sluttDato: any }[]): boolean {
-    const historiskPeriode = selectHistoriskPeriode(state);
+    const historiskPeriode = selectHistoriskPeriode(state as unknown as Store);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
@@ -45,18 +48,24 @@ export function datoErIPeriode(dato: string, valgtHistoriskPeriode?: Periode, si
     return !sistePeriodeSluttDato || isAfterOrEqual(datoDate, new Date(sistePeriodeSluttDato));
 }
 
-export function aktivitetFilter(aktivitet: AlleAktiviteter, state: any) {
+const hasNoOverlap = (a: string[], b: string[]): boolean => {
+    return a.every((element) => !b.includes(element));
+};
+
+const getTiltakstatusEtiketter = (aktivitet: AlleAktiviteter) => {
+    if (isArenaAktivitet(aktivitet)) {
+        return getArenaFilterableFields(aktivitet);
+    } else if (isEksternAktivitet(aktivitet)) {
+        return getEksternFilterableFields(aktivitet);
+    }
+    return [];
+};
+
+export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any): boolean {
     const aktivitetTypeFilter = selectAktivitetTyperFilter(state);
-    if (erAktivtFilter(aktivitetTypeFilter) && !aktivitetTypeFilter[aktivitet.type]) {
-        if (
-            aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
-            !aktivitetTypeFilter[aktivitet.eksternAktivitet.type]
-        ) {
-            return false;
-        }
-        if (aktivitet.type !== VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE && !aktivitetTypeFilter[aktivitet.type]) {
-            return false;
-        }
+    const aktivitetType = getType(aktivitet);
+    if (erAktivtFilter(aktivitetTypeFilter) && !aktivitetTypeFilter[aktivitetType]) {
+        return false;
     }
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
@@ -65,11 +74,14 @@ export function aktivitetFilter(aktivitet: AlleAktiviteter, state: any) {
     }
 
     const arenaEtikettFilter = selectArenaAktivitetEtiketterFilter(state);
-    if (
-        erAktivtFilter(arenaEtikettFilter) &&
-        (!isArenaAktivitet(aktivitet) || !arenaEtikettFilter[aktivitet.etikett])
-    ) {
-        return false;
+    if (erAktivtFilter(arenaEtikettFilter)) {
+        const aktiveFilters = Object.entries(arenaEtikettFilter)
+            .filter(([_, val]: [string, unknown]) => !!val)
+            .map(([key, _]: [string, unknown]) => key);
+        const etiketter = getTiltakstatusEtiketter(aktivitet);
+        if (hasNoOverlap(etiketter, aktiveFilters)) {
+            return false;
+        }
     }
 
     const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
@@ -78,11 +90,10 @@ export function aktivitetFilter(aktivitet: AlleAktiviteter, state: any) {
     }
 
     const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
-
     const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.avtaltMedNav;
     const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
     const { avtalt } = aktivitet;
-    const aktivtAvtaltFilter = avtaltMedNavFilter ^ ikkeAvtaltMedNavFilter;
+    const aktivtAvtaltFilter = [avtaltMedNavFilter, ikkeAvtaltMedNavFilter].filter((it) => it).length === 1;
     const muligeAvtaltFiltereringer = (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);
 
     return !(aktivtAvtaltFilter && muligeAvtaltFiltereringer);
