@@ -1,7 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
+import ReactModal from 'react-modal';
 import { Provider } from 'react-redux';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import create from '../../../store';
 import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../../dialog/dialog-reducer';
@@ -10,28 +11,24 @@ import AktivitetvisningModal from './AktivitetvisningModal';
 
 const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: {} });
 
-function Router(props: { children?: React.ReactNode }) {
-    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
-        return <HashRouter>{props.children}</HashRouter>;
-    }
-    return <BrowserRouter basename={process.env.PUBLIC_URL}>{props.children}</BrowserRouter>;
-}
-
 const AktivitetsvisningModalWrapped = (props: { store: any }) => (
-    <Router>
-        <Provider store={props.store}>
-            <AktivitetvisningModal avhengigheter={[]}>
-                <div />
-            </AktivitetvisningModal>
-        </Provider>
-    </Router>
+    <div id={'app'}>
+        <MemoryRouter>
+            <Provider store={props.store}>
+                <AktivitetvisningModal avhengigheter={[]}>
+                    <div />
+                </AktivitetvisningModal>
+            </Provider>
+        </MemoryRouter>
+    </div>
 );
 
+// Hack to remove warnings from tests https://github.com/reactjs/react-modal/issues/632
+ReactModal.setAppElement(document.createElement('div'));
 describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
         const store = create();
         const wrapper = mount(<AktivitetsvisningModalWrapped store={store} />);
-
         expect(wrapper.find(Feilmelding).html()).toBeNull();
     });
 
