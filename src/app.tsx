@@ -4,6 +4,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
+import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
@@ -13,8 +14,6 @@ import { UpdateEventHandler } from './utils/UpdateHandler';
 function isValueOrGetDefault(value: any, defaultValue: any) {
     return value === undefined ? defaultValue : value;
 }
-
-export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
 export interface AppConfig {
     CONTEXT_PATH: string;
