@@ -2,7 +2,7 @@ import { ActionCreatorWithPayload, createSlice } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/oppfolgingAPI';
 import { RequestStatus, STATUS, doThenDispatch } from '../../api/utils';
-import { OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 /*
@@ -18,7 +18,7 @@ export const SETT_DIGITAL_PENDING = 'oppfolging/digital/PENDING';
 
 interface OppfolgingSlice {
     status: RequestStatus;
-    data: OppfolgingStore;
+    data: OppfolgingStatus;
     feil: Feil | undefined;
 }
 
@@ -28,51 +28,34 @@ const initalState: OppfolgingSlice = {
     feil: undefined as Feil | undefined,
 };
 
-interface OppfolgingStore {
-    aktorId: string;
-    veilederId: null;
-    reservasjonKRR: boolean;
-    manuell: boolean;
-    underOppfolging: boolean;
-    underKvp: boolean;
-    oppfolgingUtgang: null;
-    oppfolgingsPerioder: OppfolgingsPeriode[];
-    gjeldendeEskaleringsvarsel: null;
-    kanStarteOppfolging: boolean;
-    avslutningStatus: null;
-    harSkriveTilgang: boolean;
-    kanReaktiveres: boolean;
-    servicegruppe: string;
-    inaktiveringsdato: string;
-}
-
 interface Feil {}
 
 interface DataAction<Data> {
     type: string;
-    payload: Data;
+    data: Data;
+    payload: never;
 }
 
 const oppfolgingSlice = createSlice({
     name: 'oppfolging',
     initialState: initalState as OppfolgingSlice,
     reducers: {
-        SETT_DIGITAL_OK(state, action: DataAction<OppfolgingStore>) {
+        SETT_DIGITAL_OK(state, action: DataAction<OppfolgingStatus>) {
             widowEvent(UpdateTypes.Oppfolging);
             state.status = STATUS.OK;
-            state.data = action.payload;
+            state.data = action.data;
         },
-        OK(state, action: DataAction<OppfolgingStore>) {
+        OK(state, action: DataAction<OppfolgingStatus>) {
             state.status = STATUS.OK;
-            state.data = action.payload;
+            state.data = action.data;
         },
         FEILET(state, action: DataAction<Feil>) {
             state.status = STATUS.ERROR;
-            state.feil = action.payload;
+            state.feil = action.data;
         },
         SETT_DIGITAL_FEILET(state, action: DataAction<Feil>) {
             state.status = STATUS.ERROR;
-            state.feil = action.payload;
+            state.feil = action.data;
         },
         PENDING(state) {
             state.status = state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING;

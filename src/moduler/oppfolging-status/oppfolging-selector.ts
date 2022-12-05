@@ -1,4 +1,5 @@
 import { RequestStatus, STATUS } from '../../api/utils';
+import { OppfolgingStatus, OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
 import { State } from '../../reducer';
 import { getNowAsISODate } from '../../utils';
 import { selectHistoriskeOppfolgingsPerioder } from './oppfolging-selectorts';
@@ -7,7 +8,7 @@ export function selectOppfolgingSlice(state: State) {
     return state!!.data.oppfolging;
 }
 
-function selectOppfolgingData(state: State) {
+function selectOppfolgingData(state: State): OppfolgingStatus {
     return selectOppfolgingSlice(state).data;
 }
 
@@ -21,7 +22,7 @@ export function selectServicegruppe(state: State) {
     return selectOppfolgingData(state).servicegruppe;
 }
 
-export function selectOppfolgingsPerioder(state: State) {
+export function selectOppfolgingsPerioder(state: State): OppfolgingsPeriode[] {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
 

@@ -1,11 +1,11 @@
 import * as Api from '../../api/aktivitetAPI';
 import { doThenDispatch } from '../../api/utils';
 import * as statuskoder from '../../constant';
+import { AktivitetStatus, StillingFraNavSoknadsstatus } from '../../datatypes/aktivitetTypes';
+import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
+import { SamtalereferatAktivitet, VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
+import { ReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
 import * as AT from './aktivitet-action-types';
-import {SamtalereferatAktivitet, VeilarbAktivitet} from "../../datatypes/internAktivitetTypes";
-import {AktivitetStatus, StillingFraNavSoknadsstatus} from "../../datatypes/aktivitetTypes";
-import {ReduxDispatch} from "../../felles-komponenter/hooks/useReduxDispatch";
-import {Forhaandsorientering} from "../../datatypes/forhaandsorienteringTypes";
 
 export function hentAktiviteter() {
     return doThenDispatch(() => Api.hentAktiviteter(), {
@@ -70,12 +70,16 @@ export function markerForhaandsorienteringSomLest(aktivitet: VeilarbAktivitet) {
     });
 }
 
-export function flyttAktivitetMedBegrunnelse(aktivitet: VeilarbAktivitet, status: AktivitetStatus, avsluttetKommentar: string) {
+export function flyttAktivitetMedBegrunnelse(
+    aktivitet: VeilarbAktivitet,
+    status: AktivitetStatus,
+    avsluttetKommentar: string
+) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, status);
 }
 
-export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string) {
+export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string | null) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);
 }
@@ -93,7 +97,11 @@ export function oppdaterCVSvar(aktivitetId: string, aktivitetVersjon: string, ka
     });
 }
 
-export function oppdaterStillingFraNavSoknadsstatus(aktivitetId: string, aktivitetVersjon: string, soknadsstatus: StillingFraNavSoknadsstatus) {
+export function oppdaterStillingFraNavSoknadsstatus(
+    aktivitetId: string,
+    aktivitetVersjon: string,
+    soknadsstatus: StillingFraNavSoknadsstatus
+) {
     return doThenDispatch(() => Api.oppdaterStillingFraNavSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus), {
         OK: AT.OPPDATER_OK,
         FEILET: AT.OPPDATER_FEILET,

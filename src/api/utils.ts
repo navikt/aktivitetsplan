@@ -25,12 +25,28 @@ enum StatusPrioritet {
     OK = 1,
 }
 
-export function aggregerStatus(...reducereEllerStatuser: (StatusPrioritet | { status: StatusPrioritet })[]) {
-    // TODO: Make sure this works
-    return reducereEllerStatuser.reduce((a, b) => {
-        const aStatus = typeof a !== 'number' ? a.status : a;
-        const bStatus = typeof b !== 'number' ? b.status : b;
-        return (StatusPrioritet[aStatus] || 0) > (StatusPrioritet[bStatus] || 0) ? aStatus : bStatus;
+const getStatusValue = (
+    thing: RequestStatus | StatusPrioritet | { status: StatusPrioritet | RequestStatus }
+): number => {
+    if (thing === null || thing === undefined) return 0;
+    if (typeof thing === 'string') return StatusPrioritet[thing];
+    if (typeof thing === 'number') return thing;
+    if (thing.status) return getStatusValue(thing.status);
+    return 0;
+};
+
+const getStatusString = (thing: RequestStatus | StatusPrioritet | { status: StatusPrioritet }) => {
+    if (!thing || typeof thing === 'string' || typeof thing == 'number') return thing;
+    return thing.status ?? thing;
+};
+
+export function aggregerStatus(
+    ...reducereEllerStatuser: (RequestStatus | StatusPrioritet | { status: StatusPrioritet })[]
+) {
+    return reducereEllerStatuser.reduce((mostImportantStatus, next) => {
+        const aStatusValue = getStatusValue(mostImportantStatus);
+        const bStatusValue = getStatusValue(next);
+        return aStatusValue > bStatusValue ? mostImportantStatus : getStatusString(next);
     });
 }
 

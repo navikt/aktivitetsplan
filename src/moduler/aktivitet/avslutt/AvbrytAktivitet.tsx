@@ -7,6 +7,7 @@ import { AnyAction } from 'redux';
 import { STATUS } from '../../../api/utils';
 import { STATUS_AVBRUTT } from '../../../constant';
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
@@ -28,14 +29,18 @@ const AvbrytAktivitet = (props: Props) => {
     const { match } = props;
     const aktivitetId = match.params.id;
 
-    const valgtAktivitet = useSelector((state) => selectAktivitetMedId(state, aktivitetId));
+    const valgtAktivitet = useSelector((state) => selectAktivitetMedId(state, aktivitetId)) as
+        | VeilarbAktivitet
+        | undefined;
     const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
 
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
+    const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string) => {
+        if (!valgtAktivitet) return;
         dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst) as unknown as AnyAction);
+    };
 
     const lagrer = aktivitetListeStatus !== STATUS.OK;
 
