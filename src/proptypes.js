@@ -179,12 +179,6 @@ export const malverktype = PT.shape({
     tilDato: PT.string,
 });
 
-export const history = PT.shape({
-    goBack: PT.func.isRequired,
-    push: PT.func.isRequired,
-    replace: PT.func.isRequired,
-});
-
 export const lest = PT.shape({
     tidspunkt: PT.string.isRequired,
     verdi: PT.string,
