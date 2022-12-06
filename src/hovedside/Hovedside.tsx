@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
-import AktivitetsplanRouting, { PublicRouting } from '../aktivitetsplanRouting';
+import AktivitetsplanRouting from '../AktivitetsplanRoutes';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
@@ -19,11 +19,11 @@ import { aktivitetRoute } from '../routes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     useEventListener('visAktivitetsplan', (event) => {
         const aktivitetId = event.detail as string | undefined;
         if (!aktivitetId) return;
-        history.replace(aktivitetRoute(aktivitetId));
+        navigate(aktivitetRoute(aktivitetId), { replace: true });
     });
 
     const dispatch = useDispatch();
@@ -49,7 +49,6 @@ const Hovedside = () => {
                     <Aktivitetstavle />
                     <AktivitetsplanRouting />
                 </OppfolgingStatus>
-                <PublicRouting />
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
@@ -48,7 +49,6 @@ interface Props {
     doHentMal: () => void;
     doHentMalListe: () => void;
     avhengigheter: InnholdslasterProps['avhengigheter'];
-    doResetUtskrift: () => void;
     bruker: Bruker;
     kvpPerioder?: KvpPeriode[];
     dialoger?: Dialog[];
@@ -63,7 +63,6 @@ function AktivitetsplanPrint(props: Props) {
         doHentMal,
         doHentMalListe,
         avhengigheter,
-        doResetUtskrift,
         kvpPerioder,
         dialoger,
         mittMal,
@@ -77,6 +76,8 @@ function AktivitetsplanPrint(props: Props) {
         doHentMalListe();
         loggEvent(PRINT_MODSAL_OPEN);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const navigate = useNavigate();
 
     const fnr = hentFnrFraUrl();
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
@@ -135,7 +136,9 @@ function AktivitetsplanPrint(props: Props) {
                         kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
                     />
                 }
-                onRequestClose={doResetUtskrift}
+                onRequestClose={() => {
+                    navigate('/');
+                }}
             >
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <PrintMeldingForm
@@ -197,9 +200,6 @@ function tomBruker(): Bruker {
 
 function mapDispatchToProps(dispatch: any, props: any) {
     return {
-        doResetUtskrift: () => {
-            props.history.push('/');
-        },
         doHentMal: () => dispatch(hentMal()),
         doHentMalListe: () => dispatch(hentMalListe()),
     };

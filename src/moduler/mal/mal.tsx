@@ -3,7 +3,7 @@ import './mal.less';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
@@ -27,7 +27,7 @@ function Mal() {
     const isDirty = useRef(false);
 
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(hentMal() as unknown as AnyAction);
@@ -39,10 +39,10 @@ function Mal() {
     const onModalRequestClosed = () => {
         if (isDirty.current) {
             if (window.confirm(CONFIRM)) {
-                history.push('/');
+                navigate('/');
             }
         } else {
-            history.push('/');
+            navigate('/');
         }
     };
 

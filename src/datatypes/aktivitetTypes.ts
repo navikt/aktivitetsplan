@@ -36,6 +36,7 @@ export type Livslopsstatus =
     | 'AVBRUTT_AV_BRUKER';
 
 export type BrukerType = 'NAV' | 'BRUKER';
+export type JobbStatusType = 'HETID' | 'DELTID';
 
 export interface Lest {
     tidspunkt: string;

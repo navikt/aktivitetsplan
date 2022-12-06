@@ -1,11 +1,12 @@
 import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
 import React, { ReactNode } from 'react';
-import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { FeilmeldingType } from '../../moduler/feilmelding/FeilmeldingTypes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
+import { RouteComponentProps, withRouter } from '../utils/withRouter';
 import ModalHeader from './ModalHeader';
 
 interface Props extends RouteComponentProps {
@@ -34,7 +35,7 @@ const Modal = (props: Props) => {
         ...rest
     } = props;
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const closeFuncOrDefault = () => {
         if (onRequestClose) {
@@ -42,7 +43,7 @@ const Modal = (props: Props) => {
             return;
         }
 
-        history.push('/');
+        navigate('/');
     };
 
     return (

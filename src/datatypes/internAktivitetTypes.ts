@@ -2,6 +2,7 @@ import {
     AktivitetBaseProps,
     AlleAktiviteter,
     BrukerType,
+    JobbStatusType,
     Livslopsstatus,
     StillingFraNavSoknadsstatus,
 } from './aktivitetTypes';
@@ -20,6 +21,7 @@ export type VeilarbAktivitet =
     | StillingAktivitet
     | SokeavtaleAktivitet
     | MedisinskBehandlingAktivitet
+    | IJobbAktivitet
     | StillingFraNavAktivitet
     | EgenAktivitet
     | EksternAktivitet;
@@ -68,6 +70,13 @@ export interface SamtalereferatAktivitet
     forberedelser: string;
     referat: string;
     erReferatPublisert: boolean;
+}
+
+export interface IJobbAktivitet extends AktivitetBaseProps {
+    type: VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE;
+    jobbStatus?: JobbStatusType;
+    ansettelsesforhold?: string;
+    arbeidstid?: string;
 }
 
 export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsTyper | MoteTransaksjonsType> {
