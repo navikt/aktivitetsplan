@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { fetchHarFlereAktorId } from '../../api/oppfolgingAPI';
@@ -9,8 +9,8 @@ import { loggTidBruktGaaInnPaaAktivitetsplanen } from '../../felles-komponenter/
 import { selectErBruker } from '../identitet/identitet-selector';
 import { hentLest, selectLestInformasjon, selectLestStatus } from '../lest/lest-reducer';
 import { selectErUnderOppfolging, selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
-import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
 import { setBackPath } from './informasjon-reducer';
+import { INFORMASJON_MODAL_VERSJON } from './InformasjonModal';
 
 const redirectPath = '/informasjon';
 
@@ -47,7 +47,7 @@ function InformasjonsHenting() {
     if (videreSendTilInfo && erBruker && !ref.current) {
         ref.current = true;
         setBack(pathname);
-        return <Redirect to={redirectPath} />;
+        return <Navigate replace to={redirectPath} />;
     }
 
     return null;

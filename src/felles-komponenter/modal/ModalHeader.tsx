@@ -9,7 +9,7 @@ import Tilbakeknapp from './Tilbakeknapp';
 interface Props {
     tilbakeTekst?: string;
     headerTekst?: string;
-    onTilbakeClick?(): string;
+    onTilbakeClick?(e?: React.MouseEvent): void;
     className?: string;
     aktivitetErLaast?: boolean;
 }

@@ -33,7 +33,7 @@ import {
 interface Props {
     onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
     isDirtyRef?: { current: boolean };
-    aktivitet: MoteAktivitet;
+    aktivitet?: MoteAktivitet;
 }
 
 type FormType = {
@@ -92,7 +92,7 @@ const MoteAktivitetForm = (props: Props) => {
         forberedelser: (val, _, a) => validateForberedelser(a.avtalt, val),
     });
 
-    const maybeAktivitet = aktivitet || {};
+    const maybeAktivitet = aktivitet || ({} as any);
     const avtalt = maybeAktivitet.avtalt === true;
     const dato = beregnKlokkeslettVarighet(maybeAktivitet);
     const beskrivelse = maybeAktivitet.beskrivelse || '';
@@ -108,7 +108,7 @@ const MoteAktivitetForm = (props: Props) => {
         forberedelser: maybeAktivitet.forberedelser || '',
     };
 
-    const state = validator(initalValue, aktivitet);
+    const state = validator(initalValue, aktivitet as any);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;

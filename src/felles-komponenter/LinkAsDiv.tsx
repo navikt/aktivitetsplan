@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     to: string;
@@ -12,7 +12,7 @@ interface Props {
 
 const LinkAsDiv = (props: Props) => {
     const { to, children, id, className, ariaLabel, onClick } = props;
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <div
@@ -22,12 +22,12 @@ const LinkAsDiv = (props: Props) => {
             className={className}
             tabIndex={0}
             onClick={() => {
-                history.push(to);
+                navigate(to);
                 onClick();
             }}
             onKeyPress={(e) => {
                 if (e.key === 'Enter') {
-                    history.push(to);
+                    navigate(to);
                     onClick();
                 }
             }}
