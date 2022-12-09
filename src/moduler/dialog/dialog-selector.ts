@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { STATUS } from '../../api/utils';
-import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { Periode, datoErIPeriode } from '../filtrering/filter/filter-utils';
