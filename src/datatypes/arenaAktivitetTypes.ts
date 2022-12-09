@@ -28,8 +28,7 @@ interface Moteplan {
 //Flere av disse kan muligens være null
 export interface ArenaAktivitet {
     //Felles
-    id: string;
-    aktivitetId: number | undefined;
+    id: string; // Enten tekniskid eller arenaid
     status: AktivitetStatus;
     type: ArenaAktivitetType;
     tittel: string;

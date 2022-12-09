@@ -9,7 +9,6 @@ import { createSelectDialogForAktivitetId } from '../../../../dialog/dialog-sele
 import LenkeTilDialog from '../../../../dialog/DialogLink';
 import { selectErVeileder } from '../../../../identitet/identitet-selector';
 import { selectErBrukerManuell, selectReservasjonKRR } from '../../../../oppfolging-status/oppfolging-selector';
-import { getKoblingsId } from '../../../aktivitet-util';
 import DeleLinje from '../../delelinje/delelinje';
 import DialogIkon from './DialogIkon';
 import DialogLenkeInnhold from './DialogLenkeInnhold';
@@ -31,7 +30,12 @@ function DialogPil(props: { antallUleste: number }) {
 
 function DialogLenke(props: Props) {
     const { aktivitet, hidden } = props;
-    const aktivitetId = getKoblingsId(aktivitet); // If arenaAktivitet -> arenaid, else tekniskId
+    // Note:
+    //   Hvis aktivitet er arenaaktivitet:
+    //        Hvis aktivitet er migrert: id er tekniskid
+    //        Hvis ikke migrert        : id er arenaid
+    //   Hvis veilarbaktivitet:          id er tekniskid
+    const aktivitetId = aktivitet.id;
     const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
     const erVeileder: boolean = !!useSelector(selectErVeileder);
     const manuellBruker: boolean = useSelector(selectErBrukerManuell);

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { STATUS } from '../../api/utils';
-import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { Periode, datoErIPeriode } from '../filtrering/filter/filter-utils';
@@ -52,12 +52,7 @@ export function createSelectDialogForAktivitetId(aktivitet: AlleAktiviteter) {
 
 export function selectDialogForAktivitetId(state: any, aktivitet: AlleAktiviteter) {
     return selectAlleDialoger(state).find((d: Dialog) => {
-        if (d.aktivitetId === aktivitet.id) {
-            return true;
-        } else if (isArenaAktivitet(aktivitet) && d.aktivitetId === aktivitet.aktivitetId?.toString()) {
-            return true;
-        }
-        return false;
+        return d.aktivitetId === aktivitet.id;
     });
 }
 
