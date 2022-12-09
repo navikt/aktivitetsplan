@@ -52,12 +52,7 @@ export function createSelectDialogForAktivitetId(aktivitet: AlleAktiviteter) {
 
 export function selectDialogForAktivitetId(state: any, aktivitet: AlleAktiviteter) {
     return selectAlleDialoger(state).find((d: Dialog) => {
-        if (d.aktivitetId === aktivitet.id) {
-            return true;
-        } else if (isArenaAktivitet(aktivitet) && d.aktivitetId === aktivitet.aktivitetId?.toString()) {
-            return true;
-        }
-        return false;
+        return d.aktivitetId === aktivitet.id;
     });
 }
 

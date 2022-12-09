@@ -237,12 +237,3 @@ export const splitIEldreOgNyereAktiviteter = (aktiviteter: AlleAktiviteter[]): G
                 : { ...forrige, eldreAktiviteter: [...forrige.eldreAktiviteter, aktivitet] },
         { nyereAktiviteter: [], eldreAktiviteter: [] }
     );
-
-// If arenaAktivitet -> arenaid, else tekniskId
-export function getKoblingsId(aktivitet: AlleAktiviteter): string {
-    if (isArenaAktivitet(aktivitet)) {
-        return aktivitet.aktivitetId?.toString() ?? aktivitet.id;
-    } else {
-        return aktivitet.id;
-    }
-}
