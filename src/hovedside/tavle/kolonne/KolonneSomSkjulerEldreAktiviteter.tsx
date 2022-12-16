@@ -24,12 +24,18 @@ function KolonneSomSkjulerEldreAktiviteter({ status }: Props) {
         <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
     ));
 
+    const aktivitetTekst =
+        status === 'FULLFORT' ? 'eldre fullførte aktiviteter' : /* status === "AVBRUTT" */ 'eldre avbrutte aktiviteter';
+
     return (
         <DropTargetKolonne status={status}>
             <KolonneHeader status={status} />
             <div>
                 {aktivitetsListe}
-                <SkjulEldreAktiviteterFraKolonne aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter} />
+                <SkjulEldreAktiviteterFraKolonne
+                    aktivitetTekst={aktivitetTekst}
+                    aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter}
+                />
             </div>
         </DropTargetKolonne>
     );

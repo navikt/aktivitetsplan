@@ -12,12 +12,14 @@ const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
 
 interface Props {
     aktiviteteterTilDatoMerEnnToManederSiden: AlleAktiviteter[];
+    aktivitetTekst: string;
 }
 
 const SkjulEldreAktiviteterFraKolonne = (props: Props) => {
     const erVeileder = useSelector(selectErVeileder);
     const aktiviteter = props.aktiviteteterTilDatoMerEnnToManederSiden;
     const hiden = aktiviteter.length === 0;
+    const { aktivitetTekst } = props;
 
     const liste = aktiviteter.map((aktivitet) => <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />);
 
@@ -26,8 +28,8 @@ const SkjulEldreAktiviteterFraKolonne = (props: Props) => {
             hidden={hiden}
             onOpen={() => loggEvent(LOGGING_VISELDREAKITIVITETER, { erVeileder })}
             onClose={() => loggEvent(LOGGING_SKJULELDREAKTIVITETER, { erVeileder })}
-            apneTekst="Vis aktiviteter eldre enn 1 måned"
-            lukkTekst="Skjul aktiviteter eldre enn 1 måned"
+            apneTekst={`Vis ${aktivitetTekst}`}
+            lukkTekst={`Skjul ${aktivitetTekst}`}
         >
             {liste}
         </InvertedLestMer>
