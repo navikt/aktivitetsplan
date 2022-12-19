@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { sorterAktiviteter, splitIEldreOgNyereAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
@@ -10,7 +11,16 @@ import KolonneHeader from './KolonneHeader';
 import SkjulEldreAktiviteterFraKolonne from './SkjulEldreAktiviteterFraKolonne';
 
 interface Props {
-    status: AktivitetStatus;
+    status: typeof STATUS_FULLFOERT | typeof STATUS_AVBRUTT;
+}
+
+function aktivitetTekst(status: typeof STATUS_FULLFOERT | typeof STATUS_AVBRUTT): string {
+    switch (status) {
+        case 'FULLFORT':
+            return 'eldre fullførte aktiviteter';
+        case 'AVBRUTT':
+            return 'eldre avbrutte aktiviteter';
+    }
 }
 
 function KolonneSomSkjulerEldreAktiviteter({ status }: Props) {
@@ -29,7 +39,10 @@ function KolonneSomSkjulerEldreAktiviteter({ status }: Props) {
             <KolonneHeader status={status} />
             <div>
                 {aktivitetsListe}
-                <SkjulEldreAktiviteterFraKolonne aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter} />
+                <SkjulEldreAktiviteterFraKolonne
+                    aktivitetTekst={aktivitetTekst(status)}
+                    aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter}
+                />
             </div>
         </DropTargetKolonne>
     );
