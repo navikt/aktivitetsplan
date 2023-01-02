@@ -98,7 +98,7 @@ export default function SokeAvtaleAktivitetForm(props) {
                     hidden={brukeStillingerIUken}
                     disabled={avtalt}
                     label="Antall søknader i perioden *"
-                    bredde="S"
+                    bredde="XS"
                     {...state.fields.antallStillingerSokes}
                 />
 
@@ -106,7 +106,7 @@ export default function SokeAvtaleAktivitetForm(props) {
                     hidden={!brukeStillingerIUken}
                     disabled={avtalt}
                     label="Antall søknader i uken *"
-                    bredde="S"
+                    bredde="XS"
                     {...state.fields.antallStillingerIUken}
                 />
                 <Textarea
