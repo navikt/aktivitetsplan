@@ -59,7 +59,7 @@ spec:
             "bucketName": "aktivitetsplan-dev"
           },
           "auth": {
-            "ID_PORTEN"
+            "loginProvider": "ID_PORTEN"
           },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
