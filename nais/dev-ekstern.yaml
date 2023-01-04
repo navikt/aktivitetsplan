@@ -25,6 +25,12 @@ spec:
     requests:
       cpu: 250m
       memory: 256Mi
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+  tokenx:
+    enabled: true
   ingresses:
     - https://aktivitetsplan.dev.nav.no
   accessPolicy:
