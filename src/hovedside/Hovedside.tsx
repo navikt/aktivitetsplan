@@ -34,12 +34,13 @@ const Hovedside = () => {
     }, [dispatch]);
 
     return (
+        <>
+        <InformasjonsHenting />
         <div className="hovedside">
             <div className="hovedsideinnhold">
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
                 <OppfolgingStatus>
-                    <InformasjonsHenting />
                     <Varslinger />
                     <div className="container">
                         <Navigasjonslinje />
@@ -52,6 +53,7 @@ const Hovedside = () => {
                 <PublicRouting />
             </div>
         </div>
+        </>
     );
 };
 
