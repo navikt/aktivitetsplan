@@ -50,6 +50,6 @@ spec:
         {
           "gcs": {
             "bucketName": "aktivitetsplan-dev-intern"
-          },
+          }
         }
 
