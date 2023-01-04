@@ -50,6 +50,9 @@ spec:
         {
           "gcs": {
             "bucketName": "aktivitetsplan-dev-intern"
-          }
+          },
+          "cors": {
+             "origin": ["*"]
+           }
         }
 
