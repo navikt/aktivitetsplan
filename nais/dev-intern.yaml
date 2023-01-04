@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/pto-frontend/pto-frontend:2023.01.13_08.11-4fff74d23073
+  image: ghcr.io/navikt/pto-frontend/poao-frontend:2022.12.12_15.14-6d2623ef615d
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -45,3 +45,11 @@ spec:
       value: aktivitetsplan-dev-intern
     - name: CORS_DOMAIN
       value: "*"
+    - name: JSON_CONFIG
+      value: >
+        {
+          "gcs": {
+            "bucketName": "aktivitetsplan-dev-intern"
+          },
+        }
+
