@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import dayjs from 'dayjs';
+import { format, parseISO, startOfDay } from 'date-fns';
 import NavDatoVelger, { DatepickerProps } from 'nav-datovelger/lib/Datepicker';
 import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
@@ -39,7 +39,7 @@ function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | '
         setTouched(true);
     };
 
-    const day = erGyldigISODato(input.value) ? dayjs(input.value).startOf('day').format('YYYY-MM-DD') : input.value;
+    const day = erGyldigISODato(input.value) ? format(startOfDay(parseISO(input.value)), 'yyyy-MM-dd') : input.value;
 
     const cls = classNames(styles.datovelger, { [styles.harFeil]: !!feil });
     const datovelgerInput = { ...input, placeholder: 'dd.mm.åååå', required };

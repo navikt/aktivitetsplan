@@ -28,7 +28,6 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
-    "dayjs": "^1.11.6",
     "history": "^4.10.1",
     "intl": "^1.2.5",
     "lodash.throttle": "^4.1.1",
