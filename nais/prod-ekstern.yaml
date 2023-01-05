@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/pto-frontend/pto-frontend:2023.01.13_08.11-4fff74d23073
+  image: ghcr.io/navikt/poao-frontend/poao-frontend:2022.12.12_15.14-6d2623ef615d
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -18,6 +18,14 @@ spec:
     min: 2
     max: 4
     cpuThresholdPercentage: 50
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      autoLogin: true
+  tokenx:
+    enabled:
+      true
   ingresses:
     - https://aktivitetsplan.nav.no
   resources:
@@ -40,55 +48,53 @@ spec:
     - configmap: pto-config
     - configmap: loginservice-idporten
   env:
-    - name: ENFORCE_LOGIN
-      value: "true"
-    - name: LOGIN_REDIRECT_URL
-      value: https://loginservice.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
-    - name: TOKEN_COOKIE_NAME
-      value: selvbetjening-idtoken
-    - name: GCS_BUCKET_NAME
-      value: aktivitetsplan-prod
     - name: JSON_CONFIG
       value: >
         {
-          "fallbackStrategy": "serve",
+          "gcs": {
+            "bucketName": "aktivitetsplan-prod"
+          },
+          "auth": {
+            "loginProvider": "ID_PORTEN"
+          },
+          "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
-            { "from": "/veilarbvedtakinfo", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
-            { "from": "/veilarblest", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
-            { "from": "/veilarboppfolging", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
-            { "from": "/veilarbdialog", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
-            { "from": "/veilarbaktivitet", "to": "http://pto-proxy/proxy", "preserveContextPath": true }
+            { "fromPath": "/veilarbvedtakinfo", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
+            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
+            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
+            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
+            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true }
           ],
           "redirects": [
             {
-              "from": "/api/auth",
-              "to": "/auth/info"
+              "fromPath": "/api/auth",
+              "toUrl": "/auth/info"
             },
             {
-              "from": "/aktivitetsplan",
-              "to": "{{AKTIVITETSPLAN_URL}}"
+              "fromPath": "/aktivitetsplan",
+              "toUrl": "{{AKTIVITETSPLAN_URL}}"
             },
             {
-              "from": "/arbeidssokerregistrering",
-              "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
+              "fromPath": "/arbeidssokerregistrering",
+              "toUrl": "{{ARBEIDSSOKERREGISTRERING_URL}}"
             },
             {
-              "from": "/minside",
-              "to": "{{MINSIDE_URL}}"
+              "fromPath": "/minside",
+              "toUrl": "{{MINSIDE_URL}}"
             },
             {
-              "from": "/veientilarbeid",
-              "to": "{{VEIENTILARBEID_URL}}"
+              "fromPath": "/veientilarbeid",
+              "toUrl": "{{VEIENTILARBEID_URL}}"
             },
             {
-              "from": "/arbeidsrettet-dialog",
-              "to": "{{ARBEIDSRETTET_DIALOG_URL}}",
-              "preserveContextPath": "true"
+              "fromPath": "/arbeidsrettet-dialog",
+              "toUrl": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveFromPath": "true"
             },
             {
-              "from": "/dialog",
-              "to": "{{ARBEIDSRETTET_DIALOG_URL}}",
-              "preserveContextPath": "true"
+              "fromPath": "/dialog",
+              "toUrl": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveFromPath": "true"
             }
           ]
         }
