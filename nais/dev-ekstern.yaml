@@ -47,12 +47,6 @@ spec:
     - configmap: pto-config
     - configmap: loginservice-idporten
   env:
-    - name: ENFORCE_LOGIN
-      value: "true"
-    - name: LOGIN_REDIRECT_URL
-      value: https://loginservice.dev.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
-    - name: TOKEN_COOKIE_NAME
-      value: selvbetjening-idtoken
     - name: JSON_CONFIG
       value: >
         {
