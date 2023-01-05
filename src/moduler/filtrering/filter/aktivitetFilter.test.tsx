@@ -82,7 +82,6 @@ function makeTestAktiviteter<T>(
         type: HENT_AKTIVITET_OK,
         data: testAktiviteter,
     });
-    console.log(testAktiviteter)
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
 

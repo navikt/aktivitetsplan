@@ -15,7 +15,6 @@ import {
     selectHistoriskPeriode,
 } from './filter-selector';
 import {getStillingStatusFilterValue} from "./EtikettFilter";
-import {keyCodes} from "nav-frontend-js-utils";
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
@@ -79,10 +78,6 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
         if (!isVeilarbAktivitet(aktivitet) || hasNoOverlap(getStillingStatusFilterValue(aktivitet), activeFilters(etikettFilter))) {
             return false
         }
-        console.log({
-            etiketter: getStillingStatusFilterValue(aktivitet),
-            activeFilter: Object.keys(etikettFilter)
-        })
         return true
     }
 
