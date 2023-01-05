@@ -11,9 +11,12 @@ import FilterVisningsKomponent, {EtikettFilterType, FilterValueExtractor} from '
 function notNull<T>(thing: T | null | undefined): thing is T {
     return !!thing;
 }
-const getFilterableFields: FilterValueExtractor<VeilarbAktivitet, keyof EtikettFilterType> = (aktvitet) => {
+export const getStillingStatusFilterValue: FilterValueExtractor<VeilarbAktivitet, keyof EtikettFilterType> = (aktvitet) => {
     if (aktvitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE) {
-        return [aktvitet.stillingFraNavData.soknadsstatus].filter(notNull)
+        return [aktvitet.stillingFraNavData.soknadsstatus]
+            // Dette gjøres fordi "Avslag" og "Ikke fått jobben" skal vises likt og bare trenger 1 filter
+            .map(value => value === "AVSLAG" ? "IKKE_FATT_JOBBEN" : value)
+            .filter(notNull)
     } else {
         return [aktvitet.etikett].filter(notNull)
     }
@@ -21,7 +24,7 @@ const getFilterableFields: FilterValueExtractor<VeilarbAktivitet, keyof EtikettF
 
 const EtikettFilter = () => {
     const aktiviteter: AlleAktiviteter[] = useSelector(selectAktiviterForAktuellePerioden);
-    const filters = Array.from(new Set(aktiviteter.filter(isVeilarbAktivitet).flatMap(getFilterableFields)));
+    const filters = Array.from(new Set(aktiviteter.filter(isVeilarbAktivitet).flatMap(getStillingStatusFilterValue)));
 
     return (
         <FilterVisningsKomponent

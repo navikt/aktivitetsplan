@@ -14,6 +14,7 @@ import {
     selectArenaAktivitetEtiketterFilter,
     selectHistoriskPeriode,
 } from './filter-selector';
+import {getStillingStatusFilterValue} from "./EtikettFilter";
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
@@ -69,8 +70,11 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
     }
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
-    if (erAktivtFilter(etikettFilter) && (!etikettFilter[aktivitet.etikett!!] || !isVeilarbAktivitet(aktivitet))) {
-        return false;
+    if (erAktivtFilter(etikettFilter)) {
+        if (!isVeilarbAktivitet(aktivitet) || hasNoOverlap(getStillingStatusFilterValue(aktivitet), Object.keys(etikettFilter))) {
+            return false
+        }
+        return true
     }
 
     const arenaEtikettFilter = selectArenaAktivitetEtiketterFilter(state);

@@ -79,16 +79,17 @@ function VisValgtFilter(props: Props) {
                     );
                 }
 
-                return Object.keys(activeFiltersMap)
-                    .map((activeFilter) => {
-                        const filterValues = setFilterValues(filterCategoryKey, activeFilter);
+                return Object.entries(activeFiltersMap)
+                    .filter(([_, isFilterEnabled]) => isFilterEnabled)
+                    .map(([activeFilterKey, _]) => {
+                        const filterValues = setFilterValues(filterCategoryKey, activeFilterKey);
                         if (typeof filterValues === 'string') return null;
                         return (
                             <FiltreringLabel
-                                key={activeFilter}
+                                key={activeFilterKey}
                                 label={<FormattedMessage id={filterValues.tekstPath.toLowerCase()} />}
                                 slettFilter={() => {
-                                    filterValues.func(activeFilter);
+                                    filterValues.func(activeFilterKey);
                                 }}
                             />
                         );
