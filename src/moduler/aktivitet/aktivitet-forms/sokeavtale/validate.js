@@ -25,6 +25,8 @@ export function validateAntallStillinger(avtalt, value) {
 
     if (!Number.isInteger(Number(value))) {
         return 'Antall må være et heltall';
+    } else if (value > 99) {
+        return 'Antall søknader må ikke være høyere enn 99';
     }
 }
 
@@ -39,6 +41,8 @@ export function validateAntallStillingerIUken(avtalt, value, antallStillingerSok
 
     if (!Number.isInteger(Number(value))) {
         return 'Antall må være et heltall';
+    } else if (value > 99) {
+        return 'Antall søknader må ikke være høyere enn 99';
     }
 }
 
