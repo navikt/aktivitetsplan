@@ -49,7 +49,7 @@ export const stillingsEtikettMapper: Record<StillingsStatus, string> = {
     INGEN_VALGT: 'Ingen',
     SOKNAD_SENDT: 'Søknaden er sendt',
     INNKALT_TIL_INTERVJU: 'Skal på intervju',
-    AVSLAG: 'Fått avslag',
+    AVSLAG: 'Ikke fått jobben',
     JOBBTILBUD: 'Fått jobbtilbud',
 }
 

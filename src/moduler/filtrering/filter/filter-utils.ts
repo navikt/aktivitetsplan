@@ -15,6 +15,7 @@ import {
     selectHistoriskPeriode,
 } from './filter-selector';
 import {getStillingStatusFilterValue} from "./EtikettFilter";
+import {keyCodes} from "nav-frontend-js-utils";
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
@@ -53,6 +54,10 @@ const hasNoOverlap = (a: string[], b: string[]): boolean => {
     return a.every((element) => !b.includes(element));
 };
 
+const activeFilters = (filterMap: Record<string, true | false>): string[] => Object.entries(filterMap)
+    .filter(([key, value]) => value)
+    .map(([key, _]) => key)
+
 const getTiltakstatusEtiketter = (aktivitet: AlleAktiviteter) => {
     if (isArenaAktivitet(aktivitet)) {
         return getArenaFilterableFields(aktivitet);
@@ -71,9 +76,13 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
     if (erAktivtFilter(etikettFilter)) {
-        if (!isVeilarbAktivitet(aktivitet) || hasNoOverlap(getStillingStatusFilterValue(aktivitet), Object.keys(etikettFilter))) {
+        if (!isVeilarbAktivitet(aktivitet) || hasNoOverlap(getStillingStatusFilterValue(aktivitet), activeFilters(etikettFilter))) {
             return false
         }
+        console.log({
+            etiketter: getStillingStatusFilterValue(aktivitet),
+            activeFilter: Object.keys(etikettFilter)
+        })
         return true
     }
 

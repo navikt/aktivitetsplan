@@ -1,20 +1,20 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { Store } from 'redux';
+import {fireEvent, render, screen} from '@testing-library/react';
+import {Provider} from 'react-redux';
+import {MemoryRouter} from 'react-router-dom';
+import {Store} from 'redux';
 
-import { STATUS } from '../../../api/utils';
-import { STATUS_GJENNOMFOERT } from '../../../constant';
-import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import {STATUS} from '../../../api/utils';
+import {STATUS_GJENNOMFOERT} from '../../../constant';
+import {AlleAktiviteter, StillingFraNavSoknadsstatus, StillingsStatus} from '../../../datatypes/aktivitetTypes';
+import {VeilarbAktivitetType} from '../../../datatypes/internAktivitetTypes';
 import Hovedside from '../../../hovedside/Hovedside';
-import { wrapAktivitet } from '../../../mocks/aktivitet';
-import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
-import { mockOppfolging } from '../../../mocks/oppfolging';
-import reducer, { State } from '../../../reducer';
+import {wrapAktivitet} from '../../../mocks/aktivitet';
+import {enStillingFraNavAktivitet} from '../../../mocks/fixtures/stillingFraNavFixtures';
+import {mockOppfolging} from '../../../mocks/oppfolging';
+import reducer, {State} from '../../../reducer';
 import create from '../../../store';
-import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
-import { HENT_AKTIVITET_OK } from '../../aktivitet/aktivitet-action-types';
+import {aktivitetTypeMap, stillingsEtikettMapper} from '../../../utils/textMappers';
+import {HENT_AKTIVITET_OK} from '../../aktivitet/aktivitet-action-types';
 
 const identitet = {
     id: 'Z123456',
@@ -82,6 +82,7 @@ function makeTestAktiviteter<T>(
         type: HENT_AKTIVITET_OK,
         data: testAktiviteter,
     });
+    console.log(testAktiviteter)
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
 
@@ -149,17 +150,42 @@ describe('aktivitets-filter', () => {
         });
     });
 
-    it('Should filter based on etiketter', () => {
+    it('Should filter based on etiketter (stilling fra NAV)', () => {
         const store = create(initialStore);
         render(<WrappedHovedside store={store} />);
-        makeTestAktiviteter(store, ['AVSLAG', 'SOKNAD_SENDT'], (aktivitet, value) => {
+        const statuser: StillingFraNavSoknadsstatus[] = ['AVSLAG', 'VENTER']
+        makeTestAktiviteter(store, statuser, (aktivitet, value) => {
+            return {
+                ...aktivitet,
+                stillingFraNavData: {
+                    ...aktivitet.stillingFraNavData,
+                    soknadsstatus: value
+                },
+            } as AlleAktiviteter;
+        });
+        screen.getByText(`Aktivitet: VENTER`);
+        screen.getByText(`Aktivitet: AVSLAG`)
+        clickOnFirst(stillingsEtikettMapper['AVSLAG']);
+        expect(screen.getByText(`Aktivitet: AVSLAG`)).not.toBeNull();
+        expect(screen.queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
+        fireEvent.click(screen.getByText('Filtrer'));
+    });
+
+    it('Should filter based on etiketter (stilling)', () => {
+        const store = create(initialStore);
+        render(<WrappedHovedside store={store} />);
+        const statuser: StillingsStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT']
+        makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,
                 etikett: value,
+                type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
             } as AlleAktiviteter;
         });
-        clickOnFirst(stillingsEtikettMapper['AVSLAG']);
-        screen.getByText(`Aktivitet: AVSLAG`);
+        screen.getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)
+        screen.getByText(`Aktivitet: SOKNAD_SENDT`);
+        clickOnFirst(stillingsEtikettMapper['INNKALT_TIL_INTERVJU']);
+        expect(screen.getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)).not.toBeNull();
         expect(screen.queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
     });
 });
