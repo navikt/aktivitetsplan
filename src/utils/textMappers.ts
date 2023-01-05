@@ -1,4 +1,9 @@
-import { AktivitetType, AlleAktiviteter } from '../datatypes/aktivitetTypes';
+import {
+    AktivitetType,
+    AlleAktiviteter,
+    StillingFraNavSoknadsstatus,
+    StillingsStatus
+} from '../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../datatypes/arenaAktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 
@@ -40,21 +45,26 @@ export const avtaltMapper = {
     ikkeAvtaltMedNav: 'Ikke avtalt med NAV',
 };
 
-export const stillingsEtikettMapper = {
+export const stillingsEtikettMapper: Record<StillingsStatus, string> = {
     INGEN_VALGT: 'Ingen',
     SOKNAD_SENDT: 'Søknaden er sendt',
     INNKALT_TIL_INTERVJU: 'Skal på intervju',
     AVSLAG: 'Fått avslag',
     JOBBTILBUD: 'Fått jobbtilbud',
-};
+}
 
-export const stillingFraNavSoknadsstatusMapper = {
+export const stillingFraNavSoknadsstatusMapper: Record<StillingFraNavSoknadsstatus, string> = {
     VENTER: 'Venter på å bli kontaktet',
     CV_DELT: 'CV er delt med arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Ikke fått jobben',
     IKKE_FATT_JOBBEN: 'Ikke fått jobben',
+};
+
+export const stillingOgStillingFraNavEtikettMapper: Record<StillingsStatus | StillingFraNavSoknadsstatus, string> = {
+    ...stillingsEtikettMapper,
+    ...stillingFraNavSoknadsstatusMapper,
 };
 
 export const tiltakEtikettMapper = {

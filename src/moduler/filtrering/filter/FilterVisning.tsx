@@ -5,7 +5,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from 'redux';
 
-import { AktivitetType, StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import {AktivitetType, StillingFraNavSoknadsstatus, StillingsStatus} from '../../../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
 import { EksternAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
@@ -52,7 +52,7 @@ export interface ArenaEtikettFilterType {
     VENTELISTE: boolean;
 }
 
-export type EtikettFilterType = Record<ArenaEtikett | StillingsStatus, boolean>;
+export type EtikettFilterType = Record<ArenaEtikett | StillingsStatus | StillingFraNavSoknadsstatus, boolean>;
 
 export type FilterKategori = 'avtalt' | 'status' | 'aktivitet' | 'etikett' | 'arenaEtikett';
 export type FilterValueExtractor<AktivitetType, FilterValueType> = (aktvitet: AktivitetType) => FilterValueType[];
