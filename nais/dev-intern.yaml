@@ -39,12 +39,6 @@ spec:
   envFrom:
     - configmap: pto-config
   env:
-    - name: ENFORCE_LOGIN
-      value: "false"
-    - name: GCS_BUCKET_NAME
-      value: aktivitetsplan-dev-intern
-    - name: CORS_DOMAIN
-      value: "*"
     - name: JSON_CONFIG
       value: >
         {
