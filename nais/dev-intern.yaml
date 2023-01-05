@@ -52,7 +52,7 @@ spec:
             "bucketName": "aktivitetsplan-dev-intern"
           },
           "cors": {
-             "origin": ["*"]
+             "origin": "https://veilarbpersonflate.dev.intern.nav.no"
            }
         }
 
