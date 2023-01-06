@@ -29,7 +29,7 @@ const getText = (etikettnavn: StillingsStatus): string => {
         case statuskoder.JOBBTILBUD:
             return 'Fått jobbtilbud 🎉';
         case statuskoder.AVSLAG:
-            return 'Fått avslag';
+            return 'Ikke fått jobben';
         case statuskoder.INGEN_VALGT:
             return 'Ikke startet';
     }

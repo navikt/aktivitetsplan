@@ -64,33 +64,32 @@ function VisValgtFilter(props: Props) {
     };
     return (
         <div className={classNames('filtrering-label-container')}>
-            {Object.keys(filterSlice).map((filterKey) => {
-                const filterValue = filterSlice[filterKey];
-
-                if (filterKey === 'historiskPeriode') {
-                    if (!filterValue) {
+            {Object.entries(filterSlice as Record<string, Record<string, string> | null>).map(([filterCategoryKey, activeFiltersMap]) => {
+                if (activeFiltersMap === null) return null
+                if (filterCategoryKey === 'historiskPeriode') {
+                    if (!activeFiltersMap) {
                         return null;
                     }
                     return (
                         <FiltreringLabel
-                            key={filterValue}
-                            label={<PeriodeLabel historiskPeriode={filterValue} />}
+                            key={"historiskPeriode"}
+                            label={<PeriodeLabel historiskPeriode={activeFiltersMap} />}
                             slettFilter={() => doVelgHistoriskPeriode(null)}
                         />
                     );
                 }
 
-                return Object.keys(filterSlice[filterKey])
-                    .filter((f) => filterValue[f])
-                    .map((f) => {
-                        const filterValues = setFilterValues(filterKey, f);
+                return Object.entries(activeFiltersMap)
+                    .filter(([_, isFilterEnabled]) => isFilterEnabled)
+                    .map(([activeFilterKey, _]) => {
+                        const filterValues = setFilterValues(filterCategoryKey, activeFilterKey);
                         if (typeof filterValues === 'string') return null;
                         return (
                             <FiltreringLabel
-                                key={f}
+                                key={activeFilterKey}
                                 label={<FormattedMessage id={filterValues.tekstPath.toLowerCase()} />}
                                 slettFilter={() => {
-                                    filterValues.func(f);
+                                    filterValues.func(activeFilterKey);
                                 }}
                             />
                         );

@@ -69,7 +69,7 @@ const StillingEtikettForm = (props: Props) => {
                     {...state.fields.etikettstatus}
                 />
                 <Radio
-                    label="Fått avslag"
+                    label="Ikke fått jobben"
                     value={konstanter.AVSLAG}
                     disabled={disable}
                     {...state.fields.etikettstatus}
