@@ -29,7 +29,8 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     SAMTALEREFERAT: 'Samtalereferat',
     STILLING_FRA_NAV: 'Stilling fra NAV',
     ARENA_TILTAK: 'Tiltak gjennom NAV',
-    MIDL_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
+    MIDLERTIDIG_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
+    VARIG_LONNSTILSKUDD: 'Avtale varig lønnstilskudd',
 };
 
 export const aktivitetStatusMap = {

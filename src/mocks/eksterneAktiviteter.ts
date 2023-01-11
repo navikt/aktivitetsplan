@@ -58,6 +58,24 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   },
               }),
           }),
+        wrapAktivitet({
+            ...enEksternAktivitet({
+                tittel: 'Arbeidstrening hos Biggen Blues og Bensin',
+                status: STATUS_PLANLAGT,
+                avtalt: true,
+                beskrivelse: 'Pumpeoperatør',
+                eksternAktivitet: {
+                    type: EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE,
+                    oppgave: undefined,
+                    handlinger: undefined,
+                    detaljer: [
+                        { label: 'Arbeidsgiver', verdi: 'Biggen Blues og Bensin' },
+                        { label: 'Stillingsprosent', verdi: '100%' },
+                    ],
+                    etiketter: undefined,
+                },
+            }),
+        }),
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Saltrød og Høneby - med oppgave',

@@ -39,7 +39,6 @@ const getEtikettByKode = (type: EksternAktivitetType, kode: string): EksternEtik
     switch (type) {
         case EksternAktivitetType.ARENA_TILTAK_TYPE:
             return arenaTiltakEtikettKodeMapper(kode);
-        case EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE:
         default:
             return undefined;
     }
