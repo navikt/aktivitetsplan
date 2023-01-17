@@ -58,11 +58,11 @@ spec:
           },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
-            { "fromPath": "/veilarbvedtakinfo", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
-            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
-            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
-            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true },
-            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true }
+            { "fromPath": "/veilarbvedtakinfo", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "dev-fss" } },
+            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "dev-fss" } },
+            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "dev-fss" } },
+            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "dev-fss" } },
+            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "dev-fss" } }
           ],
           "redirects": [
               {
