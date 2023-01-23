@@ -13,7 +13,7 @@ export interface Oppgave extends Lenke {
 }
 
 export interface LenkeMedType extends RequiredLenkeProps {
-    type: LenkeType;
+    lenkeType: LenkeType;
 }
 
 export interface OppgaveLenke {

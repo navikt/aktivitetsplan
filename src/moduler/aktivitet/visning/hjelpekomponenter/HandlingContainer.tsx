@@ -14,8 +14,8 @@ interface Props {
 }
 
 const LenkeSeksjon = (handling: LenkeMedType, erVeileder: boolean, i: number) => {
-    if (handling.type === 'EKSTERN' && erVeileder) return null;
-    if (handling.type === 'INTERN' && !erVeileder) return null;
+    if (handling.lenkeType === 'EKSTERN' && erVeileder) return null;
+    if (handling.lenkeType === 'INTERN' && !erVeileder) return null;
 
     return (
         <div key={i}>
