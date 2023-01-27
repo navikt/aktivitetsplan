@@ -36,7 +36,7 @@ export function etSamtalereferat({ tittel }) {
         jobbStatus: null,
         kanal: 'TELEFON',
         kontaktperson: null,
-        lagtInnAv: 'NAV',
+        endretAvType: 'NAV',
         lenke: null,
         oppfolging: null,
         opprettetDato: '2020-10-14T12:04:41.175Z',

@@ -58,7 +58,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
 
-    const endretAvBruker = aktivitet.lagtInnAv === 'BRUKER';
+    const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
     const ikkeAvslag = IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
     const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;

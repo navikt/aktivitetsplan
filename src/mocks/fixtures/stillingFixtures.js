@@ -20,7 +20,7 @@ export const enStillingAktivitet = ({ tittel }) => {
         endretAv: 'z990207',
         historisk: false,
         avtalt: false,
-        lagtInnAv: 'NAV',
+        endretAvType: 'NAV',
         transaksjonsType: 'OPPRETTET',
         erReferatPublisert: false,
     };

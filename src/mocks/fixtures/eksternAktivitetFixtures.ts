@@ -36,7 +36,7 @@ export const enEksternAktivitet = ({
         historisk: false,
         avsluttetKommentar: undefined,
         avtalt,
-        lagtInnAv: 'NAV',
+        endretAvType: 'NAV',
         transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         etikett: undefined,
         forhaandsorientering: undefined,

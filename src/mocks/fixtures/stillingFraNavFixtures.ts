@@ -58,7 +58,7 @@ export const enStillingFraNavAktivitet = ({
         endretDato: endretDate?.toISOString(),
         endretAv: 'z990207',
         historisk: false,
-        lagtInnAv: 'NAV',
+        endretAvType: 'NAV',
         transaksjonsType: FellesTransaksjonsTyper.STATUS_ENDRET,
         stillingFraNavData: {
             ...enStillingFraNavData,
