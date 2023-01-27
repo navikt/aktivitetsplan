@@ -1,16 +1,16 @@
 import { BrukerType } from '../../../../datatypes/aktivitetTypes';
 
-export const hentBrukeravhengigTekst = (erBruker: boolean, lagtInnAv: BrukerType, endretAv?: string) => {
+export const hentBrukeravhengigTekst = (erBruker: boolean, endretAvType: BrukerType, endretAv?: string) => {
     let brukeravhengigTekst;
 
     if (erBruker) {
-        if (lagtInnAv === 'BRUKER') {
+        if (endretAvType === 'BRUKER') {
             brukeravhengigTekst = 'Du';
         } else {
             brukeravhengigTekst = 'NAV';
         }
     } else {
-        if (lagtInnAv === 'NAV') {
+        if (endretAvType === 'NAV') {
             brukeravhengigTekst = endretAv ? endretAv : 'NAV';
         } else {
             brukeravhengigTekst = 'Bruker';

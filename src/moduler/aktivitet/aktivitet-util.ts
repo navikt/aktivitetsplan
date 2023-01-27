@@ -82,8 +82,8 @@ export function delCvikkeSvartSkalVises(aktivitet: StillingFraNavAktivitet): boo
 
 export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasjon: Lest, me: Me): boolean {
     const sisteEndringVarFraMeg =
-        (aktivitet.lagtInnAv === 'BRUKER' && me.erBruker) ||
-        (aktivitet.lagtInnAv === 'NAV' && me.erVeileder && aktivitet.endretAv === me.id);
+        (aktivitet.endretAvType === 'BRUKER' && me.erBruker) ||
+        (aktivitet.endretAvType === 'NAV' && me.erVeileder && aktivitet.endretAv === me.id);
 
     if (sisteEndringVarFraMeg) {
         return false;

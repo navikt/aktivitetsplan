@@ -31,7 +31,7 @@ const Endringstekst = (props: Props) => {
 
     const brukeravhengigTekst = (
         <Element className={styles.identitet}>
-            {hentBrukeravhengigTekst(erBruker, aktivitet.lagtInnAv, aktivitet.endretAv)}
+            {hentBrukeravhengigTekst(erBruker, aktivitet.endretAvType, aktivitet.endretAv)}
         </Element>
     );
 

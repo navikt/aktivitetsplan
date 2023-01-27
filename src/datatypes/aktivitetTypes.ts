@@ -49,7 +49,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     tittel: string;
     opprettetDato: string;
     status: AktivitetStatus;
-    lagtInnAv: BrukerType;
+    endretAvType: BrukerType;
     forhaandsorientering?: Forhaandsorientering;
     endretAv: string;
     endretDato?: string;

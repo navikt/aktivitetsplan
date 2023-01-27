@@ -21,7 +21,7 @@ export const aktivitet = PT.shape({
     opprettetDato: PT.string.isRequired,
     endretDato: PT.string,
     historisk: PT.bool,
-    lagtInnAv: PT.string,
+    endretAvType: PT.string,
     detaljer: PT.object,
     beskrivelse: PT.string,
     avtalt: PT.bool,

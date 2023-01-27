@@ -23,7 +23,7 @@ export function enSokeAktivitet({ tittel }) {
         historisk: false,
         avsluttetKommentar: null,
         avtalt: true,
-        lagtInnAv: 'NAV',
+        endretAvType: 'NAV',
         transaksjonsType: 'OPPRETTET',
         etikett: null,
         kontaktperson: null,

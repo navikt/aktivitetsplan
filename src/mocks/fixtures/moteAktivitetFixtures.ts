@@ -16,7 +16,7 @@ export const enMoteAktivitet = (): MoteAktivitet => {
         endretAv: 'z990207',
         historisk: false,
         avtalt: false,
-        lagtInnAv: 'NAV',
+        endretAvType: 'NAV',
         forberedelser: 'forberedelser',
         refereat: 'referet',
         transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
