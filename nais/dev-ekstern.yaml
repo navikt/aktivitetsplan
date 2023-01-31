@@ -56,6 +56,19 @@ spec:
           "auth": {
             "loginProvider": "ID_PORTEN"
           },
+          "header": {
+            "csp": {
+              "default-src":["*.nav.no"],
+              "script-src":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'"],
+              "script-src-elem":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'"],
+              "worker-src":["blob:"],"child-src":["blob:"],"style-src":["*.nav.no","*.psplugin.com","'unsafe-inline'"],
+              "style-src-elem":["*.nav.no","*.psplugin.com","'unsafe-inline'"],
+              "font-src":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
+              "img-src":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com"],
+              "frame-src":["*.hotjar.com","player.vimeo.com","video.qbrick.com"],
+              "connect-src":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com"]
+            }
+          },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
             { "fromPath": "/veilarbvedtakinfo", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "dev-fss" } },
