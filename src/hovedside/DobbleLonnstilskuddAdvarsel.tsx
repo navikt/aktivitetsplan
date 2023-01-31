@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import { AlleAktiviteter } from '../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 import { selectAktiviterForAktuellePerioden } from '../moduler/aktivitet/aktivitetlisteSelector';
-import * as styles from './dobble-lonnstilskudd-advarsel.module.less';
+import styles from './dobble-lonnstilskudd-advarsel.module.less';
+
+console.log(styles);
+console.log(styles.lonnstilskuddAdvarsel);
 
 const erLonnstilskudd = (aktivitet: AlleAktiviteter): boolean => {
     return (
