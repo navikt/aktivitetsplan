@@ -7,9 +7,6 @@ import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internA
 import { selectAktiviterForAktuellePerioden } from '../moduler/aktivitet/aktivitetlisteSelector';
 import styles from './dobble-lonnstilskudd-advarsel.module.less';
 
-console.log(styles);
-console.log(styles.lonnstilskuddAdvarsel);
-
 const erLonnstilskudd = (aktivitet: AlleAktiviteter): boolean => {
     return (
         aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
