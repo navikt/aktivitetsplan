@@ -49,6 +49,7 @@ spec:
     - configmap: loginservice-idporten
   env:
     - name: JSON_CONFIG
+      # CSP for dekoratoren er hentet fra https://www.nav.no/dekoratoren/api/csp
       value: >
         {
           "gcs": {
