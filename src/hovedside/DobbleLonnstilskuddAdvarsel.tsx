@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { AlleAktiviteter } from '../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 import { selectAktiviterForAktuellePerioden } from '../moduler/aktivitet/aktivitetlisteSelector';
+import * as styles from './dobble-lonnstilskudd-advarsel.module.less';
 
 const erLonnstilskudd = (aktivitet: AlleAktiviteter): boolean => {
     return (
@@ -18,16 +19,16 @@ const DobbleLonnstilskuddAdvarsel = () => {
     const harLonnstilskudd = useSelector(selectAktiviterForAktuellePerioden).some(erLonnstilskudd);
 
     if (!harLonnstilskudd) {
-        return undefined;
+        return null;
     }
 
     return (
         <AlertStripe
-            className="lonnstilskudd-advarsel"
+            className={styles.lonnstilskuddAdvarsel}
             type={'advarsel'}
             title={'Vi opplever en teknisk feil i aktivitetsplanen'}
         >
-            <h1 className="lonnstilskudd-advarsel__tittel">
+            <h1 className={styles.lonnstilskuddAdvarsel__tittel}>
                 Lønnstilskudd kan dukke opp flere ganger i aktivitetsplanen din
             </h1>
             <p>
