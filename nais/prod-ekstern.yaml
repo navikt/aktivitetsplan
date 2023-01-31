@@ -23,6 +23,9 @@ spec:
     sidecar:
       enabled: true
       autoLogin: true
+      # Chrome does not send cookie with the site.webmanifest request, dont require login for that file
+      autoLoginIgnorePaths:
+        - /site.webmanifest
   tokenx:
     enabled:
       true
@@ -60,7 +63,7 @@ spec:
           },
           "header": {
             "csp": {
-              "defaultSrc":["'self'", "*.nav.no", "*.difi.no"],
+              "defaultSrc":["'self'", "*.nav.no"],
               "scriptSrc":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'", "blob:", "*.boost.ai"],
               "styleSrc":["*.nav.no","*.psplugin.com","'unsafe-inline'"],
               "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
