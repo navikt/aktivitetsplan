@@ -59,8 +59,8 @@ spec:
           },
           "header": {
             "csp": {
-              "defaultSrc":["'self'", "*.nav.no"],
-              "scriptSrc":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'"],
+              "defaultSrc":["'self'", "*.nav.no", "*.difi.no"],
+              "scriptSrc":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'", "blob:*.nav.no", "*.boost.ai"],
               "styleSrc":["*.nav.no","*.psplugin.com","'unsafe-inline'"],
               "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
               "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com"],
