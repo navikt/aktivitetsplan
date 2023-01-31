@@ -1,17 +1,25 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
-/*
 import { useSelector } from 'react-redux';
-import { VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
+
+import { AlleAktiviteter } from '../datatypes/aktivitetTypes';
+import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 import { selectAktiviterForAktuellePerioden } from '../moduler/aktivitet/aktivitetlisteSelector';
-*/
+
+const erLonnstilskudd = (aktivitet: AlleAktiviteter): boolean => {
+    return (
+        aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
+        (aktivitet.eksternAktivitet.type === EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE ||
+            aktivitet.eksternAktivitet.type === EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE)
+    );
+};
 
 const DobbleLonnstilskuddAdvarsel = () => {
-    /*
-    TODO: Bare vis denne banneren hvis brukeren har lønnstilskudd
-    const alleAktiviteter = useSelector(selectAktiviterForAktuellePerioden).filter(
-        (aktiviteter) => aktiviteter.type === Are
-    );*/
+    const harLonnstilskudd = useSelector(selectAktiviterForAktuellePerioden).some(erLonnstilskudd);
+
+    if (!harLonnstilskudd) {
+        return undefined;
+    }
 
     return (
         <AlertStripe
