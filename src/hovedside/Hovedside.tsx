@@ -16,6 +16,7 @@ import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { aktivitetRoute } from '../routes';
+import DobbleLonnstilskuddAdvarsel from './DobbleLonnstilskuddAdvarsel';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
@@ -43,6 +44,7 @@ const Hovedside = () => {
                     <Varslinger />
                     <div className="container">
                         <Navigasjonslinje />
+                        <DobbleLonnstilskuddAdvarsel />
                         <Maal />
                         <Verktoylinje />
                     </div>
