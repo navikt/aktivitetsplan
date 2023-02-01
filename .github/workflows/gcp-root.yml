@@ -20,12 +20,12 @@ on:
         required: true
 
 jobs:
-  permissions:
-    contents: 'read'
-    id-token: 'write'
   deploy:
     name: Deploy application to dev
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
