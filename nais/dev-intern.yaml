@@ -42,9 +42,6 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
-          "gcs": {
-            "bucketName": "aktivitetsplan-dev-intern"
-          },
           "cors": {
              "origin": "https://veilarbpersonflate.dev.intern.nav.no"
            }
