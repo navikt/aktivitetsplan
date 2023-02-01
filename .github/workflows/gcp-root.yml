@@ -65,7 +65,7 @@ jobs:
         uses: navikt/frontend/actions/cdn-upload/v1@main
         with:
           cdn-team-name: dab
-          source: ./public/
+          source: ./build/
           destination: '/aktivitetsplan/'
       - name: Create release
         uses: actions/create-release@v1
