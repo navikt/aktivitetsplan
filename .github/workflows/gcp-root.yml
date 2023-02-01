@@ -62,7 +62,13 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
-      - name: Deploy container
+      - name: Upload to CDN
+        uses: navikt/frontend/actions/cdn-upload/v1@main
+        with:
+          cdn-team-name: dab
+          source: ./build/
+          destination: '/aktivitetsplan/'
+      - name: Deploy application
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
@@ -91,9 +97,3 @@ jobs:
       #  run: gsutil -m rsync -r build "$BUCKET"
       #  env:
       #    BUCKET: gs://${{ inputs.bucket }}
-      - name: Upload to CDN
-        uses: navikt/frontend/actions/cdn-upload/v1@main
-        with:
-          cdn-team-name: dab
-          source: ./build/
-          destination: '/aktivitetsplan/'
