@@ -18,7 +18,9 @@ on:
     secrets:
       GCS_SA_KEY:
         required: true
-
+env:
+  IMAGE_TAG: ${{ github.sha }}
+  IMAGE: ghcr.io/${{ github.repository }}/aktivitetsplan
 jobs:
   deploy:
     name: Deploy application to dev
