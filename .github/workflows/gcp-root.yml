@@ -21,6 +21,9 @@ on:
       SENTRY_AUTH_TOKEN:
         required: false
 
+env:
+  IMAGE_TAG: ${{ github.sha }}
+  IMAGE: ghcr.io/${{ github.repository }}/aktivitetsplan
 jobs:
   deploy:
     name: Deploy application to dev
