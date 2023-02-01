@@ -15,8 +15,10 @@ jobs:
       bucket: aktivitetsplan-dev
       releaseName: dev-ekstern
       naisfile: dev-ekstern
+      cluster: dev-gcp
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+      NAIS_DEPLOY_APIKEY: ${{ NAIS_DEPLOY_APIKEY }}
 
   dev-intern:
     name: Deploy application to dev intern
@@ -26,5 +28,7 @@ jobs:
       bucket: aktivitetsplan-dev-intern
       releaseName: dev-intern
       naisfile: dev-intern
+      cluster: dev-gcp
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+      NAIS_DEPLOY_APIKEY: ${{ NAIS_DEPLOY_APIKEY }}
