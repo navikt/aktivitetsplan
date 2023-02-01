@@ -15,11 +15,16 @@ on:
       naisfile:
         required: true
         type: string
+      cluster:
+        required: true
+        type: string
     secrets:
       GCS_SA_KEY:
         required: true
       SENTRY_AUTH_TOKEN:
         required: false
+      NAIS_DEPLOY_APIKEY:
+        required: true
 
 env:
   IMAGE_TAG: ${{ github.sha }}
@@ -61,7 +66,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
+          CLUSTER: ${{ inputs.cluster }}
           RESOURCE: nais/${{ inputs.naisfile }}.yaml
           VAR: version=${{ env.IMAGE_TAG }},namespace=q1
           BUCKET: gs://${{ inputs.bucket }}
