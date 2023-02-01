@@ -61,9 +61,6 @@ spec:
       # CSP for dekoratoren er hentet fra https://www.nav.no/dekoratoren/api/csp
       value: >
         {
-          "gcs": {
-            "bucketName": "aktivitetsplan-dev"
-          },
           "auth": {
             "loginProvider": "ID_PORTEN"
           },
