@@ -1,4 +1,5 @@
 name: deploy feature branch
+run-name: Deploy feature branch ${{ github.ref_name }} by @${{ github.actor }}
 on:
   workflow_dispatch:
 
