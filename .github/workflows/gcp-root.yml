@@ -65,7 +65,7 @@ jobs:
         with:
           cdn-environment: ${{ inputs.cdnEnv }}
           cdn-team-name: dab
-          source: ./build/*
+          source: ./build/
           destination: '/aktivitetsplan/'
       - name: Deploy application
         uses: nais/deploy/actions/deploy@v1
