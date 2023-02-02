@@ -18,6 +18,9 @@ on:
       cluster:
         required: true
         type: string
+      cdnEnv:
+        required: true
+        type: string
     secrets:
       GCS_SA_KEY:
         required: true
@@ -60,6 +63,7 @@ jobs:
       - name: Upload to CDN
         uses: navikt/frontend/actions/cdn-upload/v1@main
         with:
+          cdn-environment: ${{ inputs.cdnEnv }}
           cdn-team-name: dab
           source: ./build/
           destination: '/aktivitetsplan/'
