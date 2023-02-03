@@ -14,7 +14,6 @@ jobs:
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
-      releaseName: dev-ekstern
       naisfile: dev-ekstern
       cluster: dev-gcp
       cdnEnv: cdn.dev.nav.no
@@ -28,7 +27,6 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
-      releaseName: dev-intern
       naisfile: dev-intern
       cluster: dev-gcp
       cdnEnv: cdn.dev.nav.no
