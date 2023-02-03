@@ -5,6 +5,8 @@ on:
       - main
   workflow_dispatch:
 
+description: "Deploy to all environments"
+
 concurrency:
   group: deploy
   cancel-in-progress: true

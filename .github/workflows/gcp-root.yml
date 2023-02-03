@@ -10,7 +10,6 @@ on:
         required: true
         type: string
       releaseName:
-        required: true
         type: string
       naisfile:
         required: true
@@ -86,6 +85,7 @@ jobs:
       #    BUCKET: gs://${{ inputs.bucket }}
       - name: Create release
         uses: actions/create-release@v1
+        if: ${{ inputs.releaseName }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
