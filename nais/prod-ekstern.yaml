@@ -91,5 +91,37 @@ spec:
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
+          ],
+          "redirects": [
+            {
+              "fromPath": "/api/auth",
+              "toUrl": "/auth/info"
+            },
+            {
+              "fromPath": "/aktivitetsplan",
+              "toUrl": "\{{AKTIVITETSPLAN_URL}}"
+            },
+            {
+              "fromPath": "/arbeidssokerregistrering",
+              "toUrl": "\{{ARBEIDSSOKERREGISTRERING_URL}}"
+            },
+            {
+              "fromPath": "/minside",
+              "toUrl": "\{{MINSIDE_URL}}"
+            },
+            {
+              "fromPath": "/veientilarbeid",
+              "toUrl": "\{{VEIENTILARBEID_URL}}"
+            },
+            {
+              "fromPath": "/arbeidsrettet-dialog",
+              "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveFromPath": "true"
+            },
+            {
+              "fromPath": "/dialog",
+              "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveFromPath": "true"
+            }
           ]
         }
