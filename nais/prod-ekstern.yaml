@@ -87,28 +87,28 @@ spec:
             },
             {
               "fromPath": "/aktivitetsplan",
-              "toUrl": "{{AKTIVITETSPLAN_URL}}"
+              "toUrl": "\{{AKTIVITETSPLAN_URL}}"
             },
             {
               "fromPath": "/arbeidssokerregistrering",
-              "toUrl": "{{ARBEIDSSOKERREGISTRERING_URL}}"
+              "toUrl": "\{{ARBEIDSSOKERREGISTRERING_URL}}"
             },
             {
               "fromPath": "/minside",
-              "toUrl": "{{MINSIDE_URL}}"
+              "toUrl": "\{{MINSIDE_URL}}"
             },
             {
               "fromPath": "/veientilarbeid",
-              "toUrl": "{{VEIENTILARBEID_URL}}"
+              "toUrl": "\{{VEIENTILARBEID_URL}}"
             },
             {
               "fromPath": "/arbeidsrettet-dialog",
-              "toUrl": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
               "preserveFromPath": "true"
             },
             {
               "fromPath": "/dialog",
-              "toUrl": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
               "preserveFromPath": "true"
             }
           ]
