@@ -35,7 +35,13 @@ export type Livslopsstatus =
     | 'AVBRUTT_AV_SYSTEM'
     | 'AVBRUTT_AV_BRUKER';
 
-export type BrukerType = 'NAV' | 'BRUKER';
+export type BrukerType =
+    'BRUKER' |
+    'ARBEIDSGIVER' |
+    'TILTAKSARRANGOER' |
+    'NAV' |
+    'SYSTEM' |
+    'ARENAIDENT';
 
 export interface Lest {
     tidspunkt: string;
