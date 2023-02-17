@@ -13,8 +13,8 @@ import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import styles from './navigasjonslinje.module.less';
 
-const MINSIDE_PATH = '/minside/';
-const DIALOG_PATH = '/arbeidsrettet-dialog';
+const MINSIDE_PATH = process.env.REACT_APP_MINSIDE_URL;
+const DIALOG_PATH = process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL;
 
 function Navigasjonslinje() {
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
