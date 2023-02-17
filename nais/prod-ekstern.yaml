@@ -74,10 +74,10 @@ spec:
           },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
-            { "fromPath": "/veilarbvedtakinfo", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarblest", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarboppfolging", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbdialog", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbaktivitet", "toUrl": "http://pto-proxy/proxy", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
+            { "fromPath": "/veilarbvedtakinfo", "toUrl": "https://veilarbvedtakinfo.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarblest", "toUrl": "https://veilarblest.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
           ]
         }
