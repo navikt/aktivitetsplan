@@ -33,7 +33,7 @@
     "lodash.throttle": "^4.1.1",
     "moment": "^2.29.4",
     "moment-duration-format": "^2.3.2",
-    "moment-timezone": "^0.5.38",
+    "moment-timezone": "^0.5.39",
     "nav-datovelger": "^12.6.0",
     "nav-frontend-alertstriper": "^4.0.2",
     "nav-frontend-alertstriper-style": "^3.0.2",
