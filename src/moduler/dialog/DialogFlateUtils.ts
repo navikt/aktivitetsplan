@@ -16,6 +16,8 @@ export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialo
     );
 };
 
+const ARBEIDSRETTET_DIALOG_URL = process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL;
+
 export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
     if (erVeileder) {
         const fnr = hentFnrFraUrl();
@@ -29,10 +31,10 @@ export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogI
     }
 
     if (dialogId) {
-        return `/arbeidsrettet-dialog/${dialogId}`;
+        return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;
     }
     if (aktiviteId) {
-        return `/arbeidsrettet-dialog/ny?aktivitetId=${aktiviteId}`;
+        return `${ARBEIDSRETTET_DIALOG_URL}/ny?aktivitetId=${aktiviteId}`;
     }
-    return `/arbeidsrettet-dialog`;
+    return `${ARBEIDSRETTET_DIALOG_URL}`;
 };

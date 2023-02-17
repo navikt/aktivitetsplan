@@ -4,7 +4,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-export const arbeidssokerregistreringHref = '/arbeidssokerregistrering';
+export const arbeidssokerregistreringHref = process.env.REACT_APP_ARBEIDSSOKERREGISTRERING_URL as string;
 
 interface PropTypes {
     erVeileder: boolean;

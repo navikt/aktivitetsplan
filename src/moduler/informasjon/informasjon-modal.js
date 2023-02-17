@@ -51,7 +51,7 @@ class InformasjonModal extends Component {
                         Du kan legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Veilederen
                         kan blant annet legge inn forslag til aktiviteter eller skrive referat fra et møte dere har
                         hatt. Du kan kommunisere med veilederen din om aktivitetene i{' '}
-                        <Lenke href="/dialog">dialogen</Lenke>.
+                        <Lenke href={process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL}>dialogen</Lenke>.
                     </Normaltekst>
                     <BrukePlanenPanel />
                     <OkonomiskStotte />
