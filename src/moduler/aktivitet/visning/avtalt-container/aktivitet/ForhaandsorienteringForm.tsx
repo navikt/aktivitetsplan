@@ -1,5 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -99,7 +98,7 @@ const ForhaandsorienteringForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
+            <div>
                 <ForNavAnsattMarkeringWrapper>
                     {isGammelArenaAktivitet && (
                         <Normaltekst className={styles.tittel}>
@@ -121,7 +120,7 @@ const ForhaandsorienteringForm = (props: Props) => {
                     lasterData={lasterData}
                     state={state}
                 />
-            </SkjemaGruppe>
+            </div>
         </form>
     );
 };

@@ -1,5 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -98,7 +97,7 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
                 <Normaltekst className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
             </ForNavAnsattMarkeringWrapper>
 
-            <SkjemaGruppe>
+            <div>
                 <Checkbox label="Legg til forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
 
                 <ForhaandsorienteringsMeldingArenaaktivitet
@@ -106,7 +105,7 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
                     lasterData={lasterData}
                     state={state}
                 />
-            </SkjemaGruppe>
+            </div>
         </form>
     );
 };

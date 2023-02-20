@@ -1,6 +1,5 @@
 import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
@@ -44,7 +43,7 @@ const SoknadsstatusForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
+            <div className="space-y-4 pb-4">
                 <Radio
                     label="Venter på å bli kontaktet av NAV eller arbeidsgiver"
                     value={konstanter.VENTER}
@@ -75,7 +74,7 @@ const SoknadsstatusForm = (props: Props) => {
                     disabled={disable}
                     {...state.fields.soknadsstatus}
                 />
-            </SkjemaGruppe>
+            </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre
             </Button>

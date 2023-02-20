@@ -1,7 +1,6 @@
 import { Alert, Link } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import moment, { now } from 'moment';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -126,7 +125,7 @@ const MoteAktivitetForm = (props: Props) => {
             autoComplete="off"
             noValidate
         >
-            <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
+            <div className="skjema-innlogget aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
@@ -161,7 +160,7 @@ const MoteAktivitetForm = (props: Props) => {
                     {...state.fields.forberedelser}
                 />
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
+            </div>
             <LagreAktivitet />
         </form>
     );

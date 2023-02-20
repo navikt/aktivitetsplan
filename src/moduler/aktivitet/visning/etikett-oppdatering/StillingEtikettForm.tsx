@@ -1,6 +1,5 @@
 import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
@@ -43,7 +42,7 @@ const StillingEtikettForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
+            <div className="space-y-4 mb-4">
                 <Radio
                     label="Ikke startet"
                     value={konstanter.INGEN_VALGT}
@@ -74,7 +73,7 @@ const StillingEtikettForm = (props: Props) => {
                     disabled={disable}
                     {...state.fields.etikettstatus}
                 />
-            </SkjemaGruppe>
+            </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre
             </Button>

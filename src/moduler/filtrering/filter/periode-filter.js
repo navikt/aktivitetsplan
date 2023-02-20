@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
@@ -51,7 +51,7 @@ function PeriodeFilter({
                 onOpen={() => loggEvent(LIST_HISTORISK_PERIODE)}
             >
                 <div className="filter__container">
-                    <SkjemaGruppe className="filter">
+                    <div className="filter space-y-4 pb-4">
                         <Undertittel className="filter__tittel">Velg periode</Undertittel>
                         <HiddenIfDiv hidden={skjulInneverende}>
                             <Radio
@@ -79,7 +79,7 @@ function PeriodeFilter({
                                 </div>
                             );
                         })}
-                    </SkjemaGruppe>
+                    </div>
                 </div>
             </Dropdown>
         </VisibleIfDiv>

@@ -1,6 +1,5 @@
 import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { useMoveSelectionStartToEnd } from '../../felles-komponenter/hooks/useMoveSelectionStartToEnd';
@@ -66,7 +65,7 @@ function MalForm(props: Props) {
 
     return (
         <form className="aktivitetmal__innhold" onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
+            <div className="mb-4">
                 <Textarea
                     textareaClass={textAreaCls}
                     visTellerFra={150}
@@ -76,7 +75,7 @@ function MalForm(props: Props) {
                     maxLength={500}
                     {...state.fields.mal}
                 />
-            </SkjemaGruppe>
+            </div>
             <Button>Lagre</Button>
         </form>
     );

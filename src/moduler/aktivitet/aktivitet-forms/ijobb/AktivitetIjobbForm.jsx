@@ -1,5 +1,5 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
+import { RadioGruppe } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import React from 'react';
 
@@ -16,11 +16,8 @@ import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
-import {
-    validateJobbstatus,
-    validateTittel,
-} from './validate';
 import { validateBeskrivelse, validateFeltForLangt, validateFraDato } from '../validate';
+import { validateJobbstatus, validateTittel } from './validate';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -62,7 +59,7 @@ function IJobbAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <SkjemaGruppe className="aktivitetskjema" tag="div">
+            <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
@@ -103,7 +100,7 @@ function IJobbAktivitetForm(props) {
                     {...state.fields.beskrivelse}
                 />
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
+            </div>
             <LagreAktivitet />
         </form>
     );

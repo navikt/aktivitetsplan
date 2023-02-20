@@ -1,5 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import React from 'react';
 
@@ -15,16 +14,8 @@ import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
-import {
-    validateTilDato,
-    validateTittel,
-} from './validate';
-import {
-    validateBeskrivelse,
-    validateFeltForLangt,
-    validateLenke,
-    validateFraDato
-} from '../validate';
+import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke } from '../validate';
+import { validateTilDato, validateTittel } from './validate';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -69,7 +60,7 @@ function EgenAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <SkjemaGruppe className="aktivitetskjema" tag="div">
+            <div className="aktivitetskjema space-y-3">
                 <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="EGEN" />
@@ -94,7 +85,7 @@ function EgenAktivitetForm(props) {
                 <Input disabled={avtalt} label="Min huskeliste for denne aktiviteten" {...state.fields.oppfolging} />
                 <Input disabled={avtalt} label="Lenke til en aktuell nettside" {...state.fields.lenke} />
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
+            </div>
             <LagreAktivitet />
         </form>
     );

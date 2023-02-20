@@ -1,6 +1,5 @@
 import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
@@ -76,7 +75,7 @@ const InnerSamtalereferatForm = (props: Props) => {
             })}
             noValidate
         >
-            <SkjemaGruppe className="aktivitetskjema">
+            <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />
@@ -97,7 +96,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                 )}
 
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
+            </div>
             <Lagreknapper isLoading={state.submitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
         </form>
     );

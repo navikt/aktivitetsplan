@@ -1,5 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import React from 'react';
 
@@ -13,16 +12,11 @@ import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-s
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
+import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
+import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke } from '../validate';
 import { validateTittel } from './validate';
-import {
-    validateBeskrivelse,
-    validateFeltForLangt,
-    validateLenke,
-    validateFraDato
-} from '../validate';
-import { todayIsoString } from '../../../../utils/dateUtils';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -66,7 +60,7 @@ function StillingAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <SkjemaGruppe className="aktivitetskjema" tag="div">
+            <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} required />
@@ -95,7 +89,7 @@ function StillingAktivitetForm(props) {
                 />
                 <Input disabled={avtalt} label="Lenke til stillingsannonse" {...state.fields.lenke} />
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
+            </div>
             <LagreAktivitet />
         </form>
     );

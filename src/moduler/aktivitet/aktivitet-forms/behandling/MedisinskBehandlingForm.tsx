@@ -1,5 +1,4 @@
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
@@ -88,7 +87,7 @@ const MedisinskBehandlingForm = (props: Props) => {
     }
     return (
         <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off" noValidate>
-            <SkjemaGruppe className="aktivitetskjema">
+            <div className="aktivitetskjema space-y-2">
                 <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Type behandling *" {...state.fields.behandlingType} />
@@ -116,7 +115,7 @@ const MedisinskBehandlingForm = (props: Props) => {
                     {...state.fields.beskrivelse}
                 />
                 <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-            </SkjemaGruppe>
+            </div>
             <LagreAktivitet />
         </form>
     );

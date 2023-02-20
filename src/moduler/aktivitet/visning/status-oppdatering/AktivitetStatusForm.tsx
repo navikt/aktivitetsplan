@@ -1,6 +1,5 @@
 import { Alert, Button } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import {
@@ -77,7 +76,7 @@ const AktivitetStatusForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe feil={state.fields.statusValidering.error}>
+            <div className="space-y-4">
                 <Radio
                     label="Forslag"
                     value={STATUS_BRUKER_ER_INTRESSERT}
@@ -119,7 +118,10 @@ const AktivitetStatusForm = (props: Props) => {
                         />
                     </VisibleIfDiv>
                 </VisibleIfDiv>
-            </SkjemaGruppe>
+                {!!state.fields.statusValidering.error ? (
+                    <p className="font-bold text-red-700">{state.fields.statusValidering.error}</p>
+                ) : null}
+            </div>
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
             <Button loading={state.submitting} className="oppdater-status" disabled={disabled}>
                 Lagre

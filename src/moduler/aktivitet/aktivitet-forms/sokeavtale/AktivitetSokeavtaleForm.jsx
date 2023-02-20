@@ -1,5 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import React from 'react';
 
@@ -71,7 +70,7 @@ export default function SokeAvtaleAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
+            <div className="skjema-innlogget aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
 
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="SOKEAVTALE" />
@@ -124,7 +123,7 @@ export default function SokeAvtaleAktivitetForm(props) {
                     {...state.fields.beskrivelse}
                 />
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
+            </div>
             <LagreAktivitet />
         </form>
     );

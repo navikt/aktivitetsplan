@@ -1,7 +1,6 @@
 import { Button, HelpText } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -97,7 +96,7 @@ const AvtaltForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
-            <SkjemaGruppe>
+            <div className="">
                 <ForNavAnsattMarkeringWrapper>
                     <div className={styles.checkbox}>
                         <Checkbox
@@ -106,7 +105,7 @@ const AvtaltForm = (props: Props) => {
                             {...state.fields.avtaltCheckbox}
                             className={styles.checkboxNoSpace}
                         />
-                        <HelpText id="hjelp">
+                        <HelpText id="hjelp" className="ml-2">
                             <div className={styles.maxWidth300}>
                                 Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
                                 "Avtalt med NAV"
@@ -115,7 +114,10 @@ const AvtaltForm = (props: Props) => {
                     </div>
                 </ForNavAnsattMarkeringWrapper>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
-                    <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
+                    <VisibleIfDiv
+                        className={classNames('space-y-4', kanSendeForhaandsvarsel && styles.innhold)}
+                        visible={avtalt}
+                    >
                         <KanIkkeSendeForhaandsorienteringInfotekst
                             mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                             manglerTilDato={manglerTilDato}
@@ -130,7 +132,7 @@ const AvtaltForm = (props: Props) => {
                         </Button>
                     </VisibleIfDiv>
                 </Innholdslaster>
-            </SkjemaGruppe>
+            </div>
         </form>
     );
 };

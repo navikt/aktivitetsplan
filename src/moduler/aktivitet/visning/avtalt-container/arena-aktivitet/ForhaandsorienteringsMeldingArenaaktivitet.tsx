@@ -1,4 +1,5 @@
 import { Button } from '@navikt/ds-react';
+import classNames from 'classnames';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -24,7 +25,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     }
 
     return (
-        <div className={styles.forhandsorienteringArenaInnhold}>
+        <div className={classNames('space-y-4', styles.forhandsorienteringArenaInnhold)}>
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={lasterData}
