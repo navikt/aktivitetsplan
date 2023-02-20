@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.01.13_08.09-36c09678654f
+  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.02.20_10.11-47a91300306e
   port: 8080
   liveness:
     path: /internal/isAlive
