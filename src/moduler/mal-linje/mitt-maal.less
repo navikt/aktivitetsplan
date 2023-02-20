@@ -1,8 +1,6 @@
 @import '../../variables';
-@import './../../../node_modules/nav-frontend-paneler-style/src/mixins';
 
 a.mitt-maal {
-    .panel-focushover-mixin();
     z-index: 0;
 
     &:hover #mittmal_header {
@@ -24,9 +22,6 @@ a.mitt-maal {
     margin-bottom: 1rem;
 
     //TODO: Bør slettes så fort vi har ny versjon av dekoratøren som ikke overstyrer fokusfarge
-    &:focus {
-        background-color: #cde7d8;
-    }
 
     &.empty {
         background-color: @white;

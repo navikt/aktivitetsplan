@@ -1,7 +1,7 @@
+import { Panel } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import { DatepickerLimitations } from 'nav-datovelger/lib/types';
-import Panel from 'nav-frontend-paneler';
 import { Element as NavElement } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
