@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
@@ -76,9 +76,9 @@ const SoknadsstatusForm = (props: Props) => {
                     {...state.fields.soknadsstatus}
                 />
             </SkjemaGruppe>
-            <Hovedknapp className="oppdater-status" disabled={disable} spinner={state.submitting} autoDisableVedSpinner>
+            <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre
-            </Hovedknapp>
+            </Button>
         </form>
     );
 };

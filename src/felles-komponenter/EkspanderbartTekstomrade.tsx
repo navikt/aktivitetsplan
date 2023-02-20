@@ -1,7 +1,7 @@
 import { ChevronDownCircle, ChevronUpCircle } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 import { LinebreakRule } from '@navikt/textparser';
 import classNames from 'classnames';
-import { Knapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useState } from 'react';
 
@@ -27,10 +27,14 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
                 <Tekstomrade className="inline" rules={[LinebreakRule, ShortenedLinkRule]}>
                     {hasLongText ? text.slice(0, maxCharacters) + ' ... ' : text + ' '}
                 </Tekstomrade>
-                <Knapp onClick={toggleMoreOrLess} className={styles.button}>
+                <Button variant={'tertiary'} onClick={toggleMoreOrLess} className={styles.button}>
                     {hasLongText ? 'Les mer' : 'Vis mindre'}
-                    {hasLongText ? <ChevronDownCircle className="ml-0.5" /> : <ChevronUpCircle className="ml-0.5" />}
-                </Knapp>
+                    {hasLongText ? (
+                        <ChevronDownCircle className="ml-0.5 inline" />
+                    ) : (
+                        <ChevronUpCircle className="ml-0.5 inline" />
+                    )}
+                </Button>
             </div>
         );
     }

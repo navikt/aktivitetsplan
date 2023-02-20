@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -14,8 +14,8 @@ interface VelgPlanUtskriftFormProps {
     kvpPerioder?: KvpPeriode[];
 }
 type FormType = {
-    utskriftPlanType: string
-}
+    utskriftPlanType: string;
+};
 
 function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
     const { onSubmit, kvpPerioder, hidden } = props;
@@ -68,7 +68,7 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
                 </div>
             </div>
             <div className="printmelding__knapperad">
-                <Hovedknapp>Velg</Hovedknapp>
+                <Button>Velg</Button>
             </div>
         </form>
     );

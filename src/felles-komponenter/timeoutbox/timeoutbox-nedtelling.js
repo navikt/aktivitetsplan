@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React, { Component } from 'react';
@@ -42,12 +42,16 @@ class TimeoutboxNedtelling extends Component {
                     </div>
                 </ModalContainer>
                 <ModalFooter>
-                    <Hovedknapp className="modal-footer__knapp mr-4" onClick={() => window.location.reload()}>
+                    <Button className="modal-footer__knapp mr-4" onClick={() => window.location.reload()}>
                         Last siden på nytt
-                    </Hovedknapp>
-                    <Knapp className="modal-footer__knapp" onClick={() => document.querySelector('#logout').click()}>
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        className="modal-footer__knapp"
+                        onClick={() => document.querySelector('#logout').click()}
+                    >
                         Logg ut
-                    </Knapp>
+                    </Button>
                 </ModalFooter>
             </div>
         );

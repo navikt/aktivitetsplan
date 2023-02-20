@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Alert, Button } from '@navikt/ds-react';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
@@ -18,9 +17,7 @@ function VisAdvarsel({ onSubmit, headerTekst }) {
                 </Alert>
             </ModalContainer>
             <ModalFooter>
-                <Hovedknapp htmlType="button" onClick={onSubmit}>
-                    Lagre
-                </Hovedknapp>
+                <Button onClick={onSubmit}>Lagre</Button>
             </ModalFooter>
         </div>
     );

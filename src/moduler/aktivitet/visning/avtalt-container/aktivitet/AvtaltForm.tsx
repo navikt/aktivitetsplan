@@ -1,7 +1,6 @@
-import { HelpText } from '@navikt/ds-react';
+import { Button, HelpText } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -126,9 +125,9 @@ const AvtaltForm = (props: Props) => {
                             hidden={!kanSendeForhaandsvarsel}
                             oppdaterer={oppdaterer}
                         />
-                        <Hovedknapp spinner={oppdaterer} disabled={lasterData}>
+                        <Button loading={oppdaterer} disabled={lasterData}>
                             Bekreft
-                        </Hovedknapp>
+                        </Button>
                     </VisibleIfDiv>
                 </Innholdslaster>
             </SkjemaGruppe>

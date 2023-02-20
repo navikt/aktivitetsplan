@@ -1,4 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -48,9 +48,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                 <Textarea label={<VarslingInfo />} maxLength={500} {...state.fields.tekst} />
             </VisibleIfDiv>
 
-            <Hovedknapp spinner={lasterData} autoDisableVedSpinner>
-                Bekreft
-            </Hovedknapp>
+            <Button loading={lasterData}>Bekreft</Button>
         </div>
     );
 };

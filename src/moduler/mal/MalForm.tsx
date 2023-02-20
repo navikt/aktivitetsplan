@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
@@ -29,7 +29,7 @@ interface Props {
 }
 
 type FormType = {
-    mal: string
+    mal: string;
 };
 
 function MalForm(props: Props) {
@@ -77,7 +77,7 @@ function MalForm(props: Props) {
                     {...state.fields.mal}
                 />
             </SkjemaGruppe>
-            <Hovedknapp>Lagre</Hovedknapp>
+            <Button>Lagre</Button>
         </form>
     );
 }

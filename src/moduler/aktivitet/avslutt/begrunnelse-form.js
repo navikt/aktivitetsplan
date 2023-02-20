@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
@@ -45,9 +45,7 @@ function BegrunnelseForm(props) {
                 </ModalContainer>
             </div>
             <ModalFooter>
-                <Hovedknapp spinner={lagrer} autoDisableVedSpinner>
-                    Lagre
-                </Hovedknapp>
+                <Button loading={lagrer}>Lagre</Button>
             </ModalFooter>
         </form>
     );

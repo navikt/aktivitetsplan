@@ -1,9 +1,9 @@
 import './mitt-maal.less';
 
 import { Add } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
-import { Flatknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
@@ -55,10 +55,10 @@ function MalContent(props: MalContentProps) {
         return (
             <div className="mittmal_callToAction">
                 <Element>Hva er målet ditt fremover?</Element>
-                <Flatknapp className="mittmal_knapp" form="kompakt">
+                <Button variant="tertiary" className="mittmal_knapp" form="kompakt">
                     <Add role="img" focusable="false" aria-hidden />
                     <span>Legg til</span>
-                </Flatknapp>
+                </Button>
             </div>
         );
     }
