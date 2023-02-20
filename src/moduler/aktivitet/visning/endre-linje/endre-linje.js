@@ -1,4 +1,3 @@
-import { guid } from 'nav-frontend-js-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React, { useMemo } from 'react';
@@ -12,6 +11,16 @@ function moveElementIntoView(id) {
     setTimeout(() => {
         document.querySelector(`#${id}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 400);
+}
+
+function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+        .toString()
+        .substring(1);
+}
+
+function guid() {
+    return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 }
 
 function EndreLinje(props) {
