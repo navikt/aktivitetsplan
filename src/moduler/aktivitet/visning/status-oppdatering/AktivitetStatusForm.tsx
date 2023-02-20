@@ -1,6 +1,5 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
@@ -122,14 +121,9 @@ const AktivitetStatusForm = (props: Props) => {
                 </VisibleIfDiv>
             </SkjemaGruppe>
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-            <Hovedknapp
-                spinner={state.submitting}
-                autoDisableVedSpinner
-                className="oppdater-status"
-                disabled={disabled}
-            >
+            <Button loading={state.submitting} className="oppdater-status" disabled={disabled}>
                 Lagre
-            </Hovedknapp>
+            </Button>
         </form>
     );
 };

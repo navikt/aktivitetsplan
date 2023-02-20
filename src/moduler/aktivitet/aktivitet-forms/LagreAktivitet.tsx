@@ -1,4 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -13,9 +13,9 @@ const LagreAktivitet = () => {
 
     return (
         <div className="aktivitetskjema__lagre-knapp">
-            <Hovedknapp spinner={venter} disabled={venter || !underOppfolging}>
+            <Button loading={venter} disabled={venter || !underOppfolging}>
                 Lagre
-            </Hovedknapp>
+            </Button>
         </div>
     );
 };

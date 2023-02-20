@@ -1,6 +1,6 @@
+import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -107,14 +107,14 @@ const OppdaterReferatForm = (props: Props) => {
                 Del med bruker
             </HiddenIfHovedknapp>
 
-            <Knapp type={erReferatPublisert ? 'hoved' : 'standard'} kompakt spinner={oppdaterer} disabled={oppdaterer}>
+            <Button variant={erReferatPublisert ? 'primary' : 'secondary'} loading={oppdaterer} disabled={oppdaterer}>
                 {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
-            </Knapp>
+            </Button>
 
             {aktivitet.referat && (
-                <Flatknapp kompakt onClick={onFerdig}>
+                <Button variant="tertiary" onClick={onFerdig}>
                     Avbryt
-                </Flatknapp>
+                </Button>
             )}
         </form>
     );

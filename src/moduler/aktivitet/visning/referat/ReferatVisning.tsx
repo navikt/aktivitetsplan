@@ -1,6 +1,5 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -35,18 +34,18 @@ const ReferatVisning = (props: Props) => {
             <EkspanderbartTekstomrade className="oppdater-referat__referat" tekst={referat} antallTegn={275} />
             <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="oppdater-referat-knapper">
                 <HiddenIfDiv hidden={erReferatPublisert}>
-                    <Hovedknapp kompakt onClick={dispatchPubliserReferat} spinner={publiserer}>
+                    <Button onClick={dispatchPubliserReferat} loading={publiserer}>
                         Del med bruker
-                    </Hovedknapp>
+                    </Button>
                 </HiddenIfDiv>
                 <HiddenIfDiv hidden={!erReferatPublisert}>
                     <Alert variant="success" className="oppdater-referat-status">
                         Delt med bruker
                     </Alert>
                 </HiddenIfDiv>
-                <Flatknapp kompakt onClick={startOppdaterReferat}>
+                <Button variant="tertiary" onClick={startOppdaterReferat}>
                     Endre referat
-                </Flatknapp>
+                </Button>
             </HiddenIfDiv>
         </div>
     );

@@ -1,4 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -18,9 +18,9 @@ const TimeoutboxLoggetUt = () => (
             </div>
         </ModalContainer>
         <ModalFooter>
-            <Hovedknapp className="modal-footer__knapp" onClick={() => window.location.reload()}>
+            <Button variant="primary" className="modal-footer__knapp" onClick={() => window.location.reload()}>
                 Last siden på nytt
-            </Hovedknapp>
+            </Button>
         </ModalFooter>
     </div>
 );

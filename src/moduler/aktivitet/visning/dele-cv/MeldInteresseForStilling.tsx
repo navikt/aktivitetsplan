@@ -1,6 +1,5 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
@@ -119,12 +118,11 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                     input={{ ...state.fields.kanDeles.input, onChange: onChange }}
                 />
             </RadioGruppe>
-            {/*{infoTekst && <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />}*/}
             {infoTekst && <Alert children={infoTekst} variant="info" inline className="mt-4" />}
             {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
-            <Hovedknapp mini className={styles.knapp} disabled={state.submitting}>
+            <Button className={styles.knapp} disabled={state.submitting}>
                 Lagre
-            </Hovedknapp>
+            </Button>
         </form>
     );
 };
