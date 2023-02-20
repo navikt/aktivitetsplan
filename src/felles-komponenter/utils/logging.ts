@@ -82,9 +82,9 @@ declare global {
 
 export function logTimeToAktivitestavlePaint(veileder: boolean) {
     if (!window.aktivitesplanTimeToAktivitestavlePaint) {
-        const time = performance.now();
-        window.aktivitesplanTimeToAktivitestavlePaint = time
-        loggEvent("aktivitetsplan.timeToAktivitestavlePaint", {time}, {veileder});
+        const timeToAktivitestavlePaint = performance.now();
+        window.aktivitesplanTimeToAktivitestavlePaint = timeToAktivitestavlePaint
+        loggEvent("aktivitetsplan.timeToAktivitestavlePaint", {timeToAktivitestavlePaint}, {veileder});
     }
 }
 
