@@ -38,8 +38,6 @@
     "moment-timezone": "^0.5.39",
     "nav-datovelger": "^12.6.0",
     "nav-frontend-core": "^6.0.1",
-    "nav-frontend-popover": "^2.0.4",
-    "nav-frontend-popover-style": "^2.0.2",
     "nav-frontend-skjema": "^4.0.6",
     "nav-frontend-skjema-style": "^3.0.3",
     "nav-frontend-snakkeboble": "^3.0.2",
