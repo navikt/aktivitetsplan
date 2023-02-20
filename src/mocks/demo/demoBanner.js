@@ -1,4 +1,4 @@
-import Modal from 'nav-frontend-modal';
+import { Modal } from '@navikt/ds-react';
 import React from 'react';
 
 import DemoDashboard from './demoDashboard';
@@ -24,7 +24,7 @@ class DemoBanner extends React.Component {
         return (
             <div>
                 <DemoIkon onClick={this.openModal} />
-                <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal} closeButton={true}>
+                <Modal open={this.state.modalIsOpen} onClose={this.closeModal}>
                     <DemoDashboard />
                 </Modal>
             </div>
