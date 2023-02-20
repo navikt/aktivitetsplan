@@ -1,4 +1,4 @@
-import { VenstreChevron } from 'nav-frontend-chevron';
+import { ChevronLeftCircle } from '@navikt/ds-icons';
 import React from 'react';
 
 import InternLenke from '../utils/InternLenke';
@@ -14,7 +14,7 @@ const Tilbakeknapp = (props: TilbakeknappType) => {
     return (
         <InternLenke href="/" onClick={onClick} className="tilbakeknapp">
             <div className="tilbakeknapp-innhold">
-                <VenstreChevron />
+                <ChevronLeftCircle />
                 <span className="tilbakeknapp-innhold__tekst">{tekst}</span>
             </div>
         </InternLenke>

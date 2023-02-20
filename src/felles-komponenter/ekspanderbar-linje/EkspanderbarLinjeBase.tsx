@@ -1,3 +1,4 @@
+import { ChevronDownCircle, ChevronUpCircle } from '@navikt/ds-icons';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef } from 'react';
 import { UnmountClosed } from 'react-collapse';
@@ -45,8 +46,12 @@ const EkspanderbarLinjeBase = (props: PropsBase) => {
             <button onClick={onClick} className={styles.endreContainer} aria-expanded={erAapen} disabled={!kanToogle}>
                 <div className={styles.endreVisning}>{tittelKomponent}</div>
                 <VisibleIfDiv visible={kanToogle} className={styles.endreKnapp}>
-                    <div className={styles.endreKnappInnhold}>{erAapen ? lukkeTekst : aapneTekst}</div>
-                    <div className={erAapen ? styles.endreIndikasjonLukket : styles.endreIndikasjonApen} />
+                    <div className="inline-block pr-0.5">{erAapen ? lukkeTekst : aapneTekst}</div>
+                    {erAapen ? (
+                        <ChevronUpCircle className="inline-block" />
+                    ) : (
+                        <ChevronDownCircle className="inline-block" />
+                    )}
                 </VisibleIfDiv>
             </button>
 

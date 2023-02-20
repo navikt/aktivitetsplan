@@ -1,4 +1,4 @@
-import { HoyreChevron } from 'nav-frontend-chevron';
+import { ChevronRightCircle } from '@navikt/ds-icons';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -32,7 +32,7 @@ export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
                 onClick={() => loggStillingFraNavStillingslenkeKlikk(erVeileder)}
             >
                 Les mer om stillingen
-                <HoyreChevron />
+                <ChevronRightCircle />
             </a>
         </>
     );

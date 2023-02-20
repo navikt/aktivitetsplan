@@ -1,4 +1,4 @@
-import { HoyreChevron } from 'nav-frontend-chevron';
+import { ChevronRightCircle } from '@navikt/ds-icons';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -23,7 +23,7 @@ function DialogPil(props: { antallUleste: number }) {
     return (
         <div className={styles.dialogPil} aria-hidden>
             <DialogIkon antallUleste={props.antallUleste} />
-            <HoyreChevron />
+            <ChevronRightCircle />
         </div>
     );
 }
