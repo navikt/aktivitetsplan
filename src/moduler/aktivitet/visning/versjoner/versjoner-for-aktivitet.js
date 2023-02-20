@@ -1,4 +1,4 @@
-import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import { ReadMore } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -41,11 +41,15 @@ class VersjonerForAktivitet extends Component {
             ));
 
         const versjonerInnslagUnderAccordion = (
-            <Lesmerpanel className="" apneTekst="Vis mer" lukkTekst="Vis mer">
+            <ReadMore header="Vis mer">
                 {versjoner.slice(MAX_SIZE).map((versjon, index) => (
-                    <VersjonInnslag key={versjon.endretDato} aktivitet={versjon} forrigeAktivitet={versjoner[index + 1]} />
+                    <VersjonInnslag
+                        key={versjon.endretDato}
+                        aktivitet={versjon}
+                        forrigeAktivitet={versjoner[index + 1]}
+                    />
                 ))}
-            </Lesmerpanel>
+            </ReadMore>
         );
 
         return (

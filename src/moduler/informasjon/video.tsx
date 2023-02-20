@@ -1,4 +1,4 @@
-import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import { ReadMore } from '@navikt/ds-react';
 import React, { Component } from 'react';
 
 import styles from './video.module.less';
@@ -11,11 +11,7 @@ export default class Video extends Component {
         return (
             <div>
                 <iframe title="onboarding-video" src={ONBOARDING_VIDEO_URL} className={styles.videoPlayer} />
-                <Lesmerpanel
-                    apneTekst="Vis tekst for video"
-                    lukkTekst="Skjul teksten for videoen"
-                    className={styles.lesMerPanel}
-                >
+                <ReadMore header="Vis tekst for video" className={'mt-4 ' + styles.lesMerPanel}>
                     <ul>
                         <li>
                             For at du skal holde oversikt og vite hva som forventes av deg, og kunne samarbeide med
@@ -39,7 +35,7 @@ export default class Video extends Component {
                         <li>Målet er at du skal få en jobb på den måten som passer best for deg og din situasjon.</li>
                         <li>Lykke til!</li>
                     </ul>
-                </Lesmerpanel>
+                </ReadMore>
             </div>
         );
     }
