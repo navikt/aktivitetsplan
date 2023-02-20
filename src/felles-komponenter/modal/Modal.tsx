@@ -1,5 +1,5 @@
+import { Modal as NavModal } from '@navikt/ds-react';
 import classNames from 'classnames';
-import NavFrontendModal from 'nav-frontend-modal';
 import React, { ReactNode } from 'react';
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 
@@ -46,22 +46,22 @@ const Modal = (props: Props) => {
     };
 
     return (
-        <NavFrontendModal
+        <NavModal
             {...rest}
-            isOpen
+            open
             className={classNames('aktivitet-modal', className)}
             overlayClassName="aktivitet-modal__overlay"
-            portalClassName="aktivitetsplanfs aktivitet-modal-portal"
-            contentLabel={contentLabel}
-            onRequestClose={closeFuncOrDefault}
-            contentClass={contentClass}
+            // portalClassName="aktivitetsplanfs aktivitet-modal-portal"
+            // contentLabel={contentLabel}
+            onClose={closeFuncOrDefault}
+            // contentClass={contentClass}
         >
             {header}
             {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
             <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
                 {children}
             </Innholdslaster>
-        </NavFrontendModal>
+        </NavModal>
     );
 };
 

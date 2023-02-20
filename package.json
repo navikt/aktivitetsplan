@@ -20,7 +20,9 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "@navikt/ds-css": "^2.2.0",
     "@navikt/ds-icons": "^1.5.4",
+    "@navikt/ds-react": "^2.2.0",
     "@navikt/fnrvalidator": "^1.3.0",
     "@navikt/navspa": "^5.0.1",
     "@navikt/textparser": "^2.2.1",
