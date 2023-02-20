@@ -1,4 +1,4 @@
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -36,10 +36,10 @@ const VarslingBoks = ({ className, aktivitet }: Props) => {
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
                 <HiddenIfDiv className={className} hidden={!visVarselOmManglendeDialog}>
-                    <AlertStripe type="advarsel">
+                    <Alert variant="warning">
                         Brukeren får ikke automatisk beskjed om at aktiviteten er opprettet. <br />
                         Send en dialogmelding slik at bruker får informasjon om møtet.
-                    </AlertStripe>
+                    </Alert>
                 </HiddenIfDiv>
             </Innholdslaster>
         </HiddenIfDiv>

@@ -1,5 +1,5 @@
+import { Alert } from '@navikt/ds-react';
 import { mount } from 'enzyme';
-import AlertStripe from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -14,7 +14,7 @@ describe('Feilmelding', () => {
     it('Skal vise generell feilmelding ved flere feil', () => {
         const feilmeldinger = [{ type: '' }, { type: '' }];
         const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
-        const tekst = wrapper.find(AlertStripe).find(Normaltekst).text().trim();
+        const tekst = wrapper.find(Alert).find(Normaltekst).text().trim();
 
         expect(tekst).toEqual(tekster.fallback);
     });
@@ -23,7 +23,7 @@ describe('Feilmelding', () => {
         const feilmeldinger = [{ type: AKTIVITET_HENT_FEILET }];
         const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
 
-        const tekst = wrapper.find(AlertStripe).find(Normaltekst).text().trim();
+        const tekst = wrapper.find(Alert).find(Normaltekst).text().trim();
 
         expect(tekst).toEqual(tekster.aktivitetFeilet);
     });
@@ -31,7 +31,7 @@ describe('Feilmelding', () => {
     it('Skal vise generell feilmelding hvis både aktivitet og andre ting feiler', () => {
         const feilmeldinger = [{ type: AKTIVITET_HENT_FEILET }, { type: '' }];
         const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
-        const tekst = wrapper.find(AlertStripe).find(Normaltekst).text().trim();
+        const tekst = wrapper.find(Alert).find(Normaltekst).text().trim();
 
         expect(tekst).toEqual(tekster.fallback);
     });

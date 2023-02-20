@@ -1,4 +1,4 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import React, { useEffect } from 'react';
@@ -57,10 +57,10 @@ const Nivaa4Feilmelding = () => {
 
     return (
         <div className={styles.feilmelding}>
-            <AlertStripeAdvarsel>
+            <Alert variant="warning">
                 Denne brukeren kan ikke logge inn i aktivitetsplan og dialog.
                 <Mere />
-            </AlertStripeAdvarsel>
+            </Alert>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -11,7 +11,6 @@ import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-s
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
-import styles from '../dele-cv/DeleCvSvarVisning.module.less';
 import EndreLinje from '../endre-linje/endre-linje';
 import SoknadsstatusForm from './SoknadsstatusForm';
 
@@ -70,7 +69,9 @@ const OppdaterSoknadsstatus = (props: Props) => {
         <>
             <StillingFraNavEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />
             {skalViseInfoBoks && (
-                <AlertStripeInfo className={styles.infoStripe}>{ikkefattjobbendetaljer}</AlertStripeInfo>
+                <Alert variant="info" className="mt-4">
+                    {ikkefattjobbendetaljer}
+                </Alert>
             )}
         </>
     );

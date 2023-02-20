@@ -1,4 +1,4 @@
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
@@ -45,7 +45,7 @@ const SattTilAvtaltInfotekst = (props: Props) => {
 
     return (
         <div className={aktivitetvisningStyles.underseksjon}>
-            <AlertStripeSuksess>{text}</AlertStripeSuksess>
+            <Alert variant="success">{text}</Alert>
         </div>
     );
 };

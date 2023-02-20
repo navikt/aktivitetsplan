@@ -1,4 +1,4 @@
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
@@ -13,9 +13,9 @@ function VisAdvarsel({ onSubmit, headerTekst }) {
         <div>
             <ModalContainer className={aktivitetvisningStyles.underseksjon}>
                 <Innholdstittel>{headerTekst}</Innholdstittel>
-                <AlertStripe type="advarsel">
+                <Alert variant="warning">
                     Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
-                </AlertStripe>
+                </Alert>
             </ModalContainer>
             <ModalFooter>
                 <Hovedknapp htmlType="button" onClick={onSubmit}>

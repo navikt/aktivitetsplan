@@ -1,4 +1,4 @@
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -7,18 +7,18 @@ import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import * as AppPT from '../../../proptypes';
 import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
 
-function PubliserReferat({ aktivitet, nyStatus, children }) {
+const PubliserReferat = ({ aktivitet, nyStatus, children }) => {
     if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
         return (
             <ModalContainer className="publiser-referat">
-                <AlertStripe type="feil">
+                <Alert variant="error">
                     <FormattedMessage id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`} />
-                </AlertStripe>
+                </Alert>
             </ModalContainer>
         );
     }
     return children;
-}
+};
 
 PubliserReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,

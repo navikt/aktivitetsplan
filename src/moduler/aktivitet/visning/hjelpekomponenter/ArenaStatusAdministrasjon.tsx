@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
 import DeleLinje from '../delelinje/delelinje';
@@ -17,7 +17,7 @@ const ArenaStatusAdministrasjon = (props: Props) => {
     return (
         <>
             <div className="aktivitetvisning__underseksjon">
-                <AlertStripeInfo>{alertTekst}</AlertStripeInfo>
+                <Alert variant="info">{alertTekst}</Alert>
             </div>
             <DeleLinje />
         </>

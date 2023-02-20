@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -83,7 +83,7 @@ export const DeleCVAvbruttVisning = (props: Props) => {
             aapneTekst="Åpne"
             lukkeTekst="Lukk"
         >
-            <AlertStripeInfo className={styles.infoStripe}>{tekst}</AlertStripeInfo>
+            <Alert variant="info">{tekst}</Alert>
         </EkspanderbarLinje>
     );
 };

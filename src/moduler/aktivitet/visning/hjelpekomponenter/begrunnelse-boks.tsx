@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -10,9 +10,9 @@ interface Props {
 const BegrunnelseBoks = ({ begrunnelse, className }: Props) => {
     return (
         <div className={className}>
-            <AlertStripeInfo>
+            <Alert variant="info">
                 <Normaltekst className="tilDittNavTekst">{begrunnelse}</Normaltekst>
-            </AlertStripeInfo>
+            </Alert>
         </div>
     );
 };

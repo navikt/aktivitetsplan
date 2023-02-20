@@ -10,7 +10,6 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import AdvarselMedDialogLenke from './AdvarselMedDialogLenke';
 import { HiddenIfAdvarselMedLenke } from './varsel-alertstriper';
-import styls from './Varslinger.module.less';
 
 const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string | undefined => {
     if (!antallDagerIgjen) {
@@ -51,13 +50,13 @@ const BrukerVarslinger = (props: Props) => {
                 lenkeTekst="Les hva du må gjøre."
                 tekst="Du har fått en viktig melding fra NAV."
                 dialogId={tilhorendeDialogId}
-                className={styls.varsling}
+                className="mb-5 mt-4"
                 hidden={!erEskalert}
             />
             <HiddenIfAdvarselMedLenke
                 hidden={!kanReaktiveres}
                 tekstId={infotekstTilInaktivertBrukere(antallDagerIgjen)}
-                className={styls.varsling}
+                className="mb-5 mt-4"
                 lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
                 href={arbeidssokerregistreringHref}
                 values={{ antalldagerIgjen: antallDagerIgjen }}
@@ -65,7 +64,7 @@ const BrukerVarslinger = (props: Props) => {
             <HiddenIfAdvarselMedLenke
                 hidden={underOppfolging}
                 tekstId="ikke.under.oppfolging.reaktivering"
-                className={styls.varsling}
+                className="mb-5 mt-4"
                 lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
                 href={arbeidssokerregistreringHref}
                 values={{ antalldagerIgjen: antallDagerIgjen }}

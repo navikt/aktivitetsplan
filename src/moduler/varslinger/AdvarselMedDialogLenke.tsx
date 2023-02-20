@@ -1,4 +1,4 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -21,7 +21,7 @@ const AdvarselMedDialogLenke = (props: Props) => {
     }
 
     return (
-        <AlertStripeAdvarsel className={className}>
+        <Alert variant="warning" className={className}>
             <Normaltekst>
                 {tekst}
                 &nbsp;
@@ -29,7 +29,7 @@ const AdvarselMedDialogLenke = (props: Props) => {
                     {lenkeTekst}
                 </LenkeTilDialog>
             </Normaltekst>
-        </AlertStripeAdvarsel>
+        </Alert>
     );
 };
 

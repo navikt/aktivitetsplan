@@ -9,7 +9,7 @@ import { settDigital } from '../oppfolging-status/oppfolging-reducer';
 import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel';
 
-function AktiverDigitalOppfolging() {
+const AktiverDigitalOppfolging = () => {
     const oppfolgingStatus = useSelector(selectOppfolgingStatus);
     const reservertKrr = useSelector(selectReservasjonKRR);
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function AktiverDigitalOppfolging() {
     const lasterOppfolging = oppfolgingStatus === STATUS.PENDING || oppfolgingStatus === STATUS.RELOADING;
 
     return (
-        <div className="sett-digital">
+        <div className="flex items-center flex-col">
             <AktiverDigitalOppfolgingVarsel reservertIKRR={reservertKrr} settDigitalFeilet={settOppfolgingFeilet} />
             <HiddenIfHovedknapp
                 disabled={lasterOppfolging}
@@ -30,6 +30,6 @@ function AktiverDigitalOppfolging() {
             </HiddenIfHovedknapp>
         </div>
     );
-}
+};
 
 export default AktiverDigitalOppfolging;

@@ -1,6 +1,6 @@
+import { Alert } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import moment, { now } from 'moment';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -52,9 +52,9 @@ const HuskVarsleBruker = ({ avtalt, pristine }: { avtalt: boolean; pristine: boo
         return null;
     }
     return (
-        <AlertStripeAdvarsel className="mote-aktivitet_husk_bruker">
+        <Alert variant="warning" className="mb-8">
             Husk å sende en dialogmelding til brukeren om endringen du gjør.
-        </AlertStripeAdvarsel>
+        </Alert>
     );
 };
 

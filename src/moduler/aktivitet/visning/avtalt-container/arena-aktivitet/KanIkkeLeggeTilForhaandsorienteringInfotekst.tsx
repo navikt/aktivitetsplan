@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
 interface Props {
@@ -13,9 +13,9 @@ const KanIkkeLeggeTilForhaandsorienteringInfotekst = (props: Props) => {
     }
 
     return (
-        <AlertStripeInfo>
+        <Alert variant="info">
             Du kan ikke legge til forhåndsorientering fordi sluttdatoen er færre enn 7 dager frem i tid.
-        </AlertStripeInfo>
+        </Alert>
     );
 };
 

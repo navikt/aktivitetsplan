@@ -1,5 +1,5 @@
+import { Alert } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
@@ -40,7 +40,9 @@ const ReferatVisning = (props: Props) => {
                     </Hovedknapp>
                 </HiddenIfDiv>
                 <HiddenIfDiv hidden={!erReferatPublisert}>
-                    <AlertStripeSuksess className="oppdater-referat-status">Delt med bruker</AlertStripeSuksess>
+                    <Alert variant="success" className="oppdater-referat-status">
+                        Delt med bruker
+                    </Alert>
                 </HiddenIfDiv>
                 <Flatknapp kompakt onClick={startOppdaterReferat}>
                     Endre referat

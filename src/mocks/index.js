@@ -196,7 +196,7 @@ mock.get('/veilarbperson/api/person/:fnr/harNivaa4', failOrGetResponse(nivaa4Fei
 mock.post('/veilarbmalverk/api/mal', ({ body }, res, ctx) => res(ctx.json(hentMalverkMedType(body))));
 
 //aktivitetsplan-api
-mock.get('/api/auth', jsonResponse(auth));
+mock.get('/auth/info', jsonResponse(auth));
 
 ///veilarblest/api
 mock.get('/veilarblest/api/aktivitetsplan/les', (req, res, ctx) => res(ctx.json(lest)));

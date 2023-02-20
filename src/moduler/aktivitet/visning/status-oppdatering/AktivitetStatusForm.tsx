@@ -1,5 +1,5 @@
+import { Alert } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
-import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
@@ -22,7 +22,7 @@ import { DirtyContext } from '../../../context/dirty-context';
 import { trengerBegrunnelse } from '../../aktivitet-util';
 import { kanOppdatereStatus, validateBegrunnelse } from './valideringUtils';
 
-const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripe);
+const VisibleAlertStripeSuksessSolid = visibleIf(Alert);
 
 const label = (status: AktivitetStatus) => {
     if (status === STATUS_FULLFOERT) {
@@ -106,7 +106,7 @@ const AktivitetStatusForm = (props: Props) => {
                 <Radio label="Avbrutt" value={STATUS_AVBRUTT} disabled={disabled} {...state.fields.aktivitetstatus} />
 
                 <VisibleIfDiv className="status-alert" visible={!state.pristine}>
-                    <VisibleAlertStripeSuksessSolid visible={visAdvarsel} type="advarsel">
+                    <VisibleAlertStripeSuksessSolid visible={visAdvarsel} variant="warning">
                         Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre
                         innholdet.
                     </VisibleAlertStripeSuksessSolid>

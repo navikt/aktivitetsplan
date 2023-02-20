@@ -1,5 +1,5 @@
+import { Alert } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -95,7 +95,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     return (
         <form className={detaljVisningStyles.underseksjon} onSubmit={state.onSubmit(onSubmit)} noValidate>
             <CustomAlertstripe tekst={overskrift} />
-            <div className={styles.luft} />
+            <div className="mt-4" />
             <Ingress />
             <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} datoBegrensninger={datobegrensninger} />
             <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
@@ -119,7 +119,8 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                     input={{ ...state.fields.kanDeles.input, onChange: onChange }}
                 />
             </RadioGruppe>
-            {infoTekst && <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />}
+            {/*{infoTekst && <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />}*/}
+            {infoTekst && <Alert children={infoTekst} variant="info" inline className="mt-4" />}
             {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
             <Hovedknapp mini className={styles.knapp} disabled={state.submitting}>
                 Lagre

@@ -37,8 +37,6 @@
     "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.39",
     "nav-datovelger": "^12.6.0",
-    "nav-frontend-alertstriper": "^4.0.2",
-    "nav-frontend-alertstriper-style": "^3.0.2",
     "nav-frontend-chevron": "^1.0.30",
     "nav-frontend-chevron-style": "^1.0.4",
     "nav-frontend-core": "^6.0.1",

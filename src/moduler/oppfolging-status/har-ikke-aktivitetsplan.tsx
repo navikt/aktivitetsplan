@@ -1,4 +1,4 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -18,7 +18,7 @@ function HarIkkeAktivitetsplan(props: PropTypes) {
 
     return (
         <div className="har-ikke-aktivitetsplan-container">
-            <AlertStripeAdvarsel>
+            <Alert variant="warning">
                 <Normaltekst>{advarsel}</Normaltekst>
                 {!erVeileder && (
                     <Lenke href={arbeidssokerregistreringHref}>
@@ -26,7 +26,7 @@ function HarIkkeAktivitetsplan(props: PropTypes) {
                         <HoyreChevron />
                     </Lenke>
                 )}
-            </AlertStripeAdvarsel>
+            </Alert>
         </div>
     );
 }

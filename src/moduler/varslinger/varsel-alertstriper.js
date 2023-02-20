@@ -1,4 +1,4 @@
-import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import Lenke from 'nav-frontend-lenker';
 import PT from 'prop-types';
 import React from 'react';
@@ -7,13 +7,13 @@ import { FormattedMessage } from 'react-intl';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
 
-export function Varsling({ tekstId, className }) {
+export const Varsling = ({ tekstId, className }) => {
     return (
-        <AlertStripeInfo className={className}>
+        <Alert variant="info" className={className}>
             <FormattedMessage id={tekstId} />
-        </AlertStripeInfo>
+        </Alert>
     );
-}
+};
 
 Varsling.defaultProps = {
     className: '',
@@ -24,17 +24,17 @@ Varsling.propTypes = {
     className: PT.string,
 };
 
-export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className, onClick }) {
+export const VarslingMedLenke = ({ tekstId, lenkeTekstId, href, className, onClick }) => {
     return (
-        <AlertStripeAdvarsel className={className}>
+        <Alert variant="warning" className={className}>
             <FormattedMessage id={tekstId} />
             &nbsp;
             <InternLenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
             </InternLenke>
-        </AlertStripeAdvarsel>
+        </Alert>
     );
-}
+};
 
 VarslingMedLenke.defaultProps = {
     className: '',
@@ -50,7 +50,11 @@ VarslingMedLenke.propTypes = {
 };
 
 export function AdvarselVarsling({ tekst, className }) {
-    return <AlertStripeAdvarsel className={className}>{tekst}</AlertStripeAdvarsel>;
+    return (
+        <Alert variant="warning" className={className}>
+            {tekst}
+        </Alert>
+    );
 }
 
 AdvarselVarsling.defaultProps = {
@@ -62,17 +66,17 @@ AdvarselVarsling.propTypes = {
     className: PT.string,
 };
 
-export function AdvarselMedLenkeVarsling({ tekstId, lenkeTekstId, href, className, onClick, values }) {
+export const AdvarselMedLenkeVarsling = ({ tekstId, lenkeTekstId, href, className, onClick, values }) => {
     return (
-        <AlertStripeAdvarsel className={className}>
+        <Alert variant="warning" className={className}>
             <FormattedMessage id={tekstId} values={values} />
             &nbsp;
             <Lenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
             </Lenke>
-        </AlertStripeAdvarsel>
+        </Alert>
     );
-}
+};
 
 AdvarselMedLenkeVarsling.defaultProps = {
     className: '',

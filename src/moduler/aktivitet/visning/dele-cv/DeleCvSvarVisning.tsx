@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 
@@ -30,9 +30,9 @@ export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props)
 
     const Infostripe = () =>
         cvKanDeles ? (
-            <AlertStripeInfo className={styles.infoStripe}>
+            <Alert variant="info" className="mt-4">
                 Arbeidsgiveren eller NAV vil kontakte deg hvis du er aktuell for stillingen
-            </AlertStripeInfo>
+            </Alert>
         ) : null;
 
     var svarTekst: string, endretTekst: string;

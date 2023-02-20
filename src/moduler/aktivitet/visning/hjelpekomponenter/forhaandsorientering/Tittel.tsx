@@ -1,11 +1,11 @@
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 const AdvarselTittel = () => (
-    <AlertStripe type="advarsel" form="inline">
+    <Alert variant="warning" inline>
         <Element>Informasjon om ansvaret ditt</Element>
-    </AlertStripe>
+    </Alert>
 );
 
 const NormalTittel = () => <Normaltekst>Informasjon om ansvaret ditt</Normaltekst>;
