@@ -84,7 +84,7 @@ export function logTimeToAktivitestavlePaint(veileder: boolean) {
     if (!window.aktivitesplanTimeToAktivitestavlePaint) {
         const timeToAktivitestavlePaint = performance.now();
         window.aktivitesplanTimeToAktivitestavlePaint = timeToAktivitestavlePaint
-        loggEvent("aktivitetsplan.timeToAktivitestavlePaint", {timeToAktivitestavlePaint}, {veileder});
+        loggEvent("aktivitetsplan.timeToAktivitestavlePaintv2", {timeToAktivitestavlePaint}, {veileder});
     }
 }
 
