@@ -77,14 +77,16 @@ export function loggForhaandsorienteringLest(aktivitetType: AktivitetType, lestK
 declare global {
     interface Window {
         aktivitesplanTimeToAktivitestavlePaint?: number;
+        defaultSelectedTab?: string;
     }
 }
 
-export function logTimeToAktivitestavlePaint(veileder: boolean) {
-    if (!window.aktivitesplanTimeToAktivitestavlePaint) {
+export function logTimeToAktivitestavlePaint(erVeileder: boolean) {
+    const rendresForst  = !erVeileder || window.defaultSelectedTab === 'AKTIVITETSPLAN';
+    if (!window.aktivitesplanTimeToAktivitestavlePaint && rendresForst) {
         const timeToAktivitestavlePaint = performance.now();
         window.aktivitesplanTimeToAktivitestavlePaint = timeToAktivitestavlePaint
-        loggEvent("aktivitetsplan.timeToAktivitestavlePaintv2", {timeToAktivitestavlePaint}, {veileder});
+        loggEvent("aktivitetsplan.timeToAktivitestavlePaintv3", {timeToAktivitestavlePaint}, {erVeileder});
     }
 }
 
