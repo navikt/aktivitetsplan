@@ -1,3 +1,4 @@
+import { Accordion } from '@navikt/ds-react';
 import Lenke from 'nav-frontend-lenker';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
@@ -35,13 +36,13 @@ class InformasjonModal extends Component {
         return (
             <Modal
                 contentLabel="informasjon-modal"
-                contentClass="informasjon-visning"
+                className="informasjon-visning"
                 onRequestClose={() => {
                     resetBackPath();
                     history.push(backPath);
                 }}
             >
-                <ModalContainer className="informasjon-modal-container">
+                <ModalContainer className="informasjon-modal-container max-w-2xl p-6">
                     <Innholdstittel className={styles.innholdsTittel}>Hva er aktivitetsplanen?</Innholdstittel>
                     <Normaltekst className={styles.avsnitt}>
                         I aktivitetsplanen holder du oversikt over det du gjør for å komme i jobb eller annen aktivitet.
@@ -53,9 +54,11 @@ class InformasjonModal extends Component {
                         hatt. Du kan kommunisere med veilederen din om aktivitetene i{' '}
                         <Lenke href={process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL}>dialogen</Lenke>.
                     </Normaltekst>
-                    <BrukePlanenPanel />
-                    <OkonomiskStotte />
-                    <RettigheterPanel />
+                    <Accordion className="mt-4">
+                        <BrukePlanenPanel />
+                        <OkonomiskStotte />
+                        <RettigheterPanel />
+                    </Accordion>
                     <Video />
                 </ModalContainer>
             </Modal>

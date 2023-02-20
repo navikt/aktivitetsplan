@@ -49,12 +49,9 @@ const Modal = (props: Props) => {
         <NavModal
             {...rest}
             open
-            className={classNames('aktivitet-modal', className)}
+            className={classNames('aktivitet-modal aktivitetsplanfs aktivitet-modal-portal', className, contentClass)}
             overlayClassName="aktivitet-modal__overlay"
-            // portalClassName="aktivitetsplanfs aktivitet-modal-portal"
-            // contentLabel={contentLabel}
             onClose={closeFuncOrDefault}
-            // contentClass={contentClass}
         >
             {header}
             {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
