@@ -42,7 +42,7 @@ class TimeoutboxNedtelling extends Component {
                     </div>
                 </ModalContainer>
                 <ModalFooter>
-                    <Hovedknapp className="modal-footer__knapp" onClick={() => window.location.reload()}>
+                    <Hovedknapp className="modal-footer__knapp mr-4" onClick={() => window.location.reload()}>
                         Last siden på nytt
                     </Hovedknapp>
                     <Knapp className="modal-footer__knapp" onClick={() => document.querySelector('#logout').click()}>

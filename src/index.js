@@ -3,11 +3,11 @@ import 'moment/locale/nb';
 
 import './polyfill';
 
+import { Modal } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
 import moment from 'moment';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import ReactModal from 'react-modal';
 
 import App from './app';
 import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
@@ -56,7 +56,7 @@ function AppWrapper(props) {
 
     // Må settes etter at dokumentet er parset
     const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
-    ReactModal.setAppElement(id);
+    Modal.setAppElement(id);
 
     return <App {...props} />;
 }

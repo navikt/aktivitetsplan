@@ -1,3 +1,4 @@
+import { Modal } from '@navikt/ds-react';
 import { mount } from 'enzyme';
 import React from 'react';
 import ReactModal from 'react-modal';
@@ -24,7 +25,7 @@ const AktivitetsvisningModalWrapped = (props: { store: any }) => (
 );
 
 // Hack to remove warnings from tests https://github.com/reactjs/react-modal/issues/632
-ReactModal.setAppElement(document.createElement('div'));
+Modal.setAppElement(document.createElement('div'));
 describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
         const store = create();

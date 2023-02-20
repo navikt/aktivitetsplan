@@ -1,5 +1,5 @@
+import { Modal } from '@navikt/ds-react';
 import moment from 'moment';
-import NavFrontendModal from 'nav-frontend-modal';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -51,12 +51,12 @@ class Timeoutbox extends Component {
         }
 
         return (
-            <NavFrontendModal
-                isOpen={skalVise}
+            <Modal
+                open={skalVise}
+                className="aktivitetsplanfs timeout-modal-portal max-w-2xl"
                 shouldCloseOnOverlayClick={false}
                 overlayClassName="aktivitet-modal__overlay"
-                portalClassName="aktivitetsplanfs timeout-modal-portal"
-                onRequestClose={() => {
+                onClose={() => {
                     this.setState({
                         manueltLukket: true,
                     });
@@ -64,7 +64,7 @@ class Timeoutbox extends Component {
                 contentLabel="Advarsel om utlogging"
             >
                 <TimeoutboxNedtelling utlopsTidspunkt={utlopsTidspunkt} />
-            </NavFrontendModal>
+            </Modal>
         );
     }
 }
