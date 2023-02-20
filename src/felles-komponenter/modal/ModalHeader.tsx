@@ -19,7 +19,7 @@ const ModalHeader = (props: Props) => {
 
     return (
         <div className={classNames('modal-header-wrapper', className)} {...rest}>
-            <header className="modal-header">
+            <header className="modal-header p-2">
                 <span aria-live="assertive" className="sr-only">
                     {aktivitetErLaast ? 'Denne aktiviteten kan ikke redigeres.' : ''}
                 </span>

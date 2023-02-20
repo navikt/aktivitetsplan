@@ -1,5 +1,6 @@
 import '@navikt/ds-css';
 
+import './index.css';
 import './index.less';
 
 import PT from 'prop-types';
