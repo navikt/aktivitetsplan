@@ -1,5 +1,4 @@
-import { Accordion } from '@navikt/ds-react';
-import Lenke from 'nav-frontend-lenker';
+import { Accordion, Link } from '@navikt/ds-react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -36,9 +35,9 @@ export function RettigheterPanel() {
                 </Normaltekst>
                 <Normaltekst>
                     Les mer om{' '}
-                    <Lenke href="https://www.nav.no/no/NAV+og+samfunn/Om+NAV/personvern-i-arbeids-og-velferdsetaten">
+                    <Link href="https://www.nav.no/no/NAV+og+samfunn/Om+NAV/personvern-i-arbeids-og-velferdsetaten">
                         hvordan NAV behandler personopplysninger
-                    </Lenke>
+                    </Link>
                     .
                 </Normaltekst>
             </Accordion.Content>

@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import Lenke from 'nav-frontend-lenker';
+import { Alert, Link } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -71,9 +70,9 @@ export const AdvarselMedLenkeVarsling = ({ tekstId, lenkeTekstId, href, classNam
         <Alert variant="warning" className={className}>
             <FormattedMessage id={tekstId} values={values} />
             &nbsp;
-            <Lenke href={href} onClick={onClick}>
+            <Link href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
-            </Lenke>
+            </Link>
         </Alert>
     );
 };

@@ -1,5 +1,4 @@
-import { Accordion } from '@navikt/ds-react';
-import Lenke from 'nav-frontend-lenker';
+import { Accordion, Link } from '@navikt/ds-react';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React, { Component } from 'react';
@@ -52,7 +51,7 @@ class InformasjonModal extends Component {
                         Du kan legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Veilederen
                         kan blant annet legge inn forslag til aktiviteter eller skrive referat fra et møte dere har
                         hatt. Du kan kommunisere med veilederen din om aktivitetene i{' '}
-                        <Lenke href={process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL}>dialogen</Lenke>.
+                        <Link href={process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL}>dialogen</Link>.
                     </Normaltekst>
                     <Accordion className="mt-4">
                         <BrukePlanenPanel />

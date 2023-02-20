@@ -1,4 +1,4 @@
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
 
 import { formatterLenke } from '../../../../utils/formatterLenke';
@@ -20,8 +20,8 @@ export default function ForkortetLenke(props: Props) {
     }
 
     return (
-        <Lenke target="_blank" href={formatterLenke(lenke)} className="detaljfelt__lenke">
+        <Link target="_blank" href={formatterLenke(lenke)} className="detaljfelt__lenke">
             {shortenedUrl} (åpnes i ny fane)
-        </Lenke>
+        </Link>
     );
 }

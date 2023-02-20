@@ -32,7 +32,7 @@ const LeggTilForm = () => {
                     </EtikettBase>
                 </div>
             </div>
-            <div hidden={!erVeileder} className={styles.lenker}>
+            <div hidden={!erVeileder} className={'space-y-3 flex flex-col ' + styles.lenker}>
                 <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
                     Avtale om å søke jobber
                 </Lenkepanel>
@@ -52,18 +52,20 @@ const LeggTilForm = () => {
                     </EtikettBase>
                 </div>
 
-                <Lenkepanel border href="/aktivitet/ny/stilling" hidden={false}>
-                    En jobb jeg vil søke på
-                </Lenkepanel>
-                <Lenkepanel border href="/aktivitet/ny/ijobb" hidden={false}>
-                    Jobb jeg har nå
-                </Lenkepanel>
-                <Lenkepanel border href="/aktivitet/ny/egen" hidden={false}>
-                    Jobbrettet egenaktivitet
-                </Lenkepanel>
-                <Lenkepanel border href="/aktivitet/ny/behandling" hidden={false}>
-                    Medisinsk behandling
-                </Lenkepanel>
+                <div className="space-y-3 flex flex-col">
+                    <Lenkepanel border href="/aktivitet/ny/stilling" hidden={false}>
+                        En jobb jeg vil søke på
+                    </Lenkepanel>
+                    <Lenkepanel border href="/aktivitet/ny/ijobb" hidden={false}>
+                        Jobb jeg har nå
+                    </Lenkepanel>
+                    <Lenkepanel border href="/aktivitet/ny/egen" hidden={false}>
+                        Jobbrettet egenaktivitet
+                    </Lenkepanel>
+                    <Lenkepanel border href="/aktivitet/ny/behandling" hidden={false}>
+                        Medisinsk behandling
+                    </Lenkepanel>
+                </div>
             </div>
         </Modal>
     );

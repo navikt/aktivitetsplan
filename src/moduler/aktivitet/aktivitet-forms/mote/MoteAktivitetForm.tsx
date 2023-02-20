@@ -1,7 +1,6 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Link } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import moment, { now } from 'moment';
-import Lenke from 'nav-frontend-lenker';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
@@ -63,13 +62,13 @@ const VideoInfo = ({ kanal }: { kanal: string }) => {
         return (
             <Normaltekst className="mote-aktivitet-form__video-info">
                 Les om{' '}
-                <Lenke
+                <Link
                     href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
                     rutiner for videomøte her <EksternLenkeIkon />
-                </Lenke>
+                </Link>
             </Normaltekst>
         );
     }

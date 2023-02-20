@@ -1,5 +1,6 @@
+import { Back } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
-import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
 import { Undertittel } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -52,9 +53,16 @@ function Navigasjonslinje() {
     } else {
         return (
             <div className={styles.navigasjonslinje}>
-                <LenkepanelBase className={styles.tilDittNav} href={MINSIDE_PATH}>
-                    <span className={styles.tilDittNavTekst}>Min side</span>
-                </LenkepanelBase>
+                <Button
+                    as="a"
+                    href={MINSIDE_PATH}
+                    variant="tertiary"
+                    iconPosition="left"
+                    icon={<Back />}
+                    className={''}
+                >
+                    <span className={''}>Min side</span>
+                </Button>
                 <Undertittel className={styles.tittel} tag="h1">
                     Aktivitetsplan
                 </Undertittel>

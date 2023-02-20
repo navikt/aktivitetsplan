@@ -1,5 +1,4 @@
-import { Accordion } from '@navikt/ds-react';
-import Lenke from 'nav-frontend-lenker';
+import { Accordion, Link } from '@navikt/ds-react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -18,7 +17,7 @@ export function OkonomiskStotte() {
                 <ul>
                     <Normaltekst tag="li">
                         kontakte NAV i tjenesten{' '}
-                        <Lenke href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Lenke>
+                        <Link href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Link>
                     </Normaltekst>
                     <Normaltekst tag="li">ringe NAV på 55 55 33 33</Normaltekst>
                 </ul>
