@@ -1,5 +1,4 @@
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
+import { HelpText } from '@navikt/ds-react';
 import React from 'react';
 
 import {
@@ -51,9 +50,9 @@ const AktivitetsplanHjelpetekst = ({ status }: Props) => {
 
     const { tittel, innhold } = config;
     return (
-        <Hjelpetekst type={PopoverOrientering.UnderHoyre} id={status} tittel={tittel}>
+        <HelpText placement={'bottom-end'} id={status} title={tittel}>
             <div className="max-width-300">{innhold}</div>
-        </Hjelpetekst>
+        </HelpText>
     );
 };
 

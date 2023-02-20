@@ -1,6 +1,6 @@
+import { HelpText } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useContext, useEffect } from 'react';
@@ -107,12 +107,12 @@ const AvtaltForm = (props: Props) => {
                             {...state.fields.avtaltCheckbox}
                             className={styles.checkboxNoSpace}
                         />
-                        <Hjelpetekst id="hjelp">
+                        <HelpText id="hjelp">
                             <div className={styles.maxWidth300}>
                                 Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
                                 "Avtalt med NAV"
                             </div>
-                        </Hjelpetekst>
+                        </HelpText>
                     </div>
                 </ForNavAnsattMarkeringWrapper>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
