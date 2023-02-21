@@ -1,4 +1,4 @@
-import { ChevronLeftCircle } from '@navikt/ds-icons';
+import { Back } from '@navikt/ds-icons';
 import React from 'react';
 
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
@@ -26,7 +26,7 @@ function ModalHeader(props: Props) {
                         hidden={!tilbake}
                     >
                         <div className="tilbakeknapp-innhold">
-                            <ChevronLeftCircle />
+                            <Back />
                             Tilbake
                         </div>
                     </Knappelenke>

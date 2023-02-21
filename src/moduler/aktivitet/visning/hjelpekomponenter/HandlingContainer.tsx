@@ -1,4 +1,4 @@
-import { ChevronRightCircle } from '@navikt/ds-icons';
+import { Next } from '@navikt/ds-icons';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -25,7 +25,7 @@ const LenkeSeksjon = (handling: LenkeMedType, erVeileder: boolean, i: number) =>
                     {handling.subtekst && <Normaltekst>{handling.subtekst}</Normaltekst>}
                 </div>
                 <div className={styles.dialogPil} aria-hidden>
-                    <ChevronRightCircle />
+                    <Next />
                 </div>
             </a>
             <DeleLinje />
