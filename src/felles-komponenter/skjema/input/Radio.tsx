@@ -1,4 +1,4 @@
-import { Radio as NavRadio, RadioPanel as NavRadioPanel } from 'nav-frontend-skjema';
+import { Radio as NavRadio } from '@navikt/ds-react';
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
@@ -20,18 +20,13 @@ interface RadioProps {
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Radio = (props: RadioProps) => {
-    const { value, touched, error, input, pristine, initialValue, setValue, ...rest } = props;
-    const inputProps = { ...input, ...rest };
-
-    return <NavRadio {...inputProps} value={value} checked={value === input.value} id={`id--${value}`} />;
-};
-
-export const RadioPanel = (props: RadioProps) => {
-    const { value, touched, error, input, pristine, initialValue, setValue, id, ...rest } = props;
+    const { value, touched, error, input, pristine, initialValue, setValue, label, ...rest } = props;
     const inputProps = { ...input, ...rest };
 
     return (
-        <NavRadioPanel {...inputProps} value={value} checked={value === input.value} id={id ? id : `id--${value}`} />
+        <NavRadio {...inputProps} value={value} checked={value === input.value} id={`id--${value}`}>
+            {label}
+        </NavRadio>
     );
 };
 export default Radio;

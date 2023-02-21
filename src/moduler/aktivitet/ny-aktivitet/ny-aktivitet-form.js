@@ -76,7 +76,7 @@ function NyAktivitetForm(props) {
             contentLabel="ny-aktivitet-modal"
             feilmeldinger={aktivitetFeilmeldinger}
         >
-            <article className="max-w-2xl">
+            <article>
                 <ModalContainer>
                     <Switch>
                         <Route path={`${match.path}/mote`}>

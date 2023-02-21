@@ -1,4 +1,4 @@
-import useFormstate from '@nutgaard/use-formstate';
+import useFormstate, { FieldState } from '@nutgaard/use-formstate';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -98,7 +98,9 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
             </ForNavAnsattMarkeringWrapper>
 
             <div>
-                <Checkbox label="Legg til forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
+                <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
+                    Legg til forhåndsorientering
+                </Checkbox>
 
                 <ForhaandsorienteringsMeldingArenaaktivitet
                     visible={state.fields.checked.input.value === 'true'}

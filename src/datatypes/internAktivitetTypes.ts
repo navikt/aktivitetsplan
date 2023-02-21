@@ -42,6 +42,15 @@ export interface EgenAktivitet extends AktivitetBaseProps {
     oppfolging?: string;
 }
 
+export interface IJobbAktivitet extends AktivitetBaseProps {
+    type: VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE;
+    fraDato?: string;
+    tilDato?: string;
+    jobbStatus: string;
+    ansettelsesforhold: string;
+    arbeidstid: string;
+}
+
 export interface SokeavtaleAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE;
     antallStillingerSokes?: number;

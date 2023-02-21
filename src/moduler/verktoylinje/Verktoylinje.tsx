@@ -1,6 +1,8 @@
 import { Add } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
 import Lenkeknapp from '../../felles-komponenter/utils/Lenkeknapp';
@@ -22,17 +24,17 @@ const Verktoylinje = () => {
         <div className="verktoylinje">
             <div className="verktoylinje__verktoy-container">
                 <div />
-                <Lenkeknapp
-                    type="hoved"
-                    href="/aktivitet/ny"
-                    className="ny-aktivitet-lenke"
-                    disabled={!aktivitetLaster}
-                    visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
-                    onClick={() => loggEvent(APNE_NY_AKTIVITET)}
-                >
-                    <Add role="img" focusable="false" aria-hidden />
-                    <span> Legg til aktivitet</span>
-                </Lenkeknapp>
+                {!viserHistoriskPeriode && underOppfolging && harSkriveTilgang ? (
+                    <Link to="/aktivitet/ny">
+                        <Button
+                            icon={<Add role="img" focusable="false" aria-hidden />}
+                            disabled={!aktivitetLaster}
+                            onClick={() => loggEvent(APNE_NY_AKTIVITET)}
+                        >
+                            Legg til aktivitet
+                        </Button>
+                    </Link>
+                ) : null}
             </div>
             <div className="verktoylinje__verktoy-container">
                 <div className="indre">

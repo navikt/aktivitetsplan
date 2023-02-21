@@ -1,19 +1,5 @@
-import { Textarea as NavTextArea } from 'nav-frontend-skjema';
+import { Textarea as NavTextArea } from '@navikt/ds-react';
 import React from 'react';
-
-const getTellerTekst = (antallTegn: number, maxLength: number, visTellerFra?: number) => {
-    const tegnIgjen = maxLength - antallTegn;
-    const tegnForMange = antallTegn - maxLength;
-    const tellerFra = visTellerFra || maxLength;
-
-    if (tegnForMange > 0) {
-        return `Du har ${tegnForMange} tegn for mye`;
-    }
-    if (tegnIgjen <= tellerFra) {
-        return `Du har ${tegnIgjen} tegn igjen`;
-    }
-    return null;
-};
 
 interface Input {
     value: string;
@@ -39,18 +25,12 @@ interface Props {
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Textarea = (props: Props) => {
-    const { touched, error, input, pristine, initialValue, visTellerFra, required, setValue, ...rest } = props;
+    const { touched, error, input, pristine, initialValue, visTellerFra, required, setValue, maxLength, ...rest } =
+        props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
 
-    return (
-        <NavTextArea
-            tellerTekst={(antallTegn, max) => getTellerTekst(antallTegn, max, visTellerFra)}
-            feil={feil}
-            required={required}
-            {...inputProps}
-        />
-    );
+    return <NavTextArea maxLength={props?.maxLength} error={feil} required={required} {...inputProps} />;
 };
 
 export default Textarea;

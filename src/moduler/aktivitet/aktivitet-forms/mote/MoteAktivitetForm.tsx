@@ -1,4 +1,4 @@
-import { Alert, Link } from '@navikt/ds-react';
+import { Alert, Link, TextField } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import moment, { now } from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -137,8 +137,13 @@ const MoteAktivitetForm = (props: Props) => {
                         {...state.fields.dato}
                         required
                     />
-                    <Input bredde="S" label="Klokkeslett *" {...state.fields.klokkeslett} type="time" step="300" />
-                    <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
+                    <TextField
+                        label="Klokkeslett *"
+                        {...state.fields.klokkeslett.input}
+                        type={'time' as any}
+                        step="300"
+                    />
+                    <TextField label="Varighet *" {...state.fields.varighet.input} type={'time' as any} step="900" />
                 </div>
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
                 <VideoInfo kanal={state.fields.kanal.input.value} />

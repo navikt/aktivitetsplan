@@ -1,4 +1,4 @@
-import Select from 'nav-frontend-skjema/lib/select';
+import { Select } from '@navikt/ds-react';
 import React from 'react';
 
 import { LocalStorageElement, settLocalStorage } from './sessionstorage';

@@ -1,5 +1,5 @@
 import { Button, HelpText } from '@navikt/ds-react';
-import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
+import useFormstate, { FieldState, SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -100,11 +100,12 @@ const AvtaltForm = (props: Props) => {
                 <ForNavAnsattMarkeringWrapper>
                     <div className={styles.checkbox}>
                         <Checkbox
-                            label="Avtalt med NAV"
                             disabled={lasterData}
-                            {...state.fields.avtaltCheckbox}
+                            {...(state.fields.avtaltCheckbox as FieldState & { error: never })}
                             className={styles.checkboxNoSpace}
-                        />
+                        >
+                            Avtalt med NAV
+                        </Checkbox>
                         <HelpText id="hjelp" className="ml-2">
                             <div className={styles.maxWidth300}>
                                 Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som

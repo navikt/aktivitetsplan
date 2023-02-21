@@ -1,4 +1,4 @@
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
 import loggEvent from '../../../felles-komponenter/utils/logging';
@@ -28,7 +28,11 @@ const FilterCheckbox = (props: Props) => {
         doToggle(nokkel);
     };
 
-    return <Checkbox label={filterTekst} onChange={onChange} checked={checked} />;
+    return (
+        <Checkbox onChange={onChange} checked={checked}>
+            {filterTekst}
+        </Checkbox>
+    );
 };
 
 export default FilterCheckbox;

@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { format, parseISO, startOfDay } from 'date-fns';
-import NavDatoVelger, { DatepickerProps } from 'nav-datovelger/lib/Datepicker';
-import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
+// import NavDatoVelger, { DatepickerProps } from 'nav-datovelger/lib/Datepicker';
 import React, { useState } from 'react';
 
 import { datePickerToISODate, erGyldigISODato } from '../../../utils';
@@ -12,7 +11,7 @@ function DatoFeil(props: { feil?: string }) {
     if (!props.feil) {
         return null;
     }
-    return <SkjemaelementFeilmelding>{props.feil}</SkjemaelementFeilmelding>;
+    return <p className="text-red-700 font-bold">{props.feil}</p>;
 }
 
 interface Props {
@@ -24,7 +23,7 @@ interface Props {
     required?: boolean;
 }
 
-function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | 'onChange'>) {
+function DatovelgerWrapper(props: Props & Record<any, any>) {
     const { label, error, input, required, labelClassName } = props;
     const [touched, setTouched] = useState(false);
     const feil = error && touched ? error : undefined;
@@ -46,10 +45,10 @@ function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | '
 
     return (
         <div className={cls}>
-            <Label htmlFor={input.id} className={labelClassName}>
+            <label htmlFor={input.id} className={labelClassName}>
                 {label}
-            </Label>
-            <NavDatoVelger {...props} inputProps={datovelgerInput} onChange={_onChange} value={day} />
+            </label>
+            {/*<NavDatoVelger {...props} inputProps={datovelgerInput} onChange={_onChange} value={day} />*/}
             <DatoFeil feil={feil} />
         </div>
     );

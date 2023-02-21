@@ -49,15 +49,21 @@ const Modal = (props: Props) => {
         <NavModal
             {...rest}
             open
-            className={classNames('aktivitet-modal aktivitetsplanfs aktivitet-modal-portal', className, contentClass)}
+            className={classNames(
+                'aktivitet-modal aktivitetsplanfs aktivitet-modal-portal w-120',
+                className,
+                contentClass
+            )}
             overlayClassName="aktivitet-modal__overlay"
             onClose={closeFuncOrDefault}
         >
-            {header}
-            {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
-            <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
-                {children}
-            </Innholdslaster>
+            <div className="flex flex-col ">
+                {header}
+                {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
+                <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
+                    {children}
+                </Innholdslaster>
+            </div>
         </NavModal>
     );
 };

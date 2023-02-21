@@ -1,13 +1,11 @@
+import { Radio, RadioGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Radio } from 'nav-frontend-skjema';
-import { Undertittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
 import Dato from '../../../felles-komponenter/Dato';
 import Dropdown from '../../../felles-komponenter/dropdown/dropdown';
-import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import loggEvent, { LIST_HISTORISK_PERIODE, VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../proptypes';
@@ -52,33 +50,34 @@ function PeriodeFilter({
             >
                 <div className="filter__container">
                     <div className="filter space-y-4 pb-4">
-                        <Undertittel className="filter__tittel">Velg periode</Undertittel>
-                        <HiddenIfDiv hidden={skjulInneverende}>
-                            <Radio
-                                className="filter__radio--periode"
-                                label="Nåværende periode"
-                                name="inneverende"
-                                onChange={() => doVelgHistoriskPeriode(null)}
-                                checked={!historiskPeriode}
-                            />
-                        </HiddenIfDiv>
-                        {historiskePerioder.map((t) => {
-                            const { id } = t;
-                            return (
-                                <div key={id}>
+                        <RadioGroup className="" legend={'Velg periode'}>
+                            {skjulInneverende ? null : (
+                                <Radio
+                                    className="filter__radio--periode"
+                                    name="inneverende"
+                                    onChange={() => doVelgHistoriskPeriode(null)}
+                                    checked={!historiskPeriode}
+                                >
+                                    Nåværende periode
+                                </Radio>
+                            )}
+                            {historiskePerioder.map((t) => {
+                                return (
                                     <Radio
+                                        key={t.id}
                                         className="filter__radio--periode"
-                                        label={<PeriodeLabel historiskPeriode={t} />}
-                                        name={id}
+                                        name={t.id}
                                         onChange={() => {
                                             doVelgHistoriskPeriode(t);
                                             loggEvent(VIS_HISTORISK_PERIODE);
                                         }}
-                                        checked={!!historiskPeriode && historiskPeriode.id === id}
-                                    />
-                                </div>
-                            );
-                        })}
+                                        checked={!!historiskPeriode && historiskPeriode.id === t.id}
+                                    >
+                                        <PeriodeLabel historiskPeriode={t} />
+                                    </Radio>
+                                );
+                            })}
+                        </RadioGroup>
                     </div>
                 </div>
             </Dropdown>

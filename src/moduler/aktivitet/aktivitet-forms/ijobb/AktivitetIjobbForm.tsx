@@ -1,9 +1,10 @@
+import { Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { RadioGruppe } from 'nav-frontend-skjema';
 import PT from 'prop-types';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 
 import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
+import { IJobbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
@@ -11,7 +12,6 @@ import PeriodeValidering, {
 } from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
@@ -19,22 +19,30 @@ import LagreAktivitet from '../LagreAktivitet';
 import { validateBeskrivelse, validateFeltForLangt, validateFraDato } from '../validate';
 import { validateJobbstatus, validateTittel } from './validate';
 
-function erAvtalt(aktivitet) {
-    return aktivitet.avtalt === true;
+function erAvtalt(aktivitet: Partial<IJobbAktivitet>) {
+    return aktivitet.avtalt;
 }
 
-function IJobbAktivitetForm(props) {
+interface Props {
+    onSubmit: (values: Record<any, any>) => Promise<void>;
+    aktivitet: IJobbAktivitet;
+    isDirtyRef: MutableRefObject<boolean>;
+}
+
+function IJobbAktivitetForm(props: Props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;
 
     const validator = useFormstate({
-        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
+        tittel: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateTittel(erAvtalt(aktivitet), val),
+        fraDato: (val, values, aktivitet: Partial<IJobbAktivitet>) =>
+            validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet: Partial<IJobbAktivitet>) => validerDato(val, undefined, aktivitet.fraDato),
         periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-        ansettelsesforhold: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        jobbStatus: (val, values, aktivitet) => validateJobbstatus(erAvtalt(aktivitet), val),
-        arbeidstid: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+        ansettelsesforhold: (val, values, aktivitet: Partial<IJobbAktivitet>) =>
+            validateFeltForLangt(erAvtalt(aktivitet), val),
+        jobbStatus: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateJobbstatus(erAvtalt(aktivitet), val),
+        arbeidstid: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateBeskrivelse(erAvtalt(aktivitet), val),
     });
 
     const maybeAktivitet = aktivitet || {};
@@ -51,11 +59,15 @@ function IJobbAktivitetForm(props) {
         beskrivelse: maybeAktivitet.beskrivelse || '',
     };
 
-    const state = validator(initalValues, aktivitet);
+    const state = validator(initalValues);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
+
+    const onChangeStillingProsent = (value: typeof JOBB_STATUS_HELTID | typeof JOBB_STATUS_HELTID) => {
+        state.setValue('jobbStatus', value);
+    };
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
@@ -77,14 +89,19 @@ function IJobbAktivitetForm(props) {
                     </div>
                 </PeriodeValidering>
 
-                <RadioGruppe
+                <RadioGroup
                     id="jobbStatus"
-                    feil={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
+                    error={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
                     legend="Stillingsandel *"
+                    onChange={onChangeStillingProsent}
                 >
-                    <Radio label="Heltid" value={JOBB_STATUS_HELTID} disabled={avtalt} {...state.fields.jobbStatus} />
-                    <Radio label="Deltid" value={JOBB_STATUS_DELTID} disabled={avtalt} {...state.fields.jobbStatus} />
-                </RadioGruppe>
+                    <Radio value={JOBB_STATUS_HELTID} disabled={avtalt}>
+                        Heltid
+                    </Radio>
+                    <Radio value={JOBB_STATUS_DELTID} disabled={avtalt}>
+                        Deltid
+                    </Radio>
+                </RadioGroup>
 
                 <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.ansettelsesforhold} />
                 <Input
