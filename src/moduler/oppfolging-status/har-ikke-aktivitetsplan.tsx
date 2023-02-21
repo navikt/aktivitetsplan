@@ -1,4 +1,4 @@
-import { ChevronRightCircle } from '@navikt/ds-icons';
+import { Next } from '@navikt/ds-icons';
 import { Alert, Link } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
@@ -22,7 +22,7 @@ function HarIkkeAktivitetsplan(props: PropTypes) {
                 {!erVeileder && (
                     <Link href={arbeidssokerregistreringHref}>
                         Register deg hos NAV
-                        <ChevronRightCircle />
+                        <Next />
                     </Link>
                 )}
             </Alert>

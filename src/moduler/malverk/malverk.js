@@ -49,7 +49,7 @@ class Malverk extends Component {
         return (
             !endre && (
                 <div className="skjemaelement">
-                    <Innholdslaster avhengigheter={avhengigheter} spinnerStorrelse="S">
+                    <Innholdslaster avhengigheter={avhengigheter} spinnerSize="S">
                         <label className="skjemaelement__label" htmlFor={domId}>
                             Ferdig utfylt aktivitet
                         </label>

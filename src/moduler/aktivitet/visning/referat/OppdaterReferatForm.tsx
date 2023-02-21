@@ -99,7 +99,7 @@ const OppdaterReferatForm = (props: Props) => {
 
             <HiddenIfHovedknapp
                 kompakt
-                spinner={oppdaterer}
+                loading={oppdaterer}
                 disabled={oppdaterer}
                 hidden={erReferatPublisert}
                 onClick={oppdaterOgPubliser}

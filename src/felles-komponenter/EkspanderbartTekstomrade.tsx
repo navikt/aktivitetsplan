@@ -1,4 +1,4 @@
-import { ChevronDownCircle, ChevronUpCircle } from '@navikt/ds-icons';
+import { Collapse, Expand } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
 import { LinebreakRule } from '@navikt/textparser';
 import classNames from 'classnames';
@@ -29,11 +29,7 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
                 </Tekstomrade>
                 <Button variant={'tertiary'} onClick={toggleMoreOrLess} className={styles.button}>
                     {hasLongText ? 'Les mer' : 'Vis mindre'}
-                    {hasLongText ? (
-                        <ChevronDownCircle className="ml-0.5 inline" />
-                    ) : (
-                        <ChevronUpCircle className="ml-0.5 inline" />
-                    )}
+                    {hasLongText ? <Expand className="ml-0.5 inline" /> : <Collapse className="ml-0.5 inline" />}
                 </Button>
             </div>
         );
