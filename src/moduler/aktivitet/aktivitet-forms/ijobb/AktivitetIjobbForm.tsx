@@ -5,7 +5,7 @@ import React, { MutableRefObject } from 'react';
 
 import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
 import { IJobbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,

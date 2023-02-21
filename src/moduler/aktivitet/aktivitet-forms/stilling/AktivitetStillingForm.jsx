@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import React from 'react';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,

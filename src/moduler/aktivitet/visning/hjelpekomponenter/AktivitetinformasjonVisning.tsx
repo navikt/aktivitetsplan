@@ -1,5 +1,7 @@
+import { Button } from '@navikt/ds-react';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
     BEHANDLING_AKTIVITET_TYPE,
@@ -56,6 +58,11 @@ const AktivitetinformasjonVisning = (props: Props) => {
         ? SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet)
         : false;
 
+    const history = useHistory();
+    const goToEndre = () => {
+        history.push(endreAktivitetRoute(id));
+    };
+
     return (
         <div>
             <div className={aktivitetsvisningStyles.underseksjon}>
@@ -86,6 +93,14 @@ const AktivitetinformasjonVisning = (props: Props) => {
             />
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
+            </div>
+            <div className="mx-6 gap-4 flex flex-wrap">
+                {!tillatEndring || isArenaAktivitet(props.valgtAktivitet) ? null : (
+                    <Button onClick={goToEndre} variant="secondary">
+                        Endre på aktiviteten
+                    </Button>
+                )}
+                <Button variant="secondary">Send en melding</Button>
             </div>
             <DeleLinje />
         </div>

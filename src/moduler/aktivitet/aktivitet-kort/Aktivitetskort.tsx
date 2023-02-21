@@ -1,3 +1,4 @@
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -64,7 +65,7 @@ const Aktivitetskort = (props: Props) => {
             className={
                 aktivitetBleVistSist
                     ? classNames(styles.aktivitetskort, styles.sistVist, className)
-                    : classNames(styles.aktivitetskort, className)
+                    : classNames('border-gray-400 border', styles.aktivitetskort, className)
             }
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}

@@ -1,12 +1,16 @@
-import { UNSAFE_DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { parseISO } from 'date-fns';
-import { DatepickerDateRange } from 'nav-datovelger';
 import PT from 'prop-types';
 import React, { useState } from 'react';
 
 import { AppConfig } from '../../../../app';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
+import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
+import PartialDateRangePicker, {
+    DateRange,
+    DateRangeValidation,
+    getErrorMessage,
+    getErrorMessageForDate,
+} from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
@@ -19,17 +23,28 @@ import {
     validateAntallStillingerIUken,
     validateBeskrivelse,
     validateOppfolging,
-    validateRange,
 } from './validate';
 
 function erAvtalt(aktivitet: any) {
     return aktivitet.avtalt === true;
 }
 
+const parseDate = (val: string | undefined) => {
+    if (!val) return undefined;
+    return new Date(val);
+};
+
 export default function SokeAvtaleAktivitetForm(props: any) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
-    const [rangeError, setRangeError] = useState({ from: undefined, to: undefined });
+    const [dateRange, setDateRange] = useState<Partial<DateRange> | undefined>({
+        from: parseDate(aktivitet?.fraDato) ?? new Date(),
+        to: parseDate(aktivitet?.tilDato),
+    });
+    const [rangeError, setRangeError] = useState<{ from: string | undefined; to: string | undefined }>({
+        to: undefined,
+        from: undefined,
+    });
 
     const validator = useFormstate({
         tittel: () => undefined,
@@ -52,25 +67,7 @@ export default function SokeAvtaleAktivitetForm(props: any) {
         periodeValidering: '',
     };
 
-    // const state = validator(initalValues, aktivitet);
     const state = validator(initalValues);
-
-    const { datepickerProps, toInputProps, fromInputProps, selectedRange } = UNSAFE_useRangeDatepicker({
-        defaultSelected: {
-            from: maybeAktivitet.fraDato ? new Date(maybeAktivitet.fraDato) : undefined,
-            to: maybeAktivitet.tilDato ? new Date(maybeAktivitet.tilDato) : undefined,
-        },
-        onValidate: (val) => {
-            // console.log({ onValidate: val });
-            setRangeError(validateRange(val) as any);
-        },
-        onRangeChange: (val) => {
-            // console.log({ range: val, fromInputProps, toInputProps });
-            // console.log(maybeAktivitet.fraDato);
-            // console.log(val);
-            // console.log(parseISO(fromInputProps.value as any));
-        },
-    });
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -81,6 +78,12 @@ export default function SokeAvtaleAktivitetForm(props: any) {
     };
 
     const brukeStillingerIUken = !state.fields.antallStillingerSokes.initialValue;
+    const validateDateRange = (val: DateRangeValidation) => {
+        const error = getErrorMessage(val);
+        if (error) {
+            setRangeError(error);
+        }
+    };
 
     return (
         <form
@@ -97,29 +100,29 @@ export default function SokeAvtaleAktivitetForm(props: any) {
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="SOKEAVTALE" />
 
                 <div className="dato-container">
-                    <UNSAFE_DatePicker {...datepickerProps} disabled={[{ before: new Date(maybeAktivitet.fraDato) }]}>
-                        <div className="flex flex-wrap justify-center gap-4 items-start">
-                            <UNSAFE_DatePicker.Input
-                                {...fromInputProps}
-                                disabled={avtalt}
-                                label="Fra dato *"
-                                error={!!rangeError.from && rangeError.from}
-                                id="fraDato"
-                            />
-                            <UNSAFE_DatePicker.Input
-                                {...toInputProps}
-                                label="Til dato *"
-                                error={!!rangeError.to && rangeError.to}
-                                id="tilDato"
-                            />
-                        </div>
-                    </UNSAFE_DatePicker>
-                    {/*{selectedRange && (*/}
-                    {/*    <div className="pt-4">*/}
-                    {/*        <div>{selectedRange?.from && selectedRange.from.toDateString()}</div>*/}
-                    {/*        <div>{selectedRange?.to && selectedRange.to.toDateString()}</div>*/}
-                    {/*    </div>*/}
-                    {/*)}*/}
+                    {aktivitet?.avtalt === true && aktivitet?.fraDato ? (
+                        <PartialDateRangePicker
+                            error={rangeError}
+                            onValidate={(val) => {
+                                const error = getErrorMessageForDate(val);
+                                if (error) setRangeError({ from: undefined, to: error });
+                            }}
+                            onChange={(toDate) => {
+                                setDateRange({
+                                    ...dateRange,
+                                    to: toDate,
+                                });
+                            }}
+                            from={parseDate(aktivitet.fraDato)!!}
+                        />
+                    ) : (
+                        <DateRangePicker
+                            error={rangeError}
+                            onValidate={validateDateRange}
+                            value={dateRange}
+                            onChange={setDateRange}
+                        />
+                    )}
                 </div>
 
                 <HiddenIfInput

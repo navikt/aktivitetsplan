@@ -4,7 +4,7 @@ import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';

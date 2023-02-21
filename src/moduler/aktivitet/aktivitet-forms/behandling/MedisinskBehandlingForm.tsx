@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
 import { MedisinskBehandlingAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';

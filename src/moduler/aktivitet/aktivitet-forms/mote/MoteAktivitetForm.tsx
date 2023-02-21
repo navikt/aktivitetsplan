@@ -6,7 +6,7 @@ import React from 'react';
 
 import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT } from '../../../../constant';
 import { MoteAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
