@@ -1,5 +1,5 @@
+import { GuidePanel } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import React from 'react';
 
 import {
@@ -56,9 +56,9 @@ const Tavleadvarsel = (props: Props) => {
 
     return (
         <div className={styles.advarsel}>
-            <Veilederpanel svg={<ObsSVG />} type="plakat" kompakt>
+            <GuidePanel illustration={<ObsSVG />} poster>
                 <Normaltekst>{getAdvarseltekst(draggingAktivitet, erVeileder)}</Normaltekst>
-            </Veilederpanel>
+            </GuidePanel>
         </div>
     );
 };
