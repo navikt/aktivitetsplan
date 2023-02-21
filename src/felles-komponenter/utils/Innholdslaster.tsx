@@ -1,4 +1,4 @@
-import Spinner from 'nav-frontend-spinner';
+import { Loader } from '@navikt/ds-react';
 import React from 'react';
 
 import { STATUS } from '../../api/utils';
@@ -7,20 +7,23 @@ import HiddenIfHOC from '../hidden-if/hidden-if';
 function asArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];
 }
-const harStatus = (...status: string[]) => (element: string): boolean => asArray(status).includes(element);
+const harStatus =
+    (...status: string[]) =>
+    (element: string): boolean =>
+        asArray(status).includes(element);
 
 const noenHarFeil = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.ERROR));
 const minstEnErOK = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.OK));
 const alleLastet = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
 const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK));
 
-const HiddenIfSpinner = HiddenIfHOC(Spinner);
+const HiddenIfSpinner = HiddenIfHOC(Loader);
 
 export type Avhengighet = Status | { status?: Status } | null | undefined;
 export interface InnholdslasterProps {
     avhengigheter?: Avhengighet[] | Avhengighet;
     children: React.ReactNode;
-    spinnerStorrelse?: string;
+    spinnerSize?: '3xlarge' | '2xlarge' | 'xlarge' | 'large' | 'medium' | 'small' | 'xsmall';
     className?: string;
     minstEn?: boolean;
     visChildrenVedFeil?: boolean;
@@ -43,7 +46,7 @@ const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] =>
 const Innholdslaster = (props: InnholdslasterProps) => {
     const {
         avhengigheter,
-        spinnerStorrelse = 'XL',
+        spinnerSize = '2xlarge',
         className,
         children,
         minstEn = false,
@@ -68,7 +71,7 @@ const Innholdslaster = (props: InnholdslasterProps) => {
         return children;
     }
 
-    return <HiddenIfSpinner hidden={noenHarFeil(statuser)} className={className} type={spinnerStorrelse} />;
+    return <HiddenIfSpinner hidden={noenHarFeil(statuser)} className={className} size={spinnerSize} />;
 };
 
 export default Innholdslaster;

@@ -1,4 +1,4 @@
-import Spinner from 'nav-frontend-spinner';
+import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -71,7 +71,7 @@ const AvbrytAktivitet = (props: Props) => {
                     {maaBegrunnes ? begrunnelse : advarsel}
                 </PubliserReferat>
             ) : (
-                <Spinner /> // TODO test at det her funker
+                <Loader /> // TODO test at det her funker
             )}
         </Modal>
     );
