@@ -48,7 +48,7 @@ import { veilederTilgang } from './veilederTilgang';
 const mock = fetchMock.configure({
     enableFallback: false,
     middleware: MiddlewareUtils.combine(
-        MiddlewareUtils.delayMiddleware(5000),
+        // MiddlewareUtils.delayMiddleware(2000),
         // MiddlewareUtils.failurerateMiddleware(0.05),
         fetchmockMiddleware
     ),
