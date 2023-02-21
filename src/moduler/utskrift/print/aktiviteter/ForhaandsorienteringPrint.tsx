@@ -1,5 +1,5 @@
+import { BodyShort, Heading } from '@navikt/ds-react';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { formaterDatoManed } from '../../../../utils';
@@ -19,15 +19,15 @@ const ForhaandsorienteringPrint = (props: Props) => {
 
     return (
         <div className="aktivitetvisning__detaljer aktivitetsdetaljer">
-            <Undertekst className={styles.tittel} tag="h2">
+            <Heading level="2" size="xsmall" className={styles.tittel}>
                 Informasjon om ansvaret ditt
-            </Undertekst>
+            </Heading>
             <Tekstomrade className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</Tekstomrade>
 
             {forhaandsorienteringLest && (
-                <Normaltekst className={styles.lestTekst}>
+                <BodyShort size="small" className={styles.lestTekst}>
                     Lest {formaterDatoManed(forhaandsorienteringLest)}
-                </Normaltekst>
+                </BodyShort>
             )}
         </div>
     );

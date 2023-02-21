@@ -1,5 +1,5 @@
 import { Collapse, Expand } from '@navikt/ds-icons';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { UnmountClosed } from 'react-collapse';
 
@@ -39,7 +39,7 @@ const EkspanderbarLinjeBase = (props: PropsBase) => {
 
     const tittelUtifraState = erAapen && aapneTittel ? aapneTittel : tittel;
     const tittelKomponent =
-        typeof tittelUtifraState === 'string' ? <Normaltekst>{tittelUtifraState}</Normaltekst> : tittelUtifraState;
+        typeof tittelUtifraState === 'string' ? <BodyShort>{tittelUtifraState}</BodyShort> : tittelUtifraState;
 
     return (
         <section>

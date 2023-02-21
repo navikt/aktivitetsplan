@@ -1,5 +1,6 @@
 import './mal.less';
 
+import { ReadMore } from '@navikt/ds-react';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -50,15 +51,17 @@ function Mal() {
         <MalModal onRequestClosed={onModalRequestClosed}>
             <Innholdstittel className="aktivitetmal__header">
                 {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
-                    ? 'Ditt mål fra en tidligere periode'
-                    : 'Ditt mål'}
+                    ? 'Mitt mål fra en tidligere periode'
+                    : 'Mitt mål'}
             </Innholdstittel>
             <Undertekst className="aktivitetmal__sub-header" tag="div">
-                Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
-                <ul>
-                    <li>Hva er målet på kort sikt? Hva er målet på lengre sikt?</li>
-                    <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
-                </ul>
+                <ReadMore header="Tips til mål">
+                    Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
+                    <ul className="list-disc mt-4 pl-8">
+                        <li>Hva er målet på kort sikt? Hva er målet på lengre sikt?</li>
+                        <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
+                    </ul>
+                </ReadMore>
             </Undertekst>
             <Innholdslaster avhengigheter={avhengigheter} alleOK>
                 <section className="aktivitetmal">

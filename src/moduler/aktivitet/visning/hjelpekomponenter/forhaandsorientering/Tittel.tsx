@@ -1,14 +1,13 @@
-import { Alert } from '@navikt/ds-react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 
 const AdvarselTittel = () => (
     <Alert variant="warning" inline>
-        <Element>Informasjon om ansvaret ditt</Element>
+        <Label>Informasjon om ansvaret ditt</Label>
     </Alert>
 );
 
-const NormalTittel = () => <Normaltekst>Informasjon om ansvaret ditt</Normaltekst>;
+const NormalTittel = () => <BodyShort>Informasjon om ansvaret ditt</BodyShort>;
 
 interface Props {
     kanMarkeresSomLest: boolean;

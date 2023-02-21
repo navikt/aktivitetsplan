@@ -1,4 +1,4 @@
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -23,9 +23,9 @@ const Gruppe = (props: Props) => {
 
     return (
         <section className="printmodal-body__statusgrupper">
-            <Systemtittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+            <Heading level="1" size="medium" className="mb-4">
                 {tittel}
-            </Systemtittel>
+            </Heading>
             {sorterteAktiviteter.map((aktivitet) => {
                 const dialogForAktivitet = dialoger && dialoger.find((d) => d.aktivitetId === aktivitet.id);
                 return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;

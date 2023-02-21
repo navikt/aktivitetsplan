@@ -15,7 +15,12 @@ export function MalModal(props: Props) {
     const feil = useSelector(selectMalListeFeilmeldinger, shallowEqual);
 
     return (
-        <Modal onRequestClose={props.onRequestClosed} contentLabel="aktivitetsmal-modal" feilmeldinger={feil}>
+        <Modal
+            onRequestClose={props.onRequestClosed}
+            contentLabel="aktivitetsmal-modal"
+            feilmeldinger={feil}
+            header={null}
+        >
             <ModalContainer>{children}</ModalContainer>
         </Modal>
     );

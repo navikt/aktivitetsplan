@@ -1,7 +1,7 @@
 import './demoDashboard.less';
 
+import { Heading } from '@navikt/ds-react';
 import { CheckboksPanelGruppe, RadioPanelGruppe } from 'nav-frontend-skjema';
-import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { ALL_FEATURES } from '../../felles-komponenter/feature/feature';
@@ -71,7 +71,9 @@ class DemoDashboard extends React.Component {
     render() {
         return (
             <section className="demodashboard">
-                <Innholdstittel className="blokk-s">DEMO</Innholdstittel>
+                <Heading level="1" size="large">
+                    DEMO
+                </Heading>
                 <Hurtigfilter />
                 <RadioPanelGruppe
                     legend="Brukertype"

@@ -1,5 +1,5 @@
+import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import VisibleIfSpan from '../utils/visible-if-span';
@@ -27,7 +27,7 @@ const ModalHeader = (props: Props) => {
                     <HengeLasIkon />
                 </VisibleIfSpan>
                 {tilbakeTekst && onTilbakeClick && <Tilbakeknapp tekst={tilbakeTekst} onClick={onTilbakeClick} />}
-                {headerTekst && <Normaltekst>{headerTekst}</Normaltekst>}
+                {headerTekst && <BodyShort>{headerTekst}</BodyShort>}
             </header>
         </div>
     );

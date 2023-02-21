@@ -1,5 +1,4 @@
-import { Button } from '@navikt/ds-react';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import ModalContainer from '../modal/ModalContainer';
@@ -9,12 +8,10 @@ const TimeoutboxLoggetUt = () => (
     <div>
         <ModalContainer>
             <div className="varselmodal">
-                <Innholdstittel className="blokk-s" tag="h1">
+                <Heading level="1" size="large">
                     Obs!
-                </Innholdstittel>
-                <Normaltekst className="blokk-xxs">
-                    Sesjonen har utløpt. Du må logge inn igjen for å fortsette.
-                </Normaltekst>
+                </Heading>
+                <BodyShort>Sesjonen har utløpt. Du må logge inn igjen for å fortsette.</BodyShort>
             </div>
         </ModalContainer>
         <ModalFooter>

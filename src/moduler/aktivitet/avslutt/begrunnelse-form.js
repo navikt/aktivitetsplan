@@ -1,6 +1,5 @@
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Innholdstittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
 
@@ -34,7 +33,9 @@ function BegrunnelseForm(props) {
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
                     <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-                    <Innholdstittel>{headerTekst}</Innholdstittel>
+                    <Heading level="1" size="large">
+                        {headerTekst}
+                    </Heading>
                     <Textarea
                         label={beskrivelseLabel}
                         maxLength={255}
