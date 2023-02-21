@@ -78,14 +78,14 @@ function IJobbAktivitetForm(props: Props) {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField
-                            disabled={avtalt}
-                            label="Fra dato *"
-                            senesteTom={maybeAktivitet.tilDato}
-                            required
-                            {...state.fields.fraDato}
-                        />
-                        <DatoField label="Til dato" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
+                        {/*<DatoField*/}
+                        {/*    disabled={avtalt}*/}
+                        {/*    label="Fra dato *"*/}
+                        {/*    senesteTom={maybeAktivitet.tilDato}*/}
+                        {/*    required*/}
+                        {/*    {...state.fields.fraDato}*/}
+                        {/*/>*/}
+                        {/*<DatoField label="Til dato" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />*/}
                     </div>
                 </PeriodeValidering>
 

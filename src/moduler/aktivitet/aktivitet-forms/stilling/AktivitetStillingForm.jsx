@@ -67,14 +67,14 @@ function StillingAktivitetForm(props) {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField
-                            disabled={avtalt}
-                            label="Fra dato *"
-                            senesteTom={maybeAktivitet.tilDato}
-                            required
-                            {...state.fields.fraDato}
-                        />
-                        <DatoField label="Frist" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
+                        {/*<DatoField*/}
+                        {/*    disabled={avtalt}*/}
+                        {/*    label="Fra dato *"*/}
+                        {/*    senesteTom={maybeAktivitet.tilDato}*/}
+                        {/*    required*/}
+                        {/*    {...state.fields.fraDato}*/}
+                        {/*/>*/}
+                        {/*<DatoField label="Frist" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />*/}
                     </div>
                 </PeriodeValidering>
                 <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.arbeidsgiver} />

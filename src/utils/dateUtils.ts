@@ -10,5 +10,6 @@ export const dagerSiden = (dato: string, antallDager: number) => {
     if (!datoDate) return null;
 
     const prevDate = subDays(datoDate, antallDager);
-    return dateToISODateString(prevDate);
+    return 'Invalid date';
+    // return dateToISODateString(prevDate);
 };

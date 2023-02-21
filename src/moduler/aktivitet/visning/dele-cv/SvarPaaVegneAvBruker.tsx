@@ -1,22 +1,22 @@
 import { Panel } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import { DatepickerLimitations } from 'nav-datovelger/lib/types';
+// import { DatepickerLimitations } from 'nav-datovelger/lib/types';
 import { Element as NavElement } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import EtikettBase from '../../../../felles-komponenter/etikett-base/EtikettBase';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+// import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import styles from './SvarPaaVegneAvBruker.module.less';
 
 interface Props {
     formhandler: FieldState;
-    datoBegrensninger: DatepickerLimitations;
+    // datoBegrensninger: DatepickerLimitations;
 }
 
-export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) => {
+export const SvarPaaVegneAvBruker = ({ formhandler }: Props) => {
     const erVeileder = useSelector(selectErVeileder);
 
     if (!erVeileder) return null;
@@ -28,13 +28,13 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
             <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
             <Panel border className={styles.panel}>
                 <NavElement>Svar på vegne av brukeren</NavElement>
-                <DatoField
-                    labelClassName={styles.label}
-                    label="Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren? *"
-                    {...formhandler}
-                    required
-                    limitations={datoBegrensninger}
-                />
+                {/*<DatoField*/}
+                {/*    labelClassName={styles.label}*/}
+                {/*    label="Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren? *"*/}
+                {/*    {...formhandler}*/}
+                {/*    required*/}
+                {/*    limitations={datoBegrensninger}*/}
+                {/*/>*/}
             </Panel>
         </div>
     );

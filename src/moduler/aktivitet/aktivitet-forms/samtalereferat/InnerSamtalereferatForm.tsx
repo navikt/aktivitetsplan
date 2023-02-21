@@ -80,7 +80,7 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />
 
-                <DatoField label="Dato *" {...state.fields.fraDato} required />
+                {/*<DatoField label="Dato *" {...state.fields.fraDato} required />*/}
 
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 

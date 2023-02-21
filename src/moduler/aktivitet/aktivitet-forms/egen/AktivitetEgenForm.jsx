@@ -69,8 +69,8 @@ function EgenAktivitetForm(props) {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} required />
-                        <DatoField label="Til dato *" {...state.fields.tilDato} required />
+                        {/*<DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} required />*/}
+                        {/*<DatoField label="Til dato *" {...state.fields.tilDato} required />*/}
                     </div>
                 </PeriodeValidering>
 

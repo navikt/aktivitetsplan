@@ -131,12 +131,12 @@ const MoteAktivitetForm = (props: Props) => {
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <DatoField
-                        limitations={{ minDate: moment(now()).toISOString() }}
-                        label="Dato *"
-                        {...state.fields.dato}
-                        required
-                    />
+                    {/*<DatoField*/}
+                    {/*    limitations={{ minDate: moment(now()).toISOString() }}*/}
+                    {/*    label="Dato *"*/}
+                    {/*    {...state.fields.dato}*/}
+                    {/*    required*/}
+                    {/*/>*/}
                     <TextField
                         label="Klokkeslett *"
                         {...state.fields.klokkeslett.input}

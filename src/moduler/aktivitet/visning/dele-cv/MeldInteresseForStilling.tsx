@@ -1,6 +1,7 @@
 import { WarningColored } from '@navikt/ds-icons';
 import { Alert, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
+import { RadioGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,7 +92,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     return (
         <form className={detaljVisningStyles.underseksjon} onSubmit={state.onSubmit(onSubmit)} noValidate>
             <div className="mt-4" />
-            <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} datoBegrensninger={datobegrensninger} />
+            <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} />
             <RadioGroup
                 legend={
                     <div className="flex">
