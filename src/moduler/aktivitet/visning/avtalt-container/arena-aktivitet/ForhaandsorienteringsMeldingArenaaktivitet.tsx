@@ -1,6 +1,5 @@
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
@@ -38,11 +37,11 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
             </Select>
             <VisibleIfDiv visible={valgtForhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <VarslingInfo />
-                <Normaltekst className="blokk-xs">
+                <BodyShort className="blokk-xs">
                     Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at
                     stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre
                     aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.
-                </Normaltekst>
+                </BodyShort>
             </VisibleIfDiv>
 
             <VisibleIfDiv visible={valgtForhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>

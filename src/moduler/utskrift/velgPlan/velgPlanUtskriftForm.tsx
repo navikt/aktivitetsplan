@@ -1,6 +1,5 @@
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
@@ -38,7 +37,9 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
         <form onSubmit={state.onSubmit(submit)} className="printmelding__form" hidden={hidden}>
             <div className="printmelding__skjema">
                 <div className="printmelding__tittel">
-                    <Innholdstittel>Velg hva du ønsker å skrive ut</Innholdstittel>
+                    <Heading level="2" size="medium">
+                        Velg hva du ønsker å skrive ut
+                    </Heading>
                 </div>
 
                 <div>

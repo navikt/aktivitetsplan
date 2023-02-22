@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 interface Props {
@@ -11,7 +10,7 @@ const BegrunnelseBoks = ({ begrunnelse, className }: Props) => {
     return (
         <div className={className}>
             <Alert variant="info">
-                <Normaltekst className="tilDittNavTekst">{begrunnelse}</Normaltekst>
+                <BodyShort className="tilDittNavTekst">{begrunnelse}</BodyShort>
             </Alert>
         </div>
     );

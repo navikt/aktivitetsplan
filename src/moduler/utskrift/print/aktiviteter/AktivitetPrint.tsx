@@ -1,4 +1,4 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -26,9 +26,9 @@ const AktivitetPrint = (props: Props) => {
     return (
         <div key={id} className="printmodal-body__statusgruppe">
             <p className="printmodal-body__statusgruppe--type">{getAktivitetType(aktivitet)}</p>
-            <Undertittel tag="h2" className="printmodal-body__statusgruppe--overskrift">
+            <Heading level="2" size="medium" className="mb-4">
                 {tittel}
-            </Undertittel>
+            </Heading>
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
             {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
             aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (

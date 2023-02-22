@@ -1,5 +1,5 @@
+import { BodyShort } from '@navikt/ds-react';
 import useFormstate, { FieldState } from '@nutgaard/use-formstate';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -104,9 +104,7 @@ const ForhaandsorienteringForm = (props: Props) => {
             <div>
                 <ForNavAnsattMarkeringWrapper>
                     {isGammelArenaAktivitet && (
-                        <Normaltekst className={styles.tittel}>
-                            Tiltaket er automatisk merket "Avtalt med NAV"
-                        </Normaltekst>
+                        <BodyShort className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</BodyShort>
                     )}
                     <div className={styles.checkbox}>
                         <Checkbox

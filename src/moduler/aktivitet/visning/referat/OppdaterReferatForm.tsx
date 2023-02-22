@@ -1,7 +1,6 @@
 import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -89,7 +88,7 @@ const OppdaterReferatForm = (props: Props) => {
         >
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
             <Textarea
-                label={<Undertittel>Samtalereferat</Undertittel>}
+                label={`Samtalereferat`}
                 disabled={oppdaterer}
                 maxLength={5000}
                 visTellerFra={500}

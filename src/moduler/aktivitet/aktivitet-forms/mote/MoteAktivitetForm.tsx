@@ -1,7 +1,6 @@
-import { Alert, Link, TextField, UNSAFE_useDatepicker } from '@navikt/ds-react';
+import { Alert, BodyShort, Link, TextField, UNSAFE_useDatepicker } from '@navikt/ds-react';
 import DatePicker from '@navikt/ds-react/esm/date/datepicker/DatePicker';
 import useFormstate from '@nutgaard/use-formstate';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT } from '../../../../constant';
@@ -58,7 +57,7 @@ const HuskVarsleBruker = ({ avtalt, pristine }: { avtalt: boolean; pristine: boo
 const VideoInfo = ({ kanal }: { kanal: string }) => {
     if (kanal === INTERNET_KANAL) {
         return (
-            <Normaltekst className="mote-aktivitet-form__video-info">
+            <BodyShort className="mote-aktivitet-form__video-info">
                 Les om{' '}
                 <Link
                     href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx"
@@ -67,7 +66,7 @@ const VideoInfo = ({ kanal }: { kanal: string }) => {
                 >
                     rutiner for videomøte her <EksternLenkeIkon />
                 </Link>
-            </Normaltekst>
+            </BodyShort>
         );
     }
     return null;

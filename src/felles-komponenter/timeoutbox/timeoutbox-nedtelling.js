@@ -1,6 +1,5 @@
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 
@@ -33,12 +32,12 @@ class TimeoutboxNedtelling extends Component {
             <div>
                 <ModalContainer>
                     <div className="varselmodal">
-                        <Innholdstittel className="blokk-s" tag="h1">
+                        <Heading className="blokk-s" level="1" size="large">
                             Obs!
-                        </Innholdstittel>
-                        <Normaltekst className="blokk-xxs">
+                        </Heading>
+                        <BodyShort className="blokk-xxs">
                             {`Din sesjon vil utløpe om ${tid} minutter. Dersom du ikke laster siden på nytt, vil du bli logget ut. Ta vare på alt ulagret arbeid. For å laste siden på nytt, vennligst trykk "Last siden på nytt".`}
-                        </Normaltekst>
+                        </BodyShort>
                     </div>
                 </ModalContainer>
                 <ModalFooter>

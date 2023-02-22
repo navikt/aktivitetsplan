@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import { CvKanDelesData } from '../../../../datatypes/internAktivitetTypes';
@@ -20,11 +19,11 @@ export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props)
 
     const cvKanDeles = cvKanDelesData.kanDeles;
 
-    const Tittel = () => <Normaltekst className={styles.deleCVEndreTittel}>{overskrift}</Normaltekst>;
+    const Tittel = () => <BodyShort className={styles.deleCVEndreTittel}>{overskrift}</BodyShort>;
     const TittelMedCvSvar = () => (
         <>
             <Tittel />
-            <Element className={styles.deleCVTittelSvarTekst}>{cvKanDeles ? 'Ja' : 'Nei'}</Element>
+            <BodyShort className={styles.deleCVTittelSvarTekst}>{cvKanDeles ? 'Ja' : 'Nei'}</BodyShort>
         </>
     );
 
@@ -57,8 +56,8 @@ export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props)
             onClick={toggle}
         >
             <Ingress />
-            <Normaltekst className={styles.deleCVSvarTekst}>{svarTekst}</Normaltekst>
-            <Normaltekst className={styles.endretTidspunkt}>{endretTekst}</Normaltekst>
+            <BodyShort className={styles.deleCVSvarTekst}>{svarTekst}</BodyShort>
+            <BodyShort className={styles.endretTidspunkt}>{endretTekst}</BodyShort>
             <Infostripe />
         </EkspanderbarLinjeBase>
     );

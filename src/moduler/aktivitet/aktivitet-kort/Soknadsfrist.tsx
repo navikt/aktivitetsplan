@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { StillingAktivitet } from '../../../datatypes/internAktivitetTypes';
@@ -33,7 +33,7 @@ function Soknadfrist({ aktivitet }: Props) {
     }
 
     const frist = dagerTil(tilDato);
-    return <Normaltekst className={getClassName(frist)}>{getTekst(frist, tilDato)}</Normaltekst>;
+    return <BodyShort className={getClassName(frist)}>{getTekst(frist, tilDato)}</BodyShort>;
 }
 
 export default Soknadfrist;

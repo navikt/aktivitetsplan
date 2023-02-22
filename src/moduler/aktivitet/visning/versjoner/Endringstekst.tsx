@@ -1,4 +1,4 @@
-import { Element } from 'nav-frontend-typografi';
+import { Label } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -30,9 +30,9 @@ const Endringstekst = (props: Props) => {
     const erBruker = useSelector(selectErBruker);
 
     const brukeravhengigTekst = (
-        <Element className={styles.identitet}>
+        <Label className={styles.identitet}>
             {hentBrukeravhengigTekst(erBruker, aktivitet.endretAvType, aktivitet.endretAv)}
-        </Element>
+        </Label>
     );
 
     switch (aktivitet.transaksjonsType) {

@@ -1,7 +1,6 @@
 import './mal.less';
 
-import { ReadMore } from '@navikt/ds-react';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import { Heading, ReadMore } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -49,12 +48,12 @@ function Mal() {
 
     return (
         <MalModal onRequestClosed={onModalRequestClosed}>
-            <Innholdstittel className="aktivitetmal__header">
+            <Heading level="1" size="large" className="aktivitetmal__header">
                 {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
                     ? 'Mitt mål fra en tidligere periode'
                     : 'Mitt mål'}
-            </Innholdstittel>
-            <Undertekst className="aktivitetmal__sub-header" tag="div">
+            </Heading>
+            <div className="p-8">
                 <ReadMore header="Tips til mål">
                     Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
                     <ul className="list-disc mt-4 pl-8">
@@ -62,7 +61,7 @@ function Mal() {
                         <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
                     </ul>
                 </ReadMore>
-            </Undertekst>
+            </div>
             <Innholdslaster avhengigheter={avhengigheter} alleOK>
                 <section className="aktivitetmal">
                     <MalContainer dirtyRef={isDirty} />

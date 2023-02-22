@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,10 +11,10 @@ import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-fel
 const Motaplan = (planListe) => (
     <span>
         {planListe.planListe.map((mote) => (
-            <Normaltekst key={mote.startDato} tag="span">
+            <BodyShort key={mote.startDato} tag="span">
                 {formaterDatoKortManedTid(mote.startDato)}
                 {formaterTid(mote.sluttDato) === '00:00' ? '' : ` - ${formaterTid(mote.sluttDato)}`},{` ${mote.sted}`}
-            </Normaltekst>
+            </BodyShort>
         ))}
     </span>
 );

@@ -1,6 +1,5 @@
 import { Next } from '@navikt/ds-icons';
-import { Alert, Link } from '@navikt/ds-react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort, Link } from '@navikt/ds-react';
 import React from 'react';
 
 export const arbeidssokerregistreringHref = process.env.REACT_APP_ARBEIDSSOKERREGISTRERING_URL as string;
@@ -18,7 +17,7 @@ function HarIkkeAktivitetsplan(props: PropTypes) {
     return (
         <div className="har-ikke-aktivitetsplan-container">
             <Alert variant="warning">
-                <Normaltekst>{advarsel}</Normaltekst>
+                <BodyShort>{advarsel}</BodyShort>
                 {!erVeileder && (
                     <Link href={arbeidssokerregistreringHref}>
                         Register deg hos NAV

@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import LenkeTilDialog from '../dialog/DialogLink';
@@ -22,13 +21,13 @@ const AdvarselMedDialogLenke = (props: Props) => {
 
     return (
         <Alert variant="warning" className={className}>
-            <Normaltekst>
+            <BodyShort>
                 {tekst}
                 &nbsp;
                 <LenkeTilDialog dialogId={dialogId} onClick={onClick}>
                     {lenkeTekst}
                 </LenkeTilDialog>
-            </Normaltekst>
+            </BodyShort>
         </Alert>
     );
 };

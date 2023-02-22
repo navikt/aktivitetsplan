@@ -1,6 +1,5 @@
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { Bruker } from '../../datatypes/types';
@@ -42,7 +41,7 @@ function PrintMeldingForm(props: Props) {
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
                 <div className="printmelding__tittel">
-                    <Innholdstittel>{`Aktivitetsplan for ${bruker.fornavn}`}</Innholdstittel>
+                    <Heading size="large" level="1">{`Aktivitetsplan for ${bruker.fornavn}`}</Heading>
                 </div>
 
                 <Textarea

@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
@@ -27,7 +27,7 @@ const InnholdsWrapper = (props: ChildProps) => {
             </CustomBodyLong>
         );
     } else {
-        return <Normaltekst className="detaljfelt__tekst">{children}</Normaltekst>;
+        return <BodyShort className="detaljfelt__tekst">{children}</BodyShort>;
     }
 };
 

@@ -1,10 +1,9 @@
 import './mitt-maal.less';
 
 import { Add } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -54,7 +53,9 @@ function MalContent(props: MalContentProps) {
     if (!mal && !disabled) {
         return (
             <div className="mittmal_callToAction">
-                <Element>Hva er målet ditt fremover?</Element>
+                <Heading level="2" size="small">
+                    Hva er målet ditt fremover?
+                </Heading>
                 <Button variant="tertiary" className="mittmal_knapp" form="kompakt">
                     <Add role="img" focusable="false" aria-hidden />
                     <span>Legg til</span>
@@ -99,10 +100,10 @@ function MittMaal() {
                     dispatch(lesMal());
                 }}
             >
-                <Normaltekst tag="div" id="mittmal_header">
+                <div id="mittmal_header">
                     <NotifikasjonMarkering visible={nyEndring} />
                     Ditt mål
-                </Normaltekst>
+                </div>
                 <div className="mittmal_content">
                     <MalContent disabled={disabled} mal={mal} />
                 </div>

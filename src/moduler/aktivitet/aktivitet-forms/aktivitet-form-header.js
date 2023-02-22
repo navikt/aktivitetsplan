@@ -1,4 +1,4 @@
-import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React from 'react';
 
@@ -8,9 +8,11 @@ import AktivitetIngress from '../visning/aktivitetingress/AktivitetIngress';
 function AktivitetFormHeader({ tittel, aktivitetsType }) {
     return (
         <div className="aktivitetskjema__header">
-            <Sidetittel className="skjema-header__tittel">{tittel}</Sidetittel>
+            <Heading level="1" size="xlarge" className="skjema-header__tittel">
+                {tittel}
+            </Heading>
             <AktivitetIngress aktivitetstype={aktivitetsType} />
-            <Undertekst className="skjema-header__pakrevd-info">* må fylles ut</Undertekst>
+            <BodyShort className="skjema-header__pakrevd-info">* må fylles ut</BodyShort>
         </div>
     );
 }

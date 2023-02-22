@@ -1,5 +1,4 @@
-import { Button } from '@navikt/ds-react';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -66,9 +65,9 @@ const AktivitetinformasjonVisning = (props: Props) => {
         <div>
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <div className={styles.header}>
-                    <Sidetittel id="modal-aktivitetsvisning-header" className="softbreak">
+                    <Heading level="2" size="medium" id="modal-aktivitetsvisning-header" className="softbreak">
                         {tittel}
-                    </Sidetittel>
+                    </Heading>
                 </div>
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />

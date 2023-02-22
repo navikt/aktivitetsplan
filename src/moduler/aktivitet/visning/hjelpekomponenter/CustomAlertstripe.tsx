@@ -1,4 +1,4 @@
-import { Element } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { ReactComponent as VarselIkon } from '../../../../Ikoner/advarsel-ikon.svg';
@@ -13,6 +13,6 @@ interface Props {
 export const CustomAlertstripe = (props: Props) => (
     <div className={props.sectionClassName ? props.sectionClassName : styles.overskrift}>
         <VarselIkon className={props.ikonClassName ? props.ikonClassName : styles.ikon} />
-        <Element>{props.tekst}</Element>
+        <BodyShort>{props.tekst}</BodyShort>
     </div>
 );
