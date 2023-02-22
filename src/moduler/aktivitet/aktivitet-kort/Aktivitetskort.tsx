@@ -1,4 +1,3 @@
-import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';

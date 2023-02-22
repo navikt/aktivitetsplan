@@ -1,41 +1,50 @@
-import { Panel } from '@navikt/ds-react';
+import { BodyShort, Heading, Panel, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-// import { DatepickerLimitations } from 'nav-datovelger/lib/types';
 import { Element as NavElement } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import EtikettBase from '../../../../felles-komponenter/etikett-base/EtikettBase';
-// import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import styles from './SvarPaaVegneAvBruker.module.less';
 
 interface Props {
     formhandler: FieldState;
-    // datoBegrensninger: DatepickerLimitations;
+    datoBegrensninger: { after: Date; before: Date };
 }
 
-export const SvarPaaVegneAvBruker = ({ formhandler }: Props) => {
+export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) => {
     const erVeileder = useSelector(selectErVeileder);
+
+    const { datepickerProps, inputProps } = UNSAFE_useDatepicker({
+        disabled: [datoBegrensninger],
+        onDateChange: (val) => {
+            formhandler.setValue(val?.toISOString() || '');
+        },
+    });
 
     if (!erVeileder) return null;
 
-    const feil = formhandler.touched && formhandler.error;
-    const cls = classNames(styles.svarPaaVegneAvBruker, { [styles.feil]: !!feil });
+    const feil = formhandler.touched ? formhandler.error : undefined;
+    // const cls = classNames(styles.svarPaaVegneAvBruker, { [styles.feil]: !!feil });
     return (
-        <div className={cls}>
+        <div className="mb-4">
             <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
-            <Panel border className={styles.panel}>
-                <NavElement>Svar på vegne av brukeren</NavElement>
-                {/*<DatoField*/}
-                {/*    labelClassName={styles.label}*/}
-                {/*    label="Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren? *"*/}
-                {/*    {...formhandler}*/}
-                {/*    required*/}
-                {/*    limitations={datoBegrensninger}*/}
-                {/*/>*/}
-            </Panel>
+            <Heading size="medium" level="3">
+                Svar på vegne av brukeren
+            </Heading>
+            <UNSAFE_DatePicker {...datepickerProps}>
+                <UNSAFE_DatePicker.Input
+                    {...inputProps}
+                    error={feil}
+                    label={
+                        <BodyShort>
+                            Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren
+                        </BodyShort>
+                    }
+                />
+            </UNSAFE_DatePicker>
         </div>
     );
 };

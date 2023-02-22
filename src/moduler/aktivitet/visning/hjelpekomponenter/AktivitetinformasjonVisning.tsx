@@ -8,12 +8,10 @@ import {
     EGEN_AKTIVITET_TYPE,
     EKSTERN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
-    SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
-import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';

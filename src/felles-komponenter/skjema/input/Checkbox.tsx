@@ -1,4 +1,4 @@
-import { CheckboxProps, Checkbox as NavCheckbox } from '@navikt/ds-react';
+import { Checkbox as NavCheckbox } from '@navikt/ds-react';
 import React, { ReactNode, useState } from 'react';
 
 import { FieldStateInput } from './inputTypes';

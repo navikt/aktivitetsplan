@@ -22,7 +22,8 @@ export type VeilarbAktivitet =
     | MedisinskBehandlingAktivitet
     | StillingFraNavAktivitet
     | EgenAktivitet
-    | EksternAktivitet;
+    | EksternAktivitet
+    | IJobbAktivitet;
 
 export enum VeilarbAktivitetType {
     EGEN_AKTIVITET_TYPE = 'EGEN',

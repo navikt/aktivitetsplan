@@ -1,9 +1,11 @@
 import useFormstate from '@nutgaard/use-formstate';
+import { Formstate } from '@nutgaard/use-formstate/dist/types/domain';
 import PT from 'prop-types';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
+import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,
@@ -18,41 +20,63 @@ import LagreAktivitet from '../LagreAktivitet';
 import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke } from '../validate';
 import { validateTittel } from './validate';
 
-function erAvtalt(aktivitet) {
-    return aktivitet.avtalt === true;
+function erAvtalt(aktivitet: Partial<StillingAktivitet>) {
+    return aktivitet?.avtalt || false;
 }
 
-function StillingAktivitetForm(props) {
+interface Props {
+    onSubmit: (values: StillingAktivitetFormValues) => Promise<void>;
+    isDirtyRef: MutableRefObject<boolean>;
+    aktivitet?: StillingAktivitet;
+}
+
+type StillingAktivitetFormValues = {
+    tittel: string;
+    fraDato: string;
+    tilDato: string;
+    beskrivelse: string;
+    arbeidssted: string;
+    arbeidsgiver: string;
+    kontaktperson: string;
+    lenke: string;
+    periodeValidering: string;
+};
+
+function StillingAktivitetForm(props: Props) {
     const { onSubmit, isDirtyRef, aktivitet } = props;
 
-    const validator = useFormstate({
-        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
-        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-        arbeidssted: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        arbeidsgiver: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        kontaktperson: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
-        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-    });
+    const validator: (
+        initialValues: StillingAktivitetFormValues,
+        props: Partial<StillingAktivitetFormValues>
+    ) => Formstate<StillingAktivitetFormValues> = useFormstate<StillingAktivitetFormValues, Partial<StillingAktivitet>>(
+        {
+            tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+            fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+            tilDato: (val, values, aktivitet) => validerDato(val, undefined, aktivitet.fraDato),
+            beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+            arbeidssted: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+            arbeidsgiver: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+            kontaktperson: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+            lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
+            periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+        }
+    );
 
-    const maybeAktivitet = aktivitet || {};
-    const avtalt = maybeAktivitet.avtalt === true;
+    const avtalt = aktivitet?.avtalt === true;
 
     const initalValues = {
-        tittel: maybeAktivitet.tittel || '',
-        fraDato: maybeAktivitet.fraDato || todayIsoString(),
-        tilDato: maybeAktivitet.tilDato || '',
-        beskrivelse: maybeAktivitet.beskrivelse || '',
-        arbeidssted: maybeAktivitet.arbeidssted || '',
-        arbeidsgiver: maybeAktivitet.arbeidsgiver || '',
-        kontaktperson: maybeAktivitet.kontaktperson || '',
-        lenke: maybeAktivitet.lenke || '',
+        tittel: aktivitet?.tittel || '',
+        fraDato: aktivitet?.fraDato || todayIsoString(),
+        tilDato: aktivitet?.tilDato || '',
+        beskrivelse: aktivitet?.beskrivelse || '',
+        arbeidssted: aktivitet?.arbeidssted || '',
+        arbeidsgiver: aktivitet?.arbeidsgiver || '',
+        kontaktperson: aktivitet?.kontaktperson || '',
+        lenke: aktivitet?.lenke || '',
         periodeValidering: '',
     };
 
-    const state = validator(initalValues, aktivitet);
+    const state = validator(initalValues, aktivitet || {});
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -67,14 +91,11 @@ function StillingAktivitetForm(props) {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        {/*<DatoField*/}
-                        {/*    disabled={avtalt}*/}
-                        {/*    label="Fra dato *"*/}
-                        {/*    senesteTom={maybeAktivitet.tilDato}*/}
-                        {/*    required*/}
-                        {/*    {...state.fields.fraDato}*/}
-                        {/*/>*/}
-                        {/*<DatoField label="Frist" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />*/}
+                        <MaybeAvtaltDateRangePicker
+                            formState={state}
+                            aktivitet={aktivitet}
+                            initialFromDate={aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined}
+                        />
                     </div>
                 </PeriodeValidering>
                 <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.arbeidsgiver} />

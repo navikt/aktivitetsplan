@@ -11,7 +11,6 @@ import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
-import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import styles from './ArenaForhaandsorienteringForm.module.less';
 import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 

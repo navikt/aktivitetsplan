@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
 import { MedisinskBehandlingAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
@@ -85,6 +85,7 @@ const MedisinskBehandlingForm = (props: Props) => {
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off" noValidate>
             <div className="aktivitetskjema space-y-2">
@@ -95,8 +96,11 @@ const MedisinskBehandlingForm = (props: Props) => {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        {/*<DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} required />*/}
-                        {/*<DatoField label="Til dato *" {...state.fields.tilDato} required />*/}
+                        <MaybeAvtaltDateRangePicker
+                            formState={state}
+                            aktivitet={aktivitet}
+                            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}
+                        />
                     </div>
                 </PeriodeValidering>
 

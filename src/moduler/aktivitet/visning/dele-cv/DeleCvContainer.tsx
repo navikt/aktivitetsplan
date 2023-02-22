@@ -1,3 +1,4 @@
+import { BodyShort } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 
@@ -13,10 +14,8 @@ interface PropTypes {
     aktivitet: StillingFraNavAktivitet;
 }
 
-export const Ingress = () => (
-    <Normaltekst className={styles.ingress}>
-        Du bestemmer selv om NAV kan dele CV-en din for denne stillingen.
-    </Normaltekst>
+export const Ingress = ({ className }: { className?: string }) => (
+    <BodyShort className={className}>Du bestemmer selv om NAV kan dele CV-en din for denne stillingen.</BodyShort>
 );
 
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {

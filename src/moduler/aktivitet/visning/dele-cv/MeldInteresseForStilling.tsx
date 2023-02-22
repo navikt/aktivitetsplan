@@ -1,8 +1,5 @@
-import { WarningColored } from '@navikt/ds-icons';
-import { Alert, Button, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { RadioGruppe } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -13,7 +10,6 @@ import { formaterDatoManed } from '../../../../utils';
 import { dagerSiden, todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
-import detaljVisningStyles from '../Aktivitetsvisning.module.less';
 import { Ingress } from './DeleCvContainer';
 import styles from './MeldInteresseForStilling.module.less';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
@@ -85,38 +81,43 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
     const datobegrensninger = {
-        minDate: syvDagerFoerOpprettet,
-        maxDate: todayIsoString(),
+        before: new Date(syvDagerFoerOpprettet),
+        after: new Date(todayIsoString()),
     };
 
     return (
-        <form className={detaljVisningStyles.underseksjon} onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <div className="mt-4" />
-            <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} />
+        <form
+            className={'bg-surface-subtle rounded-md border-border-default border m-4 p-4'}
+            onSubmit={state.onSubmit(onSubmit)}
+            noValidate
+        >
+            <SvarPaaVegneAvBruker datoBegrensninger={datobegrensninger} formhandler={state.fields.avtaltDato} />
             <RadioGroup
                 legend={
-                    <div className="flex">
-                        <WarningColored className="mr-2" />
-                        {overskrift}
+                    <div className="flex flex-col mb-4">
+                        <Heading size="medium" level="2">
+                            {overskrift}
+                        </Heading>
+                        <Ingress className="mt-1" />
+                        <BodyShort className="mt-1">Svar før: {formaterDatoManed(svarfrist)}</BodyShort>
                     </div>
                 }
                 onChange={onChange}
                 aria-label={overskrift}
                 role="radiogroup"
-                className="inputPanelGruppe"
+                className=""
                 error={state.submittoken && state.fields.kanDeles.error}
             >
-                <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
                 <Radio id="kanDeles" value={SvarType.JA.toString()}>
                     {JaSvarTekst}
                 </Radio>
                 <Radio value={SvarType.NEI.toString()}>{NeiSvarTekst}</Radio>
             </RadioGroup>
-            <Ingress />
-            {infoTekst && <Alert children={infoTekst} variant="info" inline className="mt-4" />}
+
+            {infoTekst && <Alert children={infoTekst} variant="info" inline className="my-3" />}
             {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
             <Button className={styles.knapp} disabled={state.submitting}>
-                Lagre
+                Send svar
             </Button>
         </form>
     );

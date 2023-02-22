@@ -1,10 +1,9 @@
-import { Button } from '@navikt/ds-react';
+import { Button, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
@@ -33,21 +32,14 @@ const InnerSamtalereferatForm = (props: Props) => {
         referat: validateReferat,
     });
 
-    const state = validator(
-        aktivitet
-            ? {
-                  tittel: aktivitet.tittel,
-                  fraDato: aktivitet.fraDato ? aktivitet.fraDato : '',
-                  kanal: aktivitet.kanal as string,
-                  referat: aktivitet.referat ? aktivitet.referat : '',
-              }
-            : {
-                  tittel: '',
-                  fraDato: todayIsoString(),
-                  kanal: TELEFON_KANAL,
-                  referat: startTekst,
-              }
-    );
+    const initialValues = {
+        tittel: aktivitet?.tittel || '',
+        fraDato: aktivitet?.fraDato ? aktivitet.fraDato : todayIsoString(),
+        kanal: aktivitet?.kanal || TELEFON_KANAL,
+        referat: aktivitet?.referat ? aktivitet.referat : startTekst,
+    };
+
+    const state = validator(initialValues);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -61,6 +53,11 @@ const InnerSamtalereferatForm = (props: Props) => {
             avtalt: false,
         };
         return onSubmit(newValues);
+    });
+
+    const { datepickerProps, inputProps } = UNSAFE_useDatepicker({
+        defaultSelected: initialValues.fraDato ? new Date(initialValues.fraDato) : undefined,
+        onDateChange: (date) => state.setValue('fraDato', date?.toISOString() || ''),
     });
 
     return (
@@ -80,7 +77,9 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />
 
-                {/*<DatoField label="Dato *" {...state.fields.fraDato} required />*/}
+                <UNSAFE_DatePicker {...datepickerProps}>
+                    <UNSAFE_DatePicker.Input error={state.errors.fraDato} label="Dato *" {...inputProps} />
+                </UNSAFE_DatePicker>
 
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 

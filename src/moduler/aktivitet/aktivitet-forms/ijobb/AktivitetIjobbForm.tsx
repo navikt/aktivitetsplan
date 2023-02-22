@@ -1,11 +1,12 @@
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
+import { Formstate, Mapped } from '@nutgaard/use-formstate/dist/types/domain';
 import PT from 'prop-types';
 import React, { MutableRefObject } from 'react';
 
 import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
 import { IJobbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,
@@ -25,41 +26,52 @@ function erAvtalt(aktivitet: Partial<IJobbAktivitet>) {
 
 interface Props {
     onSubmit: (values: Record<any, any>) => Promise<void>;
-    aktivitet: IJobbAktivitet;
+    aktivitet?: IJobbAktivitet;
     isDirtyRef: MutableRefObject<boolean>;
 }
+
+type IJobbAktivitetFormValues = {
+    tittel: string;
+    fraDato: string;
+    tilDato: string;
+    periodeValidering: string;
+    ansettelsesforhold: string;
+    jobbStatus: string;
+    arbeidstid: string;
+    beskrivelse: string;
+};
 
 function IJobbAktivitetForm(props: Props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;
 
-    const validator = useFormstate({
-        tittel: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateTittel(erAvtalt(aktivitet), val),
-        fraDato: (val, values, aktivitet: Partial<IJobbAktivitet>) =>
-            validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet: Partial<IJobbAktivitet>) => validerDato(val, undefined, aktivitet.fraDato),
+    const validator: (
+        initialValues: IJobbAktivitetFormValues,
+        props: Partial<IJobbAktivitetFormValues>
+    ) => Formstate<IJobbAktivitetFormValues> = useFormstate<IJobbAktivitetFormValues, Partial<IJobbAktivitet>>({
+        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet) => validerDato(val, undefined, aktivitet.fraDato),
         periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-        ansettelsesforhold: (val, values, aktivitet: Partial<IJobbAktivitet>) =>
-            validateFeltForLangt(erAvtalt(aktivitet), val),
-        jobbStatus: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateJobbstatus(erAvtalt(aktivitet), val),
-        arbeidstid: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        beskrivelse: (val, values, aktivitet: Partial<IJobbAktivitet>) => validateBeskrivelse(erAvtalt(aktivitet), val),
+        ansettelsesforhold: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        jobbStatus: (val, values, aktivitet) => validateJobbstatus(erAvtalt(aktivitet), val),
+        arbeidstid: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
     });
 
-    const maybeAktivitet = aktivitet || {};
-    const avtalt = maybeAktivitet.avtalt === true;
+    const avtalt = aktivitet?.avtalt === true;
 
     const initalValues = {
-        tittel: maybeAktivitet.tittel || '',
-        fraDato: maybeAktivitet.fraDato || '',
-        tilDato: maybeAktivitet.tilDato || '',
+        tittel: aktivitet?.tittel || '',
+        fraDato: aktivitet?.fraDato || '',
+        tilDato: aktivitet?.tilDato || '',
         periodeValidering: '',
-        jobbStatus: maybeAktivitet.jobbStatus || '',
-        ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
-        arbeidstid: maybeAktivitet.arbeidstid || '',
-        beskrivelse: maybeAktivitet.beskrivelse || '',
+        jobbStatus: aktivitet?.jobbStatus || '',
+        ansettelsesforhold: aktivitet?.ansettelsesforhold || '',
+        arbeidstid: aktivitet?.arbeidstid || '',
+        beskrivelse: aktivitet?.beskrivelse || '',
     };
 
-    const state = validator(initalValues);
+    const state = validator(initalValues, aktivitet || {});
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -73,22 +85,16 @@ function IJobbAktivitetForm(props: Props) {
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
             <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
-
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
-
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        {/*<DatoField*/}
-                        {/*    disabled={avtalt}*/}
-                        {/*    label="Fra dato *"*/}
-                        {/*    senesteTom={maybeAktivitet.tilDato}*/}
-                        {/*    required*/}
-                        {/*    {...state.fields.fraDato}*/}
-                        {/*/>*/}
-                        {/*<DatoField label="Til dato" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />*/}
+                        <MaybeAvtaltDateRangePicker
+                            formState={state}
+                            aktivitet={aktivitet}
+                            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}
+                        />
                     </div>
                 </PeriodeValidering>
-
                 <RadioGroup
                     id="jobbStatus"
                     error={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
@@ -102,7 +108,6 @@ function IJobbAktivitetForm(props: Props) {
                         Deltid
                     </Radio>
                 </RadioGroup>
-
                 <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.ansettelsesforhold} />
                 <Input
                     disabled={avtalt}

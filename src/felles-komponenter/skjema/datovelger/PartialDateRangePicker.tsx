@@ -1,7 +1,4 @@
 import { DateValidationT, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
-import { isAfter } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import { useState } from 'react';
 
 interface Props {
     onChange: (val: Date | undefined) => void;
