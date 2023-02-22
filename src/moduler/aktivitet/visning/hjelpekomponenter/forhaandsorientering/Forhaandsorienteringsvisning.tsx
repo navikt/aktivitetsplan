@@ -1,4 +1,3 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -13,6 +12,7 @@ import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';
 import { selectArenaAktivitetFhoLestStatus } from '../../../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import { skalMarkereForhaandsorienteringSomLest } from '../../avtalt-container/utilsForhaandsorientering';
+import CustomBodyLong from '../CustomBodyLong';
 import styles from './Forhaandsorienteringsvisning.module.less';
 import LestDatoVisning from './LestDatoVisning';
 import LestKnapp from './LestKnapp';
@@ -76,7 +76,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
             onClick={onClickToggle}
             kanToogle
         >
-            <Tekstomrade className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Tekstomrade>
+            <CustomBodyLong className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</CustomBodyLong>
             <LestDatoVisning hidden={!erLest} lest={forhaandsorienteringLestDato} />
             <LestKnapp hidden={!kanMarkeresSomLest} onClick={onClickLestKnapp} lasterData={lasterData} />
         </EkspanderbarLinjeBase>

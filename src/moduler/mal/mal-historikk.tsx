@@ -1,10 +1,10 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
 import EkspanderbarLinje from '../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoEllerTidSiden } from '../../utils';
+import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectMalListe } from './aktivitetsmal-selector';
 
@@ -23,7 +23,9 @@ function malListeVisning(gjeldendeMal: Mal, erVeileder: boolean) {
                 <span>{identitetMap(erVeileder, gjeldendeMal.endretAv)}</span>
             </span>
             {` ${formaterDatoEllerTidSiden(gjeldendeMal.dato)}`}
-            <Tekstomrade className="aktivitetmal__historikk-tekst">{gjeldendeMal.mal || ''}</Tekstomrade>
+            <CustomBodyLong formatLinebreaks formatLinks>
+                {gjeldendeMal.mal}
+            </CustomBodyLong>
         </article>
     );
 }

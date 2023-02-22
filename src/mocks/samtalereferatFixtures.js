@@ -9,7 +9,8 @@ export function etSamtalereferat({ tittel }) {
         id: `${id}`,
         versjon: `${versjon}`,
         tittel,
-        referat: 'Dette er et referat\n\nMed flere avsnitt.\nOg linjeskift.',
+        referat:
+            'Dette er et referat\n\nMed flere avsnitt.\nOg linjeskift. https://www.nav.no asdasdasdads 123 https://www.google.com',
         adresse: null,
         ansettelsesforhold: null,
         antallStillingerIUken: null,
