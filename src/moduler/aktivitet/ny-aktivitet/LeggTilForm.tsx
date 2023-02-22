@@ -1,4 +1,4 @@
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -20,12 +20,14 @@ const LeggTilForm = () => {
             feilmeldinger={aktivitetFeilmeldinger}
         >
             <div className={styles.leggTilHeader}>
-                <Normaltekst hidden={erVeileder} className={styles.hjelpeTekst}>
+                <BodyShort hidden={erVeileder} className={styles.hjelpeTekst}>
                     Her kan du legge til ulike aktiviteter du gjør for å nå målet ditt.
-                </Normaltekst>
+                </BodyShort>
 
                 <div className={styles.tittelBoks}>
-                    <Innholdstittel className={styles.nyAktivitetTittel}>Legg til</Innholdstittel>
+                    <Heading level="2" size="small" className={styles.nyAktivitetTittel}>
+                        Legg til
+                    </Heading>
 
                     <EtikettBase className={styles.etikett} hidden={!erVeileder}>
                         FOR NAV-ANSATT

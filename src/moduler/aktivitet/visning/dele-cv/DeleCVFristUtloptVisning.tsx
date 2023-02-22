@@ -1,4 +1,4 @@
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
@@ -14,11 +14,11 @@ interface Props {
 export const DeleCVFristUtloptVisning = (props: Props) => {
     const { overskrift, svarfrist } = props;
 
-    const Tittel = () => <Normaltekst className={styles.deleCVEndreTittel}>{overskrift}</Normaltekst>;
+    const Tittel = () => <BodyShort className={styles.deleCVEndreTittel}>{overskrift}</BodyShort>;
     const TittelMedUtloptTekst = () => (
         <>
             <Tittel />
-            <Element className={styles.deleCVTittelUtloptTekst}>Fristen har gått ut</Element>
+            <BodyShort className={styles.deleCVTittelUtloptTekst}>Fristen har gått ut</BodyShort>
         </>
     );
 
@@ -31,9 +31,9 @@ export const DeleCVFristUtloptVisning = (props: Props) => {
             lukkeTekst="Lukk"
         >
             <Ingress />
-            <Normaltekst className={styles.deleCVUtloptTekst}>
+            <BodyShort className={styles.deleCVUtloptTekst}>
                 Spørsmålet ble ikke besvart innen fristen {formaterDatoManed(svarfrist)}
-            </Normaltekst>
+            </BodyShort>
         </EkspanderbarLinje>
     );
 };

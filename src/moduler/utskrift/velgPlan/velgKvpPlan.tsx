@@ -1,5 +1,5 @@
+import { BodyShort } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
@@ -54,11 +54,11 @@ function KvpPlanListeValg(props: KvpPlanValgProps) {
                         key={kvp.opprettetDato}
                         id={kvp.opprettetDato}
                         label={
-                            <Normaltekst>
+                            <BodyShort>
                                 {`${formaterDatoKortManed(kvp.opprettetDato)} - ${
                                     formaterDatoKortManed(kvp.avsluttetDato) || 'nå'
                                 }`}
-                            </Normaltekst>
+                            </BodyShort>
                         }
                         className="kvp-periode-valg"
                         value={kvp.opprettetDato}

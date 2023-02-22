@@ -1,6 +1,5 @@
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
@@ -30,7 +29,9 @@ const ReferatVisning = (props: Props) => {
 
     return (
         <div className={classNames('oppdater-referat', styles.underseksjon)}>
-            <Undertittel>Samtalereferat</Undertittel>
+            <Heading level="2" size="small">
+                Samtalereferat
+            </Heading>
             <EkspanderbartTekstomrade className="oppdater-referat__referat" tekst={referat} antallTegn={275} />
             <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="oppdater-referat-knapper">
                 <HiddenIfDiv hidden={erReferatPublisert}>

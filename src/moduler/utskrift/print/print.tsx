@@ -1,4 +1,4 @@
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
@@ -80,9 +80,9 @@ function Print(props: Props) {
                     </HiddenIfDiv>
                 </div>
             </div>
-            <Sidetittel tag="h1" className="printmodal-body__utskrift--overskrift">
+            <Heading level="1" size="xlarge" className="printmodal-body__utskrift--overskrift">
                 Aktivitetsplan
-            </Sidetittel>
+            </Heading>
             <HiddenIfSection hidden={printMelding === ''} className="printmodal-body__visprintmelding">
                 <p>{printMelding}</p>
             </HiddenIfSection>

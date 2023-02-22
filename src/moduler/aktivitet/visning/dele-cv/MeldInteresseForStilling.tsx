@@ -1,3 +1,4 @@
+import { WarningColored } from '@navikt/ds-icons';
 import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import React, { useState } from 'react';
@@ -108,6 +109,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 className=""
                 error={state.submittoken && state.fields.kanDeles.error}
             >
+                <BodyShort className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</BodyShort>
                 <Radio id="kanDeles" value={SvarType.JA.toString()}>
                     {JaSvarTekst}
                 </Radio>

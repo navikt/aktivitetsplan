@@ -1,4 +1,4 @@
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 
 interface MessageProps {
@@ -11,12 +11,12 @@ function Message(props: MessageProps) {
     if (undertekst) {
         return (
             <div>
-                <Element>{tittel}</Element>
-                <Normaltekst>{undertekst}</Normaltekst>
+                <Label>{tittel}</Label>
+                <BodyShort>{undertekst}</BodyShort>
             </div>
         );
     }
-    return <Element>{tittel}</Element>;
+    return <Label>{tittel}</Label>;
 }
 
 const melding_er = (antall: number) => (antall > 1 ? 'meldinger' : 'melding');

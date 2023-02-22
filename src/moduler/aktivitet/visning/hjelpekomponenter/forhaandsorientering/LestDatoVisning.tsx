@@ -1,4 +1,4 @@
-import { Undertekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { formaterDatoManed } from '../../../../../utils';
@@ -16,7 +16,7 @@ const LestDatoVisning = (props: Props) => {
         return null;
     }
 
-    return <Undertekst className={styles.lestDato}>Lest {formaterDatoManed(lest)}</Undertekst>;
+    return <BodyShort className={styles.lestDato}>Lest {formaterDatoManed(lest)}</BodyShort>;
 };
 
 export default LestDatoVisning;

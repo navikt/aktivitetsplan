@@ -1,7 +1,6 @@
 import { Back } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { Undertittel } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -63,9 +62,9 @@ function Navigasjonslinje() {
                 >
                     <span className={''}>Min side</span>
                 </Button>
-                <Undertittel className={styles.tittel} tag="h1">
+                <Heading className={styles.tittel} level="1" size="medium">
                     Aktivitetsplan
-                </Undertittel>
+                </Heading>
                 <a className={styles.tilDialog} href={DIALOG_PATH}>
                     <span className={styles.tilDialogTekst}>Dialog</span>
                     <DialogIkon antallUleste={antallUlesteDialoger} />

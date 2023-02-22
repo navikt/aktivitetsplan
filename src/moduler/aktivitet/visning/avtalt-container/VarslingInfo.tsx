@@ -1,12 +1,11 @@
-import { HelpText } from '@navikt/ds-react';
-import { Undertekst } from 'nav-frontend-typografi';
+import { HelpText, Label } from '@navikt/ds-react';
 import React from 'react';
 
 import styles from './VarslingInfo.module.less';
 
 const VarslingInfo = () => (
     <div className="flex">
-        <Undertekst className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</Undertekst>
+        <Label className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</Label>
         <HelpText className="ml-2">
             <div className={styles.maxWidth300}>
                 Brukeren mottar sms eller e-post (se KRR) med en lenke til aktiviteten. <br />

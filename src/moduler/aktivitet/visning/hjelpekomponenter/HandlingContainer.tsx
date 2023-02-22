@@ -1,5 +1,5 @@
 import { Next } from '@navikt/ds-icons';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -21,8 +21,8 @@ const LenkeSeksjon = (handling: LenkeMedType, erVeileder: boolean, i: number) =>
         <div key={i}>
             <a target="_blank" rel="noopener noreferrer" href={handling.url} className={styles.dialogLinke}>
                 <div>
-                    <Element>{handling.tekst}</Element>
-                    {handling.subtekst && <Normaltekst>{handling.subtekst}</Normaltekst>}
+                    <Label>{handling.tekst}</Label>
+                    {handling.subtekst && <BodyShort>{handling.subtekst}</BodyShort>}
                 </div>
                 <div className={styles.dialogPil} aria-hidden>
                     <Next />

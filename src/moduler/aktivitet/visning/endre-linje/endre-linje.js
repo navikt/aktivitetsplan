@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { useMemo } from 'react';
 import { UnmountClosed } from 'react-collapse';
@@ -43,7 +43,7 @@ function EndreLinje(props) {
                 disabled={!kanEndre}
             >
                 <div className={styles.endreVisning}>
-                    <Normaltekst className={styles.endreTittel}>{tittel}</Normaltekst>
+                    <BodyShort className={styles.endreTittel}>{tittel}</BodyShort>
                     <div>{endring ? null : visning}</div>
                 </div>
                 <VisibleIfDiv visible={kanEndre} className={styles.endreKnapp}>

@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { AVBRUTT_AV_SYSTEM, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
@@ -67,11 +66,11 @@ export const DeleCVAvbruttVisning = (props: Props) => {
     const tekst = getTekst(status, livslopsstatus, erHistorisk, svarfrist);
     const titteltekst = getTitteltekst(status, livslopsstatus, erHistorisk);
 
-    const Tittel = () => <Normaltekst className={styles.deleCVEndreTittel}>{overskrift}</Normaltekst>;
+    const Tittel = () => <BodyShort className={styles.deleCVEndreTittel}>{overskrift}</BodyShort>;
     const TittelMedUtloptTekst = () => (
         <>
             <Tittel />
-            <Element className={styles.deleCVTittelUtloptTekst}>{titteltekst}</Element>
+            <BodyShort className={styles.deleCVTittelUtloptTekst}>{titteltekst}</BodyShort>
         </>
     );
 

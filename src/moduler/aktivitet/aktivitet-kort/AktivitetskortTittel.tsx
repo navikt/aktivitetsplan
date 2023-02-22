@@ -1,5 +1,5 @@
+import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
@@ -16,9 +16,9 @@ export default function Aktivitetskorttittel({ aktivitet, harEndring, id }: Prop
     return (
         <div className={styles.header}>
             <NotifikasjonMarkering visible={harEndring} />
-            <Element tag="h3" id={id} className={classNames(styles.tittel, 'softbreak')}>
+            <Heading level="3" id={id} className={classNames(styles.tittel, 'softbreak')} size="xsmall">
                 {aktivitet.tittel}
-            </Element>
+            </Heading>
         </div>
     );
 }

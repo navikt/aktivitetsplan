@@ -1,5 +1,5 @@
+import { BodyShort } from '@navikt/ds-react';
 import { mount } from 'enzyme';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -50,7 +50,7 @@ describe('<HovedsideFeilmelding/>', () => {
             </Provider>
         );
         const feilmelding = wrapper.find(Feilmelding);
-        const actualTekst = feilmelding.find(Normaltekst).text().trim();
+        const actualTekst = feilmelding.find(BodyShort).text().trim();
 
         expect(feilmelding.length).toEqual(1);
         expect(actualTekst).toEqual(tekster.dialogFeilet);

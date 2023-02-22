@@ -1,5 +1,5 @@
+import { BodyShort, Detail, Label } from '@navikt/ds-react';
 import useFormstate, { FieldState } from '@nutgaard/use-formstate';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -92,8 +92,8 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <Normaltekst className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
-            <Undertekst className={styles.navAnsattTekst}>FOR NAV-ANSATT</Undertekst>
+            <BodyShort className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</BodyShort>
+            <Label className={styles.navAnsattTekst}>FOR NAV-ANSATT</Label>
 
             <div>
                 <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>

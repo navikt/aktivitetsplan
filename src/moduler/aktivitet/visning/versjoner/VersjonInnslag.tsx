@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
@@ -17,7 +17,7 @@ const VersjonInnslag = (props: Props) => {
     return (
         <div className={styles.versjonForAktivitetInnslag}>
             <Endringstekst aktivitet={aktivitet} forrigeAktivitet={forrigeAktivitet} />
-            <Normaltekst>{formaterDatoEllerTidSiden(aktivitet.endretDato)}</Normaltekst>
+            <BodyShort>{formaterDatoEllerTidSiden(aktivitet.endretDato)}</BodyShort>
         </div>
     );
 };

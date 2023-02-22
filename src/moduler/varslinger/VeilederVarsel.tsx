@@ -1,5 +1,4 @@
-import { Alert } from '@navikt/ds-react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { formaterDatoKortManed } from '../../utils';
@@ -23,10 +22,10 @@ const VeilederVarsel = (props: Props) => {
     return (
         <div className="container">
             <Alert variant="warning" className="mb-5">
-                <Normaltekst>
+                <BodyShort>
                     NAV har sendt varsel {dato}{' '}
                     <LenkeTilDialog dialogId={tilhorendeDialogId}>Les meldingen</LenkeTilDialog>
-                </Normaltekst>
+                </BodyShort>
             </Alert>
         </div>
     );

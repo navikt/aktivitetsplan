@@ -1,5 +1,5 @@
+import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 interface Props {
@@ -19,9 +19,9 @@ function DetaljFelt(props: Props) {
                 'detaljfelt--beskrivelse': beskrivelse,
             })}
         >
-            <Undertekst className="detaljfelt__tittel" tag="h2">
+            <Heading size="small" className="detaljfelt__tittel" level="2">
                 {tittel}
-            </Undertekst>
+            </Heading>
             {children}
         </div>
     );

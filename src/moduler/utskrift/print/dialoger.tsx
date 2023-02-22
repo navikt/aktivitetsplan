@@ -1,4 +1,4 @@
-import { Element, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Detail, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { Dialog } from '../../../datatypes/dialogTypes';
@@ -21,13 +21,17 @@ function Tittel(props: { dialog: Dialog }) {
     const dialog = props.dialog;
     if (dialog.aktivitetId) {
         return (
-            <Element tag="h2" className="printmodal-body__statusgruppe--overskrift">
+            <Heading level="2" size="medium" className="printmodal-body__statusgruppe--overskrift">
                 Dialog
-            </Element>
+            </Heading>
         );
     }
 
-    return <Undertittel className="printmodal-body__statusgruppe--overskrift">{dialog.overskrift}</Undertittel>;
+    return (
+        <Heading level="2" size="small" className="printmodal-body__statusgruppe--overskrift">
+            {dialog.overskrift}
+        </Heading>
+    );
 }
 
 export function DialogPrint(props: DialogProps) {
@@ -46,9 +50,9 @@ export function DialogPrint(props: DialogProps) {
             {henvendelserSynkende &&
                 henvendelserSynkende.map((h) => (
                     <div className="henvendelse" key={h.id}>
-                        <Undertekst className="detaljfelt__tittel" tag="h2">
+                        <Detail className="detaljfelt__tittel">
                             {`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(h.sendt)}`}
-                        </Undertekst>
+                        </Detail>
                         <CustomBodyLong formatLinebreaks formatLinks>
                             {h.tekst}
                         </CustomBodyLong>
@@ -74,9 +78,9 @@ export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
 
     return (
         <section className="printmodal-body__statusgrupper">
-            <Systemtittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+            <Heading level="1" size="medium" className="printmodal-body__statusgruppe--overskrift">
                 Dialogen med veileder
-            </Systemtittel>
+            </Heading>
             {sorterteDialoger.map((d) => (
                 <DialogPrint key={d.id} dialog={d} />
             ))}

@@ -1,5 +1,4 @@
-import { Accordion, Link } from '@navikt/ds-react';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -42,17 +41,19 @@ class InformasjonModal extends Component {
                 }}
             >
                 <ModalContainer className="informasjon-modal-container max-w-2xl p-6">
-                    <Innholdstittel className={styles.innholdsTittel}>Hva er aktivitetsplanen?</Innholdstittel>
-                    <Normaltekst className={styles.avsnitt}>
+                    <Heading level="2" size="small" className={styles.innholdsTittel}>
+                        Hva er aktivitetsplanen?
+                    </Heading>
+                    <BodyShort className={styles.avsnitt}>
                         I aktivitetsplanen holder du oversikt over det du gjør for å komme i jobb eller annen aktivitet.
                         Både du og veilederen din kan se og endre aktivitetsplanen.
-                    </Normaltekst>
-                    <Normaltekst>
+                    </BodyShort>
+                    <BodyShort>
                         Du kan legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Veilederen
                         kan blant annet legge inn forslag til aktiviteter eller skrive referat fra et møte dere har
                         hatt. Du kan kommunisere med veilederen din om aktivitetene i{' '}
                         <Link href={process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL}>dialogen</Link>.
-                    </Normaltekst>
+                    </BodyShort>
                     <Accordion className="mt-4">
                         <BrukePlanenPanel />
                         <OkonomiskStotte />

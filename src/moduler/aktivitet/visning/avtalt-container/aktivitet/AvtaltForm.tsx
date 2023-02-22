@@ -1,7 +1,6 @@
-import { Button, HelpText } from '@navikt/ds-react';
+import { Button, HelpText, Label } from '@navikt/ds-react';
 import useFormstate, { FieldState, SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
-import { Undertekst } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -116,7 +115,7 @@ const AvtaltForm = (props: Props) => {
                             med NAV"
                         </div>
                     </HelpText>
-                    <Undertekst className="text-right flex-grow">FOR NAV-ANSATT</Undertekst>
+                    <Label className="text-right flex-grow">FOR NAV-ANSATT</Label>
                 </div>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv

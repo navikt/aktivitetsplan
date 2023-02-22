@@ -1,5 +1,5 @@
+import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from 'redux';
@@ -123,7 +123,9 @@ function FilterVisning(props: FilterVisningTypes) {
     return (
         <VisibleIfDiv visible={harAktiviteter} className={classNames(className, 'filter')}>
             <form>
-                <Undertittel className="filter__tittel">{tekst}</Undertittel>
+                <Heading level="2" size="small" className="filter__tittel">
+                    {tekst}
+                </Heading>
                 {checkboxes}
             </form>
         </VisibleIfDiv>

@@ -1,18 +1,20 @@
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-interface UtskriftValgProps {
+interface Props {
     tittelId: string;
     tekstId: string;
 }
 
-function UtskriftValg(props: UtskriftValgProps) {
+const UtskriftValg = ({ tittelId, tekstId }: Props) => {
     return (
         <div>
-            <Undertittel>{props.tittelId}</Undertittel>
-            <Normaltekst>{props.tekstId}</Normaltekst>
+            <Heading level="2" size="medium">
+                {tittelId}
+            </Heading>
+            <BodyShort>{tekstId}</BodyShort>
         </div>
     );
-}
+};
 
 export default UtskriftValg;
