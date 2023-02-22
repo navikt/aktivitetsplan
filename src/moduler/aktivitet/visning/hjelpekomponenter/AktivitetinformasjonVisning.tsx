@@ -60,6 +60,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
 
     const history = useHistory();
     const goToEndre = () => {
+        loggEvent(APNE_ENDRE_AKTIVITET);
         history.push(endreAktivitetRoute(id));
     };
 
@@ -70,17 +71,6 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     <Sidetittel id="modal-aktivitetsvisning-header" className="softbreak">
                         {tittel}
                     </Sidetittel>
-                    <InternLenke
-                        className="endreknapp"
-                        role="button"
-                        hidden={!tillatEndring || isArenaAktivitet(props.valgtAktivitet)}
-                        href={endreAktivitetRoute(id)}
-                        onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
-                        disabled={laster || !underOppfolging}
-                    >
-                        {/* Endrer for samtalereferat nå, vi faser over til å bruke teksten "Endre detaljer" for flere typer etter hvert*/}
-                        {SAMTALEREFERAT_TYPE === type ? 'Endre detaljer' : 'Endre'}
-                    </InternLenke>
                 </div>
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
@@ -96,7 +86,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
             </div>
             <div className="mx-6 gap-4 flex flex-wrap">
                 {!tillatEndring || isArenaAktivitet(props.valgtAktivitet) ? null : (
-                    <Button onClick={goToEndre} variant="secondary">
+                    <Button disabled={laster || !underOppfolging} onClick={goToEndre} variant="secondary">
                         Endre på aktiviteten
                     </Button>
                 )}

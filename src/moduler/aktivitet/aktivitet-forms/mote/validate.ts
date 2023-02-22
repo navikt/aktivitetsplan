@@ -1,6 +1,4 @@
-import moment, { now } from 'moment';
-
-import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
+import { isBefore, isValid } from 'date-fns';
 
 const TITTEL_MAKS_LENGDE = 100;
 const TITTEL_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
@@ -46,17 +44,12 @@ export const validateAdresse = (_avtalt: boolean, value: string) => {
 };
 
 export const validateMoteDato = (value: string) => {
-    if (!erVerdiSatt(value)) {
-        return 'Du må fylle ut dato for møtet';
-    }
-
-    const fraDato = moment(value);
-
-    if (fraDato.isBefore(moment(now()), 'day')) {
+    if (!erVerdiSatt(value)) return 'Du må fylle ut dato for møtet';
+    if (isValid(value)) return 'Datoen er ugyldig';
+    const fraDato = new Date(value);
+    if (isBefore(fraDato, new Date())) {
         return 'Datoen må tidligst være i dag';
     }
-
-    return validerDato(value);
 };
 
 export const validateHensikt = (avtalt: boolean, value: string) => {

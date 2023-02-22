@@ -1,12 +1,11 @@
-import { Alert, Link, TextField } from '@navikt/ds-react';
+import { Alert, Link, TextField, UNSAFE_useDatepicker } from '@navikt/ds-react';
+import DatePicker from '@navikt/ds-react/esm/date/datepicker/DatePicker';
 import useFormstate from '@nutgaard/use-formstate';
-import moment, { now } from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT } from '../../../../constant';
 import { MoteAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
@@ -29,9 +28,9 @@ import {
 } from './validate';
 
 interface Props {
-    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
+    onSubmit: (data: { status: string; avtalt: boolean } & FormType) => Promise<any>;
     isDirtyRef?: { current: boolean };
-    aktivitet: MoteAktivitet;
+    aktivitet?: MoteAktivitet;
 }
 
 type FormType = {
@@ -79,34 +78,39 @@ export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter d
 const MoteAktivitetForm = (props: Props) => {
     const { aktivitet, isDirtyRef, onSubmit } = props;
 
-    const validator = useFormstate<FormType, MoteAktivitet>({
-        tittel: (val, _, a) => validateTittel(a.avtalt, val),
-        dato: validateMoteDato,
-        klokkeslett: (val, _, a) => validateKlokkeslett(a.avtalt, val),
-        varighet: (val, _, a) => validateVarighet(a.avtalt, val),
-        kanal: (val, _, a) => validateKanal(a.avtalt, val),
-        adresse: (val, _, a) => validateAdresse(a.avtalt, val),
-        beskrivelse: (val, _, a) => validateHensikt(a.avtalt, val),
-        forberedelser: (val, _, a) => validateForberedelser(a.avtalt, val),
+    const validator = useFormstate<FormType, Partial<MoteAktivitet>>({
+        tittel: (val, _, a) => validateTittel(a?.avtalt || false, val),
+        klokkeslett: (val, _, a) => validateKlokkeslett(a?.avtalt || false, val),
+        varighet: (val, _, a) => validateVarighet(a?.avtalt || false, val),
+        kanal: (val, _, a) => validateKanal(a?.avtalt || false, val),
+        adresse: (val, _, a) => validateAdresse(a?.avtalt || false, val),
+        beskrivelse: (val, _, a) => validateHensikt(a?.avtalt || false, val),
+        forberedelser: (val, _, a) => validateForberedelser(a?.avtalt || false, val),
+        dato: (val) => validateMoteDato(val),
     });
 
-    const maybeAktivitet = aktivitet || {};
-    const avtalt = maybeAktivitet.avtalt === true;
-    const dato = beregnKlokkeslettVarighet(maybeAktivitet);
-    const beskrivelse = maybeAktivitet.beskrivelse || '';
+    const avtalt = aktivitet?.avtalt || false;
+    const dato = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
+    const beskrivelse = aktivitet?.beskrivelse || '';
 
     const initalValue = {
-        tittel: maybeAktivitet.tittel || '',
-        dato: maybeAktivitet.fraDato || '',
-        klokkeslett: dato.klokkeslett ? dato.klokkeslett : '10:00',
-        varighet: dato.varighet ? dato.varighet : '00:45',
-        kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
-        adresse: maybeAktivitet.adresse || '',
+        tittel: aktivitet?.tittel || '',
+        klokkeslett: dato?.klokkeslett ? dato.klokkeslett : '10:00',
+        varighet: dato?.varighet ? dato.varighet : '00:45',
+        kanal: aktivitet?.kanal || OPPMOTE_KANAL,
+        adresse: aktivitet?.adresse || '',
         beskrivelse: beskrivelse ? beskrivelse : defaultBeskrivelse,
-        forberedelser: maybeAktivitet.forberedelser || '',
+        forberedelser: aktivitet?.forberedelser || '',
+        dato: aktivitet?.fraDato || '',
     };
 
-    const state = validator(initalValue, aktivitet);
+    const state = validator(initalValue);
+
+    const { datepickerProps, inputProps, selectedDay } = UNSAFE_useDatepicker({
+        onDateChange: (dato) => {
+            state.setValue('dato', dato?.toString() || '');
+        },
+    });
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -114,12 +118,13 @@ const MoteAktivitetForm = (props: Props) => {
 
     return (
         <form
-            onSubmit={state.onSubmit((x) =>
+            onSubmit={state.onSubmit((formValues) =>
                 onSubmit({
-                    ...x,
-                    ...beregnFraTil(x),
+                    ...formValues,
+                    ...beregnFraTil(formValues),
                     status: STATUS_PLANLAGT,
                     avtalt: false,
+                    dato: selectedDay!!.toString(),
                 })
             )}
             autoComplete="off"
@@ -131,12 +136,15 @@ const MoteAktivitetForm = (props: Props) => {
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    {/*<DatoField*/}
-                    {/*    limitations={{ minDate: moment(now()).toISOString() }}*/}
-                    {/*    label="Dato *"*/}
-                    {/*    {...state.fields.dato}*/}
-                    {/*    required*/}
-                    {/*/>*/}
+                    <DatePicker {...datepickerProps} disabled={[{ before: new Date() }]}>
+                        <DatePicker.Input
+                            {...state.fields.dato.input}
+                            {...inputProps}
+                            required
+                            label={'Dato *'}
+                            error={state.fields.dato.touched ? state.fields.dato.error : undefined}
+                        />
+                    </DatePicker>
                     <TextField
                         label="Klokkeslett *"
                         {...state.fields.klokkeslett.input}
@@ -164,7 +172,7 @@ const MoteAktivitetForm = (props: Props) => {
                     visTellerFra={200}
                     {...state.fields.forberedelser}
                 />
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+                <FormErrorSummary submittoken={state.submittoken} errors={{ ...state.errors }} />
             </div>
             <LagreAktivitet />
         </form>

@@ -1,6 +1,7 @@
 import { Button, HelpText } from '@navikt/ds-react';
 import useFormstate, { FieldState, SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
+import { Undertekst } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -10,7 +11,6 @@ import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslast
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
-import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import { useKanSendeVarsel } from '../avtaltHooks';
 import styles from './AvtaltForm.module.less';
 import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
@@ -95,25 +95,29 @@ const AvtaltForm = (props: Props) => {
     const avhengigheter = useSelector(selectNivaa4Status);
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
-            <div className="">
-                <ForNavAnsattMarkeringWrapper>
-                    <div className={styles.checkbox}>
-                        <Checkbox
-                            disabled={lasterData}
-                            {...(state.fields.avtaltCheckbox as FieldState & { error: never })}
-                            className={styles.checkboxNoSpace}
-                        >
-                            Avtalt med NAV
-                        </Checkbox>
-                        <HelpText id="hjelp" className="ml-2">
-                            <div className={styles.maxWidth300}>
-                                Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
-                                "Avtalt med NAV"
-                            </div>
-                        </HelpText>
-                    </div>
-                </ForNavAnsattMarkeringWrapper>
+        <form
+            onSubmit={state.onSubmit(onSubmit)}
+            noValidate
+            autoComplete="off"
+            className={classNames('bg-surface-alt-3-subtle py-2 px-4 mx-6 border border-border-alt-3 rounded-md')}
+        >
+            <div>
+                <div className={'flex items-center'}>
+                    <Checkbox
+                        disabled={lasterData}
+                        {...(state.fields.avtaltCheckbox as FieldState & { error: never })}
+                        className={styles.checkboxNoSpace}
+                    >
+                        Avtalt med NAV
+                    </Checkbox>
+                    <HelpText id="hjelp" className="ml-2 justify-self-start">
+                        <div className={styles.maxWidth300}>
+                            Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt
+                            med NAV"
+                        </div>
+                    </HelpText>
+                    <Undertekst className="text-right flex-grow">FOR NAV-ANSATT</Undertekst>
+                </div>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv
                         className={classNames('space-y-4', kanSendeForhaandsvarsel && styles.innhold)}

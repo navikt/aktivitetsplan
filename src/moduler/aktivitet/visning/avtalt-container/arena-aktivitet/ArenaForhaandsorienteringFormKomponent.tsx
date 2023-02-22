@@ -27,17 +27,18 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
 
     return (
         <>
-            <DeleLinje />
             <div className={aktivitetsvisningStyles.underseksjon}>
-                <KanIkkeLeggeTilForhaandsorienteringInfotekst merEnnSyvDagerTil={merEnnSyvDagerTil} />
-                <ArenaForhaandsorienteringForm
-                    setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
-                    aktivitet={aktivitet}
-                    setForhandsorienteringType={setForhandsorienteringType}
-                    hidden={!merEnnSyvDagerTil}
-                />
+                {merEnnSyvDagerTil ? (
+                    <KanIkkeLeggeTilForhaandsorienteringInfotekst />
+                ) : (
+                    <ArenaForhaandsorienteringForm
+                        setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
+                        aktivitet={aktivitet}
+                        setForhandsorienteringType={setForhandsorienteringType}
+                        hidden={!merEnnSyvDagerTil}
+                    />
+                )}
             </div>
-            <DeleLinje />
         </>
     );
 };

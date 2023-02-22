@@ -8,6 +8,7 @@ export const validerDato = (value: string | null, tidligsteFom?: string, seneste
     }
 
     if (!erGyldigISODato(value)) {
+        console.log(value);
         return 'Datoen må være en gyldig dato på formatet dd.mm.åååå';
     }
 

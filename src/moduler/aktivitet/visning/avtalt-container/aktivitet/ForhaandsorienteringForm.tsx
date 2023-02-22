@@ -97,7 +97,10 @@ const ForhaandsorienteringForm = (props: Props) => {
         [EksternAktivitetType.ARENA_TILTAK_TYPE].includes(aktivitet.eksternAktivitet.type);
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)}>
+        <form
+            onSubmit={state.onSubmit(onSubmit)}
+            className="bg-surface-alt-3-subtle py-2 px-4 mx-6 border border-border-alt-3 rounded-md"
+        >
             <div>
                 <ForNavAnsattMarkeringWrapper>
                     {isGammelArenaAktivitet && (

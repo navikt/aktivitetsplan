@@ -1,3 +1,4 @@
+import { Alert } from '@navikt/ds-react';
 import { Values } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import React from 'react';
@@ -11,8 +12,6 @@ import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
 import aktivitetvisningStyles from './../../Aktivitetsvisning.module.less';
-import aktivitetsvisningStyles from '../../Aktivitetsvisning.module.less';
-import DeleLinje from '../../delelinje/delelinje';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from '../arena-aktivitet/KanIkkeLeggeTilForhaandsorienteringInfotekst';
 import { useSendAvtaltMetrikker } from '../avtaltHooks';
 import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from '../utilsForhaandsorientering';
@@ -54,17 +53,17 @@ const AvtaltFormContainer = (props: Props) => {
 
     return (
         <>
-            <DeleLinje />
             {aktivitet.avtalt && aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
-                <div className={aktivitetsvisningStyles.underseksjon}>
-                    <KanIkkeLeggeTilForhaandsorienteringInfotekst merEnnSyvDagerTil={!mindreEnnSyvDagerTil} />
+                mindreEnnSyvDagerTil ? (
+                    <KanIkkeLeggeTilForhaandsorienteringInfotekst />
+                ) : (
                     <ForhaandsorienteringForm
                         setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
                         aktivitet={aktivitet}
                         hidden={mindreEnnSyvDagerTil}
                         setForhandsorienteringType={setForhandsorienteringType}
                     />
-                </div>
+                )
             ) : (
                 <AvtaltForm
                     className={classNames(aktivitetvisningStyles.underseksjon, 'avtalt-container')}
@@ -75,7 +74,6 @@ const AvtaltFormContainer = (props: Props) => {
                     onSubmit={onSubmit}
                 />
             )}
-            <DeleLinje />
         </>
     );
 };
