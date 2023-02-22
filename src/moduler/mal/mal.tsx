@@ -53,7 +53,7 @@ function Mal() {
                     ? 'Mitt mål fra en tidligere periode'
                     : 'Mitt mål'}
             </Heading>
-            <div className="aktivitetmal__sub-header">
+            <div className="p-8">
                 <ReadMore header="Tips til mål">
                     Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
                     <ul className="list-disc mt-4 pl-8">

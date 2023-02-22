@@ -70,8 +70,8 @@ function MalForm(props: Props) {
                     textareaClass={textAreaCls}
                     visTellerFra={150}
                     autoFocus
-                    label=""
-                    aria-label="Ditt mål"
+                    label="Mitt mål (obligatorisk)"
+                    aria-label="Mitt mål"
                     maxLength={500}
                     {...state.fields.mal}
                 />

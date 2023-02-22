@@ -1,8 +1,8 @@
+import { Accordion, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
-import EkspanderbarLinje from '../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoEllerTidSiden } from '../../utils';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectErVeileder } from '../identitet/identitet-selector';
@@ -30,7 +30,7 @@ function malListeVisning(gjeldendeMal: Mal, erVeileder: boolean) {
     );
 }
 
-function MalHistorikk() {
+const MalHistorikk = () => {
     const historiskeMal = useSelector(selectMalListe, shallowEqual);
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
 
@@ -39,13 +39,17 @@ function MalHistorikk() {
     }
 
     return (
-        <>
-            <hr className="aktivitetmal__delelinje" />
-            <EkspanderbarLinje tittel="Tidligere lagrede mål" kanToogle aapneTekst="Åpne" lukkeTekst="Lukk">
-                {historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}
-            </EkspanderbarLinje>
-        </>
+        <Accordion>
+            <Accordion.Item>
+                <Accordion.Header>
+                    <Heading level="2" size="small">
+                        Tidligere lagrede mål
+                    </Heading>
+                </Accordion.Header>
+                <Accordion.Content>{historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}</Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
     );
-}
+};
 
 export default MalHistorikk;
