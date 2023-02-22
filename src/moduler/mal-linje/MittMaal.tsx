@@ -1,7 +1,7 @@
 import './mitt-maal.less';
 
 import { Add } from '@navikt/ds-icons';
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
 import React, { useEffect } from 'react';
@@ -100,10 +100,10 @@ function MittMaal() {
                     dispatch(lesMal());
                 }}
             >
-                <BodyShort id="mittmal_header">
+                <div id="mittmal_header">
                     <NotifikasjonMarkering visible={nyEndring} />
                     Ditt mål
-                </BodyShort>
+                </div>
                 <div className="mittmal_content">
                     <MalContent disabled={disabled} mal={mal} />
                 </div>
