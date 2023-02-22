@@ -1,8 +1,11 @@
 import useFormstate from '@nutgaard/use-formstate';
+import { Formstate } from '@nutgaard/use-formstate/dist/types/domain';
 import PT from 'prop-types';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
+import { EgenAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
@@ -16,14 +19,38 @@ import LagreAktivitet from '../LagreAktivitet';
 import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke } from '../validate';
 import { validateTilDato, validateTittel } from './validate';
 
-function erAvtalt(aktivitet) {
-    return aktivitet.avtalt === true;
+function erAvtalt(aktivitet?: Partial<EgenAktivitet>) {
+    return aktivitet?.avtalt || false;
+}
+declare const window: {
+    appconfig: { VIS_MALER: boolean };
+};
+
+interface Props {
+    onSubmit: (values: EgenAktivitetFormValues) => Promise<void>;
+    aktivitet?: EgenAktivitet;
+    isDirtyRef: MutableRefObject<boolean>;
+    endre: boolean;
 }
 
-function EgenAktivitetForm(props) {
+type EgenAktivitetFormValues = {
+    tittel: string;
+    fraDato: string;
+    tilDato: string;
+    periodeValidering: string;
+    hensikt: string;
+    beskrivelse: string;
+    oppfolging: string;
+    lenke: string;
+};
+
+function EgenAktivitetForm(props: Props) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
-    const validator = useFormstate({
+    const validator: (
+        initialValues: EgenAktivitetFormValues,
+        props: Partial<EgenAktivitet>
+    ) => Formstate<EgenAktivitetFormValues> = useFormstate<EgenAktivitetFormValues, Partial<EgenAktivitet>>({
         tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
         fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
         tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
@@ -34,28 +61,27 @@ function EgenAktivitetForm(props) {
         lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
     });
 
-    const maybeAktivitet = aktivitet || {};
+    const avtalt = aktivitet?.avtalt === true;
 
-    const avtalt = maybeAktivitet.avtalt === true;
-
-    const initalValues = {
-        tittel: maybeAktivitet.tittel || '',
-        fraDato: maybeAktivitet.fraDato || '',
-        tilDato: maybeAktivitet.tilDato || '',
+    const initalValues: EgenAktivitetFormValues = {
+        tittel: aktivitet?.tittel || '',
+        fraDato: aktivitet?.fraDato || '',
+        tilDato: aktivitet?.tilDato || '',
         periodeValidering: '',
-        hensikt: maybeAktivitet.hensikt || '',
-        beskrivelse: maybeAktivitet.beskrivelse || '',
-        oppfolging: maybeAktivitet.oppfolging || '',
-        lenke: maybeAktivitet.lenke || '',
+        hensikt: aktivitet?.hensikt || '',
+        beskrivelse: aktivitet?.beskrivelse || '',
+        oppfolging: aktivitet?.oppfolging || '',
+        lenke: aktivitet?.lenke || '',
     };
 
-    const state = validator(initalValues, aktivitet);
+    const state = validator(initalValues, aktivitet || {});
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
 
-    const reinitalize = (newInitalValues) => state.reinitialize({ ...initalValues, ...newInitalValues });
+    const reinitalize = (newInitalValues: EgenAktivitetFormValues) =>
+        state.reinitialize({ ...initalValues, ...newInitalValues });
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
@@ -68,8 +94,11 @@ function EgenAktivitetForm(props) {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        {/*<DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} required />*/}
-                        {/*<DatoField label="Til dato *" {...state.fields.tilDato} required />*/}
+                        <MaybeAvtaltDateRangePicker
+                            formState={state}
+                            aktivitet={aktivitet}
+                            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}
+                        />
                     </div>
                 </PeriodeValidering>
 

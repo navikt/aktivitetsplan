@@ -46,7 +46,7 @@ function IJobbAktivitetForm(props: Props) {
 
     const validator: (
         initialValues: IJobbAktivitetFormValues,
-        props: Partial<IJobbAktivitetFormValues>
+        props: Partial<IJobbAktivitet>
     ) => Formstate<IJobbAktivitetFormValues> = useFormstate<IJobbAktivitetFormValues, Partial<IJobbAktivitet>>({
         tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
         fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
