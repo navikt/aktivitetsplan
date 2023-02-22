@@ -4,7 +4,6 @@ import { Add } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -16,6 +15,7 @@ import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
+import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';
@@ -40,7 +40,7 @@ function MalText(props: MalTextProps) {
         );
     }
 
-    return <Tekstomrade>{props.mal}</Tekstomrade>;
+    return <CustomBodyLong formatLinebreaks>{props.mal}</CustomBodyLong>;
 }
 
 interface MalContentProps {

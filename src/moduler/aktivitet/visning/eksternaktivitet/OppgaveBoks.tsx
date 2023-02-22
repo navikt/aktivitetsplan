@@ -1,10 +1,10 @@
 import { Alert } from '@navikt/ds-react';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Oppgave, OppgaveLenke } from '../../../../datatypes/eksternAktivitetTypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
+import CustomBodyLong from '../hjelpekomponenter/CustomBodyLong';
 import styles from './OppgaveBoks.module.less';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 const customAlertStripe = (oppgave: Oppgave) => (
     <Alert variant="warning" className="w-full mb-3">
         <h3 className={styles.tekst}>{oppgave.tekst}</h3>
-        {oppgave.subtekst && <Tekstomrade className={styles.subtekst}>{oppgave.subtekst}</Tekstomrade>}
+        {oppgave.subtekst && <CustomBodyLong className={styles.subtekst}>{oppgave.subtekst}</CustomBodyLong>}
         <a href={oppgave.url} target="_blank" rel="noopener noreferrer" className="knapp knapp--hoved">
             {oppgave.knapptekst}
         </a>

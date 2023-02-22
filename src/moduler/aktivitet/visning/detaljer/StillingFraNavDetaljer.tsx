@@ -27,12 +27,12 @@ export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
             </div>
             <a
                 href={url}
-                className="knapp knapp--mini"
+                className="mt-4"
                 target="_blank"
                 onClick={() => loggStillingFraNavStillingslenkeKlikk(erVeileder)}
             >
                 Les mer om stillingen
-                <Next />
+                <Next className="inline" />
             </a>
         </>
     );

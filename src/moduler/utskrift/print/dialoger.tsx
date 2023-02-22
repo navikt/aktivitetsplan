@@ -1,9 +1,9 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Element, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
+import CustomBodyLong from '../../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 
 interface DialogProps {
     dialog?: Dialog;
@@ -49,7 +49,9 @@ export function DialogPrint(props: DialogProps) {
                         <Undertekst className="detaljfelt__tittel" tag="h2">
                             {`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(h.sendt)}`}
                         </Undertekst>
-                        <Tekstomrade>{h.tekst}</Tekstomrade>
+                        <CustomBodyLong formatLinebreaks formatLinks>
+                            {h.tekst}
+                        </CustomBodyLong>
                     </div>
                 ))}
         </div>

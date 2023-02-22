@@ -1,10 +1,8 @@
-import { LinebreakRule, ParagraphRule } from '@navikt/textparser';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
-import { ShortenedLinkRule } from '../../../../felles-komponenter/utils/rules';
+import CustomBodyLong from './CustomBodyLong';
 import DetaljFelt from './detalj-felt';
 
 interface Props {
@@ -24,9 +22,9 @@ const InnholdsWrapper = (props: ChildProps) => {
     const { children, formattertTekst } = props;
     if (formattertTekst) {
         return (
-            <Tekstomrade className="detaljfelt__tekst" rules={[ShortenedLinkRule, LinebreakRule, ParagraphRule]}>
+            <CustomBodyLong className="detaljfelt__tekst" formatLinks formatLinebreaks>
                 {children}
-            </Tekstomrade>
+            </CustomBodyLong>
         );
     } else {
         return <Normaltekst className="detaljfelt__tekst">{children}</Normaltekst>;

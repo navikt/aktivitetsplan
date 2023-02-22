@@ -1,8 +1,8 @@
 import { BodyShort, Heading } from '@navikt/ds-react';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 
 import { formaterDatoManed } from '../../../../utils';
+import CustomBodyLong from '../../../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import styles from './ForhaandsorienteringPrint.module.less';
 
 interface Props {
@@ -22,7 +22,7 @@ const ForhaandsorienteringPrint = (props: Props) => {
             <Heading level="2" size="xsmall" className={styles.tittel}>
                 Informasjon om ansvaret ditt
             </Heading>
-            <Tekstomrade className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</Tekstomrade>
+            <CustomBodyLong className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</CustomBodyLong>
 
             {forhaandsorienteringLest && (
                 <BodyShort size="small" className={styles.lestTekst}>

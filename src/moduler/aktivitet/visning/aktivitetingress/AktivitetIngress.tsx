@@ -1,7 +1,7 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 
 import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import CustomBodyLong from '../hjelpekomponenter/CustomBodyLong';
 
 const aktivitetingress: Record<string, string> = {
     BEHANDLING:
@@ -37,7 +37,7 @@ type Props = {
 const AktivitetIngress = ({ aktivitetstype }: Props) => {
     return (
         <section className="aktivitetingress">
-            <Tekstomrade className="aktivitetingress__tekst">{aktivitetingress[aktivitetstype]}</Tekstomrade>
+            <CustomBodyLong className="aktivitetingress__tekst">{aktivitetingress[aktivitetstype]}</CustomBodyLong>
         </section>
     );
 };
