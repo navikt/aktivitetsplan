@@ -1,4 +1,4 @@
-import { endOfToday, formatISO, subDays } from 'date-fns';
+import { endOfToday, format, formatISO, subDays } from 'date-fns';
 
 import { toDate } from '../utils';
 
@@ -9,5 +9,5 @@ export const dagerSiden = (dato: string, antallDager: number): string | null => 
     if (!datoDate) return null;
 
     const prevDate = subDays(datoDate, antallDager);
-    return prevDate.toISOString();
+    return format(prevDate, 'yyyy-MM-dd');
 };

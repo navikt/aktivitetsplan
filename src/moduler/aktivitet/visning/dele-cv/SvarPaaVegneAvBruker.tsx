@@ -25,7 +25,6 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
     if (!erVeileder) return null;
 
     const feil = formhandler.touched ? formhandler.error : undefined;
-    // const cls = classNames(styles.svarPaaVegneAvBruker, { [styles.feil]: !!feil });
     return (
         <div className="mb-4">
             <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>

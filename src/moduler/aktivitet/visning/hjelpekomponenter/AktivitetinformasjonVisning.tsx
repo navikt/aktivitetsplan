@@ -66,7 +66,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
         <div>
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <div className={styles.header}>
-                    <Heading level="2" size="medium" id="modal-aktivitetsvisning-header" className="softbreak">
+                    <Heading level="1" size="large" id="modal-aktivitetsvisning-header">
                         {tittel}
                     </Heading>
                 </div>

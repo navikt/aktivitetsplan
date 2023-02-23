@@ -1,4 +1,4 @@
-import { BodyShort, Detail, Label } from '@navikt/ds-react';
+import { BodyShort, Label } from '@navikt/ds-react';
 import useFormstate, { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
