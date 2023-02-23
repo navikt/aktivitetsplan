@@ -10,7 +10,7 @@ import {
 } from '../../constant';
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 
-const hjelpetekster = {
+const hjelpetekster: Record<AktivitetStatus, { tittel: string; innhold: string }> = {
     [STATUS_BRUKER_ER_INTRESSERT]: {
         tittel: 'Informasjon om statusen Forslag',
         innhold:
@@ -43,12 +43,8 @@ interface Props {
 
 const AktivitetsplanHjelpetekst = ({ status }: Props) => {
     const config = hjelpetekster[status];
-
-    if (!config) {
-        return null;
-    }
-
     const { tittel, innhold } = config;
+
     return (
         <HelpText placement={'bottom-end'} id={status} title={tittel}>
             <div className="max-width-300">{innhold}</div>

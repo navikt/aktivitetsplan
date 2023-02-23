@@ -102,7 +102,7 @@ function MittMaal() {
             >
                 <div id="mittmal_header">
                     <NotifikasjonMarkering visible={nyEndring} />
-                    Ditt mål
+                    Mitt mål
                 </div>
                 <div className="mittmal_content">
                     <MalContent disabled={disabled} mal={mal} />
