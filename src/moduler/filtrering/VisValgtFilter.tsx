@@ -1,3 +1,4 @@
+import { Chips } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PT from 'prop-types';
 import React from 'react';
@@ -6,6 +7,7 @@ import { connect } from 'react-redux';
 import { Store } from 'redux';
 
 import { ReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import { VistOppfolgingsPeriode } from '../oppfolging-status/oppfolging-selector';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
@@ -15,7 +17,7 @@ import {
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
 import { selectFilterSlice } from './filter/filter-selector';
-import { PeriodeLabel } from './filter/periode-filter';
+import { PeriodeLabel } from './filter/PeriodeFilter';
 import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
 type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
@@ -62,39 +64,48 @@ function VisValgtFilter(props: Props) {
                 return filterType;
         }
     };
+
     return (
         <div className={classNames('filtrering-label-container')}>
-            {Object.entries(filterSlice as Record<string, Record<string, string> | null>).map(([filterCategoryKey, activeFiltersMap]) => {
-                if (activeFiltersMap === null) return null
-                if (filterCategoryKey === 'historiskPeriode') {
-                    if (!activeFiltersMap) {
-                        return null;
-                    }
-                    return (
-                        <FiltreringLabel
-                            key={"historiskPeriode"}
-                            label={<PeriodeLabel historiskPeriode={activeFiltersMap} />}
-                            slettFilter={() => doVelgHistoriskPeriode(null)}
-                        />
-                    );
-                }
+            <Chips>
+                {Object.entries(filterSlice as Record<string, Record<string, string> | null>).map(
+                    ([filterCategoryKey, activeFiltersMap]) => {
+                        if (activeFiltersMap === null) return null;
+                        if (filterCategoryKey === 'historiskPeriode') {
+                            if (!activeFiltersMap) {
+                                return null;
+                            }
+                            return (
+                                <FiltreringLabel
+                                    key={'historiskPeriode'}
+                                    label={
+                                        <PeriodeLabel
+                                            historiskPeriode={activeFiltersMap as unknown as VistOppfolgingsPeriode}
+                                        />
+                                    }
+                                    slettFilter={() => doVelgHistoriskPeriode(null)}
+                                />
+                            );
+                        }
 
-                return Object.entries(activeFiltersMap)
-                    .filter(([_, isFilterEnabled]) => isFilterEnabled)
-                    .map(([activeFilterKey, _]) => {
-                        const filterValues = setFilterValues(filterCategoryKey, activeFilterKey);
-                        if (typeof filterValues === 'string') return null;
-                        return (
-                            <FiltreringLabel
-                                key={activeFilterKey}
-                                label={<FormattedMessage id={filterValues.tekstPath.toLowerCase()} />}
-                                slettFilter={() => {
-                                    filterValues.func(activeFilterKey);
-                                }}
-                            />
-                        );
-                    });
-            })}
+                        return Object.entries(activeFiltersMap)
+                            .filter(([_, isFilterEnabled]) => isFilterEnabled)
+                            .map(([activeFilterKey, _]) => {
+                                const filterValues = setFilterValues(filterCategoryKey, activeFilterKey);
+                                if (typeof filterValues === 'string') return null;
+                                return (
+                                    <FiltreringLabel
+                                        key={activeFilterKey}
+                                        label={<FormattedMessage id={filterValues.tekstPath.toLowerCase()} />}
+                                        slettFilter={() => {
+                                            filterValues.func(activeFilterKey);
+                                        }}
+                                    />
+                                );
+                            });
+                    }
+                )}
+            </Chips>
         </div>
     );
 }

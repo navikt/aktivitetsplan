@@ -1,3 +1,5 @@
+import { string } from 'prop-types';
+
 export interface Me {
     erBruker: boolean;
     erVeileder: boolean;
@@ -35,6 +37,10 @@ export interface OppfolgingsPeriode {
     startDato: string;
     veileder?: string | null;
 }
+
+export type HistoriskOppfolgingsPeriode = Omit<OppfolgingsPeriode, 'sluttDato'> & {
+    sluttDato: string;
+};
 
 export interface KvpPeriode {
     opprettetDato: string;

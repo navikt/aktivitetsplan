@@ -1,14 +1,11 @@
-import classNames from 'classnames';
-import PT from 'prop-types';
-import React from 'react';
+import { Button } from '@navikt/ds-react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { isArenaAktivitet } from '../../datatypes/aktivitetTypes';
-import Dropdown from '../../felles-komponenter/dropdown/dropdown';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
+import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
+import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import * as AppPT from '../../proptypes';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import AktivitetStatusFilter from './filter/AktivitetStatusFilter';
 import AktivitetTypeFilter from './filter/AktivitetTypeFilter';
@@ -16,7 +13,7 @@ import ArenaEtikettFilter from './filter/ArenaEtikettFilter';
 import AvtaltMedNavFilter from './filter/AvtaltFilter';
 import EtikettFilter from './filter/EtikettFilter';
 
-function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
+function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe: AlleAktiviteter[]) {
     const muligeFilterKombinasjoner = aktivitetsListe.reduce(
         (res, aktivitet) => {
             const { status, type, etikett, avtalt } = aktivitet;
@@ -42,51 +39,57 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     );
 
     return Object.keys(muligeFilterKombinasjoner).reduce(
-        (acc, key) => muligeFilterKombinasjoner[key].size > 1 || acc,
+        (acc, key) => muligeFilterKombinasjoner[key as keyof typeof muligeFilterKombinasjoner].size > 1 || acc,
         false
     );
 }
 
-function Filter({ avhengigheter, harAktivitet, className }) {
+interface Props {
+    avhengigheter: Avhengighet[];
+    harAktivitet: boolean;
+    className: string;
+}
+
+function Filter({ avhengigheter, harAktivitet, className }: Props) {
+    const [open, setOpen] = useState(false);
+    /*
     const resolvedClassNames = classNames(className, 'filter', {
         skjult: !harAktivitet,
-    });
+    });*/
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
-            <VisibleIfDiv className={resolvedClassNames}>
-                <Dropdown
+            <VisibleIfDiv className="relative">
+                <Button
+                    variant="secondary"
                     name="filter"
-                    knappeTekst="Filtrer"
-                    className="dropdown--alignright"
-                    onOpen={() => {
+                    className="relative"
+                    onClick={() => {
+                        setOpen(!open);
                         loggEvent(OPNE_AKTIVITETFILTER);
                     }}
                 >
-                    <div className="filter__container">
+                    Filtrer
+                </Button>
+                {open ? (
+                    <div className="rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto">
                         <AvtaltMedNavFilter />
                         <EtikettFilter />
                         <ArenaEtikettFilter />
                         <AktivitetStatusFilter />
                         <AktivitetTypeFilter />
                     </div>
-                </Dropdown>
+                ) : null}
             </VisibleIfDiv>
         </Innholdslaster>
     );
 }
-
-Filter.propTypes = {
-    avhengigheter: AppPT.avhengigheter.isRequired,
-    harAktivitet: PT.bool,
-    className: PT.string,
-};
 
 Filter.defaultProps = {
     harAktivitet: true,
     className: '',
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     return {

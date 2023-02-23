@@ -48,26 +48,26 @@ function Mal() {
 
     return (
         <MalModal onRequestClosed={onModalRequestClosed}>
-            <Heading level="1" size="large" className="aktivitetmal__header">
-                {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
-                    ? 'Mitt mål fra en tidligere periode'
-                    : 'Mitt mål'}
-            </Heading>
-            <div className="p-8">
-                <ReadMore header="Tips til mål">
+            <div className="p-4">
+                <Heading level="1" size="large" className="mb-8">
+                    {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
+                        ? 'Mitt mål fra en tidligere periode'
+                        : 'Mitt mål'}
+                </Heading>
+                <ReadMore className="mb-8" header="Tips til mål">
                     Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
                     <ul className="list-disc mt-4 pl-8">
                         <li>Hva er målet på kort sikt? Hva er målet på lengre sikt?</li>
                         <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
                     </ul>
                 </ReadMore>
+                <Innholdslaster avhengigheter={avhengigheter} alleOK>
+                    <section>
+                        <MalContainer dirtyRef={isDirty} />
+                        <MalHistorikk />
+                    </section>
+                </Innholdslaster>
             </div>
-            <Innholdslaster avhengigheter={avhengigheter} alleOK>
-                <section className="aktivitetmal">
-                    <MalContainer dirtyRef={isDirty} />
-                    <MalHistorikk />
-                </section>
-            </Innholdslaster>
         </MalModal>
     );
 }

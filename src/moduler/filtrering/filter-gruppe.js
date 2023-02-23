@@ -11,7 +11,7 @@ import {
     toggleAktivitetsType,
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
-import { PeriodeLabel } from './filter/periode-filter';
+import { PeriodeLabel } from './filter/PeriodeFilter';
 import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
 function FilterGruppe({

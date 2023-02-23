@@ -1,12 +1,14 @@
-import { Back } from '@navikt/ds-icons';
-import { Button, Heading } from '@navikt/ds-react';
+import { Heading, Link } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Link as ReactRouterLink } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { Dialog } from '../../datatypes/dialogTypes';
+import InternLenke from '../../felles-komponenter/utils/InternLenke';
+import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
 import { hentDialog } from '../dialog/dialog-reducer';
 import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
@@ -51,25 +53,25 @@ function Navigasjonslinje() {
         return null;
     } else {
         return (
-            <div className={styles.navigasjonslinje}>
-                <Button
-                    as="a"
-                    href={MINSIDE_PATH}
-                    variant="tertiary"
-                    iconPosition="left"
-                    icon={<Back />}
-                    className={''}
-                >
-                    <span className={''}>Min side</span>
-                </Button>
-                <Heading className={styles.tittel} level="1" size="medium">
+            <div className="flex flex-col mt-4 mb-8">
+                <div className="flex gap-8 my-4">
+                    <Link href={MINSIDE_PATH}>Min side</Link>
+                    <Link href={DIALOG_PATH}>
+                        <span className={styles.tilDialogTekst}>Min dialog med veileder</span>
+                        <DialogIkon antallUleste={antallUlesteDialoger} />
+                        <span className={styles.avstand} hidden={antallUlesteDialoger > 0} />
+                    </Link>
+                    <ReactRouterLink
+                        to="/informasjon"
+                        className="text-text-action underline"
+                        onClick={() => loggEvent(APNE_OM_TJENESTEN)}
+                    >
+                        Om aktivitetsplanen
+                    </ReactRouterLink>
+                </div>
+                <Heading level="1" size="xlarge">
                     Aktivitetsplan
                 </Heading>
-                <a className={styles.tilDialog} href={DIALOG_PATH}>
-                    <span className={styles.tilDialogTekst}>Dialog</span>
-                    <DialogIkon antallUleste={antallUlesteDialoger} />
-                    <span className={styles.avstand} hidden={antallUlesteDialoger > 0} />
-                </a>
             </div>
         );
     }

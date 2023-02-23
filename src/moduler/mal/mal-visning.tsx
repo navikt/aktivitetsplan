@@ -25,8 +25,8 @@ const Malvisning = (props: Props) => {
         (historiskVisning && historiskeMal.length === 0) || !mal ? 'Det ble ikke skrevet mål i denne perioden' : mal;
 
     return (
-        <div className="aktivitetmal__innhold">
-            <BodyLong className="mb-6">{malText}</BodyLong>
+        <div className="mb-8">
+            <BodyLong className="mb-8">{malText}</BodyLong>
             <HiddenIfHovedknapp
                 onClick={onClick}
                 hidden={historiskVisning}

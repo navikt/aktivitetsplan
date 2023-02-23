@@ -41,7 +41,7 @@ const MalHistorikk = () => {
     return (
         <Accordion>
             <Accordion.Item>
-                <Accordion.Header>
+                <Accordion.Header className="bg-surface-action-subtle border-b-0">
                     <Heading level="2" size="small">
                         Tidligere lagrede mål
                     </Heading>

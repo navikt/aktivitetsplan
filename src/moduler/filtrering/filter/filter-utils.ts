@@ -3,9 +3,11 @@ import { Store } from 'redux';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
+import { OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
+import { getStillingStatusFilterValue } from './EtikettFilter';
 import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
@@ -14,7 +16,6 @@ import {
     selectArenaAktivitetEtiketterFilter,
     selectHistoriskPeriode,
 } from './filter-selector';
-import {getStillingStatusFilterValue} from "./EtikettFilter";
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
@@ -26,7 +27,7 @@ export interface Periode {
     til: string;
 }
 
-export function selectDatoErIPeriode(dato: string, state: { sluttDato: any }[]): boolean {
+export function selectDatoErIPeriode(dato: string, state: OppfolgingsPeriode[]): boolean {
     const historiskPeriode = selectHistoriskPeriode(state as unknown as Store);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
@@ -53,9 +54,10 @@ const hasNoOverlap = (a: string[], b: string[]): boolean => {
     return a.every((element) => !b.includes(element));
 };
 
-const activeFilters = (filterMap: Record<string, true | false>): string[] => Object.entries(filterMap)
-    .filter(([key, value]) => value)
-    .map(([key, _]) => key)
+const activeFilters = (filterMap: Record<string, true | false>): string[] =>
+    Object.entries(filterMap)
+        .filter(([key, value]) => value)
+        .map(([key, _]) => key);
 
 const getTiltakstatusEtiketter = (aktivitet: AlleAktiviteter) => {
     if (isArenaAktivitet(aktivitet)) {
@@ -75,10 +77,13 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
     if (erAktivtFilter(etikettFilter)) {
-        if (!isVeilarbAktivitet(aktivitet) || hasNoOverlap(getStillingStatusFilterValue(aktivitet), activeFilters(etikettFilter))) {
-            return false
+        if (
+            !isVeilarbAktivitet(aktivitet) ||
+            hasNoOverlap(getStillingStatusFilterValue(aktivitet), activeFilters(etikettFilter))
+        ) {
+            return false;
         }
-        return true
+        return true;
     }
 
     const arenaEtikettFilter = selectArenaAktivitetEtiketterFilter(state);

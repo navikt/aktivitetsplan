@@ -64,18 +64,16 @@ function MalForm(props: Props) {
     }
 
     return (
-        <form className="aktivitetmal__innhold" onSubmit={state.onSubmit(onSubmit)}>
-            <div className="mb-4">
-                <Textarea
-                    textareaClass={textAreaCls}
-                    visTellerFra={150}
-                    autoFocus
-                    label="Mitt mål (obligatorisk)"
-                    aria-label="Mitt mål"
-                    maxLength={500}
-                    {...state.fields.mal}
-                />
-            </div>
+        <form className="my-4 space-y-8" onSubmit={state.onSubmit(onSubmit)}>
+            <Textarea
+                textareaClass={textAreaCls}
+                visTellerFra={150}
+                autoFocus
+                label="Mitt mål (obligatorisk)"
+                aria-label="Mitt mål"
+                maxLength={500}
+                {...state.fields.mal}
+            />
             <Button>Lagre</Button>
         </form>
     );

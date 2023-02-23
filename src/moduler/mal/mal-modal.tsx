@@ -2,7 +2,6 @@ import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import Modal from '../../felles-komponenter/modal/Modal';
-import ModalContainer from '../../felles-komponenter/modal/ModalContainer';
 import { selectMalListeFeilmeldinger } from './aktivitetsmal-selector';
 
 interface Props {
@@ -21,7 +20,7 @@ export function MalModal(props: Props) {
             feilmeldinger={feil}
             header={null}
         >
-            <ModalContainer>{children}</ModalContainer>
+            {children}
         </Modal>
     );
 }

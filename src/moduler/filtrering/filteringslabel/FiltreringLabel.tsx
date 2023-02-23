@@ -1,4 +1,4 @@
-import { Close } from '@navikt/ds-icons';
+import { Chips } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 
 interface Props {
@@ -7,10 +7,9 @@ interface Props {
 }
 
 const FiltreringLabel = ({ label, slettFilter }: Props) => (
-    <button type="button" aria-label="slett-filter" className="filtreringlabel typo-undertekst" onClick={slettFilter}>
-        <span className="filtreringlabel__label">{label}</span>
-        <Close className="filter-ikon-x-svg" aria-describedby="Fjern filter" role="img" focusable="false" />
-    </button>
+    <Chips.Removable variant="neutral" aria-label="slett-filter" onClick={slettFilter}>
+        {label as any}
+    </Chips.Removable>
 );
 
 export default FiltreringLabel;
