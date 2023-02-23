@@ -1,6 +1,6 @@
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Formstate, Mapped } from '@nutgaard/use-formstate/dist/types/domain';
+import { Formstate } from '@nutgaard/use-formstate/dist/types/domain';
 import PT from 'prop-types';
 import React, { MutableRefObject } from 'react';
 

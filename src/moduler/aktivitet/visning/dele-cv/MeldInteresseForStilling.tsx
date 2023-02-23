@@ -1,4 +1,3 @@
-import { WarningColored } from '@navikt/ds-icons';
 import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import React, { useState } from 'react';

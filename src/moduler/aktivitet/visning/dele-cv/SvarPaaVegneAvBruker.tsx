@@ -1,8 +1,5 @@
 import { BodyShort, Heading, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
-import classNames from 'classnames';
-// import { DatepickerLimitations } from 'nav-datovelger/lib/types';
-import { Element as NavElement } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -28,7 +25,6 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
     if (!erVeileder) return null;
 
     const feil = formhandler.touched ? formhandler.error : undefined;
-    // const cls = classNames(styles.svarPaaVegneAvBruker, { [styles.feil]: !!feil });
     return (
         <div className="mb-4">
             <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
