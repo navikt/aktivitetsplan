@@ -5,39 +5,39 @@ a.mitt-maal {
 
     &:hover #mittmal_header {
         text-decoration: underline;
-        color: @navBla;
+        color: @bla;
     }
 }
 
 .mitt-maal {
     display: block;
-    border-radius: @border-radius-base;
+    border-radius: 4px;
     padding: 1rem 1rem 0.75rem 1rem;
 
     text-decoration: none;
 
-    background-color: @navGronnLighten80;
-    color: @navMorkGra;
+    background-color: @hvit;
+    color: @gray-text;
 
     margin-bottom: 1rem;
 
     //TODO: Bør slettes så fort vi har ny versjon av dekoratøren som ikke overstyrer fokusfarge
 
     &.empty {
-        background-color: @white;
+        background-color: @hvit;
         border-style: dashed;
-        border-color: @navGra60;
+        border-color: @gray-inactive;
         border-width: 2px;
         &:hover,
         &--hover {
-            box-shadow: @grayIcon 0 0 5px 0;
+            box-shadow: @gray-foreground 0 0 5px 0;
         }
     }
 }
 
 #mittmal_header {
     margin: 0 1rem 0 1rem;
-    color: @navMorkGra;
+    color: @gray-text;
     display: flex;
     text-transform: uppercase;
 }

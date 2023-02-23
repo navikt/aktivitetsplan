@@ -1,7 +1,7 @@
-@import (reference) '~nav-frontend-core/less/core';
+@import '../../../../variables.less';
 
 .etikett {
-    color: @navGra40;
+    color: @gray-400;
     display: flex;
     justify-content: flex-end;
 }
@@ -14,11 +14,11 @@
 }
 .feil {
     .etikett {
-        color: @redError;
+        color: var(--a-red-600);
     }
     .panel {
-        border-color: @redError;
-        box-shadow: 0 0 0 1px @redError;
+        border-color: var(--a-red-600);
+        box-shadow: 0 0 0 1px var(--a-red-600);
     }
 }
 

@@ -1,8 +1,5 @@
 import { BodyShort, Heading, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
-import classNames from 'classnames';
-// import { DatepickerLimitations } from 'nav-datovelger/lib/types';
-import { Element as NavElement } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 

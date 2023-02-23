@@ -1,7 +1,7 @@
 @import '../../variables';
 
 @color-kolonne-background: @gray-200;
-@color-background-drag: @navGra40;
+@color-background-drag: @gray-400;
 
 @min-height: 2rem;
 
@@ -23,7 +23,7 @@
     padding: 1rem 0.5rem 0.1rem;
     transition: padding 0.05s ease-in-out;
     min-height: @min-height;
-    border-radius: @border-radius-base;
+    border-radius: 4px;
     margin: 0.5rem 8px;
 
     .hjelpetekst__tooltip--under-venstre {
@@ -39,7 +39,7 @@
             }
         }
 
-        @media (min-width: @screen-md) {
+        @media (min-width: @screen-md-min) {
             width: 17.5rem;
         }
 
@@ -59,7 +59,7 @@
 }
 
 // 992px
-@media (min-width: @screen-md) {
+@media (min-width: @screen-md-min) {
     .aktivitetstavle__kolonne {
         margin: 0;
     }

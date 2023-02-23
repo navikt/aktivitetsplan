@@ -2,10 +2,7 @@
 
 @full-desktop: 1480px;
 
-@import '~nav-frontend-core/less/core';
-
 .aktivitetsplanfs {
-    @import './felles-komponenter/modal/modal';
     @import './felles-komponenter/felles-komponenter';
     @import './utils';
     @import './moduler/aktivitet/aktivitet';
@@ -38,7 +35,7 @@
     }
 
     .alertstripe:not(.alertstripe--solid) .alertstripe__ikon:after {
-        background-color: @white;
+        background-color: @hvit;
     }
 
     .row + .alertstripe {

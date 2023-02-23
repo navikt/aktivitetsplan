@@ -8,7 +8,7 @@
     position: relative;
     text-align: left;
     text-decoration: none;
-    border-radius: @border-radius-base;
+    border-radius: 4px;
     padding: 0.75rem 1rem 1rem;
     cursor: pointer;
 
@@ -18,18 +18,18 @@
     }
 
     &:hover {
-        box-shadow: 1px 1px 3px 0 @navGra60;
+        box-shadow: 1px 1px 3px 0 @gray-inactive;
 
         .tittel {
-            color: @navBla;
+            color: @bla;
             text-decoration: underline;
         }
     }
 }
 
 .sistVist {
-    background-color: @navBlaLighten80;
-    box-shadow: 0 0 0 1px @navBla;
+    background-color: @lys-bla;
+    box-shadow: 0 0 0 1px @bla;
 }
 
 .type {
@@ -37,7 +37,7 @@
 }
 
 .drag {
-    background-color: @navLysGra;
+    background-color: @gray-foreground;
 }
 
 .tittel {

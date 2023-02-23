@@ -36,8 +36,6 @@
     "moment": "^2.29.4",
     "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.39",
-    "nav-datovelger": "^12.6.0",
-    "nav-frontend-core": "^6.0.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-collapse": "^5.1.1",

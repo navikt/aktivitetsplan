@@ -1,9 +1,9 @@
-@import (reference) '~nav-frontend-core/less/core';
+@import "../../../../../variables";
 
 .dialogPil {
     display: flex;
     align-items: center;
-    color: @navBla;
+    color: @bla;
     font-size: 0.875rem;
 }
 
@@ -27,7 +27,7 @@
     }
 
     &:focus {
-        box-shadow: 0 0 0 3px @fokusFarge;
+        box-shadow: 0 0 0 3px var(--a-blue-800);
         outline: none;
     }
     @media (pointer: fine) {
