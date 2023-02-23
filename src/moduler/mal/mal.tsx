@@ -48,7 +48,7 @@ function Mal() {
 
     return (
         <MalModal onRequestClosed={onModalRequestClosed}>
-            <div className="p-4">
+            <div>
                 <Heading level="1" size="large" className="mb-8">
                     {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
                         ? 'Mitt mål fra en tidligere periode'
