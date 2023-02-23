@@ -20,7 +20,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "@navikt/ds-css": "^2.2.0",
+    "@navikt/ds-css": "^2.3.1",
     "@navikt/ds-icons": "^1.5.4",
     "@navikt/ds-react": "^2.2.0",
     "@navikt/ds-tailwind": "^2.3.0",
@@ -39,8 +39,6 @@
     "moment-timezone": "^0.5.39",
     "nav-datovelger": "^12.6.0",
     "nav-frontend-core": "^6.0.1",
-    "nav-frontend-skjema": "^4.0.6",
-    "nav-frontend-skjema-style": "^3.0.3",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-collapse": "^5.1.1",
