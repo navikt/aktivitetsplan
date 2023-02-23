@@ -2,12 +2,10 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
-import styles from './LeggTilForm.module.less';
 
 const LeggTilForm = () => {
     const erVeileder = useSelector(selectErVeileder);
@@ -19,22 +17,16 @@ const LeggTilForm = () => {
             contentClass="ny-aktivitet-visning"
             feilmeldinger={aktivitetFeilmeldinger}
         >
-            <div className={styles.leggTilHeader}>
-                <BodyShort hidden={erVeileder} className={styles.hjelpeTekst}>
+            <div className="mb-8">
+                <Heading level="2" size="large">
+                    Legg til en aktiviet
+                </Heading>
+                <BodyShort hidden={erVeileder}>
                     Her kan du legge til ulike aktiviteter du gjør for å nå målet ditt.
                 </BodyShort>
-
-                <div className={styles.tittelBoks}>
-                    <Heading level="2" size="small" className={styles.nyAktivitetTittel}>
-                        Legg til
-                    </Heading>
-
-                    <EtikettBase className={styles.etikett} hidden={!erVeileder}>
-                        FOR NAV-ANSATT
-                    </EtikettBase>
-                </div>
             </div>
-            <div hidden={!erVeileder} className={'space-y-3 flex flex-col ' + styles.lenker}>
+            <div hidden={!erVeileder} className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-8 px-8 -my-4 py-4">
+                <Heading size="medium">For NAV-ansatt</Heading>
                 <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
                     Avtale om å søke jobber
                 </Lenkepanel>
@@ -45,15 +37,12 @@ const LeggTilForm = () => {
                     Samtalereferat
                 </Lenkepanel>
             </div>
-
-            <hr hidden={!erVeileder} className={styles.deleLinje} />
-            <div className={styles.lenker}>
-                <div className={styles.etikettBruker}>
-                    <EtikettBase className={styles.etikett} hidden={!erVeileder}>
-                        FOR BRUKER OG NAV-ANSATT
-                    </EtikettBase>
-                </div>
-
+            <div className="mt-8">
+                {erVeileder ? (
+                    <Heading size="medium" className="mb-4">
+                        For bruker og NAV-ansatt
+                    </Heading>
+                ) : null}
                 <div className="space-y-3 flex flex-col">
                     <Lenkepanel border href="/aktivitet/ny/stilling" hidden={false}>
                         En jobb jeg vil søke på

@@ -1,3 +1,4 @@
+import { Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -16,9 +17,9 @@ const EtikettBase = (props: Props) => {
     }
 
     return (
-        <div className={classNames(styles.etikett, className)}>
-            <span className={styles.etikettTekst}>{children}</span>
-        </div>
+        <Tag variant="neutral" size="small" className={classNames(className)}>
+            {children}
+        </Tag>
     );
 };
 

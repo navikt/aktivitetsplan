@@ -1,4 +1,4 @@
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -19,16 +19,18 @@ const ModalHeader = (props: Props) => {
 
     return (
         <div className={classNames('modal-header-wrapper', className)} {...rest}>
-            <header className="modal-header p-2">
-                <span aria-live="assertive" className="sr-only">
-                    {aktivitetErLaast ? 'Denne aktiviteten kan ikke redigeres.' : ''}
-                </span>
-                <VisibleIfSpan className="modal-header-skillestrek" visible={aktivitetErLaast}>
-                    <HengeLasIkon />
-                </VisibleIfSpan>
-                {tilbakeTekst && onTilbakeClick && <Tilbakeknapp tekst={tilbakeTekst} onClick={onTilbakeClick} />}
-                {headerTekst && <BodyShort>{headerTekst}</BodyShort>}
-            </header>
+            <span aria-live="assertive" className="sr-only">
+                {aktivitetErLaast ? 'Denne aktiviteten kan ikke redigeres.' : ''}
+            </span>
+            <VisibleIfSpan className="modal-header-skillestrek" visible={aktivitetErLaast}>
+                <HengeLasIkon />
+            </VisibleIfSpan>
+            {tilbakeTekst && onTilbakeClick && <Tilbakeknapp tekst={tilbakeTekst} onClick={onTilbakeClick} />}
+            {headerTekst && (
+                <Heading level="2" size="medium">
+                    {headerTekst}
+                </Heading>
+            )}
         </div>
     );
 };

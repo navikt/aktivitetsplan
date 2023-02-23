@@ -7,7 +7,6 @@ import { AnyAction } from 'redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { Dialog } from '../../datatypes/dialogTypes';
-import InternLenke from '../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
 import { hentDialog } from '../dialog/dialog-reducer';

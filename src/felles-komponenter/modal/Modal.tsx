@@ -1,4 +1,4 @@
-import { Modal as NavModal } from '@navikt/ds-react';
+import { Modal as AkselModal } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
@@ -46,11 +46,11 @@ const Modal = (props: Props) => {
     };
 
     return (
-        <NavModal
+        <AkselModal
             {...rest}
             open
             className={classNames(
-                'aktivitet-modal aktivitetsplanfs aktivitet-modal-portal w-120',
+                'aktivitet-modal aktivitetsplanfs aktivitet-modal-portal w-120 p-8',
                 className,
                 contentClass
             )}
@@ -64,7 +64,7 @@ const Modal = (props: Props) => {
                     {children}
                 </Innholdslaster>
             </div>
-        </NavModal>
+        </AkselModal>
     );
 };
 
