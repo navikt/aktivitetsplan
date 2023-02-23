@@ -1,9 +1,9 @@
 import shajs from 'sha.js';
 
-import { AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
-import { OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
-import { AKTIVITET_BASE_URL } from '../../environment';
+import {AktivitetStatus, AktivitetType, Lest} from '../../datatypes/aktivitetTypes';
+import {VeilarbAktivitet} from '../../datatypes/internAktivitetTypes';
+import {OppfolgingsPeriode} from '../../datatypes/oppfolgingTypes';
+import {AKTIVITET_BASE_URL} from '../../environment';
 
 interface FrontendEvent {
     name: string;
@@ -12,7 +12,7 @@ interface FrontendEvent {
 }
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
-    const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
+    const event: FrontendEvent = {name: eventNavn, fields: feltObjekt, tags: tagObjekt};
     const url = `${AKTIVITET_BASE_URL}/logger/event`;
     const config = {
         headers: {
@@ -74,20 +74,36 @@ export function loggForhaandsorienteringLest(aktivitetType: AktivitetType, lestK
     loggEvent(FORHAANDSORIENTERING_LEST, {}, tag);
 }
 
+declare global {
+    interface Window {
+        aktivitesplanTimeToAktivitestavlePaint?: number;
+        defaultSelectedTab?: string;
+    }
+}
+
+export function logTimeToAktivitestavlePaint(erVeileder: boolean) {
+    const rendresForst  = !erVeileder || window.defaultSelectedTab === 'AKTIVITETSPLAN';
+    if (!window.aktivitesplanTimeToAktivitestavlePaint && rendresForst) {
+        const timeToAktivitestavlePaint = performance.now();
+        window.aktivitesplanTimeToAktivitestavlePaint = timeToAktivitestavlePaint
+        loggEvent("aktivitetsplan.timeToAktivitestavlePaintv3", {timeToAktivitestavlePaint}, {erVeileder});
+    }
+}
+
 export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boolean, ident: string, aktorId?: string) {
     const fields = {
         underOppfolging,
         veileder: hash(ident),
         bruker: hash(aktorId),
     };
-    loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
+    loggEvent(ANTALL_VEILEDERE, fields, {servicegruppe});
 }
 
 export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
     if (!underOppfolging) {
-        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, { servicegruppe });
+        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, {servicegruppe});
     } else {
-        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) }, { servicegruppe });
+        loggEvent(LOGGING_ANTALLBRUKERE, {bruker: hash(aktorId)}, {servicegruppe});
     }
 }
 
@@ -140,22 +156,22 @@ export function loggForhandsorientering(
 }
 
 export function loggMittMalKlikk(veileder: boolean) {
-    loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
+    loggEvent(MITTMAL_KLIKK_LOGGEVENT, {erVeileder: veileder});
 }
 
 export function loggMittMalLagre(veileder: boolean) {
-    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
+    loggEvent(MITTMAL_LAGRE_LOGGEVENT, {erVeileder: veileder});
 }
 
 export function loggStillingFraNavStillingslenkeKlikk(veileder: boolean) {
-    loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, { erVeileder: veileder });
+    loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, {erVeileder: veileder});
 }
 
 const HAR_BRUKT_NIVAA_4 = 'aktivitetsplan.innsikt.harBruktNivaa4';
 const IKKE_REGISTRERT_I_KRR = 'aktivitetsplan.innsikt.ikkeRegistrertIKrr';
 
 export function loggHarBruktNivaa4(harBruktNivaa4: boolean) {
-    loggEvent(HAR_BRUKT_NIVAA_4, { harBruktNivaa4: harBruktNivaa4 });
+    loggEvent(HAR_BRUKT_NIVAA_4, {harBruktNivaa4: harBruktNivaa4});
 }
 
 export function loggIkkeRegistrertIKrr() {
