@@ -12,7 +12,7 @@ interface Props {
 
 export default function Aktivitetskorttittel({ aktivitet, harEndring, id }: Props) {
     return (
-        <div className="flex items-center">
+        <div className="flex items-baseline">
             <NotifikasjonMarkering visible={harEndring} />
             <Heading level="3" id={id} size="xsmall">
                 {aktivitet.tittel}
