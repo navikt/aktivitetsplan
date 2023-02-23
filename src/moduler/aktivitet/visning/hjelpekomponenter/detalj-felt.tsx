@@ -1,4 +1,4 @@
-import { Heading } from '@navikt/ds-react';
+import { Heading, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -19,9 +19,7 @@ function DetaljFelt(props: Props) {
                 'detaljfelt--beskrivelse': beskrivelse,
             })}
         >
-            <Heading size="small" className="detaljfelt__tittel" level="2">
-                {tittel}
-            </Heading>
+            <Label>{tittel}</Label>
             {children}
         </div>
     );

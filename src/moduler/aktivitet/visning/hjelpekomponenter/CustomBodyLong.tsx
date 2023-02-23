@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 
 interface Props {
-    children: string;
+    children?: string;
     className?: string;
     size?: 'small' | 'medium';
     formatLinks?: boolean;
@@ -15,6 +15,10 @@ const linkRegex = /((?:[\w-]+:\/\/?|www(?:-\w+)?\.)[^\s()<>]+\w)/g;
 const CustomBodyLong = (props: Props) => {
     const { children, className, size = 'medium', formatLinks = false, formatLinebreaks = false } = props;
 
+    if (!children) {
+        return null;
+    }
+
     let newChildren: ReactNode[] = [children];
 
     if (formatLinks) {
@@ -22,7 +26,7 @@ const CustomBodyLong = (props: Props) => {
             if (typeof el === 'string') {
                 return replaceMatchesWithNode(el, linkRegex, (value, index) => {
                     return (
-                        <Link target="_blank" href={value} key={`link-${value}`}>{`${value} (åpnes i ny fane)`}</Link>
+                        <Link target="_blank" href={value} key={`link-${index}`}>{`${value} (åpnes i ny fane)`}</Link>
                     );
                 });
             }

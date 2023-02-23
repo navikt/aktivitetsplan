@@ -70,7 +70,7 @@ function App({ fnr, key }: { fnr: string; key: string }) {
                         <HashRouterIfGHPages fnr={fnr}>
                             <Hovedside />
                         </HashRouterIfGHPages>
-                        <HiddenIf hidden={!!window.appconfig.TIMEOUTBOX}>
+                        <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
                         </HiddenIf>
                     </div>

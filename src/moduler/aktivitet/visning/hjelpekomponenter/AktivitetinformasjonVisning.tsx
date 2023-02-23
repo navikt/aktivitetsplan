@@ -1,3 +1,4 @@
+import { DialogDots, Edit } from '@navikt/ds-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -81,13 +82,20 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            <div className="mx-6 gap-4 flex flex-wrap">
+            <div className="mx-6 mb-6 gap-4 flex flex-wrap">
                 {!tillatEndring || isArenaAktivitet(props.valgtAktivitet) ? null : (
-                    <Button disabled={laster || !underOppfolging} onClick={goToEndre} variant="secondary">
+                    <Button
+                        disabled={laster || !underOppfolging}
+                        onClick={goToEndre}
+                        variant="secondary"
+                        icon={<Edit aria-hidden />}
+                    >
                         Endre på aktiviteten
                     </Button>
                 )}
-                <Button variant="secondary">Send en melding</Button>
+                <Button variant="secondary" icon={<DialogDots aria-hidden />}>
+                    Send en melding
+                </Button>
             </div>
             <DeleLinje />
         </div>

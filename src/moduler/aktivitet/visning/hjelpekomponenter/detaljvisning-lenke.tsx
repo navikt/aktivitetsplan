@@ -1,7 +1,7 @@
 import React from 'react';
 
+import CustomBodyLong from './CustomBodyLong';
 import DetaljFelt from './detalj-felt';
-import ForkortetLenke from './ForkortetLenke';
 
 interface Props {
     lenke?: string;
@@ -9,7 +9,7 @@ interface Props {
 
 const DetaljvisningLenke = ({ lenke }: Props) => (
     <DetaljFelt key="lenke" tittel="Lenke" fullbredde>
-        <ForkortetLenke lenke={lenke} />
+        <CustomBodyLong formatLinks>{lenke}</CustomBodyLong>
     </DetaljFelt>
 );
 

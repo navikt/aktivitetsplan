@@ -80,7 +80,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               versjon: '2410',
               tittel: 'Ta et webkurs',
               beskrivelse: 'Jeg skal bli awesome i html. Sjørøvere trenger å være awesome i html',
-              lenke: 'www.nav.no',
+              lenke: 'www.nav.no/asdasdasd/asdsad',
               type: 'EGEN',
               status: 'BRUKER_ER_INTERESSERT',
               fraDato: '2020-01-01T12:00:00+01:00',
