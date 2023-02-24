@@ -115,9 +115,9 @@ function Lagreknapper(props: { isLoading: boolean; isNy: boolean; lagreOgDel: (e
         );
     }
     return (
-        <div className="aktivitetskjema__lagre-knapp">
-            <Button loading={isLoading}>Lagre</Button>
-        </div>
+        <Button className="mt-4" loading={isLoading}>
+            Lagre
+        </Button>
     );
 }
 

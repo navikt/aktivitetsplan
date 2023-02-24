@@ -1,38 +1,16 @@
-import { Alert, BodyShort } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import { BodyShort, Heading } from '@navikt/ds-react';
+import React from 'react';
 
 import { CvKanDelesData } from '../../../../datatypes/internAktivitetTypes';
-import EkspanderbarLinjeBase from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { formaterDatoManed } from '../../../../utils';
-import { Ingress } from './DeleCvContainer';
-import styles from './DeleCvSvarVisning.module.less';
 import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 
 interface Props {
     cvKanDelesData: CvKanDelesData;
-    startAapen?: boolean;
 }
 
-export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props) => {
-    const [erAapen, setAapen] = useState(startAapen);
-    const toggle = () => setAapen(!erAapen);
-
+export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
     const cvKanDeles = cvKanDelesData.kanDeles;
-
-    const Tittel = () => <BodyShort className={styles.deleCVEndreTittel}>{overskrift}</BodyShort>;
-    const TittelMedCvSvar = () => (
-        <>
-            <Tittel />
-            <BodyShort className={styles.deleCVTittelSvarTekst}>{cvKanDeles ? 'Ja' : 'Nei'}</BodyShort>
-        </>
-    );
-
-    const Infostripe = () =>
-        cvKanDeles ? (
-            <Alert variant="info" className="mt-4">
-                Arbeidsgiveren eller NAV vil kontakte deg hvis du er aktuell for stillingen
-            </Alert>
-        ) : null;
 
     var svarTekst: string, endretTekst: string;
     if (cvKanDelesData.endretAvType === 'BRUKER') {
@@ -46,19 +24,17 @@ export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props)
     }
 
     return (
-        <EkspanderbarLinjeBase
-            tittel={<TittelMedCvSvar />}
-            aapneTittel={<Tittel />}
-            kanToogle
-            aapneTekst="Åpne"
-            lukkeTekst="Lukk"
-            erAapen={erAapen}
-            onClick={toggle}
-        >
-            <Ingress />
-            <BodyShort className={styles.deleCVSvarTekst}>{svarTekst}</BodyShort>
-            <BodyShort className={styles.endretTidspunkt}>{endretTekst}</BodyShort>
-            <Infostripe />
-        </EkspanderbarLinjeBase>
+        <div className="p-4 bg-surface-subtle border-border-default border rounded-md">
+            <Heading size="medium" className="mb-4">
+                {cvKanDeles ? 'Du svarte at du er interessert' : 'Du svarte at du ikke er interessert'}
+            </Heading>
+            <BodyShort>{svarTekst}</BodyShort>
+            <BodyShort className="mt-4">{endretTekst}</BodyShort>
+            {cvKanDeles ? (
+                <BodyShort className="mt-4">
+                    Arbeidsgiveren eller NAV vil kontakte deg hvis du er aktuell for stillingen
+                </BodyShort>
+            ) : null}
+        </div>
     );
 };

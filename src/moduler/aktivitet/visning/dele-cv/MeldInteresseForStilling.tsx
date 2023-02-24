@@ -108,7 +108,6 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 className=""
                 error={state.submittoken && state.fields.kanDeles.error}
             >
-                <BodyShort className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</BodyShort>
                 <Radio id="kanDeles" value={SvarType.JA.toString()}>
                     {JaSvarTekst}
                 </Radio>

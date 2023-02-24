@@ -20,35 +20,21 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     const stillingFraNavData = aktivitet.stillingFraNavData;
     const cvKanDelesSvar = stillingFraNavData && stillingFraNavData?.cvKanDelesData;
     const erHistorisk = aktivitet.historisk;
-    const [startCvSvarVisningAapen] = useState(!cvKanDelesSvar);
 
     if (cvKanDelesSvar) {
-        return (
-            <>
-                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} startAapen={startCvSvarVisningAapen} />
-                <DeleLinje />
-            </>
-        );
+        return <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} />;
     }
 
     if (erHistorisk || aktivitet.status === STATUS_FULLFOERT || aktivitet.status === STATUS_AVBRUTT) {
         return (
-            <>
-                <DeleCVAvbruttVisning
-                    status={aktivitet.status}
-                    livslopsstatus={stillingFraNavData.livslopsstatus}
-                    erHistorisk={erHistorisk}
-                    svarfrist={stillingFraNavData.svarfrist}
-                />
-                <DeleLinje />
-            </>
+            <DeleCVAvbruttVisning
+                status={aktivitet.status}
+                livslopsstatus={stillingFraNavData.livslopsstatus}
+                erHistorisk={erHistorisk}
+                svarfrist={stillingFraNavData.svarfrist}
+            />
         );
     }
 
-    return (
-        <>
-            <MeldInteresseForStilling aktivitet={aktivitet} />
-            <DeleLinje />
-        </>
-    );
+    return <MeldInteresseForStilling aktivitet={aktivitet} />;
 };
