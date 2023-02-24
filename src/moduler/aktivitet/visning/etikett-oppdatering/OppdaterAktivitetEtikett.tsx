@@ -30,7 +30,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
     );
     const erIkkeUnderOppfolging = !useSelector(selectErUnderOppfolging);
 
-    const [endring, setEndring] = useState(false);
+    const [open, setIsOpen] = useState(false);
     const dispatch = useDispatch();
 
     const lagreEtikett = (val: EtikettValue): Promise<any> => {
@@ -50,7 +50,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
 
     const onSubmit = (val: EtikettValue): Promise<any> =>
         lagreEtikett(val).then(() => {
-            setEndring(false);
+            setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
 
@@ -60,9 +60,10 @@ const OppdaterAktivitetEtikett = (props: Props) => {
 
     return (
         <EndreLinje
+            onClick={() => setIsOpen(!open)}
+            open={open}
             tittel="Hvor langt har du kommet i søknadsprosessen?"
             form={form}
-            endring={endring}
             subtittel={<StillingEtikett aktivitet={aktivitet} />}
         />
     );

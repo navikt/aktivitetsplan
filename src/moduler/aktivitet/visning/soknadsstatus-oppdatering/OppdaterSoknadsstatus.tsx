@@ -47,13 +47,13 @@ interface SoknadsstatusValue {
 
 const OppdaterSoknadsstatus = (props: Props) => {
     const { aktivitet } = props;
-    const [endring, setEndring] = useState(false);
+    const [open, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 
     const onSubmit = (value: SoknadsstatusValue): Promise<any> =>
         lagreSoknadsstatus(dispatch, value, aktivitet).then(() => {
-            setEndring(false);
+            setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
 
@@ -79,9 +79,10 @@ const OppdaterSoknadsstatus = (props: Props) => {
 
     return (
         <EndreLinje
+            onClick={() => setIsOpen(!open)}
+            open={open}
             tittel="Hvor er du i søknadsprosessen?"
             form={form}
-            endring={endring}
             kanEndre={kanEndre}
             subtittel={visning}
         />

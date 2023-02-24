@@ -33,7 +33,6 @@ const label = (status: AktivitetStatus) => {
 export type ValideringsProps = {
     aktivitetstatus: string;
     begrunnelse: string;
-    statusValidering: string;
 };
 
 type Handler = SubmitHandler<ValideringsProps>;
@@ -70,15 +69,13 @@ const AktivitetStatusForm = (props: Props) => {
     const { aktivitet, onSubmit, disabled } = props;
 
     const validator = useFormstate<ValideringsProps, VeilarbAktivitet>({
-        aktivitetstatus: () => undefined,
+        aktivitetstatus: (val, values, validerStatusAktivitet) => kanOppdatereStatus(validerStatusAktivitet, values),
         begrunnelse: (val, values, valgtAktivitet) => validateBegrunnelse(val, values, valgtAktivitet),
-        statusValidering: (val, values, validerStatusAktivitet) => kanOppdatereStatus(validerStatusAktivitet, values),
     });
 
     const initalValue = {
         aktivitetstatus: aktivitet.status || '',
         begrunnelse: aktivitet.avsluttetKommentar || '',
-        statusValidering: '',
     };
 
     const state = validator(initalValue, aktivitet);
@@ -109,7 +106,7 @@ const AktivitetStatusForm = (props: Props) => {
                             key={value}
                             label={label}
                             value={value}
-                            checked={value === state.fields.statusValidering.input.value}
+                            checked={value === state.fields.aktivitetstatus.input.value}
                         />
                     ))}
                 </RadioGroup>
@@ -128,8 +125,8 @@ const AktivitetStatusForm = (props: Props) => {
                         />
                     </VisibleIfDiv>
                 </VisibleIfDiv>
-                {!!state.fields.statusValidering.error ? (
-                    <p className="font-bold text-red-700">{state.fields.statusValidering.error}</p>
+                {!!state.fields.aktivitetstatus.error ? (
+                    <p className="font-bold text-red-700">{state.fields.aktivitetstatus.error}</p>
                 ) : null}
             </div>
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />

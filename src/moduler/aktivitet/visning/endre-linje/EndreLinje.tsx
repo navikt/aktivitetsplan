@@ -1,6 +1,6 @@
 import { Accordion, Heading } from '@navikt/ds-react';
 import PT from 'prop-types';
-import React, { ReactNode, useMemo } from 'react';
+import React, { MouseEventHandler, ReactNode, useMemo } from 'react';
 
 import styles from './endre-linje.module.less';
 
@@ -18,19 +18,20 @@ interface Props {
     tittel: string;
     form: ReactNode;
     subtittel: ReactNode;
-    endring: boolean;
+    open: boolean;
+    onClick: MouseEventHandler;
 }
 
 function EndreLinje(props: Props) {
-    const { tittel, form, subtittel } = props;
+    const { tittel, form, subtittel, open, onClick } = props;
 
     //to get a valid css id it needs to start with a letter
     const unique = useMemo(() => 'a' + guid(), []);
 
     return (
         <Accordion>
-            <Accordion.Item>
-                <Accordion.Header>
+            <Accordion.Item open={open}>
+                <Accordion.Header onClick={onClick}>
                     <div className="flex justify-between">
                         <div className={styles.endreVisning}>
                             <Heading size="small" level="2">
@@ -53,7 +54,6 @@ function EndreLinje(props: Props) {
 EndreLinje.propTypes = {
     tittel: PT.string.isRequired,
     form: PT.node.isRequired,
-    endring: PT.bool.isRequired,
     kanEndre: PT.bool,
 };
 

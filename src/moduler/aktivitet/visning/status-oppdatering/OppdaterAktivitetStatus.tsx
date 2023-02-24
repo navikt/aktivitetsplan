@@ -14,7 +14,6 @@ import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetlisteSelector';
 import EndreLinje from '../endre-linje/EndreLinje';
 import AktivitetStatusForm from './AktivitetStatusForm';
-import StatusVisning from './status-visning';
 
 const useDisableStatusEndring = (aktivitet: VeilarbAktivitet) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
@@ -43,13 +42,13 @@ interface OppdaterAktivitetStatusProps {
 
 function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
     const { aktivitet } = props;
-    const [endring, setEndring] = useState(false);
+    const [open, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const disableStatusEndring = useDisableStatusEndring(aktivitet);
 
     const onSubmit = (val: any): Promise<any> =>
         lagreStatusEndringer(dispatch, val, aktivitet).then(() => {
-            setEndring(false);
+            setIsOpen(false);
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();
         });
@@ -61,8 +60,9 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
 
     return (
         <EndreLinje
+            onClick={() => setIsOpen(!open)}
+            open={open}
             tittel="Hva er status på aktiviteten?"
-            endring={endring}
             subtittel={subtittel}
             form={form}
             kanEndre={kanEndre}
