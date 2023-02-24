@@ -7,6 +7,10 @@ module.exports = {
     },
     plugins: [],
     theme: {
+        screens: {
+            sm: '768px',
+            md: '992px',
+        },
         colors: {
             'border-default': 'rgba(0, 0, 0, 0.44)',
             'border-strong': 'rgba(0, 0, 0, 0.56)',

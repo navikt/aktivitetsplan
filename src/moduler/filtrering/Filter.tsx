@@ -14,88 +14,85 @@ import AvtaltMedNavFilter from './filter/AvtaltFilter';
 import EtikettFilter from './filter/EtikettFilter';
 
 function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe: AlleAktiviteter[]) {
-  const muligeFilterKombinasjoner = aktivitetsListe.reduce(
-    (res, aktivitet) => {
-      const { status, type, etikett, avtalt } = aktivitet;
-      res.muligeStatus.add(status);
-      res.muligeTyper.add(type);
-      if (etikett) {
-        if (isArenaAktivitet(aktivitet)) {
-          res.muligeArenaEtiketter.add(etikett);
-        } else {
-          res.muligeEtiketter.add(etikett);
+    const muligeFilterKombinasjoner = aktivitetsListe.reduce(
+        (res, aktivitet) => {
+            const { status, type, etikett, avtalt } = aktivitet;
+            res.muligeStatus.add(status);
+            res.muligeTyper.add(type);
+            if (etikett) {
+                if (isArenaAktivitet(aktivitet)) {
+                    res.muligeArenaEtiketter.add(etikett);
+                } else {
+                    res.muligeEtiketter.add(etikett);
+                }
+            }
+            res.muligeAvtalt.add(avtalt);
+            return res;
+        },
+        {
+            muligeStatus: new Set(),
+            muligeTyper: new Set(),
+            muligeEtiketter: new Set(),
+            muligeArenaEtiketter: new Set(),
+            muligeAvtalt: new Set(),
         }
-      }
-      res.muligeAvtalt.add(avtalt);
-      return res;
-    },
-    {
-      muligeStatus: new Set(),
-      muligeTyper: new Set(),
-      muligeEtiketter: new Set(),
-      muligeArenaEtiketter: new Set(),
-      muligeAvtalt: new Set(),
-    }
-  );
+    );
 
-  return Object.keys(muligeFilterKombinasjoner).reduce(
-    (acc, key) => muligeFilterKombinasjoner[key as keyof typeof muligeFilterKombinasjoner].size > 1 || acc,
-    false
-  );
+    return Object.keys(muligeFilterKombinasjoner).reduce(
+        (acc, key) => muligeFilterKombinasjoner[key as keyof typeof muligeFilterKombinasjoner].size > 1 || acc,
+        false
+    );
 }
 
 interface Props {
-  avhengigheter: Avhengighet[];
-  harAktivitet: boolean;
-  className: string;
+    avhengigheter: Avhengighet[];
+    harAktivitet: boolean;
+    className: string;
 }
 
 function Filter({ avhengigheter, harAktivitet, className }: Props) {
-  const [open, setOpen] = useState(false);
-  /*
-    const resolvedClassNames = classNames(className, 'filter', {
-        skjult: !harAktivitet,
-    });*/
-  return (
-    <Innholdslaster avhengigheter={avhengigheter}>
-      <VisibleIfDiv className="relative">
-        <Button
-          variant="secondary"
-          name="filter"
-          className="relative"
-          onClick={() => {
-            setOpen(!open);
-            loggEvent(OPNE_AKTIVITETFILTER);
-          }}
-        >
-          Filtrer
-        </Button>
-        {open ? (
-          <div className="rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto">
-            <AvtaltMedNavFilter />
-            <EtikettFilter />
-            <ArenaEtikettFilter />
-            <AktivitetStatusFilter />
-            <AktivitetTypeFilter />
-          </div>
-        ) : null}
-      </VisibleIfDiv>
-    </Innholdslaster>
-  );
+    const [open, setOpen] = useState(false);
+
+    return (
+        <Innholdslaster avhengigheter={avhengigheter}>
+            <VisibleIfDiv className="relative">
+                <Button
+                    variant="secondary"
+                    name="filter"
+                    className="relative w-full"
+                    onClick={() => {
+                        setOpen(!open);
+                        loggEvent(OPNE_AKTIVITETFILTER);
+                    }}
+                >
+                    Filtrer
+                </Button>
+                {open ? (
+                    <div className="rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto">
+                        <AvtaltMedNavFilter />
+                        <EtikettFilter />
+                        <ArenaEtikettFilter />
+                        <AktivitetStatusFilter />
+                        <AktivitetTypeFilter />
+                    </div>
+                ) : null}
+            </VisibleIfDiv>
+        </Innholdslaster>
+    );
 }
 
 Filter.defaultProps = {
-  harAktivitet: true,
-  className: '',
+    harAktivitet: true,
+    className: '',
 };
 
 const mapStateToProps = (state: any) => {
-  const aktiviteter = selectAktiviterForAktuellePerioden(state);
-  const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
-  return {
-    avhengigheter: [selectAktivitetListeStatus(state)],
-    harAktivitet,
-  };
+    const aktiviteter = selectAktiviterForAktuellePerioden(state);
+    const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
+    return {
+        avhengigheter: [selectAktivitetListeStatus(state)],
+        harAktivitet,
+    };
 };
 
 export default connect(mapStateToProps)(Filter);
