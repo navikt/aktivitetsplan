@@ -1,10 +1,8 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React from 'react';
 
 import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
-import styles from './../Aktivitetsvisning.module.less';
 
 interface Props {
     referat: string;

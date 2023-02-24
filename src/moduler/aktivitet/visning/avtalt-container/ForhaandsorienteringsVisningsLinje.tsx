@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import DeleLinje from '../delelinje/delelinje';
 import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorientering/Forhaandsorienteringsvisning';
 import { skalMarkereForhaandsorienteringSomLest } from './utilsForhaandsorientering';
 

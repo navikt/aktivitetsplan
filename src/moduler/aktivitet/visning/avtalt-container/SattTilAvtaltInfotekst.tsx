@@ -2,7 +2,6 @@ import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
-import aktivitetvisningStyles from '../Aktivitetsvisning.module.less';
 import { useKanSendeVarsel } from './avtaltHooks';
 
 const getText = (

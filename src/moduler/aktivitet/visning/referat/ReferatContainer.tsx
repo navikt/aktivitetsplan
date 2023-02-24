@@ -10,7 +10,6 @@ import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
-import DeleLinje from '../delelinje/delelinje';
 import OppdaterReferatForm from './OppdaterReferatForm';
 import ReferatVisning from './ReferatVisning';
 

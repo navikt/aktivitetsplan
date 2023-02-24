@@ -1,4 +1,9 @@
-import { BodyShort, Heading, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
+import {
+    BodyShort,
+    UNSAFE_DatePicker as DatePicker,
+    Heading,
+    UNSAFE_useDatepicker as useDatepicker,
+} from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -15,7 +20,7 @@ interface Props {
 export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) => {
     const erVeileder = useSelector(selectErVeileder);
 
-    const { datepickerProps, inputProps } = UNSAFE_useDatepicker({
+    const { datepickerProps, inputProps } = useDatepicker({
         disabled: [datoBegrensninger],
         onDateChange: (val) => {
             formhandler.setValue(val?.toISOString() || '');
@@ -31,8 +36,8 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
             <Heading size="medium" level="3">
                 Svar på vegne av brukeren
             </Heading>
-            <UNSAFE_DatePicker {...datepickerProps}>
-                <UNSAFE_DatePicker.Input
+            <DatePicker {...datepickerProps}>
+                <DatePicker.Input
                     {...inputProps}
                     error={feil}
                     label={
@@ -41,7 +46,7 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
                         </BodyShort>
                     }
                 />
-            </UNSAFE_DatePicker>
+            </DatePicker>
         </div>
     );
 };

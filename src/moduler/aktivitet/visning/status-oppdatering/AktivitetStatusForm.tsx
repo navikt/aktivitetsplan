@@ -1,5 +1,3 @@
-import { stat } from 'fs';
-
 import { Alert, Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import React, { useContext, useEffect } from 'react';
