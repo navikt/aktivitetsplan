@@ -1,8 +1,9 @@
 import { Button } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
+import { useOutsideClick } from '../../felles-komponenter/hooks/useClickOutside';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
@@ -50,10 +51,13 @@ const Filter = () => {
     const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     const avhengigheter = [useSelector(selectAktivitetListeStatus)];
 
+    const ref = useRef(null);
+    useOutsideClick(ref, () => setOpen(!open), open);
+
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             {harAktivitet ? (
-                <div className="relative">
+                <div className="relative" ref={ref}>
                     <Button
                         variant="secondary"
                         name="filter"

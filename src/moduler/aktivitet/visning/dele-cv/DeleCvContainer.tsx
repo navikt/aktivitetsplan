@@ -1,9 +1,8 @@
 import { BodyShort } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DeleLinje from '../delelinje/delelinje';
 import { DeleCVAvbruttVisning } from './DeleCVAvbruttVisning';
 import { DeleCvSvarVisning } from './DeleCvSvarVisning';
 import { MeldInteresseForStilling } from './MeldInteresseForStilling';

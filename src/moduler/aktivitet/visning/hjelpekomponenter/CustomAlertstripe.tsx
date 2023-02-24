@@ -2,8 +2,6 @@ import { WarningColored } from '@navikt/ds-icons';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
-import styles from './CustomAlertstripe.module.less';
-
 interface Props {
     tekst: string;
     sectionClassName?: string;

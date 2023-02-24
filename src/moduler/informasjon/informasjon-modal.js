@@ -15,7 +15,7 @@ import styles from './informasjon-modal.module.less';
 import { selectBackPath, setBackPath } from './informasjon-reducer';
 import { OkonomiskStotte } from './okonomiskStottePanel';
 import { RettigheterPanel } from './rettigheterPanel';
-import Video from './video';
+import Video from './Video';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 

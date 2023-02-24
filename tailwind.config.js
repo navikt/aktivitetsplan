@@ -217,6 +217,9 @@ module.exports = {
             'icon-on-info': 'rgba(38, 38, 38, 1)',
         },
         extend: {
+            height: {
+                '300px': '300px',
+            },
             maxHeight: {
                 'screen-h-1/2': '50wh',
             },

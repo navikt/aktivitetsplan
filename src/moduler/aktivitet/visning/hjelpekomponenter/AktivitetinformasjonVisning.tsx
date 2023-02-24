@@ -11,7 +11,7 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitetType, isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
+import { isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
@@ -20,7 +20,6 @@ import IkkeDeltFerdigMarkering, {
 } from '../../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
-import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {

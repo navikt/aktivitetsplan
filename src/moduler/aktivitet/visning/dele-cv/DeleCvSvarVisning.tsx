@@ -3,7 +3,7 @@ import React from 'react';
 
 import { CvKanDelesData } from '../../../../datatypes/internAktivitetTypes';
 import { formaterDatoManed } from '../../../../utils';
-import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
+import { JaSvarTekst, NeiSvarTekst } from './tekster';
 
 interface Props {
     cvKanDelesData: CvKanDelesData;
