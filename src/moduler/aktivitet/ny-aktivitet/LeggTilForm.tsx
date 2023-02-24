@@ -19,7 +19,7 @@ const LeggTilForm = () => {
         >
             <div className="mb-4">
                 <Heading level="2" size="large">
-                    Legg til en aktiviet
+                    Legg til en aktivitet
                 </Heading>
                 {!erVeileder ? (
                     <BodyShort className="mt-6">

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { CustomAlertstripe } from '../visning/hjelpekomponenter/CustomAlertstripe';
-import styles from './UlestMarkering.module.less';
 
 interface Props {
     hidden: boolean;

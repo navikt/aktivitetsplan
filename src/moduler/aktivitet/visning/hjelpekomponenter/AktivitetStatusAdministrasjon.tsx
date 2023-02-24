@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import DeleLinje from '../delelinje/delelinje';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/OppdaterAktivitetEtikett';
 import OppdaterSoknadsstatus from '../soknadsstatus-oppdatering/OppdaterSoknadsstatus';
 import OppdaterAktivitetStatus from '../status-oppdatering/OppdaterAktivitetStatus';

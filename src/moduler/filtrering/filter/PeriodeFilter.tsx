@@ -1,13 +1,13 @@
 import { Historic } from '@navikt/ds-icons';
 import { Button, Radio, RadioGroup } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
 import Dato from '../../../felles-komponenter/Dato';
+import { useOutsideClick } from '../../../felles-komponenter/hooks/useClickOutside';
 import { ReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import loggEvent, { LIST_HISTORISK_PERIODE, VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../proptypes';
 import {
     VistOppfolgingsPeriode,
@@ -51,8 +51,13 @@ const PeriodeFilter = ({
 }: Props) => {
     const [open, setOpen] = useState(false);
 
+    const ref = useRef(null);
+    useOutsideClick(ref, () => setOpen(!open), open);
+
+    if (!harHistoriskePerioder) return null;
+
     return (
-        <VisibleIfDiv visible={harHistoriskePerioder}>
+        <div ref={ref}>
             <Button
                 icon={<Historic />}
                 variant="tertiary"
@@ -98,7 +103,7 @@ const PeriodeFilter = ({
                     </RadioGroup>
                 </div>
             ) : null}
-        </VisibleIfDiv>
+        </div>
     );
 };
 
