@@ -20,7 +20,7 @@ const UlestAvtaltMarkering = (props: Props) => {
     if (!skalMarkereSomLest && !aktivitet.avtalt) return null;
 
     return (
-        <div className={styles.container}>
+        <div>
             <UlestMarkering hidden={!skalMarkereSomLest} />
             <AvtaltMarkering hidden={!aktivitet.avtalt} />
         </div>

@@ -11,8 +11,8 @@ interface Props {
 }
 
 export const CustomAlertstripe = (props: Props) => (
-    <div className={props.sectionClassName ? props.sectionClassName : styles.overskrift}>
-        <WarningColored className={props.ikonClassName ? props.ikonClassName : styles.ikon} />
+    <div className="flex items-center mr-2">
+        <WarningColored className="mr-2 mb-1" />
         <BodyShort>{props.tekst}</BodyShort>
     </div>
 );

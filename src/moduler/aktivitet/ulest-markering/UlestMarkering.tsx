@@ -13,9 +13,7 @@ const UlestMarkering = (props: Props) => {
         return null;
     }
 
-    return (
-        <CustomAlertstripe tekst="Ulest" sectionClassName={styles.ulestMarkering} ikonClassName={styles.varselIkon} />
-    );
+    return <CustomAlertstripe tekst="Ulest" />;
 };
 
 export default UlestMarkering;
