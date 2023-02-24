@@ -105,7 +105,7 @@ function Lagreknapper(props: { isLoading: boolean; isNy: boolean; lagreOgDel: (e
     const { isLoading, isNy, lagreOgDel } = props;
     if (isNy) {
         return (
-            <div className="aktivitetskjema__lagre-knapp">
+            <div className="mt-4">
                 <Button loading={isLoading} onClick={lagreOgDel} className="mr-4">
                     Del med bruker
                 </Button>

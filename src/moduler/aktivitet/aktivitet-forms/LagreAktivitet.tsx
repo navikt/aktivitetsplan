@@ -12,11 +12,9 @@ const LagreAktivitet = () => {
     const venter = !(status === STATUS.OK || status === STATUS.ERROR);
 
     return (
-        <div className="aktivitetskjema__lagre-knapp">
-            <Button loading={venter} disabled={venter || !underOppfolging}>
-                Lagre
-            </Button>
-        </div>
+        <Button className="mt-4" loading={venter} disabled={venter || !underOppfolging}>
+            Lagre
+        </Button>
     );
 };
 
