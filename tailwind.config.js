@@ -8,8 +8,9 @@ module.exports = {
     plugins: [],
     theme: {
         screens: {
-            sm: '768px',
-            md: '992px',
+            sm: '640px',
+            md: '768px',
+            lg: '992px',
         },
         colors: {
             'border-default': 'rgba(0, 0, 0, 0.44)',

@@ -64,10 +64,10 @@ function MalContent(props: MalContentProps) {
                 <BodyShort>Skriv litt om hva som er målet ditt slik at vi kan hjelpe deg bedre.</BodyShort>
                 <ul className="list-disc ml-6 mb-4">
                     <li>
-                        <BodyShort>Hva er målet på kort sikt? Hva er målet på lengre sikt?</BodyShort>
+                        <BodyShort>Hva er målet på kort og på lang sikt?</BodyShort>
                     </li>
                     <li>
-                        <BodyShort>Hva slags arbeidsoppgaver ønsker du deg?</BodyShort>
+                        <BodyShort>Hva slags jobb ønsker du deg?</BodyShort>
                     </li>
                 </ul>
                 <Button onClick={endreMal} variant="secondary" size="small">
@@ -115,7 +115,7 @@ function MittMaal() {
             })}
         >
             <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
-                <div className="flex items-center gap-6">
+                <div className="flex flex-col sm:flex-row items-center gap-6">
                     <MålIkon className="mx-4" />
                     <div>
                         <div className="flex mb-2">
