@@ -1,3 +1,5 @@
+import { stat } from 'fs';
+
 import { Alert, Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import React, { useContext, useEffect } from 'react';
@@ -96,6 +98,12 @@ const AktivitetStatusForm = (props: Props) => {
     const onChangeStatus = (value: AktivitetStatus) => {
         state.fields.aktivitetstatus.setValue(value);
     };
+
+    console.log({
+        value: state.fields.aktivitetstatus.input.value,
+        stateFormValue: state.fields.aktivitetstatus.input.value,
+        equal: fields[0].value === state.fields.aktivitetstatus.input.value,
+    });
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>

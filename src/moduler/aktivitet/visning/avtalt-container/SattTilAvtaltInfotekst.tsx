@@ -43,11 +43,7 @@ const SattTilAvtaltInfotekst = (props: Props) => {
 
     const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, harTilDato, forhaandsorienteringstype);
 
-    return (
-        <div className={aktivitetvisningStyles.underseksjon}>
-            <Alert variant="success">{text}</Alert>
-        </div>
-    );
+    return <Alert variant="success">{text}</Alert>;
 };
 
 export default SattTilAvtaltInfotekst;

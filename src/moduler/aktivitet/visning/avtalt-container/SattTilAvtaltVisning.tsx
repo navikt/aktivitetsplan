@@ -23,14 +23,12 @@ const SattTilAvtaltVisning = (props: Props) => {
 
     return (
         <>
-            <DeleLinje />
             <SattTilAvtaltInfotekst
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 harTilDato={aktivitet.tilDato != null}
                 forhaandsorienteringstype={forhaandsorienteringstype}
             />
             <Forhaandsorienteringsvisning aktivitet={aktivitet} startAapen />
-            <DeleLinje />
         </>
     );
 };
