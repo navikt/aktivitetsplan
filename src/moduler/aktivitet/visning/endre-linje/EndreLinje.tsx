@@ -1,6 +1,6 @@
 import { Accordion, Heading } from '@navikt/ds-react';
 import PT from 'prop-types';
-import React, { MouseEventHandler, ReactNode, useMemo } from 'react';
+import React, { MouseEventHandler, ReactNode, useEffect, useMemo } from 'react';
 
 import styles from './endre-linje.module.less';
 

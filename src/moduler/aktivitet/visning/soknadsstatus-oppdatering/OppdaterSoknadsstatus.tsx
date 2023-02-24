@@ -1,5 +1,5 @@
 import { Alert } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -7,6 +7,7 @@ import { IKKE_FATT_JOBBEN } from '../../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
+import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
@@ -75,11 +76,17 @@ const OppdaterSoknadsstatus = (props: Props) => {
             )}
         </>
     );
+    const { setFormIsDirty } = useContext(DirtyContext);
     const form = <SoknadsstatusForm disabled={disableSoknadsstatusEndring} aktivitet={aktivitet} onSubmit={onSubmit} />;
 
     return (
         <EndreLinje
-            onClick={() => setIsOpen(!open)}
+            onClick={() => {
+                if (open) {
+                    setFormIsDirty('soknadsstatus', false);
+                }
+                setIsOpen(!open);
+            }}
             open={open}
             tittel="Hvor er du i søknadsprosessen?"
             form={form}

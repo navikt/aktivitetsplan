@@ -56,9 +56,6 @@ const StillingEtikettForm = (props: Props) => {
     const { setFormIsDirty } = useContext(DirtyContext);
     useEffect(() => {
         setFormIsDirty('etikett', !state.pristine);
-        return () => {
-            setFormIsDirty('etikett', false);
-        };
     }, [setFormIsDirty, state.pristine]);
 
     const disable = state.submitting || disabled;

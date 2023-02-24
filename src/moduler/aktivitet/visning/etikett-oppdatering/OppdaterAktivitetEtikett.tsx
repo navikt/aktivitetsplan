@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import * as statuser from '../../../../constant';
 import { StillingsStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
@@ -56,11 +57,17 @@ const OppdaterAktivitetEtikett = (props: Props) => {
 
     const disableEtikettEndringer = lasterAktivitetData || kanIkkeEndreAktivitet || erIkkeUnderOppfolging;
 
+    const { setFormIsDirty } = useContext(DirtyContext);
     const form = <StillingEtikettForm disabled={disableEtikettEndringer} aktivitet={aktivitet} onSubmit={onSubmit} />;
 
     return (
         <EndreLinje
-            onClick={() => setIsOpen(!open)}
+            onClick={() => {
+                if (open) {
+                    setFormIsDirty('etikett', false);
+                }
+                setIsOpen(!open);
+            }}
             open={open}
             tittel="Hvor langt har du kommet i søknadsprosessen?"
             form={form}

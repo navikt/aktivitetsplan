@@ -97,12 +97,6 @@ const AktivitetStatusForm = (props: Props) => {
         state.fields.aktivitetstatus.setValue(value);
     };
 
-    console.log({
-        value: state.fields.aktivitetstatus.input.value,
-        stateFormValue: state.fields.aktivitetstatus.input.value,
-        equal: fields[0].value === state.fields.aktivitetstatus.input.value,
-    });
-
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="">

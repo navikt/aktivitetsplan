@@ -8,9 +8,7 @@ import { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import EtikettBase from '../../../../felles-komponenter/etikett-base/EtikettBase';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
-import styles from './SvarPaaVegneAvBruker.module.less';
 
 interface Props {
     formhandler: FieldState;
