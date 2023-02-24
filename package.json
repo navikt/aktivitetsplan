@@ -18,6 +18,7 @@
     "format-all": "prettier --write 'src/'",
     "lint": "echo \"Not implemented\"",
     "lint-staged": "lint-staged",
+    "dev": "vite",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
@@ -58,6 +59,7 @@
     "sha.js": "^2.4.11",
     "source-map-explorer": "^2.5.3",
     "typescript": "^4.8.4",
+    "vite": "^4.1.4",
     "whatwg-fetch": "^3.6.2"
   },
   "husky": {
