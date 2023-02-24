@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
+import Modal from '../../felles-komponenter/modal/Modal';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
@@ -66,13 +67,15 @@ const Filter = () => {
                         Filtrer
                     </Button>
                     {open ? (
-                        <div className="rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto">
-                            <AvtaltMedNavFilter />
-                            <EtikettFilter />
-                            <ArenaEtikettFilter />
-                            <AktivitetStatusFilter />
-                            <AktivitetTypeFilter />
-                        </div>
+                        <Modal contentLabel="filter-modal" header="" onRequestClose={() => setOpen(false)}>
+                            <div className="flex flex-row gap-4 gap-x-8 flex-wrap">
+                                <AvtaltMedNavFilter />
+                                <EtikettFilter />
+                                <ArenaEtikettFilter />
+                                <AktivitetStatusFilter />
+                                <AktivitetTypeFilter />
+                            </div>
+                        </Modal>
                     ) : null}
                 </div>
             ) : null}
