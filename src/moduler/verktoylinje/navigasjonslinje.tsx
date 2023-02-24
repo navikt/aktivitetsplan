@@ -52,8 +52,8 @@ function Navigasjonslinje() {
         return null;
     } else {
         return (
-            <div className="flex flex-col">
-                <div className="flex gap-8 my-4">
+            <div className="flex flex-col gap-y-2">
+                <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row">
                     <Link href={MINSIDE_PATH}>Min side</Link>
                     <Link href={DIALOG_PATH}>
                         <span className={styles.tilDialogTekst}>Min dialog med veileder</span>
@@ -65,7 +65,7 @@ function Navigasjonslinje() {
                         className="text-text-action underline"
                         onClick={() => loggEvent(APNE_OM_TJENESTEN)}
                     >
-                        Om aktivitetsplanen
+                        Hva er aktivitetsplanen?
                     </ReactRouterLink>
                 </div>
                 <Heading level="1" size="xlarge">

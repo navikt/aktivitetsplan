@@ -42,14 +42,15 @@ interface Props {
     skjulInneverende: boolean;
 }
 
-function PeriodeFilter({
+const PeriodeFilter = ({
     harHistoriskePerioder,
     historiskPeriode,
     historiskePerioder,
     doVelgHistoriskPeriode,
     skjulInneverende,
-}: Props) {
+}: Props) => {
     const [open, setOpen] = useState(false);
+
     return (
         <VisibleIfDiv visible={harHistoriskePerioder}>
             <Button
@@ -63,46 +64,42 @@ function PeriodeFilter({
                 Tidligere planer
             </Button>
             {open ? (
-                <div className="relative">
-                    <div className="filter space-y-4 p-4 pb-4 border absolute z-10 bg-white">
-                        <RadioGroup className="" legend={'Velg periode'}>
-                            {skjulInneverende ? null : (
+                <div className="rounded-md absolute p-4 bg-white border z-10">
+                    <RadioGroup legend={'Velg periode'}>
+                        {skjulInneverende ? null : (
+                            <Radio
+                                value="inneverende"
+                                className="filter__radio--periode"
+                                name="inneverende"
+                                onChange={() => doVelgHistoriskPeriode(null)}
+                                checked={!historiskPeriode}
+                            >
+                                Nåværende periode
+                            </Radio>
+                        )}
+                        {historiskePerioder.map((oppfolgingsPeriode, index) => {
+                            return (
                                 <Radio
-                                    value="inneverende"
+                                    value={oppfolgingsPeriode.uuid}
+                                    key={index}
                                     className="filter__radio--periode"
-                                    name="inneverende"
-                                    onChange={() => doVelgHistoriskPeriode(null)}
-                                    checked={!historiskPeriode}
+                                    name={oppfolgingsPeriode.uuid}
+                                    onChange={() => {
+                                        doVelgHistoriskPeriode(oppfolgingsPeriode);
+                                        loggEvent(VIS_HISTORISK_PERIODE);
+                                    }}
+                                    checked={!!historiskPeriode && historiskPeriode.uuid === oppfolgingsPeriode.uuid}
                                 >
-                                    Nåværende periode
+                                    <PeriodeLabel historiskPeriode={oppfolgingsPeriode} />
                                 </Radio>
-                            )}
-                            {historiskePerioder.map((oppfolgingsPeriode, index) => {
-                                return (
-                                    <Radio
-                                        value={oppfolgingsPeriode.uuid}
-                                        key={index}
-                                        className="filter__radio--periode"
-                                        name={oppfolgingsPeriode.uuid}
-                                        onChange={() => {
-                                            doVelgHistoriskPeriode(oppfolgingsPeriode);
-                                            loggEvent(VIS_HISTORISK_PERIODE);
-                                        }}
-                                        checked={
-                                            !!historiskPeriode && historiskPeriode.uuid === oppfolgingsPeriode.uuid
-                                        }
-                                    >
-                                        <PeriodeLabel historiskPeriode={oppfolgingsPeriode} />
-                                    </Radio>
-                                );
-                            })}
-                        </RadioGroup>
-                    </div>
+                            );
+                        })}
+                    </RadioGroup>
                 </div>
             ) : null}
         </VisibleIfDiv>
     );
-}
+};
 
 (PeriodeFilter as any).defaultProps = {
     historiskPeriode: null,

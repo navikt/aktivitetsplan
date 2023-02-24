@@ -2,8 +2,6 @@ import { Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
-import styles from './EtikettBase.module.less';
-
 interface Props {
     className?: string;
     children: React.ReactNode;

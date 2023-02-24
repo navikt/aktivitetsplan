@@ -15,12 +15,16 @@ export const OkonomiskStotte = () => {
                     økonomisk støtte, økonomisk sosialhjelp, boligsituasjon eller andre ting som ikke handler om å komme
                     i jobb, kan du
                 </BodyShort>
-                <ul>
-                    <BodyShort as="li">
-                        kontakte NAV i tjenesten{' '}
-                        <Link href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Link>
-                    </BodyShort>
-                    <BodyShort as="li">ringe NAV på 55 55 33 33</BodyShort>
+                <ul className="list-disc mt-4 pl-8">
+                    <li>
+                        <BodyShort>
+                            kontakte NAV i tjenesten{' '}
+                            <Link href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Link>
+                        </BodyShort>
+                    </li>
+                    <li>
+                        <BodyShort>ringe NAV på 55 55 33 33</BodyShort>{' '}
+                    </li>
                 </ul>
             </Accordion.Content>
         </Accordion.Item>

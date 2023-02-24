@@ -115,7 +115,7 @@ function MittMaal() {
             })}
         >
             <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6">
                     <MålIkon className="mx-4" />
                     <div>
                         <div className="flex mb-2">

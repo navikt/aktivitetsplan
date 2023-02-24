@@ -3,13 +3,6 @@ import useFormstate from '@nutgaard/use-formstate';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
-import {
-    STATUS_AVBRUTT,
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_FULLFOERT,
-    STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
-} from '../../../../constant';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';

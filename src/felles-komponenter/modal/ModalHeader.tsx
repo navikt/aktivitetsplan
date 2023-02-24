@@ -1,5 +1,5 @@
 import { Locked } from '@navikt/ds-icons';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 

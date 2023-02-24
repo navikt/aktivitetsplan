@@ -2,7 +2,6 @@ import React from 'react';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
-import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import styles from './Aktivitetsvisning.module.less';
 import { DeleCvContainer } from './dele-cv/DeleCvContainer';
@@ -12,7 +11,6 @@ import HandlingContainer from './hjelpekomponenter/HandlingContainer';
 import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
 import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/ReferatContainer';
-import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
 import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 
 interface Props {

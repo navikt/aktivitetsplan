@@ -1,9 +1,8 @@
 import { Chips, Label } from '@navikt/ds-react';
-import classNames from 'classnames';
 import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { Store } from 'redux';
 
 import { ReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';

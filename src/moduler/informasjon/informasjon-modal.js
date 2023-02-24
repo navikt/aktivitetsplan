@@ -41,7 +41,7 @@ class InformasjonModal extends Component {
                 }}
             >
                 <ModalContainer className="informasjon-modal-container max-w-2xl p-6">
-                    <Heading level="2" size="small" className={styles.innholdsTittel}>
+                    <Heading level="1" size="large" className={styles.innholdsTittel}>
                         Hva er aktivitetsplanen?
                     </Heading>
                     <BodyShort className={styles.avsnitt}>
