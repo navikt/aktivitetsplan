@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import Filter from '../filtrering/Filter';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectFilterSlice, selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import PeriodeFilter from '../filtrering/filter/PeriodeFilter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
@@ -24,7 +24,7 @@ const Verktoylinje = () => {
     };
 
     return (
-        <div className="">
+        <div className="flex flex-col gap-y-6">
             <div className="flex flex-row space-x-4 items-start">
                 {!viserHistoriskPeriode && underOppfolging && harSkriveTilgang ? (
                     <Link to="/aktivitet/ny">
@@ -43,9 +43,7 @@ const Verktoylinje = () => {
                     Skriv ut
                 </Button>
             </div>
-            <div className="verktoylinje__verktoy-container">
-                <VisValgtFilter />
-            </div>
+            <VisValgtFilter />
         </div>
     );
 };

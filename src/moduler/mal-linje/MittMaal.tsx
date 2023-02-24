@@ -70,7 +70,7 @@ function MalContent(props: MalContentProps) {
                         <BodyShort>Hva slags arbeidsoppgaver ønsker du deg?</BodyShort>
                     </li>
                 </ul>
-                <Button onClick={endreMal} variant="secondary">
+                <Button onClick={endreMal} variant="secondary" size="small">
                     Sett et mål
                 </Button>
             </div>
@@ -80,7 +80,7 @@ function MalContent(props: MalContentProps) {
     return (
         <div className="space-y-2">
             <MalText disabled={disabled} mal={mal} />
-            <Button onClick={endreMal} variant="secondary">
+            <Button onClick={endreMal} variant="secondary" size="small">
                 Endre målet
             </Button>
         </div>

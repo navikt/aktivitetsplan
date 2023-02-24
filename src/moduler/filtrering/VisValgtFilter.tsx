@@ -1,9 +1,9 @@
-import { Chips } from '@navikt/ds-react';
+import { Chips, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Store } from 'redux';
 
 import { ReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
@@ -65,8 +65,14 @@ function VisValgtFilter(props: Props) {
         }
     };
 
-    return (
-        <div className={classNames('filtrering-label-container')}>
+    const activeFilterExists: boolean = Object.values(filterSlice).some((filterMap) => {
+        if (!filterMap) return false;
+        return Object.values(filterMap).some((value) => value === true);
+    });
+
+    return activeFilterExists ? (
+        <div className="flex flex-wrap flex-col">
+            <Label className="mb-2">Valgte filter</Label>
             <Chips>
                 {Object.entries(filterSlice as Record<string, Record<string, string> | null>).map(
                     ([filterCategoryKey, activeFiltersMap]) => {
@@ -107,7 +113,7 @@ function VisValgtFilter(props: Props) {
                 )}
             </Chips>
         </div>
-    );
+    ) : null;
 }
 
 (VisValgtFilter as any).defaultProps = {

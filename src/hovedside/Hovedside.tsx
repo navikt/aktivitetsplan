@@ -42,7 +42,7 @@ const Hovedside = () => {
                 <OppfolgingStatus>
                     <InformasjonsHenting />
                     <Varslinger />
-                    <div className="container">
+                    <div className="container flex flex-col gap-y-4">
                         <Navigasjonslinje />
                         <DobbleLonnstilskuddAdvarsel />
                         <Maal />

@@ -11,7 +11,7 @@ import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { hentMal, selectMalStatus } from './aktivitetsmal-reducer';
-import { selectMalListeStatus } from './aktivitetsmal-selector';
+import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import MalContainer from './mal-container';
 import MalHistorikk from './mal-historikk';
 import { MalModal } from './mal-modal';
@@ -23,6 +23,7 @@ function Mal() {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const underOppfolging = useSelector(selectUnderOppfolging, shallowEqual);
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
+    const historiskeMal = useSelector(selectMalListe, shallowEqual);
 
     const isDirty = useRef(false);
 
@@ -54,7 +55,7 @@ function Mal() {
                         ? 'Mitt mål fra en tidligere periode'
                         : 'Mitt mål'}
                 </Heading>
-                <ReadMore className="mb-8" header="Tips til mål">
+                <ReadMore className="mb-8" header="Tips til mål" defaultOpen={historiskeMal.length === 0}>
                     Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
                     <ul className="list-disc mt-4 pl-8">
                         <li>Hva er målet på kort sikt? Hva er målet på lengre sikt?</li>
