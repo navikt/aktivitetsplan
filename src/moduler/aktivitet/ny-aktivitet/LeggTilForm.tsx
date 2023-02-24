@@ -17,26 +17,30 @@ const LeggTilForm = () => {
             contentClass="ny-aktivitet-visning"
             feilmeldinger={aktivitetFeilmeldinger}
         >
-            <div className="mb-8">
+            <div className="mb-4">
                 <Heading level="2" size="large">
                     Legg til en aktiviet
                 </Heading>
-                <BodyShort hidden={erVeileder}>
-                    Her kan du legge til ulike aktiviteter du gjør for å nå målet ditt.
-                </BodyShort>
+                {!erVeileder ? (
+                    <BodyShort className="mt-6">
+                        Her kan du legge til ulike aktiviteter du gjør for å nå målet ditt.
+                    </BodyShort>
+                ) : null}
             </div>
-            <div hidden={!erVeileder} className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-8 px-8 -my-4 py-4">
-                <Heading size="medium">For NAV-ansatt</Heading>
-                <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
-                    Avtale om å søke jobber
-                </Lenkepanel>
-                <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
-                    Møte med NAV
-                </Lenkepanel>
-                <Lenkepanel border href="/aktivitet/ny/samtalereferat" hidden={!erVeileder}>
-                    Samtalereferat
-                </Lenkepanel>
-            </div>
+            {erVeileder ? (
+                <div className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-8 px-8 py-4">
+                    <Heading size="medium">For NAV-ansatt</Heading>
+                    <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
+                        Avtale om å søke jobber
+                    </Lenkepanel>
+                    <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
+                        Møte med NAV
+                    </Lenkepanel>
+                    <Lenkepanel border href="/aktivitet/ny/samtalereferat" hidden={!erVeileder}>
+                        Samtalereferat
+                    </Lenkepanel>
+                </div>
+            ) : null}
             <div className="mt-8">
                 {erVeileder ? (
                     <Heading size="medium" className="mb-4">
