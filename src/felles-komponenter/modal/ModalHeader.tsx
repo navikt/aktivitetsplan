@@ -26,11 +26,7 @@ const ModalHeader = (props: Props) => {
                 <HengeLasIkon />
             </VisibleIfSpan>
             {tilbakeTekst && onTilbakeClick && <Tilbakeknapp tekst={tilbakeTekst} onClick={onTilbakeClick} />}
-            {headerTekst && (
-                <Heading level="2" size="medium">
-                    {headerTekst}
-                </Heading>
-            )}
+            {headerTekst && <BodyShort>{headerTekst}</BodyShort>}
         </div>
     );
 };

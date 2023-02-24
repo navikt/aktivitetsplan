@@ -26,7 +26,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
 
     return (
         <>
-            <div className={aktivitetsvisningStyles.underseksjon}>
+            <div className="my-4">
                 {merEnnSyvDagerTil ? (
                     <KanIkkeLeggeTilForhaandsorienteringInfotekst />
                 ) : (

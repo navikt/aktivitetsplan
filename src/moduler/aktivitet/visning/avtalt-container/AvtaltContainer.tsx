@@ -13,7 +13,7 @@ import SattTilAvtaltVisning from './SattTilAvtaltVisning';
 interface Props {
     underOppfolging: boolean;
     aktivitet: AlleAktiviteter;
-    className: string;
+    className?: string;
 }
 
 const AvtaltContainer = (props: Props) => {

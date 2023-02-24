@@ -31,34 +31,32 @@ function Aktivitetvisning(props: Props) {
 
     return (
         <div>
-            <ModalContainer className="aktivitetvisning">
-                <VarslingBoks className={styles.underseksjon} aktivitet={aktivitet} />
+            <VarslingBoks className={styles.underseksjon} aktivitet={aktivitet} />
 
-                {visBegrunnelse && aktivitet.avsluttetKommentar ? (
-                    <BegrunnelseBoks className={styles.underseksjon} begrunnelse={aktivitet.avsluttetKommentar} />
-                ) : null}
+            {visBegrunnelse && aktivitet.avsluttetKommentar ? (
+                <BegrunnelseBoks className={styles.underseksjon} begrunnelse={aktivitet.avsluttetKommentar} />
+            ) : null}
 
-                <AktivitetinformasjonVisning
-                    valgtAktivitet={aktivitet}
-                    tillatEndring={tillatEndring}
-                    underOppfolging={underOppfolging}
-                    laster={laster}
-                />
+            <AktivitetinformasjonVisning
+                valgtAktivitet={aktivitet}
+                tillatEndring={tillatEndring}
+                underOppfolging={underOppfolging}
+                laster={laster}
+            />
 
-                {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
-                    <DeleCvContainer aktivitet={aktivitet} />
-                ) : null}
-                {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
-                aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
-                    <ReferatContainer aktivitet={aktivitet} />
-                ) : null}
-                {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
-                    <HandlingContainer aktivitet={aktivitet} />
-                ) : null}
-                <Statusadministrasjon aktivitet={aktivitet} />
-                <DialogLenke aktivitet={aktivitet} />
-                {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
-            </ModalContainer>
+            {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
+                <DeleCvContainer aktivitet={aktivitet} />
+            ) : null}
+            {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
+            aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
+                <ReferatContainer aktivitet={aktivitet} />
+            ) : null}
+            {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
+                <HandlingContainer aktivitet={aktivitet} />
+            ) : null}
+            <Statusadministrasjon aktivitet={aktivitet} />
+            {/*<DialogLenke aktivitet={aktivitet} /> */}
+            {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
         </div>
     );
 }

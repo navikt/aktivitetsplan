@@ -9,7 +9,7 @@ import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
 import StillingEtikett from '../../etikett/StillingEtikett';
-import EndreLinje from '../endre-linje/endre-linje';
+import EndreLinje from '../endre-linje/EndreLinje';
 import StillingEtikettForm from './StillingEtikettForm';
 
 interface Props {
@@ -63,8 +63,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
             tittel="Hvor langt har du kommet i søknadsprosessen?"
             form={form}
             endring={endring}
-            setEndring={setEndring}
-            visning={<StillingEtikett aktivitet={aktivitet} />}
+            subtittel={<StillingEtikett aktivitet={aktivitet} />}
         />
     );
 };

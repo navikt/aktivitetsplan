@@ -1,4 +1,4 @@
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import React, { useContext, useEffect } from 'react';
 
@@ -44,6 +44,28 @@ interface Props {
     onSubmit: Handler;
 }
 
+const fields = [
+    {
+        value: STATUS_BRUKER_ER_INTRESSERT,
+        label: 'Forslag',
+    },
+    {
+        value: STATUS_PLANLAGT,
+        label: 'Planlegger',
+    },
+    {
+        value: STATUS_GJENNOMFOERT,
+        label: 'Gjennomfører',
+    },
+    {
+        value: STATUS_FULLFOERT,
+        label: 'Fullført',
+    },
+    {
+        value: STATUS_AVBRUTT,
+        label: 'Avbrutt',
+    },
+];
 const AktivitetStatusForm = (props: Props) => {
     const { aktivitet, onSubmit, disabled } = props;
 
@@ -74,35 +96,23 @@ const AktivitetStatusForm = (props: Props) => {
     const visAdvarsel = status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
 
+    const onChangeStatus = (value: AktivitetStatus) => {
+        state.fields.aktivitetstatus.setValue(value);
+    };
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <div className="space-y-4">
-                <Radio
-                    label="Forslag"
-                    value={STATUS_BRUKER_ER_INTRESSERT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio
-                    label="Planlegger"
-                    value={STATUS_PLANLAGT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio
-                    label="Gjennomfører"
-                    value={STATUS_GJENNOMFOERT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio
-                    label="Fullført"
-                    value={STATUS_FULLFOERT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio label="Avbrutt" value={STATUS_AVBRUTT} disabled={disabled} {...state.fields.aktivitetstatus} />
-
+            <div className="">
+                <RadioGroup legend={''} onChange={onChangeStatus}>
+                    {fields.map(({ value, label }) => (
+                        <Radio
+                            key={value}
+                            label={label}
+                            value={value}
+                            checked={value === state.fields.statusValidering.input.value}
+                        />
+                    ))}
+                </RadioGroup>
                 <VisibleIfDiv className="status-alert" visible={!state.pristine}>
                     <VisibleAlertStripeSuksessSolid visible={visAdvarsel} variant="warning">
                         Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre

@@ -64,25 +64,17 @@ const AktivitetinformasjonVisning = (props: Props) => {
 
     return (
         <div>
-            <div className={aktivitetsvisningStyles.underseksjon}>
-                <div className={styles.header}>
-                    <Heading level="1" size="large" id="modal-aktivitetsvisning-header">
-                        {tittel}
-                    </Heading>
-                </div>
+            <div className="space-y-8">
+                <Heading level="1" size="large" id="modal-aktivitetsvisning-header">
+                    {tittel}
+                </Heading>
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
                 <IkkeDeltFerdigMarkering visible={deltFerdigMarkeringSkalVises} />
             </div>
-            <AvtaltContainer
-                underOppfolging={underOppfolging}
-                aktivitet={valgtAktivitet}
-                className={aktivitetsvisningStyles.underseksjon}
-            />
-            <div className={aktivitetsvisningStyles.underseksjon}>
-                <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
-            </div>
-            <div className="mx-6 mb-6 gap-4 flex flex-wrap">
+            <AvtaltContainer underOppfolging={underOppfolging} aktivitet={valgtAktivitet} />
+            <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
+            <div className="my-4 gap-4 flex flex-wrap">
                 {!tillatEndring || isArenaAktivitet(props.valgtAktivitet) ? null : (
                     <Button
                         disabled={laster || !underOppfolging}

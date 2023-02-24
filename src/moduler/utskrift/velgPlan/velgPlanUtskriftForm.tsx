@@ -44,6 +44,7 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
 
                 <div>
                     <Radio
+                        checked={state.fields.utskriftPlanType.input.value === 'helePlanen'}
                         label={
                             <UtskriftValg
                                 tittelId="Hele oppfølgingsperioden"
@@ -52,9 +53,9 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
                         }
                         value="helePlanen"
                         id="id--helePlanen"
-                        {...state.fields.utskriftPlanType}
                     />
                     <Radio
+                        checked={state.fields.utskriftPlanType.input.value === 'aktivitetsplan'}
                         label={
                             <UtskriftValg
                                 tittelId="Oppfølgingsperioden uten KVP-perioden"
@@ -63,7 +64,6 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
                         }
                         value="aktivitetsplan"
                         id="id--aktivitetsplan"
-                        {...state.fields.utskriftPlanType}
                     />
                     <KvpPlanValg kvpPerioder={kvpPerioder} field={state.fields.utskriftPlanType} />
                 </div>

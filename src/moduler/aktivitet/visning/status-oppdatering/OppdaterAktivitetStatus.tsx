@@ -1,3 +1,4 @@
+import { BodyShort } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -6,11 +7,12 @@ import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
+import { aktivitetStatusMap } from '../../../../utils/textMappers';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetlisteSelector';
-import EndreLinje from '../endre-linje/endre-linje';
+import EndreLinje from '../endre-linje/EndreLinje';
 import AktivitetStatusForm from './AktivitetStatusForm';
 import StatusVisning from './status-visning';
 
@@ -52,7 +54,7 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
             document.querySelector('.aktivitet-modal').focus();
         });
 
-    const visning = <StatusVisning status={aktivitet.status} />;
+    const subtittel = <BodyShort>{aktivitetStatusMap[aktivitet.status]}</BodyShort>;
     const form = <AktivitetStatusForm disabled={disableStatusEndring} onSubmit={onSubmit} aktivitet={aktivitet} />;
 
     const kanEndre = aktivitet.status !== STATUS_FULLFOERT && aktivitet.status !== STATUS_AVBRUTT;
@@ -61,8 +63,7 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
         <EndreLinje
             tittel="Hva er status på aktiviteten?"
             endring={endring}
-            setEndring={setEndring}
-            visning={visning}
+            subtittel={subtittel}
             form={form}
             kanEndre={kanEndre}
         />

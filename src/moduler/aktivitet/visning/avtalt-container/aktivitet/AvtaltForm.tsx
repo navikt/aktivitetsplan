@@ -97,7 +97,7 @@ const AvtaltForm = (props: Props) => {
             onSubmit={state.onSubmit(onSubmit)}
             noValidate
             autoComplete="off"
-            className={classNames('bg-surface-alt-3-subtle py-2 px-4 mx-6 border border-border-alt-3 rounded-md')}
+            className={classNames('bg-surface-alt-3-subtle py-2 px-4 my-4 border border-border-alt-3 rounded-md')}
         >
             <div>
                 <div className={'flex items-center'}>

@@ -11,7 +11,7 @@ import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-s
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
-import EndreLinje from '../endre-linje/endre-linje';
+import EndreLinje from '../endre-linje/EndreLinje';
 import SoknadsstatusForm from './SoknadsstatusForm';
 
 const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
@@ -83,8 +83,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
             form={form}
             endring={endring}
             kanEndre={kanEndre}
-            setEndring={setEndring}
-            visning={visning}
+            subtittel={visning}
         />
     );
 };

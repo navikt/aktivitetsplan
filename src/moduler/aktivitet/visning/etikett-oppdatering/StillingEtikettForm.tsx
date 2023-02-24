@@ -3,6 +3,13 @@ import useFormstate from '@nutgaard/use-formstate';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
+import {
+    STATUS_AVBRUTT,
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_FULLFOERT,
+    STATUS_GJENNOMFOERT,
+    STATUS_PLANLAGT,
+} from '../../../../constant';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -18,6 +25,28 @@ interface Props {
 type FormType = {
     etikettstatus: string;
 };
+const fields = [
+    {
+        label: 'Ikke startet',
+        value: konstanter.INGEN_VALGT,
+    },
+    {
+        label: 'Sendt søknad og venter på svar',
+        value: konstanter.SOKNAD_SENDT,
+    },
+    {
+        label: 'Skal på intervju',
+        value: konstanter.INNKALT_TIL_INTERVJU,
+    },
+    {
+        label: 'Fått jobbtilbud',
+        value: konstanter.JOBBTILBUD,
+    },
+    {
+        label: 'Ikke fått jobben',
+        value: konstanter.AVSLAG,
+    },
+];
 
 const StillingEtikettForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;
@@ -43,36 +72,15 @@ const StillingEtikettForm = (props: Props) => {
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="space-y-4 mb-4">
-                <Radio
-                    label="Ikke startet"
-                    value={konstanter.INGEN_VALGT}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Sendt søknad og venter på svar"
-                    value={konstanter.SOKNAD_SENDT}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Skal på intervju"
-                    value={konstanter.INNKALT_TIL_INTERVJU}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Fått jobbtilbud"
-                    value={konstanter.JOBBTILBUD}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Ikke fått jobben"
-                    value={konstanter.AVSLAG}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
+                {fields.map(({ value, label }) => (
+                    <Radio
+                        key={value}
+                        value={value}
+                        label={label}
+                        checked={value === state.fields.etikettstatus.input.value}
+                        disabled={disable}
+                    />
+                ))}
             </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre

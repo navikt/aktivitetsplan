@@ -4,6 +4,13 @@ export const STATUS_GJENNOMFOERT = 'GJENNOMFORES';
 export const STATUS_FULLFOERT = 'FULLFORT';
 export const STATUS_AVBRUTT = 'AVBRUTT';
 
+export type AktivitetStatus =
+    | typeof STATUS_BRUKER_ER_INTRESSERT
+    | typeof STATUS_PLANLAGT
+    | typeof STATUS_PLANLAGT
+    | typeof STATUS_FULLFOERT
+    | typeof STATUS_AVBRUTT;
+
 export const EGEN_AKTIVITET_TYPE = 'EGEN';
 export const STILLING_AKTIVITET_TYPE = 'STILLING';
 export const TILTAK_AKTIVITET_TYPE = 'TILTAKSAKTIVITET';

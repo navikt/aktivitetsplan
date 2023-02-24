@@ -2,29 +2,20 @@ import { Radio as NavRadio } from '@navikt/ds-react';
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
-import { FieldStateInput } from './inputTypes';
-
 interface RadioProps {
-    id?: string;
-    initialValue?: string;
     className?: string;
     disabled?: boolean;
     value: string;
     label: React.ReactNode;
-    pristine?: boolean;
-    touched: boolean;
-    error?: string;
-    input: FieldStateInput;
-    setValue?: (value: string) => void;
+    checked: boolean;
+    id?: string;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Radio = (props: RadioProps) => {
-    const { value, touched, error, input, pristine, initialValue, setValue, label, ...rest } = props;
-    const inputProps = { ...input, ...rest };
-
+    const { value, label, checked, disabled, className, id } = props;
     return (
-        <NavRadio {...inputProps} value={value} checked={value === input.value} id={`id--${value}`}>
+        <NavRadio className={className} disabled={disabled} value={value} checked={checked} id={id || `id--${value}`}>
             {label}
         </NavRadio>
     );

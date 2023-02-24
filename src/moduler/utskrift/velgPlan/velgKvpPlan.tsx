@@ -34,11 +34,10 @@ function KvpPlanSingelValg(props: KvpPlanSingelValgProps) {
 
     return (
         <Radio
-            id={kvpPeriode.opprettetDato}
             label={<UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />}
             value={kvpPeriode.opprettetDato}
             disabled={!kvpPeriode.avsluttetDato}
-            {...field}
+            checked={field.input.value === kvpPeriode.opprettetDato}
         />
     );
 }
@@ -49,21 +48,20 @@ function KvpPlanListeValg(props: KvpPlanValgProps) {
         <div className="kvp-plan-valg">
             <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />
             {kvpPerioder &&
-                kvpPerioder.map((kvp) => (
+                kvpPerioder.map((kvpPeriode) => (
                     <Radio
-                        key={kvp.opprettetDato}
-                        id={kvp.opprettetDato}
+                        checked={kvpPeriode.opprettetDato === field.input.value}
+                        key={kvpPeriode.opprettetDato}
                         label={
                             <BodyShort>
-                                {`${formaterDatoKortManed(kvp.opprettetDato)} - ${
-                                    formaterDatoKortManed(kvp.avsluttetDato) || 'nå'
+                                {`${formaterDatoKortManed(kvpPeriode.opprettetDato)} - ${
+                                    formaterDatoKortManed(kvpPeriode.avsluttetDato) || 'nå'
                                 }`}
                             </BodyShort>
                         }
                         className="kvp-periode-valg"
-                        value={kvp.opprettetDato}
-                        disabled={!kvp.avsluttetDato}
-                        {...field}
+                        value={kvpPeriode.opprettetDato}
+                        disabled={!kvpPeriode.avsluttetDato}
                     />
                 ))}
         </div>

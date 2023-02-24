@@ -17,6 +17,29 @@ type FormType = {
     soknadsstatus: string;
 };
 
+const fields = [
+    {
+        label: 'Venter på å bli kontaktet av NAV eller arbeidsgiver',
+        value: konstanter.VENTER,
+    },
+    {
+        label: 'CV er delt med arbeidsgiver',
+        value: konstanter.CV_DELT,
+    },
+    {
+        label: 'Skal på intervju',
+        value: konstanter.SKAL_PAA_INTERVJU,
+    },
+    {
+        label: 'Fått jobbtilbud',
+        value: konstanter.JOBBTILBUD,
+    },
+    {
+        label: 'Ikke fått jobben',
+        value: konstanter.AVSLAG,
+    },
+];
+
 const SoknadsstatusForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;
 
@@ -44,36 +67,14 @@ const SoknadsstatusForm = (props: Props) => {
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="space-y-4 pb-4">
-                <Radio
-                    label="Venter på å bli kontaktet av NAV eller arbeidsgiver"
-                    value={konstanter.VENTER}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="CV er delt med arbeidsgiver"
-                    value={konstanter.CV_DELT}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="Skal på intervju"
-                    value={konstanter.SKAL_PAA_INTERVJU}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="Fått jobbtilbud"
-                    value={konstanter.JOBBTILBUD}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="Ikke fått jobben"
-                    value={konstanter.AVSLAG}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
+                {fields.map(({ label, value }) => (
+                    <Radio
+                        key={value}
+                        value={value}
+                        label={label}
+                        checked={value === state.fields.soknadsstatus.input.value}
+                    />
+                ))}
             </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre

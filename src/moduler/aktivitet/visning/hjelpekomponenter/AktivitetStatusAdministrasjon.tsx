@@ -4,7 +4,7 @@ import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/in
 import DeleLinje from '../delelinje/delelinje';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/OppdaterAktivitetEtikett';
 import OppdaterSoknadsstatus from '../soknadsstatus-oppdatering/OppdaterSoknadsstatus';
-import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
+import OppdaterAktivitetStatus from '../status-oppdatering/OppdaterAktivitetStatus';
 
 interface Props {
     aktivitet: VeilarbAktivitet;
