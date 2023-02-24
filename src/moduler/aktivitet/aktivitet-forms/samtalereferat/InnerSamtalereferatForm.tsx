@@ -88,7 +88,6 @@ const InnerSamtalereferatForm = (props: Props) => {
                         label="Samtalereferat *"
                         placeholder="Skriv her"
                         maxLength={5000}
-                        visTellerFra={500}
                         required
                         {...state.fields.referat}
                     />

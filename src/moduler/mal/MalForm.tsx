@@ -67,8 +67,6 @@ function MalForm(props: Props) {
         <form className="my-4 space-y-8" onSubmit={state.onSubmit(onSubmit)}>
             <Textarea
                 textareaClass={textAreaCls}
-                visTellerFra={150}
-                autoFocus
                 label="Mitt mål (obligatorisk)"
                 aria-label="Mitt mål"
                 maxLength={500}

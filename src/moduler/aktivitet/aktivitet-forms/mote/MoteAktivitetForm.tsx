@@ -160,7 +160,6 @@ const MoteAktivitetForm = (props: Props) => {
                     disabled={avtalt}
                     label="Hensikt med møtet *"
                     maxLength={HENSIKT_MAKS_LENGDE}
-                    visTellerFra={500}
                     required
                     {...state.fields.beskrivelse}
                 />
@@ -168,7 +167,6 @@ const MoteAktivitetForm = (props: Props) => {
                     disabled={avtalt}
                     label="Forberedelser til møtet"
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
-                    visTellerFra={200}
                     {...state.fields.forberedelser}
                 />
                 <FormErrorSummary submittoken={state.submittoken} errors={{ ...state.errors }} />

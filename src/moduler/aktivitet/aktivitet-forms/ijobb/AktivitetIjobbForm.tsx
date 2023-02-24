@@ -119,7 +119,6 @@ function IJobbAktivitetForm(props: Props) {
                     disabled={avtalt}
                     label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
                     maxLength={5000}
-                    visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />

@@ -87,7 +87,6 @@ const OppdaterReferatForm = (props: Props) => {
                 label={`Samtalereferat`}
                 disabled={oppdaterer}
                 maxLength={5000}
-                visTellerFra={500}
                 placeholder="Skriv samtalereferatet her"
                 {...state.fields.referat}
             />

@@ -142,16 +142,9 @@ export default function SokeAvtaleAktivitetForm(props: any) {
                     disabled={avtalt}
                     label="Oppfølging fra NAV"
                     maxLength={255}
-                    visTellerFra={100}
                     {...state.fields.avtaleOppfolging}
                 />
-                <Textarea
-                    disabled={avtalt}
-                    label="Beskrivelse"
-                    maxLength={5000}
-                    visTellerFra={500}
-                    {...state.fields.beskrivelse}
-                />
+                <Textarea disabled={avtalt} label="Beskrivelse" maxLength={5000} {...state.fields.beskrivelse} />
                 {/*<FormErrorSummary submittoken={state.submittoken} errors={state.errors} />*/}
                 <FormErrorSummary submittoken={state.submittoken} errors={{ ...state.errors, ...rangeError }} />
             </div>

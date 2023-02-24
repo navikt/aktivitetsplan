@@ -39,7 +39,6 @@ function BegrunnelseForm(props) {
                     <Textarea
                         label={beskrivelseLabel}
                         maxLength={255}
-                        visTellerFra={255}
                         disabled={lagrer}
                         {...state.fields.begrunnelse}
                     />

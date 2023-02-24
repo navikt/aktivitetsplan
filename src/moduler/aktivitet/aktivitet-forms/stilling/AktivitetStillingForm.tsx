@@ -105,7 +105,6 @@ function StillingAktivitetForm(props: Props) {
                     disabled={avtalt}
                     label="Kort beskrivelse av stillingen"
                     maxLength={5000}
-                    visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
                 <Input disabled={avtalt} label="Lenke til stillingsannonse" {...state.fields.lenke} />
