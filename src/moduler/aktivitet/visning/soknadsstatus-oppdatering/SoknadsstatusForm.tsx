@@ -1,8 +1,9 @@
-import { Button } from '@navikt/ds-react';
+import { Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
+import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -64,12 +65,18 @@ const SoknadsstatusForm = (props: Props) => {
 
     const disable = state.submitting || disabled;
 
+    const onChangeSoknadStatus = (value: StillingFraNavSoknadsstatus) => {
+        state.fields.soknadsstatus.setValue(value);
+    };
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <div className="space-y-4 pb-4">
-                {fields.map(({ label, value }) => (
-                    <Radio key={value} value={value} label={label} />
-                ))}
+            <div className="pb-4">
+                <RadioGroup legend={''} value={state.fields.soknadsstatus.input.value} onChange={onChangeSoknadStatus}>
+                    {fields.map(({ label, value }) => (
+                        <Radio key={value} value={value} label={label} />
+                    ))}
+                </RadioGroup>
             </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre

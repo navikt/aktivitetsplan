@@ -1,8 +1,9 @@
-import { Button } from '@navikt/ds-react';
+import { Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
+import { StillingsStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -62,12 +63,22 @@ const StillingEtikettForm = (props: Props) => {
 
     const disable = state.submitting || disabled;
 
+    const onChangeStillingStatus = (value: StillingsStatus) => {
+        state.fields.etikettstatus.setValue(value);
+    };
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="mb-4">
-                {fields.map(({ value, label }) => (
-                    <Radio key={value} value={value} label={label} disabled={disable} />
-                ))}
+                <RadioGroup
+                    legend={''}
+                    value={state.fields.etikettstatus.input.value}
+                    onChange={onChangeStillingStatus}
+                >
+                    {fields.map(({ value, label }) => (
+                        <Radio key={value} value={value} label={label} disabled={disable} />
+                    ))}
+                </RadioGroup>
             </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre

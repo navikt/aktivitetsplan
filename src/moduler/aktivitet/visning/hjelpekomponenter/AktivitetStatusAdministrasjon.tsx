@@ -20,19 +20,12 @@ const AktivitetStatusAdministrasjon = ({ aktivitet }: Props) => {
     return (
         <div>
             {type === VeilarbAktivitetType.STILLING_AKTIVITET_TYPE ? (
-                <>
-                    <OppdaterAktivitetEtikett aktivitet={aktivitet} />
-                    <DeleLinje />
-                </>
+                <OppdaterAktivitetEtikett aktivitet={aktivitet} />
             ) : null}
             {type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE && svartJaPaaStillingFraNav ? (
-                <>
-                    <OppdaterSoknadsstatus aktivitet={aktivitet} />
-                    <DeleLinje />
-                </>
+                <OppdaterSoknadsstatus aktivitet={aktivitet} />
             ) : null}
             <OppdaterAktivitetStatus aktivitet={aktivitet} />
-            <DeleLinje />
         </div>
     );
 };

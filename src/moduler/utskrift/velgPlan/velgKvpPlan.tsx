@@ -18,7 +18,7 @@ function KvpPlanValg(props: KvpPlanValgProps) {
     if (!kvpPerioder) return null;
 
     if (kvpPerioder.length === 1) {
-        return <KvpPlanSingelValg kvpPeriode={kvpPerioder[0]} field={field} />;
+        return <KvpPlanSingelValgRadio kvpPeriode={kvpPerioder[0]} />;
     } else {
         return <KvpPlanListeValg kvpPerioder={kvpPerioder} field={field} />;
     }
@@ -26,18 +26,16 @@ function KvpPlanValg(props: KvpPlanValgProps) {
 
 interface KvpPlanSingelValgProps {
     kvpPeriode: KvpPeriode;
-    field: FieldState;
 }
 
-function KvpPlanSingelValg(props: KvpPlanSingelValgProps) {
-    const { kvpPeriode, field } = props;
+function KvpPlanSingelValgRadio(props: KvpPlanSingelValgProps) {
+    const { kvpPeriode } = props;
 
     return (
         <Radio
             label={<UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />}
             value={kvpPeriode.opprettetDato}
             disabled={!kvpPeriode.avsluttetDato}
-            checked={field.input.value === kvpPeriode.opprettetDato}
         />
     );
 }
