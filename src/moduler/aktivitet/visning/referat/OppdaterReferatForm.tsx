@@ -82,10 +82,7 @@ const OppdaterReferatForm = (props: Props) => {
     });
 
     return (
-        <form
-            onSubmit={state.onSubmit(onSubmit)}
-            className={classNames('oppdater-referat', aktivitetsvisningStyles.underseksjon)}
-        >
+        <form onSubmit={state.onSubmit(onSubmit)} className={classNames('space-y-4')}>
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
             <Textarea
                 label={`Samtalereferat`}
@@ -96,25 +93,31 @@ const OppdaterReferatForm = (props: Props) => {
                 {...state.fields.referat}
             />
 
-            <HiddenIfHovedknapp
-                kompakt
-                loading={oppdaterer}
-                disabled={oppdaterer}
-                hidden={erReferatPublisert}
-                onClick={oppdaterOgPubliser}
-            >
-                Del med bruker
-            </HiddenIfHovedknapp>
+            <div className="space-x-4">
+                <HiddenIfHovedknapp
+                    kompakt
+                    loading={oppdaterer}
+                    disabled={oppdaterer}
+                    hidden={erReferatPublisert}
+                    onClick={oppdaterOgPubliser}
+                >
+                    Del med bruker
+                </HiddenIfHovedknapp>
 
-            <Button variant={erReferatPublisert ? 'primary' : 'secondary'} loading={oppdaterer} disabled={oppdaterer}>
-                {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
-            </Button>
-
-            {aktivitet.referat && (
-                <Button variant="tertiary" onClick={onFerdig}>
-                    Avbryt
+                <Button
+                    variant={erReferatPublisert ? 'primary' : 'secondary'}
+                    loading={oppdaterer}
+                    disabled={oppdaterer}
+                >
+                    {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
                 </Button>
-            )}
+
+                {aktivitet.referat && (
+                    <Button variant="tertiary" onClick={onFerdig}>
+                        Avbryt
+                    </Button>
+                )}
+            </div>
         </form>
     );
 };

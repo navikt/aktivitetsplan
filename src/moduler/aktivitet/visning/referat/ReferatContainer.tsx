@@ -44,28 +44,20 @@ const ReferatContainer = (props: Props) => {
 
     const manglerReferat = erVeileder && !referat && erAktivAktivitet;
     if (manglerReferat || isOppdaterReferat) {
-        return (
-            <section>
-                <OppdaterReferatForm aktivitet={aktivitet} onFerdig={() => setOppdaterReferat(false)} />
-                <DeleLinje />
-            </section>
-        );
+        return <OppdaterReferatForm aktivitet={aktivitet} onFerdig={() => setOppdaterReferat(false)} />;
     }
 
     if (!!referat) {
         return (
-            <section>
-                <ReferatVisning
-                    referat={referat}
-                    erAktivAktivitet={erAktivAktivitet}
-                    erVeileder={erVeileder}
-                    dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
-                    publiserer={publiserer}
-                    erReferatPublisert={erReferatPublisert}
-                    startOppdaterReferat={() => setOppdaterReferat(true)}
-                />
-                <DeleLinje />
-            </section>
+            <ReferatVisning
+                referat={referat}
+                erAktivAktivitet={erAktivAktivitet}
+                erVeileder={erVeileder}
+                dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
+                publiserer={publiserer}
+                erReferatPublisert={erReferatPublisert}
+                startOppdaterReferat={() => setOppdaterReferat(true)}
+            />
         );
     }
 

@@ -11,13 +11,10 @@ interface Props {
 }
 
 const ForhaandsorienteringsVisningsLinje = ({ aktivitet, erBruker }: Props) => (
-    <>
-        <Forhaandsorienteringsvisning
-            aktivitet={aktivitet}
-            startAapen={skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet)}
-        />
-        <DeleLinje />
-    </>
+    <Forhaandsorienteringsvisning
+        aktivitet={aktivitet}
+        startAapen={skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet)}
+    />
 );
 
 export default ForhaandsorienteringsVisningsLinje;

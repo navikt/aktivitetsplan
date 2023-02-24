@@ -28,27 +28,26 @@ const ReferatVisning = (props: Props) => {
     } = props;
 
     return (
-        <div className={classNames('oppdater-referat', styles.underseksjon)}>
+        <section className="">
             <Heading level="2" size="small">
                 Samtalereferat
             </Heading>
             <EkspanderbartTekstomrade className="oppdater-referat__referat" tekst={referat} antallTegn={275} />
-            <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="oppdater-referat-knapper">
-                <HiddenIfDiv hidden={erReferatPublisert}>
-                    <Button onClick={dispatchPubliserReferat} loading={publiserer}>
-                        Del med bruker
-                    </Button>
-                </HiddenIfDiv>
-                <HiddenIfDiv hidden={!erReferatPublisert}>
+            <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="flex space-x-4">
+                {erReferatPublisert ? (
                     <Alert variant="success" className="oppdater-referat-status">
                         Delt med bruker
                     </Alert>
-                </HiddenIfDiv>
-                <Button variant="tertiary" onClick={startOppdaterReferat}>
+                ) : (
+                    <Button onClick={dispatchPubliserReferat} loading={publiserer}>
+                        Del med bruker
+                    </Button>
+                )}
+                <Button variant="secondary" onClick={startOppdaterReferat}>
                     Endre referat
                 </Button>
             </HiddenIfDiv>
-        </div>
+        </section>
     );
 };
 
