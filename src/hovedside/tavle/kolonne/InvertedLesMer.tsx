@@ -32,7 +32,7 @@ export const InvertedLestMer = (props: Props) => {
 
     return (
         <div className={style.invertedLesMer}>
-            <div className={style.toggle}>
+            <div>
                 <ReadMore open={vis} onClick={toggle} header={vis ? lukkTekst : apneTekst} children={null} />
             </div>
             <Collapse isOpened={vis}>{children}</Collapse>
