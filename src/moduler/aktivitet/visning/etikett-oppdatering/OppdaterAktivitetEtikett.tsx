@@ -49,11 +49,13 @@ const OppdaterAktivitetEtikett = (props: Props) => {
         })(dispatch);
     };
 
-    const onSubmit = (val: EtikettValue): Promise<any> =>
-        lagreEtikett(val).then(() => {
+    const onSubmit = (val: EtikettValue): Promise<any> => {
+        setFormIsDirty('etikett', false);
+        return lagreEtikett(val).then(() => {
             setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
+    };
 
     const disableEtikettEndringer = lasterAktivitetData || kanIkkeEndreAktivitet || erIkkeUnderOppfolging;
 

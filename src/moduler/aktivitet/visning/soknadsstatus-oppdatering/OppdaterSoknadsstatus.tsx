@@ -52,11 +52,13 @@ const OppdaterSoknadsstatus = (props: Props) => {
     const dispatch = useDispatch();
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 
-    const onSubmit = (value: SoknadsstatusValue): Promise<any> =>
-        lagreSoknadsstatus(dispatch, value, aktivitet).then(() => {
+    const onSubmit = (value: SoknadsstatusValue): Promise<any> => {
+        setFormIsDirty('soknadsstatus', false);
+        return lagreSoknadsstatus(dispatch, value, aktivitet).then(() => {
             setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
+    };
 
     const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
     const ikkeAvslag = IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;

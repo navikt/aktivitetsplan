@@ -47,12 +47,14 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
     const dispatch = useDispatch();
     const disableStatusEndring = useDisableStatusEndring(aktivitet);
 
-    const onSubmit = (val: any): Promise<any> =>
-        lagreStatusEndringer(dispatch, val, aktivitet).then(() => {
+    const onSubmit = (val: any): Promise<any> => {
+        setFormIsDirty('status', false);
+        return lagreStatusEndringer(dispatch, val, aktivitet).then(() => {
             setIsOpen(false);
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();
         });
+    };
 
     const subtittel = <BodyShort>{aktivitetStatusMap[aktivitet.status]}</BodyShort>;
     const { setFormIsDirty } = useContext(DirtyContext);
