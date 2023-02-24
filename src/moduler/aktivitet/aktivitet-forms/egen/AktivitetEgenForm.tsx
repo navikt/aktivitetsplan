@@ -107,7 +107,6 @@ function EgenAktivitetForm(props: Props) {
                     disabled={avtalt}
                     label="Kort beskrivelse av aktiviteten"
                     maxLength={5000}
-                    visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
                 <Input disabled={avtalt} label="Min huskeliste for denne aktiviteten" {...state.fields.oppfolging} />

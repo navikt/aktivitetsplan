@@ -115,7 +115,6 @@ const MedisinskBehandlingForm = (props: Props) => {
                     disabled={avtalt}
                     label="Kort beskrivelse av behandlingen"
                     maxLength={400}
-                    visTellerFra={200}
                     {...state.fields.beskrivelse}
                 />
                 <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />

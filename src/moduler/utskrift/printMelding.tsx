@@ -47,7 +47,6 @@ function PrintMeldingForm(props: Props) {
                 <Textarea
                     label="Rediger teksten under så den passer til brukeren."
                     maxLength={2000}
-                    visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
             </div>
