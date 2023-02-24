@@ -1,9 +1,7 @@
-import shajs from 'sha.js';
-
-import {AktivitetStatus, AktivitetType, Lest} from '../../datatypes/aktivitetTypes';
-import {VeilarbAktivitet} from '../../datatypes/internAktivitetTypes';
-import {OppfolgingsPeriode} from '../../datatypes/oppfolgingTypes';
-import {AKTIVITET_BASE_URL} from '../../environment';
+import { AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
+import { OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { AKTIVITET_BASE_URL } from '../../environment';
 
 interface FrontendEvent {
     name: string;
@@ -12,7 +10,7 @@ interface FrontendEvent {
 }
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
-    const event: FrontendEvent = {name: eventNavn, fields: feltObjekt, tags: tagObjekt};
+    const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
     const url = `${AKTIVITET_BASE_URL}/logger/event`;
     const config = {
         headers: {
@@ -61,9 +59,22 @@ const AKTIVITET_FLYTTET = 'aktivitetsplan.aktivitet.flyttet';
 
 const FORHAANDSORIENTERING_LEST = 'aktivitetsplan.forhaandsorientering.lest';
 
-export function hash(string?: string): string | undefined {
-    return string ? shajs('sha256').update(string).digest('hex') : undefined;
-}
+// Shameless steal from https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+const hash = (str: string | undefined, seed = 0): string | undefined => {
+    if (str === undefined) return undefined;
+    let h1 = 0xdeadbeef ^ seed,
+        h2 = 0x41c6ce57 ^ seed;
+    for (let i = 0, ch; i < str.length; i++) {
+        ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+
+    return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString();
+};
 
 export function loggForhaandsorienteringLest(aktivitetType: AktivitetType, lestKnappTrykket: boolean) {
     const tag = {
@@ -82,11 +93,11 @@ declare global {
 }
 
 export function logTimeToAktivitestavlePaint(erVeileder: boolean) {
-    const rendresForst  = !erVeileder || window.defaultSelectedTab === 'AKTIVITETSPLAN';
+    const rendresForst = !erVeileder || window.defaultSelectedTab === 'AKTIVITETSPLAN';
     if (!window.aktivitesplanTimeToAktivitestavlePaint && rendresForst) {
         const timeToAktivitestavlePaint = performance.now();
-        window.aktivitesplanTimeToAktivitestavlePaint = timeToAktivitestavlePaint
-        loggEvent("aktivitetsplan.timeToAktivitestavlePaintv3", {timeToAktivitestavlePaint}, {erVeileder});
+        window.aktivitesplanTimeToAktivitestavlePaint = timeToAktivitestavlePaint;
+        loggEvent('aktivitetsplan.timeToAktivitestavlePaintv3', { timeToAktivitestavlePaint }, { erVeileder });
     }
 }
 
@@ -96,14 +107,14 @@ export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boole
         veileder: hash(ident),
         bruker: hash(aktorId),
     };
-    loggEvent(ANTALL_VEILEDERE, fields, {servicegruppe});
+    loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
 }
 
 export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
     if (!underOppfolging) {
-        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, {servicegruppe});
+        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, { servicegruppe });
     } else {
-        loggEvent(LOGGING_ANTALLBRUKERE, {bruker: hash(aktorId)}, {servicegruppe});
+        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) }, { servicegruppe });
     }
 }
 
@@ -156,22 +167,22 @@ export function loggForhandsorientering(
 }
 
 export function loggMittMalKlikk(veileder: boolean) {
-    loggEvent(MITTMAL_KLIKK_LOGGEVENT, {erVeileder: veileder});
+    loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
 }
 
 export function loggMittMalLagre(veileder: boolean) {
-    loggEvent(MITTMAL_LAGRE_LOGGEVENT, {erVeileder: veileder});
+    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
 }
 
 export function loggStillingFraNavStillingslenkeKlikk(veileder: boolean) {
-    loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, {erVeileder: veileder});
+    loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, { erVeileder: veileder });
 }
 
 const HAR_BRUKT_NIVAA_4 = 'aktivitetsplan.innsikt.harBruktNivaa4';
 const IKKE_REGISTRERT_I_KRR = 'aktivitetsplan.innsikt.ikkeRegistrertIKrr';
 
 export function loggHarBruktNivaa4(harBruktNivaa4: boolean) {
-    loggEvent(HAR_BRUKT_NIVAA_4, {harBruktNivaa4: harBruktNivaa4});
+    loggEvent(HAR_BRUKT_NIVAA_4, { harBruktNivaa4: harBruktNivaa4 });
 }
 
 export function loggIkkeRegistrertIKrr() {

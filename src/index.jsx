@@ -1,8 +1,6 @@
 import 'moment-timezone';
 import 'moment/locale/nb';
 
-import './polyfill';
-
 import { Modal } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
 import moment from 'moment';
@@ -14,8 +12,7 @@ import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 
-/* eslint-disable global-require */
-if (!global.Intl) {
+if (!window.Intl) {
     require('intl');
     require('intl/locale-data/jsonp/nb.js');
 }
@@ -44,7 +41,7 @@ if (process.env.REACT_APP_MOCK === 'true') {
     console.log('=========================='); // eslint-disable-line no-console
     console.log('======== MED MOCK ========'); // eslint-disable-line no-console
     console.log('=========================='); // eslint-disable-line no-console
-    require('./mocks'); // eslint-disable-line global-require
+    import('./mocks');
 
     ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
 }

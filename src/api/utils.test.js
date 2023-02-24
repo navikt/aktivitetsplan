@@ -152,11 +152,11 @@ describe('utils', () => {
     });
     describe('getCookie', () => {
         it('Henter ut fra cookie', () => {
-            global.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
+            document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
             expect(getCookie('test1')).toEqual('detteerentest123');
         });
         it('Tom streng ved ingen match', () => {
-            global.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
+            document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
             expect(getCookie('test0')).toEqual('');
         });
     });
