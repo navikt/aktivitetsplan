@@ -66,13 +66,7 @@ const StillingEtikettForm = (props: Props) => {
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="mb-4">
                 {fields.map(({ value, label }) => (
-                    <Radio
-                        key={value}
-                        value={value}
-                        label={label}
-                        checked={value === state.fields.etikettstatus.input.value}
-                        disabled={disable}
-                    />
+                    <Radio key={value} value={value} label={label} disabled={disable} />
                 ))}
             </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>

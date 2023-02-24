@@ -1,4 +1,4 @@
-import { Button, Heading } from '@navikt/ds-react';
+import { Button, Heading, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import React from 'react';
 
@@ -43,29 +43,29 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
                 </div>
 
                 <div>
-                    <Radio
-                        checked={state.fields.utskriftPlanType.input.value === 'helePlanen'}
-                        label={
-                            <UtskriftValg
-                                tittelId="Hele oppfølgingsperioden"
-                                tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, også KVP-perioden"
-                            />
-                        }
-                        value="helePlanen"
-                        id="id--helePlanen"
-                    />
-                    <Radio
-                        checked={state.fields.utskriftPlanType.input.value === 'aktivitetsplan'}
-                        label={
-                            <UtskriftValg
-                                tittelId="Oppfølgingsperioden uten KVP-perioden"
-                                tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, uten om KVP-perioden"
-                            />
-                        }
-                        value="aktivitetsplan"
-                        id="id--aktivitetsplan"
-                    />
-                    <KvpPlanValg kvpPerioder={kvpPerioder} field={state.fields.utskriftPlanType} />
+                    <RadioGroup legend={''} value={state.fields.utskriftPlanType.input.value}>
+                        <Radio
+                            label={
+                                <UtskriftValg
+                                    tittelId="Hele oppfølgingsperioden"
+                                    tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, også KVP-perioden"
+                                />
+                            }
+                            value="helePlanen"
+                            id="id--helePlanen"
+                        />
+                        <Radio
+                            label={
+                                <UtskriftValg
+                                    tittelId="Oppfølgingsperioden uten KVP-perioden"
+                                    tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, uten om KVP-perioden"
+                                />
+                            }
+                            value="aktivitetsplan"
+                            id="id--aktivitetsplan"
+                        />
+                        <KvpPlanValg kvpPerioder={kvpPerioder} field={state.fields.utskriftPlanType} />
+                    </RadioGroup>
                 </div>
             </div>
             <div className="printmelding__knapperad">

@@ -96,6 +96,7 @@ function IJobbAktivitetForm(props: Props) {
                     </div>
                 </PeriodeValidering>
                 <RadioGroup
+                    value={state.fields.jobbStatus.input.value}
                     id="jobbStatus"
                     error={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
                     legend="Stillingsandel *"

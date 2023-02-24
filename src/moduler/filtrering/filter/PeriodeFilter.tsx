@@ -65,14 +65,16 @@ const PeriodeFilter = ({
             </Button>
             {open ? (
                 <div className="rounded-md absolute p-4 bg-white border z-10">
-                    <RadioGroup legend={'Velg periode'}>
+                    <RadioGroup
+                        value={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
+                        legend={'Velg periode'}
+                    >
                         {skjulInneverende ? null : (
                             <Radio
                                 value="inneverende"
                                 className="filter__radio--periode"
                                 name="inneverende"
                                 onChange={() => doVelgHistoriskPeriode(null)}
-                                checked={!historiskPeriode}
                             >
                                 Nåværende periode
                             </Radio>
@@ -88,7 +90,6 @@ const PeriodeFilter = ({
                                         doVelgHistoriskPeriode(oppfolgingsPeriode);
                                         loggEvent(VIS_HISTORISK_PERIODE);
                                     }}
-                                    checked={!!historiskPeriode && historiskPeriode.uuid === oppfolgingsPeriode.uuid}
                                 >
                                     <PeriodeLabel historiskPeriode={oppfolgingsPeriode} />
                                 </Radio>

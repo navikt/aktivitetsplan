@@ -43,14 +43,13 @@ function KvpPlanSingelValg(props: KvpPlanSingelValgProps) {
 }
 
 function KvpPlanListeValg(props: KvpPlanValgProps) {
-    const { kvpPerioder, field } = props;
+    const { kvpPerioder } = props;
     return (
         <div className="kvp-plan-valg">
             <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />
             {kvpPerioder &&
                 kvpPerioder.map((kvpPeriode) => (
                     <Radio
-                        checked={kvpPeriode.opprettetDato === field.input.value}
                         key={kvpPeriode.opprettetDato}
                         label={
                             <BodyShort>

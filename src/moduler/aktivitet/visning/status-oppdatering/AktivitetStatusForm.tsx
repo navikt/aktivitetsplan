@@ -108,14 +108,9 @@ const AktivitetStatusForm = (props: Props) => {
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="">
-                <RadioGroup legend={''} onChange={onChangeStatus}>
+                <RadioGroup legend={''} value={state.fields.aktivitetstatus.input.value} onChange={onChangeStatus}>
                     {fields.map(({ value, label }) => (
-                        <Radio
-                            key={value}
-                            label={label}
-                            value={value}
-                            checked={value === state.fields.aktivitetstatus.input.value}
-                        />
+                        <Radio key={value} label={label} value={value} />
                     ))}
                 </RadioGroup>
                 <VisibleIfDiv className="status-alert" visible={!state.pristine}>

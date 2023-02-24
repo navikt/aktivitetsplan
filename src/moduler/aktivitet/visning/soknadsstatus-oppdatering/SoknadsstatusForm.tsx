@@ -68,12 +68,7 @@ const SoknadsstatusForm = (props: Props) => {
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="space-y-4 pb-4">
                 {fields.map(({ label, value }) => (
-                    <Radio
-                        key={value}
-                        value={value}
-                        label={label}
-                        checked={value === state.fields.soknadsstatus.input.value}
-                    />
+                    <Radio key={value} value={value} label={label} />
                 ))}
             </div>
             <Button className="oppdater-status" disabled={disable} loading={state.submitting}>

@@ -1,4 +1,4 @@
-import { UNSAFE_DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
+import { UNSAFE_DatePicker as DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
 
 import { DateRange } from './PartialDateRangePicker';
@@ -31,16 +31,16 @@ const DateRangePicker = ({ error, onChange, from, value, onValidate, disabledDay
 
     return (
         <div className="flex flex-1">
-            <UNSAFE_DatePicker {...datepickerProps} wrapperClassName="flex flex-1">
+            <DatePicker {...datepickerProps} wrapperClassName="flex flex-1">
                 <div className="flex flex-1 items-start gap-2">
-                    <UNSAFE_DatePicker.Input
+                    <DatePicker.Input
                         className="flex-1"
                         error={error?.from}
                         label={'Fra dato'}
                         {...fromInputProps}
                         onChange={onFromChange}
                     />
-                    <UNSAFE_DatePicker.Input
+                    <DatePicker.Input
                         className="flex-1"
                         error={error?.to}
                         label={'Til dato'}
@@ -48,7 +48,7 @@ const DateRangePicker = ({ error, onChange, from, value, onValidate, disabledDay
                         onChange={onToChange}
                     />
                 </div>
-            </UNSAFE_DatePicker>
+            </DatePicker>
         </div>
     );
 };

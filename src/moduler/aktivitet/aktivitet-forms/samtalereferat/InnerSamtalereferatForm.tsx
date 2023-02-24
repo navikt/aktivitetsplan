@@ -1,4 +1,4 @@
-import { Button, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
+import { Button, UNSAFE_DatePicker as DatePicker, UNSAFE_useDatepicker as useDatepicker } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
 import React from 'react';
 
@@ -55,7 +55,7 @@ const InnerSamtalereferatForm = (props: Props) => {
         return onSubmit(newValues);
     });
 
-    const { datepickerProps, inputProps } = UNSAFE_useDatepicker({
+    const { datepickerProps, inputProps } = useDatepicker({
         defaultSelected: initialValues.fraDato ? new Date(initialValues.fraDato) : undefined,
         onDateChange: (date) => state.setValue('fraDato', date?.toISOString() || ''),
     });
@@ -77,9 +77,9 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />
 
-                <UNSAFE_DatePicker {...datepickerProps}>
-                    <UNSAFE_DatePicker.Input error={state.errors.fraDato} label="Dato *" {...inputProps} />
-                </UNSAFE_DatePicker>
+                <DatePicker {...datepickerProps}>
+                    <DatePicker.Input error={state.errors.fraDato} label="Dato *" {...inputProps} />
+                </DatePicker>
 
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 

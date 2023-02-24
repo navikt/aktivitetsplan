@@ -7,15 +7,14 @@ interface RadioProps {
     disabled?: boolean;
     value: string;
     label: React.ReactNode;
-    checked: boolean;
     id?: string;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Radio = (props: RadioProps) => {
-    const { value, label, checked, disabled, className, id } = props;
+    const { value, label, disabled, className, id } = props;
     return (
-        <NavRadio className={className} disabled={disabled} value={value} checked={checked} id={id || `id--${value}`}>
+        <NavRadio className={className} disabled={disabled} value={value} id={id || `id--${value}`}>
             {label}
         </NavRadio>
     );

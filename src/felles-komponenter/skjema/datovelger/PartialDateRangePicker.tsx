@@ -1,4 +1,8 @@
-import { DateValidationT, UNSAFE_DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
+import {
+    UNSAFE_DatePicker as DatePicker,
+    DateValidationT,
+    UNSAFE_useDatepicker as useDatePicker,
+} from '@navikt/ds-react';
 
 interface Props {
     onChange: (val: Date | undefined) => void;
@@ -32,23 +36,23 @@ export const getErrorMessageForDate = (val: DateValidationT): string | undefined
 };
 
 const PartialDateRangePicker = ({ onChange, from, onValidate, error, disabled }: Props) => {
-    const { datepickerProps: fromDatePickerProps, inputProps: fromDateInputProps } = UNSAFE_useDatepicker({
+    const { datepickerProps: fromDatePickerProps, inputProps: fromDateInputProps } = useDatePicker({
         fromDate: from,
         defaultSelected: from,
     });
-    const { datepickerProps: toDatePickerProps, inputProps: toDateInputProps } = UNSAFE_useDatepicker({
+    const { datepickerProps: toDatePickerProps, inputProps: toDateInputProps } = useDatePicker({
         onDateChange: onChange,
         onValidate: onValidate,
         disabled: disabled,
     });
     return (
         <div className="flex flex-wrap justify-center gap-4 items-start">
-            <UNSAFE_DatePicker {...fromDatePickerProps}>
-                <UNSAFE_DatePicker.Input disabled label={'Fra dato'} {...fromDateInputProps} />
-            </UNSAFE_DatePicker>
-            <UNSAFE_DatePicker {...toDatePickerProps} disabled={[{ before: from }]}>
-                <UNSAFE_DatePicker.Input error={error?.to} label={'Til dato'} {...toDateInputProps} />
-            </UNSAFE_DatePicker>
+            <DatePicker {...fromDatePickerProps}>
+                <DatePicker.Input disabled label={'Fra dato'} {...fromDateInputProps} />
+            </DatePicker>
+            <DatePicker {...toDatePickerProps} disabled={[{ before: from }]}>
+                <DatePicker.Input error={error?.to} label={'Til dato'} {...toDateInputProps} />
+            </DatePicker>
         </div>
     );
 };
