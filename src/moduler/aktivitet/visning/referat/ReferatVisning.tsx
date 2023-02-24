@@ -26,11 +26,11 @@ const ReferatVisning = (props: Props) => {
     } = props;
 
     return (
-        <section className="">
+        <section className="my-4">
             <Heading level="2" size="small">
                 Samtalereferat
             </Heading>
-            <EkspanderbartTekstomrade className="oppdater-referat__referat" tekst={referat} antallTegn={275} />
+            <EkspanderbartTekstomrade tekst={referat} antallTegn={275} />
             <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="flex space-x-4">
                 {erReferatPublisert ? (
                     <Alert variant="success" className="oppdater-referat-status">

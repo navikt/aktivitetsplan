@@ -7,14 +7,14 @@ import CustomBodyLong from '../moduler/aktivitet/visning/hjelpekomponenter/Custo
 import styles from './EkspanderbartTekstomrade.module.less';
 
 interface ToggleBetweenDisplayingTruncatedOrFullTextProps {
-    className: string;
+    className?: string;
     text: string;
     maxCharacters: number;
 }
 
 const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayingTruncatedOrFullTextProps) => {
     const { className, text, maxCharacters } = props;
-    const contentClassNames = classNames(className);
+    const contentClassNames = classNames('mb-4', className);
     const [hasLongText, setHasLongText] = useState(true);
     const toggleMoreOrLess = () => {
         setHasLongText(!hasLongText);
@@ -43,7 +43,7 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
 };
 
 interface Props {
-    className: string;
+    className?: string;
     tekst: string;
     antallTegn: number;
 }

@@ -11,7 +11,7 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
-import { isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
+import { VeilarbAktivitetType, isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
@@ -87,7 +87,6 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     Send en melding
                 </Button>
             </div>
-            <DeleLinje />
         </div>
     );
 };
