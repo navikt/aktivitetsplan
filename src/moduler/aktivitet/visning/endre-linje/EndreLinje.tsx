@@ -2,8 +2,6 @@ import { Accordion, Heading } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { MouseEventHandler, ReactNode, useEffect, useMemo } from 'react';
 
-import styles from './endre-linje.module.less';
-
 function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
         .toString()
@@ -31,20 +29,14 @@ function EndreLinje(props: Props) {
     return (
         <Accordion>
             <Accordion.Item open={open}>
-                <Accordion.Header onClick={onClick}>
-                    <div className="flex justify-between">
-                        <div className={styles.endreVisning}>
-                            <Heading size="small" level="2">
-                                {tittel}
-                            </Heading>
-                            <div>{subtittel}</div>
-                        </div>
-                    </div>
+                <Accordion.Header className="flex flex-row" onClick={onClick}>
+                    <Heading size="small" level="2">
+                        {tittel}
+                    </Heading>
+                    <div>{subtittel}</div>
                 </Accordion.Header>
                 <Accordion.Content>
-                    <div id={unique} className={styles.endreForm}>
-                        {form}
-                    </div>
+                    <div id={unique}>{form}</div>
                 </Accordion.Content>
             </Accordion.Item>
         </Accordion>
