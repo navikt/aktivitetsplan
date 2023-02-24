@@ -31,11 +31,13 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
 
     const feil = formhandler.touched ? formhandler.error : undefined;
     return (
-        <div className="mb-4">
-            <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
-            <Heading size="medium" level="3">
-                Svar på vegne av brukeren
-            </Heading>
+        <div className="mb-4 bg-surface-alt-3-subtle border-border-alt-3 border rounded-md p-4">
+            <div className="flex justify-between">
+                <Heading size="medium" level="3">
+                    Svar på vegne av brukeren
+                </Heading>
+                <BodyShort size="small">FOR NAV-ANSATT</BodyShort>
+            </div>
             <DatePicker {...datepickerProps}>
                 <DatePicker.Input
                     {...inputProps}
