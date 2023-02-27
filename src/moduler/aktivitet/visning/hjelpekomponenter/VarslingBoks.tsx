@@ -12,11 +12,10 @@ import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/
 import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';
 
 interface Props {
-    className: string;
     aktivitet: AlleAktiviteter;
 }
 
-const VarslingBoks = ({ className, aktivitet }: Props) => {
+const VarslingBoks = ({ aktivitet }: Props) => {
     const identitetStatus = useSelector(selectIdentitetStatus);
     const dialogStatus = useSelector(selectDialogStatus);
     const avhengigheter = [identitetStatus, dialogStatus];
@@ -35,7 +34,7 @@ const VarslingBoks = ({ className, aktivitet }: Props) => {
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
-                <HiddenIfDiv className={className} hidden={!visVarselOmManglendeDialog}>
+                <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
                     <Alert variant="warning">
                         Brukeren får ikke automatisk beskjed om at aktiviteten er opprettet. <br />
                         Send en dialogmelding slik at bruker får informasjon om møtet.

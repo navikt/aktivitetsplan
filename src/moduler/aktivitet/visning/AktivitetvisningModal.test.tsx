@@ -1,7 +1,6 @@
 import { Modal } from '@navikt/ds-react';
 import { mount } from 'enzyme';
 import React from 'react';
-import ReactModal from 'react-modal';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 

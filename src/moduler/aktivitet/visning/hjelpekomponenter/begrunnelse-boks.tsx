@@ -3,16 +3,13 @@ import React from 'react';
 
 interface Props {
     begrunnelse: string;
-    className: string;
 }
 
-const BegrunnelseBoks = ({ begrunnelse, className }: Props) => {
+const BegrunnelseBoks = ({ begrunnelse }: Props) => {
     return (
-        <div className={className}>
-            <Alert variant="info">
-                <BodyShort className="tilDittNavTekst">{begrunnelse}</BodyShort>
-            </Alert>
-        </div>
+        <Alert variant="info">
+            <BodyShort className="tilDittNavTekst">{begrunnelse}</BodyShort>
+        </Alert>
     );
 };
 

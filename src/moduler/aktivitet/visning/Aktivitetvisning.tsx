@@ -28,11 +28,11 @@ function Aktivitetvisning(props: Props) {
     const visBegrunnelse = !erArenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     return (
-        <div>
-            <VarslingBoks className={styles.underseksjon} aktivitet={aktivitet} />
+        <div className="mt-4">
+            <VarslingBoks aktivitet={aktivitet} />
 
             {visBegrunnelse && aktivitet.avsluttetKommentar ? (
-                <BegrunnelseBoks className={styles.underseksjon} begrunnelse={aktivitet.avsluttetKommentar} />
+                <BegrunnelseBoks begrunnelse={aktivitet.avsluttetKommentar} />
             ) : null}
 
             <AktivitetinformasjonVisning
