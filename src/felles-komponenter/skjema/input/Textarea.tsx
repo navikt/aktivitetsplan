@@ -1,5 +1,5 @@
 import { Textarea as NavTextArea } from '@navikt/ds-react';
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 
 interface Input {
     value: string;
@@ -23,12 +23,12 @@ interface Props {
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
-const Textarea = (props: Props) => {
+const Textarea = forwardRef((props: Props, ref: ForwardedRef<HTMLTextAreaElement | null>) => {
     const { touched, error, input, pristine, initialValue, required, setValue, maxLength, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
 
-    return <NavTextArea maxLength={props?.maxLength} error={feil} required={required} {...inputProps} />;
-};
+    return <NavTextArea ref={ref} maxLength={props?.maxLength} error={feil} required={required} {...inputProps} />;
+});
 
 export default Textarea;

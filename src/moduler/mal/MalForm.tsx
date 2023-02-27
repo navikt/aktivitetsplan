@@ -1,8 +1,7 @@
 import { Button } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
-import { useMoveSelectionStartToEnd } from '../../felles-komponenter/hooks/useMoveSelectionStartToEnd';
 import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
 import Textarea from '../../felles-komponenter/skjema/input/Textarea';
 import { oppdaterMal } from './aktivitetsmal-reducer';
@@ -39,8 +38,14 @@ function MalForm(props: Props) {
         mal: validateMal,
     });
 
-    const textAreaCls = 'aktivitetplansmal';
-    useMoveSelectionStartToEnd(textAreaCls);
+    const ref = useRef<HTMLTextAreaElement | null>(null);
+    useLayoutEffect(() => {
+        const el = ref.current;
+        if (el) {
+            el.focus();
+            el.selectionStart = el.selectionEnd = el.value.length;
+        }
+    }, []);
 
     const onSubmit = (data: { mal: string }) => {
         if (data.mal !== props.mal) {
@@ -66,7 +71,7 @@ function MalForm(props: Props) {
     return (
         <form className="my-4 space-y-8" onSubmit={state.onSubmit(onSubmit)}>
             <Textarea
-                textareaClass={textAreaCls}
+                ref={ref}
                 label="Mitt mål (obligatorisk)"
                 aria-label="Mitt mål"
                 maxLength={500}
