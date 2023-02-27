@@ -57,10 +57,9 @@ function DropTargetKolonne({ status, children }: Props) {
     return (
         <div ref={drop} className="aktivitetstavle__kolonne-wrapper">
             <div
-                className={classNames(
-                    'aktivitetstavle__kolonne',
-                    collectedProps.canDrop && collectedProps.isOver && 'aktivitetstavle__kolonne--drag'
-                )}
+                className={classNames('bg-bg-subtle aktivitetstavle__kolonne', {
+                    'pb-2 bg-surface-action-subtle-hover': collectedProps.canDrop && collectedProps.isOver,
+                })}
             >
                 {children}
             </div>
