@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { useOutsideClick } from '../../felles-komponenter/hooks/useClickOutside';
-import Modal from '../../felles-komponenter/modal/Modal';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
@@ -46,11 +45,14 @@ const sjekkAttFinnesFilteringsAlternativ = (aktivitetsListe: AlleAktiviteter[]) 
 };
 
 const Filter = () => {
+    const ref = useRef<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
 
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
     const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     const avhengigheter = [useSelector(selectAktivitetListeStatus)];
+
+    useOutsideClick(ref, () => setOpen(false), open);
 
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
@@ -68,15 +70,16 @@ const Filter = () => {
                         Filtrer
                     </Button>
                     {open ? (
-                        <Modal contentLabel="filter-modal" header="" onRequestClose={() => setOpen(false)}>
-                            <div className="flex flex-wrap gap-y-4">
-                                <AvtaltMedNavFilter />
-                                <EtikettFilter />
-                                <ArenaEtikettFilter />
-                                <AktivitetStatusFilter />
-                                <AktivitetTypeFilter />
-                            </div>
-                        </Modal>
+                        <div
+                            ref={ref}
+                            className="rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto"
+                        >
+                            <AvtaltMedNavFilter />
+                            <EtikettFilter />
+                            <ArenaEtikettFilter />
+                            <AktivitetStatusFilter />
+                            <AktivitetTypeFilter />
+                        </div>
                     ) : null}
                 </div>
             ) : null}
