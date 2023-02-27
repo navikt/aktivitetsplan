@@ -8,6 +8,7 @@ interface Props {
     onChange: (val: Date | undefined) => void;
     disabled?: any[];
     from: Date;
+    initialToDate?: Date;
     error?: { from?: string; to?: string };
     onValidate: (validation: DateValidationT) => void;
 }
@@ -35,7 +36,7 @@ export const getErrorMessageForDate = (val: DateValidationT): string | undefined
     if (!val.isValidDate) return 'Datoen er ugyldig';
 };
 
-const PartialDateRangePicker = ({ onChange, from, onValidate, error, disabled }: Props) => {
+const PartialDateRangePicker = ({ onChange, from, onValidate, error, disabled, initialToDate }: Props) => {
     const { datepickerProps: fromDatePickerProps, inputProps: fromDateInputProps } = useDatePicker({
         fromDate: from,
         defaultSelected: from,
@@ -44,6 +45,7 @@ const PartialDateRangePicker = ({ onChange, from, onValidate, error, disabled }:
         onDateChange: onChange,
         onValidate: onValidate,
         disabled: disabled,
+        defaultSelected: initialToDate,
     });
     return (
         <div className="flex flex-wrap justify-center gap-4 items-start">

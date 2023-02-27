@@ -17,6 +17,7 @@ interface Props<T extends FormValuesWithDates> {
     formState: Formstate<T>;
     aktivitet?: AlleAktiviteter;
     initialFromDate?: Date;
+    initialToDate?: Date;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -25,10 +26,11 @@ function MaybeAvtaltDateRangePicker<T extends FormValuesWithDates>({
     aktivitet,
     formState,
     initialFromDate,
+    initialToDate,
 }: Props<T>) {
     const [dateRange, setDateRange] = useState<Partial<DateRange>>({
         from: initialFromDate ? new Date(initialFromDate) : undefined,
-        to: undefined,
+        to: initialToDate,
     });
     const onChangeDate = (val: Date | undefined) => {
         setDateRange({ ...dateRange, to: val });
@@ -45,6 +47,7 @@ function MaybeAvtaltDateRangePicker<T extends FormValuesWithDates>({
             onChange={onChangeDate}
             from={new Date(aktivitet.fraDato)}
             onValidate={noOp}
+            initialToDate={initialToDate}
             error={{ to: getError(formState, 'tilDato') }}
         />
     ) : (

@@ -1,6 +1,6 @@
 import { BodyLong, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { ReactNode } from 'react';
+import React, { ReactChildren, ReactNode } from 'react';
 
 interface Props {
     children?: string;

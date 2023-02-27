@@ -10,6 +10,7 @@ import PeriodeValidering, {
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { HiddenIfInput as Input } from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
+import { nivaa4Feilet } from '../../../../mocks/demo/sessionstorage';
 import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
@@ -72,7 +73,7 @@ const MedisinskBehandlingForm = (props: Props) => {
         tittel: maybeAktivitet.tittel ? maybeAktivitet.tittel : 'Medisinsk behandling',
         behandlingType: maybeAktivitet.behandlingType ? maybeAktivitet.behandlingType : '',
         behandlingSted: maybeAktivitet.behandlingSted ? maybeAktivitet.behandlingSted : '',
-        fraDato: maybeAktivitet.fraDato ? maybeAktivitet.fraDato : todayIsoString(),
+        fraDato: maybeAktivitet.fraDato ? maybeAktivitet.fraDato : '',
         tilDato: maybeAktivitet.tilDato ? maybeAktivitet.tilDato : '',
         effekt: maybeAktivitet.effekt ? maybeAktivitet.effekt : '',
         beskrivelse: maybeAktivitet.beskrivelse ? maybeAktivitet.beskrivelse : '',
@@ -100,6 +101,7 @@ const MedisinskBehandlingForm = (props: Props) => {
                             formState={state}
                             aktivitet={aktivitet}
                             initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}
+                            initialToDate={initalValues.tilDato ? new Date(initalValues.tilDato) : undefined}
                         />
                     </div>
                 </PeriodeValidering>
