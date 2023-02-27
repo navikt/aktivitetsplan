@@ -28,7 +28,7 @@ function Aktivitetvisning(props: Props) {
     const visBegrunnelse = !erArenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     return (
-        <div className="mt-4">
+        <div className="mt-4 space-y-8">
             <VarslingBoks aktivitet={aktivitet} />
 
             {visBegrunnelse && aktivitet.avsluttetKommentar ? (
@@ -52,9 +52,11 @@ function Aktivitetvisning(props: Props) {
             {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
                 <HandlingContainer aktivitet={aktivitet} />
             ) : null}
-            <Statusadministrasjon aktivitet={aktivitet} />
-            {/*<DialogLenke aktivitet={aktivitet} /> */}
-            {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
+            <div>
+                <Statusadministrasjon aktivitet={aktivitet} />
+                {/*<DialogLenke aktivitet={aktivitet} /> */}
+                {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
+            </div>
         </div>
     );
 }

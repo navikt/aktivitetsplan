@@ -1,27 +1,26 @@
+import { Alert, BodyLong, BodyShort, Heading, ReadMore } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../../api/utils';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
-import EkspanderbarLinjeBase from '../../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
+import { formaterDatoManed } from '../../../../../utils';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
 import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
 import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';
 import { selectArenaAktivitetFhoLestStatus } from '../../../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import { skalMarkereForhaandsorienteringSomLest } from '../../avtalt-container/utilsForhaandsorientering';
-import CustomBodyLong from '../CustomBodyLong';
-import styles from './Forhaandsorienteringsvisning.module.less';
-import LestDatoVisning from './LestDatoVisning';
 import LestKnapp from './LestKnapp';
-import Tittel from './Tittel';
 
 interface Props {
     aktivitet: AlleAktiviteter;
     startAapen?: boolean;
 }
+
+const tittelTekst = 'Informasjon om ansvaret ditt';
 
 const Forhaandsorienteringsvisning = (props: Props) => {
     const { aktivitet, startAapen = false } = props;
@@ -61,25 +60,26 @@ const Forhaandsorienteringsvisning = (props: Props) => {
         setErEkspandert(false);
     };
 
-    const onClickToggle = () => setErEkspandert((ekspandert) => !ekspandert);
-
     const lasterDataArena = arenaAktivitetFhoLestStatus === STATUS.PENDING;
     const lasterDataAktivitet = aktivitetFhoLestStatus === STATUS.PENDING;
     const lasterData = erArenaAktivitet ? lasterDataArena : lasterDataAktivitet;
 
+    if (!erLest && kanMarkeresSomLest) {
+        return (
+            <Alert variant="warning">
+                <Heading size="xsmall" level="2">
+                    {tittelTekst}
+                </Heading>
+                <BodyLong>{forhaandsorienteringTekst}</BodyLong>
+                <LestKnapp onClick={onClickLestKnapp} lasterData={lasterData} />
+            </Alert>
+        );
+    }
     return (
-        <EkspanderbarLinjeBase
-            tittel={<Tittel kanMarkeresSomLest={kanMarkeresSomLest} />}
-            aapneTekst="Les"
-            lukkeTekst="Lukk"
-            erAapen={erEkspandert}
-            onClick={onClickToggle}
-            kanToogle
-        >
-            <CustomBodyLong className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</CustomBodyLong>
-            <LestDatoVisning hidden={!erLest} lest={forhaandsorienteringLestDato} />
-            <LestKnapp hidden={!kanMarkeresSomLest} onClick={onClickLestKnapp} lasterData={lasterData} />
-        </EkspanderbarLinjeBase>
+        <ReadMore header={tittelTekst} open={erEkspandert} onClick={() => setErEkspandert(!erEkspandert)}>
+            <BodyLong>{forhaandsorienteringTekst}</BodyLong>
+            <BodyShort className="mt-4">Lest {formaterDatoManed(forhaandsorienteringLestDato)}</BodyShort>
+        </ReadMore>
     );
 };
 
