@@ -98,7 +98,7 @@ describe('utils', () => {
             expect(consoleOutput.length).toBe(1);
         });
         it('Sjekk at funksjonen dispatcher parset feil', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const response = {
                 status: 1234,
                 text: () => Promise.resolve('{"type":"FEILTYPE"}'),
@@ -120,7 +120,7 @@ describe('utils', () => {
             expect(consoleOutput.length).toBe(0);
         });
         it('Sjekk at funksjonen dispatcher error message', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const error = new Error('message');
 
             handterFeil(dispatch, action)(error).catch(() => {});

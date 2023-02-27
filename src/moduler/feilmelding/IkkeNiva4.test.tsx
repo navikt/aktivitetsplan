@@ -35,10 +35,10 @@ const WrappedIkkeNiva4 = ({ store = createMockStore() }) => {
     );
 };
 
-jest.mock('../../felles-komponenter/utils/logging', () => ({
-    ...jest.requireActual('../../felles-komponenter/utils/logging'),
-    loggIkkeRegistrertIKrr: jest.fn(),
-    loggHarBruktNivaa4: jest.fn(),
+vi.mock('../../felles-komponenter/utils/logging', () => ({
+    ...vi.requireActual('../../felles-komponenter/utils/logging'),
+    loggIkkeRegistrertIKrr: vi.fn(),
+    loggHarBruktNivaa4: vi.fn(),
 }));
 
 const fetchData = (
