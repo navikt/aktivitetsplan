@@ -14,6 +14,17 @@ import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 
+declare const window: {
+    Intl: any;
+    history: History;
+    appconfig: {
+        CONTEXT_PATH: string;
+        TILLAT_SET_AVTALT: boolean;
+        VIS_MALER: boolean;
+        TIMEOUTBOX: boolean;
+    };
+};
+
 /* eslint-disable global-require */
 // if (!global.Intl) {
 if (!window.Intl) {
@@ -27,18 +38,13 @@ moment.updateLocale('nb', {
     monthsShort: ['jan.', 'feb.', 'mar.', 'apr.', 'mai', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'des.'],
 });
 
-const usingHashRouting = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
-
-console.log(import.meta.env);
+const usingHashRouting: boolean = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
 
 export const mockfnr = '12345678910';
 
-if (import.meta.env.DEV === true) {
+if (import.meta.env.DEV) {
     const fnr = mockfnr;
-    // const pathnamePrefix = `${import.meta.env.BASE_URL}/${usingHashRouting ? '#/' : ''}`;
-    const pathnamePrefix = '/';
-    console.log(pathnamePrefix);
-
+    const pathnamePrefix = `${import.meta.env.BASE_URL}${usingHashRouting ? '#/' : ''}`;
     if (erEksternBruker()) {
         window.history.replaceState({}, '', pathnamePrefix);
         window.appconfig = eksternBrukerConfig;
@@ -51,14 +57,14 @@ if (import.meta.env.DEV === true) {
     console.log('======== MED MOCK ========'); // eslint-disable-line no-console
     console.log('=========================='); // eslint-disable-line no-console
 
-    import('./mocks').then(() => ReactDOM.render(<DemoBanner />, document.getElementById('demo')));
-    // require('./mocks'); // eslint-disable-line global-require
+    import('./mocks').then(() => {
+        ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
+        render();
+    });
 }
 
 function AppWrapper(props: any) {
-    console.log('asdasd');
-    if (import.meta.env.DEV === true) {
-        console.log('asdasoidjasidjsaiodjasiodj');
+    if (import.meta.env.DEV) {
         props = { ...props, fnr: erEksternBruker() ? undefined : mockfnr };
     }
 
@@ -76,5 +82,3 @@ function render() {
     }
 }
 NAVSPA.eksporter('aktivitetsplan', AppWrapper);
-
-render();

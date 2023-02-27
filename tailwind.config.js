@@ -1,6 +1,6 @@
 module.exports = {
     presets: [require('@navikt/ds-tailwind')],
-    purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     darkMode: false, // or 'media' or 'class'
     variants: {
         extend: {},
