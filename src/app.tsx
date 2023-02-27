@@ -40,7 +40,7 @@ window.appconfig = {
 };
 
 const getBasename = (fnr: string) => {
-    const pathnamePrefix = process.env.PUBLIC_URL;
+    const pathnamePrefix = import.meta.env.BASE_URL;
     if (fnr && !pathnamePrefix) {
         return fnr;
     } else if (fnr && pathnamePrefix) {
@@ -53,7 +53,7 @@ const getBasename = (fnr: string) => {
 };
 
 function HashRouterIfGHPages({ fnr, children }: { fnr: string; children: React.ReactNode }) {
-    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
+    if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
         return <HashRouter basename={fnr}>{children}</HashRouter>;
     }
 

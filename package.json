@@ -18,6 +18,7 @@
     "format-all": "prettier --write 'src/'",
     "lint": "echo \"Not implemented\"",
     "lint-staged": "lint-staged",
+    "dev": "vite",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "@navikt/ds-tailwind": "^2.3.0",
     "@navikt/navspa": "^5.0.1",
     "@nutgaard/use-formstate": "^3.0.1",
+    "@vitejs/plugin-react": "^3.1.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
@@ -54,6 +56,8 @@
     "reselect": "^4.1.7",
     "source-map-explorer": "^2.5.3",
     "typescript": "^4.8.4",
+    "vite": "^4.1.4",
+    "vite-plugin-svgr": "^2.4.0",
     "whatwg-fetch": "^3.6.2"
   },
   "husky": {
@@ -84,7 +88,6 @@
     "@testing-library/react": "^12.1.5",
     "@types/enzyme": "^3.10.12",
     "@types/jest": "^29.2.1",
-    "react-error-overlay": "6.0.9",
     "@types/moment-duration-format": "^2.2.3",
     "@types/node": "^18.11.9",
     "@types/react": "^17.0.45",
@@ -104,6 +107,7 @@
     "postcss": "^7.0.39",
     "prettier": "^2.7.1",
     "prettier-plugin-import-sort": "0.0.7",
+    "react-error-overlay": "6.0.9",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "yet-another-fetch-mock": "^4.1.0"
   },

@@ -16,7 +16,7 @@ export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialo
     );
 };
 
-const ARBEIDSRETTET_DIALOG_URL = process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL;
+const ARBEIDSRETTET_DIALOG_URL = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
 
 export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
     if (erVeileder) {
