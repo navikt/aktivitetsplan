@@ -2,6 +2,7 @@ import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from 
 
 const oppfPerioder = [
     {
+        uuid: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2017-01-30T10:46:10.971+01:00',
@@ -35,6 +36,7 @@ const oppfPerioder = [
         ],
     },
     {
+        uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2018-01-31T10:46:10.971+01:00',
