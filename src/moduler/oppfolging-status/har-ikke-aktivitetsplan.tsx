@@ -2,7 +2,7 @@ import { Next } from '@navikt/ds-icons';
 import { Alert, BodyShort, Link } from '@navikt/ds-react';
 import React from 'react';
 
-export const arbeidssokerregistreringHref = process.env.REACT_APP_ARBEIDSSOKERREGISTRERING_URL as string;
+export const arbeidssokerregistreringHref = import.meta.env.VITE_ARBEIDSSOKERREGISTRERING_URL as string;
 
 interface PropTypes {
     erVeileder: boolean;

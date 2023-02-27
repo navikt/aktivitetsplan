@@ -21,7 +21,7 @@ export const StillingFraNavDetaljer = ({ aktivitet }: Props) => {
 
     const stillingFraNavData = aktivitet.stillingFraNavData;
 
-    const url = process.env.REACT_APP_STILLING_FRA_NAV_BASE_URL + stillingFraNavData.stillingsId;
+    const url = import.meta.env.VITE_STILLING_FRA_NAV_BASE_URL + stillingFraNavData.stillingsId;
 
     return (
         <>
