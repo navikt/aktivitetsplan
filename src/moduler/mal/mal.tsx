@@ -1,5 +1,3 @@
-import './mal.less';
-
 import { Heading, ReadMore } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
