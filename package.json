@@ -52,7 +52,6 @@
     "redux-freeze": "^0.1.7",
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.7",
-    "sha.js": "^2.4.11",
     "source-map-explorer": "^2.5.3",
     "typescript": "^4.8.4",
     "whatwg-fetch": "^3.6.2"
@@ -94,7 +93,6 @@
     "@types/react-modal": "^3.13.1",
     "@types/react-redux": "^7.1.24",
     "@types/react-router-dom": "^5.3.3",
-    "@types/sha.js": "^2.4.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.7.0",
     "autoprefixer": "^9.8.8",
     "craco-less": "^1.20.0",
