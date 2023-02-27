@@ -2,14 +2,21 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const BehandlingsDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={BEHANDLING_AKTIVITET_TYPE !== aktivitet.type}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const BehandlingsDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== BEHANDLING_AKTIVITET_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <Informasjonsfelt
                 key="behandlingtype"
                 tittel={<FormattedMessage id="aktivitetdetaljer.behandling-type-label" />}
@@ -35,12 +42,8 @@ const BehandlingsDetaljer = ({ aktivitet }) => (
                 fullbredde
             />
             <Beskrivelse aktivitet={aktivitet} />
-        </div>
-    </HiddenIf>
-);
-
-BehandlingsDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default BehandlingsDetaljer;

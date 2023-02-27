@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './VarslingInfo.module.less';
 
 const VarslingInfo = () => (
-    <div className="flex">
+    <div className="flex mb-2">
         <Label className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</Label>
         <HelpText className="ml-2">
             <div className={styles.maxWidth300}>

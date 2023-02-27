@@ -19,7 +19,7 @@ export enum ArenaAktivitetType {
     UTDANNINGSAKTIVITET = 'UTDANNINGSAKTIVITET',
 }
 
-interface Moteplan {
+export interface Moteplan {
     startDato: string;
     sluttDato: string;
     sted: string;

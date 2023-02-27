@@ -2,15 +2,22 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import DetaljvisningLenke from '../hjelpekomponenter/detaljvisning-lenke';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const EgenAktivitetDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== EGEN_AKTIVITET_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const EgenAktivitetDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== EGEN_AKTIVITET_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <FraDato aktivitet={aktivitet} tittel={<FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.egen" />} />
             <TilDato aktivitet={aktivitet} tittel={<FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />} />
             <Informasjonsfelt
@@ -27,12 +34,8 @@ const EgenAktivitetDetaljer = ({ aktivitet }) => (
             />
             <Beskrivelse aktivitet={aktivitet} />
             <DetaljvisningLenke lenke={aktivitet.lenke} />
-        </div>
-    </HiddenIf>
-);
-
-EgenAktivitetDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default EgenAktivitetDetaljer;

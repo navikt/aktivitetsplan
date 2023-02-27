@@ -20,7 +20,7 @@ import IkkeDeltFerdigMarkering, {
 } from '../../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
-import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
+import Aktivitetsdetaljer from '../detaljer/Aktivitetsdetaljer';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (

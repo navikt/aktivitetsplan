@@ -1,22 +1,25 @@
 import React from 'react';
 
 import { UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const UtdanningDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== UTDANNING_AKTIVITET_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const UtdanningDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== UTDANNING_AKTIVITET_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <FraDato aktivitet={aktivitet} visIkkeSatt />
             <TilDato aktivitet={aktivitet} visIkkeSatt />
             <Beskrivelse aktivitet={aktivitet} />
-        </div>
-    </HiddenIf>
-);
-
-UtdanningDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default UtdanningDetaljer;

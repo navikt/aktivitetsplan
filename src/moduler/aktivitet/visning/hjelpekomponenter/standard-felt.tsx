@@ -1,5 +1,5 @@
 import PT from 'prop-types';
-import React from 'react';
+import { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -16,7 +16,7 @@ const formatertDato = (dato: string | undefined, visIkkeSatt: boolean) => {
 
 interface Props {
     aktivitet: AlleAktiviteter;
-    tittel: string;
+    tittel: ReactNode;
     visIkkeSatt: boolean;
     hidden: boolean;
 }

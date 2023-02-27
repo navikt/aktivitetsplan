@@ -7,14 +7,14 @@ import DetaljFelt from './detalj-felt';
 
 interface Props {
     tittel: React.ReactNode;
-    innhold?: string;
+    innhold?: React.ReactNode;
     fullbredde?: boolean;
     formattertTekst?: boolean;
     beskrivelse?: boolean;
 }
 
 interface ChildProps {
-    children: string;
+    children: React.ReactNode;
     formattertTekst?: boolean;
 }
 
@@ -22,12 +22,12 @@ const InnholdsWrapper = (props: ChildProps) => {
     const { children, formattertTekst } = props;
     if (formattertTekst) {
         return (
-            <CustomBodyLong className="detaljfelt__tekst" formatLinks formatLinebreaks>
+            <CustomBodyLong formatLinks formatLinebreaks>
                 {children}
             </CustomBodyLong>
         );
     } else {
-        return <BodyShort className="detaljfelt__tekst">{children}</BodyShort>;
+        return <BodyShort>{children}</BodyShort>;
     }
 };
 

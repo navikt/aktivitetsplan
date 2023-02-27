@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { ReactChildren, ReactNode } from 'react';
 
 interface Props {
-    children?: string;
+    children?: React.ReactNode;
     className?: string;
     size?: 'small' | 'medium';
     formatLinks?: boolean;

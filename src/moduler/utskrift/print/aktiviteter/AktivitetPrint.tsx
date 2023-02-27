@@ -8,7 +8,7 @@ import { getAktivitetType } from '../../../../utils/textMappers';
 import AvtaltMarkering from '../../../aktivitet/avtalt-markering/AvtaltMarkering';
 import StillingEtikett from '../../../aktivitet/etikett/StillingEtikett';
 import TiltakEtikett from '../../../aktivitet/etikett/TiltakEtikett';
-import Aktivitetsdetaljer from '../../../aktivitet/visning/detaljer/aktivitetsdetaljer';
+import Aktivitetsdetaljer from '../../../aktivitet/visning/detaljer/Aktivitetsdetaljer';
 import { DialogPrint } from '../dialoger';
 import AktivitetReferat from './AktivitetReferat';
 import ForhaandsorienteringPrint from './ForhaandsorienteringPrint';
@@ -29,7 +29,7 @@ const AktivitetPrint = (props: Props) => {
             <Heading level="2" size="medium" className="mb-4">
                 {tittel}
             </Heading>
-            <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
+            <Aktivitetsdetaljer valgtAktivitet={aktivitet} />
             {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
             aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
                 <AktivitetReferat aktivitet={aktivitet} />

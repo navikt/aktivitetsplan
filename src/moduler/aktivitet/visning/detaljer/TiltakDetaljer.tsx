@@ -2,14 +2,20 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { TILTAK_AKTIVITET_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const TiltakDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== TILTAK_AKTIVITET_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const TiltakDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== TILTAK_AKTIVITET_TYPE) {
+        return null;
+    }
+    return (
+        <>
             <FraDato aktivitet={aktivitet} visIkkeSatt />
             <TilDato aktivitet={aktivitet} visIkkeSatt />
             <Informasjonsfelt
@@ -28,12 +34,8 @@ const TiltakDetaljer = ({ aktivitet }) => (
                 innhold={aktivitet.antallDagerPerUke && `${aktivitet.antallDagerPerUke}`}
             />
             <Beskrivelse aktivitet={aktivitet} />
-        </div>
-    </HiddenIf>
-);
-
-TiltakDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default TiltakDetaljer;

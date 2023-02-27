@@ -9,20 +9,20 @@ interface Props {
     beskrivelse?: boolean;
 }
 
-function DetaljFelt(props: Props) {
+const DetaljFelt = (props: Props) => {
     const { tittel, children, fullbredde, beskrivelse } = props;
 
     return (
         <div
-            className={classNames('aktivitetsdetaljer__felt', 'detaljfelt', {
-                'detaljfelt--fullbredde': fullbredde,
-                'detaljfelt--beskrivelse': beskrivelse,
+            className={classNames('w-1/2 overflow-hidden overflow-ellipsis', {
+                'w-full': fullbredde,
+                'flex-auto break-words': beskrivelse,
             })}
         >
             <Label>{tittel}</Label>
             {children}
         </div>
     );
-}
+};
 
 export default DetaljFelt;

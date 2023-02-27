@@ -5,7 +5,6 @@ import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes
 import Detaljer from '../eksternaktivitet/Detaljer';
 import OppgaveBoks from '../eksternaktivitet/OppgaveBoks';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
-import styles from './AktivitetDetaljer.module.less';
 
 type Props = {
     aktivitet: AlleAktiviteter;
@@ -18,7 +17,7 @@ const EksternAktivitetDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <div className={styles.detaljer}>
+            <div className="flex flex-row flex-wrap w-full gap-y-3">
                 <OppgaveBoks oppgave={aktivitet.eksternAktivitet.oppgave} />
                 <FraDato aktivitet={aktivitet} />
                 <TilDato aktivitet={aktivitet} />

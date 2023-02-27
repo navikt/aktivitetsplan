@@ -2,14 +2,21 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const SokeDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== SOKEAVTALE_AKTIVITET_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const SokeDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== SOKEAVTALE_AKTIVITET_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <FraDato aktivitet={aktivitet} />
             <TilDato aktivitet={aktivitet} />
             <HiddenIfInformasjonsfelt
@@ -29,16 +36,12 @@ const SokeDetaljer = ({ aktivitet }) => (
                 tittel={<FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />}
                 beskrivelse
                 formattertTekst
-                hiden={!aktivitet.avtaleOppfolging}
+                hidden={!aktivitet.avtaleOppfolging}
                 innhold={aktivitet.avtaleOppfolging}
             />
             <Beskrivelse aktivitet={aktivitet} />
-        </div>
-    </HiddenIf>
-);
-
-SokeDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default SokeDetaljer;

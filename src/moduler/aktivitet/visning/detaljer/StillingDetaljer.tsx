@@ -2,15 +2,22 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import DetaljvisningLenke from '../hjelpekomponenter/detaljvisning-lenke';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const StillingDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== STILLING_AKTIVITET_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const StillingDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== STILLING_AKTIVITET_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <FraDato
                 aktivitet={aktivitet}
                 tittel={<FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />}
@@ -37,12 +44,8 @@ const StillingDetaljer = ({ aktivitet }) => (
             />
             <Beskrivelse aktivitet={aktivitet} />
             <DetaljvisningLenke lenke={aktivitet.lenke} />
-        </div>
-    </HiddenIf>
-);
-
-StillingDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default StillingDetaljer;

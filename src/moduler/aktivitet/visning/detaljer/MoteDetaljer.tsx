@@ -2,14 +2,22 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { MOTE_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf, formaterDatoManed } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
+import { formaterDatoManed } from '../../../../utils';
 import { beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 
-const MoteDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== MOTE_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const MoteDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== MOTE_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <Informasjonsfelt
                 key="dato"
                 tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
@@ -51,12 +59,8 @@ const MoteDetaljer = ({ aktivitet }) => (
                 formattertTekst
                 fullbredde
             />
-        </div>
-    </HiddenIf>
-);
-
-MoteDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default MoteDetaljer;

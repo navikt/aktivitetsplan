@@ -2,14 +2,21 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { IJOBB_AKTIVITET_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const IJobbDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== IJOBB_AKTIVITET_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const IJobbDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== IJOBB_AKTIVITET_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <FraDato aktivitet={aktivitet} />
             <TilDato aktivitet={aktivitet} visIkkeSatt />
             <Informasjonsfelt
@@ -28,12 +35,8 @@ const IJobbDetaljer = ({ aktivitet }) => (
                 innhold={aktivitet.arbeidstid}
             />
             <Beskrivelse aktivitet={aktivitet} />
-        </div>
-    </HiddenIf>
-);
-
-IJobbDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default IJobbDetaljer;

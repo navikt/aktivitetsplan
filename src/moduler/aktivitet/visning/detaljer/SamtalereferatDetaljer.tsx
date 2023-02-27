@@ -2,13 +2,21 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { SAMTALEREFERAT_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
-import { HiddenIf, formaterDatoKortManed } from '../../../../utils';
+import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
+import { formaterDatoKortManed } from '../../../../utils';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 
-const SamtalereferatDetaljer = ({ aktivitet }) => (
-    <HiddenIf hidden={aktivitet.type !== SAMTALEREFERAT_TYPE}>
-        <div className="aktivitetvisning__detaljer">
+interface Props {
+    aktivitet: AlleAktiviteter;
+}
+
+const SamtalereferatDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== SAMTALEREFERAT_TYPE) {
+        return null;
+    }
+
+    return (
+        <>
             <Informasjonsfelt
                 key="dato"
                 tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
@@ -19,12 +27,8 @@ const SamtalereferatDetaljer = ({ aktivitet }) => (
                 tittel={<FormattedMessage id="aktivitetdetaljer.kanal" />}
                 innhold={aktivitet.kanal && <FormattedMessage id={`kanal.${aktivitet.kanal}`.toLowerCase()} />}
             />
-        </div>
-    </HiddenIf>
-);
-
-SamtalereferatDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+        </>
+    );
 };
 
 export default SamtalereferatDetaljer;
