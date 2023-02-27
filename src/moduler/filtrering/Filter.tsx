@@ -69,7 +69,7 @@ const Filter = () => {
                     </Button>
                     {open ? (
                         <Modal contentLabel="filter-modal" header="" onRequestClose={() => setOpen(false)}>
-                            <div className="flex flex-row gap-4 gap-x-8 flex-wrap">
+                            <div className="flex flex-wrap gap-y-4">
                                 <AvtaltMedNavFilter />
                                 <EtikettFilter />
                                 <ArenaEtikettFilter />

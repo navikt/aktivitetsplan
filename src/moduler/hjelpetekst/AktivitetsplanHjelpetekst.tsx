@@ -47,7 +47,7 @@ const AktivitetsplanHjelpetekst = ({ status }: Props) => {
 
     return (
         <HelpText placement={'bottom-end'} id={status} title={tittel}>
-            <div className="max-width-300">{innhold}</div>
+            <div className="w-80">{innhold}</div>
         </HelpText>
     );
 };
