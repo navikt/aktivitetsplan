@@ -15,6 +15,7 @@ import DemoBanner from './mocks/demo/demoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 
 declare const window: {
+    NAVSPA: any;
     Intl: any;
     history: History;
     appconfig: {
@@ -28,8 +29,8 @@ declare const window: {
 /* eslint-disable global-require */
 // if (!global.Intl) {
 if (!window.Intl) {
-    require('intl');
-    require('intl/locale-data/jsonp/nb.js');
+    import('intl');
+    import('intl/locale-data/jsonp/nb.js');
 }
 
 moment.locale('nb');

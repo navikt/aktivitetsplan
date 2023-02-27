@@ -1,7 +1,6 @@
 module.exports = {
     presets: [require('@navikt/ds-tailwind')],
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-    darkMode: false, // or 'media' or 'class'
     variants: {
         extend: {},
     },
