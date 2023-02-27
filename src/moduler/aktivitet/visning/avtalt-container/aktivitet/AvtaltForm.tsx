@@ -118,7 +118,7 @@ const AvtaltForm = (props: Props) => {
                 </div>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv
-                        className={classNames('space-y-4', kanSendeForhaandsvarsel && styles.innhold)}
+                        className={classNames('space-y-4 mb-2', kanSendeForhaandsvarsel && styles.innhold)}
                         visible={avtalt}
                     >
                         <KanIkkeSendeForhaandsorienteringInfotekst

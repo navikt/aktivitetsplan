@@ -61,7 +61,7 @@ const KanIkkeSendeForhaandsorienteringInfotekst = (props: {
         return null;
     }
 
-    return <Alert variant="info">{tekst}</Alert>;
+    return <Alert variant="warning">{tekst}</Alert>;
 };
 
 export default KanIkkeSendeForhaandsorienteringInfotekst;
