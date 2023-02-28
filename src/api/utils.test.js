@@ -91,11 +91,13 @@ describe('utils', () => {
         });
 
         const mockedError = (output) => consoleOutput.push(output);
-        beforeEach(() => (console.error = mockedError));
+        beforeEach(() => {
+            console.error = mockedError;
+        });
 
-        it('Sjekk at funksjonen returnerer et rejected promise', () => {
+        it('Sjekk at funksjonen returnerer et rejected promise', async () => {
             expect(handterFeil(() => {}, action)(new Error('message'))).rejects.toThrow('message');
-            expect(consoleOutput.length).toBe(1);
+            expect(consoleOutput).toHaveLength(1);
         });
         it('Sjekk at funksjonen dispatcher parset feil', () => {
             const dispatch = vi.fn();
@@ -107,6 +109,7 @@ describe('utils', () => {
             handterFeil(dispatch, action)({ response }).catch(() => {});
 
             setTimeout(() => {
+                expect(dispatch.mock.calls).toHaveLength(1);
                 expect(dispatch.mock.calls[0][0]).toEqual({
                     data: {
                         melding: { type: 'FEILTYPE' },
@@ -117,7 +120,7 @@ describe('utils', () => {
                 });
             }, 0);
 
-            expect(consoleOutput.length).toBe(0);
+            expect(consoleOutput).toHaveLength(0);
         });
         it('Sjekk at funksjonen dispatcher error message', () => {
             const dispatch = vi.fn();
@@ -130,7 +133,7 @@ describe('utils', () => {
                 type: action,
             });
 
-            expect(consoleOutput.length).toBe(1);
+            expect(consoleOutput).toHaveLength(1);
         });
     });
 

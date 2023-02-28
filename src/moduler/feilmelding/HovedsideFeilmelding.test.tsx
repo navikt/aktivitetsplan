@@ -1,4 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
+import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -44,16 +45,12 @@ describe('<HovedsideFeilmelding/>', () => {
         const store = createStore(reducer);
 
         store.dispatch(dialogFeilet());
-        const wrapper = mount(
+        const { getByText } = render(
             <Provider store={store}>
                 <HovedsideFeilmelding />
             </Provider>
         );
-        const feilmelding = wrapper.find(Feilmelding);
-        const actualTekst = feilmelding.find(BodyShort).text().trim();
-
-        expect(feilmelding.length).toEqual(1);
-        expect(actualTekst).toEqual(tekster.dialogFeilet);
+        getByText(tekster.dialogFeilet);
     });
 
     it('Skal rendre <Feilmelding/> dersom arena feiler', () => {

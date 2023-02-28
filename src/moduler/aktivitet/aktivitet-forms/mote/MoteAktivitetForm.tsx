@@ -106,6 +106,7 @@ const MoteAktivitetForm = (props: Props) => {
     const state = validator(initalValue);
 
     const { datepickerProps, inputProps, selectedDay } = UNSAFE_useDatepicker({
+        defaultSelected: initalValue.dato ? new Date(initalValue.dato) : undefined,
         onDateChange: (dato) => {
             state.setValue('dato', dato?.toString() || '');
         },
@@ -169,7 +170,7 @@ const MoteAktivitetForm = (props: Props) => {
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
                     {...state.fields.forberedelser}
                 />
-                <FormErrorSummary submittoken={state.submittoken} errors={{ ...state.errors }} />
+                <FormErrorSummary errors={{ ...state.errors }} />
             </div>
             <LagreAktivitet />
         </form>

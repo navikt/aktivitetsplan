@@ -1,5 +1,6 @@
 import 'moment-duration-format';
 
+import { formatDuration, minutesToHours } from 'date-fns';
 import moment, { DurationInputArg1 } from 'moment';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
@@ -138,18 +139,19 @@ export function beregnFraTil(data: Data): FraTil {
     return {};
 }
 
-export function formatterVarighet(varighet?: string): string | undefined {
+export function formatterVarighet(varighet?: string | number): string | undefined {
     if (!varighet) {
         return undefined;
     }
-    return moment(varighet, 'HH:mm').format('h:mm');
+    const inputMinutes = typeof varighet === 'number' ? varighet : parseInt(varighet);
+    const hours = minutesToHours(inputMinutes);
+    const minutes = inputMinutes - 60 * hours;
+    return `${hours}:${minutes}`;
 }
 
+// TODO: Finn en bedre løsning i MoteAktivitet-form
 export function formatterKlokkeslett(klokkeslett?: string): string | undefined {
-    if (!klokkeslett) {
-        return undefined;
-    }
-    return moment(klokkeslett, 'HH:mm').format('h:mm');
+    return formatterVarighet(klokkeslett);
 }
 
 export function formatterTelefonnummer(telefonnummer: string): string {

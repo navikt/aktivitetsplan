@@ -11,6 +11,7 @@ interface Props {
     input: FieldStateInput;
     pristine?: boolean;
     initialValue?: string;
+    value?: string;
     setValue?: (value: string) => void;
 }
 

@@ -5,22 +5,19 @@ import React, { useEffect, useRef } from 'react';
 import styles from './feiloppsummering.module.less';
 
 interface Props {
-    submittoken: string | undefined;
     errors: Record<string, string | undefined>;
 }
 
-function FormErrorSummary({ submittoken, errors }: Props) {
+function FormErrorSummary({ errors }: Props) {
     const summaryRef = useRef<HTMLDivElement>();
 
     // focus on summary ref when shown
     useEffect(() => {
-        if (submittoken) {
-            summaryRef?.current?.focus();
-            summaryRef?.current?.scrollIntoView && summaryRef.current.scrollIntoView();
-        }
-    }, [submittoken, summaryRef]);
+        summaryRef?.current?.focus();
+        summaryRef?.current?.scrollIntoView && summaryRef.current.scrollIntoView();
+    }, [summaryRef]);
 
-    if (!submittoken || Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length === 0) {
         return null;
     }
 
@@ -43,6 +40,11 @@ function FormErrorSummary({ submittoken, errors }: Props) {
     );
 }
 
+const FormErrorSummaryWrapper = ({ errors }: Props) => {
+    if (!errors || Object.keys(errors).length === 0) return null;
+    return <FormErrorSummary errors={errors} />;
+};
+
 FormErrorSummary.propTypes = {
     submittoken: PT.string,
     errors: PT.object.isRequired,
@@ -52,4 +54,4 @@ FormErrorSummary.defaultProps = {
     submittoken: undefined,
 };
 
-export default FormErrorSummary;
+export default FormErrorSummaryWrapper;

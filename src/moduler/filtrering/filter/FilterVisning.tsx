@@ -1,6 +1,6 @@
 import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from 'redux';
 

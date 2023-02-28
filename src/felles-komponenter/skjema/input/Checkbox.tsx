@@ -22,6 +22,7 @@ const Checkbox = (props: Props) => {
     const [toggel, setToggel] = useState(initialValue === 'true');
 
     const toggelOnChange = (event: any) => {
+        console.log('ONCHANGE ');
         const newValue = toggel ? 'false' : 'true';
         const customEvent: any = {
             target: { name: event.target.name, value: newValue },
@@ -29,6 +30,8 @@ const Checkbox = (props: Props) => {
         input.onChange(customEvent);
         setToggel(!toggel);
     };
+
+    console.log('CHECKBOX');
 
     const feil = error && touched ? error : undefined;
     return (

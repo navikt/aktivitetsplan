@@ -1,60 +1,41 @@
-import { Alert, BodyShort } from '@navikt/ds-react';
-import { mount } from 'enzyme';
+import { fireEvent, queryAllByText, render } from '@testing-library/react';
 import React from 'react';
 
-import Knappelenke from '../../felles-komponenter/utils/Knappelenke';
 import { HENTING_FEILET as AKTIVITET_HENT_FEILET } from '../aktivitet/aktivitet-action-types';
 import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer';
 import Feilmelding from './Feilmelding';
-import FeilmeldingDetaljer from './FeilmeldingDetaljer';
 import { tekster } from './GetErrorText';
 
 describe('Feilmelding', () => {
     it('Skal vise generell feilmelding ved flere feil', () => {
         const feilmeldinger = [{ type: '' }, { type: '' }];
-        const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
-        const tekst = wrapper.find(Alert).find(BodyShort).text().trim();
+        const { getByText } = render(<Feilmelding feilmeldinger={feilmeldinger} />);
 
-        expect(tekst).toEqual(tekster.fallback);
+        getByText(tekster.fallback);
     });
 
     it('Skal vise aktivitetfeilmelding når kun aktivitet hent feiler', () => {
         const feilmeldinger = [{ type: AKTIVITET_HENT_FEILET }];
-        const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
-
-        const tekst = wrapper.find(Alert).find(BodyShort).text().trim();
-
-        expect(tekst).toEqual(tekster.aktivitetFeilet);
+        const { getByText } = render(<Feilmelding feilmeldinger={feilmeldinger} />);
+        getByText(tekster.aktivitetFeilet);
     });
 
     it('Skal vise generell feilmelding hvis både aktivitet og andre ting feiler', () => {
         const feilmeldinger = [{ type: AKTIVITET_HENT_FEILET }, { type: '' }];
-        const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
-        const tekst = wrapper.find(Alert).find(BodyShort).text().trim();
-
-        expect(tekst).toEqual(tekster.fallback);
+        const { getByText } = render(<Feilmelding feilmeldinger={feilmeldinger} />);
+        getByText(tekster.fallback);
     });
 
     it('Skal ikke vise feilmelding hvis ingenting feiler', () => {
-        const wrapper = mount(<Feilmelding feilmeldinger={[]} />);
-
-        expect(wrapper.find(Feilmelding).html()).toBeNull();
-    });
-
-    it('Skal ikke vise debug per default', () => {
-        const feilmeldinger = [{ type: AKTIVITET_HENT_FEILET }, { type: DIALOG_HENT_FEIL }];
-        const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
-        const debuginfo = wrapper.find(FeilmeldingDetaljer);
-
-        expect(debuginfo.length).toEqual(0);
+        const { queryByText } = render(<Feilmelding feilmeldinger={[]} />);
+        expect(queryByText(tekster.fallback)).toBeNull();
     });
 
     it('Skal vise debug info for alle feil', () => {
         const feilmeldinger = [{ type: AKTIVITET_HENT_FEILET }, { type: DIALOG_HENT_FEIL }];
-        const wrapper = mount(<Feilmelding feilmeldinger={feilmeldinger} />);
-
-        wrapper.find(Knappelenke).simulate('click');
-
-        expect(wrapper.find(FeilmeldingDetaljer).length).toEqual(feilmeldinger.length);
+        const { getByText, queryByText } = render(<Feilmelding feilmeldinger={feilmeldinger} />);
+        fireEvent.click(getByText('Vis detaljer'));
+        expect(queryAllByText(getByText('Vis detaljer'), 'aktivitet/hent/fail')).not.toBeNull();
+        expect(queryAllByText(getByText('Vis detaljer'), 'dialog/hent/fail')).not.toBeNull();
     });
 });

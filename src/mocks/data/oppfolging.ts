@@ -68,8 +68,7 @@ const oppfolging = {
 export const mockOppfolging = oppfolging;
 
 export const getOppfolging = (req: RestRequest) => {
-    (oppfolging as any).fnr = req.url.searchParams.get('fnr') ?? undefined;
-    return oppfolging;
+    return { ...oppfolging, fnr: req.url.searchParams.get('fnr') ?? undefined };
 };
 
 export function settDigital() {
