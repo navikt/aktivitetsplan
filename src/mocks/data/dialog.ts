@@ -1,5 +1,7 @@
-import { erEksternBruker, ulesteDialoger } from './demo/sessionstorage';
-import { rndId } from './utils';
+import { ResponseComposition, RestContext, RestRequest } from 'msw';
+
+import { erEksternBruker, ulesteDialoger } from '../demo/sessionstorage';
+import { rndId } from '../utils';
 
 const dialoger = [
     {
@@ -59,8 +61,7 @@ const dialoger = [
                 avsenderId: 'Z990286',
                 sendt: '2018-11-21T13:13:20.685+01:00',
                 lest: !ulesteDialoger(),
-                tekst:
-                    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+                tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
             },
         ],
         egenskaper: ['PARAGRAF8'],
@@ -192,35 +193,37 @@ const dialoger = [
     },
 ];
 
-export function opprettDialog(update) {
-    const dialogId = update.dialogId === undefined ? rndId() : `${update.dialogId}`;
+export const opprettDialog = async (req: RestRequest) => {
+    const body = await req.json();
+
+    const dialogId = body.dialogId === undefined ? rndId() : `${body.dialogId}`;
     const nyHenvendelse = {
         id: rndId(),
         dialogId: dialogId,
         avsender: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
         avsenderId: 'Z123456',
-        overskrift: update.overskrift,
-        tekst: update.tekst,
+        overskrift: body.overskrift,
+        tekst: body.tekst,
         lest: !ulesteDialoger(),
         sendt: new Date(),
-    };
+    } as any;
 
-    const eksisterendeDialoger = dialoger.filter((dialog) => update.dialogId !== undefined && dialog.id === dialogId);
+    const eksisterendeDialoger = dialoger.filter((dialog) => body.dialogId !== undefined && dialog.id === dialogId);
 
     if (eksisterendeDialoger.length === 1) {
         const oldDialog = eksisterendeDialoger[0];
-        oldDialog.sisteTekst = update.tekst;
+        oldDialog.sisteTekst = body.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
         return oldDialog;
     } else {
         const nyDialog = {
             id: nyHenvendelse.dialogId,
-            ferdigBehandlet: !update.ikkeFerdigbehandlet,
-            venterPaSvar: !!update.venterPaSvar,
-            aktivitetId: update.aktivitetId === undefined ? null : update.aktivitetId,
-            overskrift: update.overskrift,
-            sisteTekst: update.tekst,
+            ferdigBehandlet: !body.ikkeFerdigbehandlet,
+            venterPaSvar: !!body.venterPaSvar,
+            aktivitetId: body.aktivitetId === undefined ? null : body.aktivitetId,
+            overskrift: body.overskrift,
+            sisteTekst: body.tekst,
             sisteDato: new Date(),
             opprettetDato: new Date(),
             historisk: false,
@@ -228,21 +231,22 @@ export function opprettDialog(update) {
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             henvendelser: [nyHenvendelse],
-            egenskaper: update.egenskaper === undefined ? [] : update.egenskaper,
-        };
+            egenskaper: body.egenskaper === undefined ? [] : body.egenskaper,
+        } as any;
         dialoger.push(nyDialog);
         return nyDialog;
     }
-}
+};
 
-export function setVenterPaSvar(id, bool) {
-    const dialog = dialoger.filter((dialog) => dialog.id === id)[0];
-    dialog.venterPaSvar = bool === 'true';
+export function setVenterPaaSvar(req: RestRequest, _res: ResponseComposition, _ctx: RestContext) {
+    const dialog = dialoger.filter((d) => d.id === req.params.id)[0];
+    dialog.venterPaSvar = req.params.bool === 'true';
     return dialog;
 }
-export function setFerdigBehandlet(id, bool) {
-    const dialog = dialoger.filter((dialog) => dialog.id === id)[0];
-    dialog.ferdigBehandlet = bool === 'true';
+
+export function setFerdigBehandlet(req: RestRequest, _res: ResponseComposition, _ctx: RestContext) {
+    const dialog = dialoger.filter((d) => d.id === req.params.id)[0];
+    dialog.ferdigBehandlet = req.params.bool === 'true';
     return dialog;
 }
 

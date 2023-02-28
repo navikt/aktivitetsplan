@@ -1,4 +1,4 @@
-import { erEksternBruker } from './demo/sessionstorage';
+import { erEksternBruker } from '../demo/sessionstorage';
 
 const eksternbruker = {
     id: '1234567890',

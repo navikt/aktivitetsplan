@@ -28,6 +28,7 @@ declare const window: {
 
 /* eslint-disable global-require */
 // if (!global.Intl) {
+// TODO fix
 if (!window.Intl) {
     import('intl');
     import('intl/locale-data/jsonp/nb.js');
@@ -41,7 +42,7 @@ moment.updateLocale('nb', {
 
 const usingHashRouting: boolean = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
 
-export const mockfnr = '12345678910';
+const mockfnr = '12345678910';
 
 const useMock = import.meta.env.DEV || usingHashRouting;
 
@@ -56,14 +57,12 @@ if (useMock) {
         window.appconfig = veilederConfig;
     }
 
-    console.log('=========================='); // eslint-disable-line no-console
-    console.log('======== MED MOCK ========'); // eslint-disable-line no-console
-    console.log('=========================='); // eslint-disable-line no-console
-
-    import('./mocks').then(() => {
-        ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
-        render();
-    });
+    import('./mocks')
+        .then(({ default: startWorker }) => startWorker())
+        .then(() => {
+            ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
+            render();
+        });
 }
 
 function AppWrapper(props: any) {
@@ -80,7 +79,6 @@ function AppWrapper(props: any) {
 
 function render() {
     if (window.NAVSPA) {
-        console.log(window);
         return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));
     }
 }

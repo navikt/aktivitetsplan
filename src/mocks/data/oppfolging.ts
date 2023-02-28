@@ -1,4 +1,6 @@
-import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from './demo/sessionstorage';
+import { RestRequest } from 'msw';
+
+import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from '../demo/sessionstorage';
 
 const oppfPerioder = [
     {
@@ -62,21 +64,21 @@ const oppfolging = {
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
+
 export const mockOppfolging = oppfolging;
 
-export default function getOppfolging(queryParams) {
-    const { fnr } = queryParams;
-    oppfolging.fnr = fnr;
+export const getOppfolging = (req: RestRequest) => {
+    (oppfolging as any).fnr = req.url.searchParams.get('fnr') ?? undefined;
     return oppfolging;
-}
+};
 
 export function settDigital() {
     oppfolging.manuell = false;
     return oppfolging;
 }
 
-export function avslutningStatus(update) {
-    oppfolging.avslutningStatus = {
+export const avslutningStatus = () => {
+    (oppfolging as any).avslutningStatus = {
         kanAvslutte: true,
         underOppfolging: false,
         harYtelser: true,
@@ -85,4 +87,6 @@ export function avslutningStatus(update) {
         inaktiveringsDato: '2018-06-05T00:00:00+02:00',
     };
     return oppfolging;
-}
+};
+
+export default getOppfolging;

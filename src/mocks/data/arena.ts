@@ -1,10 +1,13 @@
 import moment from 'moment';
+import { RestRequest } from 'msw';
 
-import { visArenaAktiviteter } from './demo/sessionstorage';
+import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
+import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
+import { visArenaAktiviteter } from '../demo/sessionstorage';
 
 export const arena = !visArenaAktiviteter()
     ? []
-    : [
+    : ([
           {
               id: 'ARENATA11',
               status: 'GJENNOMFORES',
@@ -283,24 +286,29 @@ export const arena = !visArenaAktiviteter()
               statusSistEndret: '2012-06-25T22:00:00.000+00:00',
               moeteplanListe: null,
           },
-      ];
+      ] as unknown as ArenaAktivitet[]);
 
-export const oppdaterArenaaktivitet = (__params, forhaandsorientering, { arenaaktivitetId }) => {
-    const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === arenaaktivitetId);
+export const oppdaterArenaaktivitet = async (req: RestRequest) => {
+    const arenaaktivitetId = req.url.searchParams.get('arenaaktivitetId');
+    const body = await req.json();
+
+    const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === arenaaktivitetId) as ArenaAktivitet;
 
     aktivitet.forhaandsorientering = {
-        type: forhaandsorientering.type,
-        tekst: forhaandsorientering.tekst,
+        type: body.forhaandsorientering.type,
+        tekst: body.forhaandsorientering.tekst,
     };
 
     return aktivitet;
 };
 
-export const oppdaterLestFhoArenaaktivitet = (__params, __body, { aktivitetId }) => {
-    const lestAktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === aktivitetId);
+export const oppdaterLestFhoArenaaktivitet = (req: RestRequest) => {
+    const aktivitetId = req.url.searchParams.get('aktivitetId');
+
+    const lestAktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === aktivitetId) as ArenaAktivitet;
 
     lestAktivitet.forhaandsorientering = {
-        ...lestAktivitet.forhaandsorientering,
+        ...(lestAktivitet.forhaandsorientering as Forhaandsorientering),
         lestDato: moment().toISOString(),
     };
 

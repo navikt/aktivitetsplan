@@ -1,3 +1,5 @@
+import { RestRequest } from 'msw';
+
 const egenMalverk = [
     {
         hensikt: 'Bli synlig for arbeidsgivere',
@@ -50,7 +52,10 @@ const sokeavtaleMalverk = [
     },
 ];
 
-export function hentMalverkMedType({ type }) {
+export const hentMalverkMedType = async (req: RestRequest) => {
+    const body = await req.json();
+    const { type } = body;
+
     if (type === 'EGEN') {
         return egenMalverk;
     } else if (type === 'SOKEAVTALE') {
@@ -58,4 +63,4 @@ export function hentMalverkMedType({ type }) {
     } else {
         return [];
     }
-}
+};

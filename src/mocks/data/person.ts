@@ -1,4 +1,4 @@
-export default function getPerson(fnr) {
+export const getPerson = () => {
     return {
         fornavn: 'Bruce',
         mellomnavn: 'Batty',
@@ -158,9 +158,9 @@ export default function getPerson(fnr) {
         kjonn: 'K',
         malform: 'se',
     };
-}
+};
 
-export function getPostadresse() {
+export const getPostadresse = () => {
     return {
         navn: 'Navn Navnesen',
         adresse: {
@@ -173,4 +173,4 @@ export function getPostadresse() {
             land: 'Norge',
         },
     };
-}
+};

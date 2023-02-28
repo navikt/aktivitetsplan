@@ -1,4 +1,6 @@
-import { erEksternBruker, ingenMal } from './demo/sessionstorage';
+import { RestRequest } from 'msw';
+
+import { erEksternBruker, ingenMal } from '../demo/sessionstorage';
 
 let maler = [
     {
@@ -24,9 +26,11 @@ export function sisteMal() {
     return maler[maler.length - 1];
 }
 
-export function opprettMal(params, update) {
+export async function opprettMal(req: RestRequest) {
+    const body = await req.json();
+
     let nyMal = {
-        mal: update.mal,
+        mal: body.mal,
         endretAv: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
         dato: new Date(),
     };

@@ -1,7 +1,8 @@
 import moment from 'moment';
+import { RestRequest } from 'msw';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
-import { BrukerType, StillingFraNavSoknadsstatus } from '../datatypes/aktivitetTypes';
+import { BrukerType } from '../datatypes/aktivitetTypes';
 import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import {
     CvKanDelesData,
@@ -80,7 +81,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               versjon: '2410',
               tittel: 'Ta et webkurs',
               beskrivelse: 'Jeg skal bli awesome i html. Sjørøvere trenger å være awesome i html',
-              lenke: 'www.nav.no/asdasdasd/asdsad',
+              lenke: 'www.nav.no',
               type: 'EGEN',
               status: 'BRUKER_ER_INTERESSERT',
               fraDato: '2020-01-01T12:00:00+01:00',
@@ -464,19 +465,21 @@ export function wrapAktivitet(aktivitet: any) {
     };
 }
 
-interface AktivitetWithId {
-    aktivitetId: string;
-}
+export const getAktivitet = (req: RestRequest) => {
+    const aktivitetId = req.params.aktivitetId;
 
-export function getAktivitet({ aktivitetId }: AktivitetWithId) {
     return aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
-}
+};
 
-export function getAktivitetVersjoner({ aktivitetId }: AktivitetWithId) {
+export const getAktivitetVersjoner = (req: RestRequest) => {
+    const aktivitetId = req.params.aktivitetId;
+
     return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
-}
+};
 
-export function opprettAktivitet(_pathParams: never, body: Record<any, any>) {
+export const opprettAktivitet = async (req: RestRequest) => {
+    const body = await req.json();
+
     const nyAktivitet = wrapAktivitet({
         id: rndId(),
         opprettetDato: new Date(),
@@ -492,7 +495,7 @@ export function opprettAktivitet(_pathParams: never, body: Record<any, any>) {
     const nyAktivitetKlone = wrapAktivitet(nyAktivitet);
     versjoner.push(nyAktivitetKlone);
     return nyAktivitet;
-}
+};
 
 function doOppdaterInternMockStateOgReturnerNyAktivitet(
     aktivitetId: string,
@@ -525,85 +528,95 @@ function lagNyVersion(aktivitet: VeilarbAktivitet): VeilarbAktivitet {
     };
 }
 
-export function oppdaterAktivitet({ aktivitetId }: AktivitetWithId, aktivitetPayload: VeilarbAktivitet) {
+export const oppdaterAktivitet = async (req: RestRequest) => {
+    const aktivitetId = req.params.aktivitetId;
+    const body = await req.json();
+
     const nyeAktivitetAttributter = {
-        ...aktivitetPayload,
+        ...body,
         transaksjonsType: FellesTransaksjonsTyper.DETALJER_ENDRET,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
 
-export function oppdaterAktivitetStatus({ aktivitetId }: AktivitetWithId, aktivitetPayload: VeilarbAktivitet) {
+export const oppdaterAktivitetStatus = async (req: RestRequest) => {
+    const aktivitetId = req.params.aktivitetId;
+    const body = await req.json();
+
     const nyeAktivitetAttributter = {
-        ...aktivitetPayload,
+        ...body,
         transaksjonsType: FellesTransaksjonsTyper.STATUS_ENDRET,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
 
-export function oppdaterEtikett({ aktivitetId }: AktivitetWithId, aktivitetPayload: StillingAktivitet) {
+export const oppdaterEtikett = async (req: RestRequest) => {
+    const aktivitetId = req.params.aktivitetId;
+    const body: StillingAktivitet = await req.json();
+
     const nyeAktivitetAttributter: StillingAktivitet = {
-        ...aktivitetPayload,
+        ...body,
         transaksjonsType: StillingTransaksjonsType.ETIKETT_ENDRET,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
 
-export function oppdaterAvtaltMedNav(
-    __params: never,
-    { forhaandsorientering }: { forhaandsorientering: Forhaandsorientering },
-    { aktivitetId }: AktivitetWithId
-) {
+export const oppdaterAvtaltMedNav = async (req: RestRequest) => {
+    const aktivitetId = req.url.searchParams.get('aktivitetId');
+    const body: any = await req.json();
+
     const nyeAktivitetAttributter: Partial<VeilarbAktivitet> = {
-        forhaandsorientering: forhaandsorientering,
+        ...body,
         avtalt: true,
         transaksjonsType: FellesTransaksjonsTyper.AVTALT,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
 
-export function oppdaterCVKanDelesSvar(
-    __params: never,
-    { kanDeles, avtaltDato }: CvKanDelesData,
-    { aktivitetId }: AktivitetWithId
-) {
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
+
+export const oppdaterCVKanDelesSvar = async (req: RestRequest) => {
+    const aktivitetId = req.url.searchParams.get('aktivitetId');
+    const cvKanDelesData: CvKanDelesData = await req.json();
+
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as StillingFraNavAktivitet;
     const nyeAktivitetAttributter: StillingFraNavAktivitet = {
         ...gammelAktivitet,
-        status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
+        status: cvKanDelesData.kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
         transaksjonsType: StillingFraNavTransaksjonsType.DEL_CV_SVART,
         stillingFraNavData: {
             ...gammelAktivitet.stillingFraNavData,
             cvKanDelesData: {
-                kanDeles: kanDeles,
+                kanDeles: cvKanDelesData.kanDeles,
                 endretTidspunkt: new Date(),
-                avtaltDato: avtaltDato,
+                avtaltDato: cvKanDelesData.avtaltDato,
                 endretAv: bruker ? '843029483' : 'z123',
                 endretAvType: bruker,
             },
-            soknadsstatus: kanDeles ? 'VENTER' : undefined,
+            soknadsstatus: cvKanDelesData.kanDeles ? 'VENTER' : undefined,
         },
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
 
-export function oppdaterStillingFraNavSoknadsstatus(
-    __params: never,
-    { soknadsstatus }: { soknadsstatus: StillingFraNavSoknadsstatus },
-    { aktivitetId }: AktivitetWithId
-) {
+export const oppdaterStillingFraNavSoknadsstatus = async (req: RestRequest) => {
+    const aktivitetId = req.url.searchParams.get('aktivitetId');
+    const body = await req.json();
+
     const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         stillingFraNavData: {
             ...(gammelAktivitet as StillingFraNavAktivitet).stillingFraNavData,
-            soknadsstatus: soknadsstatus,
+            soknadsstatus: body.soknadsstatus,
         },
         transaksjonsType: StillingFraNavTransaksjonsType.SOKNADSSTATUS_ENDRET,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
 
-export function oppdaterLestFho(__params: never, { aktivitetId }: AktivitetWithId) {
+export const oppdaterLestFho = async (req: RestRequest) => {
+    const body = await req.json();
+    const { aktivitetId } = body;
+
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as VeilarbAktivitet;
     const nyeAktivitetAttributter: VeilarbAktivitet = {
         ...gammelAktivitet,
@@ -614,23 +627,28 @@ export function oppdaterLestFho(__params: never, { aktivitetId }: AktivitetWithI
         transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+};
 
-export function publiserReferat({ aktivitetId }: AktivitetWithId) {
+export const publiserReferat = (req: RestRequest) => {
+    const aktivitetId = req.params.aktivitetId;
+
     const nyeAktivitetAttributter = {
         erReferatPublisert: true,
         transaksjonsType: MoteTransaksjonsType.REFERAT_PUBLISERT,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
 
-export function endreReferat({ aktivitetId }: AktivitetWithId, aktivitetPayload: MoteAktivitet) {
-    const nyeAktivitetAttributter = {
-        ...aktivitetPayload,
+export const endreReferat = async (req: RestRequest) => {
+    const aktivitetId = req.params.aktivitetId;
+    const body: MoteAktivitet = await req.json();
+
+    const nyeAktivitetAttributter: MoteAktivitet = {
+        ...body,
         transaksjonsType: MoteTransaksjonsType.REFERAT_ENDRET,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
-}
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
+};
 
 export const aktiviteterData = {
     aktiviteter,
