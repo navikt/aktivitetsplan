@@ -219,6 +219,9 @@ module.exports = {
             height: {
                 '300px': '300px',
             },
+            minWidth: {
+                52: '13rem',
+            },
             maxHeight: {
                 'screen-h-1/2': '50wh',
             },
