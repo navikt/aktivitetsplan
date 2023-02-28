@@ -16,6 +16,8 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
         return null;
     }
 
+    const moteTid = beregnKlokkeslettVarighet(aktivitet);
+
     return (
         <>
             <Informasjonsfelt
@@ -26,7 +28,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt
                 key="klokkeslett"
                 tittel={<FormattedMessage id="aktivitetdetaljer.klokkeslett" />}
-                innhold={formatterKlokkeslett(beregnKlokkeslettVarighet(aktivitet).klokkeslett)}
+                innhold={formatterKlokkeslett(moteTid.klokkeslett)}
             />
             <Informasjonsfelt
                 key="kanal"
@@ -36,7 +38,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt
                 key="varighet"
                 tittel={<FormattedMessage id="aktivitetdetaljer.varighet" />}
-                innhold={formatterVarighet(beregnKlokkeslettVarighet(aktivitet).varighet)}
+                innhold={formatterVarighet(moteTid.varighet)}
             />
             <Informasjonsfelt
                 key="adresse"

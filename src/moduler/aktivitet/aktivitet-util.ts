@@ -138,12 +138,18 @@ export function beregnFraTil(data: Data): FraTil {
     return {};
 }
 
-export function formatterVarighet(varighet: DurationInputArg1): string {
-    return moment.duration(varighet, 'minutes').format('h:mm', { trim: false });
+export function formatterVarighet(varighet?: string): string | undefined {
+    if (!varighet) {
+        return undefined;
+    }
+    return moment(varighet, 'HH:mm').format('h:mm');
 }
 
-export function formatterKlokkeslett(klokkeslett: DurationInputArg1): string {
-    return formatterVarighet(klokkeslett);
+export function formatterKlokkeslett(klokkeslett?: string): string | undefined {
+    if (!klokkeslett) {
+        return undefined;
+    }
+    return moment(klokkeslett, 'HH:mm').format('h:mm');
 }
 
 export function formatterTelefonnummer(telefonnummer: string): string {
