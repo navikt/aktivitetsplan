@@ -54,7 +54,6 @@ function Aktivitetvisning(props: Props) {
             ) : null}
             <div>
                 <Statusadministrasjon aktivitet={aktivitet} />
-                {/*<DialogLenke aktivitet={aktivitet} /> */}
                 {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
             </div>
         </div>

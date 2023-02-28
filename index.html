@@ -22,10 +22,9 @@
             TIMEOUTBOX: true
         };
     </script>
-<!--    <link href='%REACT_APP_DEKORATOR_URL%/css/client.css' rel='stylesheet' />-->
+    <link href="<%=VITE_DEKORATOR_URL%>/css/client.css" rel="stylesheet" />
 </head>
 <body style='background-color: white;'>
-<div id="root"></div>
 <div style='min-height: 100vh; height: auto;'>
     <div id='decorator-header'></div>
     <div id='modal-a11y-wrapper'>
@@ -33,19 +32,10 @@
         <div id='mainapp' class='appContainer'></div>
     </div>
 </div>
-<!--<div id='decorator-footer'></div>-->
-<!--<div id='decorator-env' data-src='%REACT_APP_DEKORATOR_URL%/env?feedback=false&chatbot=false&footer=true'></div>-->
+<div id='decorator-footer'></div>
 <script type="module" src="/src/index.tsx"></script>
+<div id='decorator-env' data-src='<%=VITE_DEKORATOR_URL%>/env?feedback=false&chatbot=false&footer=true'></div>
 </body>
-<!--<script src='%REACT_APP_DEKORATOR_URL%/client.js'></script>-->
-<!--<script>-->
-<!--    function render() {-->
-<!--        if (window.NAVSPA) {-->
-<!--            console.log(window);-->
-<!--            return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));-->
-<!--        }-->
-<!--    }-->
+<script src='<%=VITE_DEKORATOR_URL%>/client.js'></script>
 
-<!--    render();-->
-<!--</script>-->
 </html>
