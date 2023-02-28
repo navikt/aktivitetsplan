@@ -14,7 +14,7 @@ const DetaljFelt = (props: Props) => {
 
     return (
         <div
-            className={classNames('w-1/2 overflow-hidden overflow-ellipsis', {
+            className={classNames('w-1/2 min-w-52 overflow-hidden overflow-ellipsis', {
                 'w-full': fullbredde,
                 'flex-auto break-words': beskrivelse,
             })}
