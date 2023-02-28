@@ -14,14 +14,7 @@ const ArenaStatusAdministrasjon = (props: Props) => {
         ? 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.'
         : 'For å endre aktiviteten må du gå til Arena.';
 
-    return (
-        <>
-            <div className="aktivitetvisning__underseksjon">
-                <Alert variant="info">{alertTekst}</Alert>
-            </div>
-            <DeleLinje />
-        </>
-    );
+    return <Alert variant="info">{alertTekst}</Alert>;
 };
 
 export default ArenaStatusAdministrasjon;
