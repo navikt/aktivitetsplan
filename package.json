@@ -10,7 +10,7 @@
     "build:prod-ekstern": "npm run build:tekster && vite build --mode=prod-ekstern",
     "build:prod-intern": "npm run build:tekster && vite build --mode=prod-intern",
     "build": "npm run build:tekster && vite build",
-    "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite --mode=dev-ekstern --base=/aktivitetsplan/",
+    "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/aktivitetsplan/",
     "build:tekster": "node ./scripts/build-tekster.js",
     "test": "vitest",
     "coverage": "vitest run --coverage",
