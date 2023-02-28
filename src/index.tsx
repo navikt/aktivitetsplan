@@ -43,7 +43,9 @@ const usingHashRouting: boolean = import.meta.env.VITE_USE_HASH_ROUTER === 'true
 
 export const mockfnr = '12345678910';
 
-if (import.meta.env.DEV) {
+const useMock = import.meta.env.DEV || usingHashRouting;
+
+if (useMock) {
     const fnr = mockfnr;
     const pathnamePrefix = `${import.meta.env.BASE_URL}${usingHashRouting ? '#/' : ''}`;
     if (erEksternBruker()) {
