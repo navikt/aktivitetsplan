@@ -12,13 +12,7 @@ const LagreAktivitet = () => {
     const venter = !(status === STATUS.OK || status === STATUS.ERROR);
 
     return (
-        <Button
-            onClick={() => console.log('OVERRIDE')}
-            type="submit"
-            className="mt-4"
-            loading={venter}
-            disabled={venter || !underOppfolging}
-        >
+        <Button className="mt-4" loading={venter} disabled={venter || !underOppfolging}>
             Lagre
         </Button>
     );
