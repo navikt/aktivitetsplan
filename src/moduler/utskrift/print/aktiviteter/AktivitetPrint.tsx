@@ -1,7 +1,8 @@
 import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
-import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
+import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { getAktivitetType } from '../../../../utils/textMappers';
@@ -34,13 +35,13 @@ const AktivitetPrint = (props: Props) => {
             aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
                 <AktivitetReferat aktivitet={aktivitet} />
             ) : null}
-            <AvtaltMarkering hidden={!aktivitet.avtalt} className="etikett-print" />
+            <AvtaltMarkering hidden={!aktivitet.avtalt} />
             <ForhaandsorienteringPrint
                 forhaandsorienteringTekst={forhaandsorientering?.tekst}
                 forhaandsorienteringLest={forhaandsorientering?.lestDato}
             />
-            <StillingEtikett aktivitet={aktivitet} className="etikett-print" />
-            <TiltakEtikett aktivitet={aktivitet} className="etikett-print" />
+            {aktivitet.type === STILLING_AKTIVITET_TYPE ? <StillingEtikett aktivitet={aktivitet} /> : null}
+            {isArenaAktivitet(aktivitet) ? <TiltakEtikett aktivitet={aktivitet} /> : null}
             <DialogPrint dialog={dialog} />
         </div>
     );

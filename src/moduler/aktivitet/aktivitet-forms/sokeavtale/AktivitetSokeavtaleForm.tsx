@@ -89,7 +89,6 @@ export default function SokeAvtaleAktivitetForm(props: any) {
         <form
             autoComplete="off"
             onSubmit={() => {
-                console.log(onSubmit);
                 state.onSubmit(onSubmit);
             }}
             noValidate

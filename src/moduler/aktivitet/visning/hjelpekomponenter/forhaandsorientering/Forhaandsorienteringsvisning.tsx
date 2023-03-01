@@ -42,8 +42,6 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const [erEkspandert, setErEkspandert] = useState(startAapen);
 
-    console.log(aktivitet.forhaandsorientering);
-    console.log(forhaandsorienteringTekst);
     if (!forhaandsorienteringTekst) {
         return null;
     }
