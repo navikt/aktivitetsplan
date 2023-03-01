@@ -1,5 +1,5 @@
 import 'moment-timezone';
-import 'moment/locale/nb';
+import 'moment/dist/locale/nb';
 
 import './polyfill';
 
@@ -25,14 +25,6 @@ declare const window: {
         TIMEOUTBOX: boolean;
     };
 };
-
-/* eslint-disable global-require */
-// if (!global.Intl) {
-// TODO fix
-if (!window.Intl) {
-    import('intl');
-    import('intl/locale-data/jsonp/nb.js');
-}
 
 moment.locale('nb');
 moment.tz.setDefault('Europe/Oslo');

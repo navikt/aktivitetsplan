@@ -106,11 +106,7 @@
     "postcss": "^8.4.21",
     "prettier": "^2.7.1",
     "prettier-plugin-import-sort": "0.0.7",
-    "react-error-overlay": "6.0.9",
     "tailwindcss": "^3.2.7"
-  },
-  "overrides": {
-    "react-error-overlay": "6.0.9"
   },
   "repository": {
     "type": "git",
