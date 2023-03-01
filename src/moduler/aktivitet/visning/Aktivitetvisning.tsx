@@ -3,7 +3,6 @@ import React from 'react';
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import styles from './Aktivitetsvisning.module.less';
 import { DeleCvContainer } from './dele-cv/DeleCvContainer';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';

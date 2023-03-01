@@ -51,21 +51,6 @@ export const failOrGetResponse = (failFn: () => boolean, successFn: (req: RestRe
     };
 };
 
-// export const failOrGetResponse = (
-//     failFn: () => boolean,
-//     successRes: object | ((req: RestRequest) => object | undefined)
-// ) => {
-//     return (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
-//         if (failFn()) {
-//             return res(...internalServerError(ctx));
-//         }
-//         if (typeof successRes === 'function') {
-//             return res(ctx.json(successRes(req)));
-//         }
-//         return res(ctx.json(successRes));
-//     };
-// };
-
 export const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
         if (typeof response === 'function') {

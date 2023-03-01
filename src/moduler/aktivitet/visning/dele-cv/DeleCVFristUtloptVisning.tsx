@@ -4,7 +4,6 @@ import React from 'react';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoManed } from '../../../../utils';
 import { Ingress } from './DeleCvContainer';
-import styles from './DeleCVFristUtloptVisning.module.less';
 
 interface Props {
     overskrift: string;
@@ -14,11 +13,11 @@ interface Props {
 export const DeleCVFristUtloptVisning = (props: Props) => {
     const { overskrift, svarfrist } = props;
 
-    const Tittel = () => <BodyShort className={styles.deleCVEndreTittel}>{overskrift}</BodyShort>;
+    const Tittel = () => <BodyShort className="pr-4">{overskrift}</BodyShort>;
     const TittelMedUtloptTekst = () => (
         <>
             <Tittel />
-            <BodyShort className={styles.deleCVTittelUtloptTekst}>Fristen har gått ut</BodyShort>
+            <BodyShort className="pr-4">Fristen har gått ut</BodyShort>
         </>
     );
 
@@ -31,7 +30,7 @@ export const DeleCVFristUtloptVisning = (props: Props) => {
             lukkeTekst="Lukk"
         >
             <Ingress />
-            <BodyShort className={styles.deleCVUtloptTekst}>
+            <BodyShort className="mt-4">
                 Spørsmålet ble ikke besvart innen fristen {formaterDatoManed(svarfrist)}
             </BodyShort>
         </EkspanderbarLinje>

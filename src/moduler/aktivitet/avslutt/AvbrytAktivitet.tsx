@@ -71,7 +71,7 @@ const AvbrytAktivitet = (props: Props) => {
                     {maaBegrunnes ? begrunnelse : advarsel}
                 </PubliserReferat>
             ) : (
-                <Loader /> // TODO test at det her funker
+                <Loader />
             )}
         </Modal>
     );

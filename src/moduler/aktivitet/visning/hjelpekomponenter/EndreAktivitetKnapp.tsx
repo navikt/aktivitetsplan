@@ -16,11 +16,12 @@ interface Props {
 const EndreAktivitetKnapp = (props: Props) => {
     const { id, tillatEndring, laster, underOppfolging } = props;
 
+    const history = useHistory();
+
     if (!tillatEndring) {
         return null;
     }
 
-    const history = useHistory();
     const goToEndre = () => {
         loggEvent(APNE_ENDRE_AKTIVITET);
         history.push(endreAktivitetRoute(id));

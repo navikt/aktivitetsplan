@@ -26,12 +26,12 @@ const TiltakDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt
                 key="deltakelsesprosent"
                 tittel={<FormattedMessage id="aktivitetdetaljer.deltakelsesprosent-label" />}
-                innhold={aktivitet.deltakelseProsent && `${aktivitet.deltakelseProsent}%`}
+                innhold={!!aktivitet.deltakelseProsent && `${aktivitet.deltakelseProsent}%`}
             />
             <Informasjonsfelt
                 key="dagerPerUke"
                 tittel={<FormattedMessage id="aktivitetdetaljer.antall-dager-per-uke-label" />}
-                innhold={aktivitet.antallDagerPerUke && `${aktivitet.antallDagerPerUke}`}
+                innhold={!!aktivitet.antallDagerPerUke && `${aktivitet.antallDagerPerUke}`}
             />
             <Beskrivelse aktivitet={aktivitet} />
         </>

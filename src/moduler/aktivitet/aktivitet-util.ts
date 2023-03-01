@@ -1,7 +1,7 @@
 import 'moment-duration-format';
 
-import { formatDuration, minutesToHours } from 'date-fns';
-import moment, { DurationInputArg1 } from 'moment';
+import { minutesToHours } from 'date-fns';
+import moment from 'moment';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import {

@@ -3,7 +3,6 @@ import { RestRequest } from 'msw';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
 import { BrukerType } from '../datatypes/aktivitetTypes';
-import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import {
     CvKanDelesData,
     MoteAktivitet,

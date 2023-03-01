@@ -10,8 +10,6 @@ import PeriodeValidering, {
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { HiddenIfInput as Input } from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import { nivaa4Feilet } from '../../../../mocks/demo/sessionstorage';
-import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
 import {

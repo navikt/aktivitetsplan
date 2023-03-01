@@ -1,5 +1,3 @@
-import { string } from 'prop-types';
-
 export interface Me {
     erBruker: boolean;
     erVeileder: boolean;

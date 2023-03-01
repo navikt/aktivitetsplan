@@ -66,11 +66,11 @@ export const DeleCVAvbruttVisning = (props: Props) => {
     const tekst = getTekst(status, livslopsstatus, erHistorisk, svarfrist);
     const titteltekst = getTitteltekst(status, livslopsstatus, erHistorisk);
 
-    const Tittel = () => <BodyShort className={styles.deleCVEndreTittel}>{overskrift}</BodyShort>;
+    const Tittel = () => <BodyShort className="pr-4">{overskrift}</BodyShort>;
     const TittelMedUtloptTekst = () => (
         <>
             <Tittel />
-            <BodyShort className={styles.deleCVTittelUtloptTekst}>{titteltekst}</BodyShort>
+            <BodyShort className="pr-4">{titteltekst}</BodyShort>
         </>
     );
 

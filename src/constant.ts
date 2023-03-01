@@ -7,7 +7,7 @@ export const STATUS_AVBRUTT = 'AVBRUTT';
 export type AktivitetStatus =
     | typeof STATUS_BRUKER_ER_INTRESSERT
     | typeof STATUS_PLANLAGT
-    | typeof STATUS_PLANLAGT
+    | typeof STATUS_GJENNOMFOERT
     | typeof STATUS_FULLFOERT
     | typeof STATUS_AVBRUTT;
 
