@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { setupServer } from 'msw/node';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Store } from 'redux';
 import { STATUS } from '../../../api/utils';
 import { STATUS_GJENNOMFOERT } from '../../../constant';
 import { AlleAktiviteter, StillingFraNavSoknadsstatus, StillingsStatus } from '../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import Hovedside from '../../../hovedside/Hovedside';
 import { wrapAktivitet } from '../../../mocks/aktivitet';
 import { mockOppfolging } from '../../../mocks/data/oppfolging';
@@ -99,18 +99,9 @@ describe('aktivitets-filter', () => {
     // Reset handlers after each test `important for test isolation`
     afterEach(() => server.resetHandlers());
 
-    const clickOnFilter = (filterName: string) => {
-        fireEvent.click(screen.getByText('Filtrer'));
-        fireEvent.click(screen.getByText(filterName));
-    };
-    const clickOnFirst = (filterName: string) => {
-        fireEvent.click(screen.getByText('Filtrer'));
-        fireEvent.click(screen.queryAllByText(filterName)[0]);
-    };
-
     it('should filter avtalt med nav', async () => {
         const store = create(initialStore);
-        const { getByLabelText, getByText, queryByText } = render(<WrappedHovedside store={store} />);
+        const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
         makeTestAktiviteter(store, [true, false], (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -120,7 +111,7 @@ describe('aktivitets-filter', () => {
         // clickOnFilter('Ikke avtalt med NAV');
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
-        screen.getByRole('checkbox', { name: 'Ikke avtalt med NAV', checked: true });
+        getByRole('checkbox', { name: 'Ikke avtalt med NAV', checked: true });
 
         getByText('Aktivitet: false');
         expect(queryByText('Aktivitet: true')).toBeFalsy();
@@ -133,14 +124,14 @@ describe('aktivitets-filter', () => {
         expect(queryByText('Assisterende skipskokk')).toBeNull();
     });
 
-    it.skip('should filter on aktivitet type', async () => {
+    it('should filter on aktivitet type', async () => {
         const aktivitetTyper = [
             VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE,
             VeilarbAktivitetType.MOTE_TYPE,
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
         const store = create(initialStore);
-        render(<WrappedHovedside store={store} />);
+        const { getByText, queryByText, queryAllByText } = render(<WrappedHovedside store={store} />);
         const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -154,45 +145,47 @@ describe('aktivitets-filter', () => {
                 | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
         }[];
         aktiviteter.forEach(({ tittel, type }) => {
-            fireEvent.click(screen.getByText('Filtrer'));
-            fireEvent.click(screen.queryAllByText(aktivitetTypeMap[type])[0]);
-            screen.getByText(tittel);
+            fireEvent.click(getByText('Filtrer'));
+            fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
+            getByText(tittel);
             // Sjekk at ingen andre aktiviteter vises
             aktivitetTyper
                 .filter((andreTyper) => andreTyper != type)
                 .forEach((typeSomIkkeSkalFinnes) => {
-                    expect(screen.queryByText(`Aktivitet: ${typeSomIkkeSkalFinnes}`)).toBeNull();
+                    expect(queryByText(`Aktivitet: ${typeSomIkkeSkalFinnes}`)).toBeNull();
                 });
             // Turn filter off
-            fireEvent.click(screen.getByText('Filtrer'));
-            fireEvent.click(screen.queryAllByText(aktivitetTypeMap[type])[0]);
+            fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
+            // Close filter
+            fireEvent.click(getByText('Filtrer'));
         });
     });
 
-    it.skip('Should filter based on etiketter (stilling fra NAV)', () => {
+    it('Should filter based on etiketter (stilling fra NAV)', async () => {
         const store = create(initialStore);
-        render(<WrappedHovedside store={store} />);
+        const { getByText, queryByText, queryAllByText } = render(<WrappedHovedside store={store} />);
         const statuser: StillingFraNavSoknadsstatus[] = ['AVSLAG', 'VENTER'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,
                 stillingFraNavData: {
-                    ...aktivitet.stillingFraNavData,
+                    ...(aktivitet as unknown as StillingFraNavAktivitet).stillingFraNavData,
                     soknadsstatus: value,
                 },
-            } as AlleAktiviteter;
+            };
         });
-        screen.getByText(`Aktivitet: VENTER`);
-        screen.getByText(`Aktivitet: AVSLAG`);
-        clickOnFirst(stillingsEtikettMapper['AVSLAG']);
-        expect(screen.getByText(`Aktivitet: AVSLAG`)).not.toBeNull();
-        expect(screen.queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
-        fireEvent.click(screen.getByText('Filtrer'));
+        getByText(`Aktivitet: VENTER`);
+        getByText(`Aktivitet: AVSLAG`);
+        fireEvent.click(getByText('Filtrer'));
+        fireEvent.click(queryAllByText(stillingsEtikettMapper['AVSLAG'])[0]);
+        expect(getByText(`Aktivitet: AVSLAG`)).not.toBeNull();
+        expect(queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
+        fireEvent.click(getByText('Filtrer'));
     });
 
-    it.skip('Should filter based on etiketter (stilling)', () => {
+    it('Should filter based on etiketter (stilling)', () => {
         const store = create(initialStore);
-        render(<WrappedHovedside store={store} />);
+        const { getByText, queryByText, queryAllByText } = render(<WrappedHovedside store={store} />);
         const statuser: StillingsStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
@@ -201,10 +194,11 @@ describe('aktivitets-filter', () => {
                 type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
             } as AlleAktiviteter;
         });
-        screen.getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
-        screen.getByText(`Aktivitet: SOKNAD_SENDT`);
-        clickOnFirst(stillingsEtikettMapper['INNKALT_TIL_INTERVJU']);
-        expect(screen.getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)).not.toBeNull();
-        expect(screen.queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
+        getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
+        getByText(`Aktivitet: SOKNAD_SENDT`);
+        fireEvent.click(getByText('Filtrer'));
+        fireEvent.click(queryAllByText(stillingsEtikettMapper['INNKALT_TIL_INTERVJU'])[0]);
+        expect(getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)).not.toBeNull();
+        expect(queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
     });
 });
