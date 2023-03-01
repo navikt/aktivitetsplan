@@ -6,16 +6,15 @@ const worker = setupWorker(...handlers);
 
 export default () =>
     worker.start({
-        // for msw to work on gh pages
         serviceWorker: {
             url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
         },
         onUnhandledRequest: (req, print) => {
-            const unhandled = ['/favicon.ico', '/manifest.json', '/src'].some((route) =>
-                req.url.pathname.includes(route)
-            );
+            const hostBlacklist = ['amplitude.nav.no', 'nav.psplugin.com'];
 
-            if (unhandled) {
+            const ignore = hostBlacklist.some((route) => req.url.host.includes(route));
+
+            if (ignore) {
                 return;
             }
 
