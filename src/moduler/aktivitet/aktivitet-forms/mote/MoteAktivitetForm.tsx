@@ -170,7 +170,7 @@ const MoteAktivitetForm = (props: Props) => {
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
                     {...state.fields.forberedelser}
                 />
-                <FormErrorSummary errors={{ ...state.errors }} />
+                {state.submittoken ? <FormErrorSummary errors={{ ...state.errors }} /> : null}
             </div>
             <LagreAktivitet />
         </form>

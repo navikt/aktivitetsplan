@@ -48,18 +48,18 @@ export function validateAntallStillingerIUken(avtalt: any, value: any, antallSti
     }
 }
 
-export function validateFraDato(avtalt: any, tilDato: any, value: any) {
+export function validateFraDato(tilDato: string, value: string) {
     if (value.trim().length === 0) {
         return 'Du må fylle ut fra dato';
     }
     return validerDato(value, tilDato, null as any);
 }
 
-export function validateTilDato(avtalt: any, fraDato: any, value: any) {
+export function validateTilDato(fraDato: string, value: string) {
     if (value.trim().length === 0) {
         return 'Du må fylle ut til dato';
     }
-    return validerDato(value, null as any, fraDato);
+    return validerDato(value, undefined, fraDato);
 }
 
 interface RangeError {

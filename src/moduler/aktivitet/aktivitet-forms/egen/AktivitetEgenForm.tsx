@@ -111,7 +111,7 @@ function EgenAktivitetForm(props: Props) {
                 />
                 <Input disabled={avtalt} label="Min huskeliste for denne aktiviteten" {...state.fields.oppfolging} />
                 <Input disabled={avtalt} label="Lenke til en aktuell nettside" {...state.fields.lenke} />
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+                {state.submittoken ? <FormErrorSummary errors={state.errors} /> : null}
             </div>
             <LagreAktivitet />
         </form>

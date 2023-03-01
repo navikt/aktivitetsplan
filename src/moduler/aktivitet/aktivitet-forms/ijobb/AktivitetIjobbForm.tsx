@@ -121,7 +121,7 @@ function IJobbAktivitetForm(props: Props) {
                     maxLength={5000}
                     {...state.fields.beskrivelse}
                 />
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+                {state.submittoken ? <FormErrorSummary errors={state.errors} /> : null}
             </div>
             <LagreAktivitet />
         </form>

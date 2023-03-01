@@ -1,16 +1,10 @@
 import useFormstate from '@nutgaard/use-formstate';
 import PT from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { AppConfig } from '../../../../app';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
-import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
-import PartialDateRangePicker, {
-    DateRange,
-    DateRangeValidation,
-    getErrorMessage,
-    getErrorMessageForDate,
-} from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
@@ -22,37 +16,41 @@ import {
     validateAntallStillinger,
     validateAntallStillingerIUken,
     validateBeskrivelse,
+    validateFraDato,
     validateOppfolging,
+    validateTilDato,
 } from './validate';
 
 function erAvtalt(aktivitet: any) {
     return aktivitet.avtalt === true;
 }
 
-const parseDate = (val: string | undefined) => {
-    if (!val) return undefined;
-    return new Date(val);
+type SokeAvtaltFormValues = {
+    tittel: string;
+    antallStillingerIUken: string;
+    antallStillingerSokes: string;
+    avtaleOppfolging: string;
+    beskrivelse: string;
+    fraDato: string;
+    tilDato: string;
+};
+
+const dateOrUndefined = (arg: string | undefined): Date | undefined => {
+    return !arg ? undefined : new Date(arg);
 };
 
 export default function SokeAvtaleAktivitetForm(props: any) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
-    const [dateRange, setDateRange] = useState<Partial<DateRange> | undefined>({
-        from: parseDate(aktivitet?.fraDato) ?? new Date(),
-        to: parseDate(aktivitet?.tilDato),
-    });
-    const [rangeError, setRangeError] = useState<{ from: string | undefined; to: string | undefined }>({
-        to: undefined,
-        from: undefined,
-    });
-
-    const validator = useFormstate({
+    const validator = useFormstate<SokeAvtaltFormValues>({
         tittel: () => undefined,
         antallStillingerIUken: (val, values, aktivitet) =>
             validateAntallStillingerIUken(erAvtalt(aktivitet), val, values.antallStillingerSokes),
         antallStillingerSokes: (val, values, aktivitet) => validateAntallStillinger(erAvtalt(aktivitet), val),
         avtaleOppfolging: (val, values, aktivitet) => validateOppfolging(erAvtalt(aktivitet), val),
         beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+        fraDato: (val, values) => validateFraDato(values.tilDato, val),
+        tilDato: (val, values) => validateTilDato(values.fraDato, val),
     });
 
     const maybeAktivitet = aktivitet || {};
@@ -65,6 +63,8 @@ export default function SokeAvtaleAktivitetForm(props: any) {
         avtaleOppfolging: maybeAktivitet.avtaleOppfolging || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         periodeValidering: '',
+        fraDato: maybeAktivitet.fraDato || '',
+        tilDato: maybeAktivitet.tilDato || '',
     };
 
     const state = validator(initalValues);
@@ -78,60 +78,26 @@ export default function SokeAvtaleAktivitetForm(props: any) {
     };
 
     const brukeStillingerIUken = !state.fields.antallStillingerSokes.initialValue;
-    const validateDateRange = (val: DateRangeValidation) => {
-        const error = getErrorMessage(val);
-        if (error) {
-            setRangeError(error);
-        }
-    };
 
     return (
-        <form
-            autoComplete="off"
-            onSubmit={() => {
-                console.log(onSubmit);
-                state.onSubmit(onSubmit);
-            }}
-            noValidate
-        >
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
             <div className="skjema-innlogget aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
-
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="SOKEAVTALE" />
-
                 <div className="dato-container">
-                    {aktivitet?.avtalt === true && aktivitet?.fraDato ? (
-                        <PartialDateRangePicker
-                            error={rangeError}
-                            onValidate={(val) => {
-                                const error = getErrorMessageForDate(val);
-                                if (error) setRangeError({ from: undefined, to: error });
-                            }}
-                            onChange={(toDate) => {
-                                setDateRange({
-                                    ...dateRange,
-                                    to: toDate,
-                                });
-                            }}
-                            from={parseDate(aktivitet.fraDato)!!}
-                        />
-                    ) : (
-                        <DateRangePicker
-                            error={rangeError}
-                            onValidate={validateDateRange}
-                            value={dateRange}
-                            onChange={setDateRange}
-                        />
-                    )}
+                    <MaybeAvtaltDateRangePicker
+                        formState={state}
+                        aktivitet={aktivitet}
+                        initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}
+                        initialToDate={initalValues.tilDato ? new Date(initalValues.tilDato) : undefined}
+                    />
                 </div>
-
                 <HiddenIfInput
                     hidden={brukeStillingerIUken}
                     disabled={avtalt}
                     label="Antall søknader i perioden *"
                     {...state.fields.antallStillingerSokes}
                 />
-
                 <HiddenIfInput
                     hidden={!brukeStillingerIUken}
                     disabled={avtalt}
@@ -145,8 +111,7 @@ export default function SokeAvtaleAktivitetForm(props: any) {
                     {...state.fields.avtaleOppfolging}
                 />
                 <Textarea disabled={avtalt} label="Beskrivelse" maxLength={5000} {...state.fields.beskrivelse} />
-                {/*<FormErrorSummary submittoken={state.submittoken} errors={state.errors} />*/}
-                <FormErrorSummary submittoken={state.submittoken} errors={{ ...state.errors, ...rangeError }} />
+                {state.submittoken ? <FormErrorSummary errors={{ ...state.errors }} /> : null}
             </div>
             <LagreAktivitet />
         </form>

@@ -117,7 +117,7 @@ const MedisinskBehandlingForm = (props: Props) => {
                     maxLength={400}
                     {...state.fields.beskrivelse}
                 />
-                <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+                {state.submittoken ? <FormErrorSummary errors={state.errors} /> : null}
             </div>
             <LagreAktivitet />
         </form>

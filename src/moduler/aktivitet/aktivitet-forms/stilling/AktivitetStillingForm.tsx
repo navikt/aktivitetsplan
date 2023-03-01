@@ -108,7 +108,7 @@ function StillingAktivitetForm(props: Props) {
                     {...state.fields.beskrivelse}
                 />
                 <Input disabled={avtalt} label="Lenke til stillingsannonse" {...state.fields.lenke} />
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+                {state.submittoken ? <FormErrorSummary errors={state.errors} /> : null}
             </div>
             <LagreAktivitet />
         </form>

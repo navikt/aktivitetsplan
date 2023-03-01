@@ -92,8 +92,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                         {...state.fields.referat}
                     />
                 )}
-
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+                {state.submittoken ? <FormErrorSummary errors={state.errors} /> : null}
             </div>
             <Lagreknapper isLoading={state.submitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
         </form>
