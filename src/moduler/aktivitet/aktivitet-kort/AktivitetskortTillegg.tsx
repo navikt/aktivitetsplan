@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { STILLING_AKTIVITET_TYPE } from '../../../constant';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
@@ -55,26 +56,24 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     }
 
     return (
-        <div className={styles.tillegg}>
+        <div className="flex justify-between mt-2 w-full">
             <div>
-                <DelCvIkkeSvart visible={svartMarkeringSkalVises} />
-                <div className={styles.etikettWrapper}>
+                {svartMarkeringSkalVises ? <DelCvIkkeSvart /> : null}
+                <div className="flex flex-col gap-y-1 items-start">
                     <UlestAvtaltMarkering aktivitet={aktivitet} />
-                    <ReferatIkkeDelt visible={deltFerdigMarkeringSkalVises} />
-                    <StillingEtikett aktivitet={aktivitet} className={styles.etikett} />
-                    <TiltakEtikett aktivitet={aktivitet} className={styles.etikett} />
-                    <StillingFraNavEtikett
-                        hidden={!stillingFraNavSoknadsstatus}
-                        etikett={stillingFraNavSoknadsstatus}
-                        className={styles.etikett}
-                    />
+                    {deltFerdigMarkeringSkalVises ? <ReferatIkkeDelt /> : null}
+                    {aktivitet.type === STILLING_AKTIVITET_TYPE ? <StillingEtikett aktivitet={aktivitet} /> : null}
+                    {isArenaAktivitet(aktivitet) ? <TiltakEtikett aktivitet={aktivitet} /> : null}
+                    {stillingFraNavSoknadsstatus ? (
+                        <StillingFraNavEtikett soknadsstatus={stillingFraNavSoknadsstatus} />
+                    ) : null}
                     {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
-                        <EksterneEtiketter aktivitet={aktivitet} className={styles.etikett} />
+                        <EksterneEtiketter aktivitet={aktivitet} />
                     ) : null}
                 </div>
             </div>
 
-            <HiddenIfDiv hidden={!dialog && henvendelser.length <= 0} className={styles.ikon}>
+            <HiddenIfDiv hidden={!dialog && henvendelser.length <= 0} className="h-0 self-end">
                 <DialogIkon
                     antallUleste={ulesteHenvendelser}
                     classNameMedUleste={styles.dialogIkonMedUleste}

@@ -1,61 +1,37 @@
-import classNames from 'classnames';
+import { Tag, TagProps } from '@navikt/ds-react';
 import React from 'react';
 
-import * as statuskoder from '../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../datatypes/aktivitetTypes';
-import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import styles from './etikett.module.less';
 
-const getCls = (etikettnavn: StillingFraNavSoknadsstatus): string => {
-    switch (etikettnavn) {
-        case statuskoder.VENTER:
-            return styles.navGronnLighten60;
-        case statuskoder.CV_DELT:
-            return styles.navLysBlaLighten60;
-        case statuskoder.SKAL_PAA_INTERVJU:
-            return styles.navLysBlaLighten60;
-        case statuskoder.JOBBTILBUD:
-            return styles.navOransjeLighten60;
-        case statuskoder.AVSLAG:
-        case statuskoder.IKKE_FATT_JOBBEN:
-        case undefined:
-            return styles.gray200;
-    }
-};
+interface Etikett {
+    text: string;
+    variant: TagProps['variant'];
+}
 
-const getText = (etikettnavn: StillingFraNavSoknadsstatus): string => {
-    switch (etikettnavn) {
-        case statuskoder.VENTER:
-            return 'Venter på å bli kontaktet';
-        case statuskoder.CV_DELT:
-            return 'CV er delt med arbeidsgiver';
-        case statuskoder.SKAL_PAA_INTERVJU:
-            return 'Skal på intervju';
-        case statuskoder.JOBBTILBUD:
-            return 'Fått jobbtilbud 🎉';
-        case statuskoder.AVSLAG:
-        case statuskoder.IKKE_FATT_JOBBEN:
-            return 'Ikke fått jobben';
-    }
+const getEtikett: Record<StillingFraNavSoknadsstatus, Etikett> = {
+    VENTER: { text: 'Venter på å bli kontaktet', variant: 'success' },
+    CV_DELT: { text: 'CV er delt med arbeidsgiver', variant: 'info' },
+    SKAL_PAA_INTERVJU: { text: 'Skal på intervju', variant: 'info' },
+    JOBBTILBUD: { text: 'Fått jobbtilbud 🎉', variant: 'neutral' },
+    AVSLAG: { text: 'Ikke fått jobben', variant: 'neutral' },
+    IKKE_FATT_JOBBEN: { text: 'Ikke fått jobben', variant: 'neutral' },
 };
 
 export interface Props {
-    etikett?: StillingFraNavSoknadsstatus;
-    className?: string;
-    hidden?: boolean;
+    soknadsstatus?: StillingFraNavSoknadsstatus;
 }
 
 const StillingFraNavEtikett = (props: Props) => {
-    const { etikett, className, hidden } = props;
+    const { soknadsstatus } = props;
 
-    if (!etikett) return null;
+    if (!soknadsstatus) return null;
 
-    const cls = getCls(etikett);
+    const { text, variant } = getEtikett[soknadsstatus];
 
     return (
-        <EtikettBase className={classNames(cls, className)} hidden={hidden}>
-            {getText(etikett)}
-        </EtikettBase>
+        <Tag variant={variant} size="small">
+            {text}
+        </Tag>
     );
 };
 

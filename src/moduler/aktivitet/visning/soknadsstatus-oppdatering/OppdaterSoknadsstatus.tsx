@@ -70,7 +70,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
     );
     const visning = (
         <>
-            <StillingFraNavEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />
+            <StillingFraNavEtikett soknadsstatus={aktivitet.stillingFraNavData?.soknadsstatus} />
             {skalViseInfoBoks && (
                 <Alert variant="info" className="mt-4">
                     {ikkefattjobbendetaljer}

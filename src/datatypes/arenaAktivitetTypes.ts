@@ -37,7 +37,7 @@ export interface ArenaAktivitet {
     tilDato: string;
     opprettetDato: string;
     avtalt: boolean;
-    etikett: ArenaEtikett;
+    etikett?: ArenaEtikett;
 
     forhaandsorientering?: Forhaandsorientering;
 
