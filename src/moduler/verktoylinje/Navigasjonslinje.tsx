@@ -48,32 +48,32 @@ function Navigasjonslinje() {
         }
     }, [dispatch, erVeileder, sistOppdatert]);
 
-    if (erVeileder) {
-        return null;
-    } else {
-        return (
-            <div className="flex flex-col gap-y-2">
-                <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
-                    <Link href={MINSIDE_PATH}>Min side</Link>
-                    <Link href={DIALOG_PATH}>
-                        <span className={styles.tilDialogTekst}>Min dialog med veileder</span>
-                        <DialogIkon antallUleste={antallUlesteDialoger} />
-                        <span className={styles.avstand} hidden={antallUlesteDialoger > 0} />
-                    </Link>
-                    <ReactRouterLink
-                        to="/informasjon"
-                        className="text-text-action underline"
-                        onClick={() => loggEvent(APNE_OM_TJENESTEN)}
-                    >
-                        Hva er aktivitetsplanen?
-                    </ReactRouterLink>
-                </div>
-                <Heading level="1" size="xlarge">
-                    Aktivitetsplan
-                </Heading>
+    return (
+        <div className="flex flex-col gap-y-2">
+            <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
+                {!erVeileder ? (
+                    <>
+                        <Link href={MINSIDE_PATH}>Min side</Link>
+                        <Link href={DIALOG_PATH}>
+                            <span>Min dialog med veileder</span>
+                            <DialogIkon antallUleste={antallUlesteDialoger} />
+                            <span className={styles.avstand} hidden={antallUlesteDialoger > 0} />
+                        </Link>
+                    </>
+                ) : null}
+                <ReactRouterLink
+                    to="/informasjon"
+                    className="text-text-action underline"
+                    onClick={() => loggEvent(APNE_OM_TJENESTEN)}
+                >
+                    Hva er aktivitetsplanen?
+                </ReactRouterLink>
             </div>
-        );
-    }
+            <Heading level="1" size="xlarge">
+                Aktivitetsplan
+            </Heading>
+        </div>
+    );
 }
 
 export default Navigasjonslinje;
