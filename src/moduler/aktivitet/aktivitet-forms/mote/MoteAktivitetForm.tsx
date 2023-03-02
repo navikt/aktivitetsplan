@@ -133,7 +133,7 @@ const MoteAktivitetForm = (props: Props) => {
             <div className="skjema-innlogget aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
-                <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
+                <Input disabled={avtalt} label="Tema for møtet (obligatorisk)" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
                     <DatePicker {...datepickerProps} disabled={[{ before: new Date() }]}>
@@ -146,20 +146,25 @@ const MoteAktivitetForm = (props: Props) => {
                         />
                     </DatePicker>
                     <TextField
-                        label="Klokkeslett *"
+                        label="Klokkeslett (obligatorisk)"
                         {...state.fields.klokkeslett.input}
                         type={'time' as any}
                         step="300"
                     />
-                    <TextField label="Varighet *" {...state.fields.varighet.input} type={'time' as any} step="900" />
+                    <TextField
+                        label="Varighet (obligatorisk)"
+                        {...state.fields.varighet.input}
+                        type={'time' as any}
+                        step="900"
+                    />
                 </div>
-                <VelgKanal label="Møteform *" {...state.fields.kanal} />
+                <VelgKanal label="Møteform (obligatorisk)" {...state.fields.kanal} />
                 <VideoInfo kanal={state.fields.kanal.input.value} />
 
-                <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
+                <Input label="Møtested eller annen praktisk informasjon (obligatorisk)" {...state.fields.adresse} />
                 <Textarea
                     disabled={avtalt}
-                    label="Hensikt med møtet *"
+                    label="Hensikt med møtet (obligatorisk)"
                     maxLength={HENSIKT_MAKS_LENGDE}
                     required
                     {...state.fields.beskrivelse}

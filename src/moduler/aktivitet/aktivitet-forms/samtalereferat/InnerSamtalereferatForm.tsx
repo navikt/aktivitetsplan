@@ -75,17 +75,17 @@ const InnerSamtalereferatForm = (props: Props) => {
             <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
-                <Input label="Tema for samtalen *" {...state.fields.tittel} />
+                <Input label="Tema for samtalen (obligatorisk)" {...state.fields.tittel} />
 
                 <DatePicker {...datepickerProps}>
-                    <DatePicker.Input error={state.errors.fraDato} label="Dato *" {...inputProps} />
+                    <DatePicker.Input error={state.errors.fraDato} label="Dato (obligatorisk)" {...inputProps} />
                 </DatePicker>
 
-                <VelgKanal label="Møteform *" {...state.fields.kanal} />
+                <VelgKanal label="Møteform (obligatorisk)" {...state.fields.kanal} />
 
                 {nyAktivitet && (
                     <Textarea
-                        label="Samtalereferat *"
+                        label="Samtalereferat (obligatorisk)"
                         placeholder="Skriv her"
                         maxLength={5000}
                         required

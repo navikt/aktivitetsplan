@@ -90,7 +90,7 @@ function EgenAktivitetForm(props: Props) {
 
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="EGEN" />
 
-                <Input disabled={avtalt} label="Navn på aktiviteten *" {...state.fields.tittel} />
+                <Input disabled={avtalt} label="Navn på aktiviteten (obligatorisk)" {...state.fields.tittel} />
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">

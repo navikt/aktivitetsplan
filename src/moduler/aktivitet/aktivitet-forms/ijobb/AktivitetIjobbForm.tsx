@@ -85,7 +85,7 @@ function IJobbAktivitetForm(props: Props) {
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
             <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
-                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
+                <Input disabled={avtalt} label="Stillingstittel (obligatorisk)" {...state.fields.tittel} />
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker
@@ -99,7 +99,7 @@ function IJobbAktivitetForm(props: Props) {
                     value={state.fields.jobbStatus.input.value}
                     id="jobbStatus"
                     error={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
-                    legend="Stillingsandel *"
+                    legend="Stillingsandel (obligatorisk)"
                     onChange={onChangeStillingProsent}
                 >
                     <Radio value={JOBB_STATUS_HELTID} disabled={avtalt}>

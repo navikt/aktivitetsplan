@@ -90,8 +90,8 @@ const MedisinskBehandlingForm = (props: Props) => {
             <div className="aktivitetskjema space-y-2">
                 <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
 
-                <Input disabled={avtalt} label="Type behandling *" {...state.fields.behandlingType} />
-                <Input disabled={avtalt} label="Behandlingssted *" {...state.fields.behandlingSted} />
+                <Input disabled={avtalt} label="Type behandling (obligatorisk)" {...state.fields.behandlingType} />
+                <Input disabled={avtalt} label="Behandlingssted (obligatorisk)" {...state.fields.behandlingSted} />
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">

@@ -95,13 +95,13 @@ export default function SokeAvtaleAktivitetForm(props: any) {
                 <HiddenIfInput
                     hidden={brukeStillingerIUken}
                     disabled={avtalt}
-                    label="Antall søknader i perioden *"
+                    label="Antall søknader i perioden (obligatorisk)"
                     {...state.fields.antallStillingerSokes}
                 />
                 <HiddenIfInput
                     hidden={!brukeStillingerIUken}
                     disabled={avtalt}
-                    label="Antall søknader i uken *"
+                    label="Antall søknader i uken (obligatorisk)"
                     {...state.fields.antallStillingerIUken}
                 />
                 <Textarea
