@@ -50,7 +50,7 @@ const Modal = (props: Props) => {
             {...rest}
             open
             className={classNames(
-                'aktivitet-modal aktivitetsplanfs aktivitet-modal-portal w-120 p-8',
+                'aktivitet-modal aktivitetsplanfs aktivitet-modal-portal w-120 p-8 overscroll-contain',
                 className,
                 contentClass
             )}
