@@ -1,3 +1,5 @@
+import { addDays, subDays } from 'date-fns';
+
 import { STATUS_GJENNOMFOERT, STATUS_PLANLAGT } from '../constant';
 import { EksternAktivitetType, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { wrapAktivitet } from './aktivitet';
@@ -42,6 +44,8 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                       etiketter: [{ kode: 'SOKT_INN' }],
                   },
               }),
+              fraDato: subDays(new Date(), 2).toISOString(),
+              tilDato: addDays(new Date(), 8).toISOString(),
           }),
           wrapAktivitet({
               ...enEksternAktivitet({

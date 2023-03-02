@@ -1,3 +1,5 @@
+import { addDays, subDays } from 'date-fns';
+
 import { MoteAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
 
@@ -9,8 +11,8 @@ export const enMoteAktivitet = (): MoteAktivitet => {
         beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
         type: VeilarbAktivitetType.MOTE_TYPE,
         status: 'PLANLAGT',
-        fraDato: '2030-08-21T08:00:00+02:00',
-        tilDato: '2030-08-21T12:15:00+02:00',
+        fraDato: subDays(new Date(), 2).toISOString(),
+        tilDato: addDays(new Date(), 2).toISOString(),
         opprettetDato: '2018-08-21T11:55:14.044+02:00',
         endretDato: '2018-08-21T11:57:57.636+02:00',
         endretAv: 'z990207',

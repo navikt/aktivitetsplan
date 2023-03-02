@@ -1,3 +1,4 @@
+import { addDays, subDays } from 'date-fns';
 import moment from 'moment';
 import { RestRequest } from 'msw';
 
@@ -14,8 +15,8 @@ export const arena = !visArenaAktiviteter()
               type: 'TILTAKSAKTIVITET',
               tittel: 'Klatrekurs i seil',
               beskrivelse: 'Sjørøvere trenger å kunne klatre i seil',
-              fraDato: '2017-07-01T00:00:00+02:00',
-              tilDato: '2025-12-31T00:00:00+01:00',
+              fraDato: subDays(new Date(), 2).toISOString(),
+              tilDato: addDays(new Date(), 8).toISOString(),
               opprettetDato: '2018-09-02T00:00:00+02:00',
               avtalt: true,
               deltakelseProsent: 95.6,

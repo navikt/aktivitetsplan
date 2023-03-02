@@ -1,6 +1,7 @@
 import {
     BodyShort,
     UNSAFE_DatePicker as DatePicker,
+    Detail,
     Heading,
     UNSAFE_useDatepicker as useDatepicker,
 } from '@navikt/ds-react';
@@ -34,7 +35,7 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
                 <Heading size="medium" level="3">
                     Svar på vegne av brukeren
                 </Heading>
-                <BodyShort size="small">FOR NAV-ANSATT</BodyShort>
+                <Detail>FOR NAV-ANSATT</Detail>
             </div>
             <DatePicker {...datepickerProps}>
                 <DatePicker.Input

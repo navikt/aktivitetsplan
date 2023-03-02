@@ -24,7 +24,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     }
 
     return (
-        <div className={classNames('space-y-4', styles.forhandsorienteringArenaInnhold)}>
+        <div className={classNames('space-y-8')}>
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={lasterData}
