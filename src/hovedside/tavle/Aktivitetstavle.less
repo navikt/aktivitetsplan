@@ -19,11 +19,8 @@
 }
 
 .aktivitetstavle__kolonne {
-    padding: 1rem 0.5rem 0.1rem;
     transition: padding 0.05s ease-in-out;
     min-height: @min-height;
-    border-radius: 4px;
-    margin: 0.5rem 8px;
 
     .hjelpetekst__tooltip--under-venstre {
         @media (min-width: 480px) {
@@ -55,11 +52,4 @@
 .aktivitetstavle__kolonne--drag {
     background-color: @color-background-drag;
     padding-bottom: @min-height;
-}
-
-// 992px
-@media (min-width: @screen-md-min) {
-    .aktivitetstavle__kolonne {
-        margin: 0;
-    }
 }

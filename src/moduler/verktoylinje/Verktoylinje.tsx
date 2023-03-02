@@ -28,7 +28,7 @@ const Verktoylinje = () => {
     return (
         <div className="flex flex-col gap-y-6">
             <div className="flex gap-y-4 flex-col md:gap-x-4 md:flex-row">
-                <div className="flex gap-4 flex-col sm:flex-row md:gap-x-4">
+                <div className="flex gap-4 items-start flex-col sm:flex-row md:gap-x-4">
                     <Button
                         icon={<Add role="img" focusable="false" aria-hidden />}
                         disabled={!aktivitetLaster || leggTilAktivitetDisabled}
@@ -40,8 +40,6 @@ const Verktoylinje = () => {
                         Legg til aktivitet
                     </Button>
                     <Filter />
-                </div>
-                <div className="flex gap-x-4">
                     <PeriodeFilter skjulInneverende={!underOppfolging} />
                     <Button variant="tertiary" icon={<Print />} onClick={goToPrint}>
                         Skriv ut
