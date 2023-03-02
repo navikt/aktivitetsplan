@@ -31,7 +31,7 @@ const StillingEtikett = (props: Props) => {
     const { text, variant } = getEtikett[stillingsstatus];
 
     return (
-        <Tag variant={variant} size="small">
+        <Tag className="mr-2" variant={variant} size="small">
             {text}
         </Tag>
     );

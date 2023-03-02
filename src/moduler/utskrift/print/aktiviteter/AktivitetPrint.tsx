@@ -1,4 +1,4 @@
-import { Heading } from '@navikt/ds-react';
+import { Detail, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
@@ -25,8 +25,8 @@ const AktivitetPrint = (props: Props) => {
     const forhaandsorientering = aktivitet.forhaandsorientering;
 
     return (
-        <div key={id} className="printmodal-body__statusgruppe">
-            <p className="printmodal-body__statusgruppe--type">{getAktivitetType(aktivitet)}</p>
+        <div key={id} className="p-4 border rounded-md">
+            <Detail className="uppercase">{getAktivitetType(aktivitet)}</Detail>
             <Heading level="2" size="medium" className="mb-4">
                 {tittel}
             </Heading>

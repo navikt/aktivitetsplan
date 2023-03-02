@@ -18,8 +18,8 @@ const ForhaandsorienteringPrint = (props: Props) => {
     }
 
     return (
-        <div className="aktivitetvisning__detaljer aktivitetsdetaljer">
-            <Heading level="2" size="xsmall" className={styles.tittel}>
+        <div className="mt-8">
+            <Heading level="2" size="xsmall">
                 Informasjon om ansvaret ditt
             </Heading>
             <CustomBodyLong className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</CustomBodyLong>
