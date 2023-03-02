@@ -53,7 +53,7 @@ function Navigasjonslinje() {
     } else {
         return (
             <div className="flex flex-col gap-y-2">
-                <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row">
+                <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
                     <Link href={MINSIDE_PATH}>Min side</Link>
                     <Link href={DIALOG_PATH}>
                         <span className={styles.tilDialogTekst}>Min dialog med veileder</span>
