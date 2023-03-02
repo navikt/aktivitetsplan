@@ -25,7 +25,7 @@ const Filter = () => {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             {harAktivitet ? (
-                <div>
+                <div ref={ref}>
                     <Button
                         variant="secondary"
                         name="filter"
@@ -38,10 +38,7 @@ const Filter = () => {
                         Filtrer
                     </Button>
                     {open ? (
-                        <div
-                            ref={ref}
-                            className="rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto flex flex-col gap-y-4"
-                        >
+                        <div className="rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto flex flex-col gap-y-4">
                             <AvtaltMedNavFilter />
                             <EtikettFilter />
                             <ArenaEtikettFilter />
