@@ -223,7 +223,7 @@ module.exports = {
                 52: '13rem',
             },
             maxHeight: {
-                'screen-h-1/2': '50wh',
+                'screen-h-1/2': '50vh',
             },
             spacing: {
                 0: '0',
