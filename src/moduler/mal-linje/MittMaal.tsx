@@ -111,8 +111,7 @@ function MittMaal() {
         <div
             className={classNames('border-border-default rounded-md mb-4 p-4', {
                 'border-2 border-dashed ': !mal && !disabled,
-                'border-2': disabled,
-                border: mal,
+                border: mal || disabled,
             })}
         >
             <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
