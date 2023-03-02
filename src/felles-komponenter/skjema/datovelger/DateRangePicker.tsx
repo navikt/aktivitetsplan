@@ -30,26 +30,24 @@ const DateRangePicker = ({ error, onChange, from, value, onValidate, disabledDay
     };
 
     return (
-        <div className="flex flex-1">
-            <DatePicker {...datepickerProps} wrapperClassName="flex flex-1">
-                <div className="flex flex-1 items-start gap-2">
-                    <DatePicker.Input
-                        className="flex-1"
-                        error={error?.from}
-                        label={'Fra dato'}
-                        {...fromInputProps}
-                        onChange={onFromChange}
-                    />
-                    <DatePicker.Input
-                        className="flex-1"
-                        error={error?.to}
-                        label={'Til dato'}
-                        {...toInputProps}
-                        onChange={onToChange}
-                    />
-                </div>
-            </DatePicker>
-        </div>
+        <DatePicker {...datepickerProps} wrapperClassName="">
+            <div className="flex gap-4 items-start">
+                <DatePicker.Input
+                    className="flex-1"
+                    error={error?.from}
+                    label={'Fra dato'}
+                    {...fromInputProps}
+                    onChange={onFromChange}
+                />
+                <DatePicker.Input
+                    className="flex-1"
+                    error={error?.to}
+                    label={'Til dato'}
+                    {...toInputProps}
+                    onChange={onToChange}
+                />
+            </div>
+        </DatePicker>
     );
 };
 
