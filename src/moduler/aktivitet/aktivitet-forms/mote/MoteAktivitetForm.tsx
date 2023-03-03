@@ -141,7 +141,7 @@ const MoteAktivitetForm = (props: Props) => {
                             {...state.fields.dato.input}
                             {...inputProps}
                             required
-                            label={'Dato *'}
+                            label={'Dato (obligatorisk)'}
                             error={state.fields.dato.touched ? state.fields.dato.error : undefined}
                         />
                     </DatePicker>

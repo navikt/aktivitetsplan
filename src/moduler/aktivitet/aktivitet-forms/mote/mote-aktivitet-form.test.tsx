@@ -126,13 +126,15 @@ describe('MoteAktivitetForm', () => {
         };
         mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
 
-        expect(screen.getByLabelText('Tema for møtet *').disabled).toBeTruthy();
-        expect(screen.getByLabelText('Dato *').disabled).not.toBeTruthy();
-        expect(screen.getByLabelText('Klokkeslett *').disabled).not.toBeTruthy();
-        expect(screen.getByLabelText('Varighet *').disabled).not.toBeTruthy();
-        expect(screen.getByLabelText('Møteform *').disabled).not.toBeTruthy();
-        expect(screen.getByLabelText('Møtested eller annen praktisk informasjon *').disabled).not.toBeTruthy();
-        expect(screen.getByLabelText('Hensikt med møtet *').disabled).toBeTruthy();
-        expect(screen.getByLabelText('Forberedelser til møtet').disabled).toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)').disabled).toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)').disabled).not.toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)').disabled).not.toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Varighet (obligatorisk)').disabled).not.toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Møteform (obligatorisk)').disabled).not.toBeTruthy();
+        expect(
+            screen.getByLabelText<HTMLInputElement>('Møtested eller annen praktisk informasjon (obligatorisk)').disabled
+        ).not.toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)').disabled).toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet').disabled).toBeTruthy();
     });
 });
