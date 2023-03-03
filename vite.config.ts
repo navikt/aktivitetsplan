@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         build: {
+            manifest: 'asset-manifest.json',
             outDir: 'build',
         },
         plugins: [
