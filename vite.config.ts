@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         build: {
-            manifest: 'asset-manifest.json',
+            manifest: 'vite-manifest.json',
             outDir: 'build',
         },
         plugins: [

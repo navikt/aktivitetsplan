@@ -5,10 +5,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build:dev-ekstern": "npm run build:tekster && vite build --mode=dev-ekstern",
-    "build:dev-intern": "npm run build:tekster && vite build --mode=dev-intern",
-    "build:prod-ekstern": "npm run build:tekster && vite build --mode=prod-ekstern",
-    "build:prod-intern": "npm run build:tekster && vite build --mode=prod-intern",
+    "build:dev-ekstern": "npm run build:tekster && vite build --mode=dev-ekstern && npm run manifest-fix",
+    "build:dev-intern": "npm run build:tekster && vite build --mode=dev-intern && npm run manifest-fix",
+    "build:prod-ekstern": "npm run build:tekster && vite build --mode=prod-ekstern && npm run manifest-fix",
+    "build:prod-intern": "npm run build:tekster && vite build --mode=prod-intern && npm run manifest-fix",
     "build": "npm run build:tekster && vite build",
     "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/aktivitetsplan/",
     "build:tekster": "node ./scripts/build-tekster.js",
@@ -16,7 +16,8 @@
     "coverage": "vitest run --coverage",
     "format-all": "prettier --write 'src/'",
     "lint-staged": "lint-staged",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "manifest-fix": "node ./scripts/fixManifest.js"
   },
   "dependencies": {
     "@navikt/ds-css": "^2.3.1",
