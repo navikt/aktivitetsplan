@@ -37,6 +37,8 @@ function NyAktivitetForm(props) {
 
     const onSubmitFactory = (aktivitetsType) => {
         return (aktivitet) => {
+            console.log('SENDT AKTIVITET');
+            console.log(aktivitet);
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
             const nyAktivitet = {
                 status: STATUS_PLANLAGT,

@@ -1,70 +1,38 @@
-import useFormstate from '@nutgaard/use-formstate';
-import { Formstate } from '@nutgaard/use-formstate/dist/types/domain';
-import PT from 'prop-types';
-import React, { MutableRefObject } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TextField, Textarea } from '@navikt/ds-react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
-import PeriodeValidering, {
-    validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import * as AppPT from '../../../../proptypes';
 import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../LagreAktivitet';
-import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke } from '../validate';
-import { validateTittel } from './validate';
+import CustomErrorSummary from '../CustomErrorSummary';
+import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
-function erAvtalt(aktivitet: Partial<StillingAktivitet>) {
-    return aktivitet?.avtalt || false;
-}
+const schema = z.object({
+    tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
+    fraDato: z.string(),
+    tilDato: z.string(),
+    arbeidsgiver: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    kontaktperson: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    arbeidssted: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
+    lenke: z.string().max(2000, 'Du må korte ned lenken til 2000 tegn').optional(),
+});
+
+type StillingAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: StillingAktivitetFormValues) => Promise<void>;
-    isDirtyRef: MutableRefObject<boolean>;
     aktivitet?: StillingAktivitet;
 }
 
-type StillingAktivitetFormValues = {
-    tittel: string;
-    fraDato: string;
-    tilDato: string;
-    beskrivelse: string;
-    arbeidssted: string;
-    arbeidsgiver: string;
-    kontaktperson: string;
-    lenke: string;
-    periodeValidering: string;
-};
+const StillingAktivitetForm = (props: Props) => {
+    const { onSubmit, aktivitet } = props;
 
-function StillingAktivitetForm(props: Props) {
-    const { onSubmit, isDirtyRef, aktivitet } = props;
-
-    const validator: (
-        initialValues: StillingAktivitetFormValues,
-        props: Partial<StillingAktivitetFormValues>
-    ) => Formstate<StillingAktivitetFormValues> = useFormstate<StillingAktivitetFormValues, Partial<StillingAktivitet>>(
-        {
-            tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-            fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-            tilDato: (val, values, aktivitet) => validerDato(val, undefined, aktivitet.fraDato),
-            beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-            arbeidssted: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-            arbeidsgiver: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-            kontaktperson: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-            lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
-            periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-        }
-    );
-
-    const avtalt = aktivitet?.avtalt === true;
-
-    const initalValues = {
+    const defaultValues: StillingAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
         fraDato: aktivitet?.fraDato || todayIsoString(),
         tilDato: aktivitet?.tilDato || '',
@@ -73,57 +41,80 @@ function StillingAktivitetForm(props: Props) {
         arbeidsgiver: aktivitet?.arbeidsgiver || '',
         kontaktperson: aktivitet?.kontaktperson || '',
         lenke: aktivitet?.lenke || '',
-        periodeValidering: '',
     };
+    const avtalt = aktivitet?.avtalt || false;
 
-    const state = validator(initalValues, aktivitet || {});
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<StillingAktivitetFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: false });
 
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
-    }
+    const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
+        <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
-
-                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} required />
-
-                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
-                    <div className="dato-container">
-                        <MaybeAvtaltDateRangePicker
-                            formState={state}
-                            aktivitet={aktivitet}
-                            initialFromDate={aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined}
-                        />
-                    </div>
-                </PeriodeValidering>
-                <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.arbeidsgiver} />
-                <Input disabled={avtalt} label="Kontaktperson hos arbeidsgiver" {...state.fields.kontaktperson} />
-                <Input disabled={avtalt} label="Arbeidssted" {...state.fields.arbeidssted} />
+                <TextField
+                    disabled={avtalt}
+                    label="Stillingstittel (obligatorisk)"
+                    id={'tittel'}
+                    {...register('tittel')}
+                    error={errors.tittel && errors.tittel.message}
+                />
+                {/* TODO datovelger her */}
+                {/*<PeriodeValidering valideringFelt={state.fields.periodeValidering}>*/}
+                {/*    <div className="dato-container">*/}
+                {/*        <MaybeAvtaltDateRangePicker*/}
+                {/*            formState={state}*/}
+                {/*            aktivitet={aktivitet}*/}
+                {/*            initialFromDate={aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*</PeriodeValidering>*/}
+                <TextField
+                    disabled={avtalt}
+                    label="Arbeidsgiver"
+                    id={'arbeidsgiver'}
+                    {...register('arbeidsgiver')}
+                    error={errors.arbeidsgiver && errors.arbeidsgiver.message}
+                />
+                <TextField
+                    disabled={avtalt}
+                    label="Kontaktperson hos arbeidsgiver"
+                    id={'kontaktperson'}
+                    {...register('kontaktperson')}
+                    error={errors.kontaktperson && errors.kontaktperson.message}
+                />
+                <TextField
+                    disabled={avtalt}
+                    label="Arbeidssted"
+                    id="arbeidssted"
+                    {...register('arbeidssted')}
+                    error={errors.arbeidssted && errors.arbeidssted.message}
+                />
                 <Textarea
                     disabled={avtalt}
                     label="Kort beskrivelse av stillingen"
                     maxLength={5000}
-                    {...state.fields.beskrivelse}
+                    {...register('beskrivelse')}
+                    error={errors.beskrivelse && errors.beskrivelse.message}
+                    value={beskrivelseValue}
                 />
-                <Input disabled={avtalt} label="Lenke til stillingsannonse" {...state.fields.lenke} />
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+                <TextField
+                    disabled={avtalt}
+                    label="Lenke til stillingsannonse"
+                    id={'lenke'}
+                    {...register('lenke')}
+                    error={errors.lenke && errors.lenke.message}
+                />
+                <CustomErrorSummary errors={errors} />
+                <LagreAktivitetKnapp />
             </div>
-            <LagreAktivitet />
         </form>
     );
-}
-
-StillingAktivitetForm.propTypes = {
-    onSubmit: PT.func.isRequired,
-    aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool }),
-};
-
-StillingAktivitetForm.defaultProps = {
-    aktivitet: undefined,
-    isDirtyRef: undefined,
 };
 
 export default StillingAktivitetForm;

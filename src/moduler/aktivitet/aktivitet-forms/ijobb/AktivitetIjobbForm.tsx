@@ -1,142 +1,126 @@
-import { Radio, RadioGroup } from '@navikt/ds-react';
-import useFormstate from '@nutgaard/use-formstate';
-import { Formstate } from '@nutgaard/use-formstate/dist/types/domain';
-import PT from 'prop-types';
-import React, { MutableRefObject } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Radio, RadioGroup, TextField, Textarea } from '@navikt/ds-react';
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
 import { IJobbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
-import PeriodeValidering, {
-    validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../LagreAktivitet';
-import { validateBeskrivelse, validateFeltForLangt, validateFraDato } from '../validate';
-import { validateJobbstatus, validateTittel } from './validate';
+import CustomErrorSummary from '../CustomErrorSummary';
+import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
-function erAvtalt(aktivitet: Partial<IJobbAktivitet>) {
-    return aktivitet.avtalt;
-}
+const schema = z.object({
+    tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
+    fraDato: z.string(),
+    tilDato: z.string(),
+    jobbStatus: z.string().min(1, 'Du må velge heltid eller deltid'),
+    ansettelsesforhold: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    arbeidstid: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
+});
+
+type IJobbAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
-    onSubmit: (values: Record<any, any>) => Promise<void>;
+    onSubmit: (values: IJobbAktivitetFormValues) => Promise<void>;
     aktivitet?: IJobbAktivitet;
-    isDirtyRef: MutableRefObject<boolean>;
 }
 
-type IJobbAktivitetFormValues = {
-    tittel: string;
-    fraDato: string;
-    tilDato: string;
-    periodeValidering: string;
-    ansettelsesforhold: string;
-    jobbStatus: string;
-    arbeidstid: string;
-    beskrivelse: string;
-};
+const IJobbAktivitetForm = (props: Props) => {
+    const { onSubmit, aktivitet } = props;
 
-function IJobbAktivitetForm(props: Props) {
-    const { onSubmit, aktivitet, isDirtyRef } = props;
-
-    const validator: (
-        initialValues: IJobbAktivitetFormValues,
-        props: Partial<IJobbAktivitet>
-    ) => Formstate<IJobbAktivitetFormValues> = useFormstate<IJobbAktivitetFormValues, Partial<IJobbAktivitet>>({
-        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet) => validerDato(val, undefined, aktivitet.fraDato),
-        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-        ansettelsesforhold: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        jobbStatus: (val, values, aktivitet) => validateJobbstatus(erAvtalt(aktivitet), val),
-        arbeidstid: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-    });
-
-    const avtalt = aktivitet?.avtalt === true;
-
-    const initalValues = {
+    const defaultValues: IJobbAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
         fraDato: aktivitet?.fraDato || '',
         tilDato: aktivitet?.tilDato || '',
-        periodeValidering: '',
         jobbStatus: aktivitet?.jobbStatus || '',
         ansettelsesforhold: aktivitet?.ansettelsesforhold || '',
         arbeidstid: aktivitet?.arbeidstid || '',
         beskrivelse: aktivitet?.beskrivelse || '',
     };
+    const avtalt = aktivitet?.avtalt || false;
 
-    const state = validator(initalValues, aktivitet || {});
+    const {
+        register,
+        setValue,
+        handleSubmit,
+        watch,
+        control,
+        formState: { errors },
+    } = useForm<IJobbAktivitetFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: false });
 
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
-    }
+    const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
     const onChangeStillingProsent = (value: typeof JOBB_STATUS_HELTID | typeof JOBB_STATUS_HELTID) => {
-        state.setValue('jobbStatus', value);
+        setValue('jobbStatus', value, { shouldValidate: true });
     };
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
+        <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
-                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
-                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
-                    <div className="dato-container">
-                        <MaybeAvtaltDateRangePicker
-                            formState={state}
-                            aktivitet={aktivitet}
-                            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}
-                        />
-                    </div>
-                </PeriodeValidering>
-                <RadioGroup
-                    value={state.fields.jobbStatus.input.value}
-                    id="jobbStatus"
-                    error={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
-                    legend="Stillingsandel *"
-                    onChange={onChangeStillingProsent}
-                >
-                    <Radio value={JOBB_STATUS_HELTID} disabled={avtalt}>
-                        Heltid
-                    </Radio>
-                    <Radio value={JOBB_STATUS_DELTID} disabled={avtalt}>
-                        Deltid
-                    </Radio>
-                </RadioGroup>
-                <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.ansettelsesforhold} />
-                <Input
+                <TextField
+                    disabled={avtalt}
+                    label="Stillingstittel (obligatorisk)"
+                    id={'tittel'}
+                    {...register('tittel')}
+                    error={errors.tittel && errors.tittel.message}
+                />
+                {/* TODO datovelger her */}
+                {/*<PeriodeValidering valideringFelt={state.fields.periodeValidering}>*/}
+                {/*    <div className="dato-container">*/}
+                {/*        <MaybeAvtaltDateRangePicker*/}
+                {/*            formState={state}*/}
+                {/*            aktivitet={aktivitet}*/}
+                {/*            initialFromDate={defaultValues.fraDato ? new Date(defaultValues.fraDato) : undefined}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*</PeriodeValidering>*/}
+                <Controller
+                    name="jobbStatus"
+                    control={control}
+                    render={() => (
+                        <RadioGroup
+                            defaultValue={defaultValues.jobbStatus}
+                            disabled={avtalt}
+                            id="jobbStatus"
+                            legend="Stillingsandel (obligatorisk)"
+                            onChange={onChangeStillingProsent}
+                            error={errors.jobbStatus && errors.jobbStatus.message}
+                        >
+                            <Radio value={JOBB_STATUS_HELTID}>Heltid</Radio>
+                            <Radio value={JOBB_STATUS_DELTID}>Deltid</Radio>
+                        </RadioGroup>
+                    )}
+                />
+                <TextField
+                    disabled={avtalt}
+                    label="Arbeidsgiver"
+                    id={'ansettelsesforhold'}
+                    {...register('ansettelsesforhold')}
+                    error={errors.ansettelsesforhold && errors.ansettelsesforhold.message}
+                />
+                <TextField
                     disabled={avtalt}
                     label="Ansettelsesforhold (fast, midlertidig, vikariat)"
-                    {...state.fields.arbeidstid}
+                    id={'arbeidstid'}
+                    {...register('arbeidstid')}
+                    error={errors.arbeidstid && errors.arbeidstid.message}
                 />
                 <Textarea
                     disabled={avtalt}
                     label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
                     maxLength={5000}
-                    {...state.fields.beskrivelse}
+                    {...register('beskrivelse')}
+                    error={errors.beskrivelse && errors.beskrivelse.message}
+                    value={beskrivelseValue}
                 />
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+                <CustomErrorSummary errors={errors} />
+                <LagreAktivitetKnapp />
             </div>
-            <LagreAktivitet />
         </form>
     );
-}
-
-IJobbAktivitetForm.propTypes = {
-    onSubmit: PT.func.isRequired,
-    aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool }),
-};
-
-IJobbAktivitetForm.defaultProps = {
-    aktivitet: undefined,
-    isDirtyRef: undefined,
 };
 
 export default IJobbAktivitetForm;

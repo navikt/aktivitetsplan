@@ -1,178 +1,153 @@
-import { Alert, BodyShort, Link, TextField, UNSAFE_useDatepicker } from '@navikt/ds-react';
-import DatePicker from '@navikt/ds-react/esm/date/datepicker/DatePicker';
-import useFormstate from '@nutgaard/use-formstate';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { Select, TextField, Textarea } from '@navikt/ds-react';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT } from '../../../../constant';
+import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
 import { MoteAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../LagreAktivitet';
-import VelgKanal from '../VelgKanal';
-import {
-    FORBEREDELSER_MAKS_LENGDE,
-    HENSIKT_MAKS_LENGDE,
-    validateAdresse,
-    validateForberedelser,
-    validateHensikt,
-    validateKanal,
-    validateKlokkeslett,
-    validateMoteDato,
-    validateTittel,
-    validateVarighet,
-} from './validate';
-
-interface Props {
-    onSubmit: (data: { status: string; avtalt: boolean } & FormType) => Promise<any>;
-    isDirtyRef?: { current: boolean };
-    aktivitet?: MoteAktivitet;
-}
-
-type FormType = {
-    tittel: string;
-    dato: string;
-    klokkeslett: string;
-    varighet: string;
-    kanal: string;
-    adresse: string;
-    beskrivelse: string;
-    forberedelser: string;
-};
-
-const HuskVarsleBruker = ({ avtalt, pristine }: { avtalt: boolean; pristine: boolean }) => {
-    if (!avtalt || pristine) {
-        return null;
-    }
-    return (
-        <Alert variant="warning" className="mb-8">
-            Husk å sende en dialogmelding til brukeren om endringen du gjør.
-        </Alert>
-    );
-};
-
-const VideoInfo = ({ kanal }: { kanal: string }) => {
-    if (kanal === INTERNET_KANAL) {
-        return (
-            <BodyShort className="mote-aktivitet-form__video-info">
-                Les om{' '}
-                <Link
-                    href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    rutiner for videomøte her <EksternLenkeIkon />
-                </Link>
-            </BodyShort>
-        );
-    }
-    return null;
-};
+import CustomErrorSummary from '../CustomErrorSummary';
+import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
+import HuskVarsleBruker from './HuskVarsleBruker';
+import VideoInfo from './VideoInfo';
 
 export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
+const schema = z.object({
+    tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
+    dato: z.string(),
+    klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
+    varighet: z.string().min(1, 'Du må fylle ut varighet'),
+    kanal: z.string().min(1, 'Du må fylle ut møteform'),
+    adresse: z
+        .string()
+        .min(1, 'Du må fylle ut møtested eller annen praktisk informasjon')
+        .max(255, 'Du må korte ned teksten til 255 tegn'),
+    beskrivelse: z
+        .string()
+        .min(1, 'Du må fylle ut hensikten med møtet')
+        .max(5000, 'Du må korte ned teksten til 5000 tegn'),
+    forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn'),
+});
+
+type MoteAktivitetFormValues = z.infer<typeof schema>;
+
+interface Props {
+    aktivitet?: MoteAktivitet;
+    onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<any>;
+}
+
 const MoteAktivitetForm = (props: Props) => {
-    const { aktivitet, isDirtyRef, onSubmit } = props;
+    const { aktivitet, onSubmit } = props;
 
-    const validator = useFormstate<FormType, Partial<MoteAktivitet>>({
-        tittel: (val, _, a) => validateTittel(a?.avtalt || false, val),
-        klokkeslett: (val, _, a) => validateKlokkeslett(a?.avtalt || false, val),
-        varighet: (val, _, a) => validateVarighet(a?.avtalt || false, val),
-        kanal: (val, _, a) => validateKanal(a?.avtalt || false, val),
-        adresse: (val, _, a) => validateAdresse(a?.avtalt || false, val),
-        beskrivelse: (val, _, a) => validateHensikt(a?.avtalt || false, val),
-        forberedelser: (val, _, a) => validateForberedelser(a?.avtalt || false, val),
-        dato: (val) => validateMoteDato(val),
-    });
-
-    const avtalt = aktivitet?.avtalt || false;
     const dato = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
-    const beskrivelse = aktivitet?.beskrivelse || '';
 
-    const initalValue = {
+    const defaultValues: MoteAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
         klokkeslett: dato?.klokkeslett ? dato.klokkeslett : '10:00',
         varighet: dato?.varighet ? dato.varighet : '00:45',
         kanal: aktivitet?.kanal || OPPMOTE_KANAL,
         adresse: aktivitet?.adresse || '',
-        beskrivelse: beskrivelse ? beskrivelse : defaultBeskrivelse,
+        beskrivelse: aktivitet?.beskrivelse || defaultBeskrivelse,
         forberedelser: aktivitet?.forberedelser || '',
         dato: aktivitet?.fraDato || '',
     };
+    const avtalt = aktivitet?.avtalt || false;
 
-    const state = validator(initalValue);
-
-    const { datepickerProps, inputProps, selectedDay } = UNSAFE_useDatepicker({
-        defaultSelected: initalValue.dato ? new Date(initalValue.dato) : undefined,
-        onDateChange: (dato) => {
-            state.setValue('dato', dato?.toString() || '');
-        },
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<MoteAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
     });
 
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
-    }
+    const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
+    const forberedelserValue = watch('forberedelser'); // for <Textarea /> character-count to work
 
     return (
         <form
-            onSubmit={state.onSubmit((formValues) =>
-                onSubmit({
-                    ...formValues,
-                    ...beregnFraTil(formValues),
-                    status: STATUS_PLANLAGT,
-                    avtalt: false,
-                    dato: selectedDay!!.toString(),
-                })
-            )}
             autoComplete="off"
             noValidate
+            onSubmit={handleSubmit((data) =>
+                onSubmit({
+                    ...data,
+                    ...beregnFraTil(data),
+                    status: STATUS_PLANLAGT,
+                    avtalt: false,
+                    // dato: selectedDay!!.toString(),
+                })
+            )}
         >
             <div className="skjema-innlogget aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
-                <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
-                <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
+                <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
 
-                <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <DatePicker {...datepickerProps} disabled={[{ before: new Date() }]}>
-                        <DatePicker.Input
-                            {...state.fields.dato.input}
-                            {...inputProps}
-                            required
-                            label={'Dato *'}
-                            error={state.fields.dato.touched ? state.fields.dato.error : undefined}
-                        />
-                    </DatePicker>
-                    <TextField
-                        label="Klokkeslett *"
-                        {...state.fields.klokkeslett.input}
-                        type={'time' as any}
-                        step="300"
-                    />
-                    <TextField label="Varighet *" {...state.fields.varighet.input} type={'time' as any} step="900" />
-                </div>
-                <VelgKanal label="Møteform *" {...state.fields.kanal} />
-                <VideoInfo kanal={state.fields.kanal.input.value} />
+                <TextField
+                    disabled={avtalt}
+                    label="Tema for møtet (obligatorisk)"
+                    id={'tittel'}
+                    {...register('tittel')}
+                    error={errors.tittel && errors.tittel.message}
+                />
 
-                <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
+                {/* TODO datovelger her */}
+                {/*<div className="mote-aktivitet-form__velg-mote-klokkeslett">*/}
+                {/*    <DatePicker {...datepickerProps} disabled={[{ before: new Date() }]}>*/}
+                {/*        <DatePicker.Input*/}
+                {/*            {...state.fields.dato.input}*/}
+                {/*            {...inputProps}*/}
+                {/*            required*/}
+                {/*            label={'Dato *'}*/}
+                {/*            error={state.fields.dato.touched ? state.fields.dato.error : undefined}*/}
+                {/*        />*/}
+                {/*    </DatePicker>*/}
+                {/*    <TextField*/}
+                {/*        label="Klokkeslett *"*/}
+                {/*        {...state.fields.klokkeslett.input}*/}
+                {/*        type={'time' as any}*/}
+                {/*        step="300"*/}
+                {/*    />*/}
+                {/*    <TextField label="Varighet *" {...state.fields.varighet.input} type={'time' as any} step="900" />*/}
+                {/*</div>*/}
+
+                <Select label="Møteform (obligatorisk)" {...register('kanal')}>
+                    <option value={OPPMOTE_KANAL}>Oppmøte</option>
+                    <option value={TELEFON_KANAL}>Telefonmøte</option>
+                    <option value={INTERNET_KANAL}>Videomøte</option>
+                </Select>
+                <VideoInfo kanal={watch('kanal')} />
+
+                <TextField
+                    label="Møtested eller annen praktisk informasjon *"
+                    id={'adresse'}
+                    {...register('adresse')}
+                    error={errors.adresse && errors.adresse.message}
+                />
                 <Textarea
                     disabled={avtalt}
                     label="Hensikt med møtet *"
-                    maxLength={HENSIKT_MAKS_LENGDE}
-                    required
-                    {...state.fields.beskrivelse}
+                    maxLength={5000}
+                    {...register('beskrivelse')}
+                    error={errors.beskrivelse && errors.beskrivelse.message}
+                    value={beskrivelseValue}
                 />
                 <Textarea
                     disabled={avtalt}
                     label="Forberedelser til møtet"
-                    maxLength={FORBEREDELSER_MAKS_LENGDE}
-                    {...state.fields.forberedelser}
+                    maxLength={500}
+                    {...register('forberedelser')}
+                    error={errors.forberedelser && errors.forberedelser.message}
+                    value={forberedelserValue}
                 />
-                <FormErrorSummary errors={{ ...state.errors }} />
+                <CustomErrorSummary errors={errors} />
+                <LagreAktivitetKnapp />
             </div>
-            <LagreAktivitet />
         </form>
     );
 };

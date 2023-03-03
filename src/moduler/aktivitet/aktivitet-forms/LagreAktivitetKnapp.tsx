@@ -6,7 +6,7 @@ import { STATUS } from '../../../api/utils';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 
-const LagreAktivitet = () => {
+const LagreAktivitetKnapp = () => {
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const status = useSelector(selectAktivitetStatus);
     const venter = !(status === STATUS.OK || status === STATUS.ERROR);
@@ -18,4 +18,4 @@ const LagreAktivitet = () => {
     );
 };
 
-export default LagreAktivitet;
+export default LagreAktivitetKnapp;
