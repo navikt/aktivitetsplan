@@ -1,52 +1,101 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { FieldErrors, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { AppConfig } from '../../../../app';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import { SokeavtaleAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
+import PartialDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
 declare const window: {
     appconfig: AppConfig;
 };
 
-const schema = z.object({
+const numberErrorMessage = {
+    required_error: 'Antall stillinger må fylles ut',
+    invalid_type_error: 'Antall stillinger må fylles ut',
+};
+
+const commonFields = {
     tittel: z.string(),
-    fraDato: z.string(),
-    tilDato: z.string(),
-    antallStillingerIUken: z.number().lt(100, 'Antall søknader må ikke være høyere enn 99').nullable(),
-    antallStillingerSokes: z.number().lt(100, 'Antall søknader må ikke være høyere enn 99').nullable(),
+    fraDato: z.date().nullable().optional(),
+    tilDato: z.date().nullable().optional(),
     avtaleOppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
-});
+};
 
-type SokeavtaleAktivitetFormValues = z.infer<typeof schema>;
+const GammelSokeAvtaleFormValues = z.object({
+    ...commonFields,
+    skjemaVersjon: z.literal('gammel' as const),
+    antallStillingerSokes: z.number(numberErrorMessage).lt(100, 'Antall søknader må ikke være høyere enn 99'),
+});
+type GammelSokeavtaleAktivitetFormValues = z.infer<typeof GammelSokeAvtaleFormValues>;
+const NySokeAvtaleFormValues = z.object({
+    ...commonFields,
+    skjemaVersjon: z.literal('ny' as const),
+    antallStillingerIUken: z.number(numberErrorMessage).lt(100, 'Antall søknader må ikke være høyere enn 99'),
+});
+type NySokeavtaleAktivitetFormValues = z.infer<typeof NySokeAvtaleFormValues>;
+const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
+    GammelSokeAvtaleFormValues,
+    NySokeAvtaleFormValues,
+]);
+
+type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
 
 interface Props {
     aktivitet?: SokeavtaleAktivitet;
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
 }
 
-const SokeAvtaleAktivitetForm = (props: Props) => {
-    const { aktivitet, onSubmit } = props;
-
-    const defaultValues: SokeavtaleAktivitetFormValues = {
+const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
+    const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
+    const basevalues = {
         tittel: aktivitet?.tittel || 'Avtale om å søke jobber',
-        fraDato: aktivitet?.fraDato || '',
-        tilDato: aktivitet?.tilDato || '',
-        antallStillingerIUken: aktivitet?.antallStillingerIUken || null, // src/utils/object.js
-        antallStillingerSokes: aktivitet?.antallStillingerSokes || null, // src/utils/object.js
+        fraDato: aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined,
+        tilDato: aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined,
         avtaleOppfolging: aktivitet?.avtaleOppfolging || '',
         beskrivelse: aktivitet?.beskrivelse || '',
     };
-    const avtalt = aktivitet?.avtalt || false;
+    if (brukeStillingerIUken) {
+        return {
+            skjemaVersjon: 'ny',
+            ...basevalues,
+            antallStillingerIUken: aktivitet?.antallStillingerIUken || undefined,
+        };
+    } else {
+        return {
+            skjemaVersjon: 'gammel',
+            ...basevalues,
+            antallStillingerSokes: aktivitet?.antallStillingerSokes || undefined,
+        };
+    }
+};
 
+const parseDate = (date: string | undefined): Date | undefined => {
+    if (!date) return undefined;
+    return new Date(date);
+};
+
+const noOp = () => {};
+
+const valueAsDateOrUndefined = (value: string) => {
+    if (!value) return undefined;
+    return new Date(value);
+};
+
+const SokeAvtaleAktivitetForm = (props: Props) => {
+    const { aktivitet, onSubmit } = props;
     const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
+    const defaultValues = getDefaultValues(aktivitet);
+    const avtalt = aktivitet?.avtalt || false;
 
     const {
         register,
@@ -54,12 +103,19 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         watch,
         setValue,
         reset,
-        formState: { errors },
+        formState: { errors: formStateErrors },
     } = useForm<SokeavtaleAktivitetFormValues>({
         defaultValues,
-        resolver: zodResolver(schema),
+        resolver: zodResolver(SokeAvtaleFormValues),
         shouldFocusError: false,
     });
+
+    const errorWrapper = brukeStillingerIUken
+        ? { errors: formStateErrors as FieldErrors<NySokeavtaleAktivitetFormValues>, skjemaVersjon: 'ny' as const }
+        : {
+              errors: formStateErrors as FieldErrors<GammelSokeavtaleAktivitetFormValues>,
+              skjemaVersjon: 'gammel' as const,
+          };
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const avtaleOppfolging = watch('avtaleOppfolging'); // for <Textarea /> character-count to work
@@ -74,48 +130,39 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         }
     };
 
-    console.log(errors);
-
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <div className="skjema-innlogget aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
-
                 <Malverk
                     visible={window.appconfig.VIS_MALER}
                     endre={!!aktivitet}
                     onChange={onMalChange}
                     type="SOKEAVTALE"
                 />
-
-                {/* TODO datovelger her */}
-                {/*<div className="dato-container">*/}
-                {/*    {aktivitet?.avtalt === true && aktivitet?.fraDato ? (*/}
-                {/*        <PartialDateRangePicker*/}
-                {/*            error={rangeError}*/}
-                {/*            onValidate={(val) => {*/}
-                {/*                const error = getErrorMessageForDate(val);*/}
-                {/*                if (error) setRangeError({ from: undefined, to: error });*/}
-                {/*            }}*/}
-                {/*            onChange={(toDate) => {*/}
-                {/*                setDateRange({*/}
-                {/*                    ...dateRange,*/}
-                {/*                    to: toDate,*/}
-                {/*                });*/}
-                {/*            }}*/}
-                {/*            from={parseDate(aktivitet.fraDato)!!}*/}
-                {/*        />*/}
-                {/*    ) : (*/}
-                {/*        <DateRangePicker*/}
-                {/*            error={rangeError}*/}
-                {/*            onValidate={validateDateRange}*/}
-                {/*            value={dateRange}*/}
-                {/*            onChange={setDateRange}*/}
-                {/*        />*/}
-                {/*    )}*/}
-                {/*</div>*/}
-
-                {brukeStillingerIUken ? (
+                <div className="dato-container">
+                    {aktivitet?.avtalt === true && aktivitet?.fraDato ? (
+                        <PartialDateRangePicker
+                            error={{
+                                from: errorWrapper.errors.fraDato?.message,
+                                to: errorWrapper.errors.tilDato?.message,
+                            }}
+                            from={defaultValues.fraDato!!}
+                            fromRef={register('fraDato', { setValueAs: valueAsDateOrUndefined }).ref}
+                            toRef={register('tilDato', { setValueAs: valueAsDateOrUndefined }).ref}
+                        />
+                    ) : (
+                        <DateRangePicker
+                            fromRef={register('fraDato', { setValueAs: valueAsDateOrUndefined }).ref}
+                            toRef={register('tilDato', { setValueAs: valueAsDateOrUndefined }).ref}
+                            error={{
+                                from: errorWrapper.errors.fraDato?.message,
+                                to: errorWrapper.errors.tilDato?.message,
+                            }}
+                        />
+                    )}
+                </div>
+                {errorWrapper.skjemaVersjon === 'ny' ? (
                     <TextField
                         disabled={avtalt}
                         type="number"
@@ -124,7 +171,10 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                         {...register('antallStillingerIUken', {
                             valueAsNumber: true,
                         })}
-                        error={errors.antallStillingerIUken && errors.antallStillingerIUken.message}
+                        error={
+                            errorWrapper.errors.antallStillingerIUken &&
+                            errorWrapper.errors.antallStillingerIUken.message
+                        }
                     />
                 ) : (
                     <TextField
@@ -135,16 +185,18 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                         {...register('antallStillingerSokes', {
                             valueAsNumber: true,
                         })}
-                        error={errors.antallStillingerSokes && errors.antallStillingerSokes.message}
+                        error={
+                            errorWrapper.errors.antallStillingerSokes &&
+                            errorWrapper.errors.antallStillingerSokes.message
+                        }
                     />
                 )}
-
                 <Textarea
                     disabled={avtalt}
                     label="Oppfølging fra NAV"
                     maxLength={255}
                     {...register('avtaleOppfolging')}
-                    error={errors.avtaleOppfolging && errors.avtaleOppfolging.message}
+                    error={errorWrapper.errors.avtaleOppfolging && errorWrapper.errors.avtaleOppfolging.message}
                     value={avtaleOppfolging}
                 />
                 <Textarea
@@ -152,10 +204,10 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                     label="Beskrivelse"
                     maxLength={5000}
                     {...register('beskrivelse')}
-                    error={errors.beskrivelse && errors.beskrivelse.message}
+                    error={errorWrapper.errors.beskrivelse && errorWrapper.errors.beskrivelse.message}
                     value={beskrivelseValue}
                 />
-                {/*<CustomErrorSummary errors={errors} />*/}
+                <CustomErrorSummary errors={errorWrapper.errors} />
                 <LagreAktivitetKnapp />
             </div>
         </form>
