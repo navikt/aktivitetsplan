@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MutableRefObject, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
@@ -7,9 +7,9 @@ import { selectVeilederStatus } from '../../../veileder/veilederSelector';
 import InnerSamtalereferatForm from './InnerSamtalereferatForm';
 
 interface Props {
-    aktivitet?: SamtalereferatAktivitet;
     onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
-    isDirtyRef?: { current: boolean };
+    dirtyRef: MutableRefObject<boolean>;
+    aktivitet?: SamtalereferatAktivitet;
 }
 
 const SamtalereferatForm = (props: Props) => {

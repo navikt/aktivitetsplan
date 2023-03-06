@@ -33,8 +33,8 @@ import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 function NyAktivitetForm(props) {
     const { onLagreNyAktivitet, history, match, aktivitetFeilmeldinger, underOppfolging } = props;
 
-    const isDirty = useRef(false);
-    useConfirmOnBeforeUnload(isDirty);
+    const dirtyRef = useRef(false);
+    useConfirmOnBeforeUnload(dirtyRef);
 
     const onSubmitFactory = (aktivitetsType) => {
         return (aktivitet) => {
@@ -51,7 +51,7 @@ function NyAktivitetForm(props) {
     };
 
     function onRequestClose() {
-        const isItReallyDirty = isDirty.current;
+        const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.push('/');
         }
@@ -59,7 +59,7 @@ function NyAktivitetForm(props) {
 
     const onReqBack = (e) => {
         e.preventDefault();
-        const isItReallyDirty = isDirty.current;
+        const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.push('/aktivitet/ny');
         }
@@ -82,34 +82,34 @@ function NyAktivitetForm(props) {
                 <article>
                     <Switch>
                         <Route path={`${match.path}/mote`}>
-                            <MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} isDirtyRef={isDirty} />
+                            <MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} dirtyRef={dirtyRef} />
                         </Route>
                         <Route path={`${match.path}/samtalereferat`}>
-                            <SamtalereferatForm onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)} isDirtyRef={isDirty} />
+                            <SamtalereferatForm onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)} dirtyRef={dirtyRef} />
                         </Route>
                         <Route path={`${match.path}/stilling`}>
                             <StillingAktivitetForm
                                 onSubmit={onSubmitFactory(STILLING_AKTIVITET_TYPE)}
-                                isDirtyRef={isDirty}
+                                dirtyRef={dirtyRef}
                             />
                         </Route>
                         <Route path={`${match.path}/sokeavtale`}>
                             <SokeAvtaleAktivitetForm
                                 onSubmit={onSubmitFactory(SOKEAVTALE_AKTIVITET_TYPE)}
-                                isDirtyRef={isDirty}
+                                dirtyRef={dirtyRef}
                             />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
                             <MedisinskBehandlingForm
                                 onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
-                                isDirtyRef={isDirty}
+                                dirtyRef={dirtyRef}
                             />
                         </Route>
                         <Route path={`${match.path}/egen`}>
-                            <EgenAktivitetForm onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
+                            <EgenAktivitetForm onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)} dirtyRef={dirtyRef} />
                         </Route>
                         <Route path={`${match.path}/ijobb`}>
-                            <IJobbAktivitetForm onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
+                            <IJobbAktivitetForm onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)} dirtyRef={dirtyRef} />
                         </Route>
                     </Switch>
                 </article>

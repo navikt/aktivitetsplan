@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
@@ -9,12 +9,8 @@ import { selectGjeldendeMal } from './aktivitetsmal-reducer';
 import Malvisning from './mal-visning';
 import MalForm from './MalForm';
 
-interface DirtyRef {
-    current: boolean;
-}
-
 interface Props {
-    dirtyRef: DirtyRef;
+    dirtyRef: MutableRefObject<boolean>;
 }
 
 const MalContainer = (props: Props) => {

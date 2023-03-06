@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,7 +27,6 @@ const schema = z.object({
 type SamtalereferatAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
-    aktivitet?: SamtalereferatAktivitet;
     onSubmit: (
         data: SamtalereferatAktivitetFormValues & {
             status: string;
@@ -35,10 +34,12 @@ interface Props {
             erReferatPublisert?: boolean;
         }
     ) => Promise<void>;
+    dirtyRef: MutableRefObject<boolean>;
+    aktivitet?: SamtalereferatAktivitet;
 }
 
 const InnerSamtalereferatForm = (props: Props) => {
-    const { aktivitet, onSubmit } = props;
+    const { onSubmit, dirtyRef, aktivitet } = props;
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
 
@@ -58,12 +59,16 @@ const InnerSamtalereferatForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isDirty },
     } = useForm<SamtalereferatAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
         shouldFocusError: false,
     });
+
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
+    }
 
     const referatValue = watch('referat'); // for <Textarea /> character-count to work
 

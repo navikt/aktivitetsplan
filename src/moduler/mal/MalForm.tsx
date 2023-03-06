@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Textarea } from '@navikt/ds-react';
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { MutableRefObject, useLayoutEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -13,13 +13,9 @@ const schema = z.object({
 });
 type MalFormValues = z.infer<typeof schema>;
 
-interface DirtyRef {
-    current: boolean;
-}
-
 interface Props {
     mal?: string;
-    dirtyRef: DirtyRef;
+    dirtyRef: MutableRefObject<boolean>;
     handleComplete: () => void;
 }
 
