@@ -29,7 +29,11 @@ type SamtalereferatAktivitetFormValues = z.infer<typeof schema>;
 interface Props {
     aktivitet?: SamtalereferatAktivitet;
     onSubmit: (
-        data: SamtalereferatAktivitetFormValues & { status: string; avtalt: boolean; erReferatPublisert?: boolean }
+        data: SamtalereferatAktivitetFormValues & {
+            status: string;
+            avtalt: boolean;
+            erReferatPublisert?: boolean;
+        }
     ) => Promise<void>;
 }
 
@@ -49,7 +53,6 @@ const InnerSamtalereferatForm = (props: Props) => {
     //     defaultSelected: initialValues.fraDato ? new Date(initialValues.fraDato) : undefined,
     //     onDateChange: (date) => state.setValue('fraDato', date?.toISOString() || ''),
     // });
-    console.log('SAMTALEREFET RENDER');
 
     const {
         register,
@@ -64,28 +67,19 @@ const InnerSamtalereferatForm = (props: Props) => {
 
     const referatValue = watch('referat'); // for <Textarea /> character-count to work
 
-    const lagreOgDel = state.onSubmit((values) => {
-        const newValues = {
-            ...values,
-            status: STATUS_GJENNOMFOERT,
-            erReferatPublisert: true,
-            avtalt: false,
-        };
-        return onSubmit(newValues);
-    });
+    const lagreOgDel = (erReferatPublisert: boolean) => {
+        return handleSubmit((data) => {
+            onSubmit({
+                ...data,
+                status: STATUS_GJENNOMFOERT,
+                avtalt: false,
+                ...(erReferatPublisert && { erReferatPublisert: true }),
+            });
+        });
+    };
 
     return (
-        <form
-            autoComplete="off"
-            noValidate
-            onSubmit={handleSubmit((data) =>
-                onSubmit({
-                    ...data,
-                    status: STATUS_GJENNOMFOERT,
-                    avtalt: false,
-                })
-            )}
-        >
+        <form autoComplete="off" noValidate>
             <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
@@ -119,28 +113,27 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <CustomErrorSummary errors={errors} />
             </div>
-            {/*<Lagreknapper isLoading={state.submitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />*/}
             <Lagreknapper isLoading={false} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
         </form>
     );
 };
 
-const Lagreknapper = (props: { isLoading: boolean; isNy: boolean; lagreOgDel: (event: React.FormEvent) => void }) => {
+const Lagreknapper = (props: { isLoading: boolean; isNy: boolean; lagreOgDel: any }) => {
     const { isLoading, isNy, lagreOgDel } = props;
     if (isNy) {
         return (
             <div className="mt-4">
-                <Button loading={isLoading} onClick={lagreOgDel} className="mr-4">
+                <Button loading={isLoading} className="mr-4" onClick={lagreOgDel(true)}>
                     Del med bruker
                 </Button>
-                <Button variant="secondary" loading={isLoading}>
+                <Button variant="secondary" loading={isLoading} onClick={lagreOgDel(false)}>
                     Lagre utkast
                 </Button>
             </div>
         );
     }
     return (
-        <Button className="mt-4" loading={isLoading}>
+        <Button className="mt-4" loading={isLoading} onClick={lagreOgDel(false)}>
             Lagre
         </Button>
     );
