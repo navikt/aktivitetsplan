@@ -1,123 +1,142 @@
-import { Button, UNSAFE_DatePicker as DatePicker, UNSAFE_useDatepicker as useDatepicker } from '@navikt/ds-react';
-import useFormstate from '@nutgaard/use-formstate';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
+import {
+    INTERNET_KANAL,
+    OPPMOTE_KANAL,
+    SAMTALEREFERAT_TYPE,
+    STATUS_GJENNOMFOERT,
+    TELEFON_KANAL,
+} from '../../../../constant';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import VelgKanal from '../VelgKanal';
+import CustomErrorSummary from '../CustomErrorSummary';
 import { useReferatStartTekst } from './useReferatStartTekst';
-import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
+
+const schema = z.object({
+    tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
+    fraDato: z.string(),
+    kanal: z.string().min(1, 'Du må fylle ut samtaleform'),
+    referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
+});
+
+type SamtalereferatAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     aktivitet?: SamtalereferatAktivitet;
-    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
-    isDirtyRef?: { current: boolean };
+    onSubmit: (
+        data: SamtalereferatAktivitetFormValues & {
+            status: string;
+            avtalt: boolean;
+            erReferatPublisert?: boolean;
+        }
+    ) => Promise<void>;
 }
 
-type SamtalereferatInputProps = { tittel: string; fraDato: string; kanal: string; referat: string };
-
 const InnerSamtalereferatForm = (props: Props) => {
-    const { aktivitet, onSubmit, isDirtyRef = undefined } = props;
+    const { aktivitet, onSubmit } = props;
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
-    const validator = useFormstate<SamtalereferatInputProps>({
-        tittel: validateTittel,
-        fraDato: validateFraDato,
-        kanal: validateKanal,
-        referat: validateReferat,
-    });
 
-    const initialValues = {
+    const defaultValues: SamtalereferatAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
-        fraDato: aktivitet?.fraDato ? aktivitet.fraDato : todayIsoString(),
+        fraDato: aktivitet?.fraDato || todayIsoString(),
         kanal: aktivitet?.kanal || TELEFON_KANAL,
-        referat: aktivitet?.referat ? aktivitet.referat : startTekst,
+        referat: aktivitet?.referat || startTekst,
     };
 
-    const state = validator(initialValues);
+    // const { datepickerProps, inputProps } = useDatepicker({
+    //     defaultSelected: initialValues.fraDato ? new Date(initialValues.fraDato) : undefined,
+    //     onDateChange: (date) => state.setValue('fraDato', date?.toISOString() || ''),
+    // });
 
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
-    }
-
-    const lagreOgDel = state.onSubmit((values) => {
-        const newValues = {
-            ...values,
-            status: STATUS_GJENNOMFOERT,
-            erReferatPublisert: true,
-            avtalt: false,
-        };
-        return onSubmit(newValues);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<SamtalereferatAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
     });
 
-    const { datepickerProps, inputProps } = useDatepicker({
-        defaultSelected: initialValues.fraDato ? new Date(initialValues.fraDato) : undefined,
-        onDateChange: (date) => state.setValue('fraDato', date?.toISOString() || ''),
-    });
+    const referatValue = watch('referat'); // for <Textarea /> character-count to work
+
+    const lagreOgDel = (erReferatPublisert: boolean) => {
+        return handleSubmit((data) => {
+            onSubmit({
+                ...data,
+                status: STATUS_GJENNOMFOERT,
+                avtalt: false,
+                ...(erReferatPublisert && { erReferatPublisert: true }),
+            });
+        });
+    };
 
     return (
-        <form
-            autoComplete="off"
-            onSubmit={state.onSubmit((data) => {
-                return onSubmit({
-                    ...data,
-                    status: STATUS_GJENNOMFOERT,
-                    avtalt: false,
-                });
-            })}
-            noValidate
-        >
+        <form autoComplete="off" noValidate>
             <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
-                <Input label="Tema for samtalen (obligatorisk)" {...state.fields.tittel} />
+                <TextField
+                    label="Tema for samtalen (obligatorisk)"
+                    id={'tittel'}
+                    {...register('tittel')}
+                    error={errors.tittel && errors.tittel.message}
+                />
 
-                <DatePicker {...datepickerProps}>
-                    <DatePicker.Input error={state.errors.fraDato} label="Dato (obligatorisk)" {...inputProps} />
-                </DatePicker>
+                {/* TODO datovelger her */}
+                {/*<DatePicker {...datepickerProps}>*/}
+                {/*    <DatePicker.Input error={state.errors.fraDato} label="Dato *" {...inputProps} />*/}
+                {/*</DatePicker>*/}
 
-                <VelgKanal label="Møteform (obligatorisk)" {...state.fields.kanal} />
+                <Select label="Møteform (obligatorisk)" {...register('kanal')}>
+                    <option value={OPPMOTE_KANAL}>Oppmøte</option>
+                    <option value={TELEFON_KANAL}>Telefonmøte</option>
+                    <option value={INTERNET_KANAL}>Videomøte</option>
+                </Select>
 
                 {nyAktivitet && (
                     <Textarea
                         label="Samtalereferat (obligatorisk)"
-                        placeholder="Skriv her"
                         maxLength={5000}
-                        required
-                        {...state.fields.referat}
+                        {...register('referat')}
+                        error={errors.referat && errors.referat.message}
+                        value={referatValue}
                     />
                 )}
-                {state.submittoken ? <FormErrorSummary errors={state.errors} /> : null}
+
+                <CustomErrorSummary errors={errors} />
             </div>
-            <Lagreknapper isLoading={state.submitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+            <Lagreknapper isLoading={false} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
         </form>
     );
 };
 
-function Lagreknapper(props: { isLoading: boolean; isNy: boolean; lagreOgDel: (event: React.FormEvent) => void }) {
+const Lagreknapper = (props: { isLoading: boolean; isNy: boolean; lagreOgDel: any }) => {
     const { isLoading, isNy, lagreOgDel } = props;
     if (isNy) {
         return (
             <div className="mt-4">
-                <Button loading={isLoading} onClick={lagreOgDel} className="mr-4">
+                <Button loading={isLoading} className="mr-4" onClick={lagreOgDel(true)}>
                     Del med bruker
                 </Button>
-                <Button variant="secondary" loading={isLoading}>
+                <Button variant="secondary" loading={isLoading} onClick={lagreOgDel(false)}>
                     Lagre utkast
                 </Button>
             </div>
         );
     }
     return (
-        <Button className="mt-4" loading={isLoading}>
+        <Button className="mt-4" loading={isLoading} onClick={lagreOgDel(false)}>
             Lagre
         </Button>
     );
-}
+};
 
 export default InnerSamtalereferatForm;

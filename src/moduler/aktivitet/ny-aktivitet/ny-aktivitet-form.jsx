@@ -13,6 +13,7 @@ import {
     STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
+import ErrorBoundry from '../../../felles-komponenter/ErrorBoundry';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
@@ -37,6 +38,8 @@ function NyAktivitetForm(props) {
 
     const onSubmitFactory = (aktivitetsType) => {
         return (aktivitet) => {
+            console.log('SENDT AKTIVITET');
+            console.log(aktivitet);
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
             const nyAktivitet = {
                 status: STATUS_PLANLAGT,
@@ -75,40 +78,42 @@ function NyAktivitetForm(props) {
             contentLabel="ny-aktivitet-modal"
             feilmeldinger={aktivitetFeilmeldinger}
         >
-            <article>
-                <Switch>
-                    <Route path={`${match.path}/mote`}>
-                        <MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} isDirtyRef={isDirty} />
-                    </Route>
-                    <Route path={`${match.path}/samtalereferat`}>
-                        <SamtalereferatForm onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)} isDirtyRef={isDirty} />
-                    </Route>
-                    <Route path={`${match.path}/stilling`}>
-                        <StillingAktivitetForm
-                            onSubmit={onSubmitFactory(STILLING_AKTIVITET_TYPE)}
-                            isDirtyRef={isDirty}
-                        />
-                    </Route>
-                    <Route path={`${match.path}/sokeavtale`}>
-                        <SokeAvtaleAktivitetForm
-                            onSubmit={onSubmitFactory(SOKEAVTALE_AKTIVITET_TYPE)}
-                            isDirtyRef={isDirty}
-                        />
-                    </Route>
-                    <Route path={`${match.path}/behandling`}>
-                        <MedisinskBehandlingForm
-                            onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
-                            isDirtyRef={isDirty}
-                        />
-                    </Route>
-                    <Route path={`${match.path}/egen`}>
-                        <EgenAktivitetForm onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
-                    </Route>
-                    <Route path={`${match.path}/ijobb`}>
-                        <IJobbAktivitetForm onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
-                    </Route>
-                </Switch>
-            </article>
+            <ErrorBoundry>
+                <article>
+                    <Switch>
+                        <Route path={`${match.path}/mote`}>
+                            <MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} isDirtyRef={isDirty} />
+                        </Route>
+                        <Route path={`${match.path}/samtalereferat`}>
+                            <SamtalereferatForm onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)} isDirtyRef={isDirty} />
+                        </Route>
+                        <Route path={`${match.path}/stilling`}>
+                            <StillingAktivitetForm
+                                onSubmit={onSubmitFactory(STILLING_AKTIVITET_TYPE)}
+                                isDirtyRef={isDirty}
+                            />
+                        </Route>
+                        <Route path={`${match.path}/sokeavtale`}>
+                            <SokeAvtaleAktivitetForm
+                                onSubmit={onSubmitFactory(SOKEAVTALE_AKTIVITET_TYPE)}
+                                isDirtyRef={isDirty}
+                            />
+                        </Route>
+                        <Route path={`${match.path}/behandling`}>
+                            <MedisinskBehandlingForm
+                                onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
+                                isDirtyRef={isDirty}
+                            />
+                        </Route>
+                        <Route path={`${match.path}/egen`}>
+                            <EgenAktivitetForm onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
+                        </Route>
+                        <Route path={`${match.path}/ijobb`}>
+                            <IJobbAktivitetForm onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
+                        </Route>
+                    </Switch>
+                </article>
+            </ErrorBoundry>
         </Modal>
     );
 }

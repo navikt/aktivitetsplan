@@ -1,134 +1,130 @@
-import useFormstate from '@nutgaard/use-formstate';
-import { Formstate } from '@nutgaard/use-formstate/dist/types/domain';
-import PT from 'prop-types';
-import React, { MutableRefObject } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { TextField, Textarea } from '@navikt/ds-react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
+import { AppConfig } from '../../../../app';
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import { EgenAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import PeriodeValidering, {
-    validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../LagreAktivitet';
-import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke } from '../validate';
-import { validateTilDato, validateTittel } from './validate';
+import CustomErrorSummary from '../CustomErrorSummary';
+import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
-function erAvtalt(aktivitet?: Partial<EgenAktivitet>) {
-    return aktivitet?.avtalt || false;
-}
 declare const window: {
-    appconfig: { VIS_MALER: boolean };
+    appconfig: AppConfig;
 };
+
+const schema = z.object({
+    tittel: z.string().min(1, 'Du må fylle ut navn på aktiviteten').max(100, 'Du må korte ned teksten til 100 tegn'),
+    fraDato: z.string(),
+    tilDato: z.string(),
+    hensikt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
+    oppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    lenke: z.string().max(2000, 'Du må korte ned lenken til 2000 tegn').optional(),
+});
+
+type EgenAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: EgenAktivitetFormValues) => Promise<void>;
     aktivitet?: EgenAktivitet;
-    isDirtyRef: MutableRefObject<boolean>;
-    endre: boolean;
 }
 
-type EgenAktivitetFormValues = {
-    tittel: string;
-    fraDato: string;
-    tilDato: string;
-    periodeValidering: string;
-    hensikt: string;
-    beskrivelse: string;
-    oppfolging: string;
-    lenke: string;
-};
+const EgenAktivitetForm = (props: Props) => {
+    const { onSubmit, aktivitet } = props;
 
-function EgenAktivitetForm(props: Props) {
-    const { onSubmit, aktivitet, isDirtyRef, endre } = props;
-
-    const validator: (
-        initialValues: EgenAktivitetFormValues,
-        props: Partial<EgenAktivitet>
-    ) => Formstate<EgenAktivitetFormValues> = useFormstate<EgenAktivitetFormValues, Partial<EgenAktivitet>>({
-        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
-        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-        hensikt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-        oppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-        lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
-    });
-
-    const avtalt = aktivitet?.avtalt === true;
-
-    const initalValues: EgenAktivitetFormValues = {
+    const defaultValues: EgenAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
         fraDato: aktivitet?.fraDato || '',
         tilDato: aktivitet?.tilDato || '',
-        periodeValidering: '',
         hensikt: aktivitet?.hensikt || '',
         beskrivelse: aktivitet?.beskrivelse || '',
         oppfolging: aktivitet?.oppfolging || '',
         lenke: aktivitet?.lenke || '',
     };
 
-    const state = validator(initalValues, aktivitet || {});
+    const avtalt = aktivitet?.avtalt === true;
 
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
-    }
+    const {
+        register,
+        setValue,
+        handleSubmit,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm<EgenAktivitetFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: false });
 
-    const reinitalize = (newInitalValues: EgenAktivitetFormValues) =>
-        state.reinitialize({ ...initalValues, ...newInitalValues });
+    const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
+
+    const onMalChange = (newInitalValues: any) => {
+        if (!newInitalValues) {
+            reset();
+        } else {
+            Object.entries(newInitalValues).forEach(([name, value], _) => {
+                setValue(name as any, value); // TODO pls typ malverk. pls fjern malverk
+            });
+        }
+    };
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <div className="aktivitetskjema space-y-3">
+        <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
+            <div className="aktivitetskjema space-y-4">
                 <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 
-                <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="EGEN" />
+                <Malverk visible={window.appconfig.VIS_MALER} endre={!!aktivitet} onChange={onMalChange} type="EGEN" />
 
-                <Input disabled={avtalt} label="Navn på aktiviteten (obligatorisk)" {...state.fields.tittel} />
-
-                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
-                    <div className="dato-container">
-                        <MaybeAvtaltDateRangePicker
-                            formState={state}
-                            aktivitet={aktivitet}
-                            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}
-                        />
-                    </div>
-                </PeriodeValidering>
-
-                <Input disabled={avtalt} label="Mål med aktiviteten" {...state.fields.hensikt} />
-                <Textarea
+                <TextField
                     disabled={avtalt}
+                    label="Navn på aktiviteten (obligatorisk)"
+                    id={'tittel'}
+                    {...register('tittel')}
+                    error={errors.tittel && errors.tittel.message}
+                />
+                {/* TODO datovelger her */}
+                {/*<PeriodeValidering valideringFelt={state.fields.periodeValidering}>*/}
+                {/*    <div className="dato-container">*/}
+                {/*        <MaybeAvtaltDateRangePicker*/}
+                {/*            formState={state}*/}
+                {/*            aktivitet={aktivitet}*/}
+                {/*            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*</PeriodeValidering>*/}
+                <TextField
+                    disabled={avtalt}
+                    label="Mål med aktiviteten"
+                    id={'hensikt'}
+                    {...register('hensikt')}
+                    error={errors.hensikt && errors.hensikt.message}
+                />
+                <Textarea
                     label="Kort beskrivelse av aktiviteten"
                     maxLength={5000}
-                    {...state.fields.beskrivelse}
+                    {...register('beskrivelse')}
+                    error={errors.beskrivelse && errors.beskrivelse.message}
+                    value={beskrivelseValue}
                 />
-                <Input disabled={avtalt} label="Min huskeliste for denne aktiviteten" {...state.fields.oppfolging} />
-                <Input disabled={avtalt} label="Lenke til en aktuell nettside" {...state.fields.lenke} />
-                {state.submittoken ? <FormErrorSummary errors={state.errors} /> : null}
+                <TextField
+                    label="Min huskeliste for denne aktiviteten"
+                    id={'huskeliste'}
+                    {...register('oppfolging')}
+                    error={errors.oppfolging && errors.oppfolging.message}
+                />
+                <TextField
+                    disabled={avtalt}
+                    label="Lenke til en aktuell nettside"
+                    id={'lenke'}
+                    {...register('lenke')}
+                    error={errors.lenke && errors.lenke.message}
+                />
+                <CustomErrorSummary errors={errors} />
+                <LagreAktivitetKnapp />
             </div>
-            <LagreAktivitet />
         </form>
     );
-}
-
-EgenAktivitetForm.propTypes = {
-    onSubmit: PT.func.isRequired,
-    aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool }),
-    endre: PT.bool,
-};
-
-EgenAktivitetForm.defaultProps = {
-    aktivitet: undefined,
-    isDirtyRef: undefined,
-    endre: false,
 };
 
 export default EgenAktivitetForm;

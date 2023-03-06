@@ -8,7 +8,7 @@ import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
 import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Textarea from '../../../felles-komponenter/skjema/input/Textarea';
 
-const begrunnelseValidator = (val) => {
+const begrunnelseValidator = (val: any) => {
     if (val.trim().length === 0) {
         return 'Du må fylle ut en begrunnelse';
     }
@@ -19,7 +19,14 @@ const begrunnelseValidator = (val) => {
     return undefined;
 };
 
-function BegrunnelseForm(props) {
+interface Props {
+    headerTekst: string;
+    beskrivelseLabel: string;
+    lagrer: boolean;
+    onSubmit: (data: any) => Promise<void>;
+}
+
+function BegrunnelseForm(props: Props) {
     const { beskrivelseLabel, headerTekst, lagrer, onSubmit } = props;
 
     const validator = useFormstate({
@@ -32,7 +39,7 @@ function BegrunnelseForm(props) {
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
-                    <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+                    {/*<FormErrorSummary errors={state.errors} submittoken={state.submittoken} />*/}
                     <Heading level="1" size="large">
                         {headerTekst}
                     </Heading>
@@ -50,12 +57,5 @@ function BegrunnelseForm(props) {
         </form>
     );
 }
-
-BegrunnelseForm.propTypes = {
-    headerTekst: PT.string.isRequired,
-    beskrivelseLabel: PT.string.isRequired,
-    lagrer: PT.bool.isRequired,
-    onSubmit: PT.func.isRequired,
-};
 
 export default BegrunnelseForm;

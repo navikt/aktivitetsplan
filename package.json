@@ -20,6 +20,7 @@
     "manifest-fix": "node ./scripts/fixManifest.js"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.11",
     "@navikt/ds-css": "^2.3.1",
     "@navikt/ds-icons": "^1.5.4",
     "@navikt/ds-react": "^2.2.0",
@@ -42,6 +43,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.43.3",
     "react-intl": "^6.2.1",
     "react-modal": "^3.16.1",
     "react-redux": "^8.0.5",
@@ -58,7 +60,8 @@
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-svgr": "^2.4.0",
     "vitest": "^0.29.1",
-    "whatwg-fetch": "^3.6.2"
+    "whatwg-fetch": "^3.6.2",
+    "zod": "^3.20.6"
   },
   "husky": {
     "hooks": {
