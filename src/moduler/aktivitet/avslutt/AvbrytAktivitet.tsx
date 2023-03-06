@@ -11,6 +11,7 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
+import BegrunnelseForm from './BegrunnelseForm';
 import PubliserReferat from './publiser-referat';
 import VisAdvarsel from './vis-advarsel';
 
@@ -39,13 +40,13 @@ const AvbrytAktivitet = (props: Props) => {
     const lagrer = aktivitetListeStatus !== STATUS.OK;
 
     const begrunnelse = valgtAktivitet ? (
-        <BegrunnelseAktivitet
+        <BegrunnelseForm
             headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
-            onSubmit={(beskrivelseForm) => {
+            onSubmit={async (beskrivelseForm) => {
                 history.replace('/');
-                return lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
+                lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
         />
     ) : null;

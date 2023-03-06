@@ -9,6 +9,7 @@ import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import * as AppPT from '../../../proptypes';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
+import BegrunnelseForm from './BegrunnelseForm';
 import PubliserReferat from './publiser-referat';
 import VisAdvarsel from './vis-advarsel';
 
@@ -19,7 +20,7 @@ const beskrivelseTekst =
 
 const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging, history }) => {
     const begrunnelse = (
-        <BegrunnelseAktivitet
+        <BegrunnelseForm
             headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseTekst}
             lagrer={lagrer}
