@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import {
@@ -58,7 +58,7 @@ const InnerSamtalereferatForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<SamtalereferatAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
@@ -113,12 +113,16 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <CustomErrorSummary errors={errors} />
             </div>
-            <Lagreknapper isLoading={false} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+            <Lagreknapper isLoading={isSubmitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
         </form>
     );
 };
 
-const Lagreknapper = (props: { isLoading: boolean; isNy: boolean; lagreOgDel: any }) => {
+const Lagreknapper = (props: {
+    isLoading: boolean;
+    isNy: boolean;
+    lagreOgDel: (erReferatPublisert: boolean) => (e?: React.BaseSyntheticEvent) => Promise<void>;
+}) => {
     const { isLoading, isNy, lagreOgDel } = props;
     if (isNy) {
         return (
