@@ -5,7 +5,7 @@ import styles from './VarslingInfo.module.less';
 
 const VarslingInfo = () => (
     <div className="flex mb-2">
-        <Label className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</Label>
+        <Label>Teksten som blir lagt til aktiviteten:</Label>
         <HelpText className="ml-2">
             <div className={styles.maxWidth300}>
                 Brukeren mottar sms eller e-post (se KRR) med en lenke til aktiviteten. <br />

@@ -13,3 +13,4 @@ public/mockServiceWorker.js
 dist
 dist-ssr
 /build
+bundle-stats.html

@@ -78,10 +78,10 @@ function MalContent(props: MalContentProps) {
     }
 
     return (
-        <div className="space-y-2">
+        <div className="flex flex-col items-start gap-4">
             <MalText disabled={disabled} mal={mal} />
             <Button onClick={endreMal} variant="secondary" size="small">
-                Endre målet
+                Se tidligere mål
             </Button>
         </div>
     );
@@ -111,7 +111,7 @@ function MittMaal() {
         <div
             className={classNames('border-border-default rounded-md mb-4 p-4', {
                 'border-2 border-dashed ': !mal && !disabled,
-                border: mal,
+                border: mal || disabled,
             })}
         >
             <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>

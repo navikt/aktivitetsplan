@@ -90,7 +90,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
                 <TextField
-                    label="Tema for samtalen *"
+                    label="Tema for samtalen (obligatorisk)"
                     id={'tittel'}
                     {...register('tittel')}
                     error={errors.tittel && errors.tittel.message}

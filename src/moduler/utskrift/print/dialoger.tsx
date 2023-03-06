@@ -1,4 +1,4 @@
-import { Detail, Heading } from '@navikt/ds-react';
+import { Detail, Heading, Label } from '@navikt/ds-react';
 import React from 'react';
 
 import { Dialog } from '../../../datatypes/dialogTypes';
@@ -45,14 +45,14 @@ export function DialogPrint(props: DialogProps) {
     const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(a.sendt, b.sendt));
 
     return (
-        <div hidden={!henvendelserSynkende} className="printmodal-body__dialog">
+        <div hidden={!henvendelserSynkende} className="border rounded-md p-4 mb-4">
             <Tittel dialog={dialog} />
             {henvendelserSynkende &&
                 henvendelserSynkende.map((h) => (
-                    <div className="henvendelse" key={h.id}>
-                        <Detail className="detaljfelt__tittel">
-                            {`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(h.sendt)}`}
-                        </Detail>
+                    <div className="my-4" key={h.id}>
+                        <Label className="">{`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(
+                            h.sendt
+                        )}`}</Label>
                         <CustomBodyLong formatLinebreaks formatLinks>
                             {h.tekst}
                         </CustomBodyLong>
@@ -77,8 +77,8 @@ export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
     const sorterteDialoger = dialogerUtenAktivitet.sort((a, b) => datoComparator(a.opprettetDato, b.opprettetDato));
 
     return (
-        <section className="printmodal-body__statusgrupper">
-            <Heading level="1" size="medium" className="printmodal-body__statusgruppe--overskrift">
+        <section className="mt-10">
+            <Heading level="1" size="large" className="mb-2">
                 Dialogen med veileder
             </Heading>
             {sorterteDialoger.map((d) => (

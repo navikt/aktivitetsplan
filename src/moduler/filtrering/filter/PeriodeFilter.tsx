@@ -1,6 +1,6 @@
-import { Historic } from '@navikt/ds-icons';
-import { Button, Radio, RadioGroup } from '@navikt/ds-react';
-import React, { useRef, useState } from 'react';
+import { Select } from '@navikt/ds-react';
+import { format } from 'date-fns';
+import React, { ChangeEventHandler, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
@@ -56,53 +56,40 @@ const PeriodeFilter = ({
 
     if (!harHistoriskePerioder) return null;
 
+    const onPeriodeChange: ChangeEventHandler<HTMLSelectElement> = (val) => {
+        const selectedPeriodeId = val.target.value;
+        if (selectedPeriodeId === 'inneverende') doVelgHistoriskPeriode(null);
+        else {
+            const periode = historiskePerioder.find((periode) => periode.uuid === selectedPeriodeId);
+            if (!periode) return;
+            loggEvent(VIS_HISTORISK_PERIODE);
+            doVelgHistoriskPeriode(periode);
+        }
+    };
+
     return (
-        <div ref={ref}>
-            <Button
-                icon={<Historic />}
-                variant="tertiary"
-                onClick={() => {
-                    setOpen(!open);
-                    loggEvent(LIST_HISTORISK_PERIODE);
-                }}
+        <div ref={ref} className="flex items-start">
+            <Select
+                defaultValue={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
+                label="Periode"
+                onChange={onPeriodeChange}
             >
-                Tidligere planer
-            </Button>
-            {open ? (
-                <div className="rounded-md absolute p-4 bg-white border z-10">
-                    <RadioGroup
-                        value={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
-                        legend={'Velg periode'}
-                    >
-                        {skjulInneverende ? null : (
-                            <Radio
-                                value="inneverende"
-                                className="filter__radio--periode"
-                                name="inneverende"
-                                onChange={() => doVelgHistoriskPeriode(null)}
-                            >
-                                Nåværende periode
-                            </Radio>
-                        )}
-                        {historiskePerioder.map((oppfolgingsPeriode, index) => {
-                            return (
-                                <Radio
-                                    value={oppfolgingsPeriode.uuid}
-                                    key={index}
-                                    className="filter__radio--periode"
-                                    name={oppfolgingsPeriode.uuid}
-                                    onChange={() => {
-                                        doVelgHistoriskPeriode(oppfolgingsPeriode);
-                                        loggEvent(VIS_HISTORISK_PERIODE);
-                                    }}
-                                >
-                                    <PeriodeLabel historiskPeriode={oppfolgingsPeriode} />
-                                </Radio>
-                            );
-                        })}
-                    </RadioGroup>
-                </div>
-            ) : null}
+                {skjulInneverende ? null : (
+                    <option value="inneverende" className="filter__radio--periode">
+                        Nåværende periode
+                    </option>
+                )}
+                {historiskePerioder.map((oppfolgingsPeriode, index) => {
+                    return (
+                        <option value={oppfolgingsPeriode.uuid} key={index}>
+                            {`${format(new Date(oppfolgingsPeriode.fra), 'dd/yyyy')} - ${format(
+                                new Date(oppfolgingsPeriode.til),
+                                'dd/yyyy'
+                            )}`}
+                        </option>
+                    );
+                })}
+            </Select>
         </div>
     );
 };

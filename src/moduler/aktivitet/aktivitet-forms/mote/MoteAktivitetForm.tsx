@@ -124,14 +124,14 @@ const MoteAktivitetForm = (props: Props) => {
                 <VideoInfo kanal={watch('kanal')} />
 
                 <TextField
-                    label="Møtested eller annen praktisk informasjon *"
+                    label="Møtested eller annen praktisk informasjon (obligatorisk)"
                     id={'adresse'}
                     {...register('adresse')}
                     error={errors.adresse && errors.adresse.message}
                 />
                 <Textarea
                     disabled={avtalt}
-                    label="Hensikt med møtet *"
+                    label="Hensikt med møtet (obligatorisk)"
                     maxLength={5000}
                     {...register('beskrivelse')}
                     error={errors.beskrivelse && errors.beskrivelse.message}

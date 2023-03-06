@@ -1,4 +1,4 @@
-import { BodyShort, Label } from '@navikt/ds-react';
+import { BodyShort, Detail, Label } from '@navikt/ds-react';
 import useFormstate, { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,21 +91,22 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
         arenaAktivitetRequestStatus === STATUS.PENDING;
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)}>
-            <BodyShort className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</BodyShort>
-            <Label className={styles.navAnsattTekst}>FOR NAV-ANSATT</Label>
-
-            <div>
+        <form
+            className="border border-border-alt-3 bg-surface-alt-3-subtle flex flex-col rounded-md p-4"
+            onSubmit={state.onSubmit(onSubmit)}
+        >
+            <div className="flex items-center justify-between">
                 <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
                     Legg til forhåndsorientering
                 </Checkbox>
-
-                <ForhaandsorienteringsMeldingArenaaktivitet
-                    visible={state.fields.checked.input.value === 'true'}
-                    lasterData={lasterData}
-                    state={state}
-                />
+                <Detail className="">FOR NAV-ANSATT</Detail>
             </div>
+            <BodyShort className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</BodyShort>
+            <ForhaandsorienteringsMeldingArenaaktivitet
+                visible={state.fields.checked.input.value === 'true'}
+                lasterData={lasterData}
+                state={state}
+            />
         </form>
     );
 };

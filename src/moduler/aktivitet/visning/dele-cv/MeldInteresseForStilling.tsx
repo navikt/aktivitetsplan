@@ -115,7 +115,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
             </RadioGroup>
 
             {infoTekst && <Alert children={infoTekst} variant="info" inline className="my-3" />}
-            {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
+            {erVeileder && state.submittoken && <FormErrorSummary errors={state.errors} />}
             <Button className={styles.knapp} disabled={state.submitting}>
                 Send svar
             </Button>

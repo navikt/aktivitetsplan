@@ -13,7 +13,7 @@ import Maal from '../moduler/mal-linje/MittMaal';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselReducer';
 import Varslinger from '../moduler/varslinger/Varslinger';
-import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
+import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { aktivitetRoute } from '../routes';
 import DobbleLonnstilskuddAdvarsel from './DobbleLonnstilskuddAdvarsel';

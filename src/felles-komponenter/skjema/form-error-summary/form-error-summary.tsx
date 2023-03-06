@@ -1,4 +1,5 @@
 import { ErrorSummary } from '@navikt/ds-react';
+import { errors } from 'msw';
 import PT from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 
@@ -24,6 +25,11 @@ function FormErrorSummary({ errors }: Props) {
     const feil = Object.entries(errors)
         .filter(([_, error]) => !!error)
         .map(([name, error]) => ({ skjemaelementId: name, feilmelding: error }));
+
+    if (feil.length === 1) {
+        // Don't show summary when only one error
+        return null;
+    }
 
     return (
         <ErrorSummary

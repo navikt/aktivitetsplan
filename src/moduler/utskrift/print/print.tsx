@@ -59,15 +59,15 @@ function Print(props: Props) {
 
     return (
         <div className="printmodal-body" hidden={hidden}>
-            <img className="printmodal-body__nav-logo-print" src={logoPng} alt="Logo NAV" />
-            <div className="printmodal-body__adresse-dato">
-                <div className="printmodal-body__adresse">
+            <img className="my-8" src={logoPng} alt="Logo NAV" />
+            <div className="flex justify-between mb-8">
+                <div className="">
                     <HiddenIfDiv hidden={!erVeileder}>
                         <StoreForbokstaver>{`${fornavn} ${etternavn}`}</StoreForbokstaver>
                         {adresse && <Adresse adresse={adresse} />}
                     </HiddenIfDiv>
                 </div>
-                <div className="printmodal-body__dato">
+                <div>
                     <HiddenIfDiv hidden={!erVeileder}>{enhetsNavn}</HiddenIfDiv>
                     Dato: {formaterDatoKortManed(Date.now())}
                     <HiddenIfDiv hidden={!fodselsnummer}>

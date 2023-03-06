@@ -22,14 +22,16 @@ const Gruppe = (props: Props) => {
     const sorterteAktiviteter = [...aktiviteter].sort(compareAktivitet);
 
     return (
-        <section className="printmodal-body__statusgrupper">
-            <Heading level="1" size="medium" className="mb-4">
+        <section className="mt-12">
+            <Heading level="1" size="large" className="mb-2">
                 {tittel}
             </Heading>
-            {sorterteAktiviteter.map((aktivitet) => {
-                const dialogForAktivitet = dialoger && dialoger.find((d) => d.aktivitetId === aktivitet.id);
-                return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;
-            })}
+            <div className="space-y-4">
+                {sorterteAktiviteter.map((aktivitet) => {
+                    const dialogForAktivitet = dialoger && dialoger.find((d) => d.aktivitetId === aktivitet.id);
+                    return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;
+                })}
+            </div>
         </section>
     );
 };

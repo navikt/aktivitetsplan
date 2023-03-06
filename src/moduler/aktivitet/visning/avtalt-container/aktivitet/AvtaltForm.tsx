@@ -1,4 +1,4 @@
-import { Button, HelpText, Label } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, HelpText, Label } from '@navikt/ds-react';
 import useFormstate, { FieldState, SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import React, { useContext, useEffect } from 'react';
@@ -114,7 +114,7 @@ const AvtaltForm = (props: Props) => {
                             med NAV"
                         </div>
                     </HelpText>
-                    <Label className="text-right flex-grow">FOR NAV-ANSATT</Label>
+                    <Detail className="text-right flex-grow">FOR NAV-ANSATT</Detail>
                 </div>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv

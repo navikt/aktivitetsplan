@@ -40,7 +40,7 @@ const TiltakEtikett = (props: Props) => {
     const text = getText(etikett);
 
     return (
-        <Tag variant={variant} size="small">
+        <Tag className="mr-2" variant={variant} size="small">
             {text}
         </Tag>
     );

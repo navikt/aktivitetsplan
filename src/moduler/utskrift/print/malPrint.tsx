@@ -1,4 +1,4 @@
-import { Heading } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { Mal } from '../../../datatypes/oppfolgingTypes';
@@ -12,11 +12,11 @@ function MalPrint(props: Props) {
     if (!mal) return null;
 
     return (
-        <section className="printmodal-body__vismittmal">
-            <Heading level="1" size="medium">
+        <section className="my-8">
+            <Heading level="1" size="large">
                 Mitt mål
             </Heading>
-            <p>{mal}</p>
+            <BodyShort>{mal}</BodyShort>
         </section>
     );
 }
