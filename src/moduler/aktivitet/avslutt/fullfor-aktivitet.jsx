@@ -9,7 +9,6 @@ import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import * as AppPT from '../../../proptypes';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
-import BegrunnelseAktivitet from './begrunnelse-form';
 import PubliserReferat from './publiser-referat';
 import VisAdvarsel from './vis-advarsel';
 

@@ -11,7 +11,6 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
-import BegrunnelseAktivitet from './begrunnelse-form';
 import PubliserReferat from './publiser-referat';
 import VisAdvarsel from './vis-advarsel';
 
