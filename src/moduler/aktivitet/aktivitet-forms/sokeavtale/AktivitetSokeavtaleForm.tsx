@@ -79,13 +79,6 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
     }
 };
 
-const parseDate = (date: string | undefined): Date | undefined => {
-    if (!date) return undefined;
-    return new Date(date);
-};
-
-const noOp = () => {};
-
 const valueAsDateOrUndefined = (value: string) => {
     if (!value) return undefined;
     return new Date(value);
