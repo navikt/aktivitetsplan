@@ -17,7 +17,7 @@ interface Props {
     dirtyRef: DirtyRef;
 }
 
-function MalContainer(props: Props) {
+const MalContainer = (props: Props) => {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
@@ -32,7 +32,7 @@ function MalContainer(props: Props) {
         return (
             <MalForm
                 mal={mal}
-                isDirty={props.dirtyRef}
+                dirtyRef={props.dirtyRef}
                 handleComplete={() => {
                     setEdit(false);
                     props.dirtyRef.current = false;
@@ -43,6 +43,6 @@ function MalContainer(props: Props) {
     }
 
     return <Malvisning onClick={() => setEdit(true)} />;
-}
+};
 
 export default MalContainer;

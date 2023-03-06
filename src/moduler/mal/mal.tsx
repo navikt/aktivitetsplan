@@ -15,7 +15,7 @@ import MalHistorikk from './mal-historikk';
 import { MalModal } from './mal-modal';
 import { hentMalListe } from './malliste-reducer';
 
-function Mal() {
+const Mal = () => {
     const malStatus = useSelector(selectMalStatus, shallowEqual);
     const malListeStatus = useSelector(selectMalListeStatus, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
@@ -69,6 +69,6 @@ function Mal() {
             </div>
         </MalModal>
     );
-}
+};
 
 export default Mal;
