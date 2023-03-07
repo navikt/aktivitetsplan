@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 
+import { Select } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -50,20 +51,15 @@ class Malverk extends Component {
             !endre && (
                 <div className="skjemaelement">
                     <Innholdslaster avhengigheter={avhengigheter} spinnerSize="S">
-                        <label className="skjemaelement__label" htmlFor={domId}>
-                            Ferdig utfylt aktivitet
-                        </label>
-                        <div className="selectContainer input--fullbredde">
-                            <select
-                                className="skjemaelement__input"
-                                id={domId}
-                                name="malverk"
-                                onChange={this.onChangeMalverk}
-                            >
-                                <option value="ingen">Ingen ferdig utfylt aktivitet valgt</option>
-                                {malverkOptions}
-                            </select>
-                        </div>
+                        <Select
+                            id={domId}
+                            name={'malverk'}
+                            label="Ferdig utfylt aktivitet"
+                            onChange={this.onChangeMalverk}
+                        >
+                            <option value="ingen">Ingen ferdig utfylt aktivitet valgt</option>
+                            {malverkOptions}
+                        </Select>
                     </Innholdslaster>
                 </div>
             )
