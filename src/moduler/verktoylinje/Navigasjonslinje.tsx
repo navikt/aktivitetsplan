@@ -56,8 +56,9 @@ function Navigasjonslinje() {
                         <Link href={MINSIDE_PATH}>Min side</Link>
                         <Link href={DIALOG_PATH}>
                             <span>Min dialog med veileder</span>
-                            <DialogIkon antallUleste={antallUlesteDialoger} />
-                            <span className={styles.avstand} hidden={antallUlesteDialoger > 0} />
+                            {/*TODO vurder å ta det med i overgang til nytt designsystem*/}
+                            {/*<DialogIkon antallUleste={antallUlesteDialoger} />*/}
+                            {/*<span className={styles.avstand} hidden={antallUlesteDialoger > 0} />*/}
                         </Link>
                     </>
                 ) : null}
@@ -67,6 +68,9 @@ function Navigasjonslinje() {
                     onClick={() => loggEvent(APNE_OM_TJENESTEN)}
                 >
                     Hva er aktivitetsplanen?
+                </ReactRouterLink>
+                <ReactRouterLink to="/utskrift" className="text-text-action underline">
+                    Skriv ut
                 </ReactRouterLink>
             </div>
             <Heading level="1" size="xlarge">

@@ -55,7 +55,7 @@ const MalForm = (props: Props) => {
         handleSubmit,
         watch,
         formState: { errors, isDirty },
-    } = useForm<MalFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: false });
+    } = useForm<MalFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: true });
 
     console.log(isDirty);
 

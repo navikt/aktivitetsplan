@@ -1,4 +1,5 @@
 import { Select } from '@navikt/ds-react';
+import classNames from 'classnames';
 import { format } from 'date-fns';
 import React, { ChangeEventHandler, useRef, useState } from 'react';
 import { connect } from 'react-redux';
@@ -68,8 +69,11 @@ const PeriodeFilter = ({
     };
 
     return (
+        // <div ref={ref} className="flex items-start">
         <div ref={ref} className="flex items-start">
             <Select
+                className="w-full sm:w-60"
+                hideLabel
                 defaultValue={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
                 label="Periode"
                 onChange={onPeriodeChange}
