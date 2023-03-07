@@ -1,14 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import React from 'react';
-import { FieldErrors, useForm } from 'react-hook-form';
+import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { AppConfig } from '../../../../app';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import { SokeavtaleAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
-import PartialDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -79,17 +78,17 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
     }
 };
 
-const valueAsDateOrUndefined = (value: string) => {
-    if (!value) return undefined;
-    return new Date(value);
-};
-
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, onSubmit } = props;
     const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const defaultValues = getDefaultValues(aktivitet);
     const avtalt = aktivitet?.avtalt || false;
 
+    const formHandlers = useForm<SokeavtaleAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(SokeAvtaleFormValues),
+        shouldFocusError: false,
+    });
     const {
         register,
         handleSubmit,
@@ -97,11 +96,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         setValue,
         reset,
         formState: { errors: formStateErrors },
-    } = useForm<SokeavtaleAktivitetFormValues>({
-        defaultValues,
-        resolver: zodResolver(SokeAvtaleFormValues),
-        shouldFocusError: false,
-    });
+    } = formHandlers;
 
     const errorWrapper = brukeStillingerIUken
         ? { errors: formStateErrors as FieldErrors<NySokeavtaleAktivitetFormValues>, skjemaVersjon: 'ny' as const }
@@ -125,84 +120,71 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
-            <div className="skjema-innlogget aktivitetskjema space-y-4">
-                <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
-                <Malverk
-                    visible={window.appconfig.VIS_MALER}
-                    endre={!!aktivitet}
-                    onChange={onMalChange}
-                    type="SOKEAVTALE"
-                />
-                <div className="dato-container">
-                    {aktivitet?.avtalt === true && aktivitet?.fraDato ? (
-                        <PartialDateRangePicker
-                            error={{
-                                from: errorWrapper.errors.fraDato?.message,
-                                to: errorWrapper.errors.tilDato?.message,
-                            }}
-                            from={defaultValues.fraDato!!}
-                            fromRef={register('fraDato', { setValueAs: valueAsDateOrUndefined }).ref}
-                            toRef={register('tilDato', { setValueAs: valueAsDateOrUndefined }).ref}
+            <FormProvider {...formHandlers}>
+                <div className="skjema-innlogget aktivitetskjema space-y-4">
+                    <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
+                    <Malverk
+                        visible={window.appconfig.VIS_MALER}
+                        endre={!!aktivitet}
+                        onChange={onMalChange}
+                        type="SOKEAVTALE"
+                    />
+                    <div className="dato-container">
+                        <MaybeAvtaltDateRangePicker
+                            aktivitet={aktivitet}
+                            from={{ name: 'fraDato' }}
+                            to={{ name: 'tilDato' }}
+                        />
+                    </div>
+                    {errorWrapper.skjemaVersjon === 'ny' ? (
+                        <TextField
+                            disabled={avtalt}
+                            type="number"
+                            label="Antall søknader i uken (obligatorisk)"
+                            id={'antallStillingerIUken'}
+                            {...register('antallStillingerIUken', {
+                                valueAsNumber: true,
+                            })}
+                            error={
+                                errorWrapper.errors.antallStillingerIUken &&
+                                errorWrapper.errors.antallStillingerIUken.message
+                            }
                         />
                     ) : (
-                        <DateRangePicker
-                            fromRef={register('fraDato', { setValueAs: valueAsDateOrUndefined }).ref}
-                            toRef={register('tilDato', { setValueAs: valueAsDateOrUndefined }).ref}
-                            error={{
-                                from: errorWrapper.errors.fraDato?.message,
-                                to: errorWrapper.errors.tilDato?.message,
-                            }}
+                        <TextField
+                            disabled={avtalt}
+                            type="number"
+                            label="Antall søknader i perioden (obligatorisk)"
+                            id={'antallStillingerSokes'}
+                            {...register('antallStillingerSokes', {
+                                valueAsNumber: true,
+                            })}
+                            error={
+                                errorWrapper.errors.antallStillingerSokes &&
+                                errorWrapper.errors.antallStillingerSokes.message
+                            }
                         />
                     )}
+                    <Textarea
+                        disabled={avtalt}
+                        label="Oppfølging fra NAV"
+                        maxLength={255}
+                        {...register('avtaleOppfolging')}
+                        error={errorWrapper.errors.avtaleOppfolging && errorWrapper.errors.avtaleOppfolging.message}
+                        value={avtaleOppfolging}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Beskrivelse"
+                        maxLength={5000}
+                        {...register('beskrivelse')}
+                        error={errorWrapper.errors.beskrivelse && errorWrapper.errors.beskrivelse.message}
+                        value={beskrivelseValue}
+                    />
+                    <CustomErrorSummary errors={errorWrapper.errors} />
+                    <LagreAktivitetKnapp />
                 </div>
-                {errorWrapper.skjemaVersjon === 'ny' ? (
-                    <TextField
-                        disabled={avtalt}
-                        type="number"
-                        label="Antall søknader i uken (obligatorisk)"
-                        id={'antallStillingerIUken'}
-                        {...register('antallStillingerIUken', {
-                            valueAsNumber: true,
-                        })}
-                        error={
-                            errorWrapper.errors.antallStillingerIUken &&
-                            errorWrapper.errors.antallStillingerIUken.message
-                        }
-                    />
-                ) : (
-                    <TextField
-                        disabled={avtalt}
-                        type="number"
-                        label="Antall søknader i perioden (obligatorisk)"
-                        id={'antallStillingerSokes'}
-                        {...register('antallStillingerSokes', {
-                            valueAsNumber: true,
-                        })}
-                        error={
-                            errorWrapper.errors.antallStillingerSokes &&
-                            errorWrapper.errors.antallStillingerSokes.message
-                        }
-                    />
-                )}
-                <Textarea
-                    disabled={avtalt}
-                    label="Oppfølging fra NAV"
-                    maxLength={255}
-                    {...register('avtaleOppfolging')}
-                    error={errorWrapper.errors.avtaleOppfolging && errorWrapper.errors.avtaleOppfolging.message}
-                    value={avtaleOppfolging}
-                />
-                <Textarea
-                    disabled={avtalt}
-                    label="Beskrivelse"
-                    maxLength={5000}
-                    {...register('beskrivelse')}
-                    error={errorWrapper.errors.beskrivelse && errorWrapper.errors.beskrivelse.message}
-                    value={beskrivelseValue}
-                />
-                <CustomErrorSummary errors={errorWrapper.errors} />
-                <LagreAktivitetKnapp />
-            </div>
+            </FormProvider>
         </form>
     );
 };

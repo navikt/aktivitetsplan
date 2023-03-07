@@ -1,65 +1,28 @@
-import { Formstate } from '@nutgaard/use-formstate';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
-import DateRangePicker from './DateRangePicker';
-import PartialDateRangePicker, { DateRange } from './PartialDateRangePicker';
+import ControlledDatePicker, { FieldSettings } from './ControlledDateRangePicker';
 
 type FormValuesWithDates = { fraDato: string; tilDato: string };
-function getError<T extends FormValuesWithDates>(
-    state: Formstate<T>,
-    field: 'fraDato' | 'tilDato'
-): string | undefined {
-    return state.fields[field].touched ? state.errors[field] : undefined;
-}
 
 interface Props<T extends FormValuesWithDates> {
-    formState: Formstate<T>;
     aktivitet?: AlleAktiviteter;
-    initialFromDate?: Date;
-    initialToDate?: Date;
+    disabled?: any[];
+    from: FieldSettings;
+    to: FieldSettings;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noOp = () => {};
-function MaybeAvtaltDateRangePicker<T extends FormValuesWithDates>({
-    aktivitet,
-    formState,
-    initialFromDate,
-    initialToDate,
-}: Props<T>) {
-    const [dateRange, setDateRange] = useState<Partial<DateRange>>({
-        from: initialFromDate ? new Date(initialFromDate) : undefined,
-        to: initialToDate,
-    });
-    const onChangeDate = (val: Date | undefined) => {
-        setDateRange({ ...dateRange, to: val });
-        formState.setValue('tilDato', val?.toISOString() || '');
-    };
-    const onChangeDateRange = (val: Partial<DateRange> | undefined) => {
-        setDateRange({ from: val?.from, to: val?.to });
-        formState.setValue('fraDato', val?.from?.toISOString() || '');
-        formState.setValue('tilDato', val?.to?.toISOString() || '');
-    };
-
+function MaybeAvtaltDateRangePicker<T extends FormValuesWithDates>({ aktivitet, from, to }: Props<T>) {
+    const defaultToValue = aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined;
+    const defaultFromValue = aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined;
     return aktivitet && aktivitet.avtalt && aktivitet.fraDato ? (
-        <PartialDateRangePicker
-            onChange={onChangeDate}
-            from={new Date(aktivitet.fraDato)}
-            onValidate={noOp}
-            initialToDate={initialToDate}
-            error={{ to: getError(formState, 'tilDato') }}
+        <ControlledDatePicker
+            from={{ defaultValue: defaultFromValue, ...from, disabled: true }}
+            to={{ defaultValue: defaultToValue, ...to }}
         />
     ) : (
-        <DateRangePicker
-            onChange={onChangeDateRange}
-            value={dateRange}
-            onValidate={noOp}
-            error={{
-                /* Error message doesn't fit in form, but still want to make field red when missing */
-                from: getError(formState, 'fraDato'),
-                to: getError(formState, 'tilDato'),
-            }}
+        <ControlledDatePicker
+            from={{ defaultValue: defaultFromValue, ...from }}
+            to={{ defaultValue: defaultToValue, ...to }}
         />
     );
 }

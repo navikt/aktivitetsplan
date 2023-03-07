@@ -4,6 +4,7 @@ import {
     UNSAFE_useDatepicker as useDatePicker,
 } from '@navikt/ds-react';
 import { MutableRefObject, RefCallback, forwardRef } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form/dist/types/form';
 
 interface Props {
     onChange?: (val: Date | undefined) => void;
@@ -12,8 +13,8 @@ interface Props {
     initialToDate?: Date;
     error?: { from?: string; to?: string };
     onValidate?: (validation: DateValidationT) => void;
-    fromRef?: RefCallback<any>;
-    toRef?: RefCallback<any>;
+    fromRegisterProps?: UseFormRegisterReturn;
+    toRegisterProps?: UseFormRegisterReturn;
 }
 
 export interface DateRange {
@@ -39,16 +40,7 @@ export const getErrorMessageForDate = (val: DateValidationT): string | undefined
     if (!val.isValidDate) return 'Datoen er ugyldig';
 };
 
-const PartialDateRangePicker = ({
-    onChange,
-    from,
-    onValidate,
-    error,
-    disabled,
-    initialToDate,
-    fromRef,
-    toRef,
-}: Props) => {
+const PartialDateRangePicker = ({ onChange, from, onValidate, error, disabled, initialToDate }: Props) => {
     const { datepickerProps: fromDatePickerProps, inputProps: fromDateInputProps } = useDatePicker({
         fromDate: from,
         defaultSelected: from,
@@ -62,26 +54,10 @@ const PartialDateRangePicker = ({
     return (
         <div className="flex flex-wrap justify-center gap-4 items-start">
             <DatePicker {...fromDatePickerProps}>
-                <DatePicker.Input
-                    disabled
-                    label={'Fra dato'}
-                    {...fromDateInputProps}
-                    ref={(element) => {
-                        (fromDateInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = element;
-                        if (fromRef) fromRef(element);
-                    }}
-                />
+                <DatePicker.Input disabled label={'Fra dato'} {...fromDateInputProps} />
             </DatePicker>
             <DatePicker {...toDatePickerProps} disabled={[{ before: from }]}>
-                <DatePicker.Input
-                    error={error?.to}
-                    label={'Til dato'}
-                    {...toDateInputProps}
-                    ref={(element) => {
-                        (toDateInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = element;
-                        if (toRef) toRef(element);
-                    }}
-                />
+                <DatePicker.Input error={error?.to} label={'Til dato'} {...toDateInputProps} />
             </DatePicker>
         </div>
     );

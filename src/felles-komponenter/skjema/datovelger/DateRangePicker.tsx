@@ -1,36 +1,60 @@
 import { UNSAFE_DatePicker as DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
 import { MutableRefObject, RefCallback } from 'react';
+import { UseFormRegisterReturn, UseFormTrigger } from 'react-hook-form/dist/types/form';
 
 import { DateRange } from './PartialDateRangePicker';
 
 interface Props {
     onChange?: (val?: Partial<DateRange>) => void;
+    onValidate: (val: RangeValidationT) => void;
     disabledDays?: any[];
-    value?: Partial<DateRange> | undefined;
+    defaultValue?: Partial<DateRange> | undefined;
     from?: Date;
     error?: { from?: string; to?: string };
-    onValidate?: (validation: RangeValidationT) => void;
-    fromRef?: RefCallback<any>;
-    toRef?: RefCallback<any>;
+    onChangeTo: (to?: Date) => void;
+    onChangeFrom: (from?: Date) => void;
+    toRef?: RefCallback<HTMLInputElement>;
+    fromRef?: RefCallback<HTMLInputElement>;
+    toRegisterProps: UseFormRegisterReturn;
+    fromRegisterProps: UseFormRegisterReturn;
+    trigger: UseFormTrigger<any>;
 }
 
-const DateRangePicker = ({ error, onChange, from, value, onValidate, disabledDays, fromRef, toRef }: Props) => {
+const handlers = (handlers: React.FocusEventHandler[]) => (event: React.FocusEvent) => {
+    handlers.forEach((handler) => handler(event));
+};
+const onChangeHandlers =
+    (handlers: React.ChangeEventHandler<HTMLInputElement>[]) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        handlers.forEach((handler) => handler(event));
+    };
+
+const DateRangePicker = ({
+    error,
+    onValidate,
+    onChangeTo,
+    onChangeFrom,
+    from,
+    trigger,
+    defaultValue,
+    disabledDays,
+    toRegisterProps,
+    fromRegisterProps,
+}: Props) => {
     const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
-        defaultSelected: value?.from ? { from: value.from, to: undefined } : undefined,
+        defaultSelected: defaultValue?.from ? { from: defaultValue.from, to: undefined } : undefined,
         fromDate: from,
         disabled: disabledDays,
-        onValidate,
-        onRangeChange: onChange,
+        onValidate: onValidate,
+        onRangeChange: async (val) => {
+            if (!val) return;
+            onChangeTo(val.to);
+            onChangeFrom(val.from);
+        },
     });
 
-    const onFromChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        if (!fromInputProps.onChange) return;
-        fromInputProps.onChange(event);
-    };
-    const onToChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        if (!toInputProps.onChange) return;
-        toInputProps.onChange(event);
+    const triggerValidation = () => {
+        trigger([fromRegisterProps.name, toRegisterProps.name]);
     };
 
     return (
@@ -42,10 +66,12 @@ const DateRangePicker = ({ error, onChange, from, value, onValidate, disabledDay
                         error={error?.from}
                         label={'Fra dato'}
                         {...fromInputProps}
-                        onChange={onFromChange}
-                        ref={(element) => {
-                            (fromInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = element;
-                            fromRef && fromRef(element);
+                        onChange={onChangeHandlers([fromInputProps.onChange as any, fromRegisterProps.onChange])}
+                        onBlur={handlers([fromInputProps.onBlur as any, fromRegisterProps.onBlur, triggerValidation])}
+                        name={fromRegisterProps.name}
+                        ref={(ref) => {
+                            (fromInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
+                            fromRegisterProps.ref(ref);
                         }}
                     />
                     <DatePicker.Input
@@ -53,10 +79,12 @@ const DateRangePicker = ({ error, onChange, from, value, onValidate, disabledDay
                         error={error?.to}
                         label={'Til dato'}
                         {...toInputProps}
-                        onChange={onToChange}
-                        ref={(element) => {
-                            (toInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = element;
-                            toRef && toRef(element);
+                        onChange={onChangeHandlers([toInputProps.onChange as any, toRegisterProps.onChange])}
+                        onBlur={handlers([toInputProps.onBlur as any, toRegisterProps.onBlur, triggerValidation])}
+                        name={toRegisterProps.name}
+                        ref={(ref) => {
+                            (toInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
+                            toRegisterProps.ref(ref);
                         }}
                     />
                 </div>
