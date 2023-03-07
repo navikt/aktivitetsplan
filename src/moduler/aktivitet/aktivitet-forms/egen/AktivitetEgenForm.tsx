@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { AppConfig } from '../../../../app';
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import { EgenAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -49,6 +50,11 @@ const EgenAktivitetForm = (props: Props) => {
 
     const avtalt = aktivitet?.avtalt === true;
 
+    const formHandlers = useForm<EgenAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
+    });
     const {
         register,
         setValue,
@@ -56,7 +62,7 @@ const EgenAktivitetForm = (props: Props) => {
         reset,
         watch,
         formState: { errors, isDirty },
-    } = useForm<EgenAktivitetFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: false });
+    } = formHandlers;
 
     if (dirtyRef) {
         dirtyRef.current = isDirty;
@@ -76,58 +82,60 @@ const EgenAktivitetForm = (props: Props) => {
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
-            <div className="aktivitetskjema space-y-4">
-                <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
+            <FormProvider {...formHandlers}>
+                <div className="aktivitetskjema space-y-4">
+                    <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 
-                <Malverk visible={window.appconfig.VIS_MALER} endre={!!aktivitet} onChange={onMalChange} type="EGEN" />
+                    <Malverk
+                        visible={window.appconfig.VIS_MALER}
+                        endre={!!aktivitet}
+                        onChange={onMalChange}
+                        type="EGEN"
+                    />
 
-                <TextField
-                    disabled={avtalt}
-                    label="Navn på aktiviteten (obligatorisk)"
-                    id={'tittel'}
-                    {...register('tittel')}
-                    error={errors.tittel && errors.tittel.message}
-                />
-                {/* TODO datovelger her */}
-                {/*<PeriodeValidering valideringFelt={state.fields.periodeValidering}>*/}
-                {/*    <div className="dato-container">*/}
-                {/*        <MaybeAvtaltDateRangePicker*/}
-                {/*            formState={state}*/}
-                {/*            aktivitet={aktivitet}*/}
-                {/*            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*</PeriodeValidering>*/}
-                <TextField
-                    disabled={avtalt}
-                    label="Mål med aktiviteten"
-                    id={'hensikt'}
-                    {...register('hensikt')}
-                    error={errors.hensikt && errors.hensikt.message}
-                />
-                <Textarea
-                    label="Kort beskrivelse av aktiviteten"
-                    maxLength={5000}
-                    {...register('beskrivelse')}
-                    error={errors.beskrivelse && errors.beskrivelse.message}
-                    value={beskrivelseValue}
-                />
-                <TextField
-                    label="Min huskeliste for denne aktiviteten"
-                    id={'huskeliste'}
-                    {...register('oppfolging')}
-                    error={errors.oppfolging && errors.oppfolging.message}
-                />
-                <TextField
-                    disabled={avtalt}
-                    label="Lenke til en aktuell nettside"
-                    id={'lenke'}
-                    {...register('lenke')}
-                    error={errors.lenke && errors.lenke.message}
-                />
-                <CustomErrorSummary errors={errors} />
-                <LagreAktivitetKnapp />
-            </div>
+                    <TextField
+                        disabled={avtalt}
+                        label="Navn på aktiviteten (obligatorisk)"
+                        id={'tittel'}
+                        {...register('tittel')}
+                        error={errors.tittel && errors.tittel.message}
+                    />
+                    <MaybeAvtaltDateRangePicker
+                        aktivitet={aktivitet}
+                        from={{ name: 'fraDato', required: true }}
+                        to={{ name: 'tilDato' }}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Mål med aktiviteten"
+                        id={'hensikt'}
+                        {...register('hensikt')}
+                        error={errors.hensikt && errors.hensikt.message}
+                    />
+                    <Textarea
+                        label="Kort beskrivelse av aktiviteten"
+                        maxLength={5000}
+                        {...register('beskrivelse')}
+                        error={errors.beskrivelse && errors.beskrivelse.message}
+                        value={beskrivelseValue}
+                    />
+                    <TextField
+                        label="Min huskeliste for denne aktiviteten"
+                        id={'huskeliste'}
+                        {...register('oppfolging')}
+                        error={errors.oppfolging && errors.oppfolging.message}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Lenke til en aktuell nettside"
+                        id={'lenke'}
+                        {...register('lenke')}
+                        error={errors.lenke && errors.lenke.message}
+                    />
+                    <CustomErrorSummary errors={errors} />
+                    <LagreAktivitetKnapp />
+                </div>
+            </FormProvider>
         </form>
     );
 };

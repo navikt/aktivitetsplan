@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
 import { MedisinskBehandlingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
@@ -50,16 +51,17 @@ const MedisinskBehandlingForm = (props: Props) => {
     };
     const avtalt = aktivitet?.avtalt || false;
 
+    const formHandlers = useForm<MedisinskBehandlingFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
+    });
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isDirty },
-    } = useForm<MedisinskBehandlingFormValues>({
-        defaultValues,
-        resolver: zodResolver(schema),
-        shouldFocusError: false,
-    });
+    } = formHandlers;
 
     if (dirtyRef) {
         dirtyRef.current = isDirty;
@@ -69,58 +71,54 @@ const MedisinskBehandlingForm = (props: Props) => {
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
-            <div className="aktivitetskjema space-y-4">
-                <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
-                <TextField
-                    disabled={avtalt}
-                    label="Type behandling (obligatorisk)"
-                    id={'behandlingstype'}
-                    {...register('behandlingType')}
-                    error={errors.behandlingType && errors.behandlingType.message}
-                />
-                <TextField
-                    disabled={avtalt}
-                    label="Behandlingssted (obligatorisk)"
-                    id={'behandlingssted'}
-                    {...register('behandlingSted')}
-                    error={errors.behandlingSted && errors.behandlingSted.message}
-                />
-                {/* TODO datovelger her */}
-                {/*<PeriodeValidering valideringFelt={state.fields.periodeValidering}>*/}
-                {/*    <div className="dato-container">*/}
-                {/*        <MaybeAvtaltDateRangePicker*/}
-                {/*            formState={state}*/}
-                {/*            aktivitet={aktivitet}*/}
-                {/*            initialFromDate={initalValues.fraDato ? new Date(initalValues.fraDato) : undefined}*/}
-                {/*            initialToDate={initalValues.tilDato ? new Date(initalValues.tilDato) : undefined}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*</PeriodeValidering>*/}
-                <TextField
-                    disabled={avtalt}
-                    label="Mål for behandlingen"
-                    id={'effekt'}
-                    {...register('effekt')}
-                    error={errors.effekt && errors.effekt.message}
-                />
-                <TextField
-                    disabled={avtalt}
-                    label="Oppfølging fra NAV"
-                    id={'behandlingoppfolging'}
-                    {...register('behandlingOppfolging')}
-                    error={errors.behandlingOppfolging && errors.behandlingOppfolging.message}
-                />
-                <Textarea
-                    disabled={avtalt}
-                    label="Kort beskrivelse av behandlingen"
-                    maxLength={400}
-                    {...register('beskrivelse')}
-                    error={errors.beskrivelse && errors.beskrivelse.message}
-                    value={beskrivelseValue}
-                />
-                <CustomErrorSummary errors={errors} />
-                <LagreAktivitetKnapp />
-            </div>
+            <FormProvider {...formHandlers}>
+                <div className="aktivitetskjema space-y-4">
+                    <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
+                    <TextField
+                        disabled={avtalt}
+                        label="Type behandling (obligatorisk)"
+                        id={'behandlingstype'}
+                        {...register('behandlingType')}
+                        error={errors.behandlingType && errors.behandlingType.message}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Behandlingssted (obligatorisk)"
+                        id={'behandlingssted'}
+                        {...register('behandlingSted')}
+                        error={errors.behandlingSted && errors.behandlingSted.message}
+                    />
+                    <MaybeAvtaltDateRangePicker
+                        aktivitet={aktivitet}
+                        from={{ name: 'fraDato', required: true }}
+                        to={{ name: 'tilDato' }}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Mål for behandlingen"
+                        id={'effekt'}
+                        {...register('effekt')}
+                        error={errors.effekt && errors.effekt.message}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Oppfølging fra NAV"
+                        id={'behandlingoppfolging'}
+                        {...register('behandlingOppfolging')}
+                        error={errors.behandlingOppfolging && errors.behandlingOppfolging.message}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Kort beskrivelse av behandlingen"
+                        maxLength={400}
+                        {...register('beskrivelse')}
+                        error={errors.beskrivelse && errors.beskrivelse.message}
+                        value={beskrivelseValue}
+                    />
+                    <CustomErrorSummary errors={errors} />
+                    <LagreAktivitetKnapp />
+                </div>
+            </FormProvider>
         </form>
     );
 };

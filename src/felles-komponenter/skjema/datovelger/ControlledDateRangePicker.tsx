@@ -62,7 +62,6 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         validateRemoveErrors(rangeValidation);
     };
 
-    console.log({ from, to });
     const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
         defaultSelected: { from: from.defaultValue, to: to.defaultValue },
         fromDate: from.defaultValue,
