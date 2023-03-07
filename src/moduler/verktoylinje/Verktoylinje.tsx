@@ -20,24 +20,28 @@ const Verktoylinje = () => {
 
     const history = useHistory();
 
-    const leggTilAktivitetDisabled = viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang;
+    const hideLeggTilOgFilter = viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang;
 
     return (
         <div className="flex flex-col gap-y-6">
             <div className="flex gap-y-4 sm:flex-row flex-col-reverse ">
                 <div className="flex gap-4 items-start flex-col sm:flex-row w-full [&>*]:w-full [&>*]:sm:w-fit">
-                    <Button
-                        className=""
-                        icon={<Add role="img" focusable="false" aria-hidden />}
-                        disabled={!aktivitetLaster || leggTilAktivitetDisabled}
-                        onClick={() => {
-                            loggEvent(APNE_NY_AKTIVITET);
-                            history.push('/aktivitet/ny');
-                        }}
-                    >
-                        Legg til aktivitet
-                    </Button>
-                    <Filter />
+                    {!hideLeggTilOgFilter ? (
+                        <>
+                            <Button
+                                className=""
+                                icon={<Add role="img" focusable="false" aria-hidden />}
+                                loading={!aktivitetLaster}
+                                onClick={() => {
+                                    loggEvent(APNE_NY_AKTIVITET);
+                                    history.push('/aktivitet/ny');
+                                }}
+                            >
+                                Legg til aktivitet
+                            </Button>
+                            <Filter />
+                        </>
+                    ) : null}
                 </div>
                 <PeriodeFilter skjulInneverende={!underOppfolging} />
             </div>

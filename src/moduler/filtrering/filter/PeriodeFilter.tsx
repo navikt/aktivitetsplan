@@ -1,39 +1,18 @@
 import { Select } from '@navikt/ds-react';
-import classNames from 'classnames';
 import { format } from 'date-fns';
 import React, { ChangeEventHandler, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
-import Dato from '../../../felles-komponenter/Dato';
 import { useOutsideClick } from '../../../felles-komponenter/hooks/useClickOutside';
 import { ReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
-import loggEvent, { LIST_HISTORISK_PERIODE, VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
-import * as AppPT from '../../../proptypes';
+import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import {
     VistOppfolgingsPeriode,
     selectSorterteHistoriskeOppfolgingsPerioder,
 } from '../../oppfolging-status/oppfolging-selector';
 import { velgHistoriskPeriode } from './filter-reducer';
 import { selectHistoriskPeriode } from './filter-selector';
-
-export function PeriodeLabel({ historiskPeriode }: { historiskPeriode: VistOppfolgingsPeriode }) {
-    return (
-        <div>
-            <Dato>{historiskPeriode.vistFra}</Dato>
-            <span> - </span>
-            <Dato>{historiskPeriode.til}</Dato>
-        </div>
-    );
-}
-
-PeriodeLabel.defaultProps = {
-    historiskPeriode: null,
-};
-
-PeriodeLabel.propTypes = {
-    historiskPeriode: AppPT.oppfolgingsPeriode,
-};
 
 interface Props {
     harHistoriskePerioder: boolean;
@@ -71,7 +50,7 @@ const PeriodeFilter = ({
     return (
         <div ref={ref} className="flex items-start">
             <Select
-                className="w-full sm:w-60"
+                className="w-full sm:w-64"
                 hideLabel
                 defaultValue={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
                 label="Periode"
@@ -82,13 +61,12 @@ const PeriodeFilter = ({
                         Nåværende periode
                     </option>
                 )}
-                {historiskePerioder.map((oppfolgingsPeriode, index) => {
+                {historiskePerioder.map((oppfolgingsperiode, index) => {
+                    const fraDato = format(new Date(oppfolgingsperiode.startDato), 'dd. MMM yyyy');
+                    const tilDato = format(new Date(oppfolgingsperiode.sluttDato), 'dd. MMM yyyy');
                     return (
-                        <option value={oppfolgingsPeriode.uuid} key={index}>
-                            {`${format(new Date(oppfolgingsPeriode.fra), 'dd/yyyy')} - ${format(
-                                new Date(oppfolgingsPeriode.til),
-                                'dd/yyyy'
-                            )}`}
+                        <option value={oppfolgingsperiode.uuid} key={index}>
+                            {`${fraDato} - ${tilDato}`}
                         </option>
                     );
                 })}
