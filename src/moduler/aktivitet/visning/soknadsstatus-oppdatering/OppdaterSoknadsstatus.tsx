@@ -77,7 +77,11 @@ const OppdaterSoknadsstatus = (props: Props) => {
                     {ikkefattjobbendetaljer}
                 </Alert>
             ) : null}
-            <SoknadsstatusForm disabled={disableSoknadsstatusEndring} aktivitet={aktivitet} onSubmit={onSubmit} />
+            <SoknadsstatusForm
+                disabled={disableSoknadsstatusEndring || !kanEndre}
+                aktivitet={aktivitet}
+                onSubmit={onSubmit}
+            />
         </>
     );
 

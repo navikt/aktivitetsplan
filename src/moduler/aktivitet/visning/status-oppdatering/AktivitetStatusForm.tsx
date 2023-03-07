@@ -99,8 +99,14 @@ const AktivitetStatusForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <div className="">
-                <RadioGroup legend={''} value={state.fields.aktivitetstatus.input.value} onChange={onChangeStatus}>
+            <div>
+                <RadioGroup
+                    legend={null}
+                    hideLegend
+                    value={state.fields.aktivitetstatus.input.value}
+                    onChange={onChangeStatus}
+                    disabled={disabled}
+                >
                     {fields.map(({ value, label }) => (
                         <Radio key={value} label={label} value={value} />
                     ))}
@@ -125,7 +131,7 @@ const AktivitetStatusForm = (props: Props) => {
                 ) : null}
             </div>
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-            <Button loading={state.submitting} className="oppdater-status" disabled={disabled}>
+            <Button loading={state.submitting} className="mt-4" disabled={disabled}>
                 Lagre
             </Button>
         </form>

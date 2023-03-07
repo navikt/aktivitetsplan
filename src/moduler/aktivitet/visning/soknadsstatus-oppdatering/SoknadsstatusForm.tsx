@@ -72,7 +72,12 @@ const SoknadsstatusForm = (props: Props) => {
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="pb-4">
-                <RadioGroup legend={''} value={state.fields.soknadsstatus.input.value} onChange={onChangeSoknadStatus}>
+                <RadioGroup
+                    legend={''}
+                    value={state.fields.soknadsstatus.input.value}
+                    onChange={onChangeSoknadStatus}
+                    disabled={disable}
+                >
                     {fields.map(({ label, value }) => (
                         <Radio key={value} value={value} label={label} />
                     ))}
