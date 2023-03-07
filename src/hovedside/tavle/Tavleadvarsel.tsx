@@ -54,7 +54,7 @@ const Tavleadvarsel = (props: Props) => {
     }
 
     return (
-        <div className={styles.advarsel}>
+        <div className="fixed z-50 left-0 right-0 max-w-lg mx-auto">
             <GuidePanel illustration={<ObsSVG />} poster>
                 <BodyShort>{getAdvarseltekst(draggingAktivitet, erVeileder)}</BodyShort>
             </GuidePanel>
