@@ -28,7 +28,6 @@ export default defineConfig(({ mode }) => {
                 filename: 'bundle-stats.html',
             }),
         ],
-        base: mode === 'test' && 'http://localhost',
         server: {
             port: 3000,
         },
