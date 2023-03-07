@@ -58,7 +58,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 </Heading>
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
-                <IkkeDeltFerdigMarkering visible={deltFerdigMarkeringSkalVises} />
+                {deltFerdigMarkeringSkalVises ? <IkkeDeltFerdigMarkering /> : null}
             </div>
             <AvtaltContainer underOppfolging={underOppfolging} aktivitet={valgtAktivitet} />
             <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />

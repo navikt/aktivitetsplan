@@ -14,7 +14,7 @@ export const SkalIkkeDeltFerdigMarkeringVises = (aktivitet: SamtalereferatAktivi
     return harIkkeDeltSamtalereferat || harIkkedeltReferatFraMote;
 };
 
-const ReferatIkkeDelt = () => {
+const IkkeDeltFerdigMarkering = () => {
     const erBruker = useSelector(selectErBruker);
     const tekst = erBruker ? 'Samtalereferatet er ikke ferdig' : 'Samtalereferatet er ikke delt';
 
@@ -25,4 +25,4 @@ const ReferatIkkeDelt = () => {
     );
 };
 
-export default ReferatIkkeDelt;
+export default IkkeDeltFerdigMarkering;
