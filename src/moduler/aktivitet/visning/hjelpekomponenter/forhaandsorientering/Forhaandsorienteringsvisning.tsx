@@ -38,9 +38,13 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const dispatch = useDispatch();
 
+    console.log(aktivitet);
     const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
 
     const [erEkspandert, setErEkspandert] = useState(startAapen);
+
+    console.log(forhaandsorientering);
+    console.log(forhaandsorienteringLestDato);
 
     if (!forhaandsorienteringTekst) {
         return null;
@@ -64,6 +68,8 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     const lasterDataAktivitet = aktivitetFhoLestStatus === STATUS.PENDING;
     const lasterData = erArenaAktivitet ? lasterDataArena : lasterDataAktivitet;
 
+    console.log({ erLest, kanMarkeresSomLest });
+
     if (!erLest && kanMarkeresSomLest) {
         return (
             <Alert variant="warning">
@@ -78,7 +84,9 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     return (
         <ReadMore header={tittelTekst} open={erEkspandert} onClick={() => setErEkspandert(!erEkspandert)}>
             <BodyLong>{forhaandsorienteringTekst}</BodyLong>
-            <BodyShort className="mt-4">Lest {formaterDatoManed(forhaandsorienteringLestDato)}</BodyShort>
+            {erLest ? (
+                <BodyShort className="mt-4">Lest {formaterDatoManed(forhaandsorienteringLestDato)}</BodyShort>
+            ) : null}
         </ReadMore>
     );
 };
