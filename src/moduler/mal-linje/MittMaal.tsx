@@ -14,12 +14,12 @@ import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';
 import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { ReactComponent as MålIkon } from './Aktivitetsplan mål.svg';
+import { ReactComponent as MaalIkon } from './Aktivitetsplan_maal.svg';
 
 interface MalTextProps {
     mal?: string;
@@ -57,6 +57,9 @@ function MalContent(props: MalContentProps) {
         loggMittMalKlikk(erVeileder);
         dispatch(lesMal());
     };
+    const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
+
+    console.log(viserInnevaerendePeriode);
 
     if (!mal && !disabled) {
         return (
@@ -81,7 +84,7 @@ function MalContent(props: MalContentProps) {
         <div className="flex flex-col items-start gap-4">
             <MalText disabled={disabled} mal={mal} />
             <Button onClick={endreMal} variant="secondary" size="small">
-                Se tidligere mål
+                {viserInnevaerendePeriode ? 'Endre målet' : 'Se tidligere mål'}
             </Button>
         </div>
     );
@@ -115,12 +118,12 @@ function MittMaal() {
             })}
         >
             <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
-                <div className="flex flex-col sm:flex-row items-center gap-6">
-                    <MålIkon className="mx-4" />
+                <div className="flex sm:flex-row items-center gap-6">
+                    <MaalIkon className="hidden sm:block mx-4" />
                     <div>
                         <div className="flex mb-2">
                             <NotifikasjonMarkering visible={nyEndring} />
-                            <Heading level="2" size="medium">
+                            <Heading level="2" size="medium" className={'flex'}>
                                 Mitt mål
                             </Heading>
                         </div>
