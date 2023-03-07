@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
+import React, { MutableRefObject, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -30,12 +30,13 @@ const schema = z.object({
 type MedisinskBehandlingFormValues = z.infer<typeof schema>;
 
 interface Props {
-    aktivitet?: MedisinskBehandlingAktivitet;
     onSubmit: (values: MedisinskBehandlingFormValues) => Promise<void>;
+    dirtyRef: MutableRefObject<boolean>;
+    aktivitet?: MedisinskBehandlingAktivitet;
 }
 
 const MedisinskBehandlingForm = (props: Props) => {
-    const { onSubmit, aktivitet } = props;
+    const { onSubmit, dirtyRef, aktivitet } = props;
 
     const defaultValues: MedisinskBehandlingFormValues = {
         tittel: aktivitet?.tittel || 'Medisinsk behandling',
@@ -53,12 +54,16 @@ const MedisinskBehandlingForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
+        formState: { errors, isDirty },
     } = useForm<MedisinskBehandlingFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
         shouldFocusError: false,
     });
+
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
+    }
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 

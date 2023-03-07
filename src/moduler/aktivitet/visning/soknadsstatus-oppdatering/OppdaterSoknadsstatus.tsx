@@ -65,21 +65,25 @@ const OppdaterSoknadsstatus = (props: Props) => {
     const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 
-    let ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
+    const ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
         aktivitet.stillingFraNavData?.ikkefattjobbendetaljer
     );
-    const visning = (
+    const visning = <StillingFraNavEtikett soknadsstatus={aktivitet.stillingFraNavData?.soknadsstatus} />;
+    const { setFormIsDirty } = useContext(DirtyContext);
+    const form = (
         <>
-            <StillingFraNavEtikett soknadsstatus={aktivitet.stillingFraNavData?.soknadsstatus} />
-            {skalViseInfoBoks && (
+            {skalViseInfoBoks ? (
                 <Alert variant="info" className="mt-4">
                     {ikkefattjobbendetaljer}
                 </Alert>
-            )}
+            ) : null}
+            <SoknadsstatusForm
+                disabled={disableSoknadsstatusEndring || !kanEndre}
+                aktivitet={aktivitet}
+                onSubmit={onSubmit}
+            />
         </>
     );
-    const { setFormIsDirty } = useContext(DirtyContext);
-    const form = <SoknadsstatusForm disabled={disableSoknadsstatusEndring} aktivitet={aktivitet} onSubmit={onSubmit} />;
 
     return (
         <EndreLinje

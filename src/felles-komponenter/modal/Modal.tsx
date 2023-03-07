@@ -50,14 +50,14 @@ const Modal = (props: Props) => {
             {...rest}
             open
             className={classNames(
-                'aktivitet-modal aktivitetsplanfs aktivitet-modal-portal w-120 p-8 overscroll-contain',
+                'aktivitet-modal lg:w-120 p-8 overscroll-contain w-full rounded-none lg:rounded',
                 className,
                 contentClass
             )}
-            overlayClassName="aktivitet-modal__overlay"
+            overlayClassName="p-0 items-stretch lg:items-center"
             onClose={closeFuncOrDefault}
         >
-            <div className="flex flex-col ">
+            <div className="flex flex-col max-w-2xl mx-auto">
                 {header}
                 {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
                 <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>

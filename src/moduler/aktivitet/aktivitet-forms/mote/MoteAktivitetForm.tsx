@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Select, TextField, Textarea } from '@navikt/ds-react';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -35,12 +35,13 @@ const schema = z.object({
 type MoteAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
-    aktivitet?: MoteAktivitet;
     onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<any>;
+    dirtyRef: MutableRefObject<boolean>;
+    aktivitet?: MoteAktivitet;
 }
 
 const MoteAktivitetForm = (props: Props) => {
-    const { aktivitet, onSubmit } = props;
+    const { aktivitet, dirtyRef, onSubmit } = props;
 
     const dato = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
@@ -60,12 +61,16 @@ const MoteAktivitetForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
+        formState: { errors, isDirty },
     } = useForm<MoteAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
         shouldFocusError: false,
     });
+
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
+    }
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const forberedelserValue = watch('forberedelser'); // for <Textarea /> character-count to work

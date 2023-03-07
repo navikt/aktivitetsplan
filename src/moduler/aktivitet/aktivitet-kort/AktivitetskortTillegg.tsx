@@ -12,7 +12,7 @@ import EksterneEtiketter from '../etikett/EksterneEtikett';
 import StillingEtikett from '../etikett/StillingEtikett';
 import StillingFraNavEtikett from '../etikett/StillingFraNavEtikett';
 import TiltakEtikett from '../etikett/TiltakEtikett';
-import ReferatIkkeDelt, {
+import IkkeDeltFerdigMarkering, {
     SkalIkkeDeltFerdigMarkeringVises,
 } from '../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
@@ -61,7 +61,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                 {svartMarkeringSkalVises ? <DelCvIkkeSvart /> : null}
                 <div className="flex flex-col gap-y-1 items-start">
                     <UlestAvtaltMarkering aktivitet={aktivitet} />
-                    {deltFerdigMarkeringSkalVises ? <ReferatIkkeDelt /> : null}
+                    {deltFerdigMarkeringSkalVises ? <IkkeDeltFerdigMarkering /> : null}
                     {aktivitet.type === STILLING_AKTIVITET_TYPE ? <StillingEtikett aktivitet={aktivitet} /> : null}
                     {isArenaAktivitet(aktivitet) ? <TiltakEtikett aktivitet={aktivitet} /> : null}
                     {stillingFraNavSoknadsstatus ? (

@@ -27,7 +27,7 @@ export function selectOppfolgingsPerioder(state: State): OppfolgingsPeriode[] {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
 
-export type VistOppfolgingsPeriode = HistoriskOppfolgingsPeriode & { vistFra: string; fra: string; til: string };
+export type VistOppfolgingsPeriode = HistoriskOppfolgingsPeriode & { fra: string; til: string };
 export function selectSorterteHistoriskeOppfolgingsPerioder(state: State): VistOppfolgingsPeriode[] {
     let nesteFra = getNowAsISODate();
     return selectHistoriskeOppfolgingsPerioder(state)
@@ -40,7 +40,6 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state: State): VistO
                 ...periode,
                 fra,
                 til: sluttDato,
-                vistFra: periode.startDato,
             };
         })
         .reverse();

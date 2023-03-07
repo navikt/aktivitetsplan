@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import React from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -30,11 +30,12 @@ type EgenAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: EgenAktivitetFormValues) => Promise<void>;
+    dirtyRef: MutableRefObject<boolean>;
     aktivitet?: EgenAktivitet;
 }
 
 const EgenAktivitetForm = (props: Props) => {
-    const { onSubmit, aktivitet } = props;
+    const { onSubmit, dirtyRef, aktivitet } = props;
 
     const defaultValues: EgenAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
@@ -54,8 +55,12 @@ const EgenAktivitetForm = (props: Props) => {
         handleSubmit,
         reset,
         watch,
-        formState: { errors },
+        formState: { errors, isDirty },
     } = useForm<EgenAktivitetFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: false });
+
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
+    }
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 

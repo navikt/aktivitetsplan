@@ -1,23 +1,18 @@
-import { Button, Heading } from '@navikt/ds-react';
-import useFormstate from '@nutgaard/use-formstate';
-import PT from 'prop-types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Heading, Textarea } from '@navikt/ds-react';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
-import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Textarea from '../../../felles-komponenter/skjema/input/Textarea';
+import CustomErrorSummary from '../aktivitet-forms/CustomErrorSummary';
 
-const begrunnelseValidator = (val: any) => {
-    if (val.trim().length === 0) {
-        return 'Du må fylle ut en begrunnelse';
-    }
-    if (val.length > 255) {
-        return 'Du må korte ned teksten til 255 tegn';
-    }
+const schema = z.object({
+    begrunnelse: z.string().min(1, 'Du må fylle ut tema begrunnelse').max(255, 'Du må korte ned teksten til 255 tegn'),
+});
 
-    return undefined;
-};
+type BegrunnelseFormValues = z.infer<typeof schema>;
 
 interface Props {
     headerTekst: string;
@@ -26,20 +21,30 @@ interface Props {
     onSubmit: (data: any) => Promise<void>;
 }
 
-function BegrunnelseForm(props: Props) {
+const BegrunnelseForm = (props: Props) => {
     const { beskrivelseLabel, headerTekst, lagrer, onSubmit } = props;
 
-    const validator = useFormstate({
-        begrunnelse: begrunnelseValidator,
+    const defaultValues: BegrunnelseFormValues = {
+        begrunnelse: '',
+    };
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<BegrunnelseFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
     });
 
-    const state = validator({ begrunnelse: '' });
+    const begrunnelseValue = watch('begrunnelse'); // for <Textarea /> character-count to work
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit((data) => onSubmit(data))}>
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
-                    {/*<FormErrorSummary errors={state.errors} submittoken={state.submittoken} />*/}
                     <Heading level="1" size="large">
                         {headerTekst}
                     </Heading>
@@ -47,8 +52,11 @@ function BegrunnelseForm(props: Props) {
                         label={beskrivelseLabel}
                         maxLength={255}
                         disabled={lagrer}
-                        {...state.fields.begrunnelse}
+                        {...register('begrunnelse')}
+                        error={errors.begrunnelse && errors.begrunnelse.message}
+                        value={begrunnelseValue}
                     />
+                    <CustomErrorSummary errors={errors} />
                 </ModalContainer>
             </div>
             <ModalFooter>
@@ -56,6 +64,6 @@ function BegrunnelseForm(props: Props) {
             </ModalFooter>
         </form>
     );
-}
+};
 
 export default BegrunnelseForm;

@@ -6,17 +6,14 @@ import { connect } from 'react-redux';
 import { Store } from 'redux';
 
 import { ReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
-import { VistOppfolgingsPeriode } from '../oppfolging-status/oppfolging-selector';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
     toggleAktivitetsStatus,
     toggleAktivitetsType,
     toggleArenaAktivitetsEtikett,
-    velgHistoriskPeriode,
 } from './filter/filter-reducer';
 import { selectFilterSlice } from './filter/filter-selector';
-import { PeriodeLabel } from './filter/PeriodeFilter';
 import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
 type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
@@ -29,7 +26,6 @@ function VisValgtFilter(props: Props) {
         doToggleArenaAktivitetsEtikett,
         doToggleAktivitetsStatus,
         doToggleAktivitetsType,
-        doVelgHistoriskPeriode,
         doToggleAktivitetAvtaltMedNav,
     } = props;
     const setFilterValues = (filterType: string, filterVerdi: string) => {
@@ -76,22 +72,7 @@ function VisValgtFilter(props: Props) {
                 {Object.entries(filterSlice as Record<string, Record<string, string> | null>).map(
                     ([filterCategoryKey, activeFiltersMap]) => {
                         if (activeFiltersMap === null) return null;
-                        if (filterCategoryKey === 'historiskPeriode') {
-                            if (!activeFiltersMap) {
-                                return null;
-                            }
-                            return (
-                                <FiltreringLabel
-                                    key={'historiskPeriode'}
-                                    label={
-                                        <PeriodeLabel
-                                            historiskPeriode={activeFiltersMap as unknown as VistOppfolgingsPeriode}
-                                        />
-                                    }
-                                    slettFilter={() => doVelgHistoriskPeriode(null)}
-                                />
-                            );
-                        }
+                        if (filterCategoryKey === 'historiskPeriode') return null;
 
                         return Object.entries(activeFiltersMap)
                             .filter(([_, isFilterEnabled]) => isFilterEnabled)
@@ -125,7 +106,6 @@ function VisValgtFilter(props: Props) {
     doToggleArenaAktivitetsEtikett: PT.func.isRequired,
     doToggleAktivitetsStatus: PT.func.isRequired,
     doToggleAktivitetsType: PT.func.isRequired,
-    doVelgHistoriskPeriode: PT.func.isRequired,
     doToggleAktivitetAvtaltMedNav: PT.func.isRequired,
     className: PT.string,
 };
@@ -140,7 +120,6 @@ const mapDispatchToProps = (dispatch: ReduxDispatch) => ({
         dispatch(toggleArenaAktivitetsEtikett(aktivitetsEtikett)),
     doToggleAktivitetsStatus: (aktivitetsStatus: string) => dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
     doToggleAktivitetsType: (aktivitetsType: string) => dispatch(toggleAktivitetsType(aktivitetsType)),
-    doVelgHistoriskPeriode: (historiskPeriode: string | null) => dispatch(velgHistoriskPeriode(historiskPeriode)),
     doToggleAktivitetAvtaltMedNav: (aktivitetsStatus: string) =>
         dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
 });

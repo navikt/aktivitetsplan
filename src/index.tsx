@@ -5,6 +5,8 @@ import './polyfill';
 
 import { Modal } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
+import { setDefaultOptions } from 'date-fns';
+import nn from 'date-fns/locale/nn';
 import moment from 'moment';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -31,6 +33,7 @@ moment.tz.setDefault('Europe/Oslo');
 moment.updateLocale('nb', {
     monthsShort: ['jan.', 'feb.', 'mar.', 'apr.', 'mai', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'des.'],
 });
+setDefaultOptions({ locale: nn });
 
 const usingHashRouting: boolean = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
 

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -50,8 +50,9 @@ const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
 type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
 
 interface Props {
-    aktivitet?: SokeavtaleAktivitet;
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
+    dirtyRef: MutableRefObject<boolean>;
+    aktivitet?: SokeavtaleAktivitet;
 }
 
 const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
@@ -79,7 +80,7 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
 };
 
 const SokeAvtaleAktivitetForm = (props: Props) => {
-    const { aktivitet, onSubmit } = props;
+    const { aktivitet, dirtyRef, onSubmit } = props;
     const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const defaultValues = getDefaultValues(aktivitet);
     const avtalt = aktivitet?.avtalt || false;
@@ -95,8 +96,12 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         watch,
         setValue,
         reset,
-        formState: { errors: formStateErrors },
+        formState: { errors: formStateErrors, isDirty },
     } = formHandlers;
+
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
+    }
 
     const errorWrapper = brukeStillingerIUken
         ? { errors: formStateErrors as FieldErrors<NySokeavtaleAktivitetFormValues>, skjemaVersjon: 'ny' as const }

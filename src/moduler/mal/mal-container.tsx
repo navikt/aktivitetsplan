@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
@@ -9,15 +9,11 @@ import { selectGjeldendeMal } from './aktivitetsmal-reducer';
 import Malvisning from './mal-visning';
 import MalForm from './MalForm';
 
-interface DirtyRef {
-    current: boolean;
-}
-
 interface Props {
-    dirtyRef: DirtyRef;
+    dirtyRef: MutableRefObject<boolean>;
 }
 
-function MalContainer(props: Props) {
+const MalContainer = (props: Props) => {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
@@ -32,7 +28,7 @@ function MalContainer(props: Props) {
         return (
             <MalForm
                 mal={mal}
-                isDirty={props.dirtyRef}
+                dirtyRef={props.dirtyRef}
                 handleComplete={() => {
                     setEdit(false);
                     props.dirtyRef.current = false;
@@ -43,6 +39,6 @@ function MalContainer(props: Props) {
     }
 
     return <Malvisning onClick={() => setEdit(true)} />;
-}
+};
 
 export default MalContainer;
