@@ -59,8 +59,6 @@ function MalContent(props: MalContentProps) {
     };
     const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
 
-    console.log(viserInnevaerendePeriode);
-
     if (!mal && !disabled) {
         return (
             <div>

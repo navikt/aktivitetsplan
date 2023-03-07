@@ -69,7 +69,6 @@ const PeriodeFilter = ({
     };
 
     return (
-        // <div ref={ref} className="flex items-start">
         <div ref={ref} className="flex items-start">
             <Select
                 className="w-full sm:w-60"
