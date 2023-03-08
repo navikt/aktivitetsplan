@@ -101,7 +101,7 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
                 </Checkbox>
                 <Detail className="">FOR NAV-ANSATT</Detail>
             </div>
-            <BodyShort className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</BodyShort>
+            <BodyShort className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</BodyShort>
             <ForhaandsorienteringsMeldingArenaaktivitet
                 visible={state.fields.checked.input.value === 'true'}
                 lasterData={lasterData}

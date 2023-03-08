@@ -14,7 +14,6 @@ import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
-import styles from './ForhaandsorienteringForm.module.less';
 
 const avtaltTekst =
     'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
@@ -104,14 +103,10 @@ const ForhaandsorienteringForm = (props: Props) => {
             <div>
                 <ForNavAnsattMarkeringWrapper>
                     {isGammelArenaAktivitet && (
-                        <BodyShort className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</BodyShort>
+                        <BodyShort className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</BodyShort>
                     )}
-                    <div className={styles.checkbox}>
-                        <Checkbox
-                            disabled={lasterData}
-                            {...(state.fields.checked as FieldState & { error: never })}
-                            className={styles.checkboxNoSpace}
-                        >
+                    <div className="flex">
+                        <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
                             Legg til forhåndsorientering
                         </Checkbox>
                     </div>

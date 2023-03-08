@@ -296,8 +296,9 @@ export const oppdaterArenaaktivitet = async (req: RestRequest) => {
     const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === arenaaktivitetId) as ArenaAktivitet;
 
     aktivitet.forhaandsorientering = {
-        type: body.forhaandsorientering.type,
-        tekst: body.forhaandsorientering.tekst,
+        // ...body,
+        type: body.type,
+        tekst: body.tekst,
     };
 
     return aktivitet;

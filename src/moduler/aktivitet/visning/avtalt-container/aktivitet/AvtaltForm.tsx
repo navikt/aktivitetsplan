@@ -101,11 +101,7 @@ const AvtaltForm = (props: Props) => {
         >
             <div>
                 <div className={'flex items-center'}>
-                    <Checkbox
-                        disabled={lasterData}
-                        {...(state.fields.avtaltCheckbox as FieldState & { error: never })}
-                        className={styles.checkboxNoSpace}
-                    >
+                    <Checkbox disabled={lasterData} {...(state.fields.avtaltCheckbox as FieldState & { error: never })}>
                         Avtalt med NAV
                     </Checkbox>
                     <HelpText id="hjelp" className="ml-2 justify-self-start">

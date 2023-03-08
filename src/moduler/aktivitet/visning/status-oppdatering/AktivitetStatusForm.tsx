@@ -111,10 +111,10 @@ const AktivitetStatusForm = (props: Props) => {
                         <Radio key={value} label={label} value={value} />
                     ))}
                 </RadioGroup>
-                <VisibleIfDiv className="status-alert" visible={!state.pristine}>
+                <VisibleIfDiv className="mt-4 flex flex-col gap-y-4" visible={!state.pristine}>
                     <VisibleAlertStripeSuksessSolid visible={visAdvarsel} variant="warning">
-                        Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre
-                        innholdet.
+                        Hvis du endrer til &quot;Fullført&quot; eller &quot;Avbrutt&quot;, blir aktiviteten låst og du
+                        kan ikke lenger endre innholdet.
                     </VisibleAlertStripeSuksessSolid>
 
                     <VisibleIfDiv visible={visBegrunnelseFelt}>
