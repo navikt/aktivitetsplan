@@ -10,7 +10,7 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Hovedside from './hovedside/Hovedside';
-import Provider from './provider';
+import Provider from './Provider';
 import { HiddenIf, getContextPath } from './utils';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 

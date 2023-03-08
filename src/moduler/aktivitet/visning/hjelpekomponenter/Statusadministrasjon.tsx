@@ -2,17 +2,20 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
-import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { AlleAktiviteter, isVeilarbAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import AktivitetStatusAdministrasjon from './AktivitetStatusAdministrasjon';
 
 interface Props {
-    aktivitet: VeilarbAktivitet;
+    aktivitet: AlleAktiviteter;
 }
 
 const Statusadministrasjon = (props: Props) => {
     const { aktivitet } = props;
     const { type } = aktivitet;
+
+    if (!isVeilarbAktivitet(aktivitet)) return null;
 
     const erBruker = useSelector(selectErBruker);
 

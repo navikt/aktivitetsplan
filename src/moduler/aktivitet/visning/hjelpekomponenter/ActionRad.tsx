@@ -1,16 +1,13 @@
-import { DialogDots } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitetType } from '../../../../datatypes/arenaAktivitetTypes';
-import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { loggStillingFraNavStillingslenkeKlikk } from '../../../../felles-komponenter/utils/logging';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ArenaStatusAdministrasjon from './ArenaStatusAdministrasjon';
 import EksternAktivitetHandlingerKnapper from './EksternAktivitetHandlingerKnapper';
 import EndreAktivitetKnapp from './EndreAktivitetKnapp';
+import LesMerOmStillingenKnapp from './LesMerOmStillingenKnapp';
+import SendEnMeldingKnapp from './SendEnMeldingKnapp';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -18,29 +15,6 @@ interface Props {
     laster: boolean;
     underOppfolging: boolean;
 }
-
-const SendEnMeldingKnapp = () => (
-    <Button variant="secondary" icon={<DialogDots aria-hidden />}>
-        Send en melding
-    </Button>
-);
-
-const LesMerOmStillingenKnapp = ({ aktivitet }: { aktivitet: StillingFraNavAktivitet }) => {
-    const erVeileder = useSelector(selectErVeileder);
-    const stillingslenke = import.meta.env.VITE_STILLING_FRA_NAV_BASE_URL + aktivitet.stillingFraNavData.stillingsId;
-
-    return (
-        <Button
-            variant="secondary"
-            as="a"
-            href={stillingslenke}
-            onClick={() => loggStillingFraNavStillingslenkeKlikk(erVeileder)}
-            target="_blank"
-        >
-            Les mer om stillingen
-        </Button>
-    );
-};
 
 const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props) => {
     switch (aktivitet.type) {

@@ -52,7 +52,7 @@ const Aktivitetvisning = (props: Props) => {
             />
 
             <Accordion>
-                {!erArenaAktivitet ? <Statusadministrasjon aktivitet={aktivitet} /> : null}
+                <Statusadministrasjon aktivitet={aktivitet} />
                 <EndringsLogg aktivitet={aktivitet} />
             </Accordion>
         </div>
