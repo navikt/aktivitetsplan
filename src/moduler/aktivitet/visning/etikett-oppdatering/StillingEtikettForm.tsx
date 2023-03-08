@@ -69,11 +69,12 @@ const StillingEtikettForm = (props: Props) => {
             <div className="mb-4">
                 <RadioGroup
                     legend={''}
+                    hideLegend
                     value={state.fields.etikettstatus.input.value}
                     onChange={onChangeStillingStatus}
                 >
                     {fields.map(({ value, label }) => (
-                        <Radio key={value} value={value} label={label} disabled={disable} />
+                        <Radio key={value} value={value} label={label} />
                     ))}
                 </RadioGroup>
             </div>

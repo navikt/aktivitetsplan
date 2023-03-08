@@ -10,7 +10,7 @@ const LestKnapp = (props: Props) => {
     const { lasterData, onClick } = props;
 
     return (
-        <Button variant="secondary" onClick={onClick} className="mt-5" loading={lasterData} size="small">
+        <Button variant="secondary" onClick={onClick} className="mt-5" loading={lasterData} size="medium">
             Ok, jeg har lest beskjeden
         </Button>
     );
