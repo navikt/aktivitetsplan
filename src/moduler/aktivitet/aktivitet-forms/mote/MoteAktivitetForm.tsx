@@ -4,12 +4,14 @@ import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
 import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
+import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { MoteAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
-import AktivitetFormHeader from '../aktivitet-form-header';
+import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
@@ -98,7 +100,7 @@ const MoteAktivitetForm = (props: Props) => {
         >
             <FormProvider {...formHandlers}>
                 <div className="skjema-innlogget aktivitetskjema space-y-4">
-                    <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
+                    <AktivitetFormHeader tittel="Møte med NAV" aktivitetstype={VeilarbAktivitetType.MOTE_TYPE} />
                     <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
 
                     <TextField

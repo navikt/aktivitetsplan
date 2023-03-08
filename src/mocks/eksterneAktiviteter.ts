@@ -115,7 +115,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                       ],
                       detaljer: [
                           { label: 'Abc', verdi: 'def' },
-                          { label: 'ghi', verdi: 'jkl' },
+                          { label: 'Ghi', verdi: 'jkl' },
                       ],
                       etiketter: undefined,
                   },

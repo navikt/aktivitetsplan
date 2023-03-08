@@ -4,9 +4,10 @@ import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { DeleCvContainer } from './dele-cv/DeleCvContainer';
+import ActionRad from './hjelpekomponenter/ActionRad';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
-import HandlingContainer from './hjelpekomponenter/HandlingContainer';
+import EksternAktivitetHandlingerKnapper from './hjelpekomponenter/EksternAktivitetHandlingerKnapper';
 import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
 import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/ReferatContainer';
@@ -19,7 +20,7 @@ interface Props {
     underOppfolging: boolean;
 }
 
-function Aktivitetvisning(props: Props) {
+const Aktivitetvisning = (props: Props) => {
     const { aktivitet, tillatEndring, laster, underOppfolging } = props;
 
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
@@ -34,12 +35,7 @@ function Aktivitetvisning(props: Props) {
                 <BegrunnelseBoks begrunnelse={aktivitet.avsluttetKommentar} />
             ) : null}
 
-            <AktivitetinformasjonVisning
-                valgtAktivitet={aktivitet}
-                tillatEndring={tillatEndring}
-                underOppfolging={underOppfolging}
-                laster={laster}
-            />
+            <AktivitetinformasjonVisning valgtAktivitet={aktivitet} underOppfolging={underOppfolging} />
 
             {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
                 <DeleCvContainer aktivitet={aktivitet} />
@@ -48,15 +44,19 @@ function Aktivitetvisning(props: Props) {
             aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
                 <ReferatContainer aktivitet={aktivitet} />
             ) : null}
-            {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
-                <HandlingContainer aktivitet={aktivitet} />
-            ) : null}
+
+            <ActionRad
+                aktivitet={aktivitet}
+                tillatEndring={tillatEndring}
+                laster={laster}
+                underOppfolging={underOppfolging}
+            />
             <div>
                 <Statusadministrasjon aktivitet={aktivitet} />
                 {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
             </div>
         </div>
     );
-}
+};
 
 export default Aktivitetvisning;

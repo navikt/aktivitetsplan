@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import {
@@ -11,10 +12,12 @@ import {
     STATUS_GJENNOMFOERT,
     TELEFON_KANAL,
 } from '../../../../constant';
+import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import { todayIsoString } from '../../../../utils/dateUtils';
-import AktivitetFormHeader from '../aktivitet-form-header';
+import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import { useReferatStartTekst } from './useReferatStartTekst';
@@ -88,7 +91,10 @@ const InnerSamtalereferatForm = (props: Props) => {
         <form autoComplete="off" noValidate>
             <FormProvider {...formHandlers}>
                 <div className="aktivitetskjema space-y-4">
-                    <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
+                    <AktivitetFormHeader
+                        tittel="Samtalereferat"
+                        aktivitetstype={VeilarbAktivitetType.SAMTALEREFERAT_TYPE}
+                    />
 
                     <TextField
                         label="Tema for samtalen (obligatorisk)"

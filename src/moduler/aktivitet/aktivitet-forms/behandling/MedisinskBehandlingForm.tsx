@@ -1,13 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useEffect } from 'react';
+import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
-import { MedisinskBehandlingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { MedisinskBehandlingAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import AktivitetFormHeader from '../aktivitet-form-header';
+import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
@@ -73,7 +72,10 @@ const MedisinskBehandlingForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="aktivitetskjema space-y-4">
-                    <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittel="Medisinsk behandling"
+                        aktivitetstype={VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE}
+                    />
                     <TextField
                         disabled={avtalt}
                         label="Type behandling (obligatorisk)"

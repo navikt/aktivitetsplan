@@ -4,10 +4,10 @@ import React, { MutableRefObject } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
-import { IJobbAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
+import { IJobbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import AktivitetFormHeader from '../aktivitet-form-header';
+import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
@@ -79,7 +79,10 @@ const IJobbAktivitetForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...methods}>
                 <div className="aktivitetskjema space-y-4">
-                    <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittel="Jobb jeg har nå"
+                        aktivitetstype={VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE}
+                    />
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"

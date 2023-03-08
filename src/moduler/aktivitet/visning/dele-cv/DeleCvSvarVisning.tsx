@@ -12,7 +12,7 @@ interface Props {
 export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
     const cvKanDeles = cvKanDelesData.kanDeles;
 
-    var svarTekst: string, endretTekst: string;
+    let svarTekst: string, endretTekst: string;
     if (cvKanDelesData.endretAvType === 'BRUKER') {
         svarTekst = cvKanDeles ? JaSvarTekst : NeiSvarTekst;
         endretTekst = `Du svarte ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}`;

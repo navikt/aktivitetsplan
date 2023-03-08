@@ -17,7 +17,6 @@ import IkkeDeltFerdigMarkering, {
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import Aktivitetsdetaljer from '../detaljer/Aktivitetsdetaljer';
-import ActionRad from './ActionRad';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (
@@ -37,13 +36,11 @@ const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) =
 
 interface Props {
     valgtAktivitet: AlleAktiviteter;
-    tillatEndring: boolean;
-    laster: boolean;
     underOppfolging: boolean;
 }
 
 const AktivitetinformasjonVisning = (props: Props) => {
-    const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
+    const { valgtAktivitet, underOppfolging } = props;
     const { tittel, type, avtalt } = valgtAktivitet;
 
     const deltFerdigMarkeringSkalVises = isSamtaleOrMote(valgtAktivitet)
@@ -62,12 +59,6 @@ const AktivitetinformasjonVisning = (props: Props) => {
             </div>
             <AvtaltContainer underOppfolging={underOppfolging} aktivitet={valgtAktivitet} />
             <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
-            <ActionRad
-                aktivitet={valgtAktivitet}
-                tillatEndring={tillatEndring}
-                laster={laster}
-                underOppfolging={underOppfolging}
-            />
         </div>
     );
 };

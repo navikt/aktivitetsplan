@@ -31,9 +31,12 @@ const ReferatVisning = (props: Props) => {
                 Samtalereferat
             </Heading>
             <EkspanderbartTekstomrade tekst={referat} antallTegn={275} />
-            <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="flex space-x-4">
+            <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="flex space-x-4 items-center">
                 {erReferatPublisert ? (
-                    <Alert variant="success" className="oppdater-referat-status">
+                    // <Alert variant="success" className="oppdater-referat-status">
+                    //     Delt med bruker
+                    // </Alert>
+                    <Alert variant="success" inline>
                         Delt med bruker
                     </Alert>
                 ) : (

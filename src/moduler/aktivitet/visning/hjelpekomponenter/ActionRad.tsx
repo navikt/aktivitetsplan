@@ -8,6 +8,7 @@ import { ArenaAktivitetType } from '../../../../datatypes/arenaAktivitetTypes';
 import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { loggStillingFraNavStillingslenkeKlikk } from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
+import EksternAktivitetHandlingerKnapper from './EksternAktivitetHandlingerKnapper';
 import EndreAktivitetKnapp from './EndreAktivitetKnapp';
 
 interface Props {
@@ -45,7 +46,6 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
         case VeilarbAktivitetType.MOTE_TYPE:
         case VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE:
         case VeilarbAktivitetType.EGEN_AKTIVITET_TYPE:
-        case VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE:
         case VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE:
         case VeilarbAktivitetType.STILLING_AKTIVITET_TYPE:
         case VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE:
@@ -74,7 +74,13 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
                     <SendEnMeldingKnapp />
                 </>
             );
-
+        case VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE:
+            return (
+                <>
+                    <EksternAktivitetHandlingerKnapper aktivitet={aktivitet} />
+                    <SendEnMeldingKnapp />
+                </>
+            );
         case ArenaAktivitetType.GRUPPEAKTIVITET:
         case ArenaAktivitetType.TILTAKSAKTIVITET:
         case ArenaAktivitetType.UTDANNINGSAKTIVITET:

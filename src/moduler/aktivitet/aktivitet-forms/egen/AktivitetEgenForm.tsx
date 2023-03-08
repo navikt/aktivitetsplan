@@ -1,15 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useRef } from 'react';
+import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { AppConfig } from '../../../../app';
-import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
-import { EgenAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { EgenAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import Malverk from '../../../malverk/malverk';
-import AktivitetFormHeader from '../aktivitet-form-header';
+import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
@@ -84,7 +83,10 @@ const EgenAktivitetForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="aktivitetskjema space-y-4">
-                    <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittel="Jobbrettet egenaktivitet"
+                        aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE}
+                    />
 
                     <Malverk
                         visible={window.appconfig.VIS_MALER}

@@ -5,11 +5,10 @@ import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { AppConfig } from '../../../../app';
-import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
-import { SokeavtaleAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import Malverk from '../../../malverk/malverk';
-import AktivitetFormHeader from '../aktivitet-form-header';
+import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
@@ -127,7 +126,10 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="skjema-innlogget aktivitetskjema space-y-4">
-                    <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittel="Avtale om å søke jobber"
+                        aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE}
+                    />
                     <Malverk
                         visible={window.appconfig.VIS_MALER}
                         endre={!!aktivitet}

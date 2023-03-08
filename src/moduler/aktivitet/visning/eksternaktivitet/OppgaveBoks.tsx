@@ -1,11 +1,9 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Oppgave, OppgaveLenke } from '../../../../datatypes/eksternAktivitetTypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
-import CustomBodyLong from '../hjelpekomponenter/CustomBodyLong';
-import styles from './OppgaveBoks.module.less';
 
 interface Props {
     oppgave?: OppgaveLenke;
@@ -13,12 +11,15 @@ interface Props {
 
 // TODO bytt dette ut med 'Alert m/ heading' når vi er over på det nye designsystemet
 const customAlertStripe = (oppgave: Oppgave) => (
-    <Alert variant="warning" className="w-full mb-3">
-        <h3 className={styles.tekst}>{oppgave.tekst}</h3>
-        {oppgave.subtekst && <CustomBodyLong className={styles.subtekst}>{oppgave.subtekst}</CustomBodyLong>}
-        <a href={oppgave.url} target="_blank" rel="noopener noreferrer" className="knapp knapp--hoved">
+    <Alert variant="warning" fullWidth>
+        <Heading spacing size="small" level="3">
+            {oppgave.tekst}
+        </Heading>
+        {oppgave.subtekst}
+
+        <Button variant={'primary'} as="a" href={oppgave.url} target="_blank" className="flex w-fit mt-4">
             {oppgave.knapptekst}
-        </a>
+        </Button>
     </Alert>
 );
 

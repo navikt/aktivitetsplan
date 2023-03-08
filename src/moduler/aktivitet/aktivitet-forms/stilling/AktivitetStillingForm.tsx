@@ -4,11 +4,12 @@ import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { StillingAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { todayIsoString } from '../../../../utils/dateUtils';
-import AktivitetFormHeader from '../aktivitet-form-header';
+import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
@@ -68,7 +69,10 @@ const StillingAktivitetForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="aktivitetskjema space-y-4">
-                    <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittel="En jobb jeg vil søke på"
+                        aktivitetstype={VeilarbAktivitetType.STILLING_AKTIVITET_TYPE}
+                    />
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"

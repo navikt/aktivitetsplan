@@ -13,7 +13,6 @@ import {
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
-import styles from './Tavleadvarsel.module.less';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     if (aktivitet.status === STATUS_FULLFOERT) {
