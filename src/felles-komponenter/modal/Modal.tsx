@@ -50,7 +50,7 @@ const Modal = (props: Props) => {
             {...rest}
             open
             className={classNames(
-                'aktivitet-modal lg:w-120 p-8 overscroll-contain w-full rounded-none lg:rounded',
+                'aktivitet-modal lg:w-120 p-8 max-h-full my-20 overscroll-contain w-full rounded-none lg:rounded',
                 className,
                 contentClass
             )}

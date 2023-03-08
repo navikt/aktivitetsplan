@@ -1,14 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
 import { MoteAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
+import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
@@ -17,7 +20,10 @@ export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter d
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
-    dato: z.string(),
+    dato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
     varighet: z.string().min(1, 'Du må fylle ut varighet'),
     kanal: z.string().min(1, 'Du må fylle ut møteform'),
@@ -45,28 +51,29 @@ const MoteAktivitetForm = (props: Props) => {
 
     const dato = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
-    const defaultValues: MoteAktivitetFormValues = {
-        tittel: aktivitet?.tittel || '',
+    const defaultValues: Partial<MoteAktivitetFormValues> = {
+        tittel: aktivitet?.tittel,
         klokkeslett: dato?.klokkeslett ? dato.klokkeslett : '10:00',
         varighet: dato?.varighet ? dato.varighet : '00:45',
         kanal: aktivitet?.kanal || OPPMOTE_KANAL,
-        adresse: aktivitet?.adresse || '',
+        adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse || defaultBeskrivelse,
-        forberedelser: aktivitet?.forberedelser || '',
-        dato: aktivitet?.fraDato || '',
+        forberedelser: aktivitet?.forberedelser,
+        dato: coerceToUndefined(aktivitet?.fraDato),
     };
     const avtalt = aktivitet?.avtalt || false;
 
+    const formHandlers = useForm<MoteAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
+    });
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isDirty },
-    } = useForm<MoteAktivitetFormValues>({
-        defaultValues,
-        resolver: zodResolver(schema),
-        shouldFocusError: false,
-    });
+    } = formHandlers;
 
     if (dirtyRef) {
         dirtyRef.current = isDirty;
@@ -89,70 +96,57 @@ const MoteAktivitetForm = (props: Props) => {
                 })
             )}
         >
-            <div className="skjema-innlogget aktivitetskjema space-y-4">
-                <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
-                <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
+            <FormProvider {...formHandlers}>
+                <div className="skjema-innlogget aktivitetskjema space-y-4">
+                    <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
+                    <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
 
-                <TextField
-                    disabled={avtalt}
-                    label="Tema for møtet (obligatorisk)"
-                    id={'tittel'}
-                    {...register('tittel')}
-                    error={errors.tittel && errors.tittel.message}
-                />
+                    <TextField
+                        disabled={avtalt}
+                        label="Tema for møtet (obligatorisk)"
+                        id={'tittel'}
+                        {...register('tittel')}
+                        error={errors.tittel && errors.tittel.message}
+                    />
 
-                {/* TODO datovelger her */}
-                {/*<div className="mote-aktivitet-form__velg-mote-klokkeslett">*/}
-                {/*    <DatePicker {...datepickerProps} disabled={[{ before: new Date() }]}>*/}
-                {/*        <DatePicker.Input*/}
-                {/*            {...state.fields.dato.input}*/}
-                {/*            {...inputProps}*/}
-                {/*            required*/}
-                {/*            label={'Dato *'}*/}
-                {/*            error={state.fields.dato.touched ? state.fields.dato.error : undefined}*/}
-                {/*        />*/}
-                {/*    </DatePicker>*/}
-                {/*    <TextField*/}
-                {/*        label="Klokkeslett *"*/}
-                {/*        {...state.fields.klokkeslett.input}*/}
-                {/*        type={'time' as any}*/}
-                {/*        step="300"*/}
-                {/*    />*/}
-                {/*    <TextField label="Varighet *" {...state.fields.varighet.input} type={'time' as any} step="900" />*/}
-                {/*</div>*/}
+                    <ControlledDatePicker
+                        field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                    />
+                    <TextField label="Klokkeslett *" {...register('klokkeslett')} type={'time' as any} step="300" />
+                    <TextField label="Varighet *" {...register('varighet')} type={'time' as any} step="900" />
+                    <Select label="Møteform (obligatorisk)" {...register('kanal')}>
+                        <option value={OPPMOTE_KANAL}>Oppmøte</option>
+                        <option value={TELEFON_KANAL}>Telefonmøte</option>
+                        <option value={INTERNET_KANAL}>Videomøte</option>
+                    </Select>
+                    <VideoInfo kanal={watch('kanal')} />
 
-                <Select label="Møteform (obligatorisk)" {...register('kanal')}>
-                    <option value={OPPMOTE_KANAL}>Oppmøte</option>
-                    <option value={TELEFON_KANAL}>Telefonmøte</option>
-                    <option value={INTERNET_KANAL}>Videomøte</option>
-                </Select>
-                <VideoInfo kanal={watch('kanal')} />
-
-                <TextField
-                    label="Møtested eller annen praktisk informasjon (obligatorisk)"
-                    id={'adresse'}
-                    {...register('adresse')}
-                    error={errors.adresse && errors.adresse.message}
-                />
-                <Textarea
-                    disabled={avtalt}
-                    label="Hensikt med møtet (obligatorisk)"
-                    maxLength={5000}
-                    {...register('beskrivelse')}
-                    error={errors.beskrivelse && errors.beskrivelse.message}
-                    value={beskrivelseValue}
-                />
-                <Textarea
-                    disabled={avtalt}
-                    label="Forberedelser til møtet"
-                    maxLength={500}
-                    {...register('forberedelser')}
-                    error={errors.forberedelser && errors.forberedelser.message}
-                    value={forberedelserValue}
-                />
-                <CustomErrorSummary errors={errors} />
-                <LagreAktivitetKnapp />
-            </div>
+                    <TextField
+                        label="Møtested eller annen praktisk informasjon (obligatorisk)"
+                        id={'adresse'}
+                        {...register('adresse')}
+                        error={errors.adresse && errors.adresse.message}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Hensikt med møtet (obligatorisk)"
+                        maxLength={5000}
+                        {...register('beskrivelse')}
+                        error={errors.beskrivelse && errors.beskrivelse.message}
+                        value={beskrivelseValue}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Forberedelser til møtet"
+                        maxLength={500}
+                        {...register('forberedelser')}
+                        error={errors.forberedelser && errors.forberedelser.message}
+                        value={forberedelserValue}
+                    />
+                    <CustomErrorSummary errors={errors} />
+                    <LagreAktivitetKnapp />
+                </div>
+            </FormProvider>
         </form>
     );
 };

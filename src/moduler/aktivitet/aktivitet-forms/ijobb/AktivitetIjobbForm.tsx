@@ -32,8 +32,8 @@ interface Props {
     aktivitet?: IJobbAktivitet;
 }
 
-const dateOrUndefined = (val: string | undefined) => {
-    if (val === undefined) return undefined;
+export const dateOrUndefined = (val: string | undefined) => {
+    if (val === undefined || val === null) return undefined;
     return new Date(val);
 };
 

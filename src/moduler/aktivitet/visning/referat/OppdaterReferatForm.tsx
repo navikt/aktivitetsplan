@@ -93,7 +93,6 @@ const OppdaterReferatForm = (props: Props) => {
 
             <div className="space-x-4">
                 <HiddenIfHovedknapp
-                    kompakt
                     loading={oppdaterer}
                     disabled={oppdaterer}
                     hidden={erReferatPublisert}

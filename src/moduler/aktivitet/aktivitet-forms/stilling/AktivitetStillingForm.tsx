@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -45,12 +46,17 @@ const StillingAktivitetForm = (props: Props) => {
     };
     const avtalt = aktivitet?.avtalt || false;
 
+    const formHandlers = useForm<StillingAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
+    });
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isDirty },
-    } = useForm<StillingAktivitetFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: false });
+    } = formHandlers;
 
     if (dirtyRef) {
         dirtyRef.current = isDirty;
@@ -60,64 +66,61 @@ const StillingAktivitetForm = (props: Props) => {
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
-            <div className="aktivitetskjema space-y-4">
-                <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
-                <TextField
-                    disabled={avtalt}
-                    label="Stillingstittel (obligatorisk)"
-                    id={'tittel'}
-                    {...register('tittel')}
-                    error={errors.tittel && errors.tittel.message}
-                />
-                {/* TODO datovelger her */}
-                {/*<PeriodeValidering valideringFelt={state.fields.periodeValidering}>*/}
-                {/*    <div className="dato-container">*/}
-                {/*        <MaybeAvtaltDateRangePicker*/}
-                {/*            formState={state}*/}
-                {/*            aktivitet={aktivitet}*/}
-                {/*            initialFromDate={aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*</PeriodeValidering>*/}
-                <TextField
-                    disabled={avtalt}
-                    label="Arbeidsgiver"
-                    id={'arbeidsgiver'}
-                    {...register('arbeidsgiver')}
-                    error={errors.arbeidsgiver && errors.arbeidsgiver.message}
-                />
-                <TextField
-                    disabled={avtalt}
-                    label="Kontaktperson hos arbeidsgiver"
-                    id={'kontaktperson'}
-                    {...register('kontaktperson')}
-                    error={errors.kontaktperson && errors.kontaktperson.message}
-                />
-                <TextField
-                    disabled={avtalt}
-                    label="Arbeidssted"
-                    id="arbeidssted"
-                    {...register('arbeidssted')}
-                    error={errors.arbeidssted && errors.arbeidssted.message}
-                />
-                <Textarea
-                    disabled={avtalt}
-                    label="Kort beskrivelse av stillingen"
-                    maxLength={5000}
-                    {...register('beskrivelse')}
-                    error={errors.beskrivelse && errors.beskrivelse.message}
-                    value={beskrivelseValue}
-                />
-                <TextField
-                    disabled={avtalt}
-                    label="Lenke til stillingsannonse"
-                    id={'lenke'}
-                    {...register('lenke')}
-                    error={errors.lenke && errors.lenke.message}
-                />
-                <CustomErrorSummary errors={errors} />
-                <LagreAktivitetKnapp />
-            </div>
+            <FormProvider {...formHandlers}>
+                <div className="aktivitetskjema space-y-4">
+                    <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
+                    <TextField
+                        disabled={avtalt}
+                        label="Stillingstittel (obligatorisk)"
+                        id={'tittel'}
+                        {...register('tittel')}
+                        error={errors.tittel && errors.tittel.message}
+                    />
+                    <MaybeAvtaltDateRangePicker
+                        aktivitet={aktivitet}
+                        from={{ name: 'fraDato', required: true }}
+                        to={{ name: 'tilDato' }}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Arbeidsgiver"
+                        id={'arbeidsgiver'}
+                        {...register('arbeidsgiver')}
+                        error={errors.arbeidsgiver && errors.arbeidsgiver.message}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Kontaktperson hos arbeidsgiver"
+                        id={'kontaktperson'}
+                        {...register('kontaktperson')}
+                        error={errors.kontaktperson && errors.kontaktperson.message}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Arbeidssted"
+                        id="arbeidssted"
+                        {...register('arbeidssted')}
+                        error={errors.arbeidssted && errors.arbeidssted.message}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Kort beskrivelse av stillingen"
+                        maxLength={5000}
+                        {...register('beskrivelse')}
+                        error={errors.beskrivelse && errors.beskrivelse.message}
+                        value={beskrivelseValue}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Lenke til stillingsannonse"
+                        id={'lenke'}
+                        {...register('lenke')}
+                        error={errors.lenke && errors.lenke.message}
+                    />
+                    <CustomErrorSummary errors={errors} />
+                    <LagreAktivitetKnapp />
+                </div>
+            </FormProvider>
         </form>
     );
 };

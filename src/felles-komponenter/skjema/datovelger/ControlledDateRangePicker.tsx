@@ -3,6 +3,8 @@ import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepi
 import { ChangeEventHandler, MutableRefObject, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
+import { coerceToUndefined, handlers } from './common';
+
 export interface FieldSettings {
     name: string;
     required?: boolean;
@@ -16,19 +18,8 @@ interface Props {
     to: FieldSettings;
 }
 
-type Handler = React.FocusEventHandler | React.ChangeEventHandler<HTMLInputElement> | undefined;
-function handlers<Event = React.FocusEvent | React.ChangeEvent<HTMLInputElement>>(handlers: Handler[]) {
-    return (event: Event) => {
-        handlers.filter((it) => it).forEach((handler) => handler!!(event as any));
-    };
-}
-
-const coerceToUndefined = (val: string | Date | undefined) => {
-    if (val === undefined || val === '' || val === null) return undefined;
-    return val;
-};
 const DateRangePicker = ({ from, to, disabledDays }: Props) => {
-    const { setError, clearErrors, control, setValue, watch } = useFormContext();
+    const { setError, clearErrors, control, setValue } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,
         name: from.name,
