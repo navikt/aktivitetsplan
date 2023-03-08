@@ -8,6 +8,7 @@ import { ArenaAktivitetType } from '../../../../datatypes/arenaAktivitetTypes';
 import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { loggStillingFraNavStillingslenkeKlikk } from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
+import ArenaStatusAdministrasjon from './ArenaStatusAdministrasjon';
 import EksternAktivitetHandlingerKnapper from './EksternAktivitetHandlingerKnapper';
 import EndreAktivitetKnapp from './EndreAktivitetKnapp';
 
@@ -84,7 +85,12 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
         case ArenaAktivitetType.GRUPPEAKTIVITET:
         case ArenaAktivitetType.TILTAKSAKTIVITET:
         case ArenaAktivitetType.UTDANNINGSAKTIVITET:
-            return <SendEnMeldingKnapp />;
+            return (
+                <>
+                    <SendEnMeldingKnapp />
+                    <ArenaStatusAdministrasjon />
+                </>
+            );
     }
 };
 

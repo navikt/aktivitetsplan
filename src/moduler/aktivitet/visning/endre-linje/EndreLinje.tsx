@@ -1,5 +1,4 @@
 import { Accordion, Heading } from '@navikt/ds-react';
-import PT from 'prop-types';
 import React, { MouseEventHandler, ReactNode, useMemo } from 'react';
 
 function s4() {
@@ -20,37 +19,25 @@ interface Props {
     onClick: MouseEventHandler;
 }
 
-function EndreLinje(props: Props) {
+const EndreLinje = (props: Props) => {
     const { tittel, form, subtittel, open, onClick } = props;
 
     //to get a valid css id it needs to start with a letter
     const unique = useMemo(() => 'a' + guid(), []);
 
     return (
-        <Accordion>
-            <Accordion.Item open={open}>
-                <Accordion.Header className="flex flex-row" onClick={onClick}>
-                    <Heading size="small" level="2">
-                        {tittel}
-                    </Heading>
-                    <div>{subtittel}</div>
-                </Accordion.Header>
-                <Accordion.Content>
-                    <div id={unique}>{form}</div>
-                </Accordion.Content>
-            </Accordion.Item>
-        </Accordion>
+        <Accordion.Item open={open} className="first:border-t-2 first:border-border-divider">
+            <Accordion.Header className="flex flex-row" onClick={onClick}>
+                <Heading size="small" level="2">
+                    {tittel}
+                </Heading>
+                <div>{subtittel}</div>
+            </Accordion.Header>
+            <Accordion.Content>
+                <div id={unique}>{form}</div>
+            </Accordion.Content>
+        </Accordion.Item>
     );
-}
-
-EndreLinje.propTypes = {
-    tittel: PT.string.isRequired,
-    form: PT.node.isRequired,
-    kanEndre: PT.bool,
-};
-
-EndreLinje.defaultProps = {
-    kanEndre: true,
 };
 
 export default EndreLinje;

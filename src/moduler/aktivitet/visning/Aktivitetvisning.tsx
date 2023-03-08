@@ -1,6 +1,7 @@
+import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
-import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { DeleCvContainer } from './dele-cv/DeleCvContainer';
@@ -29,13 +30,12 @@ const Aktivitetvisning = (props: Props) => {
     return (
         <div className="mt-4 space-y-8">
             <VarslingBoks aktivitet={aktivitet} />
-
             {visBegrunnelse && aktivitet.avsluttetKommentar ? (
                 <BegrunnelseBoks begrunnelse={aktivitet.avsluttetKommentar} />
             ) : null}
-
             <AktivitetinformasjonVisning valgtAktivitet={aktivitet} underOppfolging={underOppfolging} />
 
+            {/* TODO strategy pattern w/ slots? */}
             {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
                 <DeleCvContainer aktivitet={aktivitet} />
             ) : null}
@@ -50,10 +50,11 @@ const Aktivitetvisning = (props: Props) => {
                 laster={laster}
                 underOppfolging={underOppfolging}
             />
-            <div>
-                <Statusadministrasjon aktivitet={aktivitet} />
-                {isVeilarbAktivitet(aktivitet) ? <EndringsLogg aktivitet={aktivitet} /> : null}
-            </div>
+
+            <Accordion>
+                {!erArenaAktivitet ? <Statusadministrasjon aktivitet={aktivitet} /> : null}
+                <EndringsLogg aktivitet={aktivitet} />
+            </Accordion>
         </div>
     );
 };
