@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import {
@@ -12,14 +12,19 @@ import {
     TELEFON_KANAL,
 } from '../../../../constant';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import { useReferatStartTekst } from './useReferatStartTekst';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.string(),
+    fraDato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
     kanal: z.string().min(1, 'Du må fylle ut samtaleform'),
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
@@ -43,28 +48,24 @@ const InnerSamtalereferatForm = (props: Props) => {
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
 
-    const defaultValues: SamtalereferatAktivitetFormValues = {
+    const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
-        fraDato: aktivitet?.fraDato || todayIsoString(),
+        fraDato: dateOrUndefined(aktivitet?.fraDato),
         kanal: aktivitet?.kanal || TELEFON_KANAL,
         referat: aktivitet?.referat || startTekst,
     };
 
-    // const { datepickerProps, inputProps } = useDatepicker({
-    //     defaultSelected: initialValues.fraDato ? new Date(initialValues.fraDato) : undefined,
-    //     onDateChange: (date) => state.setValue('fraDato', date?.toISOString() || ''),
-    // });
-
+    const formHandlers = useForm<SamtalereferatAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
+    });
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isSubmitting, isDirty },
-    } = useForm<SamtalereferatAktivitetFormValues>({
-        defaultValues,
-        resolver: zodResolver(schema),
-        shouldFocusError: false,
-    });
+    } = formHandlers;
 
     if (dirtyRef) {
         dirtyRef.current = isDirty;
@@ -85,40 +86,41 @@ const InnerSamtalereferatForm = (props: Props) => {
 
     return (
         <form autoComplete="off" noValidate>
-            <div className="aktivitetskjema space-y-4">
-                <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
+            <FormProvider {...formHandlers}>
+                <div className="aktivitetskjema space-y-4">
+                    <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
-                <TextField
-                    label="Tema for samtalen (obligatorisk)"
-                    id={'tittel'}
-                    {...register('tittel')}
-                    error={errors.tittel && errors.tittel.message}
-                />
-
-                {/* TODO datovelger her */}
-                {/*<DatePicker {...datepickerProps}>*/}
-                {/*    <DatePicker.Input error={state.errors.fraDato} label="Dato *" {...inputProps} />*/}
-                {/*</DatePicker>*/}
-
-                <Select label="Møteform (obligatorisk)" {...register('kanal')}>
-                    <option value={OPPMOTE_KANAL}>Oppmøte</option>
-                    <option value={TELEFON_KANAL}>Telefonmøte</option>
-                    <option value={INTERNET_KANAL}>Videomøte</option>
-                </Select>
-
-                {nyAktivitet && (
-                    <Textarea
-                        label="Samtalereferat (obligatorisk)"
-                        maxLength={5000}
-                        {...register('referat')}
-                        error={errors.referat && errors.referat.message}
-                        value={referatValue}
+                    <TextField
+                        label="Tema for samtalen (obligatorisk)"
+                        id={'tittel'}
+                        {...register('tittel')}
+                        error={errors.tittel && errors.tittel.message}
                     />
-                )}
 
-                <CustomErrorSummary errors={errors} />
-            </div>
-            <Lagreknapper isLoading={isSubmitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+                    <ControlledDatePicker
+                        field={{ name: 'fraDato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                    />
+
+                    <Select label="Møteform (obligatorisk)" {...register('kanal')}>
+                        <option value={OPPMOTE_KANAL}>Oppmøte</option>
+                        <option value={TELEFON_KANAL}>Telefonmøte</option>
+                        <option value={INTERNET_KANAL}>Videomøte</option>
+                    </Select>
+
+                    {nyAktivitet && (
+                        <Textarea
+                            label="Samtalereferat (obligatorisk)"
+                            maxLength={5000}
+                            {...register('referat')}
+                            error={errors.referat && errors.referat.message}
+                            value={referatValue}
+                        />
+                    )}
+
+                    <CustomErrorSummary errors={errors} />
+                </div>
+                <Lagreknapper isLoading={isSubmitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+            </FormProvider>
         </form>
     );
 };
