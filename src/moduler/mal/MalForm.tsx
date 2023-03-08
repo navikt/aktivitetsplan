@@ -9,7 +9,7 @@ import { oppdaterMal } from './aktivitetsmal-reducer';
 import { hentMalListe } from './malliste-reducer';
 
 const schema = z.object({
-    mal: z.string().min(1, 'Feltet må fylles ut').max(100, 'Du må korte ned teksten til 500 tegn'),
+    mal: z.string().min(1, 'Feltet må fylles ut').max(500, 'Du må korte ned teksten til 500 tegn'),
 });
 type MalFormValues = z.infer<typeof schema>;
 
