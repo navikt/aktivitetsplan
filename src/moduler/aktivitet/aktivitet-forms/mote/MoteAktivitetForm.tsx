@@ -5,9 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
-import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
 import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { MoteAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';

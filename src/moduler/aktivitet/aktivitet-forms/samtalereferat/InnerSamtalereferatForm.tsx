@@ -2,21 +2,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import {
-    INTERNET_KANAL,
-    OPPMOTE_KANAL,
-    SAMTALEREFERAT_TYPE,
-    STATUS_GJENNOMFOERT,
-    TELEFON_KANAL,
-} from '../../../../constant';
 import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
-import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
-import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
