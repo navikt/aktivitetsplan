@@ -16,17 +16,18 @@ import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 
-declare const window: {
-    NAVSPA: any;
-    Intl: any;
-    history: History;
-    appconfig: {
-        CONTEXT_PATH: string;
-        TILLAT_SET_AVTALT: boolean;
-        VIS_MALER: boolean;
-        TIMEOUTBOX: boolean;
-    };
-};
+declare global {
+    interface Window {
+        NAVSPA: any;
+        Intl: any;
+        appconfig: {
+            CONTEXT_PATH: string;
+            TILLAT_SET_AVTALT: boolean;
+            VIS_MALER: boolean;
+            TIMEOUTBOX: boolean;
+        };
+    }
+}
 
 moment.locale('nb');
 moment.tz.setDefault('Europe/Oslo');

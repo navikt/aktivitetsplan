@@ -7,7 +7,6 @@ import { DeleCvContainer } from './dele-cv/DeleCvContainer';
 import ActionRad from './hjelpekomponenter/ActionRad';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
-import EksternAktivitetHandlingerKnapper from './hjelpekomponenter/EksternAktivitetHandlingerKnapper';
 import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
 import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/ReferatContainer';

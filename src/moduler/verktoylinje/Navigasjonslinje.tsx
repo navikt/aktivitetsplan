@@ -8,11 +8,9 @@ import { AnyAction } from 'redux';
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { Dialog } from '../../datatypes/dialogTypes';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
-import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
 import { hentDialog } from '../dialog/dialog-reducer';
 import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
-import styles from './navigasjonslinje.module.less';
 
 const MINSIDE_PATH = import.meta.env.VITE_MINSIDE_URL;
 const DIALOG_PATH = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;

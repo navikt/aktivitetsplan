@@ -1,4 +1,4 @@
-import { Detail, Heading, Label } from '@navikt/ds-react';
+import { Heading, Label } from '@navikt/ds-react';
 import React from 'react';
 
 import { Dialog } from '../../../datatypes/dialogTypes';

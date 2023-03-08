@@ -12,7 +12,6 @@ export function hentFeature(enhet?: string): Promise<{ [key: string]: boolean }>
         return Promise.resolve({ ignore: false });
     }
 
-    // @ts-ignore
     const path: string = window.appconfig.CONTEXT_PATH;
     const featuresWithEnhet = (features && enhet && `${features}&enhet=${enhet}`) || features;
     return fetchToJson(`${path}/api/feature${featuresWithEnhet}`);
