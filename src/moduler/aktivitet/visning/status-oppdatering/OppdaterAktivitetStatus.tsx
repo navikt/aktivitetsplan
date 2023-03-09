@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { EksternAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 import { aktivitetStatusMap } from '../../../../utils/textMappers';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -38,7 +38,7 @@ const lagreStatusEndringer = (
 };
 
 interface OppdaterAktivitetStatusProps {
-    aktivitet: VeilarbAktivitet;
+    aktivitet: Exclude<VeilarbAktivitet, EksternAktivitet>;
 }
 
 function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {

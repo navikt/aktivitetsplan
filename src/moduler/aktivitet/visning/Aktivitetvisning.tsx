@@ -1,17 +1,15 @@
-import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
 import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { trengerBegrunnelse } from '../aktivitet-util';
+import AktivitetvisningAccordion from './AktivitetvisningAccordion';
 import { DeleCvContainer } from './dele-cv/DeleCvContainer';
 import ActionRad from './hjelpekomponenter/ActionRad';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
-import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
 import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/ReferatContainer';
-import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -51,10 +49,7 @@ const Aktivitetvisning = (props: Props) => {
                 underOppfolging={underOppfolging}
             />
 
-            <Accordion>
-                <Statusadministrasjon aktivitet={aktivitet} />
-                <EndringsLogg aktivitet={aktivitet} />
-            </Accordion>
+            <AktivitetvisningAccordion aktivitet={aktivitet} />
         </div>
     );
 };
