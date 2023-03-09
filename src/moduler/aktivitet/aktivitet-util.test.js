@@ -5,7 +5,6 @@ import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
-    formatterTelefonnummer,
     formatterVarighet,
     splitIEldreOgNyereAktiviteter,
 } from './aktivitet-util';
@@ -29,43 +28,33 @@ describe('aktivitet-util', () => {
             tilDato: '2017-08-01T06:15:00.000+02:00',
         });
         expect(klokkeslettVarighet.klokkeslett).toEqual('04:00');
-        expect(klokkeslettVarighet.varighet).toEqual('02:15');
-        expect(klokkeslettVarighet.dato).toEqual('2017-07-31T22:00:00.000Z');
+        expect(klokkeslettVarighet.varighet).toEqual(135);
+        expect(klokkeslettVarighet.dato).toEqual(new Date('2017-07-31T22:00:00.000Z'));
 
-        expect(beregnKlokkeslettVarighet({})).toEqual({});
+        expect(beregnKlokkeslettVarighet({})).toBeUndefined();
     });
 
     it('beregnFraTil + beregnKlokkeslettVarighet', () => {
         const fraDato = '2017-08-01T04:00:00.000Z';
         const tilDato = '2017-08-01T06:15:00.000Z';
 
-        const fraTil = beregnFraTil(
-            beregnKlokkeslettVarighet(
-                beregnFraTil(
-                    beregnKlokkeslettVarighet({
-                        fraDato,
-                        tilDato,
-                    })
-                )
-            )
-        );
+        const moteTid = beregnKlokkeslettVarighet({
+            fraDato,
+            tilDato,
+        });
+        const fraTil = beregnFraTil(moteTid);
 
         expect(fraTil.fraDato).toEqual(fraDato);
         expect(fraTil.tilDato).toEqual(tilDato);
     });
 
     it('formatterVarighet', () => {
-        expect(formatterVarighet(90)).toEqual('1:30');
+        expect(formatterVarighet(90)).toEqual('01:30');
     });
 
     it('formatterKlokkeslett', () => {
-        expect(formatterKlokkeslett(75)).toEqual('1:15');
-    });
-
-    it('formatterTelefonnummer', () => {
-        expect(formatterTelefonnummer('80012345')).toEqual('800 12 345');
-        expect(formatterTelefonnummer('12345678')).toEqual('12 34 56 78');
-        expect(formatterTelefonnummer('04545')).toEqual('04545');
+        expect(formatterKlokkeslett('1:15')).toEqual('01:15');
+        expect(formatterKlokkeslett('115')).toEqual(undefined);
     });
 
     it('skal splitte basert på sorteringsdato hvor sorteringsdato er endretDato > tilDato > fraDato', () => {

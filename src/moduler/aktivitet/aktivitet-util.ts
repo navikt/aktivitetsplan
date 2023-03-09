@@ -146,24 +146,33 @@ const validKlokkeslett = (val: string): boolean => {
     const hourMinute = val.split(':');
     if (hourMinute.length != 2) return false;
     const [hour, minute] = hourMinute;
-    return !isNaN(parseInt(hour)) && !isNaN(parseInt(minute));
+    const hourInt = parseInt(hour);
+    const minuteInt = parseInt(minute);
+    return !isNaN(hourInt) && !isNaN(minuteInt) && minuteInt < 60 && hourInt < 24 && minuteInt > -1 && hourInt > -1;
 };
-const tilKlokkeslett = (klokkeslett: string): Klokkeslett => {
-    const [hour, minute] = klokkeslett.split(':').map((it) => parseInt(it));
-    return {
-        hour,
-        minute,
-    };
+const toHourAndMinutes = (klokkeslett: string | number): Klokkeslett => {
+    if (typeof klokkeslett !== 'number') {
+        const [hour, minute] = klokkeslett.split(':').map((it) => parseInt(it));
+        return {
+            hour,
+            minute,
+        };
+    } else {
+        const varighetMinutter = parseInt(klokkeslett);
+        const hour = minutesToHours(varighetMinutter); // Uses floor rounding
+        const minute = varighetMinutter - 60 * hour;
+        return { hour, minute };
+    }
 };
 
-export function beregnFraTil(data: Data): FraTil {
+export function beregnFraTil(data: MoteTid): FraTil {
     const { dato, klokkeslett, varighet } = data;
 
-    if (dato && klokkeslett && validKlokkeslett(klokkeslett) && varighet) {
-        const { hour, minute } = tilKlokkeslett(klokkeslett);
+    if (dato && klokkeslett && validKlokkeslett(klokkeslett) && varighet !== undefined && varighet !== null) {
+        const { hour, minute } = toHourAndMinutes(klokkeslett);
         const fraDato = setMinutes(setHours(startOfDay(toDate(dato)), hour), minute);
-        const { hour: varighetHours, minute: varighetMinutes } = tilKlokkeslett(varighet);
-        const tilDato = addMinutes(toDate(fraDato), varighetHours * 60 + varighetMinutes);
+        const { hour: varighetHours, minute: varighetMinutes } = toHourAndMinutes(varighet);
+        const tilDato = addMinutes(fraDato, varighetHours * 60 + varighetMinutes);
         return {
             fraDato: fraDato.toISOString(),
             tilDato: tilDato.toISOString(),
@@ -173,15 +182,10 @@ export function beregnFraTil(data: Data): FraTil {
 }
 
 export function formatterVarighet(varighet?: string | number): string | undefined {
-    if (!varighet) {
-        return undefined;
-    }
+    if (!varighet) return undefined;
     if (typeof varighet === 'number' || !isNaN(parseInt(varighet))) {
-        const varighetMinutter = parseInt(varighet as string); // parseInt can handle numbers
-        const hours = minutesToHours(varighetMinutter); // Uses floor rounding
-        const inputMinutes = typeof varighet === 'number' ? varighet : parseInt(varighet);
-        const minutes = inputMinutes - 60 * hours;
-        return `${prefixMed0(hours.toString())}:${prefixMed0(minutes.toString())}`;
+        const { hour, minute } = toHourAndMinutes(varighet);
+        return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
     } else {
         // Assuming this is correctly formatted "HH:ss"
         return varighet;
@@ -192,21 +196,8 @@ export function formatterVarighet(varighet?: string | number): string | undefine
 const prefixMed0 = (val: string) => (val.length === 1 ? '0' + val : val);
 export function formatterKlokkeslett(klokkeslett?: string): string | undefined {
     if (!klokkeslett || !validKlokkeslett(klokkeslett)) return undefined;
-    const { hour, minute } = tilKlokkeslett(klokkeslett);
+    const { hour, minute } = toHourAndMinutes(klokkeslett);
     return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
-}
-
-export function formatterTelefonnummer(telefonnummer: string): string {
-    let utenSpace = telefonnummer.replace(/ /g, '');
-
-    if (utenSpace.length !== 8) {
-        return telefonnummer;
-    } else if (utenSpace.startsWith('8')) {
-        return `${utenSpace.substring(0, 3)} ${utenSpace.substring(3, 5)} ${utenSpace.substring(5)}`;
-    } else {
-        const numberPairs = utenSpace.match(/.{1,2}/g);
-        return numberPairs ? numberPairs.join(' ') : telefonnummer;
-    }
 }
 
 function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {
