@@ -42,6 +42,35 @@ const mockfnr = '12345678910';
 
 const useMock = import.meta.env.DEV || usingHashRouting;
 
+function AppWrapper(props: any) {
+    if (import.meta.env.DEV) {
+        props = { ...props, fnr: erEksternBruker() ? undefined : mockfnr };
+    }
+
+    // Må settes etter at dokumentet er parset
+    const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
+    Modal.setAppElement(id);
+
+    return <App {...props} />;
+}
+
+const rootElement = document.getElementById('mainapp');
+
+const exportToNavSpa = () => {
+    NAVSPA.eksporter('aktivitetsplan', AppWrapper);
+    window.NAVSPA['aktivitetsplan'](rootElement);
+};
+const renderAsRootApp = () => {
+    ReactDOM.render(<App key={'1'} />, rootElement);
+};
+const renderApp = () => {
+    if (window.NAVSPA) {
+        exportToNavSpa();
+    } else {
+        renderAsRootApp();
+    }
+};
+
 if (useMock) {
     const fnr = mockfnr;
     const pathnamePrefix = `${import.meta.env.BASE_URL}${usingHashRouting ? '#/' : ''}`;
@@ -57,25 +86,8 @@ if (useMock) {
         .then(({ default: startWorker }) => startWorker())
         .then(() => {
             ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
-            render();
+            renderApp();
         });
+} else {
+    renderApp();
 }
-
-function AppWrapper(props: any) {
-    if (import.meta.env.DEV) {
-        props = { ...props, fnr: erEksternBruker() ? undefined : mockfnr };
-    }
-
-    // Må settes etter at dokumentet er parset
-    const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
-    Modal.setAppElement(id);
-
-    return <App {...props} />;
-}
-
-function render() {
-    if (window.NAVSPA) {
-        return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));
-    }
-}
-NAVSPA.eksporter('aktivitetsplan', AppWrapper);

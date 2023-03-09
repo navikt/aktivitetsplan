@@ -18,6 +18,7 @@
     "format-all": "prettier --write 'src/'",
     "lint-staged": "lint-staged",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "preview": "vite preview",
     "manifest-fix": "node ./scripts/fixManifest.js"
   },
   "dependencies": {
