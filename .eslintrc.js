@@ -11,7 +11,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['react', '@typescript-eslint'],
+    plugins: ['react', '@typescript-eslint', 'vitest'],
     rules: {},
     settings: {
         react: { version: 'detect' },
