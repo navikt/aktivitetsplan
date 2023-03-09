@@ -1,19 +1,15 @@
 import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
-import { AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
 
 interface Props {
-    aktivitet: AlleAktiviteter;
+    aktivitet: VeilarbAktivitet;
 }
 
 const EndringsLogg = (props: Props) => {
     const { aktivitet } = props;
-
-    if (isArenaAktivitet(aktivitet)) {
-        return null;
-    }
 
     return (
         <Accordion.Item className="first:border-t-2 first:border-border-divider">
