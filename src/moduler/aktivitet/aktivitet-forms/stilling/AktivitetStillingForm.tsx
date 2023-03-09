@@ -5,18 +5,16 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { StillingAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.string(),
-    tilDato: z.string(),
+    fraDato: z.date({ required_error: 'Fra dato må fylles ut' }),
+    tilDato: z.date().optional(),
     arbeidsgiver: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     kontaktperson: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     arbeidssted: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
@@ -37,8 +35,8 @@ const StillingAktivitetForm = (props: Props) => {
 
     const defaultValues: StillingAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
-        fraDato: aktivitet?.fraDato || todayIsoString(),
-        tilDato: aktivitet?.tilDato || '',
+        fraDato: dateOrUndefined(aktivitet?.fraDato) ?? new Date(),
+        tilDato: dateOrUndefined(aktivitet?.tilDato),
         beskrivelse: aktivitet?.beskrivelse || '',
         arbeidssted: aktivitet?.arbeidssted || '',
         arbeidsgiver: aktivitet?.arbeidsgiver || '',
@@ -65,6 +63,8 @@ const StillingAktivitetForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
+    console.log(watch('fraDato'));
+
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
@@ -82,8 +82,8 @@ const StillingAktivitetForm = (props: Props) => {
                     />
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato' }}
+                        from={{ name: 'fraDato', required: true, defaultValue: defaultValues?.fraDato }}
+                        to={{ name: 'tilDato', defaultValue: defaultValues?.tilDato }}
                     />
                     <TextField
                         disabled={avtalt}

@@ -19,7 +19,7 @@ interface Props {
     to: FieldSettings;
 }
 
-const DateRangePicker = ({ from, to, disabledDays, required, label }: Props) => {
+const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     const { setError, clearErrors, control, setValue } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,
@@ -82,7 +82,7 @@ const DateRangePicker = ({ from, to, disabledDays, required, label }: Props) => 
                         disabled={from.disabled}
                         className="flex-1"
                         error={fromState.error?.message}
-                        label={'Fra dato'}
+                        label={from?.label ?? 'Fra dato'}
                         {...fromInputProps}
                         name={fromField.name}
                         onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs])}
@@ -95,7 +95,7 @@ const DateRangePicker = ({ from, to, disabledDays, required, label }: Props) => 
                     <DatePicker.Input
                         className="flex-1"
                         error={toState.error?.message}
-                        label={'Til dato'}
+                        label={to?.label ?? 'Til dato'}
                         {...toInputProps}
                         name={toField.name}
                         onBlur={handlers([toField.onBlur, toInputProps.onBlur, validateInputs])}

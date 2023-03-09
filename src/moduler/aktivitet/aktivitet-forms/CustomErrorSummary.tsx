@@ -17,7 +17,7 @@ const CustomErrorSummary = <T extends FieldValues>(props: Props<T>) => {
         errorRef?.current && errorRef.current.focus();
     }, [errors]);
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length < 2) {
         return null;
     }
 
