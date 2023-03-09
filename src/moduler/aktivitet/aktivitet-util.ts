@@ -1,6 +1,16 @@
 import 'moment-duration-format';
 
-import { minutesToHours } from 'date-fns';
+import {
+    addMinutes,
+    differenceInMinutes,
+    format,
+    isDate,
+    minutesToHours,
+    setHours,
+    setMinutes,
+    startOfDay,
+} from 'date-fns';
+import { da } from 'date-fns/locale';
 import moment from 'moment';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
@@ -21,13 +31,13 @@ import {
 import { Me } from '../../datatypes/oppfolgingTypes';
 
 interface MoteTid {
-    dato?: string;
-    klokkeslett?: string;
-    varighet?: string;
+    dato: Date;
+    klokkeslett: string;
+    varighet: number;
 }
 
 interface Data {
-    dato?: string;
+    dato?: string | Date;
     klokkeslett?: string;
     varighet?: string;
 }
@@ -107,33 +117,56 @@ export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasj
     return false;
 }
 
-export function beregnKlokkeslettVarighet(aktivitet: MoteAktivitet): MoteTid {
-    const { fraDato } = aktivitet;
-    const { tilDato } = aktivitet;
+export function beregnKlokkeslettVarighet(aktivitet: MoteAktivitet): MoteTid | undefined {
+    const { fraDato, tilDato } = aktivitet;
     if (fraDato && tilDato) {
-        const fraMoment = moment(fraDato);
-        const tilMoment = moment(tilDato);
-        const klokkeslett = fraMoment.format('HH:mm');
-        const diff = moment.duration(tilMoment.diff(fraMoment));
-        const varighet = `${('0' + diff.hours()).slice(-2)}:${('0' + diff.minutes()).slice(-2)}`;
+        const fra = new Date(fraDato);
+        const til = new Date(tilDato);
+        const varighet = differenceInMinutes(til, fra);
+        const klokkeslett = format(fra, 'HH:mm');
         return {
-            dato: fraMoment.startOf('day').toISOString(),
+            dato: startOfDay(fra),
             klokkeslett,
             varighet,
         };
     }
-    return {};
+    return undefined;
 }
+
+const toDate = (date: Date | string): Date => {
+    if (isDate(date)) return date as Date;
+    return new Date(date);
+};
+
+interface Klokkeslett {
+    hour: number;
+    minute: number;
+}
+const validKlokkeslett = (val: string): boolean => {
+    const hourMinute = val.split(':');
+    if (hourMinute.length != 2) return false;
+    const [hour, minute] = hourMinute;
+    return !isNaN(parseInt(hour)) && !isNaN(parseInt(minute));
+};
+const tilKlokkeslett = (klokkeslett: string): Klokkeslett => {
+    const [hour, minute] = klokkeslett.split(':').map((it) => parseInt(it));
+    return {
+        hour,
+        minute,
+    };
+};
 
 export function beregnFraTil(data: Data): FraTil {
     const { dato, klokkeslett, varighet } = data;
 
-    if (dato && klokkeslett && varighet) {
-        const fraDato = moment(dato).startOf('day').add(moment.duration(klokkeslett)).toISOString();
-        const tilDato = moment(fraDato).add(moment.duration(varighet)).toISOString();
+    if (dato && klokkeslett && validKlokkeslett(klokkeslett) && varighet) {
+        const { hour, minute } = tilKlokkeslett(klokkeslett);
+        const fraDato = setMinutes(setHours(startOfDay(toDate(dato)), hour), minute);
+        const { hour: varighetHours, minute: varighetMinutes } = tilKlokkeslett(varighet);
+        const tilDato = addMinutes(toDate(fraDato), varighetHours * 60 + varighetMinutes);
         return {
-            fraDato,
-            tilDato,
+            fraDato: fraDato.toISOString(),
+            tilDato: tilDato.toISOString(),
         };
     }
     return {};
@@ -143,15 +176,24 @@ export function formatterVarighet(varighet?: string | number): string | undefine
     if (!varighet) {
         return undefined;
     }
-    const inputMinutes = typeof varighet === 'number' ? varighet : parseInt(varighet);
-    const hours = minutesToHours(inputMinutes);
-    const minutes = inputMinutes - 60 * hours;
-    return `${hours}:${minutes}`;
+    if (typeof varighet === 'number' || !isNaN(parseInt(varighet))) {
+        const varighetMinutter = parseInt(varighet as string); // parseInt can handle numbers
+        const hours = minutesToHours(varighetMinutter); // Uses floor rounding
+        const inputMinutes = typeof varighet === 'number' ? varighet : parseInt(varighet);
+        const minutes = inputMinutes - 60 * hours;
+        return `${prefixMed0(hours.toString())}:${prefixMed0(minutes.toString())}`;
+    } else {
+        // Assuming this is correctly formatted "HH:ss"
+        return varighet;
+    }
 }
 
 // TODO: Finn en bedre løsning i MoteAktivitet-form
+const prefixMed0 = (val: string) => (val.length === 1 ? '0' + val : val);
 export function formatterKlokkeslett(klokkeslett?: string): string | undefined {
-    return formatterVarighet(klokkeslett);
+    if (!klokkeslett || !validKlokkeslett(klokkeslett)) return undefined;
+    const { hour, minute } = tilKlokkeslett(klokkeslett);
+    return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
 }
 
 export function formatterTelefonnummer(telefonnummer: string): string {

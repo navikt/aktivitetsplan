@@ -28,7 +28,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt
                 key="klokkeslett"
                 tittel={<FormattedMessage id="aktivitetdetaljer.klokkeslett" />}
-                innhold={formatterKlokkeslett(moteTid.klokkeslett)}
+                innhold={formatterKlokkeslett(moteTid?.klokkeslett)}
             />
             <Informasjonsfelt
                 key="kanal"
@@ -38,7 +38,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt
                 key="varighet"
                 tittel={<FormattedMessage id="aktivitetdetaljer.varighet" />}
-                innhold={formatterVarighet(moteTid.varighet)}
+                innhold={formatterVarighet(moteTid?.varighet)}
             />
             <Informasjonsfelt
                 key="adresse"

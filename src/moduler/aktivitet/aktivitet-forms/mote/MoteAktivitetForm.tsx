@@ -8,7 +8,7 @@ import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '.
 import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
-import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
+import { beregnFraTil, beregnKlokkeslettVarighet, formatterVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
@@ -49,16 +49,17 @@ interface Props {
 const MoteAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
 
-    const dato = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
+    const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
     const defaultValues: Partial<MoteAktivitetFormValues> = {
         tittel: aktivitet?.tittel,
-        klokkeslett: dato?.klokkeslett ? dato.klokkeslett : '10:00',
-        varighet: dato?.varighet ? dato.varighet : '00:45',
+        klokkeslett: moteTid?.klokkeslett ? moteTid.klokkeslett : '10:00',
+        // Keep field as string since input natively returns string
+        varighet: moteTid?.varighet ? formatterVarighet(moteTid.varighet) : '00:45',
         kanal: aktivitet?.kanal || OPPMOTE_KANAL,
         adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse || defaultBeskrivelse,
-        forberedelser: aktivitet?.forberedelser,
+        forberedelser: aktivitet?.forberedelser ?? undefined,
         dato: coerceToUndefined(aktivitet?.fraDato),
     };
     const avtalt = aktivitet?.avtalt || false;
@@ -112,8 +113,18 @@ const MoteAktivitetForm = (props: Props) => {
                     <ControlledDatePicker
                         field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
                     />
-                    <TextField label="Klokkeslett *" {...register('klokkeslett')} type={'time' as any} step="300" />
-                    <TextField label="Varighet *" {...register('varighet')} type={'time' as any} step="900" />
+                    <TextField
+                        label="Klokkeslett (obligatorisk)"
+                        {...register('klokkeslett')}
+                        type={'time' as any}
+                        step="300"
+                    />
+                    <TextField
+                        label="Varighet (obligatorisk)"
+                        {...register('varighet')}
+                        type={'time' as any}
+                        step="900"
+                    />
                     <Select label="Møteform (obligatorisk)" {...register('kanal')}>
                         <option value={OPPMOTE_KANAL}>Oppmøte</option>
                         <option value={TELEFON_KANAL}>Telefonmøte</option>

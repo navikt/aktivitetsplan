@@ -7,6 +7,7 @@ import { coerceToUndefined, handlers } from './common';
 
 export interface FieldSettings {
     name: string;
+    label?: string;
     required?: boolean;
     disabled?: boolean;
     defaultValue?: Date;
@@ -18,7 +19,7 @@ interface Props {
     to: FieldSettings;
 }
 
-const DateRangePicker = ({ from, to, disabledDays }: Props) => {
+const DateRangePicker = ({ from, to, disabledDays, required, label }: Props) => {
     const { setError, clearErrors, control, setValue } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,

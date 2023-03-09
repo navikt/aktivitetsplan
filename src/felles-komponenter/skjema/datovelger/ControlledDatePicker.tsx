@@ -9,7 +9,7 @@ import { FieldSettings } from './ControlledDateRangePicker';
 interface Props {
     field: FieldSettings;
 }
-const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required = false } }: Props) => {
+const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required = false, label } }: Props) => {
     const { control, setValue, setError, clearErrors } = useFormContext();
     const {
         field,
@@ -48,7 +48,7 @@ const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required 
                 disabled={disabled}
                 className="flex-1"
                 error={error?.message}
-                label={'Fra dato'}
+                label={label ?? 'Dato' + (required ? ' (obligatorisk)' : '')}
                 {...inputProps}
                 name={name}
                 onBlur={handlers([field.onBlur, inputProps.onBlur, validateInputs])}
