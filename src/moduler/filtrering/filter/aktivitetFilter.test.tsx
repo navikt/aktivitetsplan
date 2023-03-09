@@ -108,15 +108,12 @@ describe('aktivitets-filter', () => {
                 avtalt: value,
             };
         });
-        // clickOnFilter('Ikke avtalt med NAV');
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
         getByRole('checkbox', { name: 'Ikke avtalt med NAV', checked: true });
 
         getByText('Aktivitet: false');
         expect(queryByText('Aktivitet: true')).toBeFalsy();
-        // expect(queryByText('Aktivitet: true')).toBeNull();
-        // fireEvent.click(getByText('Filtrer'));
         fireEvent.click(getByText('Avtalt med NAV'));
         fireEvent.click(getByText('Ikke avtalt med NAV'));
         getByText('Aktivitet: true');

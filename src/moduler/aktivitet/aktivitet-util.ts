@@ -10,7 +10,6 @@ import {
     setMinutes,
     startOfDay,
 } from 'date-fns';
-import { da } from 'date-fns/locale';
 import moment from 'moment';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
@@ -34,12 +33,6 @@ interface MoteTid {
     dato: Date;
     klokkeslett: string;
     varighet: number;
-}
-
-interface Data {
-    dato?: string | Date;
-    klokkeslett?: string;
-    varighet?: string;
 }
 
 interface FraTil {
