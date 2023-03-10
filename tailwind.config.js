@@ -1,6 +1,7 @@
 module.exports = {
     presets: [require('@navikt/ds-tailwind')],
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    important: '#aktivitetsplan-app',
     variants: {
         extend: {},
     },
