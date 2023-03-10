@@ -56,9 +56,22 @@ function AppWrapper(props: any) {
 
 const rootElement = document.getElementById('mainapp');
 
+class DabAktivitetsplan extends HTMLElement {
+    connectedCallback() {
+        const mountPoint = document.createElement('div');
+        this.attachShadow({ mode: 'closed' }).appendChild(mountPoint);
+
+        const fnr = this.getAttribute('data-fnr') ?? undefined;
+        console.log({ fnr });
+
+        ReactDOM.render(<App key={'1'} fnr={fnr} />, rootElement);
+    }
+}
+
 const exportToNavSpa = () => {
-    NAVSPA.eksporter('aktivitetsplan', AppWrapper);
-    window.NAVSPA['aktivitetsplan'](rootElement);
+    // NAVSPA.eksporter('aktivitetsplan', AppWrapper);
+    // window.NAVSPA['aktivitetsplan'](rootElement);
+    customElements.define('dab-aktivitesplan', DabAktivitetsplan);
 };
 const renderAsRootApp = () => {
     ReactDOM.render(<App key={'1'} />, rootElement);
