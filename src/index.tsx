@@ -56,35 +56,25 @@ function AppWrapper(props: any) {
 
 const rootElement = document.getElementById('mainapp');
 
-class DabAktivitetsplan extends HTMLElement {
-    connectedCallback() {
-        const mountPoint = document.createElement('div');
-        this.attachShadow({ mode: 'closed' }).appendChild(mountPoint);
-
-        const fnr = this.getAttribute('data-fnr') ?? undefined;
-        console.log({ fnr });
-
-        ReactDOM.render(<App key={'1'} fnr={fnr} />, mountPoint);
-    }
-}
-
 const exportToNavSpa = () => {
     // NAVSPA.eksporter('aktivitetsplan', AppWrapper);
     // window.NAVSPA['aktivitetsplan'](rootElement);
-    customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
+    import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
+        customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
+    });
 };
 const renderAsRootApp = () => {
     ReactDOM.render(<App key={'1'} />, rootElement);
 };
 const renderApp = () => {
-    if (window.NAVSPA) {
+    if (true || window.NAVSPA) {
         exportToNavSpa();
     } else {
         renderAsRootApp();
     }
 };
 
-if (useMock) {
+if (true || useMock) {
     const fnr = mockfnr;
     const pathnamePrefix = `${import.meta.env.BASE_URL}${usingHashRouting ? '#/' : ''}`;
     if (erEksternBruker()) {

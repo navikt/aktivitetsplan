@@ -61,10 +61,10 @@ function HashRouterIfGHPages({ fnr, children }: { fnr: string; children: React.R
     return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
 }
 
-function App({ fnr, key }: { fnr: string; key: string }) {
+function App({ fnr }: { fnr: string }) {
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
-            <Provider key={fnr + key}>
+            <Provider key={fnr}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <HashRouterIfGHPages fnr={fnr}>
