@@ -67,14 +67,14 @@ const renderAsRootApp = () => {
     ReactDOM.render(<App key={'1'} />, rootElement);
 };
 const renderApp = () => {
-    if (true || window.NAVSPA) {
+    if (window.NAVSPA) {
         exportToNavSpa();
     } else {
         renderAsRootApp();
     }
 };
 
-if (true || useMock) {
+if (useMock) {
     const fnr = mockfnr;
     const pathnamePrefix = `${import.meta.env.BASE_URL}${usingHashRouting ? '#/' : ''}`;
     if (erEksternBruker()) {
