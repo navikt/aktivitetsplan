@@ -71,7 +71,7 @@ class DabAktivitetsplan extends HTMLElement {
 const exportToNavSpa = () => {
     // NAVSPA.eksporter('aktivitetsplan', AppWrapper);
     // window.NAVSPA['aktivitetsplan'](rootElement);
-    customElements.define('dab-aktivitesplan', DabAktivitetsplan);
+    customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
 };
 const renderAsRootApp = () => {
     ReactDOM.render(<App key={'1'} />, rootElement);
