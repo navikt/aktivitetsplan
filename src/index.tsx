@@ -64,7 +64,7 @@ class DabAktivitetsplan extends HTMLElement {
         const fnr = this.getAttribute('data-fnr') ?? undefined;
         console.log({ fnr });
 
-        ReactDOM.render(<App key={'1'} fnr={fnr} />, rootElement);
+        ReactDOM.render(<App key={'1'} fnr={fnr} />, mountPoint);
     }
 }
 
