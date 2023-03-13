@@ -10,17 +10,15 @@ interface Props {
     dialogId?: string;
     aktivitetId?: string;
     hidden?: boolean;
-    onClick?: () => void;
     children: React.ReactNode;
 }
 
-function LenkeTilDialog(props: Props) {
-    const { className, dialogId, aktivitetId, hidden, onClick, children } = props;
+const LenkeTilDialog = (props: Props) => {
+    const { className, dialogId, aktivitetId, hidden, children } = props;
     const history = useHistory();
     const erVeileder = useSelector(selectErVeileder);
 
     const internalOnClick = (event: MouseEvent) => {
-        onClick && onClick();
         if (erVeileder) {
             history.replace('/');
             byttTilDialogFlate(event, aktivitetId, dialogId);
@@ -36,6 +34,6 @@ function LenkeTilDialog(props: Props) {
             {children}
         </a>
     );
-}
+};
 
 export default LenkeTilDialog;
