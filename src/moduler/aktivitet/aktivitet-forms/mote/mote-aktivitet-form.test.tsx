@@ -135,6 +135,6 @@ describe('MoteAktivitetForm', () => {
             screen.getByLabelText<HTMLInputElement>('Møtested eller annen praktisk informasjon (obligatorisk)').disabled
         ).not.toBeTruthy();
         expect(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)').disabled).toBeTruthy();
-        expect(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet').disabled).toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)').disabled).toBeTruthy();
     });
 });
