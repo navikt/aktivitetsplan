@@ -4,7 +4,7 @@ import 'moment/dist/locale/nb';
 import './polyfill';
 
 import { Modal } from '@navikt/ds-react';
-import NAVSPA from '@navikt/navspa';
+// import NAVSPA from '@navikt/navspa';
 import { setDefaultOptions } from 'date-fns';
 import nn from 'date-fns/locale/nn';
 import moment from 'moment';
@@ -15,6 +15,7 @@ import App from './app';
 import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
+import { renderAsReactRoot } from './rootWrapper';
 
 declare global {
     interface Window {
@@ -54,7 +55,7 @@ function AppWrapper(props: any) {
     return <App {...props} />;
 }
 
-const rootElement = document.getElementById('mainapp');
+const rootElement = document.getElementById('mainapp') as HTMLElement;
 
 const exportToNavSpa = () => {
     // NAVSPA.eksporter('aktivitetsplan', AppWrapper);
@@ -64,7 +65,7 @@ const exportToNavSpa = () => {
     });
 };
 const renderAsRootApp = () => {
-    ReactDOM.render(<App key={'1'} />, rootElement);
+    renderAsReactRoot(rootElement);
 };
 const renderApp = () => {
     if (window.NAVSPA) {

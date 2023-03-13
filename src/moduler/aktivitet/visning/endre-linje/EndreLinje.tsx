@@ -1,4 +1,3 @@
-import { DirectionSign, Historic } from '@navikt/ds-icons';
 import { Accordion, Heading } from '@navikt/ds-react';
 import React, { MouseEventHandler, ReactNode, useMemo } from 'react';
 

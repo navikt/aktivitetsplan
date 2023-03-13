@@ -1,4 +1,4 @@
-import { Bag, DirectionSign, Profile } from '@navikt/ds-icons';
+import { Profile } from '@navikt/ds-icons';
 import { Alert } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
