@@ -117,7 +117,11 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
             {erVeileder && state.submittoken && <FormErrorSummary errors={state.errors} />}
             <div className="flex gap-4 items-center mt-4">
                 <Button disabled={state.submitting}>Send svar</Button>
-                {infoTekst && <Alert children={infoTekst} variant="info" inline className="" />}
+                {infoTekst && (
+                    <Alert variant="info" inline>
+                        {infoTekst}
+                    </Alert>
+                )}
             </div>
         </form>
     );

@@ -12,15 +12,11 @@ interface Props {
 
 const VisAdvarsel = ({ onSubmit, headerTekst }: Props) => {
     return (
-        <div>
-            <ModalContainer className={aktivitetvisningStyles.underseksjon}>
-                <Heading level="1" size="large">
-                    {headerTekst}
-                </Heading>
-                <Alert variant="warning">
-                    Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
-                </Alert>
-            </ModalContainer>
+        <div className="flex flex-col gap-8">
+            <Heading level="1" size="large">
+                {headerTekst}
+            </Heading>
+            <Alert variant="warning">Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.</Alert>
             <ModalFooter>
                 <Button onClick={onSubmit}>Lagre</Button>
             </ModalFooter>

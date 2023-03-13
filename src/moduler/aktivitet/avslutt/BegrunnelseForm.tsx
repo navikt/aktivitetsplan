@@ -43,21 +43,19 @@ const BegrunnelseForm = (props: Props) => {
 
     return (
         <form onSubmit={handleSubmit((data) => onSubmit(data))}>
-            <div className="aktivitetvisning__underseksjon">
-                <ModalContainer>
-                    <Heading level="1" size="large">
-                        {headerTekst}
-                    </Heading>
-                    <Textarea
-                        label={beskrivelseLabel}
-                        maxLength={255}
-                        disabled={lagrer}
-                        {...register('begrunnelse')}
-                        error={errors.begrunnelse && errors.begrunnelse.message}
-                        value={begrunnelseValue}
-                    />
-                    <CustomErrorSummary errors={errors} />
-                </ModalContainer>
+            <div>
+                <Heading level="1" size="large">
+                    {headerTekst}
+                </Heading>
+                <Textarea
+                    label={beskrivelseLabel}
+                    maxLength={255}
+                    disabled={lagrer}
+                    {...register('begrunnelse')}
+                    error={errors.begrunnelse && errors.begrunnelse.message}
+                    value={begrunnelseValue}
+                />
+                <CustomErrorSummary errors={errors} />
             </div>
             <ModalFooter>
                 <Button loading={lagrer}>Lagre</Button>

@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -104,7 +103,7 @@ const Aktivitetstavle = () => {
             <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
             <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
 
-            <Tavle className={classNames('aktivitetstavle', !skjulAdvarsel, dragging && 'opacity-25')}>
+            <Tavle>
                 <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} />
                 <Kolonne status={STATUS_PLANLAGT} />
                 <Kolonne status={STATUS_GJENNOMFOERT} />

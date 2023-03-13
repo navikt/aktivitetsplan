@@ -6,15 +6,13 @@ import SprettendeScrollbars from './sprettende-scrollbars';
 
 const KOLONNEBREDDE = 300;
 const KOLONNEMARGIN = 10;
-const tavleClassname = (className?: string) => classNames('tavle', className);
 
 interface Props {
-    className?: string;
     children: ReactElement[];
 }
 
 const Tavle = (props: Props) => {
-    const { children, className } = props;
+    const { children } = props;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickIndex, setClickIndex] = useState(0);
@@ -90,10 +88,10 @@ const Tavle = (props: Props) => {
     );
 
     return (
-        <section className={tavleClassname(className)} tabIndex={-1}>
+        <section className={'aktivitetstavle tavle'} tabIndex={-1}>
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
-                <div className="kolonner">{kolonner}</div>
+                <div className="kolonner opacity-100">{kolonner}</div>
             </SprettendeScrollbars>
             {hoyreKnapp}
         </section>

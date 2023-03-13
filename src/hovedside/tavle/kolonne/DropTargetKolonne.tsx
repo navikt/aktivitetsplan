@@ -10,6 +10,7 @@ import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTy
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
+import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
 import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
@@ -33,6 +34,7 @@ function DropTargetKolonne({ status, children }: Props) {
 
     const erBruker = useSelector(selectErBruker, shallowEqual);
     const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+    const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
 
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,
@@ -54,13 +56,17 @@ function DropTargetKolonne({ status, children }: Props) {
         }),
     });
 
+    const isDragging = !!draggingAktivitet;
+    const isOverAndCanDrop = collectedProps.canDrop && collectedProps.isOver;
+
     return (
-        <div ref={drop} className="aktivitetstavle__kolonne-wrapper">
+        <div ref={drop} className="aktivitetstavle__kolonne-wrapper z-50">
             <div
                 className={classNames(
                     'bg-bg-subtle border-t border-border-divider rounded-none p-4 sm:p-2 m-0 sm:border-t-0 sm:rounded-md aktivitetstavle__kolonne',
                     {
-                        'pb-2 bg-surface-action-subtle-hover': collectedProps.canDrop && collectedProps.isOver,
+                        'opacity-50': isDragging && !isOverAndCanDrop,
+                        'bg-surface-action-subtle-hover ': isOverAndCanDrop,
                     }
                 )}
             >
