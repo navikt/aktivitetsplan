@@ -10,6 +10,7 @@ import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/da
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
 declare const window: {
@@ -18,8 +19,14 @@ declare const window: {
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut navn på aktiviteten').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.string(),
-    tilDato: z.string(),
+    fraDato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
+    tilDato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
     hensikt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
     oppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
@@ -37,10 +44,10 @@ interface Props {
 const EgenAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const defaultValues: EgenAktivitetFormValues = {
+    const defaultValues: Partial<EgenAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
-        fraDato: aktivitet?.fraDato || '',
-        tilDato: aktivitet?.tilDato || '',
+        fraDato: dateOrUndefined(aktivitet?.fraDato),
+        tilDato: dateOrUndefined(aktivitet?.tilDato),
         hensikt: aktivitet?.hensikt || '',
         beskrivelse: aktivitet?.beskrivelse || '',
         oppfolging: aktivitet?.oppfolging || '',

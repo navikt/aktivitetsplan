@@ -8,12 +8,22 @@ import { MedisinskBehandlingAktivitet, VeilarbAktivitetType } from '../../../../
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
 const schema = z.object({
     tittel: z.string(),
-    fraDato: z.string(),
-    tilDato: z.string(),
+    fraDato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
+    tilDato: z
+        .date({
+            required_error: 'Fra dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        })
+        .optional()
+        .nullable(),
     behandlingType: z
         .string()
         .min(1, 'Du må fylle ut type behandling')
@@ -38,12 +48,12 @@ interface Props {
 const MedisinskBehandlingForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const defaultValues: MedisinskBehandlingFormValues = {
+    const defaultValues: Partial<MedisinskBehandlingFormValues> = {
         tittel: aktivitet?.tittel || 'Medisinsk behandling',
         behandlingType: aktivitet?.behandlingType || '',
         behandlingSted: aktivitet?.behandlingSted || '',
-        fraDato: aktivitet?.fraDato || '',
-        tilDato: aktivitet?.tilDato || '',
+        fraDato: dateOrUndefined(aktivitet?.fraDato),
+        tilDato: dateOrUndefined(aktivitet?.tilDato),
         effekt: aktivitet?.effekt || '',
         beskrivelse: aktivitet?.beskrivelse || '',
         behandlingOppfolging: aktivitet?.behandlingOppfolging || '',
