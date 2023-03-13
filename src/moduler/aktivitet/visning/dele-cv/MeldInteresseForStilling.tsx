@@ -114,11 +114,11 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 <Radio value={SvarType.NEI.toString()}>{NeiSvarTekst}</Radio>
             </RadioGroup>
 
-            {infoTekst && <Alert children={infoTekst} variant="info" inline className="my-3" />}
             {erVeileder && state.submittoken && <FormErrorSummary errors={state.errors} />}
-            <Button className={styles.knapp} disabled={state.submitting}>
-                Send svar
-            </Button>
+            <div className="flex gap-4 items-center mt-4">
+                <Button disabled={state.submitting}>Send svar</Button>
+                {infoTekst && <Alert children={infoTekst} variant="info" inline className="" />}
+            </div>
         </form>
     );
 };
