@@ -47,14 +47,14 @@ const getBasename = (fnr: string) => {
     }
 };
 
-function HashRouterIfGHPages({ fnr, children }: { fnr: string; children: React.ReactNode }) {
+const Router = ({ fnr, children }: { fnr: string; children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
         return <HashRouter basename={fnr}>{children}</HashRouter>;
     }
 
     const basename = getBasename(fnr);
     return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
-}
+};
 
 function App({ fnr }: { fnr: string }) {
     return (
@@ -62,9 +62,9 @@ function App({ fnr }: { fnr: string }) {
             <Provider key={fnr}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
-                        <HashRouterIfGHPages fnr={fnr}>
+                        <Router fnr={fnr}>
                             <Hovedside />
-                        </HashRouterIfGHPages>
+                        </Router>
                         <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
                         </HiddenIf>

@@ -3,8 +3,6 @@ import 'moment/dist/locale/nb';
 
 import './polyfill';
 
-import { Modal } from '@navikt/ds-react';
-// import NAVSPA from '@navikt/navspa';
 import { setDefaultOptions } from 'date-fns';
 import nn from 'date-fns/locale/nn';
 import moment from 'moment';
@@ -43,20 +41,6 @@ const mockfnr = '12345678910';
 
 const useMock = import.meta.env.DEV || usingHashRouting;
 
-function AppWrapper(props: any) {
-    if (import.meta.env.DEV) {
-        props = { ...props, fnr: erEksternBruker() ? undefined : mockfnr };
-    }
-
-    // Må settes etter at dokumentet er parset
-    const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
-    Modal.setAppElement(id);
-
-    return <App {...props} />;
-}
-
-const rootElement = document.getElementById('mainapp') as HTMLElement;
-
 const exportToNavSpa = () => {
     // NAVSPA.eksporter('aktivitetsplan', AppWrapper);
     // window.NAVSPA['aktivitetsplan'](rootElement);
@@ -64,14 +48,17 @@ const exportToNavSpa = () => {
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
     });
 };
-const renderAsRootApp = () => {
-    renderAsReactRoot(rootElement);
+
+const renderAsRootApp = (props?: { fnr?: string }) => {
+    const rootElement = document.getElementById('mainapp') as HTMLElement;
+    renderAsReactRoot(rootElement, props);
 };
-const renderApp = () => {
+
+const renderApp = (props?: { fnr?: string }) => {
     if (window.NAVSPA) {
         exportToNavSpa();
     } else {
-        renderAsRootApp();
+        renderAsRootApp(props);
     }
 };
 
@@ -90,7 +77,8 @@ if (useMock) {
         .then(({ default: startWorker }) => startWorker())
         .then(() => {
             ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
-            renderApp();
+            const props = { fnr: erEksternBruker() ? undefined : mockfnr };
+            renderApp(props);
         });
 } else {
     renderApp();

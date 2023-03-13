@@ -9,11 +9,10 @@ interface Props {
     hidden?: boolean;
     dialogId?: string;
     className: string;
-    onClick?: () => void;
 }
 
 const AdvarselMedDialogLenke = (props: Props) => {
-    const { lenkeTekst, tekst, hidden, dialogId, className, onClick } = props;
+    const { lenkeTekst, tekst, hidden, dialogId, className } = props;
 
     if (hidden) {
         return null;
@@ -24,9 +23,7 @@ const AdvarselMedDialogLenke = (props: Props) => {
             <BodyShort>
                 {tekst}
                 &nbsp;
-                <LenkeTilDialog dialogId={dialogId} onClick={onClick}>
-                    {lenkeTekst}
-                </LenkeTilDialog>
+                <LenkeTilDialog dialogId={dialogId}>{lenkeTekst}</LenkeTilDialog>
             </BodyShort>
         </Alert>
     );
