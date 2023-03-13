@@ -87,28 +87,28 @@ const StillingAktivitetForm = (props: Props) => {
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Arbeidsgiver"
+                        label="Arbeidsgiver (valgfri)"
                         id={'arbeidsgiver'}
                         {...register('arbeidsgiver')}
                         error={errors.arbeidsgiver && errors.arbeidsgiver.message}
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Kontaktperson hos arbeidsgiver"
+                        label="Kontaktperson hos arbeidsgiver (valgfri)"
                         id={'kontaktperson'}
                         {...register('kontaktperson')}
                         error={errors.kontaktperson && errors.kontaktperson.message}
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Arbeidssted"
+                        label="Arbeidssted (valgfri)"
                         id="arbeidssted"
                         {...register('arbeidssted')}
                         error={errors.arbeidssted && errors.arbeidssted.message}
                     />
                     <Textarea
                         disabled={avtalt}
-                        label="Kort beskrivelse av stillingen"
+                        label="Kort beskrivelse av stillingen (valgfri)"
                         maxLength={5000}
                         {...register('beskrivelse')}
                         error={errors.beskrivelse && errors.beskrivelse.message}
@@ -116,7 +116,7 @@ const StillingAktivitetForm = (props: Props) => {
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Lenke til stillingsannonse"
+                        label="Lenke til stillingsannonse (valgfri)"
                         id={'lenke'}
                         {...register('lenke')}
                         error={errors.lenke && errors.lenke.message}

@@ -109,27 +109,27 @@ const EgenAktivitetForm = (props: Props) => {
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Mål med aktiviteten"
+                        label="Mål med aktiviteten (valgfri)"
                         id={'hensikt'}
                         {...register('hensikt')}
                         error={errors.hensikt && errors.hensikt.message}
                     />
                     <Textarea
-                        label="Kort beskrivelse av aktiviteten"
+                        label="Kort beskrivelse av aktiviteten (valgfri)"
                         maxLength={5000}
                         {...register('beskrivelse')}
                         error={errors.beskrivelse && errors.beskrivelse.message}
                         value={beskrivelseValue}
                     />
                     <TextField
-                        label="Min huskeliste for denne aktiviteten"
+                        label="Min huskeliste for denne aktiviteten (valgfri)"
                         id={'huskeliste'}
                         {...register('oppfolging')}
                         error={errors.oppfolging && errors.oppfolging.message}
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Lenke til en aktuell nettside"
+                        label="Lenke til en aktuell nettside (valgfri)"
                         id={'lenke'}
                         {...register('lenke')}
                         error={errors.lenke && errors.lenke.message}

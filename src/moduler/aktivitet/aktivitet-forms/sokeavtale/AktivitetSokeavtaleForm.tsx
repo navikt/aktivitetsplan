@@ -174,7 +174,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                     )}
                     <Textarea
                         disabled={avtalt}
-                        label="Oppfølging fra NAV"
+                        label="Oppfølging fra NAV (valgfri)"
                         maxLength={255}
                         {...register('avtaleOppfolging')}
                         error={errorWrapper.errors.avtaleOppfolging && errorWrapper.errors.avtaleOppfolging.message}
@@ -182,7 +182,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                     />
                     <Textarea
                         disabled={avtalt}
-                        label="Beskrivelse"
+                        label="Beskrivelse (valgfri)"
                         maxLength={5000}
                         {...register('beskrivelse')}
                         error={errorWrapper.errors.beskrivelse && errorWrapper.errors.beskrivelse.message}

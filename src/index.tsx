@@ -9,7 +9,6 @@ import moment from 'moment';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import App from './app';
 import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';

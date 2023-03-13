@@ -97,21 +97,21 @@ const MedisinskBehandlingForm = (props: Props) => {
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Mål for behandlingen"
+                        label="Mål for behandlingen (valgfri)"
                         id={'effekt'}
                         {...register('effekt')}
                         error={errors.effekt && errors.effekt.message}
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Oppfølging fra NAV"
+                        label="Oppfølging fra NAV (valgfri)"
                         id={'behandlingoppfolging'}
                         {...register('behandlingOppfolging')}
                         error={errors.behandlingOppfolging && errors.behandlingOppfolging.message}
                     />
                     <Textarea
                         disabled={avtalt}
-                        label="Kort beskrivelse av behandlingen"
+                        label="Kort beskrivelse av behandlingen (valgfri)"
                         maxLength={400}
                         {...register('beskrivelse')}
                         error={errors.beskrivelse && errors.beskrivelse.message}
