@@ -33,7 +33,7 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
                         laster={laster}
                         underOppfolging={underOppfolging}
                     />
-                    <SendEnMeldingKnapp />
+                    <SendEnMeldingKnapp aktivitet={aktivitet} />
                 </>
             );
         case VeilarbAktivitetType.STILLING_FRA_NAV_TYPE:
@@ -46,14 +46,14 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
                         laster={laster}
                         underOppfolging={underOppfolging}
                     />
-                    <SendEnMeldingKnapp />
+                    <SendEnMeldingKnapp aktivitet={aktivitet} />
                 </>
             );
         case VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE:
             return (
                 <>
                     <EksternAktivitetHandlingerKnapper aktivitet={aktivitet} />
-                    <SendEnMeldingKnapp />
+                    <SendEnMeldingKnapp aktivitet={aktivitet} />
                 </>
             );
         case ArenaAktivitetType.GRUPPEAKTIVITET:
@@ -61,7 +61,7 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
         case ArenaAktivitetType.UTDANNINGSAKTIVITET:
             return (
                 <>
-                    <SendEnMeldingKnapp />
+                    <SendEnMeldingKnapp aktivitet={aktivitet} />
                     <ArenaStatusAdministrasjon />
                 </>
             );
