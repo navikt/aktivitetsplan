@@ -89,7 +89,7 @@ const Tavle = (props: Props) => {
         <section className="aktivitetstavle tavle" tabIndex={-1}>
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
-                <div className="kolonner">{kolonner}</div>
+                <div className="kolonner gap-x-4 mx-4">{kolonner}</div>
             </SprettendeScrollbars>
             {hoyreKnapp}
         </section>
