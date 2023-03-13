@@ -1,4 +1,3 @@
-import { BodyShort, GuidePanel } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -101,7 +100,7 @@ const Aktivitetstavle = () => {
     }, [sistVisteAktivitetId, skalScrolle, appIsVisible]);
 
     return (
-        <Innholdslaster minstEn avhengigheter={avhengigheter}>
+        <Innholdslaster className="flex m-auto mt-8" minstEn avhengigheter={avhengigheter}>
             <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
             <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
 

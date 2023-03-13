@@ -110,12 +110,12 @@ function MittMaal() {
 
     return (
         <div
-            className={classNames('border-border-default rounded-md mb-4 p-4', {
+            className={classNames('border-border-default flex rounded-md mb-4 p-4', {
                 'border-2 border-dashed ': !mal && !disabled,
                 border: mal || disabled,
             })}
         >
-            <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <div className="flex sm:flex-row items-center gap-6">
                     <MaalIkon className="hidden sm:block mx-4" />
                     <div>

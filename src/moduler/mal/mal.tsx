@@ -4,6 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
+import { STATUS } from '../../api/utils';
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
@@ -60,7 +61,7 @@ const Mal = () => {
                         <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
                     </ul>
                 </ReadMore>
-                <Innholdslaster avhengigheter={avhengigheter} alleOK>
+                <Innholdslaster className="flex m-auto" avhengigheter={avhengigheter} alleOK>
                     <section>
                         <MalContainer dirtyRef={isDirty} />
                         <MalHistorikk />

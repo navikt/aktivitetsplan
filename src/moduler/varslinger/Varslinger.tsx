@@ -31,7 +31,7 @@ const Varslinger = () => {
         />
     );
 
-    return <Innholdslaster avhengigheter={[oppfolgingstatus, ident, eskaleringsvarselStatus]}> {child}</Innholdslaster>;
+    return <Innholdslaster avhengigheter={[oppfolgingstatus, ident, eskaleringsvarselStatus]}>{child}</Innholdslaster>;
 };
 
 export default Varslinger;

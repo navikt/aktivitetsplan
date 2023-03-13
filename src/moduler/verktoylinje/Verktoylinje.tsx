@@ -25,7 +25,7 @@ const Verktoylinje = () => {
     return (
         <div className="flex flex-col gap-y-6">
             <div className="flex gap-y-4 sm:flex-row flex-col-reverse ">
-                <div className="flex gap-4 items-start flex-col sm:flex-row w-full [&>*]:w-full [&>*]:sm:w-fit">
+                <div className="flex gap-4 items-start flex-col sm:flex-row w-full">
                     {!hideLeggTilOgFilter ? (
                         <>
                             <Button

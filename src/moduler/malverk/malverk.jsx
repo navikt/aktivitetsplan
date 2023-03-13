@@ -50,7 +50,7 @@ class Malverk extends Component {
         return (
             !endre && (
                 <div className="skjemaelement">
-                    <Innholdslaster avhengigheter={avhengigheter} spinnerSize="S">
+                    <Innholdslaster className="flex m-auto" avhengigheter={avhengigheter} spinnerSize="large">
                         <Select
                             id={domId}
                             name={'malverk'}

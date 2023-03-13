@@ -2,6 +2,7 @@ import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { STATUS } from '../../api/utils';
 import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import * as AppPT from '../../proptypes';
@@ -29,7 +30,10 @@ class OppfolgingStatus extends Component {
     render() {
         const { props } = this;
         return (
-            <Innholdslaster avhengigheter={[props.oppfolgingStatus, props.identitetStatus, props.toggleStatus]}>
+            <Innholdslaster
+                className="mt-8"
+                avhengigheter={[props.oppfolgingStatus, props.identitetStatus, props.toggleStatus]}
+            >
                 <div className="fullbredde">
                     <VidereSendBrukereEllerRenderChildren {...props} />
                 </div>

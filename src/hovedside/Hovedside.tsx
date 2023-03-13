@@ -36,7 +36,7 @@ const Hovedside = () => {
 
     return (
         <div className="hovedside">
-            <div className="hovedsideinnhold">
+            <div className="flex items-center flex-col h-full">
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
                 <OppfolgingStatus>

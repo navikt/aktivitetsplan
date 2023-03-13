@@ -1,6 +1,6 @@
 import { Modal as AkselModal } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
@@ -60,7 +60,7 @@ const Modal = (props: Props) => {
             <div className="flex flex-col max-w-2xl mx-auto">
                 {header}
                 {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
-                <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
+                <Innholdslaster className="flex m-auto my-8" minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
                     {children}
                 </Innholdslaster>
             </div>

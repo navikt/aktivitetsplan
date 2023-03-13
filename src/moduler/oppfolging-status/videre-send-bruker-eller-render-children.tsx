@@ -49,7 +49,7 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         return <AktiverDigitalOppfolging />;
     }
 
-    return <div>{children}</div>;
+    return children;
 }
 
 export default VidereSendBrukereEllerRenderChildren;
