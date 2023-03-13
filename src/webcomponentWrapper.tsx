@@ -21,7 +21,7 @@ export class DabAktivitetsplan extends HTMLElement {
 
         // Load styles under this shadowDom-node, not root element
         const styleElem = document.createElement('style');
-        styleElem.innerHTML = lessCss + tailwindCss + dsStyles + modulesCss;
+        styleElem.innerHTML = dsStyles + tailwindCss + lessCss + modulesCss;
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
