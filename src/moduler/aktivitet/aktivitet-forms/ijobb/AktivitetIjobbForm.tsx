@@ -93,7 +93,7 @@ const IJobbAktivitetForm = (props: Props) => {
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
                         from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato' }}
+                        to={{ name: 'tilDato', label: 'Frist (valgfri)' }}
                     />
                     <Controller
                         name="jobbStatus"
