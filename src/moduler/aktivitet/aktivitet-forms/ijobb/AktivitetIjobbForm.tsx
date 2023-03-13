@@ -121,14 +121,16 @@ const IJobbAktivitetForm = (props: Props) => {
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Ansettelsesforhold (fast, midlertidig, vikariat)"
+                        label="Ansettelsesforhold (valgfri)"
+                        description="For eksempel fast, midlertidig, vikariat"
                         id={'arbeidstid'}
                         {...register('arbeidstid')}
                         error={errors.arbeidstid && errors.arbeidstid.message}
                     />
                     <Textarea
                         disabled={avtalt}
-                        label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
+                        label="Kort beskrivelse av stillingen (valgfri)"
+                        description="For eksempel dag, kveld, helg, stillingsprosent eller oppgaver"
                         maxLength={5000}
                         {...register('beskrivelse')}
                         error={errors.beskrivelse && errors.beskrivelse.message}
