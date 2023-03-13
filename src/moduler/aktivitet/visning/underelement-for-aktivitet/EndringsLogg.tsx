@@ -1,3 +1,4 @@
+import { Historic } from '@navikt/ds-icons';
 import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
@@ -13,7 +14,12 @@ const EndringsLogg = (props: Props) => {
 
     return (
         <Accordion.Item className="first:border-t-2 first:border-border-divider">
-            <Accordion.Header>Historikk</Accordion.Header>
+            <Accordion.Header>
+                <div className="flex gap-4">
+                    <Historic fontSize={24} />
+                    Historikk
+                </div>
+            </Accordion.Header>
             <Accordion.Content>
                 <VersjonerForAktivitet visible={true} aktivitet={aktivitet} />
             </Accordion.Content>

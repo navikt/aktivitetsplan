@@ -1,3 +1,4 @@
+import { DirectionSign } from '@navikt/ds-icons';
 import { BodyShort } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,6 +65,7 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
 
     return (
         <EndreLinje
+            icon={<DirectionSign fontSize="24" />}
             onClick={() => {
                 if (open) {
                     setFormIsDirty('status', false);

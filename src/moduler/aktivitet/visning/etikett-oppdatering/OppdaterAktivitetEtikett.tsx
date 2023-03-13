@@ -1,3 +1,4 @@
+import { Bag, DirectionSign } from '@navikt/ds-icons';
 import React, { useContext, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -64,6 +65,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
 
     return (
         <EndreLinje
+            icon={<Bag fontSize="24" />}
             onClick={() => {
                 if (open) {
                     setFormIsDirty('etikett', false);
