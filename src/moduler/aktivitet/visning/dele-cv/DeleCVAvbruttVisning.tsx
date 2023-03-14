@@ -1,32 +1,10 @@
-import { Alert, BodyShort } from '@navikt/ds-react';
+import { Alert, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { AVBRUTT_AV_SYSTEM, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus, Livslopsstatus } from '../../../../datatypes/aktivitetTypes';
-import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoManed } from '../../../../utils';
-import styles from './DeleCVAvbruttVisning.module.less';
 import { overskrift } from './tekster';
-
-const getTitteltekst = (status: AktivitetStatus, livslopsstatus: Livslopsstatus, erHistorisk: boolean): string => {
-    if (status === STATUS_AVBRUTT && livslopsstatus === AVBRUTT_AV_SYSTEM) {
-        return `Fristen har gått ut`;
-    }
-
-    if (status === STATUS_AVBRUTT) {
-        return `Aktiviteten er avbrutt`;
-    }
-
-    if (status === STATUS_FULLFOERT) {
-        return `Aktiviteten er fullført`;
-    }
-
-    if (erHistorisk) {
-        return '';
-    }
-
-    return 'Noe er feil, kontakt brukerstøtte';
-};
 
 const getTekst = (
     status: AktivitetStatus,
@@ -64,25 +42,15 @@ export const DeleCVAvbruttVisning = (props: Props) => {
     const { status, livslopsstatus, erHistorisk, svarfrist } = props;
 
     const tekst = getTekst(status, livslopsstatus, erHistorisk, svarfrist);
-    const titteltekst = getTitteltekst(status, livslopsstatus, erHistorisk);
-
-    const Tittel = () => <BodyShort className="pr-4">{overskrift}</BodyShort>;
-    const TittelMedUtloptTekst = () => (
-        <>
-            <Tittel />
-            <BodyShort className="pr-4">{titteltekst}</BodyShort>
-        </>
-    );
 
     return (
-        <EkspanderbarLinje
-            tittel={<TittelMedUtloptTekst />}
-            aapneTittel={<Tittel />}
-            kanToogle
-            aapneTekst="Åpne"
-            lukkeTekst="Lukk"
-        >
-            <Alert variant="info">{tekst}</Alert>
-        </EkspanderbarLinje>
+        <div className="p-4 bg-surface-subtle border-border-default border rounded-md">
+            <Heading size="medium" className="mb-4">
+                {overskrift}
+            </Heading>
+            <Alert variant="info" inline>
+                {tekst}
+            </Alert>
+        </div>
     );
 };

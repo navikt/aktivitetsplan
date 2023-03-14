@@ -11,7 +11,6 @@ import { dagerSiden, todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import { Ingress } from './DeleCvContainer';
-import styles from './MeldInteresseForStilling.module.less';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
 import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 
@@ -105,7 +104,6 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 onChange={onChange}
                 aria-label={overskrift}
                 role="radiogroup"
-                className=""
                 error={state.submittoken && state.fields.kanDeles.error}
             >
                 <Radio id="kanDeles" value={SvarType.JA.toString()}>
