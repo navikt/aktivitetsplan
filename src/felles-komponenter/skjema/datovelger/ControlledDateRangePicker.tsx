@@ -77,7 +77,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     return (
         <div className="flex flex-1">
             <DatePicker {...datepickerProps} wrapperClassName="flex flex-1">
-                <div className="flex flex-1 items-start gap-2">
+                <div className="flex flex-1 items-start gap-y-2 gap-x-6 flex-wrap">
                     <DatePicker.Input
                         disabled={from.disabled}
                         className="flex-1"
