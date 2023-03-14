@@ -1,5 +1,6 @@
 import { DateValidationT } from '@navikt/ds-react';
-import { UNSAFE_DatePicker as DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react/esm/date';
+import { UNSAFE_DatePicker as DatePicker, UNSAFE_useDatepicker } from '@navikt/ds-react';
+import React from 'react';
 import { ChangeEventHandler, MutableRefObject, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 

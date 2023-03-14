@@ -1,8 +1,7 @@
 import { Button } from '@navikt/ds-react';
-import React, { useRef, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useOutsideClick } from '../../felles-komponenter/hooks/useClickOutside';
 import { minstEnErOK, toStatus } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
@@ -13,7 +12,6 @@ import AvtaltMedNavFilter from './filter/AvtaltFilter';
 import EtikettFilter from './filter/EtikettFilter';
 
 const Filter = () => {
-    const ref = useRef<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
 
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
@@ -23,10 +21,22 @@ const Filter = () => {
     const statuser = toStatus(avhengigheter);
     const filterErKlart = minstEnErOK(statuser);
 
-    useOutsideClick(ref, () => setOpen(false), open);
+    const preventCloseOnInsideClick: MouseEventHandler = (event) => {
+        event.stopPropagation();
+    };
+    const handleClickOutside = () => setOpen(false);
+
+    useEffect(() => {
+        if (open) {
+            window.addEventListener('click', handleClickOutside);
+        }
+        return () => {
+            window.removeEventListener('click', handleClickOutside);
+        };
+    }, [handleClickOutside]);
 
     return harAktivitet ? (
-        <div ref={ref}>
+        <div onClick={preventCloseOnInsideClick}>
             <Button
                 loading={!filterErKlart}
                 variant="secondary"
