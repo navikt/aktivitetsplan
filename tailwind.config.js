@@ -10,6 +10,8 @@ module.exports = {
             sm: '640px',
             md: '768px',
             lg: '992px',
+            xl: '1280px',
+            'tavle-max-width': '1700px',
         },
         colors: {
             'border-default': 'rgba(0, 0, 0, 0.44)',

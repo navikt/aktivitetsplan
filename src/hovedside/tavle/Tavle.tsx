@@ -4,15 +4,16 @@ import React, { ReactElement, useRef, useState } from 'react';
 
 import SprettendeScrollbars from './sprettende-scrollbars';
 
-const KOLONNEBREDDE = 300;
+const KOLONNEBREDDE = 325;
 const KOLONNEMARGIN = 10;
 
 interface Props {
     children: ReactElement[];
+    dragging: boolean;
 }
 
 const Tavle = (props: Props) => {
-    const { children } = props;
+    const { children, dragging } = props;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickIndex, setClickIndex] = useState(0);
@@ -52,7 +53,7 @@ const Tavle = (props: Props) => {
     const kolonner = children.map((child, index) => (
         <section
             key={child.key || index}
-            className="tavle-kolonne"
+            className={'min-w-[300px] lg:max-w-[300px]'}
             data-testid={`aktivitetstavle.${child.props.status}`}
         >
             {child}
@@ -61,6 +62,7 @@ const Tavle = (props: Props) => {
 
     const venstreKnapp = (
         <button
+            type="button"
             className={classNames('tavle__scrollknapp knapp-forrige', {
                 invisible: venstreKnappDisabled,
             })}
@@ -74,6 +76,7 @@ const Tavle = (props: Props) => {
 
     const hoyreKnapp = (
         <button
+            type="button"
             className={classNames('tavle__scrollknapp knapp-neste', {
                 invisible: hoyreKnappDisabled,
             })}
@@ -86,10 +89,15 @@ const Tavle = (props: Props) => {
     );
 
     return (
-        <section className="aktivitetstavle tavle" tabIndex={-1}>
+        <section className={classNames('tavle aktivitetstavle lg:w-full', { 'opacity-50': dragging })} tabIndex={-1}>
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
-                <div className="kolonner gap-x-4 mx-4">{kolonner}</div>
+                <div
+                    className="kolonner opacity-100 flex flex-col sm:gap-y-6 sm:mx-8 sm:max-w-[624px] sm:mx-auto md:max-w-[720px]
+                                lg:flex-row lg:gap-x-5 lg:mx-4 lg:max-w-full tavle-max-width:justify-center"
+                >
+                    {kolonner}
+                </div>
             </SprettendeScrollbars>
             {hoyreKnapp}
         </section>

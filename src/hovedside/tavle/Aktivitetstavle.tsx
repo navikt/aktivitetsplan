@@ -102,7 +102,8 @@ const Aktivitetstavle = () => {
         <Innholdslaster className="flex m-auto mt-8" minstEn avhengigheter={avhengigheter}>
             <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
             <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
-            <Tavle>
+
+            <Tavle dragging={dragging}>
                 <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} />
                 <Kolonne status={STATUS_PLANLAGT} />
                 <Kolonne status={STATUS_GJENNOMFOERT} />
