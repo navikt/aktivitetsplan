@@ -125,7 +125,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
-                <div className="skjema-innlogget aktivitetskjema space-y-4">
+                <div className="space-y-8">
                     <AktivitetFormHeader
                         tittel="Avtale om å søke jobber"
                         aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE}

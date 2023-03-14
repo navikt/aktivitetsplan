@@ -17,13 +17,11 @@ const EksternAktivitetDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <div className="flex flex-row flex-wrap w-full gap-y-3">
-                <OppgaveBoks oppgave={aktivitet.eksternAktivitet.oppgave} />
-                <FraDato aktivitet={aktivitet} />
-                <TilDato aktivitet={aktivitet} />
-                <Detaljer detaljer={aktivitet.eksternAktivitet.detaljer} />
-                <Beskrivelse aktivitet={aktivitet} />
-            </div>
+            <OppgaveBoks oppgave={aktivitet.eksternAktivitet.oppgave} />
+            <FraDato aktivitet={aktivitet} />
+            <TilDato aktivitet={aktivitet} />
+            <Detaljer detaljer={aktivitet.eksternAktivitet.detaljer} />
+            <Beskrivelse aktivitet={aktivitet} />
         </>
     );
 };

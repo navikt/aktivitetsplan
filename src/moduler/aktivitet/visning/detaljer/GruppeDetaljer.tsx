@@ -33,7 +33,7 @@ const GruppeDetaljer = ({ aktivitet }: Props) => {
     const erGruppeDatoLike = formaterDatoKortManed(fraDato) === formaterDatoKortManed(tilDato);
 
     return (
-        <div className="flex flex-row flex-wrap w-full gap-y-3">
+        <>
             <FraDato aktivitet={aktivitet} visIkkeSatt hidden={erGruppeDatoLike} />
             <TilDato aktivitet={aktivitet} visIkkeSatt hidden={erGruppeDatoLike} />
             <HiddenIfInformasjonsfelt
@@ -49,7 +49,7 @@ const GruppeDetaljer = ({ aktivitet }: Props) => {
                 innhold={MoteplanInnhold(moeteplanListe)}
             />
             <Beskrivelse aktivitet={aktivitet} />
-        </div>
+        </>
     );
 };
 
