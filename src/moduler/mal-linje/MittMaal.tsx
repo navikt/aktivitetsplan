@@ -110,7 +110,7 @@ function MittMaal() {
 
     return (
         <div
-            className={classNames('border-border-default flex rounded-md mb-4 p-4', {
+            className={classNames('border-border-default flex rounded-md p-4', {
                 'border-2 border-dashed ': !mal && !disabled,
                 border: mal || disabled,
             })}
