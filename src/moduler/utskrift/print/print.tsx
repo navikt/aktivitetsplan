@@ -8,7 +8,7 @@ import { Bruker, Postadresse } from '../../../datatypes/types';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
 import { formaterDatoKortManed } from '../../../utils';
-import logoPng from '../ikoner/logo.png';
+import logoPngImagePath from '../ikoner/logo.png';
 import Adresse from './adresse';
 import Aktiviteter from './aktiviteter/Aktiviteter';
 import { DialogerUtenAktivitet } from './dialoger';
@@ -57,9 +57,11 @@ function Print(props: Props) {
     const kvpPeriodeFra = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.opprettetDato) : undefined;
     const kvpPeriodeTil = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.avsluttetDato) : undefined;
 
+    const navLogoPng = new URL(logoPngImagePath, import.meta.url).href;
+
     return (
         <div className="printmodal-body" hidden={hidden}>
-            <img className="my-8" src={logoPng} alt="Logo NAV" />
+            <img className="my-8" src={navLogoPng} alt="Logo NAV" />
             <div className="flex justify-between mb-8">
                 <div className="">
                     <HiddenIfDiv hidden={!erVeileder}>
