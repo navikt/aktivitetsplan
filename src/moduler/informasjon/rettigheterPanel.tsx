@@ -1,8 +1,6 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import React from 'react';
 
-import styles from './informasjon-modal.module.less';
-
 export function RettigheterPanel() {
     return (
         <Accordion.Item>
@@ -17,7 +15,7 @@ export function RettigheterPanel() {
                     aktivitetsplanen og annen informasjon du gir til veilederen din brukes til å vurdere ditt behov for
                     hjelp fra NAV.
                 </BodyShort>
-                <Heading level="3" size="xsmall" className={styles.element}>
+                <Heading level="3" size="xsmall" className="pt-4">
                     Manuell oppfølging
                 </Heading>
                 <BodyShort>
@@ -27,14 +25,14 @@ export function RettigheterPanel() {
                     en veileder følger deg opp, uten at du selv bruker den digitale aktivitetsplanen. Du får
                     aktivitetsplanen skrevet ut på papir.
                 </BodyShort>
-                <Heading level="3" size="xsmall" className={styles.element}>
+                <Heading level="3" size="xsmall" className="pt-4">
                     Deling og lagring
                 </Heading>
-                <BodyShort className={styles.avsnitt}>
+                <BodyShort className="pb-4">
                     Opplysningene i aktivitetsplanen blir ikke delt med andre offentlige etater, med mindre de har rett
                     til å hente slike opplysninger.
                 </BodyShort>
-                <BodyShort className={styles.avsnitt}>
+                <BodyShort className="pb-4">
                     Opplysningene i aktivitetsplanen din blir lagret og oppbevart etter arkivloven. Aktiviteter og
                     meldinger i dialogen kan ikke slettes når de først er opprettet.
                 </BodyShort>

@@ -54,11 +54,11 @@ const renderAsRootApp = (props?: { fnr?: string }) => {
 };
 
 const renderApp = (props?: { fnr?: string }) => {
-    if (window.NAVSPA) {
-        exportToNavSpa();
-    } else {
-        renderAsRootApp(props);
-    }
+    // if (window.NAVSPA) {
+    exportToNavSpa();
+    // } else {
+    //     renderAsRootApp(props);
+    // }
 };
 
 if (useMock) {

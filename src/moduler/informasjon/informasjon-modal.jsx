@@ -11,7 +11,6 @@ import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon } from '../lest/lest-reducer';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { BrukePlanenPanel } from './brukePlanenPanel';
-import styles from './informasjon-modal.module.less';
 import { selectBackPath, setBackPath } from './informasjon-reducer';
 import { OkonomiskStotte } from './okonomiskStottePanel';
 import { RettigheterPanel } from './rettigheterPanel';
@@ -41,10 +40,10 @@ class InformasjonModal extends Component {
                 }}
             >
                 <ModalContainer className="informasjon-modal-container max-w-2xl p-6">
-                    <Heading level="1" size="large" className={styles.innholdsTittel}>
+                    <Heading level="1" size="large" className="mb-4">
                         Hva er aktivitetsplanen?
                     </Heading>
-                    <BodyShort className={styles.avsnitt}>
+                    <BodyShort className="pb-4">
                         I aktivitetsplanen holder du oversikt over det du gjør for å komme i jobb eller annen aktivitet.
                         Både du og veilederen din kan se og endre aktivitetsplanen.
                     </BodyShort>
