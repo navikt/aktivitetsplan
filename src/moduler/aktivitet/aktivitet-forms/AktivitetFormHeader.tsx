@@ -11,7 +11,7 @@ interface Props {
 
 const AktivitetFormHeader = ({ tittel, aktivitetstype }: Props) => {
     return (
-        <div className="mb-8">
+        <div className="mb-8 mt-4">
             <Heading level="1" size="xlarge">
                 {tittel}
             </Heading>

@@ -1,3 +1,4 @@
+import { JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../constant';
 import {
     AktivitetBaseProps,
     AlleAktiviteter,
@@ -47,7 +48,7 @@ export interface IJobbAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE;
     fraDato?: string;
     tilDato?: string;
-    jobbStatus: string;
+    jobbStatus: typeof JOBB_STATUS_HELTID | typeof JOBB_STATUS_DELTID;
     ansettelsesforhold: string;
     arbeidstid: string;
 }

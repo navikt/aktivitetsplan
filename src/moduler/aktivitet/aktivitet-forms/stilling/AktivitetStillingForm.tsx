@@ -83,7 +83,7 @@ const StillingAktivitetForm = (props: Props) => {
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
                         from={{ name: 'fraDato', required: true, defaultValue: defaultValues?.fraDato }}
-                        to={{ name: 'tilDato', defaultValue: defaultValues?.tilDato }}
+                        to={{ name: 'tilDato', defaultValue: defaultValues?.tilDato, label: 'Frist (valgfri)' }}
                     />
                     <TextField
                         disabled={avtalt}

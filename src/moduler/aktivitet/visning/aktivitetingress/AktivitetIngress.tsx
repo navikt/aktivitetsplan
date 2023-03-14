@@ -6,7 +6,7 @@ import CustomBodyLong from '../hjelpekomponenter/CustomBodyLong';
 
 const aktivitetingress: Record<AktivitetType, string | ReactElement | undefined> = {
     BEHANDLING: (
-        <div>
+        <div className="mt-4">
             <BodyShort>
                 Her kan du legge inn medisinsk behandling som påvirker muligheten din til å jobbe eller være på kurs og
                 tiltak.
@@ -49,7 +49,7 @@ const AktivitetIngress = ({ aktivitetstype }: Props) => {
     if (!content) return null;
     if (typeof content === 'string') {
         return (
-            <section className="aktivitetingress">
+            <section className="aktivitetingress mt-4">
                 <CustomBodyLong className="aktivitetingress__tekst">{content}</CustomBodyLong>
             </section>
         );

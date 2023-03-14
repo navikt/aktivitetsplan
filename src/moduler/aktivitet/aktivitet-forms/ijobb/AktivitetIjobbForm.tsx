@@ -18,7 +18,7 @@ const schema = z.object({
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     tilDato: z.date({ invalid_type_error: 'Ikke en gyldig dato' }).optional().nullable(),
-    jobbStatus: z.string().min(1, 'Du må velge heltid eller deltid'),
+    jobbStatus: z.enum([JOBB_STATUS_HELTID, JOBB_STATUS_DELTID], { required_error: 'Du må velge heltid eller deltid' }),
     ansettelsesforhold: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
     arbeidstid: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
     beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional().nullable(),
@@ -75,6 +75,8 @@ const IJobbAktivitetForm = (props: Props) => {
         setValue('jobbStatus', value, { shouldValidate: true });
     };
 
+    console.log(errors);
+
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...methods}>
@@ -93,7 +95,7 @@ const IJobbAktivitetForm = (props: Props) => {
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
                         from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato', label: 'Frist (valgfri)' }}
+                        to={{ name: 'tilDato' }}
                     />
                     <Controller
                         name="jobbStatus"

@@ -61,7 +61,6 @@ const Tavle = (props: Props) => {
 
     const venstreKnapp = (
         <button
-            type="button"
             className={classNames('tavle__scrollknapp knapp-forrige', {
                 invisible: venstreKnappDisabled,
             })}
@@ -75,7 +74,6 @@ const Tavle = (props: Props) => {
 
     const hoyreKnapp = (
         <button
-            type="button"
             className={classNames('tavle__scrollknapp knapp-neste', {
                 invisible: hoyreKnappDisabled,
             })}
@@ -88,10 +86,10 @@ const Tavle = (props: Props) => {
     );
 
     return (
-        <section className={'aktivitetstavle tavle'} tabIndex={-1}>
+        <section className="aktivitetstavle tavle" tabIndex={-1}>
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
-                <div className="kolonner opacity-100">{kolonner}</div>
+                <div className="kolonner">{kolonner}</div>
             </SprettendeScrollbars>
             {hoyreKnapp}
         </section>

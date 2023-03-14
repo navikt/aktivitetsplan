@@ -82,7 +82,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         disabled={from.disabled}
                         className="flex-1"
                         error={fromState.error?.message}
-                        label={from?.label ?? `Fra dato ${to.required ? '(obligatorisk)' : '(valgfri)'}`}
+                        label={from?.label ?? `Fra dato ${from.required ? '(obligatorisk)' : '(valgfri)'}`}
                         {...fromInputProps}
                         name={fromField.name}
                         onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs])}
