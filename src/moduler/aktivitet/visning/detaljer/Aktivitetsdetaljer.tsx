@@ -21,7 +21,7 @@ interface Props {
 const Aktivitetsdetaljer = ({ valgtAktivitet }: Props) => {
     return (
         <section>
-            <div className="flex flex-row flex-wrap w-full gap-y-3">
+            <div className="flex flex-row flex-wrap w-full gap-y-4">
                 <BehandlingsDetaljer aktivitet={valgtAktivitet} />
                 <EgenAktivitetDetaljer aktivitet={valgtAktivitet} />
                 <GruppeDetaljer aktivitet={valgtAktivitet} />

@@ -80,7 +80,7 @@ const IJobbAktivitetForm = (props: Props) => {
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...methods}>
-                <div className="aktivitetskjema space-y-4">
+                <div className="space-y-8">
                     <AktivitetFormHeader
                         tittel="Jobb jeg har nå"
                         aktivitetstype={VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE}

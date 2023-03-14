@@ -72,6 +72,7 @@ const StillingEtikettForm = (props: Props) => {
                     hideLegend
                     value={state.fields.etikettstatus.input.value}
                     onChange={onChangeStillingStatus}
+                    disabled={disable}
                 >
                     {fields.map(({ value, label }) => (
                         <Radio key={value} value={value} label={label} />

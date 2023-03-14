@@ -16,9 +16,9 @@ export const StillingFraNavDetaljer = ({ aktivitet }: Props) => {
     const stillingFraNavData = aktivitet.stillingFraNavData;
 
     return (
-        <div className="flex flex-row flex-wrap w-full gap-y-3">
+        <>
             <Informasjonsfelt key="arbeidsgiver" tittel="Arbeidsgiver" innhold={stillingFraNavData.arbeidsgiver} />
             <Informasjonsfelt key="arbeidssted" tittel="Arbeidssted" innhold={stillingFraNavData.arbeidssted} />
-        </div>
+        </>
     );
 };

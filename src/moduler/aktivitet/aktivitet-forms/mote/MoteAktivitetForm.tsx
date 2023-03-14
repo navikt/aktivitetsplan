@@ -98,7 +98,7 @@ const MoteAktivitetForm = (props: Props) => {
             )}
         >
             <FormProvider {...formHandlers}>
-                <div className="skjema-innlogget aktivitetskjema space-y-4">
+                <div className="space-y-8">
                     <AktivitetFormHeader tittel="Møte med NAV" aktivitetstype={VeilarbAktivitetType.MOTE_TYPE} />
                     <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
 

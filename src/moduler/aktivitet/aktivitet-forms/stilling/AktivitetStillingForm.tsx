@@ -68,7 +68,7 @@ const StillingAktivitetForm = (props: Props) => {
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
-                <div className="aktivitetskjema space-y-4">
+                <div className="space-y-8">
                     <AktivitetFormHeader
                         tittel="En jobb jeg vil søke på"
                         aktivitetstype={VeilarbAktivitetType.STILLING_AKTIVITET_TYPE}

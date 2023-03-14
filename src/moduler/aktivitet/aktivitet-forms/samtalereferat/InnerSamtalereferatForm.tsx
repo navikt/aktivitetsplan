@@ -80,7 +80,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     return (
         <form autoComplete="off" noValidate>
             <FormProvider {...formHandlers}>
-                <div className="aktivitetskjema space-y-4">
+                <div className="space-y-8">
                     <AktivitetFormHeader
                         tittel="Samtalereferat"
                         aktivitetstype={VeilarbAktivitetType.SAMTALEREFERAT_TYPE}
