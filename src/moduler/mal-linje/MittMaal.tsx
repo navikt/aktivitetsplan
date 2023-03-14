@@ -117,7 +117,7 @@ function MittMaal() {
         >
             <Innholdslaster avhengigheter={avhengigheter}>
                 <div className="flex sm:flex-row items-center gap-6">
-                    <MaalIkon className="hidden sm:block mx-4" />
+                    <MaalIkon className="hidden sm:block mx-4 min-w-fit" />
                     <div>
                         <div className="flex mb-2">
                             <NotifikasjonMarkering visible={nyEndring} />
