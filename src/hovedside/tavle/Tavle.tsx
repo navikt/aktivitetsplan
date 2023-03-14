@@ -89,11 +89,11 @@ const Tavle = (props: Props) => {
     );
 
     return (
-        <section className={classNames('tavle aktivitetstavle lg:w-full', { 'opacity-50': dragging })} tabIndex={-1}>
+        <section className={classNames('tavle aktivitetstavle lg:w-full')} tabIndex={-1}>
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
                 <div
-                    className="kolonner opacity-100 flex flex-col sm:gap-y-6 sm:mx-8 sm:max-w-[624px] sm:mx-auto md:max-w-[720px]
+                    className="kolonner flex flex-col sm:gap-y-6 sm:mx-8 sm:max-w-[624px] sm:mx-auto md:max-w-[720px]
                                 lg:flex-row lg:gap-x-5 lg:mx-4 lg:max-w-full tavle-max-width:justify-center"
                 >
                     {kolonner}
