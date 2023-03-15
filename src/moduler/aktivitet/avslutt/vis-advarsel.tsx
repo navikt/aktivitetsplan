@@ -1,8 +1,6 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
-
 interface Props {
     headerTekst: string;
     onSubmit: (value: any) => any;
@@ -15,9 +13,9 @@ const VisAdvarsel = ({ onSubmit, headerTekst }: Props) => {
                 {headerTekst}
             </Heading>
             <Alert variant="warning">Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.</Alert>
-            <ModalFooter>
-                <Button onClick={onSubmit}>Lagre</Button>
-            </ModalFooter>
+            <Button className="mt-4" onClick={onSubmit}>
+                Lagre
+            </Button>
         </div>
     );
 };

@@ -1,4 +1,6 @@
 export const auth = {
-    // expirationTime: '2018-12-10T15:25:00+0100',
-    expirationTime: null,
+    expirationTime: '2025-03-15T13:43:51.000Z',
+    loggedIn: true,
+    remainingSeconds: 99999, // Dette blir ikke brukt, vi ser på expirationTime
+    securityLevel: 'Level4',
 };
