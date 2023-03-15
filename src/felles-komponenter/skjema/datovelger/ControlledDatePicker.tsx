@@ -4,13 +4,22 @@ import React from 'react';
 import { ChangeEventHandler, MutableRefObject, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
-import { coerceToUndefined, handlers, validateStandardDateErrors } from './common';
+import {
+    coerceToUndefined,
+    handlers,
+    preventCloseOnInsideClick,
+    useOutsideClick,
+    validateStandardDateErrors,
+} from './common';
 import { FieldSettings } from './ControlledDateRangePicker';
 
 interface Props {
     field: FieldSettings;
 }
 const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required = false, label } }: Props) => {
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    useOutsideClick(isPopoverOpen, () => setIsPopoverOpen(false));
+
     const { control, setValue, setError, clearErrors } = useFormContext();
     const {
         field,
@@ -32,6 +41,7 @@ const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required 
                 const error = validateStandardDateErrors(validation, required);
                 if (!error) clearErrors(name);
             }
+            setIsPopoverOpen(false);
         },
     });
     const setHookFormValue: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -43,23 +53,32 @@ const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required 
         if (error) setError(name, { message: error });
         else clearErrors(name);
     };
+    /*  */
+    const togglePopover = () => {
+        setIsPopoverOpen(!isPopoverOpen);
+    };
+    // These extra div's minimizes the area that can be clicked that does not close the popover
     return (
-        <DatePicker {...datepickerProps}>
-            <DatePicker.Input
-                disabled={disabled}
-                className="flex-1"
-                error={error?.message}
-                label={label ?? 'Dato' + (required ? ' (obligatorisk)' : '')}
-                {...inputProps}
-                name={name}
-                onBlur={handlers([field.onBlur, inputProps.onBlur, validateInputs])}
-                onChange={handlers([setHookFormValue, inputProps.onChange])}
-                ref={(ref) => {
-                    (inputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
-                    field.ref(ref);
-                }}
-            />
-        </DatePicker>
+        <div className="flex">
+            <div onClick={preventCloseOnInsideClick}>
+                <DatePicker {...datepickerProps} onOpenToggle={togglePopover} open={isPopoverOpen}>
+                    <DatePicker.Input
+                        disabled={disabled}
+                        className="flex-1"
+                        error={error?.message}
+                        label={label ?? 'Dato' + (required ? ' (obligatorisk)' : '')}
+                        {...inputProps}
+                        name={name}
+                        onBlur={handlers([field.onBlur, inputProps.onBlur, validateInputs])}
+                        onChange={handlers([setHookFormValue, inputProps.onChange])}
+                        ref={(ref) => {
+                            (inputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
+                            field.ref(ref);
+                        }}
+                    />
+                </DatePicker>
+            </div>
+        </div>
     );
 };
 export default ControlledDatePicker;

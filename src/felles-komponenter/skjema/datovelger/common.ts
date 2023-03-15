@@ -1,4 +1,5 @@
 import { DateValidationT } from '@navikt/ds-react';
+import { MouseEventHandler, useEffect } from 'react';
 
 type Handler = React.FocusEventHandler | React.ChangeEventHandler<HTMLInputElement> | undefined;
 
@@ -18,4 +19,17 @@ export const validateStandardDateErrors = (validation?: DateValidationT, require
     if (!validation.isEmpty && !validation.isValidDate) {
         return 'Ikke en gyldig dato';
     }
+};
+
+export const useOutsideClick = (open: boolean, onToggle: () => void) => {
+    useEffect(() => {
+        if (open) {
+            window.addEventListener('click', onToggle);
+        }
+        return () => window.removeEventListener('click', onToggle);
+    }, [onToggle]);
+};
+
+export const preventCloseOnInsideClick: MouseEventHandler = (event) => {
+    event.stopPropagation();
 };

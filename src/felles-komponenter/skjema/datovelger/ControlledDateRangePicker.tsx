@@ -4,7 +4,7 @@ import React from 'react';
 import { ChangeEventHandler, MutableRefObject, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
-import { coerceToUndefined, handlers } from './common';
+import { coerceToUndefined, handlers, preventCloseOnInsideClick, useOutsideClick } from './common';
 
 export interface FieldSettings {
     name: string;
@@ -21,6 +21,8 @@ interface Props {
 }
 
 const DateRangePicker = ({ from, to, disabledDays }: Props) => {
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    useOutsideClick(isPopoverOpen, () => setIsPopoverOpen(false));
     const { setError, clearErrors, control, setValue } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,
@@ -71,13 +73,20 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {
         setValue(from.name, coerceToUndefined(event.target.value));
     };
+    const openToggle = () => setIsPopoverOpen(true);
+    const closeToggle = () => setIsPopoverOpen(false);
     const setHookFormToValue: ChangeEventHandler<HTMLInputElement> = (event) => {
         setValue(from.name, coerceToUndefined(event.target.value));
     };
 
     return (
-        <div className="flex flex-1">
-            <DatePicker {...datepickerProps} wrapperClassName="flex flex-1">
+        <div className="flex flex-1" onClick={preventCloseOnInsideClick}>
+            <DatePicker
+                {...datepickerProps}
+                open={isPopoverOpen}
+                onOpenToggle={() => setIsPopoverOpen(!isPopoverOpen)}
+                wrapperClassName="flex flex-1"
+            >
                 <div className="flex flex-1 items-start gap-y-2 gap-x-6 flex-wrap">
                     <DatePicker.Input
                         disabled={from.disabled}
@@ -86,7 +95,8 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         label={from?.label ?? `Fra dato ${from.required ? '(obligatorisk)' : '(valgfri)'}`}
                         {...fromInputProps}
                         name={fromField.name}
-                        onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs])}
+                        onFocus={handlers([fromInputProps.onFocus, openToggle])}
+                        onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormFromValue, fromInputProps.onChange])}
                         ref={(ref) => {
                             (fromInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
@@ -99,7 +109,8 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         label={to?.label ?? `Til dato ${to.required ? '(obligatorisk)' : '(valgfri)'}`}
                         {...toInputProps}
                         name={toField.name}
-                        onBlur={handlers([toField.onBlur, toInputProps.onBlur, validateInputs])}
+                        onFocus={handlers([toInputProps.onFocus, openToggle])}
+                        onBlur={handlers([toField.onBlur, toInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormToValue, toInputProps.onChange])}
                         ref={(ref) => {
                             (toInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;

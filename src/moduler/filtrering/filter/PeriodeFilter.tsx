@@ -1,10 +1,9 @@
 import { Select } from '@navikt/ds-react';
 import { format } from 'date-fns';
-import React, { ChangeEventHandler, useRef, useState } from 'react';
+import React, { ChangeEventHandler } from 'react';
 import { connect } from 'react-redux';
 
 import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
-import { useOutsideClick } from '../../../felles-komponenter/hooks/useClickOutside';
 import { ReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import {
@@ -29,11 +28,6 @@ const PeriodeFilter = ({
     doVelgHistoriskPeriode,
     skjulInneverende,
 }: Props) => {
-    const [open, setOpen] = useState(false);
-
-    const ref = useRef(null);
-    useOutsideClick(ref, () => setOpen(!open), open);
-
     if (!harHistoriskePerioder) return null;
 
     const onPeriodeChange: ChangeEventHandler<HTMLSelectElement> = (val) => {
@@ -48,7 +42,7 @@ const PeriodeFilter = ({
     };
 
     return (
-        <div ref={ref} className="flex items-start">
+        <div className="flex items-start">
             <Select
                 className="w-full sm:w-64"
                 hideLabel

@@ -1,7 +1,8 @@
 import { Button } from '@navikt/ds-react';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { preventCloseOnInsideClick, useOutsideClick } from '../../felles-komponenter/skjema/datovelger/common';
 import { minstEnErOK, toStatus } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
@@ -21,19 +22,8 @@ const Filter = () => {
     const statuser = toStatus(avhengigheter);
     const filterErKlart = minstEnErOK(statuser);
 
-    const preventCloseOnInsideClick: MouseEventHandler = (event) => {
-        event.stopPropagation();
-    };
     const handleClickOutside = () => setOpen(false);
-
-    useEffect(() => {
-        if (open) {
-            window.addEventListener('click', handleClickOutside);
-        }
-        return () => {
-            window.removeEventListener('click', handleClickOutside);
-        };
-    }, [handleClickOutside]);
+    useOutsideClick(open, handleClickOutside);
 
     return harAktivitet ? (
         <div onClick={preventCloseOnInsideClick}>
