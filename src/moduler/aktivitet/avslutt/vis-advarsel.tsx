@@ -1,9 +1,7 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
-import aktivitetvisningStyles from '../../aktivitet/visning/Aktivitetsvisning.module.less';
 
 interface Props {
     headerTekst: string;
