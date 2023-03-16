@@ -22,6 +22,5 @@ export default function HovedsideFeilmelding() {
 
     useFeilMetrikker(alleFeil);
 
-
     return <Feilmelding feilmeldinger={alleFeil} className="container" />;
 }
