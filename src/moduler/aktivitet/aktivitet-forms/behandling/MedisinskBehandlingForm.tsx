@@ -17,12 +17,10 @@ const schema = z.object({
         required_error: 'Fra dato må fylles ut',
         invalid_type_error: 'Ikke en gyldig dato',
     }),
-    tilDato: z
-        .date({
-            invalid_type_error: 'Ikke en gyldig dato',
-        })
-        .optional()
-        .nullable(),
+    tilDato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
     behandlingType: z
         .string()
         .min(1, 'Du må fylle ut type behandling')
@@ -102,7 +100,7 @@ const MedisinskBehandlingForm = (props: Props) => {
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
                         from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato' }}
+                        to={{ name: 'tilDato', required: true }}
                     />
                     <TextField
                         disabled={avtalt}
