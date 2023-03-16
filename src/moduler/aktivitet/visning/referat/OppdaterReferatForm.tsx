@@ -1,37 +1,29 @@
-import { Button } from '@navikt/ds-react';
-import useFormstate from '@nutgaard/use-formstate';
-import classNames from 'classnames';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Textarea } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
+import { z } from 'zod';
 
 import { STATUS } from '../../../../api/utils';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { DirtyContext } from '../../../context/dirty-context';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 
-const validate = (val: string) => {
-    if (val.trim().length === 0) {
-        return 'Du må fylle ut samtalereferat';
-    }
-    if (val.length > 5000) {
-        return 'Du må korte ned teksten til 5000 tegn';
-    }
-};
+const schema = z.object({
+    referat: z.string().min(0).max(5000),
+});
+
+type ReferatInputProps = z.infer<typeof schema>;
 
 interface Props {
     aktivitet: MoteAktivitet | SamtalereferatAktivitet;
     onFerdig: () => void;
 }
-
-type ReferatInputProps = {
-    referat: string;
-};
 
 const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
@@ -44,51 +36,58 @@ const OppdaterReferatForm = (props: Props) => {
 
     const erReferatPublisert = aktivitet.erReferatPublisert;
 
-    const validator = useFormstate<ReferatInputProps>({
-        referat: validate,
-    });
-
-    const state = validator({
-        referat: aktivitet.referat || startTekst,
+    const {
+        watch,
+        formState: { isDirty },
+        register,
+        handleSubmit,
+    } = useForm<ReferatInputProps>({
+        resolver: zodResolver(schema),
+        defaultValues: {
+            referat: aktivitet.referat || startTekst,
+        },
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
     useEffect(() => {
-        setFormIsDirty('referat', !state.pristine);
-
+        setFormIsDirty('referat', !isDirty);
         return () => setFormIsDirty('referat', false);
-    }, [setFormIsDirty, state.pristine]);
+    }, [setFormIsDirty, isDirty]);
 
-    const onSubmit = (referatData: ReferatInputProps) => {
+    const updateReferat = (referatData: ReferatInputProps) => {
         const aktivitetMedOppdatertReferat = {
-            ...props.aktivitet,
-            ...referatData,
+            ...aktivitet,
+            referat: referatData.referat,
         };
-
         return oppdaterReferat(aktivitetMedOppdatertReferat)(dispatch).then((res: any) => {
             onFerdig();
             return res;
         });
     };
 
-    const oppdaterOgPubliser = state.onSubmit((values) => {
-        return onSubmit(values).then((response: { data: any }) => {
+    const updateAndPubliser = handleSubmit((values) => {
+        return updateReferat(values).then((response: { data: any }) => {
             if (response.data) {
                 dispatch(publiserReferat(response.data) as unknown as AnyAction);
             }
         });
     });
 
+    const referatValue = watch('referat');
+
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} className={classNames('space-y-4')}>
-            <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+        <form
+            onSubmit={handleSubmit(updateReferat)}
+            className="space-y-4 bg-surface-alt-3-subtle p-4 border border-border-alt-3 rounded-md"
+        >
             <Textarea
                 label={`Samtalereferat`}
                 disabled={oppdaterer}
                 maxLength={5000}
                 placeholder="Skriv samtalereferatet her"
-                {...state.fields.referat}
+                {...register('referat')}
+                value={referatValue}
             />
 
             <div className="space-x-4">
@@ -96,7 +95,7 @@ const OppdaterReferatForm = (props: Props) => {
                     loading={oppdaterer}
                     disabled={oppdaterer}
                     hidden={erReferatPublisert}
-                    onClick={oppdaterOgPubliser}
+                    onClick={updateAndPubliser}
                 >
                     Del med bruker
                 </HiddenIfHovedknapp>

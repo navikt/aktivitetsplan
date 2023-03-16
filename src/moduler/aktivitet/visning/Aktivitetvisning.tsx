@@ -37,17 +37,17 @@ const Aktivitetvisning = (props: Props) => {
             {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
                 <DeleCvContainer aktivitet={aktivitet} />
             ) : null}
-            {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
-            aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
-                <ReferatContainer aktivitet={aktivitet} />
-            ) : null}
-
             <ActionRad
                 aktivitet={aktivitet}
                 tillatEndring={tillatEndring}
                 laster={laster}
                 underOppfolging={underOppfolging}
             />
+
+            {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
+            aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
+                <ReferatContainer aktivitet={aktivitet} />
+            ) : null}
 
             <AktivitetvisningAccordion aktivitet={aktivitet} />
         </div>

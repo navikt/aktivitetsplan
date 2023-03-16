@@ -26,27 +26,25 @@ const ReferatVisning = (props: Props) => {
     } = props;
 
     return (
-        <section className="my-4">
-            <Heading level="2" size="small">
+        <section className="my-4 border-t pt-8">
+            <Heading level="2" size="large" className="mb-4">
                 Samtalereferat
             </Heading>
             <EkspanderbartTekstomrade tekst={referat} antallTegn={275} />
-            <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="flex space-x-4 items-center">
+            <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="flex flex-col mt-8 space-y-4">
                 {erReferatPublisert ? (
-                    // <Alert variant="success" className="oppdater-referat-status">
-                    //     Delt med bruker
-                    // </Alert>
                     <Alert variant="success" inline>
                         Delt med bruker
                     </Alert>
-                ) : (
-                    <Button onClick={dispatchPubliserReferat} loading={publiserer}>
+                ) : null}
+                <div className="space-x-4">
+                    <Button hidden={erReferatPublisert} onClick={dispatchPubliserReferat} loading={publiserer}>
                         Del med bruker
                     </Button>
-                )}
-                <Button variant="secondary" onClick={startOppdaterReferat}>
-                    Endre referat
-                </Button>
+                    <Button variant="secondary" onClick={startOppdaterReferat}>
+                        Endre referat
+                    </Button>
+                </div>
             </HiddenIfDiv>
         </section>
     );
