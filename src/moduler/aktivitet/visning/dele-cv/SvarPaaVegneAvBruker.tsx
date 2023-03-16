@@ -6,9 +6,10 @@ import {
     UNSAFE_useDatepicker as useDatepicker,
 } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { preventCloseOnInsideClick, useOutsideClick } from '../../../../felles-komponenter/skjema/datovelger/common';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 
 interface Props {
@@ -19,10 +20,15 @@ interface Props {
 export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) => {
     const erVeileder = useSelector(selectErVeileder);
 
+    const [popoverOpen, setPopoverOpen] = useState(false);
+    useOutsideClick(popoverOpen, () => setPopoverOpen(false));
     const { datepickerProps, inputProps } = useDatepicker({
         disabled: [datoBegrensninger],
         onDateChange: (val) => {
             formhandler.setValue(val?.toISOString() || '');
+            if (val != undefined) {
+                setPopoverOpen(false);
+            }
         },
     });
 
@@ -37,17 +43,19 @@ export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) 
                 </Heading>
                 <Detail>FOR NAV-ANSATT</Detail>
             </div>
-            <DatePicker {...datepickerProps}>
-                <DatePicker.Input
-                    {...inputProps}
-                    error={feil}
-                    label={
-                        <BodyShort>
-                            Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren
-                        </BodyShort>
-                    }
-                />
-            </DatePicker>
+            <div onClick={preventCloseOnInsideClick}>
+                <DatePicker {...datepickerProps} onOpenToggle={() => setPopoverOpen(!popoverOpen)} open={popoverOpen}>
+                    <DatePicker.Input
+                        {...inputProps}
+                        error={feil}
+                        label={
+                            <BodyShort>
+                                Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren
+                            </BodyShort>
+                        }
+                    />
+                </DatePicker>
+            </div>
         </div>
     );
 };

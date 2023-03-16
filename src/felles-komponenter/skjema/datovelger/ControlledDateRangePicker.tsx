@@ -27,7 +27,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     const closeToggle = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closeToggle);
 
-    const { setError, clearErrors, control, setValue, watch } = useFormContext();
+    const { setError, clearErrors, control, setValue } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,
         name: from.name,
@@ -63,7 +63,6 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
 
     const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
         defaultSelected: { from: from.defaultValue, to: to.defaultValue },
-        fromDate: from.defaultValue,
         disabled: disabledDays,
         onValidate: (validation) => {
             setRangeValidation(validation);
