@@ -38,13 +38,9 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const dispatch = useDispatch();
 
-    console.log(aktivitet);
     const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
 
     const [erEkspandert, setErEkspandert] = useState(startAapen);
-
-    console.log(forhaandsorientering);
-    console.log(forhaandsorienteringLestDato);
 
     if (!forhaandsorienteringTekst) {
         return null;

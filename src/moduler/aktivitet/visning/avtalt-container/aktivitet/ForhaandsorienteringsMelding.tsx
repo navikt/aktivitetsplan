@@ -1,35 +1,31 @@
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Select, Textarea } from '@navikt/ds-react';
 import React from 'react';
+import { FieldErrors } from 'react-hook-form/dist/types/errors';
+import { UseFormRegister } from 'react-hook-form/dist/types/form';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import Select from '../../../../../felles-komponenter/skjema/input/Select';
-import Textarea from '../../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
 import VarslingInfo from '../VarslingInfo';
-import styles from './ForhaandsorienteringsMelding.module.less';
+import { ForhaandsorienteringDialogFormValues } from './AvtaltForm';
 
 interface Props {
-    hidden: boolean;
+    register: UseFormRegister<ForhaandsorienteringDialogFormValues>;
     oppdaterer: boolean;
-    state: any;
+    forhaandsorienteringType: ForhaandsorienteringType;
+    avtaltText119: string;
+    errors: FieldErrors<ForhaandsorienteringDialogFormValues>;
 }
 
 const ForhaandsorienteringsMelding = (props: Props) => {
-    const { hidden, oppdaterer, state } = props;
-    const forhaandsorienteringType = state.fields.forhaandsorienteringType.input.value;
-
-    if (hidden) {
-        return null;
-    }
+    const { register, oppdaterer, forhaandsorienteringType, avtaltText119, errors } = props;
 
     return (
         <>
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={oppdaterer}
-                className={styles.selectType}
-                noBlankOption
-                {...state.fields.forhaandsorienteringType}
+                className="mt-4"
+                {...register('forhaandsorienteringType')}
             >
                 <option value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</option>
                 <option value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</option>
@@ -44,7 +40,13 @@ const ForhaandsorienteringsMelding = (props: Props) => {
                 </BodyShort>
             </VisibleIfDiv>
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
-                <Textarea label={<VarslingInfo />} maxLength={500} {...state.fields.avtaltText119} />
+                <Textarea
+                    label={<VarslingInfo />}
+                    maxLength={500}
+                    value={avtaltText119}
+                    {...register('avtaltText119')}
+                    error={(errors as any).avtaltText119 && (errors as any).avtaltText119.message}
+                />
             </VisibleIfDiv>
         </>
     );
