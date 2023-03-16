@@ -30,7 +30,6 @@ export function useFeilMetrikker(feilmeldinger: FeilmeldingType[]) {
 type ErrorSeverity = "unauthorized" | "forbidden" | "critical" | "degraded" | "unknown";
 
 function klassifiserFeil(feil: FeilmeldingType): ErrorSeverity {
-    console.log(feil)
     if(feil.httpStatus === 403) {
         return "forbidden";
     } else if(feil.httpStatus === 401) {
