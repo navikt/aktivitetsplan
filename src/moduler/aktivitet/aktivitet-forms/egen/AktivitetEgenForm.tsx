@@ -112,7 +112,7 @@ const EgenAktivitetForm = (props: Props) => {
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
                         from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato' }}
+                        to={{ name: 'tilDato', required: true }}
                     />
                     <TextField
                         disabled={avtalt}
