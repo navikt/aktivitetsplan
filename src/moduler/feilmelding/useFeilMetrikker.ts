@@ -11,7 +11,7 @@ export function useFeilMetrikker(feilmeldinger: FeilmeldingType[]) {
     const harSendtLastet = useRef(false);
 
     if(!harSendtLastet.current) {
-        loggEvent("AKTIVITESPLAN_LASTET");
+        loggEvent("aktivitesplan.lastet");
         harSendtLastet.current = true;
     }
 
