@@ -32,7 +32,7 @@ const OppdaterReferatForm = (props: Props) => {
     const dispatch = useDispatch();
 
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
-    const oppdaterer = aktivitetsStatus === (STATUS.PENDING || STATUS.RELOADING);
+    const oppdaterer = aktivitetsStatus === STATUS.PENDING || aktivitetsStatus === STATUS.RELOADING;
 
     const erReferatPublisert = aktivitet.erReferatPublisert;
 

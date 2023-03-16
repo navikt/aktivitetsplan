@@ -5,7 +5,10 @@ import {
     FHO_LEST_OK,
     FLYTT_OK,
     OPPDATER_OK,
+    OPPDATER_REFERAT,
+    OPPDATER_REFERAT_FEILET,
     OPPDATER_REFERAT_OK,
+    PUBLISER_REFERAT_FEILET,
     PUBLISER_REFERAT_OK,
 } from '../aktivitet-action-types';
 
@@ -29,6 +32,8 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING,
             };
+        case OPPDATER_REFERAT_FEILET:
+        case PUBLISER_REFERAT_FEILET:
         case FEILET:
             return { ...state, status: STATUS.ERROR, feil: action.data };
         case OPPDATER_OK:
