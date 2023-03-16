@@ -28,7 +28,7 @@ const EndreLinje = (props: Props) => {
 
     return (
         <Accordion.Item open={open} className="first:border-t-2 first:border-border-divider">
-            <Accordion.Header onClick={onClick}>
+            <Accordion.Header onClick={onClick} className="items-center">
                 <div className="flex flex-row gap-4 items-center">
                     {icon}
                     <div>
