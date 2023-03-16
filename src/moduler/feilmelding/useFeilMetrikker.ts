@@ -52,6 +52,6 @@ function klassifiserFeil(feil: FeilmeldingType): ErrorSeverity {
 }
 
 function sendFeil(feil_kategori: string) {
-    loggEvent("AKTIVITESPLAN_FEIL", {feil_kategori});
+    loggEvent("aktivitetsplan.feil", {feil_kategori});
 }
 
