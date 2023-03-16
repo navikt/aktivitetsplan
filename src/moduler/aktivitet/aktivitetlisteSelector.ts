@@ -76,6 +76,7 @@ export const selectKanEndreAktivitetDetaljer = (state: any, aktivitet: VeilarbAk
     const { avtalt, type } = aktivitet;
     return (
         selectKanEndreAktivitetStatus(state, aktivitet) &&
+        (selectErVeileder(state) || type !== VeilarbAktivitetType.SAMTALEREFERAT_TYPE) &&
         type !== VeilarbAktivitetType.STILLING_FRA_NAV_TYPE &&
         (avtalt !== true || !!window.appconfig.TILLAT_SET_AVTALT || type === BEHANDLING_AKTIVITET_TYPE)
     );
