@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
+import { tr } from 'date-fns/locale';
 import React, { MutableRefObject } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -23,8 +24,8 @@ const numberErrorMessage = {
 
 const commonFields = {
     tittel: z.string(),
-    fraDato: z.date().nullable().optional(),
-    tilDato: z.date().nullable().optional(),
+    fraDato: z.date({ required_error: 'Fra dato må fylles ut' }),
+    tilDato: z.date({ required_error: 'Til dato må fylles ut' }),
     avtaleOppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
 };
@@ -139,8 +140,8 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker
                             aktivitet={aktivitet}
-                            from={{ name: 'fraDato' }}
-                            to={{ name: 'tilDato' }}
+                            from={{ name: 'fraDato', required: true }}
+                            to={{ name: 'tilDato', required: true }}
                         />
                     </div>
                     {errorWrapper.skjemaVersjon === 'ny' ? (

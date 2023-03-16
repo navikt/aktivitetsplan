@@ -21,9 +21,13 @@ interface Props {
 }
 
 const DateRangePicker = ({ from, to, disabledDays }: Props) => {
+    /* Handle popover state self because it's used inside a web component which causes event.target to be showDom-root */
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-    useOutsideClick(isPopoverOpen, () => setIsPopoverOpen(false));
-    const { setError, clearErrors, control, setValue } = useFormContext();
+    const openToggle = () => setIsPopoverOpen(true);
+    const closeToggle = () => setIsPopoverOpen(false);
+    useOutsideClick(isPopoverOpen, closeToggle);
+
+    const { setError, clearErrors, control, setValue, watch } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,
         name: from.name,
@@ -68,13 +72,16 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         onRangeChange: (val) => {
             val?.to && setValue(to.name, coerceToUndefined(val.to));
             val?.from && setValue(from.name, coerceToUndefined(val.from));
+            if (val?.to != undefined && val.from !== undefined) {
+                closeToggle();
+            }
         },
     });
+
+    /* These on-change handlers are needed to handle manual text-input */
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {
         setValue(from.name, coerceToUndefined(event.target.value));
     };
-    const openToggle = () => setIsPopoverOpen(true);
-    const closeToggle = () => setIsPopoverOpen(false);
     const setHookFormToValue: ChangeEventHandler<HTMLInputElement> = (event) => {
         setValue(from.name, coerceToUndefined(event.target.value));
     };
