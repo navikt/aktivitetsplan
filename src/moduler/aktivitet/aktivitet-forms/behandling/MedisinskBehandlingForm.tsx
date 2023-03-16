@@ -18,7 +18,7 @@ const schema = z.object({
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     tilDato: z.date({
-        required_error: 'Fra dato må fylles ut',
+        required_error: 'Til dato må fylles ut',
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     behandlingType: z
