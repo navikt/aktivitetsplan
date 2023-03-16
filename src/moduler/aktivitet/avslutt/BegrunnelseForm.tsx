@@ -4,8 +4,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
-import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
 import CustomErrorSummary from '../aktivitet-forms/CustomErrorSummary';
 
 const schema = z.object({
@@ -56,10 +54,10 @@ const BegrunnelseForm = (props: Props) => {
                     value={begrunnelseValue}
                 />
                 <CustomErrorSummary errors={errors} />
+                <Button className="mt-4" loading={lagrer}>
+                    Lagre
+                </Button>
             </div>
-            <ModalFooter>
-                <Button loading={lagrer}>Lagre</Button>
-            </ModalFooter>
         </form>
     );
 };

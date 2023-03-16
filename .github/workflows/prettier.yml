@@ -9,7 +9,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v3
         with:
-          node-version: 19
+          node-version: 18
       - name: Kjør prettier
         run: |
           npm ci

@@ -9,7 +9,6 @@ interface Props {
     oppgave?: OppgaveLenke;
 }
 
-// TODO bytt dette ut med 'Alert m/ heading' når vi er over på det nye designsystemet
 const customAlertStripe = (oppgave: Oppgave) => (
     <Alert variant="warning" fullWidth>
         <Heading spacing size="small" level="3">
