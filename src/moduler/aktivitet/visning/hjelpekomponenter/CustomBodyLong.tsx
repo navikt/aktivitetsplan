@@ -1,6 +1,6 @@
 import { BodyLong, Link } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { ReactChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface Props {
     children?: React.ReactNode;
@@ -10,7 +10,7 @@ interface Props {
     formatLinebreaks?: boolean;
 }
 
-const linkRegex = /((?:[\w-]+:\/\/?|www(?:-\w+)?\.)[^\s()<>]+\w)/g;
+const linkRegex = /((?:[\w-]+:\/\/?|www(?:-\w+)?\.)[^\s()<>]+)/g;
 
 const CustomBodyLong = (props: Props) => {
     const { children, className, size = 'medium', formatLinks = false, formatLinebreaks = false } = props;

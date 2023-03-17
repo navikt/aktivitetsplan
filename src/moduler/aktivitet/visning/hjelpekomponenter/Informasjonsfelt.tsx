@@ -3,7 +3,7 @@ import React from 'react';
 
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 import CustomBodyLong from './CustomBodyLong';
-import DetaljFelt from './detalj-felt';
+import DetaljFelt from './DetaljFelt';
 
 interface Props {
     tittel: React.ReactNode;

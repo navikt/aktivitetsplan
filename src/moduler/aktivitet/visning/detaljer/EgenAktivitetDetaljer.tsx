@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import DetaljvisningLenke from '../hjelpekomponenter/detaljvisning-lenke';
+import DetaljvisningLenke from '../hjelpekomponenter/DetaljvisningLenke';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
