@@ -20,6 +20,7 @@ const SendEnMeldingKnapp = (props: Props) => {
     const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
 
     const ulestMeldinger =
+        1 ||
         dialog?.henvendelser?.reduce((totaltUleste, melding) => (melding.lest ? totaltUleste : totaltUleste + 1), 0) ||
         0;
 
@@ -41,12 +42,12 @@ const SendEnMeldingKnapp = (props: Props) => {
                 icon={<DialogDots aria-hidden />}
                 onClick={veilederOnClick}
             >
-                {ulestMeldinger > 0 ? `${ulestMeldinger} uleste meldinger` : 'Send en melding'}
+                {ulestMeldinger > 0
+                    ? `Du har ${ulestMeldinger} ${ulestMeldinger === 1 ? 'ulest melding' : 'uleste meldinger'}`
+                    : 'Send en melding'}
             </Button>
             {ulestMeldinger ? (
-                <div className="absolute bg-red-500 rounded-full flex justify-center items-center w-7 h-7 text-white -right-3 top-7">
-                    <span>{ulestMeldinger}</span>
-                </div>
+                <div className="absolute bg-red-500 rounded-full flex justify-center items-center w-3 h-3 text-white left-8 top-6"></div>
             ) : null}
         </div>
     );
