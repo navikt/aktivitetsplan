@@ -60,7 +60,7 @@ const DateRangePicker = ({
     return (
         <div className="flex flex-1">
             <DatePicker {...datepickerProps} wrapperClassName="flex flex-1">
-                <div className="flex flex-1 items-start gap-y-2 gap-x-6 flex-wrap">
+                <div className="flex flex-1 items-start gap-y-8 gap-x-6 flex-wrap">
                     <DatePicker.Input
                         className="flex-1"
                         error={error?.from}

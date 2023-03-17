@@ -1,5 +1,6 @@
 import 'moment-timezone';
 import 'moment/locale/nb';
+import 'whatwg-fetch';
 
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure } from 'enzyme';

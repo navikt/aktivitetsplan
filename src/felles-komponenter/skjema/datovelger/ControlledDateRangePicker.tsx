@@ -93,7 +93,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                 onOpenToggle={() => setIsPopoverOpen(!isPopoverOpen)}
                 wrapperClassName="flex flex-1"
             >
-                <div className="flex flex-1 items-start gap-y-2 gap-x-6 flex-wrap">
+                <div className="flex flex-1 items-start gap-y-8 gap-x-6 flex-wrap">
                     <DatePicker.Input
                         disabled={from.disabled}
                         className="flex-1"
