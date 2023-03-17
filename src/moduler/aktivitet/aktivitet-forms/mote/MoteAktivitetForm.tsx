@@ -35,7 +35,7 @@ const schema = z.object({
         .string()
         .min(1, 'Du må fylle ut hensikten med møtet')
         .max(5000, 'Du må korte ned teksten til 5000 tegn'),
-    forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn'),
+    forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
 });
 
 type MoteAktivitetFormValues = z.infer<typeof schema>;
