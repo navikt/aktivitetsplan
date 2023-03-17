@@ -28,7 +28,7 @@ const Filter = () => {
     return harAktivitet ? (
         <div onClick={preventCloseOnInsideClick} className="self-stretch sm:self-auto">
             <Button
-                loading={!filterErKlart}
+                disabled={!filterErKlart}
                 variant="secondary"
                 name="filter"
                 className="relative w-full"
