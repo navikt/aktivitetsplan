@@ -144,7 +144,7 @@ describe('aktivitets-filter', () => {
                 | VeilarbAktivitetType.MOTE_TYPE
                 | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
         }[];
-        for (const { tittel, type } of aktiviteter) {
+        for await (const { tittel, type } of aktiviteter) {
             await waitFor(() =>
                 expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
             );
