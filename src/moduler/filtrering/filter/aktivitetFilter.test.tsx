@@ -108,9 +108,9 @@ describe('aktivitets-filter', () => {
                 avtalt: value,
             };
         });
-        await waitFor(() => {
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
-        });
+        await waitFor(() =>
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+        );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
         getByRole('checkbox', { name: 'Ikke avtalt med NAV', checked: true });
@@ -145,9 +145,9 @@ describe('aktivitets-filter', () => {
                 | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
         }[];
         for (const { tittel, type } of aktiviteter) {
-            await waitFor(() => {
-                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
-            });
+            await waitFor(() =>
+                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            );
 
             fireEvent.click(getByRole('button', { name: 'Filtrer' }));
 
@@ -181,9 +181,9 @@ describe('aktivitets-filter', () => {
         });
         getByText(`Aktivitet: VENTER`);
         getByText(`Aktivitet: AVSLAG`);
-        await waitFor(() => {
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
-        });
+        await waitFor(() =>
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+        );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['AVSLAG'])[0]);
         expect(getByText(`Aktivitet: AVSLAG`)).not.toBeNull();
@@ -204,9 +204,9 @@ describe('aktivitets-filter', () => {
         });
         getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
         getByText(`Aktivitet: SOKNAD_SENDT`);
-        await waitFor(() => {
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
-        });
+        await waitFor(() =>
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+        );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['INNKALT_TIL_INTERVJU'])[0]);
         expect(getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)).not.toBeNull();
