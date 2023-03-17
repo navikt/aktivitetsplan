@@ -30,7 +30,7 @@ const Verktoylinje = () => {
                         <Button
                             className=""
                             icon={<Add role="img" focusable="false" aria-hidden />}
-                            loading={!aktivitetLaster}
+                            disabled={!aktivitetLaster}
                             onClick={() => {
                                 loggEvent(APNE_NY_AKTIVITET);
                                 history.push('/aktivitet/ny');
