@@ -28,7 +28,7 @@ const Filter = () => {
     return harAktivitet ? (
         <div onClick={preventCloseOnInsideClick}>
             <Button
-                loading={!filterErKlart}
+                disabled={!filterErKlart}
                 variant="secondary"
                 name="filter"
                 className="relative w-full"
