@@ -13,7 +13,7 @@ const VisAdvarsel = ({ onSubmit, headerTekst }: Props) => {
                 {headerTekst}
             </Heading>
             <Alert variant="warning">Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.</Alert>
-            <Button className="mt-4" onClick={onSubmit}>
+            <Button className="self-baseline" onClick={onSubmit}>
                 Lagre
             </Button>
         </div>
