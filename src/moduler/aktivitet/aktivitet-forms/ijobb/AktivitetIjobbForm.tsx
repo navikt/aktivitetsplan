@@ -116,7 +116,7 @@ const IJobbAktivitetForm = (props: Props) => {
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Arbeidsgiver"
+                        label="Arbeidsgiver (valgfri)"
                         id={'ansettelsesforhold'}
                         {...register('ansettelsesforhold')}
                         error={errors.ansettelsesforhold && errors.ansettelsesforhold.message}
