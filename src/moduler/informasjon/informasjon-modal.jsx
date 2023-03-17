@@ -39,7 +39,7 @@ class InformasjonModal extends Component {
                     history.push(backPath);
                 }}
             >
-                <ModalContainer className="informasjon-modal-container max-w-2xl p-6">
+                <ModalContainer className="max-w-2xl">
                     <Heading level="1" size="large" className="mb-4">
                         Hva er aktivitetsplanen?
                     </Heading>

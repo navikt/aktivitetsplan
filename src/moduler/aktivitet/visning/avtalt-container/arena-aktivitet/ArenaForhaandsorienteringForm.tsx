@@ -1,4 +1,4 @@
-import { BodyShort, Detail, Label } from '@navikt/ds-react';
+import { Alert, BodyShort, Detail, Label } from '@navikt/ds-react';
 import useFormstate, { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -99,9 +99,11 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
                 <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
                     Legg til forhåndsorientering
                 </Checkbox>
-                <Detail className="">FOR NAV-ANSATT</Detail>
+                <Detail>FOR NAV-ANSATT</Detail>
             </div>
-            <BodyShort className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</BodyShort>
+            <Alert variant="info" className="mt-2" inline>
+                Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;
+            </Alert>
             <ForhaandsorienteringsMeldingArenaaktivitet
                 visible={state.fields.checked.input.value === 'true'}
                 lasterData={lasterData}

@@ -1,4 +1,4 @@
-import { BodyShort } from '@navikt/ds-react';
+import { Alert, Detail } from '@navikt/ds-react';
 import useFormstate, { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,6 @@ import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
-import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
 
 const avtaltTekst =
@@ -98,20 +97,20 @@ const ForhaandsorienteringForm = (props: Props) => {
     return (
         <form
             onSubmit={state.onSubmit(onSubmit)}
-            className="bg-surface-alt-3-subtle py-2 px-4 mx-6 border border-border-alt-3 rounded-md"
+            className="bg-surface-alt-3-subtle py-2 px-4 border border-border-alt-3 rounded-md"
         >
             <div>
-                <ForNavAnsattMarkeringWrapper>
-                    {isGammelArenaAktivitet && (
-                        <BodyShort className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</BodyShort>
-                    )}
-                    <div className="flex">
-                        <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
-                            Legg til forhåndsorientering
-                        </Checkbox>
-                    </div>
-                </ForNavAnsattMarkeringWrapper>
-
+                <div className="flex items-center justify-between">
+                    <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
+                        Legg til forhåndsorientering
+                    </Checkbox>
+                    <Detail>FOR NAV-ANSATT</Detail>
+                </div>
+                {isGammelArenaAktivitet && (
+                    <Alert variant="info" className="mt-2" inline>
+                        Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;
+                    </Alert>
+                )}
                 <ForhaandsorienteringsMeldingArenaaktivitet
                     visible={state.fields.checked.input.value === 'true'}
                     lasterData={lasterData}
