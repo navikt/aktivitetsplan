@@ -2,6 +2,8 @@ export const removeEmptyKeysFromObject = <T extends Record<string, any>>(object:
     return Object.entries(object).reduce((obj, [key, val]) => {
         if (val !== null && typeof val === 'string' && val.length <= 0) {
             obj[key] = null;
+        } else if (val === undefined) {
+            obj[key] = null;
         } else {
             obj[key] = val;
         }

@@ -63,8 +63,6 @@ const StillingAktivitetForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
-    console.log(watch('fraDato'));
-
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
