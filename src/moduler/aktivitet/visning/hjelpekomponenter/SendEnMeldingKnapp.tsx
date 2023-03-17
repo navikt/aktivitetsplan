@@ -20,7 +20,6 @@ const SendEnMeldingKnapp = (props: Props) => {
     const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
 
     const ulestMeldinger =
-        1 ||
         dialog?.henvendelser?.reduce((totaltUleste, melding) => (melding.lest ? totaltUleste : totaltUleste + 1), 0) ||
         0;
 
