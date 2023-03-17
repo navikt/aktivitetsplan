@@ -19,6 +19,10 @@ const SendEnMeldingKnapp = (props: Props) => {
     const erVeileder = useSelector(selectErVeileder);
     const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
 
+    const ulestMeldinger =
+        dialog?.henvendelser?.reduce((totaltUleste, melding) => (melding.lest ? totaltUleste : totaltUleste + 1), 0) ||
+        0;
+
     const history = useHistory();
 
     const veilederOnClick = (event: React.MouseEvent) => {
@@ -29,15 +33,22 @@ const SendEnMeldingKnapp = (props: Props) => {
     };
 
     return (
-        <Button
-            variant="secondary"
-            as="a"
-            href={getDialogLenke(erVeileder, aktivitet.id, dialog?.id)}
-            icon={<DialogDots aria-hidden />}
-            onClick={veilederOnClick}
-        >
-            Send en melding
-        </Button>
+        <div className="relative">
+            <Button
+                variant="secondary"
+                as="a"
+                href={getDialogLenke(erVeileder, aktivitet.id, dialog?.id)}
+                icon={<DialogDots aria-hidden />}
+                onClick={veilederOnClick}
+            >
+                {ulestMeldinger > 0 ? `${ulestMeldinger} uleste meldinger` : 'Send en melding'}
+            </Button>
+            {ulestMeldinger ? (
+                <div className="absolute bg-red-500 rounded-full flex justify-center items-center w-7 h-7 text-white -right-3 top-7">
+                    <span>{ulestMeldinger}</span>
+                </div>
+            ) : null}
+        </div>
     );
 };
 
