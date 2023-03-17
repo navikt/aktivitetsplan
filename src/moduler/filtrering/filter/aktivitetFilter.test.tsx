@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, getByRole, render, waitFor } from '@testing-library/react';
 import { setupServer } from 'msw/node';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -108,6 +108,9 @@ describe('aktivitets-filter', () => {
                 avtalt: value,
             };
         });
+        await waitFor(() => {
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
+        });
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
         getByRole('checkbox', { name: 'Ikke avtalt med NAV', checked: true });
@@ -128,7 +131,7 @@ describe('aktivitets-filter', () => {
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
         const store = create(initialStore);
-        const { getByText, queryByText, queryAllByText } = render(<WrappedHovedside store={store} />);
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -141,8 +144,13 @@ describe('aktivitets-filter', () => {
                 | VeilarbAktivitetType.MOTE_TYPE
                 | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
         }[];
-        aktiviteter.forEach(({ tittel, type }) => {
-            fireEvent.click(getByText('Filtrer'));
+        for (const { tittel, type } of aktiviteter) {
+            await waitFor(() => {
+                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
+            });
+
+            fireEvent.click(getByRole('button', { name: 'Filtrer' }));
+
             fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
             getByText(tittel);
             // Sjekk at ingen andre aktiviteter vises
@@ -155,12 +163,12 @@ describe('aktivitets-filter', () => {
             fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
             // Close filter
             fireEvent.click(getByText('Filtrer'));
-        });
+        }
     });
 
     it('Should filter based on etiketter (stilling fra NAV)', async () => {
         const store = create(initialStore);
-        const { getByText, queryByText, queryAllByText } = render(<WrappedHovedside store={store} />);
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const statuser: StillingFraNavSoknadsstatus[] = ['AVSLAG', 'VENTER'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
@@ -173,6 +181,9 @@ describe('aktivitets-filter', () => {
         });
         getByText(`Aktivitet: VENTER`);
         getByText(`Aktivitet: AVSLAG`);
+        await waitFor(() => {
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
+        });
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['AVSLAG'])[0]);
         expect(getByText(`Aktivitet: AVSLAG`)).not.toBeNull();
@@ -180,9 +191,9 @@ describe('aktivitets-filter', () => {
         fireEvent.click(getByText('Filtrer'));
     });
 
-    it('Should filter based on etiketter (stilling)', () => {
+    it('Should filter based on etiketter (stilling)', async () => {
         const store = create(initialStore);
-        const { getByText, queryByText, queryAllByText } = render(<WrappedHovedside store={store} />);
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const statuser: StillingsStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
@@ -193,6 +204,9 @@ describe('aktivitets-filter', () => {
         });
         getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
         getByText(`Aktivitet: SOKNAD_SENDT`);
+        await waitFor(() => {
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull();
+        });
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['INNKALT_TIL_INTERVJU'])[0]);
         expect(getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)).not.toBeNull();
