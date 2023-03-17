@@ -60,7 +60,7 @@ function DropTargetKolonne({ status, children }: Props) {
     const isOverAndCanDrop = collectedProps.canDrop && collectedProps.isOver;
 
     return (
-        <div ref={drop} className="z-50">
+        <div ref={drop} className="z-50 h-full">
             <div
                 className={classNames(
                     'bg-bg-subtle border-t border-border-divider rounded-none p-4 sm:p-2 m-0 sm:border-t-0 sm:rounded-md aktivitetstavle__kolonne',

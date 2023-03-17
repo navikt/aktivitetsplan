@@ -3,7 +3,7 @@ import React from 'react';
 
 export const BrukePlanenPanel = () => {
     return (
-        <Accordion.Item>
+        <Accordion.Item className="first:border-t-2 first:border-border-divider">
             <Accordion.Header>
                 <Heading level="2" size="small">
                     Slik bruker du aktivitetsplanen
