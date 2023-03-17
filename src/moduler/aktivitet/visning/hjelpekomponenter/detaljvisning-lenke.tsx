@@ -7,10 +7,11 @@ interface Props {
     lenke?: string;
 }
 
-const DetaljvisningLenke = ({ lenke }: Props) => (
-    <DetaljFelt key="lenke" tittel="Lenke" fullbredde>
-        <CustomBodyLong formatLinks>{lenke}</CustomBodyLong>
-    </DetaljFelt>
-);
+const DetaljvisningLenke = ({ lenke }: Props) =>
+    lenke ? (
+        <DetaljFelt key="lenke" tittel="Lenke" fullbredde>
+            <CustomBodyLong formatLinks>{lenke}</CustomBodyLong>
+        </DetaljFelt>
+    ) : null;
 
 export default DetaljvisningLenke;
