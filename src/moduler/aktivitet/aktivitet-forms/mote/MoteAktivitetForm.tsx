@@ -21,7 +21,7 @@ export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter d
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
     dato: z.date({
-        required_error: 'Fra dato må fylles ut',
+        required_error: 'Dato må fylles ut',
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
