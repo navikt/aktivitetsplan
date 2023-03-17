@@ -28,7 +28,7 @@ const Verktoylinje = () => {
                 <div className="flex gap-4 items-start flex-col sm:flex-row w-full">
                     {!hideLeggTil ? (
                         <Button
-                            className=""
+                            className="self-stretch sm:self-auto"
                             icon={<Add role="img" focusable="false" aria-hidden />}
                             disabled={!aktivitetLaster}
                             onClick={() => {
