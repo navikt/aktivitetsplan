@@ -69,8 +69,8 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
             validateRemoveErrors(validation);
         },
         onRangeChange: (val) => {
-            val?.to && setValue(to.name, coerceToUndefined(val.to));
-            val?.from && setValue(from.name, coerceToUndefined(val.from));
+            setValue(to.name, coerceToUndefined(val?.to));
+            setValue(from.name, coerceToUndefined(val?.from));
             if (val?.to != undefined && val.from !== undefined) {
                 closeToggle();
             }
