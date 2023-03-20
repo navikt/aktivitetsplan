@@ -12,8 +12,8 @@ interface Props<T extends FormValuesWithDates> {
     to: FieldSettings;
 }
 function MaybeAvtaltDateRangePicker<T extends FormValuesWithDates>({ aktivitet, from, to }: Props<T>) {
-    const defaultToValue = aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined;
-    const defaultFromValue = aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined;
+    const defaultToValue = aktivitet?.tilDato ? new Date(aktivitet.tilDato) : to.defaultValue;
+    const defaultFromValue = aktivitet?.fraDato ? new Date(aktivitet.fraDato) : from.defaultValue;
     return aktivitet && aktivitet.avtalt && aktivitet.fraDato ? (
         <ControlledDatePicker
             from={{ defaultValue: defaultFromValue, ...from, disabled: true }}

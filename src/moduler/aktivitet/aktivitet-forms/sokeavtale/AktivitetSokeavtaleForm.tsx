@@ -1,13 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import { tr } from 'date-fns/locale';
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useEffect, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
+import { an } from 'vitest/dist/types-7cd96283';
 import { z } from 'zod';
 
 import { AppConfig } from '../../../../app';
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
+import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -53,6 +54,8 @@ interface Props {
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: SokeavtaleAktivitet;
+    // onChangeInitialValues: (initialValues?: InitalValues) => void;
+    // initialValues?: InitalValues;
 }
 
 const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
@@ -79,11 +82,24 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
     }
 };
 
+type InitalValues = Partial<{
+    tittel: string;
+    fraDato: Date;
+    tilDato: Date;
+    avtaleOppfolging: string;
+    antallStillingerIUken: number;
+}>;
+
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
-    const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
+    const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
+
     const defaultValues = getDefaultValues(aktivitet);
     const avtalt = aktivitet?.avtalt || false;
+    const [defaultDateValues, setDefaultDateValues] = useState<Partial<DateRange> | undefined>({
+        from: defaultValues.fraDato,
+        to: defaultValues?.tilDato,
+    });
 
     const formHandlers = useForm<SokeavtaleAktivitetFormValues>({
         defaultValues,
@@ -115,10 +131,16 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
 
     const onMalChange = (newInitalValues: any) => {
         if (!newInitalValues) {
+            setDefaultDateValues(undefined);
             reset();
         } else {
-            Object.entries(newInitalValues).forEach(([name, value], _) => {
-                setValue(name as any, value); // TODO pls typ malverk. pls fjern malverk
+            Object.entries(newInitalValues).forEach(([name, value]: [any, any]) => {
+                if (['fraDato', 'tilDato'].includes(name)) setValue(name, new Date(value));
+                else setValue(name, value);
+            });
+            setDefaultDateValues({
+                from: new Date(newInitalValues['fraDato']),
+                to: new Date(newInitalValues['tilDato']),
             });
         }
     };
@@ -140,8 +162,8 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker
                             aktivitet={aktivitet}
-                            from={{ name: 'fraDato', required: true }}
-                            to={{ name: 'tilDato', required: true }}
+                            from={{ name: 'fraDato', required: true, defaultValue: defaultDateValues?.from }}
+                            to={{ name: 'tilDato', required: true, defaultValue: defaultDateValues?.to }}
                         />
                     </div>
                     {errorWrapper.skjemaVersjon === 'ny' ? (
@@ -194,6 +216,17 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                 </div>
             </FormProvider>
         </form>
+    );
+};
+
+const Wrapper = (props: Props) => {
+    const [initialValues, setInitialValues] = useState<InitalValues | undefined>(undefined);
+    return (
+        <SokeAvtaleAktivitetForm
+            {...props}
+            onChangeInitialValues={(dateRange) => setInitialValues(dateRange)}
+            initialValues={initialValues}
+        />
     );
 };
 

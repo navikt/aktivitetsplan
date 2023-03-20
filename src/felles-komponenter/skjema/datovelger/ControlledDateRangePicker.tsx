@@ -1,6 +1,6 @@
 import { UNSAFE_DatePicker as DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ChangeEventHandler, MutableRefObject, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
@@ -61,7 +61,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         validateRemoveErrors(rangeValidation);
     };
 
-    const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
+    const { datepickerProps, toInputProps, fromInputProps, reset, setSelected } = UNSAFE_useRangeDatepicker({
         defaultSelected: { from: from.defaultValue, to: to.defaultValue },
         disabled: disabledDays,
         onValidate: (validation) => {
@@ -76,6 +76,16 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
             }
         },
     });
+
+    // Needed to make change in defaultValue actually have any effect
+    useEffect(() => {
+        reset();
+        // Only using reset
+        setSelected({
+            from: from.defaultValue,
+            to: to.defaultValue,
+        });
+    }, [from.defaultValue, to.defaultValue]);
 
     /* These on-change handlers are needed to handle manual text-input */
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {

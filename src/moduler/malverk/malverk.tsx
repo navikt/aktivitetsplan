@@ -3,16 +3,18 @@
 
 import { Select } from '@navikt/ds-react';
 import PT from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, EventHandler } from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import visibleIfHOC from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
+import { State } from '../../reducer';
 import { hentMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-reducer';
 import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
 
-function lagMalverkOption(mal) {
+function lagMalverkOption(mal: any) {
     return (
         <option key={mal.tittel} value={mal.tittel}>
             {mal.tittel}
@@ -20,7 +22,14 @@ function lagMalverkOption(mal) {
     );
 }
 
-class Malverk extends Component {
+type Props = ReturnType<typeof mapStateToProps> &
+    ReturnType<typeof mapDispatchToProps> & {
+        endre: boolean;
+        type: 'SOKEAVTALE' | 'EGEN';
+        onChange: (payload: Record<string, string>) => void;
+    };
+
+class Malverk extends Component<Props> {
     componentDidMount() {
         const { doHentMalverMedType, endre, type } = this.props;
         if (!endre) {
@@ -33,7 +42,7 @@ class Malverk extends Component {
         doSlettValgtMalverk();
     }
 
-    onChangeMalverk = (event) => {
+    onChangeMalverk: EventHandler<any> = (event) => {
         const { doHentMalverkMedTittel, doSettValgtMalverk, onChange } = this.props;
         event.preventDefault();
         // event.target.value er tittel på malverk
@@ -67,7 +76,7 @@ class Malverk extends Component {
     }
 }
 
-Malverk.propTypes = {
+(Malverk as any).propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     malverk: PT.arrayOf(AppPT.malverktype),
     doHentMalverkMedTittel: PT.func.isRequired,
@@ -79,17 +88,17 @@ Malverk.propTypes = {
     type: PT.string.isRequired,
 };
 
-Malverk.defaultProps = {
+(Malverk as any).defaultProps = {
     endre: false,
     malverk: undefined,
     onChange: () => null,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    doHentMalverMedType: (type) => {
-        dispatch(hentMalverkMedType(type));
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    doHentMalverMedType: (type: any) => {
+        dispatch(hentMalverkMedType(type) as any);
     },
-    doSettValgtMalverk: (valgtMalverk) => {
+    doSettValgtMalverk: (valgtMalverk: any) => {
         dispatch(settValgtMalverk(valgtMalverk));
     },
     doSlettValgtMalverk: () => {
@@ -97,10 +106,10 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: State) => ({
     malverk: selectMalverkData(state),
     avhengigheter: [selectMalverkStatus(state)],
-    doHentMalverkMedTittel: (tittel) => selectMalverkMedTittel(state, tittel),
+    doHentMalverkMedTittel: (tittel: string) => selectMalverkMedTittel(state, tittel),
 });
 
 export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(Malverk));
