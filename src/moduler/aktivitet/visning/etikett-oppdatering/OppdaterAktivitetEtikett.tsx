@@ -1,4 +1,4 @@
-import { Bag, DirectionSign } from '@navikt/ds-icons';
+import { BriefcaseIcon } from '@navikt/aksel-icons';
 import React, { useContext, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -65,7 +65,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
 
     return (
         <EndreLinje
-            icon={<Bag fontSize="24" />}
+            icon={<BriefcaseIcon fontSize="1.5rem" />}
             onClick={() => {
                 if (open) {
                     setFormIsDirty('etikett', false);

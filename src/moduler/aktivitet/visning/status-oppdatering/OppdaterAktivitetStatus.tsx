@@ -1,4 +1,4 @@
-import { DirectionSign } from '@navikt/ds-icons';
+import { HikingTrailSignIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,7 +65,7 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
 
     return (
         <EndreLinje
-            icon={<DirectionSign fontSize="24" />}
+            icon={<HikingTrailSignIcon fontSize="1.5rem" />}
             onClick={() => {
                 if (open) {
                     setFormIsDirty('status', false);
@@ -76,7 +76,6 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
             tittel="Hva er status på aktiviteten?"
             subtittel={subtittel}
             form={form}
-            kanEndre={kanEndre}
         />
     );
 }

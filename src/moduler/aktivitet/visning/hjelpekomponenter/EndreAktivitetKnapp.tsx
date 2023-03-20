@@ -1,4 +1,4 @@
-import { Edit } from '@navikt/ds-icons';
+import { PencilIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -32,7 +32,7 @@ const EndreAktivitetKnapp = (props: Props) => {
             disabled={laster || !underOppfolging}
             onClick={goToEndre}
             variant="secondary"
-            icon={<Edit aria-hidden />}
+            icon={<PencilIcon fontSize="1.5rem" />}
         >
             Endre på aktiviteten
         </Button>

@@ -1,4 +1,4 @@
-import { Profile } from '@navikt/ds-icons';
+import { PersonRectangleIcon } from '@navikt/aksel-icons';
 import { Alert } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,7 +88,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
 
     return (
         <EndreLinje
-            icon={<Profile fontSize="24" />}
+            icon={<PersonRectangleIcon fontSize="1.5rem" />}
             onClick={() => {
                 if (open) {
                     setFormIsDirty('soknadsstatus', false);
@@ -98,7 +98,6 @@ const OppdaterSoknadsstatus = (props: Props) => {
             open={open}
             tittel="Hvor er du i søknadsprosessen?"
             form={form}
-            kanEndre={kanEndre}
             subtittel={visning}
         />
     );

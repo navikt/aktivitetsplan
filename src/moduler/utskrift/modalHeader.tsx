@@ -1,9 +1,8 @@
-import { Back } from '@navikt/ds-icons';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
 
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
-import Knappelenke from '../../felles-komponenter/utils/Knappelenke';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 
 interface Props {
@@ -17,19 +16,12 @@ function ModalHeader(props: Props) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <header className="modal-header">
-                <div className="printmodal-header">
-                    <Knappelenke
-                        className="tilbakeknapp printmodal-header__tilbakeknapp"
-                        onClick={!!tilbake ? tilbake : () => {}}
-                        role="link"
-                        tabIndex={0}
-                        hidden={!tilbake}
-                    >
-                        <div className="tilbakeknapp-innhold">
-                            <Back />
+                <div className="printmodal-header flex gap-x-4">
+                    {!!tilbake ? (
+                        <Link className="hover:cursor-pointer" onClick={!!tilbake ? tilbake : () => {}} tabIndex={0}>
                             Tilbake
-                        </div>
-                    </Knappelenke>
+                        </Link>
+                    ) : null}
                     <HiddenIfHovedknapp
                         hidden={!kanSkriveUt}
                         className="printmodal-header__printknapp"

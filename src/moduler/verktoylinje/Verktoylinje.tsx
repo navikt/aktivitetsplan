@@ -1,4 +1,4 @@
-import { Add } from '@navikt/ds-icons';
+import { PlusIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -29,7 +29,7 @@ const Verktoylinje = () => {
                     {!hideLeggTil ? (
                         <Button
                             className="self-stretch sm:self-auto"
-                            icon={<Add role="img" focusable="false" aria-hidden />}
+                            icon={<PlusIcon fontSize="1.5rem" />}
                             disabled={!aktivitetLaster}
                             onClick={() => {
                                 loggEvent(APNE_NY_AKTIVITET);

@@ -1,4 +1,4 @@
-import { Locked } from '@navikt/ds-icons';
+import { PadlockLockedIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
@@ -19,8 +19,8 @@ const ModalHeader = (props: Props) => {
     return (
         <div className={classNames('flex space-x-2', className)} {...rest}>
             {aktivitetErLaast ? (
-                <div>
-                    <Locked />
+                <div className="flex items-center">
+                    <PadlockLockedIcon fontSize="1.5rem" />
                     <span aria-live="assertive" className="sr-only">
                         {aktivitetErLaast ? 'Denne aktiviteten kan ikke redigeres.' : ''}
                     </span>

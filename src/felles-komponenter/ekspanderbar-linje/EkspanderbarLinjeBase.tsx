@@ -1,4 +1,4 @@
-import { Collapse, Expand } from '@navikt/ds-icons';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { UnmountClosed } from 'react-collapse';
@@ -47,7 +47,11 @@ const EkspanderbarLinjeBase = (props: PropsBase) => {
                 <div className={styles.endreVisning}>{tittelKomponent}</div>
                 <VisibleIfDiv visible={kanToogle} className={styles.endreKnapp}>
                     <div className="inline-block pr-0.5">{erAapen ? lukkeTekst : aapneTekst}</div>
-                    {erAapen ? <Collapse className="inline-block" /> : <Expand className="inline-block" />}
+                    {erAapen ? (
+                        <ChevronDownIcon fontSize="1.5rem" className="inline-block" />
+                    ) : (
+                        <ChevronUpIcon fontSize="1.5rem" className="inline-block" />
+                    )}
                 </VisibleIfDiv>
             </button>
 

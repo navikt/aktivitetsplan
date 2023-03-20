@@ -1,4 +1,4 @@
-import { Collapse, Expand } from '@navikt/ds-icons';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useState } from 'react';
@@ -27,7 +27,11 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
                 </CustomBodyLong>
                 <Button variant={'tertiary'} onClick={toggleMoreOrLess} className={styles.button}>
                     {hasLongText ? 'Les mer' : 'Vis mindre'}
-                    {hasLongText ? <Expand className="ml-0.5 inline" /> : <Collapse className="ml-0.5 inline" />}
+                    {hasLongText ? (
+                        <ChevronDownIcon fontSize="1.5rem" className="inline" />
+                    ) : (
+                        <ChevronUpIcon fontSize="1.5rem" className="inline" />
+                    )}
                 </Button>
             </div>
         );

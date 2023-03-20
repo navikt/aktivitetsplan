@@ -1,4 +1,4 @@
-import { DialogDots } from '@navikt/ds-icons';
+import { ChatIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -38,7 +38,7 @@ const SendEnMeldingKnapp = (props: Props) => {
                 variant="secondary"
                 as="a"
                 href={getDialogLenke(erVeileder, aktivitet.id, dialog?.id)}
-                icon={<DialogDots aria-hidden />}
+                icon={<ChatIcon fontSize="1.5rem" />}
                 onClick={veilederOnClick}
             >
                 {ulestMeldinger > 0

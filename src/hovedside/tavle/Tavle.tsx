@@ -1,4 +1,4 @@
-import { Back, Next } from '@navikt/ds-icons';
+import { ChevronLeftIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import React, { ReactElement, useRef, useState } from 'react';
 
@@ -70,7 +70,7 @@ const Tavle = (props: Props) => {
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
         >
-            <Back className="knapp-forrige-ikon" aria-describedby="Forrige kolonne" role="img" focusable="false" />
+            <ChevronLeftIcon title="Forrige kolonne" fontSize="2rem" className="mr-0.5" />
         </button>
     );
 
@@ -84,7 +84,7 @@ const Tavle = (props: Props) => {
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"
         >
-            <Next className="knapp-neste-ikon" aria-describedby="Neste kolonne" role="img" focusable="false" />
+            <ChevronRightIcon title="Neste kolonne" fontSize="2rem" className="ml-0.5" />
         </button>
     );
 
