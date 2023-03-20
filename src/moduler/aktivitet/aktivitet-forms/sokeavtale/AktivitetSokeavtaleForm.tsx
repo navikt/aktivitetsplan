@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useEffect, useState } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
-import { an } from 'vitest/dist/types-7cd96283';
 import { z } from 'zod';
 
 import { AppConfig } from '../../../../app';
@@ -59,7 +58,7 @@ interface Props {
 }
 
 const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
-    const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
+    const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const basevalues = {
         tittel: aktivitet?.tittel || 'Avtale om å søke jobber',
         fraDato: aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined,

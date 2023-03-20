@@ -15,9 +15,7 @@ interface Props {
     aktivitet: AlleAktiviteter;
 }
 
-const getAccordionItems = (aktivitet: AlleAktiviteter) => {
-    const erVeileder = useSelector(selectErVeileder);
-
+const getAccordionItems = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     switch (aktivitet.type) {
         case VeilarbAktivitetType.STILLING_AKTIVITET_TYPE:
             return (
@@ -65,7 +63,8 @@ const getAccordionItems = (aktivitet: AlleAktiviteter) => {
 };
 
 const AktivitetvisningAccordion = ({ aktivitet }: Props) => {
-    const accordionItems = getAccordionItems(aktivitet);
+    const erVeileder = useSelector(selectErVeileder);
+    const accordionItems = getAccordionItems(aktivitet, erVeileder);
     if (!accordionItems) return null;
 
     return <Accordion>{accordionItems}</Accordion>;

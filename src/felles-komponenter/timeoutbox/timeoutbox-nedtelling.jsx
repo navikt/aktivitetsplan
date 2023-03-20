@@ -3,6 +3,8 @@ import moment from 'moment';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 
+import { sekunderTilMinutter } from '../../utils/dateUtils';
+
 class TimeoutboxNedtelling extends Component {
     componentDidMount() {
         this.rerender = setInterval(() => {
@@ -17,7 +19,6 @@ class TimeoutboxNedtelling extends Component {
     render() {
         const { utlopsTidspunkt } = this.props;
         const sekunderIgjen = moment(utlopsTidspunkt).diff(moment(), 'seconds');
-        const durationLeft = moment.duration(sekunderIgjen, 'seconds');
 
         if (sekunderIgjen <= 0) {
             return (
@@ -33,7 +34,8 @@ class TimeoutboxNedtelling extends Component {
             );
         }
 
-        const tid = durationLeft.format('mm:ss', { trim: false });
+        const tid = sekunderTilMinutter(sekunderIgjen);
+
         return (
             <Modal.Content>
                 <Heading className="blokk-s" level="1" size="large" spacing>
