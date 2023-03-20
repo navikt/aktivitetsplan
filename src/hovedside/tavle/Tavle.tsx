@@ -63,28 +63,28 @@ const Tavle = (props: Props) => {
     const venstreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-forrige', {
+            className={classNames('tavle__scrollknapp knapp-forrige border', {
                 invisible: venstreKnappDisabled,
             })}
             onClick={visForrige}
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
         >
-            <ChevronLeftIcon title="Forrige kolonne" fontSize="2rem" className="mr-0.5" />
+            <ChevronLeftIcon title="Forrige kolonne" fontSize="4rem" />
         </button>
     );
 
     const hoyreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-neste', {
+            className={classNames('tavle__scrollknapp knapp-neste border', {
                 invisible: hoyreKnappDisabled,
             })}
             onClick={visNeste}
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"
         >
-            <ChevronRightIcon title="Neste kolonne" fontSize="2rem" className="ml-0.5" />
+            <ChevronRightIcon title="Neste kolonne" fontSize="4rem" />
         </button>
     );
 
