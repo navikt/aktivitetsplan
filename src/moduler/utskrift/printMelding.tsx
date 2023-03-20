@@ -36,7 +36,7 @@ function PrintMeldingForm(props: Props) {
     };
 
     return (
-        <form onSubmit={state.onSubmit(submit)} className="printmelding__form" hidden={hidden}>
+        <form onSubmit={state.onSubmit(submit)} className="p-4 space-y-8" hidden={hidden}>
             <div className="printmelding__skjema">
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
@@ -50,9 +50,7 @@ function PrintMeldingForm(props: Props) {
                     {...state.fields.beskrivelse}
                 />
             </div>
-            <div className="printmelding__knapperad">
-                <Button>Velg</Button>
-            </div>
+            <Button>Velg</Button>
         </form>
     );
 }

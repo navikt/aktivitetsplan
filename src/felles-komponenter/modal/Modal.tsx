@@ -15,7 +15,6 @@ interface Props extends RouteComponentProps {
     children: ReactNode;
     avhengigheter?: Avhengighet[] | Avhengighet;
     minstEnAvhengighet?: boolean;
-    contentLabel: string;
     contentClass?: string;
     onRequestClose?(): void;
 }
@@ -29,7 +28,6 @@ const Modal = (props: Props) => {
         className,
         minstEnAvhengighet = false,
         feilmeldinger,
-        contentLabel,
         contentClass,
         ...rest
     } = props;

@@ -1,12 +1,13 @@
+import { Loader, Modal } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../datatypes/types';
-import Modal from '../../felles-komponenter/modal/Modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
@@ -120,34 +121,45 @@ function AktivitetsplanPrint(props: Props) {
     const kanHaPrintMelding = erManuell && erVeileder;
 
     const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
+    const history = useHistory();
+    const goBack = () => history.goBack();
+
     if (fnr && (isLoadingAdresse || isLoadingBruker)) {
-        return <></>;
+        return <Loader />;
     }
-    return (
-        <section>
-            <Modal
-                contentLabel="aktivitetsplanPrint"
-                className="aktivitetsplanprint"
-                header={
-                    <ModalHeader
-                        avhengigheter={avhengigheter}
-                        tilbake={back}
-                        kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                    />
-                }
-                onRequestClose={doResetUtskrift}
-            >
+
+    if (steps[stepIndex] === STEP_MELDING_FORM) {
+        return (
+            <Modal onClose={goBack} open>
                 <Innholdslaster avhengigheter={avhengigheter}>
-                    <PrintMeldingForm
-                        bruker={bruker}
-                        onSubmit={printMeldingSubmit}
-                        hidden={steps[stepIndex] !== STEP_MELDING_FORM}
-                    />
-                    <VelgPlanUtskriftForm
-                        kvpPerioder={kvpPerioder}
-                        onSubmit={velgPlanSubmint}
-                        hidden={steps[stepIndex] !== STEP_VELG_PLAN}
-                    />
+                    <PrintMeldingForm bruker={bruker} onSubmit={printMeldingSubmit} />
+                </Innholdslaster>
+            </Modal>
+        );
+    }
+
+    if (steps[stepIndex] === STEP_MELDING_FORM) {
+        return (
+            <Modal onClose={goBack} open>
+                <Innholdslaster avhengigheter={avhengigheter}>
+                    <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmint} />
+                </Innholdslaster>
+            </Modal>
+        );
+    }
+
+    return (
+        <section className="flex flex-col justify-center items-center p-8">
+            <div
+                className="aktivitetsplanprint w-[670px] flex justify-center items-center"
+                // onRequestClose={doResetUtskrift}
+            >
+                <ModalHeader
+                    avhengigheter={avhengigheter}
+                    tilbake={goBack}
+                    kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
+                />
+                <Innholdslaster avhengigheter={avhengigheter}>
                     <Print
                         dialoger={dialoger}
                         bruker={bruker}
@@ -161,7 +173,7 @@ function AktivitetsplanPrint(props: Props) {
                         hidden={steps[stepIndex] !== STEP_UTSKRIFT}
                     />
                 </Innholdslaster>
-            </Modal>
+            </div>
         </section>
     );
 }

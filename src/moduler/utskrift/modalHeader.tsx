@@ -15,24 +15,22 @@ function ModalHeader(props: Props) {
     const { avhengigheter, tilbake, kanSkriveUt } = props;
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
-            <header className="modal-header">
-                <div className="printmodal-header flex gap-x-4">
-                    {tilbake ? (
-                        <Link className="hover:cursor-pointer" onClick={tilbake ? tilbake : () => {}} tabIndex={0}>
-                            Tilbake
-                        </Link>
-                    ) : null}
-                    <HiddenIfHovedknapp
-                        hidden={!kanSkriveUt}
-                        className="printmodal-header__printknapp"
-                        onClick={() => {
-                            window.print();
-                            loggEvent(TRYK_PRINT);
-                        }}
-                    >
-                        Skriv ut
-                    </HiddenIfHovedknapp>
-                </div>
+            <header className="print:hidden self-start flex flex-row gap-x-10 ">
+                {tilbake ? (
+                    <Link className="hover:cursor-pointer" onClick={tilbake ? tilbake : () => {}} tabIndex={0}>
+                        Tilbake
+                    </Link>
+                ) : null}
+                <HiddenIfHovedknapp
+                    hidden={!kanSkriveUt}
+                    className="printmodal-header__printknapp"
+                    onClick={() => {
+                        window.print();
+                        loggEvent(TRYK_PRINT);
+                    }}
+                >
+                    Skriv ut
+                </HiddenIfHovedknapp>
             </header>
         </Innholdslaster>
     );

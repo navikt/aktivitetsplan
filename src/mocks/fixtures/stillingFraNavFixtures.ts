@@ -74,7 +74,7 @@ export const jaCvKanDeles = {
 };
 export const enStillingFraNavData: StillingFraNavAktivitetData = {
     cvKanDelesData: undefined,
-    arbeidsgiver: 'Havsalt AS',
+    arbeidsgiver: 'Havsalt AS Havsalt AS Havsalt AS Havsalt AS',
     arbeidssted: 'Kristiansand',
     kontaktpersonData: oddFellow,
     soknadsstatus: 'VENTER',
