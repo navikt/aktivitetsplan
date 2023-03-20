@@ -4,7 +4,6 @@ import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
@@ -42,7 +41,7 @@ interface OppdaterAktivitetStatusProps {
     aktivitet: Exclude<VeilarbAktivitet, EksternAktivitet>;
 }
 
-function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
+const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
     const { aktivitet } = props;
     const [open, setIsOpen] = useState(false);
     const dispatch = useDispatch();
@@ -61,8 +60,6 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
     const { setFormIsDirty } = useContext(DirtyContext);
     const form = <AktivitetStatusForm disabled={disableStatusEndring} onSubmit={onSubmit} aktivitet={aktivitet} />;
 
-    const kanEndre = aktivitet.status !== STATUS_FULLFOERT && aktivitet.status !== STATUS_AVBRUTT;
-
     return (
         <EndreLinje
             icon={<HikingTrailSignIcon fontSize="1.5rem" />}
@@ -78,6 +75,6 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
             form={form}
         />
     );
-}
+};
 
 export default OppdaterAktivitetStatus;

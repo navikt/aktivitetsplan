@@ -43,7 +43,7 @@ const EksterneEtiketter = ({ aktivitet }: Props) => {
             {etiketter
                 .map((etikett) => getEtikettByKode(type, etikett.kode))
                 .map((eksternEtikett, i) => {
-                    return !!eksternEtikett ? (
+                    return eksternEtikett ? (
                         <Tag variant={eksternEtikett.variant} size="small" key={i}>
                             {eksternEtikett.tekst}
                         </Tag>

@@ -77,8 +77,8 @@ const Aktivitetstavle = () => {
 
     // SCROLLING //
     const sistVisteAktivitetId: string = useSelector<Record<string, any>, string>((state) => {
-        const aktivitet: AlleAktiviteter = selectSistVisteAktivitet(state);
-        return !!aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
+        const aktivitet: AlleAktiviteter | undefined = selectSistVisteAktivitet(state);
+        return aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
     });
     const appIsVisible = useIsVisible(document.getElementById(AKTIVITETSPLAN_ROOT_NODE_ID));
     const [skalScrolle, setSkalScrolle] = useState(false);

@@ -620,7 +620,7 @@ export const oppdaterLestFho = async (req: RestRequest) => {
     const nyeAktivitetAttributter: VeilarbAktivitet = {
         ...gammelAktivitet,
         forhaandsorientering: {
-            ...gammelAktivitet.forhaandsorientering!!,
+            ...gammelAktivitet.forhaandsorientering!,
             lestDato: moment().toISOString(),
         },
         transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,

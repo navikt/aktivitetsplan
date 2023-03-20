@@ -17,8 +17,8 @@ function ModalHeader(props: Props) {
         <Innholdslaster avhengigheter={avhengigheter}>
             <header className="modal-header">
                 <div className="printmodal-header flex gap-x-4">
-                    {!!tilbake ? (
-                        <Link className="hover:cursor-pointer" onClick={!!tilbake ? tilbake : () => {}} tabIndex={0}>
+                    {tilbake ? (
+                        <Link className="hover:cursor-pointer" onClick={tilbake ? tilbake : () => {}} tabIndex={0}>
                             Tilbake
                         </Link>
                     ) : null}

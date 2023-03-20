@@ -126,7 +126,7 @@ const AktivitetStatusForm = (props: Props) => {
                         />
                     </VisibleIfDiv>
                 </VisibleIfDiv>
-                {!!state.fields.aktivitetstatus.error ? (
+                {state.fields.aktivitetstatus.error ? (
                     <p className="font-bold text-red-700">{state.fields.aktivitetstatus.error}</p>
                 ) : null}
             </div>

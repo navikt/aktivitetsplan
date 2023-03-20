@@ -29,7 +29,7 @@ export function sisteMal() {
 export async function opprettMal(req: RestRequest) {
     const body = await req.json();
 
-    let nyMal = {
+    const nyMal = {
         mal: body.mal,
         endretAv: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
         dato: new Date(),

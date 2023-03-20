@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
-import { tr } from 'date-fns/locale';
 import React, { MutableRefObject } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -56,7 +55,7 @@ interface Props {
 }
 
 const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
-    const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
+    const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const basevalues = {
         tittel: aktivitet?.tittel || 'Avtale om å søke jobber',
         fraDato: aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined,
@@ -81,7 +80,7 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
 
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
-    const brukeStillingerIUken = !!aktivitet ? !!aktivitet.antallStillingerIUken : true;
+    const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const defaultValues = getDefaultValues(aktivitet);
     const avtalt = aktivitet?.avtalt || false;
 
