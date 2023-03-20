@@ -86,23 +86,22 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     return (
         <form
-            className={'bg-surface-subtle rounded-md border-border-default border p-4'}
+            className={'bg-surface-subtle rounded-md border-border-default border p-4 space-y-8'}
             onSubmit={state.onSubmit(onSubmit)}
             noValidate
         >
+            <div className="flex flex-col">
+                <Heading size="medium" level="2">
+                    {overskrift}
+                </Heading>
+                <Ingress className="mt-1" />
+                <BodyShort className="mt-1">Svar før: {formaterDatoManed(svarfrist)}</BodyShort>
+            </div>
             <SvarPaaVegneAvBruker datoBegrensninger={datobegrensninger} formhandler={state.fields.avtaltDato} />
             <RadioGroup
-                legend={
-                    <div className="flex flex-col mb-4">
-                        <Heading size="medium" level="2">
-                            {overskrift}
-                        </Heading>
-                        <Ingress className="mt-1" />
-                        <BodyShort className="mt-1">Svar før: {formaterDatoManed(svarfrist)}</BodyShort>
-                    </div>
-                }
+                legend={overskrift}
+                hideLegend
                 onChange={onChange}
-                aria-label={overskrift}
                 role="radiogroup"
                 error={state.submittoken && state.fields.kanDeles.error}
             >
@@ -113,7 +112,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
             </RadioGroup>
 
             {erVeileder && state.submittoken && <FormErrorSummary errors={state.errors} />}
-            <div className="flex gap-4 items-center mt-4">
+            <div className="flex gap-4 items-center mt-8">
                 <Button disabled={state.submitting}>Send svar</Button>
                 {infoTekst && (
                     <Alert variant="info" inline>
