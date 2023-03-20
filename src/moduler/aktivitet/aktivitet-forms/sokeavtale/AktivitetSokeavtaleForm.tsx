@@ -81,14 +81,6 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
     }
 };
 
-type InitalValues = Partial<{
-    tittel: string;
-    fraDato: Date;
-    tilDato: Date;
-    avtaleOppfolging: string;
-    antallStillingerIUken: number;
-}>;
-
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
@@ -215,17 +207,6 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                 </div>
             </FormProvider>
         </form>
-    );
-};
-
-const Wrapper = (props: Props) => {
-    const [initialValues, setInitialValues] = useState<InitalValues | undefined>(undefined);
-    return (
-        <SokeAvtaleAktivitetForm
-            {...props}
-            onChangeInitialValues={(dateRange) => setInitialValues(dateRange)}
-            initialValues={initialValues}
-        />
     );
 };
 
