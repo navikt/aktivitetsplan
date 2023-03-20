@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitetType } from '../../../../datatypes/arenaAktivitetTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { selectErVeileder } from '../../../identitet/identitet-selector';
 import ArenaStatusAdministrasjon from './ArenaStatusAdministrasjon';
 import EksternAktivitetHandlingerKnapper from './EksternAktivitetHandlingerKnapper';
 import EndreAktivitetKnapp from './EndreAktivitetKnapp';
@@ -14,9 +16,10 @@ interface Props {
     tillatEndring: boolean;
     laster: boolean;
     underOppfolging: boolean;
+    erVeileder: boolean;
 }
 
-const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props) => {
+const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging, erVeileder }: Props) => {
     switch (aktivitet.type) {
         case VeilarbAktivitetType.MOTE_TYPE:
         case VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE:
@@ -24,7 +27,6 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
         case VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE:
         case VeilarbAktivitetType.STILLING_AKTIVITET_TYPE:
         case VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE:
-        case VeilarbAktivitetType.SAMTALEREFERAT_TYPE:
             return (
                 <>
                     <EndreAktivitetKnapp
@@ -33,6 +35,20 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
                         laster={laster}
                         underOppfolging={underOppfolging}
                     />
+                    <SendEnMeldingKnapp aktivitet={aktivitet} />
+                </>
+            );
+        case VeilarbAktivitetType.SAMTALEREFERAT_TYPE:
+            return (
+                <>
+                    {erVeileder ? (
+                        <EndreAktivitetKnapp
+                            id={aktivitet.id}
+                            tillatEndring={tillatEndring}
+                            laster={laster}
+                            underOppfolging={underOppfolging}
+                        />
+                    ) : null}
                     <SendEnMeldingKnapp aktivitet={aktivitet} />
                 </>
             );
@@ -69,7 +85,8 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging }: Props
 };
 
 const ActionRad = (props: Props) => {
-    const actions = getActions(props);
+    const erVeileder = useSelector(selectErVeileder);
+    const actions = getActions({ ...props, erVeileder });
 
     return <div className="my-4 gap-4 flex flex-wrap">{actions}</div>;
 };
