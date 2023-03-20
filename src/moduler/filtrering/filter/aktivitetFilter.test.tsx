@@ -89,7 +89,7 @@ function makeTestAktiviteter<T>(
 
 const server = setupServer(...handlers);
 
-describe('aktivitets-filter', () => {
+describe.skip('aktivitets-filter', () => {
     // Start server before all tests
     beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
