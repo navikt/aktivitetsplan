@@ -57,7 +57,7 @@ const renderAsRootApp = (props?: { fnr?: string }) => {
 };
 
 const renderApp = (props?: { fnr?: string }) => {
-    if (true || window.NAVSPA) {
+    if (window.NAVSPA) {
         exportToNavSpa();
     } else {
         renderAsRootApp(props);
