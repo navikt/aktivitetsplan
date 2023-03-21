@@ -1,4 +1,4 @@
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, LinkPanel } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -19,18 +19,19 @@ const EksternAktivitetHandlingerKnapper = ({ aktivitet }: Props) => {
     }
 
     return (
-        <>
+        <div className="space-y-4 flex flex-col self-end justify-self-end w-full mb-8">
             {handlinger.flatMap((handling) => {
                 if (handling.lenkeType === 'EKSTERN' && erVeileder) return null;
                 if (handling.lenkeType === 'INTERN' && !erVeileder) return null;
 
                 return (
-                    <Button variant="secondary" as="a" href={handling.url} target="_blank">
-                        {handling.tekst}
-                    </Button>
+                    <LinkPanel href={handling.url} target="_blank">
+                        <Heading size="small">{handling.tekst}</Heading>
+                        <BodyShort>{handling.subtekst}</BodyShort>
+                    </LinkPanel>
                 );
             })}
-        </>
+        </div>
     );
 };
 
