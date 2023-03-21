@@ -11,11 +11,11 @@ import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-fel
 
 const MoteplanInnhold = (planListe: Moteplan[]) => (
     <span>
-        {planListe.map((mote: Moteplan) => (
-            <BodyShort key={mote.startDato}>
+        {planListe.map((mote: Moteplan, index) => (
+            <span key={index}>
                 {formaterDatoKortManedTid(mote.startDato)}
                 {formaterTid(mote.sluttDato) === '00:00' ? '' : ` - ${formaterTid(mote.sluttDato)}`},{` ${mote.sted}`}
-            </BodyShort>
+            </span>
         ))}
     </span>
 );
