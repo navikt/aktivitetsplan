@@ -46,7 +46,7 @@ const rootElement = document.getElementById('mainapp') as HTMLElement;
 
 const exportToNavSpa = () => {
     NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
-    window.NAVSPA['aktivitetsplan'](rootElement);
+    // window.NAVSPA['aktivitetsplan'](rootElement);
     import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
     });
