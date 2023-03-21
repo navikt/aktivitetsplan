@@ -44,7 +44,6 @@ const Hovedside = () => {
                     <Varslinger />
                     <div className="container flex flex-col gap-y-6">
                         <Navigasjonslinje />
-                        <DobbleLonnstilskuddAdvarsel />
                         <Maal />
                         <Verktoylinje />
                     </div>

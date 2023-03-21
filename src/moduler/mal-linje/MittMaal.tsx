@@ -1,6 +1,6 @@
 import './mitt-maal.less';
 
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
 import React, { useEffect } from 'react';
@@ -10,7 +10,7 @@ import { AnyAction } from 'redux';
 
 import { Lest } from '../../datatypes/aktivitetTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
+import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
@@ -95,7 +95,7 @@ function MittMaal() {
         dispatch(hentMal() as unknown as AnyAction);
     }, [dispatch]);
 
-    const avhengigheter = useSelector(selectMalStatus, shallowEqual);
+    const avhengigheter: Avhengighet = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
 
@@ -108,28 +108,32 @@ function MittMaal() {
         erNyEndringIMal(malData, useSelector(selectLestAktivitetsplan), useSelector(selectIdentitetData)) &&
         harSkriveTilgang;
 
+    const noeHarFeilet = avhengigheter === 'ERROR';
     return (
-        <div
-            className={classNames('border-border-default flex rounded-md p-4', {
-                'border-2 border-dashed ': !mal && !disabled,
-                border: mal || disabled,
-            })}
-        >
+        <>
             <Innholdslaster avhengigheter={avhengigheter}>
-                <div className="flex sm:flex-row items-center gap-6">
-                    <MaalIkon className="hidden sm:block mx-4 min-w-fit" />
-                    <div>
-                        <div className="flex mb-2">
-                            <NotifikasjonMarkering visible={nyEndring} />
-                            <Heading level="2" size="medium" className={'flex'}>
-                                Mitt mål
-                            </Heading>
+                <div
+                    className={classNames('border-border-default flex rounded-md p-4', {
+                        'border-2 border-dashed ': !mal && !disabled,
+                        border: mal || disabled,
+                    })}
+                >
+                    <div className="flex sm:flex-row items-center gap-6">
+                        <MaalIkon className="hidden sm:block mx-4 min-w-fit" />
+                        <div>
+                            <div className="flex mb-2">
+                                <NotifikasjonMarkering visible={nyEndring} />
+                                <Heading level="2" size="medium" className={'flex'}>
+                                    Mitt mål
+                                </Heading>
+                            </div>
+                            <MalContent disabled={disabled} mal={mal} />
                         </div>
-                        <MalContent disabled={disabled} mal={mal} />
                     </div>
                 </div>
             </Innholdslaster>
-        </div>
+            {noeHarFeilet ? <Alert variant={'error'}>Kunne ikke hente mål</Alert> : null}
+        </>
     );
 }
 
