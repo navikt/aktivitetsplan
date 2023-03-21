@@ -1,20 +1,19 @@
-import { Back, Next } from '@navikt/ds-icons';
+import { ChevronLeftIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import React, { ReactElement, useRef, useState } from 'react';
 
 import SprettendeScrollbars from './sprettende-scrollbars';
 
-const KOLONNEBREDDE = 300;
+const KOLONNEBREDDE = 325;
 const KOLONNEMARGIN = 10;
-const tavleClassname = (className?: string) => classNames('tavle', className);
 
 interface Props {
-    className?: string;
     children: ReactElement[];
+    dragging: boolean;
 }
 
 const Tavle = (props: Props) => {
-    const { children, className } = props;
+    const { children, dragging } = props;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickIndex, setClickIndex] = useState(0);
@@ -54,7 +53,7 @@ const Tavle = (props: Props) => {
     const kolonner = children.map((child, index) => (
         <section
             key={child.key || index}
-            className="tavle-kolonne"
+            className={'min-w-[300px] lg:max-w-[300px]'}
             data-testid={`aktivitetstavle.${child.props.status}`}
         >
             {child}
@@ -64,36 +63,41 @@ const Tavle = (props: Props) => {
     const venstreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-forrige', {
+            className={classNames('tavle__scrollknapp knapp-forrige border', {
                 invisible: venstreKnappDisabled,
             })}
             onClick={visForrige}
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
         >
-            <Back className="knapp-forrige-ikon" aria-describedby="Forrige kolonne" role="img" focusable="false" />
+            <ChevronLeftIcon title="Forrige kolonne" fontSize="4rem" />
         </button>
     );
 
     const hoyreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-neste', {
+            className={classNames('tavle__scrollknapp knapp-neste border', {
                 invisible: hoyreKnappDisabled,
             })}
             onClick={visNeste}
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"
         >
-            <Next className="knapp-neste-ikon" aria-describedby="Neste kolonne" role="img" focusable="false" />
+            <ChevronRightIcon title="Neste kolonne" fontSize="4rem" />
         </button>
     );
 
     return (
-        <section className={tavleClassname(className)} tabIndex={-1}>
+        <section className={classNames('tavle aktivitetstavle lg:w-full')} tabIndex={-1}>
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
-                <div className="kolonner">{kolonner}</div>
+                <div
+                    className="kolonner flex flex-col sm:gap-y-6 sm:mx-8 sm:max-w-[624px] sm:mx-auto md:max-w-[720px]
+                                lg:flex-row lg:gap-x-5 lg:mx-4 lg:max-w-full tavle-max-width:justify-center"
+                >
+                    {kolonner}
+                </div>
             </SprettendeScrollbars>
             {hoyreKnapp}
         </section>

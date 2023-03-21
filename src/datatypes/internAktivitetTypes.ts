@@ -1,3 +1,4 @@
+import { JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../constant';
 import {
     AktivitetBaseProps,
     AlleAktiviteter,
@@ -22,7 +23,8 @@ export type VeilarbAktivitet =
     | MedisinskBehandlingAktivitet
     | StillingFraNavAktivitet
     | EgenAktivitet
-    | EksternAktivitet;
+    | EksternAktivitet
+    | IJobbAktivitet;
 
 export enum VeilarbAktivitetType {
     EGEN_AKTIVITET_TYPE = 'EGEN',
@@ -40,6 +42,15 @@ export interface EgenAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE;
     hensikt?: string;
     oppfolging?: string;
+}
+
+export interface IJobbAktivitet extends AktivitetBaseProps {
+    type: VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE;
+    fraDato?: string;
+    tilDato?: string;
+    jobbStatus: typeof JOBB_STATUS_HELTID | typeof JOBB_STATUS_DELTID;
+    ansettelsesforhold: string;
+    arbeidstid: string;
 }
 
 export interface SokeavtaleAktivitet extends AktivitetBaseProps {

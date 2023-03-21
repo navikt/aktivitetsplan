@@ -1,24 +1,30 @@
+import { ClockDashedIcon } from '@navikt/aksel-icons';
+import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
 
 interface Props {
-    hidden?: boolean;
     aktivitet: VeilarbAktivitet;
 }
 
-export default function EndringsLogg(props: Props) {
+const EndringsLogg = (props: Props) => {
     const { aktivitet } = props;
 
     return (
-        <EkspanderbarLinje tittel="Historikk" kanToogle aapneTekst="Åpne" lukkeTekst="Lukk">
-            <VersjonerForAktivitet
-                visible={true}
-                aktivitet={aktivitet}
-                className="underelementer-aktivitet__historikkvisning"
-            />
-        </EkspanderbarLinje>
+        <Accordion.Item className="first:border-t-2 first:border-border-divider">
+            <Accordion.Header>
+                <div className="flex gap-4 items-center">
+                    <ClockDashedIcon fontSize="1.5rem" />
+                    Historikk
+                </div>
+            </Accordion.Header>
+            <Accordion.Content>
+                <VersjonerForAktivitet visible={true} aktivitet={aktivitet} />
+            </Accordion.Content>
+        </Accordion.Item>
     );
-}
+};
+
+export default EndringsLogg;

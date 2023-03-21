@@ -1,8 +1,8 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { formaterDatoManed } from '../../../../utils';
+import CustomBodyLong from '../../../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import styles from './ForhaandsorienteringPrint.module.less';
 
 interface Props {
@@ -18,16 +18,16 @@ const ForhaandsorienteringPrint = (props: Props) => {
     }
 
     return (
-        <div className="aktivitetvisning__detaljer aktivitetsdetaljer">
-            <Undertekst className={styles.tittel} tag="h2">
+        <div className="mt-8">
+            <Heading level="2" size="xsmall">
                 Informasjon om ansvaret ditt
-            </Undertekst>
-            <Tekstomrade className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</Tekstomrade>
+            </Heading>
+            <CustomBodyLong className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</CustomBodyLong>
 
             {forhaandsorienteringLest && (
-                <Normaltekst className={styles.lestTekst}>
+                <BodyShort size="small" className={styles.lestTekst}>
                     Lest {formaterDatoManed(forhaandsorienteringLest)}
-                </Normaltekst>
+                </BodyShort>
             )}
         </div>
     );

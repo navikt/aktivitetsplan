@@ -1,4 +1,4 @@
-import { Undertekst } from 'nav-frontend-typografi';
+import { Detail } from '@navikt/ds-react';
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
@@ -10,9 +10,9 @@ interface Props {
 }
 
 const Aktivitetstype = ({ aktivitet }: Props) => (
-    <Undertekst tag="p" className={styles.type} data-testid={aktivitet.type}>
+    <Detail as="p" className={styles.type} data-testid={aktivitet.type}>
         {getAktivitetType(aktivitet)}
-    </Undertekst>
+    </Detail>
 );
 
 export default Aktivitetstype;

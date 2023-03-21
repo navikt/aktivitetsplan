@@ -1,23 +1,16 @@
+import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { RadioGruppe } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
 import { formaterDatoManed } from '../../../../utils';
 import { dagerSiden, todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
-import detaljVisningStyles from '../Aktivitetsvisning.module.less';
-import { CustomAlertstripe } from '../hjelpekomponenter/CustomAlertstripe';
 import { Ingress } from './DeleCvContainer';
-import styles from './MeldInteresseForStilling.module.less';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
 import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 
@@ -63,15 +56,14 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     const state = validator({ kanDeles: '', avtaltDato: '' }, { erVeileder, opprettetDato });
 
-    const onChange = (event: any) => {
-        const value = event.target.value;
+    const onChange = (value: string) => {
         if (value === SvarType.JA) {
             setInfoTekst('Stillingen flyttes til "Gjennomfører"');
         }
         if (value === SvarType.NEI) {
             setInfoTekst('Stillingen flyttes til "Avbrutt"');
         }
-        state.fields.kanDeles?.input.onChange(event);
+        state.setValue('kanDeles', value);
     };
 
     const onSubmit = (data: KanDeles) => {
@@ -88,42 +80,46 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
     const datobegrensninger = {
-        minDate: syvDagerFoerOpprettet,
-        maxDate: todayIsoString(),
+        before: new Date(syvDagerFoerOpprettet),
+        after: new Date(todayIsoString()),
     };
 
     return (
-        <form className={detaljVisningStyles.underseksjon} onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <CustomAlertstripe tekst={overskrift} />
-            <div className={styles.luft} />
-            <Ingress />
-            <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} datoBegrensninger={datobegrensninger} />
-            <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
-            <RadioGruppe
-                aria-label={overskrift}
+        <form
+            className={'bg-surface-subtle rounded-md border-border-default border p-4 space-y-8'}
+            onSubmit={state.onSubmit(onSubmit)}
+            noValidate
+        >
+            <div className="flex flex-col">
+                <Heading size="medium" level="2">
+                    {overskrift}
+                </Heading>
+                <Ingress className="mt-1" />
+                <BodyShort className="mt-1">Svar før: {formaterDatoManed(svarfrist)}</BodyShort>
+            </div>
+            <SvarPaaVegneAvBruker datoBegrensninger={datobegrensninger} formhandler={state.fields.avtaltDato} />
+            <RadioGroup
+                legend={overskrift}
+                hideLegend
+                onChange={onChange}
                 role="radiogroup"
-                className="inputPanelGruppe"
-                feil={state.submittoken && state.fields.kanDeles.error}
+                error={state.submittoken && state.fields.kanDeles.error}
             >
-                <RadioPanel
-                    id="kanDeles"
-                    label={JaSvarTekst}
-                    value={SvarType.JA.toString()}
-                    {...state.fields.kanDeles}
-                    input={{ ...state.fields.kanDeles.input, onChange: onChange }}
-                />
-                <RadioPanel
-                    label={NeiSvarTekst}
-                    value={SvarType.NEI.toString()}
-                    {...state.fields.kanDeles}
-                    input={{ ...state.fields.kanDeles.input, onChange: onChange }}
-                />
-            </RadioGruppe>
-            {infoTekst && <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />}
-            {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
-            <Hovedknapp mini className={styles.knapp} disabled={state.submitting}>
-                Lagre
-            </Hovedknapp>
+                <Radio id="kanDeles" value={SvarType.JA.toString()}>
+                    {JaSvarTekst}
+                </Radio>
+                <Radio value={SvarType.NEI.toString()}>{NeiSvarTekst}</Radio>
+            </RadioGroup>
+
+            {erVeileder && state.submittoken && <FormErrorSummary errors={state.errors} />}
+            <div className="flex gap-4 items-center mt-8">
+                <Button disabled={state.submitting}>Lagre</Button>
+                {infoTekst && (
+                    <Alert variant="info" inline>
+                        {infoTekst}
+                    </Alert>
+                )}
+            </div>
         </form>
     );
 };

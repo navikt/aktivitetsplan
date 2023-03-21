@@ -1,5 +1,5 @@
+import { Modal as AkselModal } from '@navikt/ds-react';
 import classNames from 'classnames';
-import NavFrontendModal from 'nav-frontend-modal';
 import React, { ReactNode } from 'react';
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 
@@ -15,7 +15,6 @@ interface Props extends RouteComponentProps {
     children: ReactNode;
     avhengigheter?: Avhengighet[] | Avhengighet;
     minstEnAvhengighet?: boolean;
-    contentLabel: string;
     contentClass?: string;
     onRequestClose?(): void;
 }
@@ -29,7 +28,6 @@ const Modal = (props: Props) => {
         className,
         minstEnAvhengighet = false,
         feilmeldinger,
-        contentLabel,
         contentClass,
         ...rest
     } = props;
@@ -46,22 +44,25 @@ const Modal = (props: Props) => {
     };
 
     return (
-        <NavFrontendModal
+        <AkselModal
             {...rest}
-            isOpen
-            className={classNames('aktivitet-modal', className)}
-            overlayClassName="aktivitet-modal__overlay"
-            portalClassName="aktivitetsplanfs aktivitet-modal-portal"
-            contentLabel={contentLabel}
-            onRequestClose={closeFuncOrDefault}
-            contentClass={contentClass}
+            open
+            className={classNames(
+                'aktivitet-modal lg:w-120 p-4 md:p-8 max-h-full overscroll-contain w-full rounded-none lg:rounded',
+                className,
+                contentClass
+            )}
+            overlayClassName="p-0 items-stretch lg:items-center lg:py-10"
+            onClose={closeFuncOrDefault}
         >
-            {header}
-            {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
-            <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
-                {children}
-            </Innholdslaster>
-        </NavFrontendModal>
+            <div className="flex flex-col max-w-2xl mx-auto">
+                {header}
+                {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
+                <Innholdslaster className="flex m-auto my-8" minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
+                    {children}
+                </Innholdslaster>
+            </div>
+        </AkselModal>
     );
 };
 

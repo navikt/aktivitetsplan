@@ -1,5 +1,4 @@
 @import '../../variables';
-@import (reference) '~nav-frontend-knapper-style/src/index';
 
 .navigasjonslinje {
     display: flex;
@@ -10,11 +9,11 @@
 
     .lenkepanel {
         margin-bottom: 0;
-        color: @navBla;
+        color: @bla;
 
         &:hover {
             box-shadow: none;
-            outline: 2px solid @navBla;
+            outline: 2px solid @bla;
         }
     }
 
@@ -36,7 +35,6 @@
         font-size: 1.5rem;
     }
     .tilDialog {
-        .knapp--flat();
         display: flex;
         align-items: center;
         padding: 0.5rem 0.5rem 0.5rem 0.5rem;

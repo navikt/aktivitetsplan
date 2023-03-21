@@ -1,5 +1,6 @@
 .aktivitetsplanprint {
     display: block;
+    bottom: unset;
 
     .printmodal-header {
         width: 100%;
@@ -23,7 +24,7 @@
     }
 
     .printmodal-body {
-        background-color: @white;
+        background-color: @hvit;
         padding: 2rem 0 3rem;
 
         .printmodal-body__adresse-dato {
@@ -60,7 +61,7 @@
 
         .printmodal-body__statusgrupper {
             padding: 2rem 3rem;
-            border-top: 1px solid @navGra40;
+            border-top: 1px solid @gray-400;
 
             .printmodal-body__statusgruppe {
                 margin: 2rem 0;
@@ -95,8 +96,8 @@
 
         .etikett-print {
             background: none;
-            color: @navMorkGra;
-            border: 1pt solid @navGra40;
+            color: var(--a-gray-900);
+            border: 1pt solid @gray-400;
             margin-bottom: 1rem;
         }
 
@@ -125,7 +126,7 @@
                 &__lenke {
                     text-decoration: none;
                     border-bottom: 0;
-                    color: @navMorkGra;
+                    color: var(--a-gray-900);
                     cursor: default;
                 }
             }
@@ -150,13 +151,13 @@
     }
 
     .feilmelding--systemfeil {
-        background-color: @white;
+        background-color: @hvit;
         margin: 0;
         padding: 1rem;
     }
 
     .printmelding__form {
-        background-color: @white;
+        background-color: @hvit;
         padding-top: 1.5rem;
     }
 
@@ -182,7 +183,7 @@
 
     .printmelding__knapperad {
         padding: 1.2rem 3rem 1.5rem;
-        border-top: 1px solid @navGra40;
+        border-top: 1px solid @gray-400;
         margin-top: 2rem;
     }
 }
@@ -213,9 +214,6 @@
     }
 
     .modal-header,
-    .lukknapp {
-        display: none;
-    }
 
     .aktivitetsdetaljer {
         page-break-inside: avoid;

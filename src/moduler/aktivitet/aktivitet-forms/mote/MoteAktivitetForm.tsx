@@ -1,169 +1,161 @@
-import useFormstate from '@nutgaard/use-formstate';
-import moment, { now } from 'moment';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { Select, TextField, Textarea } from '@navikt/ds-react';
+import React, { MutableRefObject } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT } from '../../../../constant';
-import { MoteAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
-import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
-import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../LagreAktivitet';
-import VelgKanal from '../VelgKanal';
-import {
-    FORBEREDELSER_MAKS_LENGDE,
-    HENSIKT_MAKS_LENGDE,
-    validateAdresse,
-    validateForberedelser,
-    validateHensikt,
-    validateKanal,
-    validateKlokkeslett,
-    validateMoteDato,
-    validateTittel,
-    validateVarighet,
-} from './validate';
+import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
+import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
+import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
+import { beregnFraTil, beregnKlokkeslettVarighet, formatterVarighet } from '../../aktivitet-util';
+import AktivitetFormHeader from '../AktivitetFormHeader';
+import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
+import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
+import HuskVarsleBruker from './HuskVarsleBruker';
+import VideoInfo from './VideoInfo';
+
+const schema = z.object({
+    tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
+    dato: z.date({
+        required_error: 'Dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
+    klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
+    varighet: z.string().min(1, 'Du må fylle ut varighet'),
+    kanal: z.string().min(1, 'Du må fylle ut møteform'),
+    adresse: z
+        .string()
+        .min(1, 'Du må fylle ut møtested eller annen praktisk informasjon')
+        .max(255, 'Du må korte ned teksten til 255 tegn'),
+    beskrivelse: z
+        .string()
+        .min(1, 'Du må fylle ut hensikten med møtet')
+        .max(5000, 'Du må korte ned teksten til 5000 tegn'),
+    forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
+});
+
+type MoteAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
-    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
-    isDirtyRef?: { current: boolean };
-    aktivitet: MoteAktivitet;
+    onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<any>;
+    dirtyRef: MutableRefObject<boolean>;
+    aktivitet?: MoteAktivitet;
 }
 
-type FormType = {
-    tittel: string;
-    dato: string;
-    klokkeslett: string;
-    varighet: string;
-    kanal: string;
-    adresse: string;
-    beskrivelse: string;
-    forberedelser: string;
-};
-
-const HuskVarsleBruker = ({ avtalt, pristine }: { avtalt: boolean; pristine: boolean }) => {
-    if (!avtalt || pristine) {
-        return null;
-    }
-    return (
-        <AlertStripeAdvarsel className="mote-aktivitet_husk_bruker">
-            Husk å sende en dialogmelding til brukeren om endringen du gjør.
-        </AlertStripeAdvarsel>
-    );
-};
-
-const VideoInfo = ({ kanal }: { kanal: string }) => {
-    if (kanal === INTERNET_KANAL) {
-        return (
-            <Normaltekst className="mote-aktivitet-form__video-info">
-                Les om{' '}
-                <Lenke
-                    href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    rutiner for videomøte her <EksternLenkeIkon />
-                </Lenke>
-            </Normaltekst>
-        );
-    }
-    return null;
-};
-
-export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
-
 const MoteAktivitetForm = (props: Props) => {
-    const { aktivitet, isDirtyRef, onSubmit } = props;
+    const { aktivitet, dirtyRef, onSubmit } = props;
 
-    const validator = useFormstate<FormType, MoteAktivitet>({
-        tittel: (val, _, a) => validateTittel(a.avtalt, val),
-        dato: validateMoteDato,
-        klokkeslett: (val, _, a) => validateKlokkeslett(a.avtalt, val),
-        varighet: (val, _, a) => validateVarighet(a.avtalt, val),
-        kanal: (val, _, a) => validateKanal(a.avtalt, val),
-        adresse: (val, _, a) => validateAdresse(a.avtalt, val),
-        beskrivelse: (val, _, a) => validateHensikt(a.avtalt, val),
-        forberedelser: (val, _, a) => validateForberedelser(a.avtalt, val),
-    });
+    const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
-    const maybeAktivitet = aktivitet || {};
-    const avtalt = maybeAktivitet.avtalt === true;
-    const dato = beregnKlokkeslettVarighet(maybeAktivitet);
-    const beskrivelse = maybeAktivitet.beskrivelse || '';
-
-    const initalValue = {
-        tittel: maybeAktivitet.tittel || '',
-        dato: maybeAktivitet.fraDato || '',
-        klokkeslett: dato.klokkeslett ? dato.klokkeslett : '10:00',
-        varighet: dato.varighet ? dato.varighet : '00:45',
-        kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
-        adresse: maybeAktivitet.adresse || '',
-        beskrivelse: beskrivelse ? beskrivelse : defaultBeskrivelse,
-        forberedelser: maybeAktivitet.forberedelser || '',
+    const defaultValues: Partial<MoteAktivitetFormValues> = {
+        tittel: aktivitet?.tittel,
+        klokkeslett: moteTid?.klokkeslett ? moteTid.klokkeslett : '10:00',
+        // Keep field as string since input natively returns string
+        varighet: moteTid?.varighet ? formatterVarighet(moteTid.varighet) : '00:45',
+        kanal: aktivitet?.kanal || OPPMOTE_KANAL,
+        adresse: aktivitet?.adresse,
+        beskrivelse: aktivitet?.beskrivelse,
+        forberedelser: aktivitet?.forberedelser ?? undefined,
+        dato: coerceToUndefined(aktivitet?.fraDato),
     };
+    const avtalt = aktivitet?.avtalt || false;
 
-    const state = validator(initalValue, aktivitet);
+    const formHandlers = useForm<MoteAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
+    });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isDirty },
+    } = formHandlers;
 
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
     }
+
+    const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
+    const forberedelserValue = watch('forberedelser'); // for <Textarea /> character-count to work
 
     return (
         <form
-            onSubmit={state.onSubmit((x) =>
-                onSubmit({
-                    ...x,
-                    ...beregnFraTil(x),
-                    status: STATUS_PLANLAGT,
-                    avtalt: false,
-                })
-            )}
             autoComplete="off"
             noValidate
+            onSubmit={handleSubmit((data) =>
+                onSubmit({
+                    ...data,
+                    ...beregnFraTil(data),
+                    status: STATUS_PLANLAGT,
+                    avtalt: false,
+                    // dato: selectedDay!!.toString(),
+                })
+            )}
         >
-            <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
-                <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
-                <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
-                <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
+            <FormProvider {...formHandlers}>
+                <div className="space-y-8">
+                    <AktivitetFormHeader tittel="Møte med NAV" aktivitetstype={VeilarbAktivitetType.MOTE_TYPE} />
+                    <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
 
-                <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <DatoField
-                        limitations={{ minDate: moment(now()).toISOString() }}
-                        label="Dato *"
-                        {...state.fields.dato}
-                        required
+                    <TextField
+                        disabled={avtalt}
+                        label="Tema for møtet (obligatorisk)"
+                        id={'tittel'}
+                        {...register('tittel')}
+                        error={errors.tittel && errors.tittel.message}
                     />
-                    <Input bredde="S" label="Klokkeslett *" {...state.fields.klokkeslett} type="time" step="300" />
-                    <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
-                </div>
-                <VelgKanal label="Møteform *" {...state.fields.kanal} />
-                <VideoInfo kanal={state.fields.kanal.input.value} />
 
-                <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
-                <Textarea
-                    disabled={avtalt}
-                    label="Hensikt med møtet *"
-                    maxLength={HENSIKT_MAKS_LENGDE}
-                    visTellerFra={500}
-                    required
-                    {...state.fields.beskrivelse}
-                />
-                <Textarea
-                    disabled={avtalt}
-                    label="Forberedelser til møtet"
-                    maxLength={FORBEREDELSER_MAKS_LENGDE}
-                    visTellerFra={200}
-                    {...state.fields.forberedelser}
-                />
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
-            <LagreAktivitet />
+                    <ControlledDatePicker
+                        field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                    />
+                    <TextField
+                        label="Klokkeslett (obligatorisk)"
+                        {...register('klokkeslett')}
+                        type={'time' as any}
+                        step="300"
+                    />
+                    <TextField
+                        label="Varighet (obligatorisk)"
+                        {...register('varighet')}
+                        type={'time' as any}
+                        step="900"
+                    />
+                    <Select label="Møteform (obligatorisk)" {...register('kanal')}>
+                        <option value={OPPMOTE_KANAL}>Oppmøte</option>
+                        <option value={TELEFON_KANAL}>Telefonmøte</option>
+                        <option value={INTERNET_KANAL}>Videomøte</option>
+                    </Select>
+                    <VideoInfo kanal={watch('kanal')} />
+
+                    <TextField
+                        label="Møtested eller annen praktisk informasjon (obligatorisk)"
+                        id={'adresse'}
+                        {...register('adresse')}
+                        error={errors.adresse && errors.adresse.message}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Hensikt med møtet (obligatorisk)"
+                        maxLength={5000}
+                        {...register('beskrivelse')}
+                        error={errors.beskrivelse && errors.beskrivelse.message}
+                        value={beskrivelseValue}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Forberedelser til møtet (valgfri)"
+                        maxLength={500}
+                        {...register('forberedelser')}
+                        error={errors.forberedelser && errors.forberedelser.message}
+                        value={forberedelserValue}
+                    />
+                    <CustomErrorSummary errors={errors} />
+                    <LagreAktivitetKnapp />
+                </div>
+            </FormProvider>
         </form>
     );
 };

@@ -28,8 +28,8 @@
         width: 100%;
         padding: 0.7rem 3rem 0.7rem 2rem;
         background: @hvit;
-        border: 1px solid @navGra60;
-        border-radius: @border-radius-small;
+        border: 1px solid @gray-inactive;
+        border-radius: 2px;
         white-space: nowrap;
 
         &:before {
@@ -53,10 +53,10 @@
     &__innhold {
         position: absolute;
         z-index: 110;
-        border: 1px solid @navGra60;
+        border: 1px solid @gray-inactive;
         top: ~'calc(100% - 1px)';
         background-color: @hvit;
-        border-radius: 0 0 @border-radius-small @border-radius-small;
+        border-radius: 0 0 2px 2px;
         width: 100%;
     }
 
@@ -90,7 +90,7 @@
     &--alignright {
         .dropdown__innhold {
             right: 0;
-            border-radius: @border-radius-small 0 @border-radius-small @border-radius-small;
+            border-radius: 2px 0 2px 2px;
         }
     }
 

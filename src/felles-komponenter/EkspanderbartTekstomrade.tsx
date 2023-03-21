@@ -1,22 +1,20 @@
-import { LinebreakRule } from '@navikt/textparser';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { NedChevron, OppChevron } from 'nav-frontend-chevron';
-import { Knapp } from 'nav-frontend-knapper';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useState } from 'react';
 
+import CustomBodyLong from '../moduler/aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import styles from './EkspanderbartTekstomrade.module.less';
-import { ShortenedLinkRule } from './utils/rules';
 
 interface ToggleBetweenDisplayingTruncatedOrFullTextProps {
-    className: string;
+    className?: string;
     text: string;
     maxCharacters: number;
 }
 
 const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayingTruncatedOrFullTextProps) => {
     const { className, text, maxCharacters } = props;
-    const contentClassNames = classNames(className, styles.content);
+    const contentClassNames = classNames('mb-4', className);
     const [hasLongText, setHasLongText] = useState(true);
     const toggleMoreOrLess = () => {
         setHasLongText(!hasLongText);
@@ -24,30 +22,32 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
     if (text.length > maxCharacters) {
         return (
             <div className={contentClassNames}>
-                <Tekstomrade className={styles.inline} rules={[LinebreakRule, ShortenedLinkRule]}>
+                <CustomBodyLong className="inline" formatLinks formatLinebreaks>
                     {hasLongText ? text.slice(0, maxCharacters) + ' ... ' : text + ' '}
-                </Tekstomrade>
-                <Knapp onClick={toggleMoreOrLess} className={styles.button}>
+                </CustomBodyLong>
+                <Button variant={'tertiary'} onClick={toggleMoreOrLess} className={styles.button}>
                     {hasLongText ? 'Les mer' : 'Vis mindre'}
                     {hasLongText ? (
-                        <NedChevron className={styles.padding} />
+                        <ChevronDownIcon fontSize="1.5rem" className="inline" />
                     ) : (
-                        <OppChevron className={styles.padding} />
+                        <ChevronUpIcon fontSize="1.5rem" className="inline" />
                     )}
-                </Knapp>
+                </Button>
             </div>
         );
     }
 
     return (
-        <Tekstomrade className={contentClassNames} rules={[ShortenedLinkRule]}>
-            {text}
-        </Tekstomrade>
+        <div className={contentClassNames}>
+            <CustomBodyLong formatLinks formatLinebreaks>
+                {text}
+            </CustomBodyLong>
+        </div>
     );
 };
 
 interface Props {
-    className: string;
+    className?: string;
     tekst: string;
     antallTegn: number;
 }

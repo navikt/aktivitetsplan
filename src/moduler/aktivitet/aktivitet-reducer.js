@@ -44,6 +44,8 @@ export default function reducer(state = initalState, action) {
             });
         case AT.OPPDATER:
         case AT.OPPRETT:
+        case AT.OPPDATER_REFERAT:
+        case AT.PUBLISER_REFERAT:
             return { ...state, status: STATUS.RELOADING };
         case AT.FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.ERROR, feil: data }, data.aktivitet);

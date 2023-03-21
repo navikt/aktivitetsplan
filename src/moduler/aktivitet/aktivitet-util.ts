@@ -1,6 +1,16 @@
 import 'moment-duration-format';
 
-import moment, { DurationInputArg1 } from 'moment';
+import {
+    addMinutes,
+    differenceInMinutes,
+    format,
+    isDate,
+    minutesToHours,
+    setHours,
+    setMinutes,
+    startOfDay,
+} from 'date-fns';
+import moment from 'moment';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import {
@@ -20,15 +30,9 @@ import {
 import { Me } from '../../datatypes/oppfolgingTypes';
 
 interface MoteTid {
-    dato?: string;
-    klokkeslett?: string;
-    varighet?: string;
-}
-
-interface Data {
-    dato?: string;
-    klokkeslett?: string;
-    varighet?: string;
+    dato: Date;
+    klokkeslett: string;
+    varighet: number;
 }
 
 interface FraTil {
@@ -106,57 +110,87 @@ export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasj
     return false;
 }
 
-export function beregnKlokkeslettVarighet(aktivitet: MoteAktivitet): MoteTid {
-    const { fraDato } = aktivitet;
-    const { tilDato } = aktivitet;
+export function beregnKlokkeslettVarighet(aktivitet: MoteAktivitet): MoteTid | undefined {
+    const { fraDato, tilDato } = aktivitet;
     if (fraDato && tilDato) {
-        const fraMoment = moment(fraDato);
-        const tilMoment = moment(tilDato);
-        const klokkeslett = fraMoment.format('HH:mm');
-        const diff = moment.duration(tilMoment.diff(fraMoment));
-        const varighet = `${('0' + diff.hours()).slice(-2)}:${('0' + diff.minutes()).slice(-2)}`;
+        const fra = new Date(fraDato);
+        const til = new Date(tilDato);
+        const varighet = differenceInMinutes(til, fra);
+        const klokkeslett = format(fra, 'HH:mm');
         return {
-            dato: fraMoment.startOf('day').toISOString(),
+            dato: startOfDay(fra),
             klokkeslett,
             varighet,
         };
     }
-    return {};
+    return undefined;
 }
 
-export function beregnFraTil(data: Data): FraTil {
+const toDate = (date: Date | string): Date => {
+    if (isDate(date)) return date as Date;
+    return new Date(date);
+};
+
+interface Klokkeslett {
+    hour: number;
+    minute: number;
+}
+const validKlokkeslett = (val: string): boolean => {
+    const hourMinute = val.split(':');
+    if (hourMinute.length != 2) return false;
+    const [hour, minute] = hourMinute;
+    const hourInt = parseInt(hour);
+    const minuteInt = parseInt(minute);
+    return !isNaN(hourInt) && !isNaN(minuteInt) && minuteInt < 60 && hourInt < 24 && minuteInt > -1 && hourInt > -1;
+};
+const toHourAndMinutes = (klokkeslett: string | number): Klokkeslett => {
+    if (typeof klokkeslett !== 'number') {
+        const [hour, minute] = klokkeslett.split(':').map((it) => parseInt(it));
+        return {
+            hour,
+            minute,
+        };
+    } else {
+        const varighetMinutter = parseInt(klokkeslett);
+        const hour = minutesToHours(varighetMinutter); // Uses floor rounding
+        const minute = varighetMinutter - 60 * hour;
+        return { hour, minute };
+    }
+};
+
+export function beregnFraTil(data: MoteTid): FraTil {
     const { dato, klokkeslett, varighet } = data;
 
-    if (dato && klokkeslett && varighet) {
-        const fraDato = moment(dato).startOf('day').add(moment.duration(klokkeslett)).toISOString();
-        const tilDato = moment(fraDato).add(moment.duration(varighet)).toISOString();
+    if (dato && klokkeslett && validKlokkeslett(klokkeslett) && varighet !== undefined && varighet !== null) {
+        const { hour, minute } = toHourAndMinutes(klokkeslett);
+        const fraDato = setMinutes(setHours(startOfDay(toDate(dato)), hour), minute);
+        const { hour: varighetHours, minute: varighetMinutes } = toHourAndMinutes(varighet);
+        const tilDato = addMinutes(fraDato, varighetHours * 60 + varighetMinutes);
         return {
-            fraDato,
-            tilDato,
+            fraDato: fraDato.toISOString(),
+            tilDato: tilDato.toISOString(),
         };
     }
     return {};
 }
 
-export function formatterVarighet(varighet: DurationInputArg1): string {
-    return moment.duration(varighet, 'minutes').format('h:mm', { trim: false });
-}
-
-export function formatterKlokkeslett(klokkeslett: DurationInputArg1): string {
-    return formatterVarighet(klokkeslett);
-}
-
-export function formatterTelefonnummer(telefonnummer: string): string {
-    let utenSpace = telefonnummer.replace(/ /g, '');
-
-    if (utenSpace.length !== 8) {
-        return telefonnummer;
-    } else if (utenSpace.startsWith('8')) {
-        return `${utenSpace.substring(0, 3)} ${utenSpace.substring(3, 5)} ${utenSpace.substring(5)}`;
+export function formatterVarighet(varighet?: string | number): string | undefined {
+    if (!varighet) return undefined;
+    if (typeof varighet === 'number' || !isNaN(parseInt(varighet))) {
+        const { hour, minute } = toHourAndMinutes(varighet);
+        return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
     } else {
-        const numberPairs = utenSpace.match(/.{1,2}/g);
-        return numberPairs ? numberPairs.join(' ') : telefonnummer;
+        // Assuming this is correctly formatted "HH:ss"
+        return varighet;
     }
+}
+
+// TODO: Finn en bedre løsning i MoteAktivitet-form
+const prefixMed0 = (val: string) => (val.length === 1 ? '0' + val : val);
+export function formatterKlokkeslett(klokkeslett?: string): string | undefined {
+    if (!klokkeslett || !validKlokkeslett(klokkeslett)) return undefined;
+    const { hour, minute } = toHourAndMinutes(klokkeslett);
+    return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
 }
 
 function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {

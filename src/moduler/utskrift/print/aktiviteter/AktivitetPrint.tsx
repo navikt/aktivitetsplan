@@ -1,14 +1,15 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Detail, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
+import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { getAktivitetType } from '../../../../utils/textMappers';
 import AvtaltMarkering from '../../../aktivitet/avtalt-markering/AvtaltMarkering';
 import StillingEtikett from '../../../aktivitet/etikett/StillingEtikett';
 import TiltakEtikett from '../../../aktivitet/etikett/TiltakEtikett';
-import Aktivitetsdetaljer from '../../../aktivitet/visning/detaljer/aktivitetsdetaljer';
+import Aktivitetsdetaljer from '../../../aktivitet/visning/detaljer/Aktivitetsdetaljer';
 import { DialogPrint } from '../dialoger';
 import AktivitetReferat from './AktivitetReferat';
 import ForhaandsorienteringPrint from './ForhaandsorienteringPrint';
@@ -24,23 +25,23 @@ const AktivitetPrint = (props: Props) => {
     const forhaandsorientering = aktivitet.forhaandsorientering;
 
     return (
-        <div key={id} className="printmodal-body__statusgruppe">
-            <p className="printmodal-body__statusgruppe--type">{getAktivitetType(aktivitet)}</p>
-            <Undertittel tag="h2" className="printmodal-body__statusgruppe--overskrift">
+        <div key={id} className="p-4 border border-border-default rounded-md print:break-inside-avoid-page">
+            <Detail className="uppercase">{getAktivitetType(aktivitet)}</Detail>
+            <Heading level="2" size="medium" className="mb-4">
                 {tittel}
-            </Undertittel>
-            <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
+            </Heading>
+            <Aktivitetsdetaljer valgtAktivitet={aktivitet} />
             {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
             aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
                 <AktivitetReferat aktivitet={aktivitet} />
             ) : null}
-            <AvtaltMarkering hidden={!aktivitet.avtalt} className="etikett-print" />
+            <AvtaltMarkering hidden={!aktivitet.avtalt} />
             <ForhaandsorienteringPrint
                 forhaandsorienteringTekst={forhaandsorientering?.tekst}
                 forhaandsorienteringLest={forhaandsorientering?.lestDato}
             />
-            <StillingEtikett aktivitet={aktivitet} className="etikett-print" />
-            <TiltakEtikett aktivitet={aktivitet} className="etikett-print" />
+            {aktivitet.type === STILLING_AKTIVITET_TYPE ? <StillingEtikett aktivitet={aktivitet} /> : null}
+            {isArenaAktivitet(aktivitet) ? <TiltakEtikett aktivitet={aktivitet} /> : null}
             <DialogPrint dialog={dialog} />
         </div>
     );

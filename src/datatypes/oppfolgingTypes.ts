@@ -36,6 +36,10 @@ export interface OppfolgingsPeriode {
     veileder?: string | null;
 }
 
+export type HistoriskOppfolgingsPeriode = Omit<OppfolgingsPeriode, 'sluttDato'> & {
+    sluttDato: string;
+};
+
 export interface KvpPeriode {
     opprettetDato: string;
     avsluttetDato?: string;

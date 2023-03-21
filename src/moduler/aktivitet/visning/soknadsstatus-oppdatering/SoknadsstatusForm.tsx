@@ -1,9 +1,9 @@
+import { Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
+import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -17,6 +17,29 @@ interface Props {
 type FormType = {
     soknadsstatus: string;
 };
+
+const fields = [
+    {
+        label: 'Venter på å bli kontaktet av NAV eller arbeidsgiver',
+        value: konstanter.VENTER,
+    },
+    {
+        label: 'CV er delt med arbeidsgiver',
+        value: konstanter.CV_DELT,
+    },
+    {
+        label: 'Skal på intervju',
+        value: konstanter.SKAL_PAA_INTERVJU,
+    },
+    {
+        label: 'Fått jobbtilbud',
+        value: konstanter.JOBBTILBUD,
+    },
+    {
+        label: 'Ikke fått jobben',
+        value: konstanter.AVSLAG,
+    },
+];
 
 const SoknadsstatusForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;
@@ -42,43 +65,27 @@ const SoknadsstatusForm = (props: Props) => {
 
     const disable = state.submitting || disabled;
 
+    const onChangeSoknadStatus = (value: StillingFraNavSoknadsstatus) => {
+        state.fields.soknadsstatus.setValue(value);
+    };
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
-                <Radio
-                    label="Venter på å bli kontaktet av NAV eller arbeidsgiver"
-                    value={konstanter.VENTER}
+            <div className="pb-4">
+                <RadioGroup
+                    legend={''}
+                    value={state.fields.soknadsstatus.input.value}
+                    onChange={onChangeSoknadStatus}
                     disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="CV er delt med arbeidsgiver"
-                    value={konstanter.CV_DELT}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="Skal på intervju"
-                    value={konstanter.SKAL_PAA_INTERVJU}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="Fått jobbtilbud"
-                    value={konstanter.JOBBTILBUD}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-                <Radio
-                    label="Ikke fått jobben"
-                    value={konstanter.AVSLAG}
-                    disabled={disable}
-                    {...state.fields.soknadsstatus}
-                />
-            </SkjemaGruppe>
-            <Hovedknapp className="oppdater-status" disabled={disable} spinner={state.submitting} autoDisableVedSpinner>
+                >
+                    {fields.map(({ label, value }) => (
+                        <Radio key={value} value={value} label={label} />
+                    ))}
+                </RadioGroup>
+            </div>
+            <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre
-            </Hovedknapp>
+            </Button>
         </form>
     );
 };

@@ -1,4 +1,5 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { BodyShort } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { UnmountClosed } from 'react-collapse';
 
@@ -38,15 +39,19 @@ const EkspanderbarLinjeBase = (props: PropsBase) => {
 
     const tittelUtifraState = erAapen && aapneTittel ? aapneTittel : tittel;
     const tittelKomponent =
-        typeof tittelUtifraState === 'string' ? <Normaltekst>{tittelUtifraState}</Normaltekst> : tittelUtifraState;
+        typeof tittelUtifraState === 'string' ? <BodyShort>{tittelUtifraState}</BodyShort> : tittelUtifraState;
 
     return (
         <section>
             <button onClick={onClick} className={styles.endreContainer} aria-expanded={erAapen} disabled={!kanToogle}>
                 <div className={styles.endreVisning}>{tittelKomponent}</div>
                 <VisibleIfDiv visible={kanToogle} className={styles.endreKnapp}>
-                    <div className={styles.endreKnappInnhold}>{erAapen ? lukkeTekst : aapneTekst}</div>
-                    <div className={erAapen ? styles.endreIndikasjonLukket : styles.endreIndikasjonApen} />
+                    <div className="inline-block pr-0.5">{erAapen ? lukkeTekst : aapneTekst}</div>
+                    {erAapen ? (
+                        <ChevronDownIcon fontSize="1.5rem" className="inline-block" />
+                    ) : (
+                        <ChevronUpIcon fontSize="1.5rem" className="inline-block" />
+                    )}
                 </VisibleIfDiv>
             </button>
 

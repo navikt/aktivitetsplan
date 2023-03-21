@@ -1,4 +1,4 @@
-import { Systemtittel } from 'nav-frontend-typografi';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { Mal } from '../../../datatypes/oppfolgingTypes';
@@ -12,11 +12,11 @@ function MalPrint(props: Props) {
     if (!mal) return null;
 
     return (
-        <section className="printmodal-body__vismittmal">
-            <Systemtittel tag="h1" className="printmodal-body__vismittmal--overskrift">
+        <section className="my-8">
+            <Heading level="1" size="large">
                 Mitt mål
-            </Systemtittel>
-            <p>{mal}</p>
+            </Heading>
+            <BodyShort>{mal}</BodyShort>
         </section>
     );
 }

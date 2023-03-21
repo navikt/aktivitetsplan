@@ -1,5 +1,5 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Button } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
@@ -24,7 +24,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     }
 
     return (
-        <div className={styles.forhandsorienteringArenaInnhold}>
+        <div className={classNames('space-y-8')}>
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={lasterData}
@@ -37,20 +37,18 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
             </Select>
             <VisibleIfDiv visible={valgtForhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <VarslingInfo />
-                <Normaltekst className="blokk-xs">
+                <BodyShort className="blokk-xs">
                     Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at
                     stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre
                     aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.
-                </Normaltekst>
+                </BodyShort>
             </VisibleIfDiv>
 
             <VisibleIfDiv visible={valgtForhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea label={<VarslingInfo />} maxLength={500} {...state.fields.tekst} />
             </VisibleIfDiv>
 
-            <Hovedknapp spinner={lasterData} autoDisableVedSpinner>
-                Bekreft
-            </Hovedknapp>
+            <Button loading={lasterData}>Bekreft</Button>
         </div>
     );
 };

@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 
 import { StillingFraNavAktivitet } from '../../../datatypes/internAktivitetTypes';
-import visibleIfHOC from '../../../hocs/visible-if';
 import { selectErBruker } from '../../identitet/identitet-selector';
 import { delCvikkeSvartSkalVises } from '../aktivitet-util';
 import { CustomAlertstripe } from '../visning/hjelpekomponenter/CustomAlertstripe';
@@ -17,4 +16,4 @@ const DelCvIkkeSvart = () => {
     return <CustomAlertstripe tekst="Venter på svar fra deg" />;
 };
 
-export default visibleIfHOC(DelCvIkkeSvart);
+export default DelCvIkkeSvart;

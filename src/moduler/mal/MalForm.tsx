@@ -1,47 +1,37 @@
-import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { Button, Textarea } from '@navikt/ds-react';
+import React, { MutableRefObject, useLayoutEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { useMoveSelectionStartToEnd } from '../../felles-komponenter/hooks/useMoveSelectionStartToEnd';
 import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
-import Textarea from '../../felles-komponenter/skjema/input/Textarea';
 import { oppdaterMal } from './aktivitetsmal-reducer';
 import { hentMalListe } from './malliste-reducer';
 
-function validateMal(val: string) {
-    if (val.length === 0) {
-        return 'Feltet må fylles ut';
-    }
-    if (val.length > 500) return 'Du må korte ned teksten til 500 tegn';
-
-    return undefined;
-}
-
-interface DirtyRef {
-    current: boolean;
-}
+const schema = z.object({
+    mal: z.string().min(1, 'Feltet må fylles ut').max(500, 'Du må korte ned teksten til 500 tegn'),
+});
+type MalFormValues = z.infer<typeof schema>;
 
 interface Props {
     mal?: string;
-    isDirty: DirtyRef;
+    dirtyRef: MutableRefObject<boolean>;
     handleComplete: () => void;
 }
 
-type FormType = {
-    mal: string
-};
+const MalForm = (props: Props) => {
+    const { mal, dirtyRef, handleComplete } = props;
 
-function MalForm(props: Props) {
     const dispatch = useReduxDispatch();
-    const { mal, isDirty, handleComplete } = props;
 
-    const validator = useFormstate<FormType>({
-        mal: validateMal,
-    });
-
-    const textAreaCls = 'aktivitetplansmal';
-    useMoveSelectionStartToEnd(textAreaCls);
+    const ref = useRef<HTMLTextAreaElement | null>(null);
+    useLayoutEffect(() => {
+        const el = ref.current;
+        if (el) {
+            el.focus();
+            el.selectionStart = el.selectionEnd = el.value.length;
+        }
+    }, []);
 
     const onSubmit = (data: { mal: string }) => {
         if (data.mal !== props.mal) {
@@ -56,30 +46,38 @@ function MalForm(props: Props) {
         return Promise.resolve();
     };
 
-    const state = validator({
+    const defaultValues: MalFormValues = {
         mal: mal || '',
-    });
+    };
 
-    if (isDirty) {
-        isDirty.current = !state.pristine;
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isDirty },
+    } = useForm<MalFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: true });
+
+    console.log(isDirty);
+
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
     }
 
+    const malValue = watch('mal'); // for <Textarea /> character-count to work
+
     return (
-        <form className="aktivitetmal__innhold" onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
-                <Textarea
-                    textareaClass={textAreaCls}
-                    visTellerFra={150}
-                    autoFocus
-                    label=""
-                    aria-label="Ditt mål"
-                    maxLength={500}
-                    {...state.fields.mal}
-                />
-            </SkjemaGruppe>
-            <Hovedknapp>Lagre</Hovedknapp>
+        <form className="my-4 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))}>
+            <Textarea
+                label="Mitt mål (obligatorisk)"
+                maxLength={500}
+                aria-label="Mitt mål"
+                {...register('mal')}
+                error={errors.mal && errors.mal.message}
+                value={malValue}
+            />
+            <Button>Lagre</Button>
         </form>
     );
-}
+};
 
 export default MalForm;

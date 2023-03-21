@@ -1,4 +1,4 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -61,7 +61,7 @@ const KanIkkeSendeForhaandsorienteringInfotekst = (props: {
         return null;
     }
 
-    return <AlertStripeInfo>{tekst}</AlertStripeInfo>;
+    return <Alert variant="warning">{tekst}</Alert>;
 };
 
 export default KanIkkeSendeForhaandsorienteringInfotekst;

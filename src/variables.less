@@ -1,29 +1,51 @@
-@import '~nav-frontend-core/less/_variabler';
+@screen-md-min: 992px;
+@screen-sm-max: 991px;
+@screen-sm-min: 768px;
+@screen-xs-max: (@screen-sm-min - 1);
+
+
+@grid-gutter-width: 16px;
+// Small screen / tablet
+@container-tablet: (720px + @grid-gutter-width);
+// ** For `@screen-sm-min` and up.
+@container-sm: @container-tablet;
+
+// Medium screen / desktop
+@container-desktop: (940px + @grid-gutter-width);
+// ** For `@screen-md-min` and up.
+@container-md: @container-desktop;
+
+// Large screen / wide desktop
+@container-large-desktop: (1140px + @grid-gutter-width);
+// ** For `@screen-lg-min` and up.
+@container-lg: @container-large-desktop;
+
 
 @mobil-hoyde: 900px;
 @mobil-bredde: 950px;
 
-@hvit: @white;
+@hvit: var(--a-white);
 
 @gray-200: #e5e5e5;
-@gray-background: @grayBackground;
-@gray-foreground: @grayIcon;
-@gray-icon: @grayIcon;
-@gray-inactive: @grayInactive;
-@gray-text: @navMorkGra;
+@gray-background: var(--a-gray-50);
+@gray-foreground: var(--a-gray-300);
+@gray-400: var(--a-gray-400);
+@gray-icon: var(--a-gray-300);
+@gray-inactive: var(--a-gray-600);
+@gray-text: var(--a-gray-900);
 
-@bla: @navBla;
-@blue-active: @navDypBla;
-@lys-bla: @navLysBla;
+@bla: var(--a-blue-500);
+@blue-active: var(--a-blue-700);
+@lys-bla: var(--a-blue-300);
 
-@red-nav: @navRod;
-@red-error: @redError;
+@red-nav: var(--a-nav-red);
+@red-error: var(--a-red-500);
 
-@fokus-farge: @fokusFarge;
-@color-background-hover: darken(@color-background, 10%);
-@color-background: @white;
-@color-border: @grayIcon;
+@fokus-farge: var(--a-blue-800);
+@color-background: var(--a-white);
+@color-background-hover: var(--a-gray-100);
+@color-border: var(--a-gray-300);
 
-@color-type: @gray-inactive;
+@color-type: var(--a-gray-600);
 
-@color-hr: @navGra40;
+@color-hr: var(--a-gray-400);

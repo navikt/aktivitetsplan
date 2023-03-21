@@ -1,4 +1,4 @@
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -22,14 +22,16 @@ const Gruppe = (props: Props) => {
     const sorterteAktiviteter = [...aktiviteter].sort(compareAktivitet);
 
     return (
-        <section className="printmodal-body__statusgrupper">
-            <Systemtittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+        <section className="mt-12">
+            <Heading level="1" size="large" className="mb-2">
                 {tittel}
-            </Systemtittel>
-            {sorterteAktiviteter.map((aktivitet) => {
-                const dialogForAktivitet = dialoger && dialoger.find((d) => d.aktivitetId === aktivitet.id);
-                return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;
-            })}
+            </Heading>
+            <div className="space-y-4">
+                {sorterteAktiviteter.map((aktivitet) => {
+                    const dialogForAktivitet = dialoger && dialoger.find((d) => d.aktivitetId === aktivitet.id);
+                    return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;
+                })}
+            </div>
         </section>
     );
 };

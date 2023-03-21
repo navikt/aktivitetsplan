@@ -1,7 +1,5 @@
+import { Alert, Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import {
@@ -22,7 +20,7 @@ import { DirtyContext } from '../../../context/dirty-context';
 import { trengerBegrunnelse } from '../../aktivitet-util';
 import { kanOppdatereStatus, validateBegrunnelse } from './valideringUtils';
 
-const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripe);
+const VisibleAlertStripeSuksessSolid = visibleIf(Alert);
 
 const label = (status: AktivitetStatus) => {
     if (status === STATUS_FULLFOERT) {
@@ -35,7 +33,6 @@ const label = (status: AktivitetStatus) => {
 export type ValideringsProps = {
     aktivitetstatus: string;
     begrunnelse: string;
-    statusValidering: string;
 };
 
 type Handler = SubmitHandler<ValideringsProps>;
@@ -46,19 +43,39 @@ interface Props {
     onSubmit: Handler;
 }
 
+const fields = [
+    {
+        value: STATUS_BRUKER_ER_INTRESSERT,
+        label: 'Forslag',
+    },
+    {
+        value: STATUS_PLANLAGT,
+        label: 'Planlegger',
+    },
+    {
+        value: STATUS_GJENNOMFOERT,
+        label: 'Gjennomfører',
+    },
+    {
+        value: STATUS_FULLFOERT,
+        label: 'Fullført',
+    },
+    {
+        value: STATUS_AVBRUTT,
+        label: 'Avbrutt',
+    },
+];
 const AktivitetStatusForm = (props: Props) => {
     const { aktivitet, onSubmit, disabled } = props;
 
     const validator = useFormstate<ValideringsProps, VeilarbAktivitet>({
-        aktivitetstatus: () => undefined,
+        aktivitetstatus: (val, values, validerStatusAktivitet) => kanOppdatereStatus(validerStatusAktivitet, values),
         begrunnelse: (val, values, valgtAktivitet) => validateBegrunnelse(val, values, valgtAktivitet),
-        statusValidering: (val, values, validerStatusAktivitet) => kanOppdatereStatus(validerStatusAktivitet, values),
     });
 
     const initalValue = {
         aktivitetstatus: aktivitet.status || '',
         begrunnelse: aktivitet.avsluttetKommentar || '',
-        statusValidering: '',
     };
 
     const state = validator(initalValue, aktivitet);
@@ -76,39 +93,28 @@ const AktivitetStatusForm = (props: Props) => {
     const visAdvarsel = status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
 
+    const onChangeStatus = (value: AktivitetStatus) => {
+        state.fields.aktivitetstatus.setValue(value);
+    };
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe feil={state.fields.statusValidering.error}>
-                <Radio
-                    label="Forslag"
-                    value={STATUS_BRUKER_ER_INTRESSERT}
+            <div>
+                <RadioGroup
+                    legend={null}
+                    hideLegend
+                    value={state.fields.aktivitetstatus.input.value}
+                    onChange={onChangeStatus}
                     disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio
-                    label="Planlegger"
-                    value={STATUS_PLANLAGT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio
-                    label="Gjennomfører"
-                    value={STATUS_GJENNOMFOERT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio
-                    label="Fullført"
-                    value={STATUS_FULLFOERT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
-                <Radio label="Avbrutt" value={STATUS_AVBRUTT} disabled={disabled} {...state.fields.aktivitetstatus} />
-
-                <VisibleIfDiv className="status-alert" visible={!state.pristine}>
-                    <VisibleAlertStripeSuksessSolid visible={visAdvarsel} type="advarsel">
-                        Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre
-                        innholdet.
+                >
+                    {fields.map(({ value, label }) => (
+                        <Radio key={value} label={label} value={value} />
+                    ))}
+                </RadioGroup>
+                <VisibleIfDiv className="mt-4 flex flex-col gap-y-4" visible={!state.pristine}>
+                    <VisibleAlertStripeSuksessSolid visible={visAdvarsel} variant="warning">
+                        Hvis du endrer til &quot;Fullført&quot; eller &quot;Avbrutt&quot;, blir aktiviteten låst og du
+                        kan ikke lenger endre innholdet.
                     </VisibleAlertStripeSuksessSolid>
 
                     <VisibleIfDiv visible={visBegrunnelseFelt}>
@@ -120,16 +126,14 @@ const AktivitetStatusForm = (props: Props) => {
                         />
                     </VisibleIfDiv>
                 </VisibleIfDiv>
-            </SkjemaGruppe>
+                {state.fields.aktivitetstatus.error ? (
+                    <p className="font-bold text-red-700">{state.fields.aktivitetstatus.error}</p>
+                ) : null}
+            </div>
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-            <Hovedknapp
-                spinner={state.submitting}
-                autoDisableVedSpinner
-                className="oppdater-status"
-                disabled={disabled}
-            >
+            <Button loading={state.submitting} className="mt-4" disabled={disabled}>
                 Lagre
-            </Hovedknapp>
+            </Button>
         </form>
     );
 };

@@ -1,16 +1,25 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import React from 'react';
+import { BodyShort } from '@navikt/ds-react';
+import React, { ReactElement } from 'react';
 
 import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import CustomBodyLong from '../hjelpekomponenter/CustomBodyLong';
 
-const aktivitetingress: Record<string, string> = {
-    BEHANDLING:
-        'Her kan du legge inn medisinsk behandling som påvirker muligheten din til å jobbe eller være på kurs og tiltak.\n\n' +
-        'Eksempler:\n' +
-        '- Oppfølging hos fastlege\n' +
-        '- Behandling og veiledning hos fysioterapaut\n' +
-        '- Behandling hos psykolog\n' +
-        '- Behandling hos spesialist\n',
+const aktivitetingress: Record<AktivitetType, string | ReactElement | undefined> = {
+    BEHANDLING: (
+        <div className="mt-4">
+            <BodyShort>
+                Her kan du legge inn medisinsk behandling som påvirker muligheten din til å jobbe eller være på kurs og
+                tiltak.
+            </BodyShort>
+            <BodyShort>Eksempler:</BodyShort>
+            <ul className="list-disc ml-4">
+                <li>Oppfølging hos fastlege</li>
+                <li>Behandling og veiledning hos fysioterapaut</li>
+                <li>Behandling hos psykolog</li>
+                <li> Behandling hos spesialist</li>
+            </ul>
+        </div>
+    ),
     EGEN:
         'Her kan du eller veilederen din legge inn aktiviteter som hjelper deg når du skal komme i arbeid. ' +
         'Eksempler kan være å registrere deg hos bemannings- og rekrutteringsbyråer, jobbe godt med CV-en, ' +
@@ -28,6 +37,7 @@ const aktivitetingress: Record<string, string> = {
         'Her ser du informasjon om en utdanningsaktivitet eller et kurs NAV har registrert at du skal gjennomføre.',
     STILLING_FRA_NAV:
         'NAV hjelper en arbeidsgiver med å finne kandidater til en stilling, og tror den kan passe for deg.',
+    EKSTERNAKTIVITET: undefined,
 };
 
 type Props = {
@@ -35,11 +45,17 @@ type Props = {
 };
 
 const AktivitetIngress = ({ aktivitetstype }: Props) => {
-    return (
-        <section className="aktivitetingress">
-            <Tekstomrade className="aktivitetingress__tekst">{aktivitetingress[aktivitetstype]}</Tekstomrade>
-        </section>
-    );
+    const content = aktivitetingress[aktivitetstype];
+    if (!content) return null;
+    if (typeof content === 'string') {
+        return (
+            <section className="aktivitetingress mt-4">
+                <CustomBodyLong className="aktivitetingress__tekst">{content}</CustomBodyLong>
+            </section>
+        );
+    }
+
+    return <section>{content}</section>;
 };
 
 export default AktivitetIngress;

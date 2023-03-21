@@ -36,15 +36,10 @@
         }
     }
 
-    .oppdater-status {
-        margin-top: 0.5rem;
-    }
-
     &__detaljer {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        max-width: 32rem;
         width: 100%;
     }
 
@@ -57,11 +52,10 @@
     }
 
     .aktivitetsbeskrivelse {
-        .blokk-s();
         margin-right: 2rem;
 
         &__tittel {
-            color: @navGra60;
+            color: @gray-inactive;
         }
 
         &__tekst {
@@ -69,48 +63,14 @@
         }
     }
 
-    .aktivitetsdetaljer {
-        .blokk-s();
-    }
-
     &__delelinje {
         margin-top: 0;
         color: @color-hr;
-    }
-
-    &__historikk {
-        .blokk-m();
     }
 }
 
 .aktivitetvisning__historikk .endringslogg-for-aktivitet {
     &__lenke-knapp {
-        .blokk-m();
         display: inline-block;
-    }
-
-    &__innslag {
-        .blokk-s();
-    }
-}
-
-@media (max-width: @screen-sm-max) {
-    .aktivitetvisning {
-        .endreknapp {
-            margin-left: 20px;
-        }
-    }
-}
-
-@media (min-width: @screen-md-min) {
-    .aktivitetvisning {
-        &__detaljer {
-            width: 32rem;
-        }
-
-        .endreknapp {
-            margin-left: 29px;
-            margin-right: -13px;
-        }
     }
 }

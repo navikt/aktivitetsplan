@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import { BriefcaseIcon } from '@navikt/aksel-icons';
+import React, { useContext, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import * as statuser from '../../../../constant';
 import { StillingsStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
 import StillingEtikett from '../../etikett/StillingEtikett';
-import EndreLinje from '../endre-linje/endre-linje';
+import EndreLinje from '../endre-linje/EndreLinje';
 import StillingEtikettForm from './StillingEtikettForm';
 
 interface Props {
@@ -30,7 +32,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
     );
     const erIkkeUnderOppfolging = !useSelector(selectErUnderOppfolging);
 
-    const [endring, setEndring] = useState(false);
+    const [open, setIsOpen] = useState(false);
     const dispatch = useDispatch();
 
     const lagreEtikett = (val: EtikettValue): Promise<any> => {
@@ -48,23 +50,32 @@ const OppdaterAktivitetEtikett = (props: Props) => {
         })(dispatch);
     };
 
-    const onSubmit = (val: EtikettValue): Promise<any> =>
-        lagreEtikett(val).then(() => {
-            setEndring(false);
+    const onSubmit = (val: EtikettValue): Promise<any> => {
+        setFormIsDirty('etikett', false);
+        return lagreEtikett(val).then(() => {
+            setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
+    };
 
     const disableEtikettEndringer = lasterAktivitetData || kanIkkeEndreAktivitet || erIkkeUnderOppfolging;
 
+    const { setFormIsDirty } = useContext(DirtyContext);
     const form = <StillingEtikettForm disabled={disableEtikettEndringer} aktivitet={aktivitet} onSubmit={onSubmit} />;
 
     return (
         <EndreLinje
+            icon={<BriefcaseIcon fontSize="1.5rem" />}
+            onClick={() => {
+                if (open) {
+                    setFormIsDirty('etikett', false);
+                }
+                setIsOpen(!open);
+            }}
+            open={open}
             tittel="Hvor langt har du kommet i søknadsprosessen?"
             form={form}
-            endring={endring}
-            setEndring={setEndring}
-            visning={<StillingEtikett aktivitet={aktivitet} />}
+            subtittel={<StillingEtikett aktivitet={aktivitet} />}
         />
     );
 };

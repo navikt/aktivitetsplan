@@ -10,7 +10,6 @@ import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
-import DeleLinje from '../delelinje/delelinje';
 import OppdaterReferatForm from './OppdaterReferatForm';
 import ReferatVisning from './ReferatVisning';
 
@@ -44,28 +43,20 @@ const ReferatContainer = (props: Props) => {
 
     const manglerReferat = erVeileder && !referat && erAktivAktivitet;
     if (manglerReferat || isOppdaterReferat) {
-        return (
-            <section>
-                <OppdaterReferatForm aktivitet={aktivitet} onFerdig={() => setOppdaterReferat(false)} />
-                <DeleLinje />
-            </section>
-        );
+        return <OppdaterReferatForm aktivitet={aktivitet} onFerdig={() => setOppdaterReferat(false)} />;
     }
 
     if (!!referat) {
         return (
-            <section>
-                <ReferatVisning
-                    referat={referat}
-                    erAktivAktivitet={erAktivAktivitet}
-                    erVeileder={erVeileder}
-                    dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
-                    publiserer={publiserer}
-                    erReferatPublisert={erReferatPublisert}
-                    startOppdaterReferat={() => setOppdaterReferat(true)}
-                />
-                <DeleLinje />
-            </section>
+            <ReferatVisning
+                referat={referat}
+                erAktivAktivitet={erAktivAktivitet}
+                erVeileder={erVeileder}
+                dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
+                publiserer={publiserer}
+                erReferatPublisert={erReferatPublisert}
+                startOppdaterReferat={() => setOppdaterReferat(true)}
+            />
         );
     }
 

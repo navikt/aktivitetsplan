@@ -1,19 +1,20 @@
 import { createSelector } from 'reselect';
 
+import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
 import { selectOppfolgingsPerioder } from './oppfolging-selector';
 
 export const selectHistoriskeOppfolgingsPerioder: (
-    oppfolgingsPerioder: { sluttDato: string }[]
-) => { sluttDato: string }[] = createSelector(selectOppfolgingsPerioder, (oppfolgingsPerioder) =>
-    oppfolgingsPerioder.filter((p: { sluttDato: Date }) => p.sluttDato)
+    oppfolgingsPerioder: OppfolgingsPeriode[]
+) => HistoriskOppfolgingsPeriode[] = createSelector(
+    selectOppfolgingsPerioder,
+    (oppfolgingsPerioder) => oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsPeriode[]
 );
 
-export const selectForrigeHistoriskeSluttDato: (oppfolgingsPerioder: { sluttDato: string }[]) => string =
-    createSelector(
-        selectHistoriskeOppfolgingsPerioder,
-        (historiskeOppfolgingsPerioder) =>
-            historiskeOppfolgingsPerioder
-                .map((p: { sluttDato: string }) => p.sluttDato)
-                .sort()
-                .reverse()[0]
-    );
+export const selectForrigeHistoriskeSluttDato: (oppfolgingsPerioder: OppfolgingsPeriode[]) => string = createSelector(
+    selectHistoriskeOppfolgingsPerioder,
+    (historiskeOppfolgingsPerioder) =>
+        historiskeOppfolgingsPerioder
+            .map((p) => p.sluttDato)
+            .sort()
+            .reverse()[0]
+);

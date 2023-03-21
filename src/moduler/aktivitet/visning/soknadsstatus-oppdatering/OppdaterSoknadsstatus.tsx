@@ -1,5 +1,6 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import React, { useState } from 'react';
+import { PersonRectangleIcon } from '@navikt/aksel-icons';
+import { Alert } from '@navikt/ds-react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -7,12 +8,12 @@ import { IKKE_FATT_JOBBEN } from '../../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
+import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
-import styles from '../dele-cv/DeleCvSvarVisning.module.less';
-import EndreLinje from '../endre-linje/endre-linje';
+import EndreLinje from '../endre-linje/EndreLinje';
 import SoknadsstatusForm from './SoknadsstatusForm';
 
 const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
@@ -48,42 +49,56 @@ interface SoknadsstatusValue {
 
 const OppdaterSoknadsstatus = (props: Props) => {
     const { aktivitet } = props;
-    const [endring, setEndring] = useState(false);
+    const [open, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 
-    const onSubmit = (value: SoknadsstatusValue): Promise<any> =>
-        lagreSoknadsstatus(dispatch, value, aktivitet).then(() => {
-            setEndring(false);
+    const onSubmit = (value: SoknadsstatusValue): Promise<any> => {
+        setFormIsDirty('soknadsstatus', false);
+        return lagreSoknadsstatus(dispatch, value, aktivitet).then(() => {
+            setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
+    };
 
     const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
     const ikkeAvslag = IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
     const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 
-    let ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
+    const ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
         aktivitet.stillingFraNavData?.ikkefattjobbendetaljer
     );
-    const visning = (
+    const visning = <StillingFraNavEtikett soknadsstatus={aktivitet.stillingFraNavData?.soknadsstatus} />;
+    const { setFormIsDirty } = useContext(DirtyContext);
+    const form = (
         <>
-            <StillingFraNavEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />
-            {skalViseInfoBoks && (
-                <AlertStripeInfo className={styles.infoStripe}>{ikkefattjobbendetaljer}</AlertStripeInfo>
-            )}
+            {skalViseInfoBoks ? (
+                <Alert variant="info" className="mt-4">
+                    {ikkefattjobbendetaljer}
+                </Alert>
+            ) : null}
+            <SoknadsstatusForm
+                disabled={disableSoknadsstatusEndring || !kanEndre}
+                aktivitet={aktivitet}
+                onSubmit={onSubmit}
+            />
         </>
     );
-    const form = <SoknadsstatusForm disabled={disableSoknadsstatusEndring} aktivitet={aktivitet} onSubmit={onSubmit} />;
 
     return (
         <EndreLinje
+            icon={<PersonRectangleIcon fontSize="1.5rem" />}
+            onClick={() => {
+                if (open) {
+                    setFormIsDirty('soknadsstatus', false);
+                }
+                setIsOpen(!open);
+            }}
+            open={open}
             tittel="Hvor er du i søknadsprosessen?"
             form={form}
-            endring={endring}
-            kanEndre={kanEndre}
-            setEndring={setEndring}
-            visning={visning}
+            subtittel={visning}
         />
     );
 };

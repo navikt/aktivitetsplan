@@ -6,8 +6,8 @@ import AvtaltFormContainer from './aktivitet/AvtaltFormContainer';
 import ArenaForhaandsorienteringFormKomponent from './arena-aktivitet/ArenaForhaandsorienteringFormKomponent';
 
 interface Props {
-    setSendtAtErAvtaltMedNav(): void;
     aktivitet: AlleAktiviteter;
+    setSendtAtErAvtaltMedNav(): void;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 

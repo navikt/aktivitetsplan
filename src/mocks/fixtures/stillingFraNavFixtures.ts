@@ -36,7 +36,7 @@ export const enStillingFraNavAktivitet = ({
     const date = arstall ? new Date(etTidspunkt(arstall)) : undefined;
     const opprettet = new Date(etTidspunkt(2020));
 
-    let endretDate = arstall ? new Date(etTidspunkt(arstall)) : undefined;
+    const endretDate = arstall ? new Date(etTidspunkt(arstall)) : undefined;
     endretDate?.setFullYear(endretDate.getFullYear() + 2);
     versjon += 1000;
     id += 1000;
@@ -74,7 +74,7 @@ export const jaCvKanDeles = {
 };
 export const enStillingFraNavData: StillingFraNavAktivitetData = {
     cvKanDelesData: undefined,
-    arbeidsgiver: 'Havsalt AS',
+    arbeidsgiver: 'Havsalt AS Havsalt AS Havsalt AS Havsalt AS',
     arbeidssted: 'Kristiansand',
     kontaktpersonData: oddFellow,
     soknadsstatus: 'VENTER',

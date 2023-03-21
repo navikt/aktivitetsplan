@@ -1,6 +1,7 @@
 import { render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
+import { vi } from 'vitest';
 
 import { STATUS } from '../../api/utils';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
@@ -35,10 +36,10 @@ const WrappedIkkeNiva4 = ({ store = createMockStore() }) => {
     );
 };
 
-jest.mock('../../felles-komponenter/utils/logging', () => ({
-    ...jest.requireActual('../../felles-komponenter/utils/logging'),
-    loggIkkeRegistrertIKrr: jest.fn(),
-    loggHarBruktNivaa4: jest.fn(),
+vi.mock('../../felles-komponenter/utils/logging', () => ({
+    ...vi.importActual('../../felles-komponenter/utils/logging'),
+    loggIkkeRegistrertIKrr: vi.fn(),
+    loggHarBruktNivaa4: vi.fn(),
 }));
 
 const fetchData = (

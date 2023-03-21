@@ -1,5 +1,4 @@
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
+import { HelpText } from '@navikt/ds-react';
 import React from 'react';
 
 import {
@@ -11,7 +10,7 @@ import {
 } from '../../constant';
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 
-const hjelpetekster = {
+const hjelpetekster: Record<AktivitetStatus, { tittel: string; innhold: string }> = {
     [STATUS_BRUKER_ER_INTRESSERT]: {
         tittel: 'Informasjon om statusen Forslag',
         innhold:
@@ -44,16 +43,12 @@ interface Props {
 
 const AktivitetsplanHjelpetekst = ({ status }: Props) => {
     const config = hjelpetekster[status];
-
-    if (!config) {
-        return null;
-    }
-
     const { tittel, innhold } = config;
+
     return (
-        <Hjelpetekst type={PopoverOrientering.UnderHoyre} id={status} tittel={tittel}>
-            <div className="max-width-300">{innhold}</div>
-        </Hjelpetekst>
+        <HelpText placement={'bottom-end'} id={status} title={tittel}>
+            <div className="w-80">{innhold}</div>
+        </HelpText>
     );
 };
 

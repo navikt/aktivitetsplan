@@ -6,7 +6,6 @@ import { selectErBruker } from '../../identitet/identitet-selector';
 import AvtaltMarkering from '../avtalt-markering/AvtaltMarkering';
 import UlestMarkering from '../ulest-markering/UlestMarkering';
 import { skalMarkereForhaandsorienteringSomLest } from '../visning/avtalt-container/utilsForhaandsorientering';
-import styles from './UlestAvtaltMarkering.module.less';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -20,7 +19,7 @@ const UlestAvtaltMarkering = (props: Props) => {
     if (!skalMarkereSomLest && !aktivitet.avtalt) return null;
 
     return (
-        <div className={styles.container}>
+        <div>
             <UlestMarkering hidden={!skalMarkereSomLest} />
             <AvtaltMarkering hidden={!aktivitet.avtalt} />
         </div>

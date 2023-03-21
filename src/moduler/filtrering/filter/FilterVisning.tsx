@@ -1,11 +1,10 @@
+import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Undertittel } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from 'redux';
 
-import {AktivitetType, StillingFraNavSoknadsstatus, StillingsStatus} from '../../../datatypes/aktivitetTypes';
+import { AktivitetType, StillingFraNavSoknadsstatus, StillingsStatus } from '../../../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
 import { EksternAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
@@ -123,10 +122,12 @@ function FilterVisning(props: FilterVisningTypes) {
 
     return (
         <VisibleIfDiv visible={harAktiviteter} className={classNames(className, 'filter')}>
-            <SkjemaGruppe>
-                <Undertittel className="filter__tittel">{tekst}</Undertittel>
+            <form>
+                <Heading level="2" size="small" className="filter__tittel">
+                    {tekst}
+                </Heading>
                 {checkboxes}
-            </SkjemaGruppe>
+            </form>
         </VisibleIfDiv>
     );
 }

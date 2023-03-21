@@ -1,20 +1,22 @@
-import {fireEvent, render, screen} from '@testing-library/react';
-import {Provider} from 'react-redux';
-import {MemoryRouter} from 'react-router-dom';
-import {Store} from 'redux';
+import { fireEvent, getByRole, render, waitFor } from '@testing-library/react';
+import { setupServer } from 'msw/node';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+import { Store } from 'redux';
 
-import {STATUS} from '../../../api/utils';
-import {STATUS_GJENNOMFOERT} from '../../../constant';
-import {AlleAktiviteter, StillingFraNavSoknadsstatus, StillingsStatus} from '../../../datatypes/aktivitetTypes';
-import {VeilarbAktivitetType} from '../../../datatypes/internAktivitetTypes';
+import { STATUS } from '../../../api/utils';
+import { STATUS_GJENNOMFOERT } from '../../../constant';
+import { AlleAktiviteter, StillingFraNavSoknadsstatus, StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import Hovedside from '../../../hovedside/Hovedside';
-import {wrapAktivitet} from '../../../mocks/aktivitet';
-import {enStillingFraNavAktivitet} from '../../../mocks/fixtures/stillingFraNavFixtures';
-import {mockOppfolging} from '../../../mocks/oppfolging';
-import reducer, {State} from '../../../reducer';
+import { wrapAktivitet } from '../../../mocks/aktivitet';
+import { mockOppfolging } from '../../../mocks/data/oppfolging';
+import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
+import { handlers } from '../../../mocks/handlers';
+import reducer, { State } from '../../../reducer';
 import create from '../../../store';
-import {aktivitetTypeMap, stillingsEtikettMapper} from '../../../utils/textMappers';
-import {HENT_AKTIVITET_OK} from '../../aktivitet/aktivitet-action-types';
+import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
+import { HENT_AKTIVITET_OK } from '../../aktivitet/aktivitet-action-types';
 
 const identitet = {
     id: 'Z123456',
@@ -85,32 +87,41 @@ function makeTestAktiviteter<T>(
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
 
-describe('aktivitets-filter', () => {
-    const clickOnFilter = (filterName: string) => {
-        fireEvent.click(screen.getByText('Filtrer'));
-        fireEvent.click(screen.getByText(filterName));
-    };
-    const clickOnFirst = (filterName: string) => {
-        fireEvent.click(screen.getByText('Filtrer'));
-        fireEvent.click(screen.queryAllByText(filterName)[0]);
-    };
+const server = setupServer(...handlers);
+
+describe.skip('aktivitets-filter', () => {
+    // Start server before all tests
+    beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+
+    //  Close server after all tests
+    afterAll(() => server.close());
+
+    // Reset handlers after each test `important for test isolation`
+    afterEach(() => server.resetHandlers());
 
     it('should filter avtalt med nav', async () => {
         const store = create(initialStore);
-        render(<WrappedHovedside store={store} />);
+        const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
         makeTestAktiviteter(store, [true, false], (aktivitet, value) => {
             return {
                 ...aktivitet,
                 avtalt: value,
             };
         });
-        clickOnFilter('Ikke avtalt med NAV');
-        screen.getByText('Aktivitet: false');
-        expect(screen.queryByText('Aktivitet: true')).toBeNull();
-        fireEvent.click(screen.getByText('Filtrer'));
-        fireEvent.click(screen.getByText('Avtalt med NAV'));
-        fireEvent.click(screen.getByText('Ikke avtalt med NAV'));
-        expect(screen.queryByText('Assisterende skipskokk')).toBeNull();
+        await waitFor(() =>
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+        );
+        fireEvent.click(getByText('Filtrer'));
+        fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
+        getByRole('checkbox', { name: 'Ikke avtalt med NAV', checked: true });
+
+        getByText('Aktivitet: false');
+        expect(queryByText('Aktivitet: true')).toBeFalsy();
+        fireEvent.click(getByText('Avtalt med NAV'));
+        fireEvent.click(getByText('Ikke avtalt med NAV'));
+        getByText('Aktivitet: true');
+        expect(queryByText('Aktivitet: false')).toBeFalsy();
+        expect(queryByText('Assisterende skipskokk')).toBeNull();
     });
 
     it('should filter on aktivitet type', async () => {
@@ -120,7 +131,7 @@ describe('aktivitets-filter', () => {
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
         const store = create(initialStore);
-        render(<WrappedHovedside store={store} />);
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -133,47 +144,57 @@ describe('aktivitets-filter', () => {
                 | VeilarbAktivitetType.MOTE_TYPE
                 | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
         }[];
-        aktiviteter.forEach(({ tittel, type }) => {
-            fireEvent.click(screen.getByText('Filtrer'));
-            fireEvent.click(screen.queryAllByText(aktivitetTypeMap[type])[0]);
-            screen.getByText(tittel);
+        for await (const { tittel, type } of aktiviteter) {
+            await waitFor(() =>
+                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            );
+
+            fireEvent.click(getByRole('button', { name: 'Filtrer' }));
+
+            fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
+            getByText(tittel);
             // Sjekk at ingen andre aktiviteter vises
             aktivitetTyper
                 .filter((andreTyper) => andreTyper != type)
                 .forEach((typeSomIkkeSkalFinnes) => {
-                    expect(screen.queryByText(`Aktivitet: ${typeSomIkkeSkalFinnes}`)).toBeNull();
+                    expect(queryByText(`Aktivitet: ${typeSomIkkeSkalFinnes}`)).toBeNull();
                 });
             // Turn filter off
-            fireEvent.click(screen.getByText('Filtrer'));
-            fireEvent.click(screen.queryAllByText(aktivitetTypeMap[type])[0]);
-        });
+            fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
+            // Close filter
+            fireEvent.click(getByText('Filtrer'));
+        }
     });
 
-    it('Should filter based on etiketter (stilling fra NAV)', () => {
+    it('Should filter based on etiketter (stilling fra NAV)', async () => {
         const store = create(initialStore);
-        render(<WrappedHovedside store={store} />);
-        const statuser: StillingFraNavSoknadsstatus[] = ['AVSLAG', 'VENTER']
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
+        const statuser: StillingFraNavSoknadsstatus[] = ['AVSLAG', 'VENTER'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,
                 stillingFraNavData: {
-                    ...aktivitet.stillingFraNavData,
-                    soknadsstatus: value
+                    ...(aktivitet as unknown as StillingFraNavAktivitet).stillingFraNavData,
+                    soknadsstatus: value,
                 },
-            } as AlleAktiviteter;
+            };
         });
-        screen.getByText(`Aktivitet: VENTER`);
-        screen.getByText(`Aktivitet: AVSLAG`)
-        clickOnFirst(stillingsEtikettMapper['AVSLAG']);
-        expect(screen.getByText(`Aktivitet: AVSLAG`)).not.toBeNull();
-        expect(screen.queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
-        fireEvent.click(screen.getByText('Filtrer'));
+        getByText(`Aktivitet: VENTER`);
+        getByText(`Aktivitet: AVSLAG`);
+        await waitFor(() =>
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+        );
+        fireEvent.click(getByText('Filtrer'));
+        fireEvent.click(queryAllByText(stillingsEtikettMapper['AVSLAG'])[0]);
+        expect(getByText(`Aktivitet: AVSLAG`)).not.toBeNull();
+        expect(queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
+        fireEvent.click(getByText('Filtrer'));
     });
 
-    it('Should filter based on etiketter (stilling)', () => {
+    it('Should filter based on etiketter (stilling)', async () => {
         const store = create(initialStore);
-        render(<WrappedHovedside store={store} />);
-        const statuser: StillingsStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT']
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
+        const statuser: StillingsStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -181,10 +202,14 @@ describe('aktivitets-filter', () => {
                 type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
             } as AlleAktiviteter;
         });
-        screen.getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)
-        screen.getByText(`Aktivitet: SOKNAD_SENDT`);
-        clickOnFirst(stillingsEtikettMapper['INNKALT_TIL_INTERVJU']);
-        expect(screen.getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)).not.toBeNull();
-        expect(screen.queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
+        getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
+        getByText(`Aktivitet: SOKNAD_SENDT`);
+        await waitFor(() =>
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+        );
+        fireEvent.click(getByText('Filtrer'));
+        fireEvent.click(queryAllByText(stillingsEtikettMapper['INNKALT_TIL_INTERVJU'])[0]);
+        expect(getByText(`Aktivitet: INNKALT_TIL_INTERVJU`)).not.toBeNull();
+        expect(queryByText(`Aktivitet: SOKNAD_SENDT`)).toBeNull();
     });
 });

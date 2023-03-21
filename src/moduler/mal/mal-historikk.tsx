@@ -1,10 +1,10 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
+import { Accordion, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
-import EkspanderbarLinje from '../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoEllerTidSiden } from '../../utils';
+import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectMalListe } from './aktivitetsmal-selector';
 
@@ -17,18 +17,20 @@ const identitetMap = (erVeileder: boolean, endretAv: string) => {
 
 function malListeVisning(gjeldendeMal: Mal, erVeileder: boolean) {
     return (
-        <article key={gjeldendeMal.dato} className="aktivitetmal__historikk">
-            <span className="aktivitetmal__historikk-skrevetav">
+        <article key={gjeldendeMal.dato}>
+            <span className="font-bold">
                 {gjeldendeMal.mal ? 'Skrevet av ' : 'Mål slettet av '}
                 <span>{identitetMap(erVeileder, gjeldendeMal.endretAv)}</span>
             </span>
             {` ${formaterDatoEllerTidSiden(gjeldendeMal.dato)}`}
-            <Tekstomrade className="aktivitetmal__historikk-tekst">{gjeldendeMal.mal || ''}</Tekstomrade>
+            <CustomBodyLong formatLinebreaks formatLinks>
+                {gjeldendeMal.mal}
+            </CustomBodyLong>
         </article>
     );
 }
 
-function MalHistorikk() {
+const MalHistorikk = () => {
     const historiskeMal = useSelector(selectMalListe, shallowEqual);
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
 
@@ -37,13 +39,17 @@ function MalHistorikk() {
     }
 
     return (
-        <>
-            <hr className="aktivitetmal__delelinje" />
-            <EkspanderbarLinje tittel="Tidligere lagrede mål" kanToogle aapneTekst="Åpne" lukkeTekst="Lukk">
-                {historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}
-            </EkspanderbarLinje>
-        </>
+        <Accordion>
+            <Accordion.Item className="first:border-t-2 first:border-border-divider">
+                <Accordion.Header>
+                    <Heading level="2" size="small">
+                        Tidligere lagrede mål
+                    </Heading>
+                </Accordion.Header>
+                <Accordion.Content>{historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}</Accordion.Content>
+            </Accordion.Item>
+        </Accordion>
     );
-}
+};
 
 export default MalHistorikk;

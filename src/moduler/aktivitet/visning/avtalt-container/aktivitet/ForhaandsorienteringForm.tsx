@@ -1,6 +1,5 @@
-import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, Detail } from '@navikt/ds-react';
+import useFormstate, { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,9 +12,7 @@ import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
-import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
-import styles from './ForhaandsorienteringForm.module.less';
 
 const avtaltTekst =
     'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
@@ -98,30 +95,28 @@ const ForhaandsorienteringForm = (props: Props) => {
         [EksternAktivitetType.ARENA_TILTAK_TYPE].includes(aktivitet.eksternAktivitet.type);
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
-                <ForNavAnsattMarkeringWrapper>
-                    {isGammelArenaAktivitet && (
-                        <Normaltekst className={styles.tittel}>
-                            Tiltaket er automatisk merket "Avtalt med NAV"
-                        </Normaltekst>
-                    )}
-                    <div className={styles.checkbox}>
-                        <Checkbox
-                            label="Legg til forhåndsorientering"
-                            disabled={lasterData}
-                            {...state.fields.checked}
-                            className={styles.checkboxNoSpace}
-                        />
-                    </div>
-                </ForNavAnsattMarkeringWrapper>
-
+        <form
+            onSubmit={state.onSubmit(onSubmit)}
+            className="bg-surface-alt-3-subtle py-2 px-4 border border-border-alt-3 rounded-md"
+        >
+            <div>
+                <div className="flex items-center justify-between">
+                    <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
+                        Legg til forhåndsorientering
+                    </Checkbox>
+                    <Detail>FOR NAV-ANSATT</Detail>
+                </div>
+                {isGammelArenaAktivitet && (
+                    <Alert variant="info" className="mt-2" inline>
+                        Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;
+                    </Alert>
+                )}
                 <ForhaandsorienteringsMeldingArenaaktivitet
                     visible={state.fields.checked.input.value === 'true'}
                     lasterData={lasterData}
                     state={state}
                 />
-            </SkjemaGruppe>
+            </div>
         </form>
     );
 };

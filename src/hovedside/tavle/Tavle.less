@@ -8,17 +8,17 @@
 
         &:focus {
             outline: 0;
-            box-shadow: 0 0 0 3px @fokus-farge;
+            box-shadow: 0 0 0 2px var(--a-gray-600);
         }
 
         &:disabled {
             cursor: default;
-            color: @navGra40;
-            border-color: @navGra40;
+            color: @gray-400;
+            border-color: @gray-400;
 
             &:hover {
-                color: @navGra40;
-                border: 0.1rem solid @navGra40;
+                color: @gray-400;
+                border: 0.1rem solid @gray-400;
                 background-color: white;
             }
         }
@@ -30,23 +30,24 @@
     }
 }
 
-@media (max-width: @screen-xs-max) {
-    .tavle {
-        .kolonner {
-            display: block;
-        }
-    }
-}
+
+//@media (max-width: @screen-xs-max) {
+//    .tavle {
+//        .kolonner {
+//            display: block;
+//        }
+//    }
+//}
 
 @media (min-width: @screen-sm-min) {
     .tavle {
         &.aktivitetstavle {
-            width: @container-sm;
+            //width: @container-sm;
             margin: 0 auto;
         }
 
         .knapp-forrige {
-            margin: 1rem 0.5rem 0 0;
+            margin: 1rem 0.5rem 0 0.5rem;
         }
 
         .knapp-forrige-ikon {
@@ -54,7 +55,7 @@
         }
 
         .knapp-neste {
-            margin: 1rem 0 0 0.5rem;
+            margin: 1rem 0.5rem 0 0.5rem;
         }
 
         .knapp-neste-ikon {
@@ -69,13 +70,13 @@
         justify-content: space-around;
 
         &.aktivitetstavle {
-            width: @screen-md-min;
+            //width: @screen-md-min;
             margin: 0 auto;
         }
 
         .kolonner {
             display: flex;
-            justify-content: space-between;
+            //justify-content: space-between;
             transition: margin 0.2s ease-in-out;
             margin-bottom: 0;
         }
@@ -86,39 +87,37 @@
             display: flex;
             align-items: center;
             border-radius: 100%;
-            border: 0.1rem solid;
             font-size: 2rem;
             background: none;
 
             &:hover,
             &:active,
             &:active:hover {
-                background-color: @navGra80;
+                background-color: var(--a-gray-400);
                 border: 0;
                 color: white;
             }
         }
 
-        .tavle-kolonne {
-            min-width: 31.33333%;
-            margin: 1%;
-        }
+        //.tavle-kolonne {
+        //    min-width: 33.33333%;
+        //}
     }
 }
 
-@media (min-width: @full-desktop) {
+@media (min-width: 1700px) {
     .tavle {
         &.aktivitetstavle {
             width: 100%;
         }
 
         .tavle__scrollknapp {
-            .hide();
+            display: none;
         }
 
-        .tavle-kolonne {
-            flex: 1;
-            min-width: unset;
-        }
+        //.tavle-kolonne {
+        //    //flex: 1;
+        //    //min-width: unset;
+        //}
     }
 }

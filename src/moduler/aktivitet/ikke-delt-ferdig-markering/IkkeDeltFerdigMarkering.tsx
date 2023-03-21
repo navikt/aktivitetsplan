@@ -1,13 +1,10 @@
-import classNames from 'classnames';
+import { Tag } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../datatypes/internAktivitetTypes';
-import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import visibleIfHOC from '../../../hocs/visible-if';
 import { selectErBruker } from '../../identitet/identitet-selector';
-import styles from './ikke-delt-ferdig-markering.module.less';
 
 export const SkalIkkeDeltFerdigMarkeringVises = (aktivitet: SamtalereferatAktivitet | MoteAktivitet): boolean => {
     const { type, referat, erReferatPublisert } = aktivitet;
@@ -17,17 +14,15 @@ export const SkalIkkeDeltFerdigMarkeringVises = (aktivitet: SamtalereferatAktivi
     return harIkkeDeltSamtalereferat || harIkkedeltReferatFraMote;
 };
 
-interface Props {
-    className?: string;
-}
-
-const ReferatIkkeDelt = (props: Props) => {
-    const { className } = props;
-
+const IkkeDeltFerdigMarkering = () => {
     const erBruker = useSelector(selectErBruker);
     const tekst = erBruker ? 'Samtalereferatet er ikke ferdig' : 'Samtalereferatet er ikke delt';
 
-    return <EtikettBase className={classNames(styles.etikett, className)}>{tekst}</EtikettBase>;
+    return (
+        <Tag variant="warning" size="small" className="mt-0.5">
+            {tekst}
+        </Tag>
+    );
 };
 
-export default visibleIfHOC(ReferatIkkeDelt);
+export default IkkeDeltFerdigMarkering;

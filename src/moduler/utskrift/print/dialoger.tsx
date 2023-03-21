@@ -1,9 +1,9 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Element, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Heading, Label } from '@navikt/ds-react';
 import React from 'react';
 
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
+import CustomBodyLong from '../../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 
 interface DialogProps {
     dialog?: Dialog;
@@ -21,13 +21,17 @@ function Tittel(props: { dialog: Dialog }) {
     const dialog = props.dialog;
     if (dialog.aktivitetId) {
         return (
-            <Element tag="h2" className="printmodal-body__statusgruppe--overskrift">
+            <Heading level="2" size="medium" className="printmodal-body__statusgruppe--overskrift">
                 Dialog
-            </Element>
+            </Heading>
         );
     }
 
-    return <Undertittel className="printmodal-body__statusgruppe--overskrift">{dialog.overskrift}</Undertittel>;
+    return (
+        <Heading level="2" size="small" className="printmodal-body__statusgruppe--overskrift">
+            {dialog.overskrift}
+        </Heading>
+    );
 }
 
 export function DialogPrint(props: DialogProps) {
@@ -41,15 +45,17 @@ export function DialogPrint(props: DialogProps) {
     const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(a.sendt, b.sendt));
 
     return (
-        <div hidden={!henvendelserSynkende} className="printmodal-body__dialog">
+        <div hidden={!henvendelserSynkende} className="mt-4 pt-4 border-t border-border-divider">
             <Tittel dialog={dialog} />
             {henvendelserSynkende &&
                 henvendelserSynkende.map((h) => (
-                    <div className="henvendelse" key={h.id}>
-                        <Undertekst className="detaljfelt__tittel" tag="h2">
-                            {`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(h.sendt)}`}
-                        </Undertekst>
-                        <Tekstomrade>{h.tekst}</Tekstomrade>
+                    <div className="my-4" key={h.id}>
+                        <Label className="">{`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(
+                            h.sendt
+                        )}`}</Label>
+                        <CustomBodyLong formatLinebreaks formatLinks>
+                            {h.tekst}
+                        </CustomBodyLong>
                     </div>
                 ))}
         </div>
@@ -71,10 +77,10 @@ export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
     const sorterteDialoger = dialogerUtenAktivitet.sort((a, b) => datoComparator(a.opprettetDato, b.opprettetDato));
 
     return (
-        <section className="printmodal-body__statusgrupper">
-            <Systemtittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+        <section className="mt-10">
+            <Heading level="1" size="large" className="mb-2">
                 Dialogen med veileder
-            </Systemtittel>
+            </Heading>
             {sorterteDialoger.map((d) => (
                 <DialogPrint key={d.id} dialog={d} />
             ))}

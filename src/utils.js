@@ -182,5 +182,5 @@ function erGCP() {
 }
 
 export function getContextPath() {
-    return erGCP() ? '' : process.env.PUBLIC_URL;
+    return erGCP() ? '' : import.meta.env.BASE_URL;
 }

@@ -1,5 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
-import Veilederpanel from 'nav-frontend-veilederpanel';
+import { BodyShort, GuidePanel } from '@navikt/ds-react';
 import React from 'react';
 
 import {
@@ -14,7 +13,6 @@ import {
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
-import styles from './Tavleadvarsel.module.less';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     if (aktivitet.status === STATUS_FULLFOERT) {
@@ -55,10 +53,10 @@ const Tavleadvarsel = (props: Props) => {
     }
 
     return (
-        <div className={styles.advarsel}>
-            <Veilederpanel svg={<ObsSVG />} type="plakat" kompakt>
-                <Normaltekst>{getAdvarseltekst(draggingAktivitet, erVeileder)}</Normaltekst>
-            </Veilederpanel>
+        <div className="fixed z-50 left-0 right-0 max-w-lg mx-auto">
+            <GuidePanel illustration={<ObsSVG />} poster>
+                <BodyShort>{getAdvarseltekst(draggingAktivitet, erVeileder)}</BodyShort>
+            </GuidePanel>
         </div>
     );
 };

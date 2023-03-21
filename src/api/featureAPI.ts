@@ -1,4 +1,3 @@
-import { ALL_FEATURES } from '../felles-komponenter/feature/feature';
 import { fetchToJson } from './utils';
 
 const featureQueryParams = (features: string[]) => {
@@ -7,13 +6,12 @@ const featureQueryParams = (features: string[]) => {
 };
 
 export function hentFeature(enhet?: string): Promise<{ [key: string]: boolean }> {
-    const features = featureQueryParams(ALL_FEATURES);
+    const features = featureQueryParams([]);
 
     if (features.length === 0) {
         return Promise.resolve({ ignore: false });
     }
 
-    // @ts-ignore
     const path: string = window.appconfig.CONTEXT_PATH;
     const featuresWithEnhet = (features && enhet && `${features}&enhet=${enhet}`) || features;
     return fetchToJson(`${path}/api/feature${featuresWithEnhet}`);

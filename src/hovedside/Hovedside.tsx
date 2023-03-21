@@ -13,7 +13,7 @@ import Maal from '../moduler/mal-linje/MittMaal';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselReducer';
 import Varslinger from '../moduler/varslinger/Varslinger';
-import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
+import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { aktivitetRoute } from '../routes';
 import DobbleLonnstilskuddAdvarsel from './DobbleLonnstilskuddAdvarsel';
@@ -36,15 +36,14 @@ const Hovedside = () => {
 
     return (
         <div className="hovedside">
-            <div className="hovedsideinnhold">
+            <div className="flex items-center flex-col h-full">
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
                 <OppfolgingStatus>
                     <InformasjonsHenting />
                     <Varslinger />
-                    <div className="container">
+                    <div className="container flex flex-col gap-y-6">
                         <Navigasjonslinje />
-                        <DobbleLonnstilskuddAdvarsel />
                         <Maal />
                         <Verktoylinje />
                     </div>

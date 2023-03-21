@@ -1,60 +1,49 @@
-import { Add } from '@navikt/ds-icons';
+import { PlusIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import InternLenke from '../../felles-komponenter/utils/InternLenke';
-import Lenkeknapp from '../../felles-komponenter/utils/Lenkeknapp';
-import loggEvent, { APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
+import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
-import Filter from '../filtrering/filter';
-import VisValgtFilter from '../filtrering/filter-vis-label';
+import Filter from '../filtrering/Filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import PeriodeFilter from '../filtrering/filter/periode-filter';
+import PeriodeFilter from '../filtrering/filter/PeriodeFilter';
+import VisValgtFilter from '../filtrering/VisValgtFilter';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 
 const Verktoylinje = () => {
-    const underOppfolging = useSelector(selectErUnderOppfolging);
+    const underOppfolging: boolean = useSelector(selectErUnderOppfolging);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode);
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang);
     const aktivitetLaster = useSelector(selectHarTilgangTilAktiviteter);
 
+    const history = useHistory();
+
+    const hideLeggTil = viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang;
+
     return (
-        <div className="verktoylinje">
-            <div className="verktoylinje__verktoy-container">
-                <div />
-                <Lenkeknapp
-                    type="hoved"
-                    href="/aktivitet/ny"
-                    className="ny-aktivitet-lenke"
-                    disabled={!aktivitetLaster}
-                    visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
-                    onClick={() => loggEvent(APNE_NY_AKTIVITET)}
-                >
-                    <Add role="img" focusable="false" aria-hidden />
-                    <span> Legg til aktivitet</span>
-                </Lenkeknapp>
-            </div>
-            <div className="verktoylinje__verktoy-container">
-                <div className="indre">
-                    <InternLenke
-                        href="/informasjon"
-                        className="knappelenke"
-                        onClick={() => loggEvent(APNE_OM_TJENESTEN)}
-                    >
-                        <span>Om aktivitetsplanen</span>
-                    </InternLenke>
-                    <InternLenke href="/utskrift" className="knappelenke utskrift-lenke">
-                        <span>Skriv ut</span>
-                    </InternLenke>
-                    <Filter className="verktoylinje__verktoy" />
+        <div className="flex flex-col gap-y-6">
+            <div className="flex gap-y-4 sm:flex-row flex-col-reverse ">
+                <div className="flex gap-4 items-start flex-col sm:flex-row w-full">
+                    {!hideLeggTil ? (
+                        <Button
+                            className="self-stretch sm:self-auto"
+                            icon={<PlusIcon fontSize="1.5rem" />}
+                            disabled={!aktivitetLaster}
+                            onClick={() => {
+                                loggEvent(APNE_NY_AKTIVITET);
+                                history.push('/aktivitet/ny');
+                            }}
+                        >
+                            Legg til aktivitet
+                        </Button>
+                    ) : null}
+                    <Filter />
                 </div>
+                <PeriodeFilter skjulInneverende={!underOppfolging} />
             </div>
-            <div className="verktoylinje__verktoy-container">
-                <VisValgtFilter />
-            </div>
-            <div className="verktoylinje__verktoy-container">
-                <PeriodeFilter className="verktoylinje__verktoy" skjulInneverende={!underOppfolging} />
-            </div>
+            <VisValgtFilter />
         </div>
     );
 };

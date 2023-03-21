@@ -1,60 +1,40 @@
-import classNames from 'classnames';
+import { Tag, TagProps } from '@navikt/ds-react';
 import React from 'react';
 
-import * as statuskoder from '../../../constant';
-import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
-import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import styles from './etikett.module.less';
+import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { StillingAktivitet } from '../../../datatypes/internAktivitetTypes';
 
-const getCls = (etikettnavn: StillingsStatus): string => {
-    switch (etikettnavn) {
-        case statuskoder.SOKNAD_SENDT:
-            return styles.navGronnLighten60;
-        case statuskoder.INNKALT_TIL_INTERVJU:
-            return styles.navLysBlaLighten60;
-        case statuskoder.JOBBTILBUD:
-            return styles.navOransjeLighten60;
-        case statuskoder.AVSLAG:
-        case statuskoder.INGEN_VALGT:
-            return styles.gray200;
-    }
-};
+interface Etikett {
+    text: string;
+    variant: TagProps['variant'];
+}
 
-const getText = (etikettnavn: StillingsStatus): string => {
-    switch (etikettnavn) {
-        case statuskoder.SOKNAD_SENDT:
-            return 'Sendt søknad og venter på svar';
-        case statuskoder.INNKALT_TIL_INTERVJU:
-            return 'Skal på intervju';
-        case statuskoder.JOBBTILBUD:
-            return 'Fått jobbtilbud 🎉';
-        case statuskoder.AVSLAG:
-            return 'Ikke fått jobben';
-        case statuskoder.INGEN_VALGT:
-            return 'Ikke startet';
-    }
+const getEtikett: Record<StillingsStatus, Etikett> = {
+    SOKNAD_SENDT: { text: 'Sendt søknad og venter på svar', variant: 'success' },
+    INNKALT_TIL_INTERVJU: { text: 'Skal på intervju', variant: 'info' },
+    JOBBTILBUD: { text: 'Fått jobbtilbud 🎉', variant: 'warning' },
+    AVSLAG: { text: 'Ikke fått jobben', variant: 'neutral' },
+    INGEN_VALGT: { text: 'Ikke fått jobben', variant: 'neutral' },
 };
 
 export interface Props {
-    aktivitet: AlleAktiviteter;
-    className?: string;
+    aktivitet: StillingAktivitet;
 }
 
 const StillingEtikett = (props: Props) => {
-    const { aktivitet, className } = props;
+    const { aktivitet } = props;
 
-    if (!isVeilarbAktivitet(aktivitet)) {
-        return null;
-    }
+    const stillingsstatus = aktivitet.etikett;
 
-    const etikett = aktivitet.etikett;
+    if (!stillingsstatus) return null;
 
-    if (!etikett) return null;
+    const { text, variant } = getEtikett[stillingsstatus];
 
-    const cls = getCls(etikett);
-    const text = getText(etikett);
-
-    return <EtikettBase className={classNames(cls, className)}>{text}</EtikettBase>;
+    return (
+        <Tag className="mr-2" variant={variant} size="small">
+            {text}
+        </Tag>
+    );
 };
 
 export default StillingEtikett;

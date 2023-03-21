@@ -1,13 +1,17 @@
 import { MouseEvent } from 'react';
 
-import { getContextPath } from '../../utils';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
+
+interface DialogEventDetails {
+    dialogId?: string;
+    aktivitetId?: string;
+}
 
 export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) => {
     event.preventDefault();
     window.history.pushState('', 'Dialog', getDialogLenke(true, aktiviteId, dialogId));
     window.dispatchEvent(
-        new CustomEvent('visDialog', {
+        new CustomEvent<DialogEventDetails>('visDialog', {
             detail: {
                 dialogId: dialogId,
                 aktivitetId: aktiviteId,
@@ -16,18 +20,19 @@ export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialo
     );
 };
 
-const ARBEIDSRETTET_DIALOG_URL = process.env.REACT_APP_ARBEIDSRETTET_DIALOG_URL;
+const ARBEIDSRETTET_DIALOG_URL = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
+const BASE_URL = import.meta.env.BASE_URL;
 
 export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
     if (erVeileder) {
         const fnr = hentFnrFraUrl();
         if (dialogId) {
-            return `${getContextPath()}/${fnr}/${dialogId}`;
+            return `${BASE_URL}${fnr}/${dialogId}`;
         }
         if (aktiviteId) {
-            return `${getContextPath()}/${fnr}/ny?aktivitetId=${aktiviteId}`;
+            return `${BASE_URL}${fnr}/ny?aktivitetId=${aktiviteId}`;
         }
-        return `${getContextPath()}/${fnr}`;
+        return `${BASE_URL}${fnr}`;
     }
 
     if (dialogId) {

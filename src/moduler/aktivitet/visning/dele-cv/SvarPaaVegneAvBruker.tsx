@@ -1,41 +1,54 @@
+import {
+    BodyShort,
+    UNSAFE_DatePicker as DatePicker,
+    Detail,
+    Heading,
+    UNSAFE_useDatepicker as useDatepicker,
+} from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
-import classNames from 'classnames';
-import { DatepickerLimitations } from 'nav-datovelger/lib/types';
-import Panel from 'nav-frontend-paneler';
-import { Element as NavElement } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import EtikettBase from '../../../../felles-komponenter/etikett-base/EtikettBase';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+import { preventCloseOnInsideClick, useOutsideClick } from '../../../../felles-komponenter/skjema/datovelger/common';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
-import styles from './SvarPaaVegneAvBruker.module.less';
 
 interface Props {
     formhandler: FieldState;
-    datoBegrensninger: DatepickerLimitations;
+    datoBegrensninger: { after: Date; before: Date };
 }
 
 export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) => {
     const erVeileder = useSelector(selectErVeileder);
 
+    const [popoverOpen, setPopoverOpen] = useState(false);
+    useOutsideClick(popoverOpen, () => setPopoverOpen(false));
+    const { datepickerProps, inputProps } = useDatepicker({
+        disabled: [datoBegrensninger],
+        onDateChange: (val) => {
+            formhandler.setValue(val?.toISOString() || '');
+            if (val != undefined) {
+                setPopoverOpen(false);
+            }
+        },
+    });
+
     if (!erVeileder) return null;
 
-    const feil = formhandler.touched && formhandler.error;
-    const cls = classNames(styles.svarPaaVegneAvBruker, { [styles.feil]: !!feil });
+    const feil = formhandler.touched ? formhandler.error : undefined;
     return (
-        <div className={cls}>
-            <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
-            <Panel border className={styles.panel}>
-                <NavElement>Svar på vegne av brukeren</NavElement>
-                <DatoField
-                    labelClassName={styles.label}
-                    label="Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren? *"
-                    {...formhandler}
-                    required
-                    limitations={datoBegrensninger}
-                />
-            </Panel>
+        <div className="mb-4 bg-surface-alt-3-subtle border-border-alt-3 border rounded-md p-4 space-y-4">
+            <div className="flex justify-between">
+                <Heading size="small" level="3">
+                    Svar på vegne av brukeren
+                </Heading>
+                <Detail>FOR NAV-ANSATT</Detail>
+            </div>
+            <BodyShort>Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren</BodyShort>
+            <div onClick={preventCloseOnInsideClick}>
+                <DatePicker {...datepickerProps} onOpenToggle={() => setPopoverOpen(!popoverOpen)} open={popoverOpen}>
+                    <DatePicker.Input {...inputProps} error={feil} label={'Dato (obligatorisk)'} />
+                </DatePicker>
+            </div>
         </div>
     );
 };

@@ -1,5 +1,4 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import LenkeTilDialog from '../dialog/DialogLink';
@@ -10,26 +9,23 @@ interface Props {
     hidden?: boolean;
     dialogId?: string;
     className: string;
-    onClick?: () => void;
 }
 
 const AdvarselMedDialogLenke = (props: Props) => {
-    const { lenkeTekst, tekst, hidden, dialogId, className, onClick } = props;
+    const { lenkeTekst, tekst, hidden, dialogId, className } = props;
 
     if (hidden) {
         return null;
     }
 
     return (
-        <AlertStripeAdvarsel className={className}>
-            <Normaltekst>
+        <Alert variant="warning" className={className}>
+            <BodyShort>
                 {tekst}
                 &nbsp;
-                <LenkeTilDialog dialogId={dialogId} onClick={onClick}>
-                    {lenkeTekst}
-                </LenkeTilDialog>
-            </Normaltekst>
-        </AlertStripeAdvarsel>
+                <LenkeTilDialog dialogId={dialogId}>{lenkeTekst}</LenkeTilDialog>
+            </BodyShort>
+        </Alert>
     );
 };
 

@@ -1,5 +1,4 @@
-@import (reference) '~nav-frontend-chevron-style/src/mixins';
-@import (reference) '~nav-frontend-core';
+@import '../../../../variables.less';
 
 .endreVisning {
     display: flex;
@@ -34,7 +33,7 @@
     }
 
     &:focus {
-        box-shadow: 0 0 0 3px @fokusFarge;
+        box-shadow: 0 0 0 3px var(--a-blue-800);
         outline: none;
     }
 
@@ -59,20 +58,10 @@
 .endreKnapp {
     margin-left: auto;
     white-space: nowrap;
-    color: @navBla;
+    color: @bla;
 }
 
 .endreKnappInnhold {
     display: inline-block;
     padding-right: 2px;
-}
-
-.endreIndikasjonApen {
-    .chevron-mixin();
-    .chevron-orientasjon-mixin(ned);
-}
-
-.endreIndikasjonLukket {
-    .chevron-mixin();
-    .chevron-orientasjon-mixin(opp);
 }

@@ -1,137 +1,154 @@
-import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { Button, Checkbox, Detail, HelpText } from '@navikt/ds-react';
 import classNames from 'classnames';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import React, { useContext, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
+import { z } from 'zod';
 
-import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
+import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
+import { VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
-import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
-import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
-import { useKanSendeVarsel } from '../avtaltHooks';
-import styles from './AvtaltForm.module.less';
+import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
+import { useKanSendeVarsel, useSendAvtaltMetrikker } from '../avtaltHooks';
+import { AVTALT_TEKST, AVTALT_TEKST_119, getForhaandsorienteringText } from '../utilsForhaandsorientering';
 import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
 import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsorienteringInfotekst';
 
-const validateForhandsorientering = (val: string, values: { forhaandsorienteringType: string }): string | undefined => {
-    if (values.forhaandsorienteringType !== ForhaandsorienteringType.SEND_PARAGRAF_11_9) {
-        return undefined;
-    }
-
-    if (val.trim().length === 0) {
-        return 'Tekst til brukeren er påkrevd';
-    }
-    if (val.length > 500) {
-        return 'Du må korte ned teksten til 500 tegn';
-    }
-
-    return undefined;
-};
-
-const noValidate = (): undefined => {
-    return undefined;
-};
-
-const avtaltTekst =
-    `Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ` +
-    'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
-    'ber vi deg ta kontakt med veilederen din så snart som mulig.';
-
-const avtaltTekst119 =
-    'Du kan få redusert utbetaling av arbeidsavklaringspenger med én stønadsdag hvis du lar være å ' +
-    '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
-    'fram av folketrygdloven § 11-9.';
-
-type SubmitProps = {
-    avtaltCheckbox: string;
-    forhaandsorienteringType: ForhaandsorienteringType;
-    avtaltText119: string;
-    avtaltText: string;
-};
-
-export type Handler = SubmitHandler<SubmitProps>;
-
 interface Props {
-    onSubmit: Handler;
-    className?: string;
+    aktivitet: VeilarbAktivitet;
     oppdaterer: boolean;
     lasterData: boolean;
     mindreEnnSyvDagerTil: boolean;
-    manglerTilDato: boolean;
+    setSendtAtErAvtaltMedNav(): void;
+    setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
-const AvtaltForm = (props: Props) => {
-    const { onSubmit, className, oppdaterer, lasterData, mindreEnnSyvDagerTil, manglerTilDato } = props;
+const schema = z.discriminatedUnion('forhaandsorienteringType', [
+    z.object({
+        forhaandsorienteringType: z.literal(ForhaandsorienteringType.SEND_STANDARD),
+        avtaltText: z.literal(AVTALT_TEKST),
+    }),
+    z.object({
+        forhaandsorienteringType: z.literal(ForhaandsorienteringType.SEND_PARAGRAF_11_9),
+        avtaltText119: z
+            .string()
+            .min(1, 'Tekst til brukeren er påkrevd')
+            .max(500, 'Du må korte ned teksten til 500 tegn'),
+    }),
+    z.object({
+        forhaandsorienteringType: z.literal(ForhaandsorienteringType.IKKE_SEND), // NOTE: submitHandleren legger på 'tekst: ""' i request payloaden. se: getForhaandsorienteringText(forhaandsorienteringDialogFormValues)
+    }),
+]);
 
-    const validator = useFormstate<SubmitProps>({
-        avtaltCheckbox: noValidate,
-        forhaandsorienteringType: noValidate,
-        avtaltText119: validateForhandsorientering,
-        avtaltText: noValidate,
-    });
+export type ForhaandsorienteringDialogFormValues = z.infer<typeof schema>;
+
+const AvtaltForm = (props: Props) => {
+    const {
+        aktivitet,
+        oppdaterer,
+        lasterData,
+        mindreEnnSyvDagerTil,
+        setSendtAtErAvtaltMedNav,
+        setForhandsorienteringType,
+    } = props;
+
+    const [showForm, setShowForm] = useState(false);
+
+    const dispatch = useDispatch();
+    const sendMetrikker = useSendAvtaltMetrikker();
+    const avhengigheter = useSelector(selectNivaa4Status);
+
+    const doSettAktivitetTilAvtalt = (avtaltAktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) =>
+        dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering) as unknown as AnyAction);
+
+    const onSubmitHandler = (
+        forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues
+    ): Promise<void> => {
+        const forhaandsorienteringType = forhaandsorienteringDialogFormValues.forhaandsorienteringType;
+        setSendtAtErAvtaltMedNav();
+        const tekst = getForhaandsorienteringText(forhaandsorienteringDialogFormValues);
+        doSettAktivitetTilAvtalt(aktivitet, { type: forhaandsorienteringType, tekst });
+
+        setForhandsorienteringType(forhaandsorienteringType);
+
+        sendMetrikker(forhaandsorienteringType, aktivitet.type, mindreEnnSyvDagerTil);
+
+        return Promise.resolve();
+    };
 
     const kanSendeForhaandsvarsel = useKanSendeVarsel() && !mindreEnnSyvDagerTil;
 
-    const state = validator({
-        avtaltCheckbox: 'false',
+    const defaultValues: ForhaandsorienteringDialogFormValues = {
         forhaandsorienteringType: kanSendeForhaandsvarsel
             ? ForhaandsorienteringType.SEND_STANDARD
             : ForhaandsorienteringType.IKKE_SEND,
-        avtaltText119: avtaltTekst119,
-        avtaltText: avtaltTekst,
+        avtaltText119: AVTALT_TEKST_119,
+        avtaltText: AVTALT_TEKST,
+    };
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isDirty },
+    } = useForm<ForhaandsorienteringDialogFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
     });
+
+    const forhaandsorienteringType = watch('forhaandsorienteringType');
+    const avtaltText119 = watch('avtaltText119');
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
     useEffect(() => {
-        setFormIsDirty('avtalt', !state.pristine);
+        setFormIsDirty('avtalt', isDirty);
         return () => setFormIsDirty('avtalt', false);
-    }, [setFormIsDirty, state.pristine]);
-
-    const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
-    const avhengigheter = useSelector(selectNivaa4Status);
+    }, [setFormIsDirty, isDirty]);
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
-            <SkjemaGruppe>
-                <ForNavAnsattMarkeringWrapper>
-                    <div className={styles.checkbox}>
-                        <Checkbox
-                            label="Avtalt med NAV"
-                            disabled={lasterData}
-                            {...state.fields.avtaltCheckbox}
-                            className={styles.checkboxNoSpace}
-                        />
-                        <Hjelpetekst id="hjelp">
-                            <div className={styles.maxWidth300}>
-                                Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
-                                "Avtalt med NAV"
-                            </div>
-                        </Hjelpetekst>
+        <form
+            autoComplete="off"
+            noValidate
+            onSubmit={handleSubmit((data) => onSubmitHandler(data))}
+            className={classNames('bg-surface-alt-3-subtle py-2 px-4 my-4 border border-border-alt-3 rounded-md')}
+        >
+            <div className="flex items-center">
+                <Checkbox onChange={() => setShowForm(!showForm)}>Avtalt med NAV</Checkbox>
+                <HelpText id="hjelp" className="ml-2 justify-self-start">
+                    <div className="max-w-[300px]">
+                        Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
+                        &quot;Avtalt med NAV&quot;
                     </div>
-                </ForNavAnsattMarkeringWrapper>
-                <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
-                    <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
+                </HelpText>
+                <Detail className="text-right flex-grow">FOR NAV-ANSATT</Detail>
+            </div>
+            <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
+                {showForm && (
+                    <div className="space-y-4 mb-2">
                         <KanIkkeSendeForhaandsorienteringInfotekst
                             mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
-                            manglerTilDato={manglerTilDato}
+                            manglerTilDato={!aktivitet.tilDato}
                         />
-                        <ForhaandsorienteringsMelding
-                            state={state}
-                            hidden={!kanSendeForhaandsvarsel}
-                            oppdaterer={oppdaterer}
-                        />
-                        <Hovedknapp spinner={oppdaterer} disabled={lasterData}>
+                        {kanSendeForhaandsvarsel ? (
+                            <ForhaandsorienteringsMelding
+                                register={register}
+                                forhaandsorienteringType={forhaandsorienteringType}
+                                avtaltText119={avtaltText119}
+                                oppdaterer={oppdaterer}
+                                errors={errors}
+                            />
+                        ) : null}
+                        <Button loading={oppdaterer} disabled={lasterData}>
                             Bekreft
-                        </Hovedknapp>
-                    </VisibleIfDiv>
-                </Innholdslaster>
-            </SkjemaGruppe>
+                        </Button>
+                    </div>
+                )}
+            </Innholdslaster>
         </form>
     );
 };

@@ -1,10 +1,8 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { formaterDatoKortManed } from '../../utils';
 import LenkeTilDialog from '../dialog/DialogLink';
-import styles from './Varslinger.module.less';
 
 interface Props {
     tilhorendeDialogId?: string;
@@ -23,12 +21,12 @@ const VeilederVarsel = (props: Props) => {
 
     return (
         <div className="container">
-            <AlertStripeAdvarsel className={styles.varslingVeileder}>
-                <Normaltekst>
+            <Alert variant="warning" className="mb-5">
+                <BodyShort>
                     NAV har sendt varsel {dato}{' '}
                     <LenkeTilDialog dialogId={tilhorendeDialogId}>Les meldingen</LenkeTilDialog>
-                </Normaltekst>
-            </AlertStripeAdvarsel>
+                </BodyShort>
+            </Alert>
         </div>
     );
 };

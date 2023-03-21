@@ -18,14 +18,14 @@ interface Props {
 const SkjulEldreAktiviteterFraKolonne = (props: Props) => {
     const erVeileder = useSelector(selectErVeileder);
     const aktiviteter = props.aktiviteteterTilDatoMerEnnToManederSiden;
-    const hiden = aktiviteter.length === 0;
+    const hidden = aktiviteter.length === 0;
     const { aktivitetTekst } = props;
 
     const liste = aktiviteter.map((aktivitet) => <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />);
 
     return (
         <InvertedLestMer
-            hidden={hiden}
+            hidden={hidden}
             onOpen={() => loggEvent(LOGGING_VISELDREAKITIVITETER, { erVeileder })}
             onClose={() => loggEvent(LOGGING_SKJULELDREAKTIVITETER, { erVeileder })}
             apneTekst={`Vis ${aktivitetTekst}`}

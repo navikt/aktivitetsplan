@@ -1,5 +1,5 @@
+import { Alert } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import React, { useState } from 'react';
 
 import Knappelenke from '../../felles-komponenter/utils/Knappelenke';
@@ -30,7 +30,7 @@ export default function Feilmelding(props: PropTypes) {
 
     return (
         <div className={classNames(styles.feilmelding, className)}>
-            <AlertStripeFeil> {tekst} </AlertStripeFeil>
+            <Alert variant="error">{tekst}</Alert>
             <Knappelenke onClick={toggleDetaljer} className="">
                 <span>Vis detaljer</span>
             </Knappelenke>

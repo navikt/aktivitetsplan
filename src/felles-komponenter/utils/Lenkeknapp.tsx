@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Knapp } from 'nav-frontend-knapper';
 import React, { ReactNode } from 'react';
 
 import visibleIfHOC from '../../hocs/visible-if';
@@ -18,7 +18,15 @@ const Lenkeknapp = (props: LenkeknappProps) => {
     const { href, disabled, type, onClick, className, children } = props;
     const lenkeknappClassNames = classNames(`knapp knapp--${type}`, className);
     if (disabled) {
-        return <Knapp onClick={onClick} className={lenkeknappClassNames} disabled children={children} />;
+        return (
+            <Button
+                variant="secondary"
+                onClick={onClick}
+                className={lenkeknappClassNames}
+                disabled
+                children={children}
+            />
+        );
     }
 
     return (

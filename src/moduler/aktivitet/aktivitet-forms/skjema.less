@@ -18,10 +18,6 @@
     }
 }
 
-.mote-aktivitet_husk_bruker {
-    margin-bottom: 2rem;
-}
-
 .samtalereferat-form__lagre-og-publiser {
     margin-right: 1rem;
 }
@@ -37,10 +33,6 @@
     flex-wrap: wrap;
     row-gap: 1rem;
     column-gap: 1rem;
-
-    & .skjemaelement__feilmelding {
-        .input--m();
-    }
 }
 
 .enhet-veileder-container {
@@ -67,15 +59,14 @@
 .aktivitetskjema__lagre-knapp {
     margin-bottom: 1rem;
     padding: 1rem 2rem;
-    border-top: 1px @navGra40 solid;
+    border-top: 1px @gray-400 solid;
 }
 
 .feedbacksummary {
-    .blokk-m();
     padding: 1.5rem;
-    border-radius: @border-radius-base;
-    background-color: @red-error;
-    color: @white;
+    border-radius: 4px;
+    background-color: var(--a-red-600);
+    color: @hvit;
     list-style-position: inside;
 
     ul {
@@ -96,7 +87,7 @@
         &:focus {
             outline: none;
             background-color: @fokus-farge;
-            color: @navMorkGra;
+            color: var(--a-gray-900);
             border-bottom: 1px solid @fokus-farge;
         }
     }

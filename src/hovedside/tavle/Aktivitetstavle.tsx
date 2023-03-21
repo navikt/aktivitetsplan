@@ -1,10 +1,9 @@
-import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {AnyAction} from 'redux';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
 
-import {doLesAktivitetsplan} from '../../api/oppfolgingAPI';
-import {STATUS} from '../../api/utils';
+import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
+import { STATUS } from '../../api/utils';
 import {
     AKTIVITETSPLAN_ROOT_NODE_ID,
     STATUS_AVBRUTT,
@@ -14,35 +13,34 @@ import {
     STATUS_PLANLAGT,
     TabId,
 } from '../../constant';
-import {AlleAktiviteter} from '../../datatypes/aktivitetTypes';
-import {TabChangeEvent} from '../../datatypes/types';
-import {useEventListener} from '../../felles-komponenter/hooks/useEventListner';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { TabChangeEvent } from '../../datatypes/types';
+import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
-import {hentAktiviteter} from '../../moduler/aktivitet/aktivitet-actions';
-import {prefixAktivtetskortId} from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
-import {selectDraggingAktivitet} from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
-import {selectAktivitetStatus} from '../../moduler/aktivitet/aktivitet-selector';
-import {selectSistVisteAktivitet} from '../../moduler/aktivitet/aktivitetview-reducer';
-import {selectArenaAktivitetStatus} from '../../moduler/aktivitet/arena-aktivitet-selector';
-import {hentArenaAktiviteter} from '../../moduler/aktivitet/arena-aktiviteter-reducer';
-import {selectErVeileder} from '../../moduler/identitet/identitet-selector';
-import {selectUnderOppfolging} from '../../moduler/oppfolging-status/oppfolging-selector';
-import {hentNivaa4} from '../../moduler/tilgang/tilgang-reducer';
-import {hentVeilederInfo} from '../../moduler/veileder/veilederReducer';
-import {hentFnrFraUrl} from '../../utils/fnr-util';
+import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
+import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
+import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
+import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
+import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
+import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
+import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
+import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
+import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
+import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
+import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
+import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
+import { hentFnrFraUrl } from '../../utils/fnr-util';
 import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
 import Tavleadvarsel from './Tavleadvarsel';
-import {erDroppbar} from './tavleUtils';
-import {logTimeToAktivitestavlePaint} from "../../felles-komponenter/utils/logging";
+import { erDroppbar } from './tavleUtils';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
     useEffect(() => {
-            logTimeToAktivitestavlePaint(props.erVeileder);
-        },
-        [props.erVeileder]);
+        logTimeToAktivitestavlePaint(props.erVeileder);
+    }, [props.erVeileder]);
 
     return null;
 }
@@ -79,8 +77,8 @@ const Aktivitetstavle = () => {
 
     // SCROLLING //
     const sistVisteAktivitetId: string = useSelector<Record<string, any>, string>((state) => {
-        const aktivitet: AlleAktiviteter = selectSistVisteAktivitet(state);
-        return !!aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
+        const aktivitet: AlleAktiviteter | undefined = selectSistVisteAktivitet(state);
+        return aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
     });
     const appIsVisible = useIsVisible(document.getElementById(AKTIVITETSPLAN_ROOT_NODE_ID));
     const [skalScrolle, setSkalScrolle] = useState(false);
@@ -101,16 +99,16 @@ const Aktivitetstavle = () => {
     }, [sistVisteAktivitetId, skalScrolle, appIsVisible]);
 
     return (
-        <Innholdslaster minstEn avhengigheter={avhengigheter}>
-            <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder}/>
-            <LogTimeToAktivitestavlePaint erVeileder={erVeileder}/>
+        <Innholdslaster className="flex m-auto mt-8" minstEn avhengigheter={avhengigheter}>
+            <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
+            <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
 
-            <Tavle className={classNames('aktivitetstavle', !skjulAdvarsel && 'aktivitetstavle-advarsel')}>
-                <Kolonne status={STATUS_BRUKER_ER_INTRESSERT}/>
-                <Kolonne status={STATUS_PLANLAGT}/>
-                <Kolonne status={STATUS_GJENNOMFOERT}/>
-                <KolonneSomSkjulerEldreAktiviteter status={STATUS_FULLFOERT}/>
-                <KolonneSomSkjulerEldreAktiviteter status={STATUS_AVBRUTT}/>
+            <Tavle dragging={dragging}>
+                <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} />
+                <Kolonne status={STATUS_PLANLAGT} />
+                <Kolonne status={STATUS_GJENNOMFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={STATUS_FULLFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={STATUS_AVBRUTT} />
             </Tavle>
         </Innholdslaster>
     );

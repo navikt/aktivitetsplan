@@ -1,12 +1,13 @@
+import { Loader, Modal } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../datatypes/types';
-import Modal from '../../felles-komponenter/modal/Modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
@@ -63,7 +64,6 @@ function AktivitetsplanPrint(props: Props) {
         doHentMal,
         doHentMalListe,
         avhengigheter,
-        doResetUtskrift,
         kvpPerioder,
         dialoger,
         mittMal,
@@ -100,8 +100,6 @@ function AktivitetsplanPrint(props: Props) {
     const [printMelding, setPrintMelding] = useState('');
     const [utskriftform, setUtskriftform] = useState('helePlanen');
 
-    const back = stepIndex > 0 ? () => setStepIndex(stepIndex - 1) : undefined;
-
     const next = () => setStepIndex(stepIndex + 1);
 
     const printMeldingSubmit = (printmelding: string) => {
@@ -120,48 +118,62 @@ function AktivitetsplanPrint(props: Props) {
     const kanHaPrintMelding = erManuell && erVeileder;
 
     const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
+    const history = useHistory();
+    const goBack = () => {
+        history.goBack();
+    };
+
     if (fnr && (isLoadingAdresse || isLoadingBruker)) {
-        return <></>;
+        return <Loader />;
     }
+
+    const getPrompt = () => {
+        if (steps[stepIndex] === STEP_MELDING_FORM) {
+            return (
+                <Modal onClose={goBack} open>
+                    <Innholdslaster avhengigheter={avhengigheter}>
+                        <PrintMeldingForm bruker={bruker} onSubmit={printMeldingSubmit} />
+                    </Innholdslaster>
+                </Modal>
+            );
+        }
+        if (steps[stepIndex] === STEP_VELG_PLAN) {
+            return (
+                <Modal onClose={goBack} open>
+                    <Innholdslaster avhengigheter={avhengigheter}>
+                        <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmint} />
+                    </Innholdslaster>
+                </Modal>
+            );
+        }
+    };
+    const prompt = getPrompt();
+
     return (
-        <section>
-            <Modal
-                contentLabel="aktivitetsplanPrint"
-                className="aktivitetsplanprint"
-                header={
-                    <ModalHeader
-                        avhengigheter={avhengigheter}
-                        tilbake={back}
-                        kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                    />
-                }
-                onRequestClose={doResetUtskrift}
-            >
+        <section className="flex flex-col justify-center items-center p-8">
+            <div className="aktivitetsplanprint flex justify-center items-center">
+                {prompt}
+                <ModalHeader
+                    avhengigheter={avhengigheter}
+                    tilbake={goBack}
+                    kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
+                />
                 <Innholdslaster avhengigheter={avhengigheter}>
-                    <PrintMeldingForm
-                        bruker={bruker}
-                        onSubmit={printMeldingSubmit}
-                        hidden={steps[stepIndex] !== STEP_MELDING_FORM}
-                    />
-                    <VelgPlanUtskriftForm
-                        kvpPerioder={kvpPerioder}
-                        onSubmit={velgPlanSubmint}
-                        hidden={steps[stepIndex] !== STEP_VELG_PLAN}
-                    />
-                    <Print
-                        dialoger={dialoger}
-                        bruker={bruker}
-                        adresse={adresse}
-                        printMelding={printMelding}
-                        aktiviteter={aktiviteter}
-                        mittMal={mittMal}
-                        erVeileder={erVeileder}
-                        utskriftPlanType={utskriftform}
-                        kvpPerioder={kvpPerioder}
-                        hidden={steps[stepIndex] !== STEP_UTSKRIFT}
-                    />
+                    <div className="border px-12 print:border-none">
+                        <Print
+                            dialoger={dialoger}
+                            bruker={bruker}
+                            adresse={adresse}
+                            printMelding={printMelding}
+                            aktiviteter={aktiviteter}
+                            mittMal={mittMal}
+                            erVeileder={erVeileder}
+                            utskriftPlanType={utskriftform}
+                            kvpPerioder={kvpPerioder}
+                        />
+                    </div>
                 </Innholdslaster>
-            </Modal>
+            </div>
         </section>
     );
 }

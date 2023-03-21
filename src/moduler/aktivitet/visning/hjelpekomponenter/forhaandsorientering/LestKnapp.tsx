@@ -1,25 +1,18 @@
-import { Knapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 
-import styles from './LestKnapp.module.less';
-
 interface Props {
-    hidden: boolean;
     lasterData: boolean;
     onClick(): void;
 }
 
 const LestKnapp = (props: Props) => {
-    const { hidden, lasterData, onClick } = props;
-
-    if (hidden) {
-        return null;
-    }
+    const { lasterData, onClick } = props;
 
     return (
-        <Knapp onClick={onClick} className={styles.lestKnapp} spinner={lasterData} autoDisableVedSpinner mini>
+        <Button variant="secondary" onClick={onClick} className="mt-5" loading={lasterData} size="medium">
             Ok, jeg har lest beskjeden
-        </Knapp>
+        </Button>
     );
 };
 

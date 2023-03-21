@@ -1,6 +1,5 @@
+import { Button, Heading, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
@@ -14,8 +13,8 @@ interface VelgPlanUtskriftFormProps {
     kvpPerioder?: KvpPeriode[];
 }
 type FormType = {
-    utskriftPlanType: string
-}
+    utskriftPlanType: string;
+};
 
 function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
     const { onSubmit, kvpPerioder, hidden } = props;
@@ -35,41 +34,38 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
     const state = validator(initial);
 
     return (
-        <form onSubmit={state.onSubmit(submit)} className="printmelding__form" hidden={hidden}>
-            <div className="printmelding__skjema">
-                <div className="printmelding__tittel">
-                    <Innholdstittel>Velg hva du ønsker å skrive ut</Innholdstittel>
-                </div>
-
-                <div>
-                    <Radio
-                        label={
-                            <UtskriftValg
-                                tittelId="Hele oppfølgingsperioden"
-                                tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, også KVP-perioden"
-                            />
-                        }
-                        value="helePlanen"
-                        id="id--helePlanen"
-                        {...state.fields.utskriftPlanType}
-                    />
-                    <Radio
-                        label={
-                            <UtskriftValg
-                                tittelId="Oppfølgingsperioden uten KVP-perioden"
-                                tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, uten om KVP-perioden"
-                            />
-                        }
-                        value="aktivitetsplan"
-                        id="id--aktivitetsplan"
-                        {...state.fields.utskriftPlanType}
-                    />
-                    <KvpPlanValg kvpPerioder={kvpPerioder} field={state.fields.utskriftPlanType} />
-                </div>
-            </div>
-            <div className="printmelding__knapperad">
-                <Hovedknapp>Velg</Hovedknapp>
-            </div>
+        <form onSubmit={state.onSubmit(submit)} className="p-4 space-y-8" hidden={hidden}>
+            <RadioGroup
+                legend={
+                    <Heading className="mb-4" level="1" size="medium">
+                        Velg hva du ønsker å skrive ut
+                    </Heading>
+                }
+                defaultValue={'helePlanen'}
+            >
+                <Radio
+                    label={
+                        <UtskriftValg
+                            tittelId="Hele oppfølgingsperioden"
+                            tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, også KVP-perioden"
+                        />
+                    }
+                    value="helePlanen"
+                    id="id--helePlanen"
+                />
+                <Radio
+                    label={
+                        <UtskriftValg
+                            tittelId="Oppfølgingsperioden uten KVP-perioden"
+                            tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, uten om KVP-perioden"
+                        />
+                    }
+                    value="aktivitetsplan"
+                    id="id--aktivitetsplan"
+                />
+                <KvpPlanValg kvpPerioder={kvpPerioder} field={state.fields.utskriftPlanType} />
+            </RadioGroup>
+            <Button>Velg</Button>
         </form>
     );
 }

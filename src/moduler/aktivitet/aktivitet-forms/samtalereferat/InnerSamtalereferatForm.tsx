@@ -1,135 +1,149 @@
-import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
+import React, { MutableRefObject } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
-import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import { todayIsoString } from '../../../../utils/dateUtils';
-import AktivitetFormHeader from '../aktivitet-form-header';
-import VelgKanal from '../VelgKanal';
+import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
+import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
+import AktivitetFormHeader from '../AktivitetFormHeader';
+import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import { useReferatStartTekst } from './useReferatStartTekst';
-import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
+
+const schema = z.object({
+    tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
+    fraDato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
+    kanal: z.string().min(1, 'Du må fylle ut samtaleform'),
+    referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
+});
+
+type SamtalereferatAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
+    onSubmit: (
+        data: SamtalereferatAktivitetFormValues & {
+            status: string;
+            avtalt: boolean;
+            erReferatPublisert?: boolean;
+        }
+    ) => Promise<void>;
+    dirtyRef: MutableRefObject<boolean>;
     aktivitet?: SamtalereferatAktivitet;
-    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
-    isDirtyRef?: { current: boolean };
 }
 
-type SamtalereferatInputProps = { tittel: string; fraDato: string; kanal: string; referat: string };
-
 const InnerSamtalereferatForm = (props: Props) => {
-    const { aktivitet, onSubmit, isDirtyRef = undefined } = props;
+    const { onSubmit, dirtyRef, aktivitet } = props;
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
-    const validator = useFormstate<SamtalereferatInputProps>({
-        tittel: validateTittel,
-        fraDato: validateFraDato,
-        kanal: validateKanal,
-        referat: validateReferat,
+
+    const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
+        tittel: aktivitet?.tittel || '',
+        fraDato: dateOrUndefined(aktivitet?.fraDato),
+        kanal: aktivitet?.kanal || TELEFON_KANAL,
+        referat: aktivitet?.referat || startTekst,
+    };
+
+    const formHandlers = useForm<SamtalereferatAktivitetFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
     });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isSubmitting, isDirty },
+    } = formHandlers;
 
-    const state = validator(
-        aktivitet
-            ? {
-                  tittel: aktivitet.tittel,
-                  fraDato: aktivitet.fraDato ? aktivitet.fraDato : '',
-                  kanal: aktivitet.kanal as string,
-                  referat: aktivitet.referat ? aktivitet.referat : '',
-              }
-            : {
-                  tittel: '',
-                  fraDato: todayIsoString(),
-                  kanal: TELEFON_KANAL,
-                  referat: startTekst,
-              }
-    );
-
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
     }
 
-    const lagreOgDel = state.onSubmit((values) => {
-        const newValues = {
-            ...values,
-            status: STATUS_GJENNOMFOERT,
-            erReferatPublisert: true,
-            avtalt: false,
-        };
-        return onSubmit(newValues);
-    });
+    const referatValue = watch('referat'); // for <Textarea /> character-count to work
+
+    const lagreOgDel = (erReferatPublisert: boolean) => {
+        return handleSubmit((data) => {
+            onSubmit({
+                ...data,
+                status: STATUS_GJENNOMFOERT,
+                avtalt: false,
+                ...(erReferatPublisert && { erReferatPublisert: true }),
+            });
+        });
+    };
 
     return (
-        <form
-            autoComplete="off"
-            onSubmit={state.onSubmit((data) => {
-                return onSubmit({
-                    ...data,
-                    status: STATUS_GJENNOMFOERT,
-                    avtalt: false,
-                });
-            })}
-            noValidate
-        >
-            <SkjemaGruppe className="aktivitetskjema">
-                <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
-
-                <Input label="Tema for samtalen *" {...state.fields.tittel} />
-
-                <DatoField label="Dato *" {...state.fields.fraDato} required />
-
-                <VelgKanal label="Møteform *" {...state.fields.kanal} />
-
-                {nyAktivitet && (
-                    <Textarea
-                        label="Samtalereferat *"
-                        placeholder="Skriv her"
-                        maxLength={5000}
-                        visTellerFra={500}
-                        required
-                        {...state.fields.referat}
+        <form autoComplete="off" noValidate>
+            <FormProvider {...formHandlers}>
+                <div className="space-y-8">
+                    <AktivitetFormHeader
+                        tittel="Samtalereferat"
+                        aktivitetstype={VeilarbAktivitetType.SAMTALEREFERAT_TYPE}
                     />
-                )}
 
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-            </SkjemaGruppe>
-            <Lagreknapper isLoading={state.submitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+                    <TextField
+                        label="Tema for samtalen (obligatorisk)"
+                        id={'tittel'}
+                        {...register('tittel')}
+                        error={errors.tittel && errors.tittel.message}
+                    />
+
+                    <ControlledDatePicker
+                        field={{ name: 'fraDato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                    />
+
+                    <Select label="Møteform (obligatorisk)" {...register('kanal')}>
+                        <option value={OPPMOTE_KANAL}>Oppmøte</option>
+                        <option value={TELEFON_KANAL}>Telefonmøte</option>
+                        <option value={INTERNET_KANAL}>Videomøte</option>
+                    </Select>
+
+                    {nyAktivitet && (
+                        <Textarea
+                            label="Samtalereferat (obligatorisk)"
+                            maxLength={5000}
+                            {...register('referat')}
+                            error={errors.referat && errors.referat.message}
+                            value={referatValue}
+                        />
+                    )}
+
+                    <CustomErrorSummary errors={errors} />
+                </div>
+                <Lagreknapper isLoading={isSubmitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+            </FormProvider>
         </form>
     );
 };
 
-function Lagreknapper(props: { isLoading: boolean; isNy: boolean; lagreOgDel: (event: React.FormEvent) => void }) {
+const Lagreknapper = (props: {
+    isLoading: boolean;
+    isNy: boolean;
+    lagreOgDel: (erReferatPublisert: boolean) => (e?: React.BaseSyntheticEvent) => Promise<void>;
+}) => {
     const { isLoading, isNy, lagreOgDel } = props;
     if (isNy) {
         return (
-            <div className="aktivitetskjema__lagre-knapp">
-                <Hovedknapp
-                    kompakt
-                    spinner={isLoading}
-                    autoDisableVedSpinner
-                    onClick={lagreOgDel}
-                    className="samtalereferat-form__lagre-og-publiser"
-                >
+            <div className="mt-4">
+                <Button loading={isLoading} className="mr-4" onClick={lagreOgDel(true)}>
                     Del med bruker
-                </Hovedknapp>
-                <Knapp kompakt spinner={isLoading} autoDisableVedSpinner>
+                </Button>
+                <Button variant="secondary" loading={isLoading} onClick={lagreOgDel(false)}>
                     Lagre utkast
-                </Knapp>
+                </Button>
             </div>
         );
     }
     return (
-        <div className="aktivitetskjema__lagre-knapp">
-            <Hovedknapp kompakt spinner={isLoading} autoDisableVedSpinner>
-                Lagre
-            </Hovedknapp>
-        </div>
+        <Button className="mt-4" loading={isLoading} onClick={lagreOgDel(false)}>
+            Lagre
+        </Button>
     );
-}
+};
 
 export default InnerSamtalereferatForm;

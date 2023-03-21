@@ -1,13 +1,12 @@
-import './index.less';
-
 import PT from 'prop-types';
 import React from 'react';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Hovedside from './hovedside/Hovedside';
-import Provider from './provider';
+import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
+import Provider from './Provider';
 import { HiddenIf, getContextPath } from './utils';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 
@@ -37,7 +36,7 @@ window.appconfig = {
 };
 
 const getBasename = (fnr: string) => {
-    const pathnamePrefix = process.env.PUBLIC_URL;
+    const pathnamePrefix = import.meta.env.BASE_URL;
     if (fnr && !pathnamePrefix) {
         return fnr;
     } else if (fnr && pathnamePrefix) {
@@ -49,24 +48,31 @@ const getBasename = (fnr: string) => {
     }
 };
 
-function HashRouterIfGHPages({ fnr, children }: { fnr: string; children: React.ReactNode }) {
-    if (process.env.REACT_APP_USE_HASH_ROUTER === 'true') {
+const Router = ({ fnr, children }: { fnr: string; children: React.ReactNode }) => {
+    if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
         return <HashRouter basename={fnr}>{children}</HashRouter>;
     }
 
     const basename = getBasename(fnr);
     return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
-}
+};
 
-function App({ fnr, key }: { fnr: string; key: string }) {
+function App({ fnr }: { fnr: string }) {
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
-            <Provider key={fnr + key}>
+            <Provider key={fnr}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
-                        <HashRouterIfGHPages fnr={fnr}>
-                            <Hovedside />
-                        </HashRouterIfGHPages>
+                        <Router fnr={fnr}>
+                            <Switch>
+                                <Route exact path="/utskrift">
+                                    <AktivitetsplanPrint />
+                                </Route>
+                                <Route>
+                                    <Hovedside />
+                                </Route>
+                            </Switch>
+                        </Router>
                         <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
                         </HiddenIf>

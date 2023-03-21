@@ -1,26 +1,25 @@
 import './mitt-maal.less';
 
-import { Add } from '@navikt/ds-icons';
+import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
-import { Flatknapp } from 'nav-frontend-knapper';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { Lest } from '../../datatypes/aktivitetTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
-import InternLenke from '../../felles-komponenter/utils/InternLenke';
+import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
+import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';
 import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+import { ReactComponent as MaalIkon } from './Aktivitetsplan_maal.svg';
 
 interface MalTextProps {
     mal?: string;
@@ -40,7 +39,7 @@ function MalText(props: MalTextProps) {
         );
     }
 
-    return <Tekstomrade>{props.mal}</Tekstomrade>;
+    return <CustomBodyLong formatLinebreaks>{props.mal}</CustomBodyLong>;
 }
 
 interface MalContentProps {
@@ -50,20 +49,43 @@ interface MalContentProps {
 
 function MalContent(props: MalContentProps) {
     const { disabled, mal } = props;
+    const dispatch = useDispatch();
+    const erVeileder = useSelector(selectErVeileder, shallowEqual);
+    const history = useHistory();
+    const endreMal = () => {
+        history.push('/mal');
+        loggMittMalKlikk(erVeileder);
+        dispatch(lesMal());
+    };
+    const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
 
     if (!mal && !disabled) {
         return (
-            <div className="mittmal_callToAction">
-                <Element>Hva er målet ditt fremover?</Element>
-                <Flatknapp className="mittmal_knapp" form="kompakt">
-                    <Add role="img" focusable="false" aria-hidden />
-                    <span>Legg til</span>
-                </Flatknapp>
+            <div>
+                <BodyShort>Skriv litt om hva som er målet ditt slik at vi kan hjelpe deg bedre.</BodyShort>
+                <ul className="list-disc ml-6 mb-4">
+                    <li>
+                        <BodyShort>Hva er målet på kort og på lang sikt?</BodyShort>
+                    </li>
+                    <li>
+                        <BodyShort>Hva slags jobb ønsker du deg?</BodyShort>
+                    </li>
+                </ul>
+                <Button onClick={endreMal} variant="secondary" size="small">
+                    Sett et mål
+                </Button>
             </div>
         );
     }
 
-    return <MalText disabled={disabled} mal={mal} />;
+    return (
+        <div className="flex flex-col items-start gap-4">
+            <MalText disabled={disabled} mal={mal} />
+            <Button onClick={endreMal} variant="secondary" size="small">
+                {viserInnevaerendePeriode ? 'Endre målet' : 'Se tidligere mål'}
+            </Button>
+        </div>
+    );
 }
 
 function MittMaal() {
@@ -73,41 +95,45 @@ function MittMaal() {
         dispatch(hentMal() as unknown as AnyAction);
     }, [dispatch]);
 
-    const avhengigheter = useSelector(selectMalStatus, shallowEqual);
+    const avhengigheter: Avhengighet = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
 
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
-    const erVeileder = useSelector(selectErVeileder, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
 
     const disabled = !underOppfolging || viserHistoriskPeriode || !harSkriveTilgang;
-    const cls = classNames('mitt-maal', { empty: !mal && !disabled });
     const nyEndring =
         erNyEndringIMal(malData, useSelector(selectLestAktivitetsplan), useSelector(selectIdentitetData)) &&
         harSkriveTilgang;
 
+    const noeHarFeilet = avhengigheter === 'ERROR';
     return (
-        <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
-            <InternLenke
-                skipLenkeStyling
-                href="/mal"
-                className={cls}
-                onClick={() => {
-                    loggMittMalKlikk(erVeileder);
-                    dispatch(lesMal());
-                }}
-            >
-                <Normaltekst tag="div" id="mittmal_header">
-                    <NotifikasjonMarkering visible={nyEndring} />
-                    Ditt mål
-                </Normaltekst>
-                <div className="mittmal_content">
-                    <MalContent disabled={disabled} mal={mal} />
+        <>
+            <Innholdslaster avhengigheter={avhengigheter}>
+                <div
+                    className={classNames('border-border-default flex rounded-md p-4', {
+                        'border-2 border-dashed ': !mal && !disabled,
+                        border: mal || disabled,
+                    })}
+                >
+                    <div className="flex sm:flex-row items-center gap-6">
+                        <MaalIkon className="hidden sm:block mx-4 min-w-fit" />
+                        <div>
+                            <div className="flex mb-2">
+                                <NotifikasjonMarkering visible={nyEndring} />
+                                <Heading level="2" size="medium" className={'flex'}>
+                                    Mitt mål
+                                </Heading>
+                            </div>
+                            <MalContent disabled={disabled} mal={mal} />
+                        </div>
+                    </div>
                 </div>
-            </InternLenke>
-        </Innholdslaster>
+            </Innholdslaster>
+            {noeHarFeilet ? <Alert variant={'error'}>Kunne ikke hente mål</Alert> : null}
+        </>
     );
 }
 

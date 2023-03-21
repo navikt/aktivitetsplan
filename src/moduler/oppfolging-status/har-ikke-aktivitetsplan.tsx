@@ -1,10 +1,7 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { HoyreChevron } from 'nav-frontend-chevron';
-import Lenke from 'nav-frontend-lenker';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort, Link } from '@navikt/ds-react';
 import React from 'react';
 
-export const arbeidssokerregistreringHref = process.env.REACT_APP_ARBEIDSSOKERREGISTRERING_URL as string;
+export const arbeidssokerregistreringHref = import.meta.env.VITE_ARBEIDSSOKERREGISTRERING_URL;
 
 interface PropTypes {
     erVeileder: boolean;
@@ -18,15 +15,10 @@ function HarIkkeAktivitetsplan(props: PropTypes) {
 
     return (
         <div className="har-ikke-aktivitetsplan-container">
-            <AlertStripeAdvarsel>
-                <Normaltekst>{advarsel}</Normaltekst>
-                {!erVeileder && (
-                    <Lenke href={arbeidssokerregistreringHref}>
-                        Register deg hos NAV
-                        <HoyreChevron />
-                    </Lenke>
-                )}
-            </AlertStripeAdvarsel>
+            <Alert variant="warning">
+                <BodyShort>{advarsel}</BodyShort>
+                {!erVeileder && <Link href={arbeidssokerregistreringHref}>Register deg hos NAV</Link>}
+            </Alert>
         </div>
     );
 }

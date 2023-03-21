@@ -1,26 +1,20 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import DeleLinje from '../delelinje/delelinje';
+import { selectErBruker } from '../../../identitet/identitet-selector';
 
-interface Props {
-    erBruker: boolean;
-}
+const ArenaStatusAdministrasjon = () => {
+    const erBruker = useSelector(selectErBruker);
 
-const ArenaStatusAdministrasjon = (props: Props) => {
-    const { erBruker } = props;
-
-    const alertTekst = erBruker
+    const text = erBruker
         ? 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.'
         : 'For å endre aktiviteten må du gå til Arena.';
 
     return (
-        <>
-            <div className="aktivitetvisning__underseksjon">
-                <AlertStripeInfo>{alertTekst}</AlertStripeInfo>
-            </div>
-            <DeleLinje />
-        </>
+        <Alert variant="info" className="w-full mt-4">
+            {text}
+        </Alert>
     );
 };
 

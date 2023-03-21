@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
@@ -45,7 +45,7 @@ function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
 
         return [formatertFraDato, formatertTilDato].filter((dato) => dato).join(' - ');
     }
-    return <Normaltekst id={id}>{periodeVisning()}</Normaltekst>;
+    return <BodyShort id={id}>{periodeVisning()}</BodyShort>;
 }
 
 export default AktiviteskortPeriodeVisning;

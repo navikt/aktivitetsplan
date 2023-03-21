@@ -2,11 +2,7 @@
 
 @full-desktop: 1480px;
 
-@import '~nav-frontend-core/less/core';
-
 .aktivitetsplanfs {
-    @import './vendors';
-    @import './felles-komponenter/modal/modal';
     @import './felles-komponenter/felles-komponenter';
     @import './utils';
     @import './moduler/aktivitet/aktivitet';
@@ -14,15 +10,13 @@
     @import './moduler/verktoylinje/Verktoylinje';
     @import './moduler/oppfolging-status/oppfolging-status';
     @import './moduler/oppfolging-status/har-ikke-aktivitetsplan-advarsel';
-    @import './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging';
     @import './hovedside/hovedside';
     @import './moduler/utskrift/aktivitetsplanprint';
     @import './moduler/informasjon/informasjon';
 
-    .typo-normal-mixin();
-    color: @navMorkGra;
-    font-family: @font-family;
-    line-height: @line-height-base;
+    color: var(--a-gray-900);
+    font-family: var(--a-font-family);
+    line-height: var(--a-font-line-height-heading-medium);
 
     .modal-a11y-wrapper {
         background-color: @gray-background;
@@ -40,16 +34,8 @@
         background: none;
     }
 
-    .lukknapp {
-        &:before,
-        &:after {
-            height: 2px;
-            top: ~'calc(50% - 2px)';
-        }
-    }
-
     .alertstripe:not(.alertstripe--solid) .alertstripe__ikon:after {
-        background-color: @white;
+        background-color: @hvit;
     }
 
     .row + .alertstripe {

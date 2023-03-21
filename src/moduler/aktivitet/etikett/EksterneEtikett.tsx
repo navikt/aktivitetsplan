@@ -1,56 +1,39 @@
-import classNames from 'classnames';
+import { Tag, TagProps } from '@navikt/ds-react';
 import React from 'react';
 
 import { EksternAktivitet, EksternAktivitetType } from '../../../datatypes/internAktivitetTypes';
-import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import styles from './etikett.module.less';
 
 interface EksternEtikett {
     tekst: string;
-    style: string;
+    variant: TagProps['variant'];
 }
 
-const arenaTiltakEtikettKodeMapper = (kode: string): EksternEtikett | undefined => {
-    switch (kode) {
-        case 'SOKT_INN':
-            return { tekst: 'Søkt inn på tiltaket', style: styles.navLysBlaLighten60 };
-        case 'AVSLAG':
-            return { tekst: 'Fått avslag', style: styles.navLysBlaLighten60 };
-        case 'IKKE_AKTUELL':
-            return { tekst: 'Ikke aktuell for tiltaket', style: styles.gray200 };
-        case 'IKKE_MOETT':
-            return { tekst: 'Ikke møtt på tiltaket', style: styles.navOransjeLighten60 };
-        case 'INFOMOETE':
-            return { tekst: 'Infomøte før tiltaket', style: styles.navLysBlaLighten60 };
-        case 'TAKKET_JA':
-            return { tekst: 'Takket ja til tilbud', style: styles.navLysBlaLighten60 };
-        case 'TAKKET_NEI':
-            return { tekst: 'Takket nei til tilbud', style: styles.navOransjeLighten60 };
-        case 'FATT_PLASS':
-            return { tekst: 'Fått plass på tiltaket', style: styles.navLysBlaLighten60 };
-        case 'VENTELISTE':
-            return { tekst: 'På venteliste', style: styles.navLysBlaLighten60 };
-        default:
-            return undefined;
-    }
+const arenaTiltakEtikettKodeMapper: Record<string, EksternEtikett | undefined> = {
+    SOKT_INN: { tekst: 'Søkt inn på tiltaket', variant: 'info' },
+    AVSLAG: { tekst: 'Fått avslag', variant: 'info' },
+    IKKE_AKTUELL: { tekst: 'Ikke aktuell for tiltaket', variant: 'neutral' },
+    IKKE_MOETT: { tekst: 'Ikke møtt på tiltaket', variant: 'warning' },
+    INFOMOETE: { tekst: 'Infomøte før tiltaket', variant: 'info' },
+    TAKKET_JA: { tekst: 'Takket ja til tilbud', variant: 'info' },
+    TAKKET_NEI: { tekst: 'Takket nei til tilbud', variant: 'warning' },
+    FATT_PLASS: { tekst: 'Fått plass på tiltaket', variant: 'info' },
+    VENTELISTE: { tekst: 'På venteliste', variant: 'info' },
 };
 
 const getEtikettByKode = (type: EksternAktivitetType, kode: string): EksternEtikett | undefined => {
     switch (type) {
         case EksternAktivitetType.ARENA_TILTAK_TYPE:
-            return arenaTiltakEtikettKodeMapper(kode);
+            return arenaTiltakEtikettKodeMapper[kode];
         default:
             return undefined;
     }
 };
 
-export interface Props {
+interface Props {
     aktivitet: EksternAktivitet;
-    className?: string;
 }
 
-const EksterneEtiketter = (props: Props) => {
-    const { aktivitet, className } = props;
+const EksterneEtiketter = ({ aktivitet }: Props) => {
     const { etiketter, type } = aktivitet.eksternAktivitet;
 
     if (!etiketter) return null;
@@ -60,10 +43,10 @@ const EksterneEtiketter = (props: Props) => {
             {etiketter
                 .map((etikett) => getEtikettByKode(type, etikett.kode))
                 .map((eksternEtikett, i) => {
-                    return !!eksternEtikett ? (
-                        <EtikettBase className={classNames(eksternEtikett.style, className)} key={i}>
+                    return eksternEtikett ? (
+                        <Tag variant={eksternEtikett.variant} size="small" key={i}>
                             {eksternEtikett.tekst}
-                        </EtikettBase>
+                        </Tag>
                     ) : null;
                 })}
         </>

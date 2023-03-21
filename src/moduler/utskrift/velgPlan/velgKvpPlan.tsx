@@ -1,5 +1,5 @@
+import { BodyShort } from '@navikt/ds-react';
 import { FieldState } from '@nutgaard/use-formstate';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
@@ -18,7 +18,7 @@ function KvpPlanValg(props: KvpPlanValgProps) {
     if (!kvpPerioder) return null;
 
     if (kvpPerioder.length === 1) {
-        return <KvpPlanSingelValg kvpPeriode={kvpPerioder[0]} field={field} />;
+        return <KvpPlanSingelValgRadio kvpPeriode={kvpPerioder[0]} />;
     } else {
         return <KvpPlanListeValg kvpPerioder={kvpPerioder} field={field} />;
     }
@@ -26,44 +26,39 @@ function KvpPlanValg(props: KvpPlanValgProps) {
 
 interface KvpPlanSingelValgProps {
     kvpPeriode: KvpPeriode;
-    field: FieldState;
 }
 
-function KvpPlanSingelValg(props: KvpPlanSingelValgProps) {
-    const { kvpPeriode, field } = props;
+function KvpPlanSingelValgRadio(props: KvpPlanSingelValgProps) {
+    const { kvpPeriode } = props;
 
     return (
         <Radio
-            id={kvpPeriode.opprettetDato}
             label={<UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />}
             value={kvpPeriode.opprettetDato}
             disabled={!kvpPeriode.avsluttetDato}
-            {...field}
         />
     );
 }
 
 function KvpPlanListeValg(props: KvpPlanValgProps) {
-    const { kvpPerioder, field } = props;
+    const { kvpPerioder } = props;
     return (
         <div className="kvp-plan-valg">
             <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />
             {kvpPerioder &&
-                kvpPerioder.map((kvp) => (
+                kvpPerioder.map((kvpPeriode) => (
                     <Radio
-                        key={kvp.opprettetDato}
-                        id={kvp.opprettetDato}
+                        key={kvpPeriode.opprettetDato}
                         label={
-                            <Normaltekst>
-                                {`${formaterDatoKortManed(kvp.opprettetDato)} - ${
-                                    formaterDatoKortManed(kvp.avsluttetDato) || 'nå'
+                            <BodyShort>
+                                {`${formaterDatoKortManed(kvpPeriode.opprettetDato)} - ${
+                                    formaterDatoKortManed(kvpPeriode.avsluttetDato) || 'nå'
                                 }`}
-                            </Normaltekst>
+                            </BodyShort>
                         }
                         className="kvp-periode-valg"
-                        value={kvp.opprettetDato}
-                        disabled={!kvp.avsluttetDato}
-                        {...field}
+                        value={kvpPeriode.opprettetDato}
+                        disabled={!kvpPeriode.avsluttetDato}
                     />
                 ))}
         </div>

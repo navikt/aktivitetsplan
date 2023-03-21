@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { StillingAktivitet } from '../../../datatypes/internAktivitetTypes';
@@ -14,5 +14,5 @@ export default function Arbeidsgiver({ aktivitet }: Props) {
         return null;
     }
 
-    return <Normaltekst>{arbeidsgiver}</Normaltekst>;
+    return <BodyShort>{arbeidsgiver}</BodyShort>;
 }

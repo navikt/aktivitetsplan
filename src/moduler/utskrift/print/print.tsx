@@ -1,4 +1,4 @@
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
@@ -8,7 +8,7 @@ import { Bruker, Postadresse } from '../../../datatypes/types';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
 import { formaterDatoKortManed } from '../../../utils';
-import logoPng from '../ikoner/logo.png';
+import logoPngImagePath from '../ikoner/logo.png';
 import Adresse from './adresse';
 import Aktiviteter from './aktiviteter/Aktiviteter';
 import { DialogerUtenAktivitet } from './dialoger';
@@ -57,17 +57,19 @@ function Print(props: Props) {
     const kvpPeriodeFra = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.opprettetDato) : undefined;
     const kvpPeriodeTil = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.avsluttetDato) : undefined;
 
+    const navLogoPng = new URL(logoPngImagePath, import.meta.url).href;
+
     return (
-        <div className="printmodal-body" hidden={hidden}>
-            <img className="printmodal-body__nav-logo-print" src={logoPng} alt="Logo NAV" />
-            <div className="printmodal-body__adresse-dato">
-                <div className="printmodal-body__adresse">
+        <div id="printarea" className="printmodal-body w-[670px]" hidden={hidden}>
+            <img className="my-8" src={navLogoPng} alt="Logo NAV" />
+            <div className="flex justify-between mb-8">
+                <div className="">
                     <HiddenIfDiv hidden={!erVeileder}>
                         <StoreForbokstaver>{`${fornavn} ${etternavn}`}</StoreForbokstaver>
                         {adresse && <Adresse adresse={adresse} />}
                     </HiddenIfDiv>
                 </div>
-                <div className="printmodal-body__dato">
+                <div>
                     <HiddenIfDiv hidden={!erVeileder}>{enhetsNavn}</HiddenIfDiv>
                     Dato: {formaterDatoKortManed(Date.now())}
                     <HiddenIfDiv hidden={!fodselsnummer}>
@@ -80,10 +82,10 @@ function Print(props: Props) {
                     </HiddenIfDiv>
                 </div>
             </div>
-            <Sidetittel tag="h1" className="printmodal-body__utskrift--overskrift">
+            <Heading level="1" size="xlarge">
                 Aktivitetsplan
-            </Sidetittel>
-            <HiddenIfSection hidden={printMelding === ''} className="printmodal-body__visprintmelding">
+            </Heading>
+            <HiddenIfSection hidden={printMelding === ''}>
                 <p>{printMelding}</p>
             </HiddenIfSection>
             <MalPrint mittMal={mittMal} />

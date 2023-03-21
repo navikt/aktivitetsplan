@@ -9,3 +9,8 @@ src/tekster.js
 build/
 .DS_Store
 .eslintcache
+public/mockServiceWorker.js
+dist
+dist-ssr
+/build
+bundle-stats.html

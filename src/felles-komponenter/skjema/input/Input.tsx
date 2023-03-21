@@ -1,4 +1,4 @@
-import { InputProps, Input as NavInput } from 'nav-frontend-skjema';
+import { TextField as NavInput, TextFieldProps } from '@navikt/ds-react';
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
@@ -11,15 +11,16 @@ interface Props {
     input: FieldStateInput;
     pristine?: boolean;
     initialValue?: string;
+    value?: string;
     setValue?: (value: string) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
-const Input = (props: Props & InputProps) => {
+const Input = (props: Props & TextFieldProps) => {
     const { touched, error, input, pristine, initialValue, setValue, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
-    return <NavInput {...inputProps} feil={feil} required />;
+    return <NavInput {...inputProps} error={feil} required />;
 };
 
 export default Input;

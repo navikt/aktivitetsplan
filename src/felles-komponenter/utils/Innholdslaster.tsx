@@ -1,26 +1,27 @@
-import Spinner from 'nav-frontend-spinner';
+import { Loader } from '@navikt/ds-react';
+import classNames from 'classnames';
 import React from 'react';
 
 import { STATUS } from '../../api/utils';
-import HiddenIfHOC from '../hidden-if/hidden-if';
 
 function asArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];
 }
-const harStatus = (...status: string[]) => (element: string): boolean => asArray(status).includes(element);
+const harStatus =
+    (...status: string[]) =>
+    (element: string): boolean =>
+        asArray(status).includes(element);
 
 const noenHarFeil = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.ERROR));
-const minstEnErOK = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.OK));
+export const minstEnErOK = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.OK));
 const alleLastet = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
 const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK));
-
-const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
 export type Avhengighet = Status | { status?: Status } | null | undefined;
 export interface InnholdslasterProps {
     avhengigheter?: Avhengighet[] | Avhengighet;
     children: React.ReactNode;
-    spinnerStorrelse?: string;
+    spinnerSize?: '3xlarge' | '2xlarge' | 'xlarge' | 'large' | 'medium' | 'small' | 'xsmall';
     className?: string;
     minstEn?: boolean;
     visChildrenVedFeil?: boolean;
@@ -30,7 +31,7 @@ export interface InnholdslasterProps {
 export type Status = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
 type InternStatus = Status | 'NOT_SETT';
 
-const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] => {
+export const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] => {
     if (!avhengiheter) {
         return [];
     }
@@ -43,7 +44,7 @@ const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] =>
 const Innholdslaster = (props: InnholdslasterProps) => {
     const {
         avhengigheter,
-        spinnerStorrelse = 'XL',
+        spinnerSize = '2xlarge',
         className,
         children,
         minstEn = false,
@@ -63,12 +64,17 @@ const Innholdslaster = (props: InnholdslasterProps) => {
             return children(avhengigheter, rest);
         }
         if (Array.isArray(children)) {
-            return <div>{children}</div>;
+            return children;
         }
         return children;
     }
 
-    return <HiddenIfSpinner hidden={noenHarFeil(statuser)} className={className} type={spinnerStorrelse} />;
+    if (noenHarFeil(statuser)) return null;
+    return (
+        <div className="flex-1 flex items-center justify-center">
+            <Loader size={spinnerSize} className={classNames(className, 'm-3')} />
+        </div>
+    );
 };
 
 export default Innholdslaster;

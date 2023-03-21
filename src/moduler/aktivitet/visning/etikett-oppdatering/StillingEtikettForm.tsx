@@ -1,9 +1,9 @@
+import { Button, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
+import { StillingsStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -19,6 +19,28 @@ interface Props {
 type FormType = {
     etikettstatus: string;
 };
+const fields = [
+    {
+        label: 'Ikke startet',
+        value: konstanter.INGEN_VALGT,
+    },
+    {
+        label: 'Sendt søknad og venter på svar',
+        value: konstanter.SOKNAD_SENDT,
+    },
+    {
+        label: 'Skal på intervju',
+        value: konstanter.INNKALT_TIL_INTERVJU,
+    },
+    {
+        label: 'Fått jobbtilbud',
+        value: konstanter.JOBBTILBUD,
+    },
+    {
+        label: 'Ikke fått jobben',
+        value: konstanter.AVSLAG,
+    },
+];
 
 const StillingEtikettForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;
@@ -34,50 +56,32 @@ const StillingEtikettForm = (props: Props) => {
     const { setFormIsDirty } = useContext(DirtyContext);
     useEffect(() => {
         setFormIsDirty('etikett', !state.pristine);
-        return () => {
-            setFormIsDirty('etikett', false);
-        };
     }, [setFormIsDirty, state.pristine]);
 
     const disable = state.submitting || disabled;
 
+    const onChangeStillingStatus = (value: StillingsStatus) => {
+        state.fields.etikettstatus.setValue(value);
+    };
+
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe>
-                <Radio
-                    label="Ikke startet"
-                    value={konstanter.INGEN_VALGT}
+            <div className="mb-4">
+                <RadioGroup
+                    legend={''}
+                    hideLegend
+                    value={state.fields.etikettstatus.input.value}
+                    onChange={onChangeStillingStatus}
                     disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Sendt søknad og venter på svar"
-                    value={konstanter.SOKNAD_SENDT}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Skal på intervju"
-                    value={konstanter.INNKALT_TIL_INTERVJU}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Fått jobbtilbud"
-                    value={konstanter.JOBBTILBUD}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-                <Radio
-                    label="Ikke fått jobben"
-                    value={konstanter.AVSLAG}
-                    disabled={disable}
-                    {...state.fields.etikettstatus}
-                />
-            </SkjemaGruppe>
-            <Hovedknapp className="oppdater-status" disabled={disable} spinner={state.submitting} autoDisableVedSpinner>
+                >
+                    {fields.map(({ value, label }) => (
+                        <Radio key={value} value={value} label={label} />
+                    ))}
+                </RadioGroup>
+            </div>
+            <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
                 Lagre
-            </Hovedknapp>
+            </Button>
         </form>
     );
 };

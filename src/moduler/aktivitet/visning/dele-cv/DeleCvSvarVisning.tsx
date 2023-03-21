@@ -1,41 +1,18 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React, { useState } from 'react';
+import { BodyShort, Heading } from '@navikt/ds-react';
+import React from 'react';
 
 import { CvKanDelesData } from '../../../../datatypes/internAktivitetTypes';
-import EkspanderbarLinjeBase from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { formaterDatoManed } from '../../../../utils';
-import { Ingress } from './DeleCvContainer';
-import styles from './DeleCvSvarVisning.module.less';
-import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
+import { JaSvarTekst, NeiSvarTekst } from './tekster';
 
 interface Props {
     cvKanDelesData: CvKanDelesData;
-    startAapen?: boolean;
 }
 
-export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props) => {
-    const [erAapen, setAapen] = useState(startAapen);
-    const toggle = () => setAapen(!erAapen);
-
+export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
     const cvKanDeles = cvKanDelesData.kanDeles;
 
-    const Tittel = () => <Normaltekst className={styles.deleCVEndreTittel}>{overskrift}</Normaltekst>;
-    const TittelMedCvSvar = () => (
-        <>
-            <Tittel />
-            <Element className={styles.deleCVTittelSvarTekst}>{cvKanDeles ? 'Ja' : 'Nei'}</Element>
-        </>
-    );
-
-    const Infostripe = () =>
-        cvKanDeles ? (
-            <AlertStripeInfo className={styles.infoStripe}>
-                Arbeidsgiveren eller NAV vil kontakte deg hvis du er aktuell for stillingen
-            </AlertStripeInfo>
-        ) : null;
-
-    var svarTekst: string, endretTekst: string;
+    let svarTekst: string, endretTekst: string;
     if (cvKanDelesData.endretAvType === 'BRUKER') {
         svarTekst = cvKanDeles ? JaSvarTekst : NeiSvarTekst;
         endretTekst = `Du svarte ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}`;
@@ -47,19 +24,17 @@ export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props)
     }
 
     return (
-        <EkspanderbarLinjeBase
-            tittel={<TittelMedCvSvar />}
-            aapneTittel={<Tittel />}
-            kanToogle
-            aapneTekst="Åpne"
-            lukkeTekst="Lukk"
-            erAapen={erAapen}
-            onClick={toggle}
-        >
-            <Ingress />
-            <Normaltekst className={styles.deleCVSvarTekst}>{svarTekst}</Normaltekst>
-            <Normaltekst className={styles.endretTidspunkt}>{endretTekst}</Normaltekst>
-            <Infostripe />
-        </EkspanderbarLinjeBase>
+        <div className="p-4 bg-surface-subtle border-border-default border rounded-md">
+            <Heading size="medium" className="mb-4">
+                {cvKanDeles ? 'Du svarte at du er interessert' : 'Du svarte at du ikke er interessert'}
+            </Heading>
+            <BodyShort>{svarTekst}</BodyShort>
+            <BodyShort className="mt-4">{endretTekst}</BodyShort>
+            {cvKanDeles ? (
+                <BodyShort className="mt-4">
+                    Arbeidsgiveren eller NAV vil kontakte deg hvis du er aktuell for stillingen
+                </BodyShort>
+            ) : null}
+        </div>
     );
 };

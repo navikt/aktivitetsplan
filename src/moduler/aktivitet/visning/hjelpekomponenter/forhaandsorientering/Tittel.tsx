@@ -1,14 +1,13 @@
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 
 const AdvarselTittel = () => (
-    <AlertStripe type="advarsel" form="inline">
-        <Element>Informasjon om ansvaret ditt</Element>
-    </AlertStripe>
+    <Alert variant="warning" inline>
+        <Label>Informasjon om ansvaret ditt</Label>
+    </Alert>
 );
 
-const NormalTittel = () => <Normaltekst>Informasjon om ansvaret ditt</Normaltekst>;
+const NormalTittel = () => <BodyShort>Informasjon om ansvaret ditt</BodyShort>;
 
 interface Props {
     kanMarkeresSomLest: boolean;

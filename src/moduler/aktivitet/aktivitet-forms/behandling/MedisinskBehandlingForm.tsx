@@ -1,123 +1,133 @@
-import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TextField, Textarea } from '@navikt/ds-react';
+import React, { MutableRefObject } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
-import { MedisinskBehandlingAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
-import PeriodeValidering, {
-    validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import { HiddenIfInput as Input } from '../../../../felles-komponenter/skjema/input/Input';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import { todayIsoString } from '../../../../utils/dateUtils';
-import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../LagreAktivitet';
-import {
-    validateBehandlingSted,
-    validateBehandlingType,
-    validateBeskrivelse,
-    validateFeltForLangt,
-    validateFraDato,
-    validateTilDato,
-} from './validate';
+import { MedisinskBehandlingAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
+import AktivitetFormHeader from '../AktivitetFormHeader';
+import CustomErrorSummary from '../CustomErrorSummary';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
+import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
-type MedisinskBehandlingFormProps = {
-    tittel: string;
-    behandlingType: string;
-    behandlingSted: string;
-    fraDato: string;
-    tilDato: string;
-    effekt: string;
-    beskrivelse: string;
-    behandlingOppfolging: string;
-};
+const schema = z.object({
+    tittel: z.string(),
+    fraDato: z.date({
+        required_error: 'Fra dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
+    tilDato: z.date({
+        required_error: 'Til dato må fylles ut',
+        invalid_type_error: 'Ikke en gyldig dato',
+    }),
+    behandlingType: z
+        .string()
+        .min(1, 'Du må fylle ut type behandling')
+        .max(100, 'Du må korte ned teksten til 100 tegn'),
+    behandlingSted: z
+        .string()
+        .min(1, 'Du må fylle ut behandlingssted')
+        .max(255, 'Du må korte ned teksten til 100 tegn'),
+    effekt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    behandlingOppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+    beskrivelse: z.string().max(400, 'Du må korte ned teksten til 400 tegn').optional(),
+});
 
-//Det er anbefalt at man bruker type er pga en known issue i use-formstate
-type ValideringsProps = MedisinskBehandlingFormProps & {
-    periodeValidering: string;
-};
-
-export type Handler = SubmitHandler<ValideringsProps>;
-
-interface DirtyRef {
-    current: boolean;
-}
+type MedisinskBehandlingFormValues = z.infer<typeof schema>;
 
 interface Props {
+    onSubmit: (values: MedisinskBehandlingFormValues) => Promise<void>;
+    dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MedisinskBehandlingAktivitet;
-    isDirtyRef: DirtyRef;
-    onSubmit: Handler;
 }
 
 const MedisinskBehandlingForm = (props: Props) => {
-    const { onSubmit, aktivitet, isDirtyRef } = props;
+    const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const validator = useFormstate<ValideringsProps, MedisinskBehandlingAktivitet>({
-        tittel: () => undefined,
-        behandlingType: (val, values, aktivitet) => validateBehandlingType(aktivitet.avtalt, val),
-        behandlingSted: (val, values, aktivitet) => validateBehandlingSted(aktivitet.avtalt, val),
-        fraDato: (val, values, aktivitet) => validateFraDato(aktivitet.avtalt, aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
-        effekt: (val, values, aktivitet) => validateFeltForLangt(aktivitet.avtalt, val),
-        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(aktivitet.avtalt, val),
-        behandlingOppfolging: (val, values, aktivitet) => validateFeltForLangt(aktivitet.avtalt, val),
-        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-    });
-
-    const avtalt = !!aktivitet && aktivitet.avtalt;
-    const maybeAktivitet: Partial<MedisinskBehandlingAktivitet> = aktivitet ? aktivitet : {};
-
-    const initalValues: ValideringsProps = {
-        tittel: maybeAktivitet.tittel ? maybeAktivitet.tittel : 'Medisinsk behandling',
-        behandlingType: maybeAktivitet.behandlingType ? maybeAktivitet.behandlingType : '',
-        behandlingSted: maybeAktivitet.behandlingSted ? maybeAktivitet.behandlingSted : '',
-        fraDato: maybeAktivitet.fraDato ? maybeAktivitet.fraDato : todayIsoString(),
-        tilDato: maybeAktivitet.tilDato ? maybeAktivitet.tilDato : '',
-        effekt: maybeAktivitet.effekt ? maybeAktivitet.effekt : '',
-        beskrivelse: maybeAktivitet.beskrivelse ? maybeAktivitet.beskrivelse : '',
-        behandlingOppfolging: maybeAktivitet.behandlingOppfolging ? maybeAktivitet.behandlingOppfolging : '',
-        periodeValidering: '',
+    const defaultValues: Partial<MedisinskBehandlingFormValues> = {
+        tittel: aktivitet?.tittel || 'Medisinsk behandling',
+        behandlingType: aktivitet?.behandlingType || '',
+        behandlingSted: aktivitet?.behandlingSted || '',
+        fraDato: dateOrUndefined(aktivitet?.fraDato),
+        tilDato: dateOrUndefined(aktivitet?.tilDato),
+        effekt: aktivitet?.effekt || '',
+        beskrivelse: aktivitet?.beskrivelse || '',
+        behandlingOppfolging: aktivitet?.behandlingOppfolging || '',
     };
+    const avtalt = aktivitet?.avtalt || false;
 
-    const state = validator(initalValues, aktivitet ? aktivitet : ({} as MedisinskBehandlingAktivitet));
+    const formHandlers = useForm<MedisinskBehandlingFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
+        shouldFocusError: false,
+    });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isDirty },
+    } = formHandlers;
 
-    if (isDirtyRef) {
-        isDirtyRef.current = !state.pristine;
+    if (dirtyRef) {
+        dirtyRef.current = isDirty;
     }
+
+    const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
+
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off" noValidate>
-            <SkjemaGruppe className="aktivitetskjema">
-                <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
-
-                <Input disabled={avtalt} label="Type behandling *" {...state.fields.behandlingType} />
-                <Input disabled={avtalt} label="Behandlingssted *" {...state.fields.behandlingSted} />
-
-                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
-                    <div className="dato-container">
-                        <DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} required />
-                        <DatoField label="Til dato *" {...state.fields.tilDato} required />
-                    </div>
-                </PeriodeValidering>
-
-                <Input disabled={avtalt} label="Mål for behandlingen" {...state.fields.effekt} />
-                <Input
-                    disabled={avtalt}
-                    label="Oppfølging fra NAV"
-                    {...state.fields.behandlingOppfolging}
-                    hidden={!aktivitet || !aktivitet.behandlingOppfolging}
-                />
-                <Textarea
-                    disabled={avtalt}
-                    label="Kort beskrivelse av behandlingen"
-                    maxLength={400}
-                    visTellerFra={200}
-                    {...state.fields.beskrivelse}
-                />
-                <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-            </SkjemaGruppe>
-            <LagreAktivitet />
+        <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
+            <FormProvider {...formHandlers}>
+                <div className="space-y-8">
+                    <AktivitetFormHeader
+                        tittel="Medisinsk behandling"
+                        aktivitetstype={VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Type behandling (obligatorisk)"
+                        id={'behandlingstype'}
+                        {...register('behandlingType')}
+                        error={errors.behandlingType && errors.behandlingType.message}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Behandlingssted (obligatorisk)"
+                        id={'behandlingssted'}
+                        {...register('behandlingSted')}
+                        error={errors.behandlingSted && errors.behandlingSted.message}
+                    />
+                    <MaybeAvtaltDateRangePicker
+                        aktivitet={aktivitet}
+                        from={{ name: 'fraDato', required: true }}
+                        to={{ name: 'tilDato', required: true }}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Mål for behandlingen (valgfri)"
+                        id={'effekt'}
+                        {...register('effekt')}
+                        error={errors.effekt && errors.effekt.message}
+                    />
+                    <TextField
+                        disabled={avtalt}
+                        label="Oppfølging fra NAV (valgfri)"
+                        id={'behandlingoppfolging'}
+                        {...register('behandlingOppfolging')}
+                        error={errors.behandlingOppfolging && errors.behandlingOppfolging.message}
+                    />
+                    <Textarea
+                        disabled={avtalt}
+                        label="Kort beskrivelse av behandlingen (valgfri)"
+                        maxLength={400}
+                        {...register('beskrivelse')}
+                        error={errors.beskrivelse && errors.beskrivelse.message}
+                        value={beskrivelseValue}
+                    />
+                    <CustomErrorSummary errors={errors} />
+                    <LagreAktivitetKnapp />
+                </div>
+            </FormProvider>
         </form>
     );
 };

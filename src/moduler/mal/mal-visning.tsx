@@ -1,4 +1,4 @@
-import Tekstomrade from 'nav-frontend-tekstomrade';
+import { BodyLong } from '@navikt/ds-react';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
@@ -12,7 +12,7 @@ interface Props {
     onClick: () => void;
 }
 
-function Malvisning(props: Props) {
+const Malvisning = (props: Props) => {
     const { onClick } = props;
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const historiskeMal = useSelector(selectMalListe, shallowEqual);
@@ -25,8 +25,8 @@ function Malvisning(props: Props) {
         (historiskVisning && historiskeMal.length === 0) || !mal ? 'Det ble ikke skrevet mål i denne perioden' : mal;
 
     return (
-        <div className="aktivitetmal__innhold">
-            <Tekstomrade className="aktivitetmal__tekst">{malText}</Tekstomrade>
+        <div className="mb-8">
+            <BodyLong className="mb-8">{malText}</BodyLong>
             <HiddenIfHovedknapp
                 onClick={onClick}
                 hidden={historiskVisning}
@@ -36,6 +36,6 @@ function Malvisning(props: Props) {
             </HiddenIfHovedknapp>
         </div>
     );
-}
+};
 
 export default Malvisning;

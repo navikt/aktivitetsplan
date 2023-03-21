@@ -1,6 +1,4 @@
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
+import { Alert, HelpText } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -17,10 +15,10 @@ import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector'
 import styles from './Feilmelding.module.less';
 
 const Mere = () => (
-    <Hjelpetekst type={PopoverOrientering.Under}>
+    <HelpText placement={'bottom'}>
         Denne brukeren har ikke vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID). <br />
         Du kan derfor ikke sende forhåndsorientering, varsel og meldinger.
-    </Hjelpetekst>
+    </HelpText>
 );
 
 const Nivaa4Feilmelding = () => {
@@ -57,10 +55,10 @@ const Nivaa4Feilmelding = () => {
 
     return (
         <div className={styles.feilmelding}>
-            <AlertStripeAdvarsel>
+            <Alert variant="warning">
                 Denne brukeren kan ikke logge inn i aktivitetsplan og dialog.
                 <Mere />
-            </AlertStripeAdvarsel>
+            </Alert>
         </div>
     );
 };

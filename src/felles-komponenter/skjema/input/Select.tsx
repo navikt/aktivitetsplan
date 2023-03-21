@@ -1,5 +1,5 @@
-import { Select as NavSelect, SelectProps } from 'nav-frontend-skjema';
 /* eslint-disable jsx-a11y/control-has-associated-label */
+import { Select as NavSelect, SelectProps } from '@navikt/ds-react';
 import React from 'react';
 
 import { FieldStateInput } from './inputTypes';
@@ -22,7 +22,7 @@ const Select = (props: Props & SelectProps) => {
     const inputProps = { ...input, ...rest };
 
     return (
-        <NavSelect feil={feil} {...inputProps}>
+        <NavSelect error={feil} {...inputProps}>
             {!noBlankOption && <option />}
             {children}
         </NavSelect>

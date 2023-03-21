@@ -1,9 +1,7 @@
 import moment from 'moment';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import React, { ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 
 import { erGyldigISODato } from '../../../utils';
-import styles from './PeriodeValidering.module.less';
 
 export const validerPeriode = (fradato: string, tildato: string) => {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {
@@ -27,21 +25,21 @@ interface ValideringFelt {
 
 interface Props {
     valideringFelt: ValideringFelt;
-    children: ReactNode;
+    children: ReactElement;
 }
 
 const PeriodeValidering = (props: Props) => {
     const { valideringFelt, children } = props;
+    const error = valideringFelt.error;
+    if (!error) return children;
 
     return (
-        <SkjemaGruppe
-            className={styles.marginBottom}
-            feilmeldingId="periode-feil"
-            feil={valideringFelt.error}
-            tag="div"
-        >
+        <>
             {children}
-        </SkjemaGruppe>
+            <p id="periode-feil" className="text-red-700 font-bold mb-4">
+                {error}
+            </p>
+        </>
     );
 };
 

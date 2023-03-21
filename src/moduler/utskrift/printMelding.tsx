@@ -1,6 +1,5 @@
+import { Button, Heading } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { Bruker } from '../../datatypes/types';
@@ -18,8 +17,8 @@ interface Props {
 }
 
 type FormType = {
-    beskrivelse: string
-}
+    beskrivelse: string;
+};
 
 function PrintMeldingForm(props: Props) {
     const { bruker, onSubmit, hidden } = props;
@@ -37,24 +36,17 @@ function PrintMeldingForm(props: Props) {
     };
 
     return (
-        <form onSubmit={state.onSubmit(submit)} className="printmelding__form" hidden={hidden}>
-            <div className="printmelding__skjema">
+        <form onSubmit={state.onSubmit(submit)} className="p-4 space-y-8" hidden={hidden}>
+            <div className="space-y-8">
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
-                <div className="printmelding__tittel">
-                    <Innholdstittel>{`Aktivitetsplan for ${bruker.fornavn}`}</Innholdstittel>
-                </div>
-
+                <Heading size="large" level="1">{`Aktivitetsplan for ${bruker.fornavn}`}</Heading>
                 <Textarea
                     label="Rediger teksten under så den passer til brukeren."
                     maxLength={2000}
-                    visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
             </div>
-            <div className="printmelding__knapperad">
-                <Hovedknapp>Velg</Hovedknapp>
-            </div>
+            <Button>Velg</Button>
         </form>
     );
 }
