@@ -45,14 +45,8 @@ const useMock = import.meta.env.DEV || usingHashRouting;
 const rootElement = document.getElementById('mainapp') as HTMLElement;
 
 const exportToNavSpa = () => {
-    import('@navikt/navspa').then((navSpaImport) => {
-        console.log('Navspa imported');
-        try {
-            navSpaImport.default.eksporter('aktivitetsplan', AppWebComponent);
-        } catch (e) {
-            console.error(e);
-        }
-    });
+    NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
+    // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
     import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
     });
@@ -63,7 +57,7 @@ const renderAsRootApp = (props?: { fnr?: string }) => {
 };
 
 const renderApp = (props?: { fnr?: string }) => {
-    if (window.NAVSPA) {
+    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
         exportToNavSpa();
     } else {
         renderAsRootApp(props);
