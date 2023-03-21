@@ -44,8 +44,10 @@ const useMock = import.meta.env.DEV || usingHashRouting;
 const rootElement = document.getElementById('mainapp') as HTMLElement;
 
 const exportToNavSpa = () => {
-    Promise.all([import('@navikt/navspa'), import('./webcomponentWrapper')]).then(([NAVSPA, { DabAktivitetsplan }]) => {
+    import('@navikt/navspa').then((NAVSPA) => {
         NAVSPA.default.eksporter('aktivitetsplan', AppWebComponent);
+    });
+    import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
     });
 };
@@ -55,7 +57,7 @@ const renderAsRootApp = (props?: { fnr?: string }) => {
 };
 
 const renderApp = (props?: { fnr?: string }) => {
-    if (window.NAVSPA) {
+    if (true || window.NAVSPA) {
         exportToNavSpa();
     } else {
         renderAsRootApp(props);
