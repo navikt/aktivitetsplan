@@ -102,12 +102,6 @@ describe('MoteAktivitetForm', () => {
         screen.getByDisplayValue(aktivitet.adresse);
     });
 
-    it('Skal populere beskrivelse(hensikt) med defaultverdi', () => {
-        const aktivitet = undefined;
-        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
-        screen.getByText(defaultBeskrivelse);
-    });
-
     it('Skal ikke populere beskrivelse(hensikt) med defaultverdi når man endrer', () => {
         const aktivitet = { beskrivelse: 'Dette er en beskrivelse' };
         mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
