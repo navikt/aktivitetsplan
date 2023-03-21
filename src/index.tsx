@@ -3,7 +3,6 @@ import 'moment/dist/locale/nb';
 
 import './polyfill';
 
-import NAVSPA from '@navikt/navspa';
 import { setDefaultOptions } from 'date-fns';
 import nn from 'date-fns/locale/nn';
 import moment from 'moment';
@@ -45,9 +44,8 @@ const useMock = import.meta.env.DEV || usingHashRouting;
 const rootElement = document.getElementById('mainapp') as HTMLElement;
 
 const exportToNavSpa = () => {
-    NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
-    // window.NAVSPA['aktivitetsplan'](rootElement);
-    import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
+    Promise.all([import('@navikt/navspa'), import('./webcomponentWrapper')]).then(([NAVSPA, { DabAktivitetsplan }]) => {
+        NAVSPA.default.eksporter('aktivitetsplan', AppWebComponent);
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
     });
 };

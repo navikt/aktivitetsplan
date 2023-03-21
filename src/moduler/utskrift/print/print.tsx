@@ -60,7 +60,7 @@ function Print(props: Props) {
     const navLogoPng = new URL(logoPngImagePath, import.meta.url).href;
 
     return (
-        <div className="printmodal-body w-[670px]" hidden={hidden}>
+        <div id="printarea" className="printmodal-body w-[670px]" hidden={hidden}>
             <img className="my-8" src={navLogoPng} alt="Logo NAV" />
             <div className="flex justify-between mb-8">
                 <div className="">
