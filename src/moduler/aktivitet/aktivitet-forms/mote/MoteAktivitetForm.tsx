@@ -16,8 +16,6 @@ import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
 
-export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
-
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
     dato: z.date({
@@ -58,7 +56,7 @@ const MoteAktivitetForm = (props: Props) => {
         varighet: moteTid?.varighet ? formatterVarighet(moteTid.varighet) : '00:45',
         kanal: aktivitet?.kanal || OPPMOTE_KANAL,
         adresse: aktivitet?.adresse,
-        beskrivelse: aktivitet?.beskrivelse || defaultBeskrivelse,
+        beskrivelse: aktivitet?.beskrivelse,
         forberedelser: aktivitet?.forberedelser ?? undefined,
         dato: coerceToUndefined(aktivitet?.fraDato),
     };
