@@ -20,12 +20,12 @@ const EksternAktivitetHandlingerKnapper = ({ aktivitet }: Props) => {
 
     return (
         <div className="space-y-4 flex flex-col self-end justify-self-end w-full mb-8">
-            {handlinger.flatMap((handling) => {
+            {handlinger.flatMap((handling, index) => {
                 if (handling.lenkeType === 'EKSTERN' && erVeileder) return null;
                 if (handling.lenkeType === 'INTERN' && !erVeileder) return null;
 
                 return (
-                    <LinkPanel href={handling.url} target="_blank">
+                    <LinkPanel key={index} href={handling.url} target="_blank">
                         <Heading size="small">{handling.tekst}</Heading>
                         <BodyShort>{handling.subtekst}</BodyShort>
                     </LinkPanel>
