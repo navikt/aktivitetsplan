@@ -9,6 +9,7 @@ import moment from 'moment';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import AppWebComponent from './AppWebComponent';
 import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
@@ -40,16 +41,17 @@ const mockfnr = '12345678910';
 
 const useMock = import.meta.env.DEV || usingHashRouting;
 
+const rootElement = document.getElementById('mainapp') as HTMLElement;
+
 const exportToNavSpa = () => {
-    // NAVSPA.eksporter('aktivitetsplan', AppWrapper);
-    // window.NAVSPA['aktivitetsplan'](rootElement);
+    window.NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
+    window.NAVSPA['aktivitetsplan'](rootElement);
     import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
     });
 };
 
 const renderAsRootApp = (props?: { fnr?: string }) => {
-    const rootElement = document.getElementById('mainapp') as HTMLElement;
     renderAsReactRoot(rootElement, props);
 };
 
