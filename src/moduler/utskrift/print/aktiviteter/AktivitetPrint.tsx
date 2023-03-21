@@ -25,7 +25,7 @@ const AktivitetPrint = (props: Props) => {
     const forhaandsorientering = aktivitet.forhaandsorientering;
 
     return (
-        <div key={id} className="p-4 border rounded-md">
+        <div key={id} className="p-4 border rounded-md print:break-inside-avoid-page">
             <Detail className="uppercase">{getAktivitetType(aktivitet)}</Detail>
             <Heading level="2" size="medium" className="mb-4">
                 {tittel}

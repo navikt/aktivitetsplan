@@ -64,7 +64,6 @@ function AktivitetsplanPrint(props: Props) {
         doHentMal,
         doHentMalListe,
         avhengigheter,
-        doResetUtskrift,
         kvpPerioder,
         dialoger,
         mittMal,
@@ -101,8 +100,6 @@ function AktivitetsplanPrint(props: Props) {
     const [printMelding, setPrintMelding] = useState('');
     const [utskriftform, setUtskriftform] = useState('helePlanen');
 
-    const back = stepIndex > 0 ? () => setStepIndex(stepIndex - 1) : undefined;
-
     const next = () => setStepIndex(stepIndex + 1);
 
     const printMeldingSubmit = (printmelding: string) => {
@@ -122,56 +119,59 @@ function AktivitetsplanPrint(props: Props) {
 
     const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
     const history = useHistory();
-    const goBack = () => history.goBack();
+    const goBack = () => {
+        history.goBack();
+    };
 
     if (fnr && (isLoadingAdresse || isLoadingBruker)) {
         return <Loader />;
     }
 
-    if (steps[stepIndex] === STEP_MELDING_FORM) {
-        return (
-            <Modal onClose={goBack} open>
-                <Innholdslaster avhengigheter={avhengigheter}>
-                    <PrintMeldingForm bruker={bruker} onSubmit={printMeldingSubmit} />
-                </Innholdslaster>
-            </Modal>
-        );
-    }
-
-    if (steps[stepIndex] === STEP_MELDING_FORM) {
-        return (
-            <Modal onClose={goBack} open>
-                <Innholdslaster avhengigheter={avhengigheter}>
-                    <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmint} />
-                </Innholdslaster>
-            </Modal>
-        );
-    }
+    const getPrompt = () => {
+        if (steps[stepIndex] === STEP_MELDING_FORM) {
+            return (
+                <Modal onClose={goBack} open>
+                    <Innholdslaster avhengigheter={avhengigheter}>
+                        <PrintMeldingForm bruker={bruker} onSubmit={printMeldingSubmit} />
+                    </Innholdslaster>
+                </Modal>
+            );
+        }
+        if (steps[stepIndex] === STEP_VELG_PLAN) {
+            return (
+                <Modal onClose={goBack} open>
+                    <Innholdslaster avhengigheter={avhengigheter}>
+                        <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmint} />
+                    </Innholdslaster>
+                </Modal>
+            );
+        }
+    };
+    const prompt = getPrompt();
 
     return (
         <section className="flex flex-col justify-center items-center p-8">
-            <div
-                className="aktivitetsplanprint w-[670px] flex justify-center items-center"
-                // onRequestClose={doResetUtskrift}
-            >
+            <div className="aktivitetsplanprint flex justify-center items-center">
+                {prompt}
                 <ModalHeader
                     avhengigheter={avhengigheter}
                     tilbake={goBack}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
                 />
                 <Innholdslaster avhengigheter={avhengigheter}>
-                    <Print
-                        dialoger={dialoger}
-                        bruker={bruker}
-                        adresse={adresse}
-                        printMelding={printMelding}
-                        aktiviteter={aktiviteter}
-                        mittMal={mittMal}
-                        erVeileder={erVeileder}
-                        utskriftPlanType={utskriftform}
-                        kvpPerioder={kvpPerioder}
-                        hidden={steps[stepIndex] !== STEP_UTSKRIFT}
-                    />
+                    <div className="border px-12 print:border-none">
+                        <Print
+                            dialoger={dialoger}
+                            bruker={bruker}
+                            adresse={adresse}
+                            printMelding={printMelding}
+                            aktiviteter={aktiviteter}
+                            mittMal={mittMal}
+                            erVeileder={erVeileder}
+                            utskriftPlanType={utskriftform}
+                            kvpPerioder={kvpPerioder}
+                        />
+                    </div>
                 </Innholdslaster>
             </div>
         </section>

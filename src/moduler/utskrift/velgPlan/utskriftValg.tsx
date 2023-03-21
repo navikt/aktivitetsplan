@@ -9,7 +9,7 @@ interface Props {
 const UtskriftValg = ({ tittelId, tekstId }: Props) => {
     return (
         <div>
-            <Heading level="2" size="medium">
+            <Heading level="2" size="small">
                 {tittelId}
             </Heading>
             <BodyShort>{tekstId}</BodyShort>

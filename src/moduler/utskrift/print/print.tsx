@@ -60,7 +60,7 @@ function Print(props: Props) {
     const navLogoPng = new URL(logoPngImagePath, import.meta.url).href;
 
     return (
-        <div className="printmodal-body" hidden={hidden}>
+        <div className="printmodal-body w-[670px]" hidden={hidden}>
             <img className="my-8" src={navLogoPng} alt="Logo NAV" />
             <div className="flex justify-between mb-8">
                 <div className="">
@@ -82,10 +82,10 @@ function Print(props: Props) {
                     </HiddenIfDiv>
                 </div>
             </div>
-            <Heading level="1" size="xlarge" className="printmodal-body__utskrift--overskrift">
+            <Heading level="1" size="xlarge">
                 Aktivitetsplan
             </Heading>
-            <HiddenIfSection hidden={printMelding === ''} className="printmodal-body__visprintmelding">
+            <HiddenIfSection hidden={printMelding === ''}>
                 <p>{printMelding}</p>
             </HiddenIfSection>
             <MalPrint mittMal={mittMal} />

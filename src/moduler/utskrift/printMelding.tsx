@@ -37,13 +37,9 @@ function PrintMeldingForm(props: Props) {
 
     return (
         <form onSubmit={state.onSubmit(submit)} className="p-4 space-y-8" hidden={hidden}>
-            <div className="printmelding__skjema">
+            <div className="space-y-8">
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
-                <div className="printmelding__tittel">
-                    <Heading size="large" level="1">{`Aktivitetsplan for ${bruker.fornavn}`}</Heading>
-                </div>
-
+                <Heading size="large" level="1">{`Aktivitetsplan for ${bruker.fornavn}`}</Heading>
                 <Textarea
                     label="Rediger teksten under så den passer til brukeren."
                     maxLength={2000}
