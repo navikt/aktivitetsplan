@@ -61,7 +61,7 @@ export const erGyldigISODato = (isoDato: string) => {
 
 function formatter(dato: string | Date, format: string) {
     if (dato) {
-        const datoVerdi = typeof dato === 'string' ? parseJSON(dato) : dato;
+        const datoVerdi = typeof dato === 'string' ? parseISO(dato) : dato;
         return isValid(datoVerdi) ? formatDate(datoVerdi, format, { locale: nb }) : undefined;
     }
     return undefined;
