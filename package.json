@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",
-    "@navikt/ds-css": "^2.7.7",
     "@navikt/aksel-icons": "^2.7.7",
+    "@navikt/ds-css": "^2.7.7",
     "@navikt/ds-react": "^2.7.7",
     "@navikt/ds-tailwind": "^2.7.7",
     "@navikt/ds-tokens": "^2.7.7",
@@ -33,6 +33,7 @@
     "@vitejs/plugin-react-swc": "^3.2.0",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
+    "date-fns-tz": "^2.0.0",
     "history": "^4.10.1",
     "intl": "^1.2.5",
     "jest": "^29.4.3",

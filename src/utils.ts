@@ -5,15 +5,15 @@ import {
     differenceInDays,
     differenceInMilliseconds,
     endOfToday,
-    format as formatDate,
+    formatDistance,
     isAfter,
     isBefore,
     isValid,
     parseISO,
-    parseJSON,
     startOfDay,
     subDays,
 } from 'date-fns';
+import { format as formatDate } from 'date-fns-tz';
 import nb from 'date-fns/locale/nb';
 import { ReactNode } from 'react';
 
@@ -89,13 +89,13 @@ export function formaterTid(dato: string) {
 
 export function formaterDatoTidSiden(dato: string) {
     const datoVerdi = parseISO(dato);
-    return isValid(datoVerdi) ? `for ${datoVerdi.fromNow()}` : undefined;
+    return isValid(datoVerdi) ? formatDistance(datoVerdi, new Date(), { addSuffix: true, locale: nb }) : undefined;
 }
 
 function erMerEnntoDagerSiden(dato: string) {
     const datoVerdi = parseISO(dato);
     const toDagerSiden = subDays(endOfToday(), 2);
-    return isValid(datoVerdi) ? isBefore(new Date(), toDagerSiden) : false;
+    return isValid(datoVerdi) ? isBefore(datoVerdi, toDagerSiden) : false;
 }
 
 export function erMerEnnSyvDagerTil(dato: string) {

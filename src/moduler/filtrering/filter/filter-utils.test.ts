@@ -1,5 +1,5 @@
 import { HistoriskOppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
-import { Periode, datoErIPeriode } from './filter-utils';
+import { datoErIPeriode } from './filter-utils';
 
 describe('datoErIPeriode', () => {
     it('Skal returnere true når det er ingen historiske perioder', () => {

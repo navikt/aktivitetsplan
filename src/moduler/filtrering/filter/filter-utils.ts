@@ -21,12 +21,6 @@ function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
-// TODO depricated see selectDatoErIPeriode
-export interface Periode {
-    fra: string;
-    til: string;
-}
-
 export function selectDatoErIPeriode(dato: string, state: Store): boolean {
     const historiskPeriode = selectHistoriskPeriode(state);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
