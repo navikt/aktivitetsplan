@@ -15,8 +15,12 @@ import { FieldSettings } from './ControlledDateRangePicker';
 
 interface Props {
     field: FieldSettings;
+    disabledDays?: any[];
 }
-const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required = false, label } }: Props) => {
+const ControlledDatePicker = ({
+    field: { disabled, name, defaultValue, required = false, label },
+    disabledDays,
+}: Props) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     useOutsideClick(isPopoverOpen, () => setIsPopoverOpen(false));
 
@@ -34,6 +38,7 @@ const ControlledDatePicker = ({ field: { disabled, name, defaultValue, required 
         onValidate: (validation) => {
             setValidation(validation);
         },
+        disabled: disabledDays,
         onDateChange: (val) => {
             console.log('On data change', val);
             if (val) {
