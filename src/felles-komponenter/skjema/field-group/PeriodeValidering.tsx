@@ -1,13 +1,13 @@
-import moment from 'moment';
+import { isAfter, isSameDay, parseISO, startOfDay } from 'date-fns';
 import React, { ReactElement } from 'react';
 
 import { erGyldigISODato } from '../../../utils';
 
 export const validerPeriode = (fradato: string, tildato: string) => {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {
-        const momentTilDato = moment(tildato).startOf('day');
-        const momentFraDato = moment(fradato).startOf('day');
-        return momentTilDato.isSameOrAfter(momentFraDato);
+        const til = startOfDay(parseISO(tildato));
+        const fra = startOfDay(parseISO(fradato));
+        return isSameDay(til, fra) || isAfter(til, fra);
     }
     return true;
 };

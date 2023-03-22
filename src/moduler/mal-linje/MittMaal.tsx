@@ -2,7 +2,7 @@ import './mitt-maal.less';
 
 import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import moment from 'moment';
+import { isAfter, parseISO } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -151,7 +151,10 @@ function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boole
         return !sisteEndringVarFraMeg;
     }
 
-    const maalLagdEtterSistLestAktivitetsplan = moment(maal.dato).isAfter(aktivitetsplanLestInfo.tidspunkt);
+    const maalLagdEtterSistLestAktivitetsplan = isAfter(
+        parseISO(maal.dato),
+        parseISO(aktivitetsplanLestInfo.tidspunkt)
+    );
 
     return !sisteEndringVarFraMeg && !maal.lest && maalLagdEtterSistLestAktivitetsplan;
 }

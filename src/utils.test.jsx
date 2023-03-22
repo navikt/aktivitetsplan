@@ -105,7 +105,7 @@ describe('app utils', () => {
         it('Formater datoer riktig', () => {
             expect(Utils.formaterDatoKortManed(null)).toBeUndefined();
             expect(Utils.formaterDatoKortManed(undefined)).toBeUndefined();
-            expect(Utils.formaterDatoKortManed('2014-02-13T14:23:21.123Z')).toEqual('13. feb 2014'); // NB zulu-time != paris-time
+            expect(Utils.formaterDatoKortManed('2014-02-13T14:23:21.123Z')).toEqual('13. feb. 2014'); // NB zulu-time != paris-time
         });
     });
 
@@ -113,7 +113,7 @@ describe('app utils', () => {
         it('Formater datoer riktig', () => {
             expect(Utils.formaterDatoKortManedTid(null)).toBeUndefined();
             expect(Utils.formaterDatoKortManedTid(undefined)).toBeUndefined();
-            expect(Utils.formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual('13. feb 2014 kl 15:23'); // NB zulu-time != paris-time
+            expect(Utils.formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual('13. feb. 2014 kl 15:23'); // NB zulu-time != paris-time
         });
     });
 

@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import * as Api from '../../api/dialogAPI';
 import { STATUS, doThenDispatch } from '../../api/utils';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
@@ -19,7 +17,7 @@ const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
     esklaringsFilter: false,
-    sistOppdatert: moment().toISOString(),
+    sistOppdatert: new Date().toISOString(),
 };
 
 function nyStateMedOppdatertDialog(state, dialog) {
@@ -42,7 +40,7 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                sistOppdatert: moment().toISOString(),
+                sistOppdatert: new Date().toISOString(),
                 data,
             };
         case ESKALERINGS_FILTER_TYPE:
@@ -67,13 +65,5 @@ export function hentDialog() {
         OK: HENTET,
         FEILET: HENTING_FEILET,
         PENDING: HENTER,
-    });
-}
-
-export function sendForhandsorientering(henvendelse) {
-    return doThenDispatch(() => Api.postForhandsorientering(henvendelse), {
-        OK: SEND_FORHANDSORIENTERING_OK,
-        FEILET: SEND_FORHANDSORIENTERING_FEILET,
-        PENDING: SEND_FORHANDSORIENTERING,
     });
 }

@@ -1,5 +1,5 @@
 import { BodyLong, BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
-import moment from 'moment';
+import { differenceInSeconds, parseISO } from 'date-fns';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 
@@ -18,7 +18,7 @@ class TimeoutboxNedtelling extends Component {
 
     render() {
         const { utlopsTidspunkt } = this.props;
-        const sekunderIgjen = moment(utlopsTidspunkt).diff(moment(), 'seconds');
+        const sekunderIgjen = differenceInSeconds(parseISO(utlopsTidspunkt), new Date());
 
         if (sekunderIgjen <= 0) {
             return (

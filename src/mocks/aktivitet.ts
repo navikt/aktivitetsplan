@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { subDays } from 'date-fns';
 import { RestRequest } from 'msw';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
@@ -61,9 +61,9 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               arbeidssted: 'De syv hav',
               arbeidsgiver: 'Uendret i lang tid',
               status: STATUS_FULLFOERT,
-              fraDato: moment().subtract(120, 'year').format(),
+              fraDato: subDays(new Date(), 120).toISOString(),
               tilDato: undefined,
-              endretDato: moment().subtract(100, 'year').format(),
+              endretDato: subDays(new Date(), 100).toISOString(),
           }),
           wrapAktivitet({
               ...enStillingAktivitet({ tittel: 'Ana Baroma' }),
@@ -71,9 +71,9 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               arbeidssted: 'Øya Gral',
               arbeidsgiver: 'Endret nylig',
               status: STATUS_FULLFOERT,
-              fraDato: moment().subtract(120, 'year').format(),
+              fraDato: subDays(new Date(), 120).toISOString(),
               tilDato: undefined,
-              endretDato: moment().subtract(1, 'day').format(),
+              endretDato: subDays(new Date(), 1).toISOString(),
           }),
           wrapAktivitet({
               id: '5',
@@ -400,7 +400,7 @@ function valueOrNow(potentialValue: any) {
     if (potentialValue) {
         return potentialValue;
     }
-    return moment.now().toString();
+    return new Date().toISOString();
 }
 
 function valueOrFalse(potentialValue: any) {
@@ -483,7 +483,7 @@ export const opprettAktivitet = async (req: RestRequest) => {
         id: rndId(),
         opprettetDato: new Date(),
         endretAvType: bruker,
-        endretDato: moment().toISOString(),
+        endretDato: new Date().toISOString(),
         endretAv: bruker,
         versjon: '1',
         erLestAvBruker: eksternBruker,
@@ -521,7 +521,7 @@ function lagNyVersion(aktivitet: VeilarbAktivitet): VeilarbAktivitet {
         ...aktivitet,
         // versjon er typet som string, men er et løpenummer (egentlig global sekvens for alle aktiviteter), derfor denne hacken.
         versjon: String(parseInt(aktivitet.versjon) + 1),
-        endretDato: moment().toISOString(),
+        endretDato: new Date().toISOString(),
         endretAv: bruker,
         endretAvType: bruker,
     };
@@ -621,7 +621,7 @@ export const oppdaterLestFho = async (req: RestRequest) => {
         ...gammelAktivitet,
         forhaandsorientering: {
             ...gammelAktivitet.forhaandsorientering!,
-            lestDato: moment().toISOString(),
+            lestDato: new Date().toISOString(),
         },
         transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,
     };

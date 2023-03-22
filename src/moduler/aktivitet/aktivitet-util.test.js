@@ -1,5 +1,4 @@
-/* eslint-env mocha */
-import moment from 'moment';
+import { subMonths } from 'date-fns';
 
 import {
     beregnFraTil,
@@ -8,6 +7,7 @@ import {
     formatterVarighet,
     splitIEldreOgNyereAktiviteter,
 } from './aktivitet-util';
+/* eslint-env mocha */
 
 describe.skip('aktivitet-util', () => {
     it('beregnFraTil', () => {
@@ -58,8 +58,8 @@ describe.skip('aktivitet-util', () => {
     });
 
     it('skal splitte basert på sorteringsdato hvor sorteringsdato er endretDato > tilDato > fraDato', () => {
-        const treManederSiden = moment().subtract(3, 'month').format();
-        const now = moment().format();
+        const treManederSiden = subMonths(new Date(), 3);
+        const now = new Date();
 
         const manglerAlleDatoer = { endretDato: null, tilDato: null, fraDato: null };
         const manglendeEndretDato = { endretDato: null, tilDato: null, fraDato: treManederSiden };

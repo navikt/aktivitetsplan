@@ -1,5 +1,6 @@
 import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import useFormstate from '@nutgaard/use-formstate';
+import { parseISO, subDays } from 'date-fns';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -7,7 +8,7 @@ import { AnyAction } from 'redux';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { formaterDatoManed } from '../../../../utils';
-import { dagerSiden, todayIsoString } from '../../../../utils/dateUtils';
+import { todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import { Ingress } from './DeleCvContainer';
@@ -39,7 +40,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const erVeileder = useSelector(selectErVeileder);
     const opprettetDato = aktivitet.opprettetDato;
 
-    const syvDagerFoerOpprettet = dagerSiden(opprettetDato, 7) ?? '';
+    const syvDagerFoerOpprettet = subDays(parseISO(opprettetDato), 7).toISOString() ?? '';
 
     const validator = useFormstate<KanDeles, ValidatorProps>({
         avtaltDato: (value, values, props) => {
@@ -47,7 +48,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
             if (props.erVeileder && !value) return 'Du må fylle ut datoen for når du var i dialog med brukeren';
             if (value < syvDagerFoerOpprettet)
                 return 'Dato for dialog kan ikke være mer enn syv dager før kortet ble opprettet';
-            if (value > todayIsoString()) return 'Dato for dialog kan ikke være frem i tid';
+            if (value > new Date().toISOString()) return 'Dato for dialog kan ikke være frem i tid';
         },
         kanDeles: (value) => {
             if (!value) return 'Du må svare ja eller nei';
