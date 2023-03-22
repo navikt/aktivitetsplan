@@ -5,6 +5,7 @@ import {
     differenceInDays,
     differenceInMilliseconds,
     endOfToday,
+    format as formatDate,
     formatDistance,
     isAfter,
     isBefore,
@@ -13,7 +14,6 @@ import {
     startOfDay,
     subDays,
 } from 'date-fns';
-import { format as formatDate } from 'date-fns-tz';
 import nb from 'date-fns/locale/nb';
 import { ReactNode } from 'react';
 
