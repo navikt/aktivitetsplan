@@ -23,7 +23,7 @@ interface Props {
 const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     /* Handle popover state self because it's used inside a web component which causes event.target to be showDom-root */
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-    const openToggle = () => setIsPopoverOpen(true);
+    // const openToggle = () => setIsPopoverOpen(true);
     const closeToggle = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closeToggle);
 
@@ -71,9 +71,9 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         onRangeChange: (val) => {
             setValue(to.name, coerceToUndefined(val?.to));
             setValue(from.name, coerceToUndefined(val?.from));
-            if (val?.to != undefined && val.from !== undefined) {
-                closeToggle();
-            }
+            // if (val?.to != undefined && val.from !== undefined) {
+            //     closeToggle();
+            // }
         },
     });
 
@@ -101,6 +101,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                 {...datepickerProps}
                 open={isPopoverOpen}
                 onOpenToggle={() => setIsPopoverOpen(!isPopoverOpen)}
+                onClose={closeToggle}
                 wrapperClassName="flex flex-1"
             >
                 <div className="flex flex-1 items-start gap-y-8 gap-x-6 flex-wrap">
@@ -111,7 +112,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         label={from?.label ?? `Fra dato ${from.required ? '(obligatorisk)' : '(valgfri)'}`}
                         {...fromInputProps}
                         name={fromField.name}
-                        onFocus={handlers([fromInputProps.onFocus, openToggle])}
+                        onFocus={handlers([fromInputProps.onFocus])}
                         onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormFromValue, fromInputProps.onChange])}
                         ref={(ref) => {
@@ -125,7 +126,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         label={to?.label ?? `Til dato ${to.required ? '(obligatorisk)' : '(valgfri)'}`}
                         {...toInputProps}
                         name={toField.name}
-                        onFocus={handlers([toInputProps.onFocus, openToggle])}
+                        onFocus={handlers([toInputProps.onFocus])}
                         onBlur={handlers([toField.onBlur, toInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormToValue, toInputProps.onChange])}
                         ref={(ref) => {
