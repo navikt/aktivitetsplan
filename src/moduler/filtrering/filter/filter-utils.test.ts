@@ -1,3 +1,4 @@
+import { HistoriskOppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
 import { Periode, datoErIPeriode } from './filter-utils';
 
 describe('datoErIPeriode', () => {
@@ -12,10 +13,10 @@ describe('datoErIPeriode', () => {
 
     it('Skal returnere true når dato er i periode', () => {
         const dato = '2020-01-24T12:00:00+00:00';
-        const valgtHistorisk: Periode = {
-            fra: '2020-01-23T12:00:00+00:00',
-            til: '2020-01-25T12:00:00+00:00',
-        };
+        const valgtHistorisk = {
+            startDato: '2020-01-23T12:00:00+00:00',
+            sluttDato: '2020-01-25T12:00:00+00:00',
+        } as HistoriskOppfolgingsPeriode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -25,10 +26,10 @@ describe('datoErIPeriode', () => {
 
     it('Skal returnere true når dato er i periode - forskjellig tidssone', () => {
         const dato = '2020-01-24T12:00:00+00:00';
-        const valgtHistorisk: Periode = {
-            fra: '2020-01-24T13:00:00+02:00', //11
-            til: '2020-01-24T15:00:00+02:00', //13
-        };
+        const valgtHistorisk = {
+            startDato: '2020-01-24T13:00:00+02:00', //11
+            sluttDato: '2020-01-24T15:00:00+02:00', //13
+        } as HistoriskOppfolgingsPeriode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -38,10 +39,10 @@ describe('datoErIPeriode', () => {
 
     it('Skal returnere false når dato ikke er i periode', () => {
         const dato = '2020-01-24T12:00:00+00:00';
-        const valgtHistorisk: Periode = {
-            fra: '2020-01-25T12:00:00+00:00',
-            til: '2020-01-26T12:00:00+00:00',
-        };
+        const valgtHistorisk = {
+            startDato: '2020-01-25T12:00:00+00:00',
+            sluttDato: '2020-01-26T12:00:00+00:00',
+        } as HistoriskOppfolgingsPeriode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -51,10 +52,10 @@ describe('datoErIPeriode', () => {
 
     it('Skal returnere false når ikke dato er i periode - forskjellig tidssone', () => {
         const dato = '2020-01-24T14:00:00+02:00'; //12
-        const valgtHistorisk: Periode = {
-            fra: '2020-01-24T13:00:00+00:00',
-            til: '2020-01-24T15:00:00+00:00',
-        };
+        const valgtHistorisk = {
+            startDato: '2020-01-24T13:00:00+00:00',
+            sluttDato: '2020-01-24T15:00:00+00:00',
+        } as HistoriskOppfolgingsPeriode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -64,10 +65,10 @@ describe('datoErIPeriode', () => {
 
     it('Skal returnere true når dato er lik historisk', () => {
         const dato = '2020-01-24T14:00:00+02:00';
-        const valgtHistorisk: Periode = {
-            fra: '2020-01-24T14:00:00+02:00',
-            til: '2020-01-24T14:00:00+02:00',
-        };
+        const valgtHistorisk = {
+            startDato: '2020-01-24T14:00:00+02:00',
+            sluttDato: '2020-01-24T14:00:00+02:00',
+        } as HistoriskOppfolgingsPeriode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
