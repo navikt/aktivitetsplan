@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
-import ControlledDatePicker, { FieldSettings } from './ControlledDateRangePicker';
+import ControlledDatePicker from './ControlledDatePicker';
+import ControlledDateRangePicker, { FieldSettings } from './ControlledDateRangePicker';
 
 type FormValuesWithDates = { fraDato: string; tilDato: string };
 
@@ -15,12 +16,15 @@ function MaybeAvtaltDateRangePicker<T extends FormValuesWithDates>({ aktivitet, 
     const defaultToValue = aktivitet?.tilDato ? new Date(aktivitet.tilDato) : to.defaultValue;
     const defaultFromValue = aktivitet?.fraDato ? new Date(aktivitet.fraDato) : from.defaultValue;
     return aktivitet && aktivitet.avtalt && aktivitet.fraDato ? (
-        <ControlledDatePicker
-            from={{ defaultValue: defaultFromValue, ...from, disabled: true }}
-            to={{ defaultValue: defaultToValue, ...to }}
-        />
+        <div className="flex gap-4">
+            <ControlledDatePicker field={{ ...from, disabled: true, defaultValue: defaultFromValue }} />
+            <ControlledDatePicker
+                field={{ ...to, defaultValue: defaultToValue }}
+                disabledDays={[{ before: defaultFromValue }]}
+            />
+        </div>
     ) : (
-        <ControlledDatePicker
+        <ControlledDateRangePicker
             from={{ defaultValue: defaultFromValue, ...from }}
             to={{ defaultValue: defaultToValue, ...to }}
         />
