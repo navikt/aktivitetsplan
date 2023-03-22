@@ -1,6 +1,6 @@
 import { UNSAFE_DatePicker as DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ChangeEventHandler, MutableRefObject, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
@@ -77,15 +77,19 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         },
     });
 
+    //
+    const memoDefaultDates = useMemo(() => {
+        return { fromDefaultValue: from.defaultValue, toDefaultValue: to.defaultValue };
+    }, [from.defaultValue?.getTime(), to.defaultValue?.getTime()]);
     // Needed to make change in defaultValue actually have any effect
     useEffect(() => {
         reset();
         // Only using reset
         setSelected({
-            from: from.defaultValue,
-            to: to.defaultValue,
+            from: memoDefaultDates.fromDefaultValue,
+            to: memoDefaultDates.toDefaultValue,
         });
-    }, [from.defaultValue, to.defaultValue]);
+    }, [memoDefaultDates]);
 
     /* These on-change handlers are needed to handle manual text-input */
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {

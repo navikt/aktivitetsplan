@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
+import { startOfDay } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -35,7 +36,7 @@ const StillingAktivitetForm = (props: Props) => {
 
     const defaultValues: StillingAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(aktivitet?.fraDato),
+        fraDato: dateOrUndefined(aktivitet?.fraDato) ?? startOfDay(new Date()),
         tilDato: dateOrUndefined(aktivitet?.tilDato),
         beskrivelse: aktivitet?.beskrivelse || '',
         arbeidssted: aktivitet?.arbeidssted || '',
@@ -80,7 +81,7 @@ const StillingAktivitetForm = (props: Props) => {
                     />
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true }}
+                        from={{ name: 'fraDato', required: true, defaultValue: defaultValues.fraDato }}
                         to={{ name: 'tilDato', required: true, label: 'Frist (valgfri)' }}
                     />
                     <TextField
