@@ -35,7 +35,7 @@ const StillingAktivitetForm = (props: Props) => {
 
     const defaultValues: StillingAktivitetFormValues = {
         tittel: aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(aktivitet?.fraDato) ?? new Date(),
+        fraDato: dateOrUndefined(aktivitet?.fraDato),
         tilDato: dateOrUndefined(aktivitet?.tilDato),
         beskrivelse: aktivitet?.beskrivelse || '',
         arbeidssted: aktivitet?.arbeidssted || '',
@@ -80,8 +80,8 @@ const StillingAktivitetForm = (props: Props) => {
                     />
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true, defaultValue: defaultValues?.fraDato }}
-                        to={{ name: 'tilDato', defaultValue: defaultValues?.tilDato, label: 'Frist (valgfri)' }}
+                        from={{ name: 'fraDato', required: true }}
+                        to={{ name: 'tilDato', required: true, label: 'Frist (valgfri)' }}
                     />
                     <TextField
                         disabled={avtalt}
