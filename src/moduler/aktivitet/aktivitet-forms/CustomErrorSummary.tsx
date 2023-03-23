@@ -24,6 +24,9 @@ const CustomErrorSummary = <T extends FieldValues>(props: Props<T>) => {
     return (
         <ErrorSummary ref={errorRef} heading={heading || 'For å gå videre må du rette opp følgende:'}>
             {Object.entries(errors).map(([key, value], index) => {
+                if (value.type === 'custom') {
+                    return <ErrorSummary.Item key={index}>{value.message}</ErrorSummary.Item>;
+                }
                 const refId = (value.ref as HTMLElement).id ?? (value.ref as { name: string }).name;
                 return (
                     <ErrorSummary.Item href={`#${refId}`} key={index}>

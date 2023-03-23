@@ -12,6 +12,7 @@ export const dagerSiden = (dato: string, antallDager: number): string | null => 
     return format(prevDate, 'yyyy-MM-dd');
 };
 
+// mm:ss
 export const sekunderTilMinutter = (sekunder: number): string => {
     const ss = sekunder % 60;
     const mm = Math.floor(sekunder / 60);

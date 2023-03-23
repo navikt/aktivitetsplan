@@ -4,8 +4,7 @@ import { VeilarbAktivitet, isSamtaleOrMote } from '../../../../datatypes/internA
 import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
 import { ValideringsProps } from './AktivitetStatusForm';
 
-export const kanOppdatereStatus = (aktivitet: VeilarbAktivitet, values: ValideringsProps) => {
-    const status = values.aktivitetstatus as AktivitetStatus;
+export const kanOppdatereStatus = (aktivitet: VeilarbAktivitet, status: AktivitetStatus) => {
     const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
     const ferdigOgManglerPubliseringAvSamtaleReferat =
         isSamtaleOrMote(aktivitet) && ferdigStatus && manglerPubliseringAvSamtaleReferat(aktivitet, status);

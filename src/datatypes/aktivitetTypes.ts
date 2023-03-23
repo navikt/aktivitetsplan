@@ -12,12 +12,20 @@ import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
-export type AktivitetStatus =
-    | typeof STATUS_AVBRUTT
-    | typeof STATUS_FULLFOERT
-    | typeof STATUS_GJENNOMFOERT
-    | typeof STATUS_PLANLAGT
-    | typeof STATUS_BRUKER_ER_INTRESSERT;
+// export type AktivitetStatus =
+//     | typeof STATUS_AVBRUTT
+//     | typeof STATUS_FULLFOERT
+//     | typeof STATUS_GJENNOMFOERT
+//     | typeof STATUS_PLANLAGT
+//     | typeof STATUS_BRUKER_ER_INTRESSERT;
+
+export enum AktivitetStatus {
+    STATUS_BRUKER_ER_INTRESSERT = 'BRUKER_ER_INTERESSERT',
+    STATUS_PLANLAGT = 'PLANLAGT',
+    STATUS_GJENNOMFOERT = 'GJENNOMFORES',
+    STATUS_FULLFOERT = 'FULLFORT',
+    STATUS_AVBRUTT = 'AVBRUTT',
+}
 
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
 export type StillingFraNavSoknadsstatus =
@@ -35,13 +43,7 @@ export type Livslopsstatus =
     | 'AVBRUTT_AV_SYSTEM'
     | 'AVBRUTT_AV_BRUKER';
 
-export type BrukerType =
-    'BRUKER' |
-    'ARBEIDSGIVER' |
-    'TILTAKSARRANGOER' |
-    'NAV' |
-    'SYSTEM' |
-    'ARENAIDENT';
+export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 
 export interface Lest {
     tidspunkt: string;

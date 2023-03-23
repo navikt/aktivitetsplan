@@ -74,7 +74,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
             }}
             open={open}
             tittel="Hvor langt har du kommet i søknadsprosessen?"
-            form={form}
+            content={form}
             subtittel={<StillingEtikett aktivitet={aktivitet} />}
         />
     );

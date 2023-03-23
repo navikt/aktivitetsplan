@@ -227,7 +227,7 @@ function erFullfoertUtenReferat(erAvtalt: boolean, status: AktivitetStatus, akti
     );
 }
 
-export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType) {
+export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType): boolean {
     return (
         erAvtaltOgAvbrutt(erAvtalt, status) ||
         erFullfoertUtenReferat(erAvtalt, status, aktivitetType) ||

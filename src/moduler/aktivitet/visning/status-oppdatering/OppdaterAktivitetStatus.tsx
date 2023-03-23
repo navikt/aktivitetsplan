@@ -72,7 +72,7 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
             open={open}
             tittel="Hva er status på aktiviteten?"
             subtittel={subtittel}
-            form={form}
+            content={form}
         />
     );
 };

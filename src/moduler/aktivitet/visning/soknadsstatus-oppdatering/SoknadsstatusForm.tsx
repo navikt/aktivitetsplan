@@ -1,89 +1,88 @@
-import { Button, RadioGroup } from '@navikt/ds-react';
-import useFormstate from '@nutgaard/use-formstate';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { Button, Radio, RadioGroup } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import * as konstanter from '../../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
-import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
 
 interface Props {
-    aktivitet: StillingFraNavAktivitet;
-    disabled?: boolean;
+    soknadsstatus?: Exclude<StillingFraNavSoknadsstatus, 'IKKE_FATT_JOBBEN'>; // IKKE_FATT_JOBBEN kan kun endres i backend
+    disabled: boolean;
     onSubmit(val: { soknadsstatus: string }): Promise<any>;
 }
 
-type FormType = {
-    soknadsstatus: string;
+const RadioButtons: Record<Exclude<StillingFraNavSoknadsstatus, 'IKKE_FATT_JOBBEN'>, string> = {
+    VENTER: 'Venter på å bli kontaktet av NAV eller arbeidsgiver',
+    CV_DELT: 'CV er delt med arbeidsgiver',
+    SKAL_PAA_INTERVJU: 'Skal på intervju',
+    JOBBTILBUD: 'Fått jobbtilbud',
+    AVSLAG: 'Ikke fått jobben',
 };
 
-const fields = [
-    {
-        label: 'Venter på å bli kontaktet av NAV eller arbeidsgiver',
-        value: konstanter.VENTER,
-    },
-    {
-        label: 'CV er delt med arbeidsgiver',
-        value: konstanter.CV_DELT,
-    },
-    {
-        label: 'Skal på intervju',
-        value: konstanter.SKAL_PAA_INTERVJU,
-    },
-    {
-        label: 'Fått jobbtilbud',
-        value: konstanter.JOBBTILBUD,
-    },
-    {
-        label: 'Ikke fått jobben',
-        value: konstanter.AVSLAG,
-    },
-];
+const schema = z.object({
+    soknadsstatus: z.enum([
+        konstanter.VENTER,
+        konstanter.CV_DELT,
+        konstanter.SKAL_PAA_INTERVJU,
+        konstanter.JOBBTILBUD,
+        konstanter.AVSLAG,
+    ]),
+});
+
+export type SoknadsstatusFormValues = z.infer<typeof schema>;
 
 const SoknadsstatusForm = (props: Props) => {
-    const { aktivitet, disabled = true, onSubmit } = props;
+    const { soknadsstatus, disabled, onSubmit } = props;
 
-    const validator = useFormstate<FormType>({
-        soknadsstatus: () => undefined,
-    });
-
-    const initialValue = {
-        soknadsstatus: aktivitet.stillingFraNavData?.soknadsstatus || '',
+    const defaultValues: SoknadsstatusFormValues = {
+        soknadsstatus: soknadsstatus || konstanter.VENTER,
     };
 
-    const state = validator(initialValue);
+    const {
+        handleSubmit,
+        setValue,
+        formState: { isDirty, isSubmitting },
+    } = useForm<SoknadsstatusFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: true });
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
     useEffect(() => {
-        setFormIsDirty('soknadsstatus', !state.pristine);
+        setFormIsDirty('soknadsstatus', isDirty);
         return () => {
             setFormIsDirty('soknadsstatus', false);
         };
-    }, [setFormIsDirty, state.pristine]);
+    }, [setFormIsDirty, isDirty]);
 
-    const disable = state.submitting || disabled;
+    const disable = isSubmitting || disabled;
 
-    const onChangeSoknadStatus = (value: StillingFraNavSoknadsstatus) => {
-        state.fields.soknadsstatus.setValue(value);
+    const onChangeSoknadsstatus = (value: Exclude<StillingFraNavSoknadsstatus, 'IKKE_FATT_JOBBEN'>) => {
+        setValue('soknadsstatus', value);
     };
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)}>
+        <form
+            onSubmit={handleSubmit((data) => {
+                onSubmit(data);
+            })}
+        >
             <div className="pb-4">
                 <RadioGroup
                     legend={''}
-                    value={state.fields.soknadsstatus.input.value}
-                    onChange={onChangeSoknadStatus}
+                    defaultValue={defaultValues.soknadsstatus}
+                    onChange={onChangeSoknadsstatus}
                     disabled={disable}
                 >
-                    {fields.map(({ label, value }) => (
-                        <Radio key={value} value={value} label={label} />
+                    {Object.entries(RadioButtons).map(([key, value]) => (
+                        <Radio key={key} value={key}>
+                            {value}
+                        </Radio>
                     ))}
                 </RadioGroup>
             </div>
-            <Button className="oppdater-status" disabled={disable} loading={state.submitting}>
+            <Button className="oppdater-status" disabled={disable} loading={isSubmitting}>
                 Lagre
             </Button>
         </form>
