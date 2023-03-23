@@ -63,11 +63,7 @@ const SoknadsstatusForm = (props: Props) => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit((data) => {
-                onSubmit(data);
-            })}
-        >
+        <form onSubmit={handleSubmit((data) => onSubmit(data))}>
             <div className="pb-4">
                 <RadioGroup
                     legend={''}

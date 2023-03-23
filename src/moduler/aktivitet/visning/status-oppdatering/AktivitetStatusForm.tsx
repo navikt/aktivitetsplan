@@ -52,6 +52,8 @@ const schema = z
     ])
     .superRefine((values, ctx) => {
         const error = kanOppdatereStatus(values.aktivitet, values.aktivitetstatus);
+        console.log('values.aktivitet', values.aktivitet);
+        console.log('error', error);
         if (error) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
@@ -82,6 +84,7 @@ const AktivitetStatusForm = (props: Props) => {
 
     useEffect(() => {
         reset();
+        setValue('aktivitet', aktivitet);
     }, [aktivitet]);
 
     const { setFormIsDirty } = useContext(DirtyContext);

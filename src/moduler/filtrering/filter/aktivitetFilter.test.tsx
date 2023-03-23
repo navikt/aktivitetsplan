@@ -6,7 +6,7 @@ import { Store } from 'redux';
 
 import { STATUS } from '../../../api/utils';
 import { STATUS_GJENNOMFOERT } from '../../../constant';
-import { AlleAktiviteter, StillingFraNavSoknadsstatus, StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, StillingFraNavSoknadsstatus, StillingStatus } from '../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import Hovedside from '../../../hovedside/Hovedside';
 import { wrapAktivitet } from '../../../mocks/aktivitet';
@@ -194,7 +194,7 @@ describe.skip('aktivitets-filter', () => {
     it('Should filter based on etiketter (stilling)', async () => {
         const store = create(initialStore);
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
-        const statuser: StillingsStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
+        const statuser: StillingStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,

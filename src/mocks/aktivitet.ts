@@ -2,7 +2,7 @@ import moment from 'moment';
 import { RestRequest } from 'msw';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
-import { BrukerType } from '../datatypes/aktivitetTypes';
+import { BrukerType, StillingStatus } from '../datatypes/aktivitetTypes';
 import {
     CvKanDelesData,
     MoteAktivitet,
@@ -50,7 +50,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               ...enStillingAktivitet({ tittel: 'Langemann' }),
               beskrivelse: 'Ute på åpent hav, er jeg kjent som sabeltanns skygge',
               status: 'GJENNOMFORES',
-              etikett: 'SOKNAD_SENDT',
+              etikett: StillingStatus.SOKNAD_SENDT,
               kontaktperson: 'Sabeltann',
               arbeidsgiver: 'Kaptein Sabeltann',
               arbeidssted: 'Den sorte dame',

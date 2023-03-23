@@ -1,23 +1,9 @@
-import {
-    STATUS_AVBRUTT,
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_FULLFOERT,
-    STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
-} from '../constant';
 import { ArenaAktivitet, ArenaAktivitetType } from './arenaAktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
 import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
-
-// export type AktivitetStatus =
-//     | typeof STATUS_AVBRUTT
-//     | typeof STATUS_FULLFOERT
-//     | typeof STATUS_GJENNOMFOERT
-//     | typeof STATUS_PLANLAGT
-//     | typeof STATUS_BRUKER_ER_INTRESSERT;
 
 export enum AktivitetStatus {
     STATUS_BRUKER_ER_INTRESSERT = 'BRUKER_ER_INTERESSERT',
@@ -27,7 +13,14 @@ export enum AktivitetStatus {
     STATUS_AVBRUTT = 'AVBRUTT',
 }
 
-export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
+export enum StillingStatus {
+    INGEN_VALGT = 'INGEN_VALGT',
+    SOKNAD_SENDT = 'SOKNAD_SENDT',
+    INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU',
+    AVSLAG = 'AVSLAG',
+    JOBBTILBUD = 'JOBBTILBUD',
+}
+
 export type StillingFraNavSoknadsstatus =
     | 'VENTER'
     | 'CV_DELT'
@@ -62,7 +55,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     endretAv: string;
     endretDato?: string;
     avtalt: boolean;
-    etikett?: StillingsStatus;
+    etikett?: StillingStatus; // todo sjekk ut hvorfor denne ligger på baseprops og ikke i StillingAktivitet
     transaksjonsType: T;
     historisk: boolean;
     fraDato?: string;
