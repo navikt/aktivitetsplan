@@ -2,7 +2,7 @@ import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { formaterDatoEllerTidSiden } from '../../../../utils';
+import { formaterDatoEllerTidSiden } from '../../../../utils/dateUtils';
 import Endringstekst from './Endringstekst';
 import styles from './VersjonInnslag.module.less';
 

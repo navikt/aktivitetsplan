@@ -7,8 +7,7 @@ import { AnyAction } from 'redux';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import { formaterDatoManed } from '../../../../utils';
-import { todayIsoString } from '../../../../utils/dateUtils';
+import { formaterDatoManed, todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import { Ingress } from './DeleCvContainer';

@@ -1,7 +1,7 @@
 import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
-import { formaterDatoKortManed } from '../../utils';
+import { formaterDatoKortManed } from '../../utils/dateUtils';
 import LenkeTilDialog from '../dialog/DialogLink';
 
 interface Props {

@@ -1,9 +1,7 @@
 import { BodyLong, BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
-import { differenceInSeconds, parseISO } from 'date-fns';
+import { differenceInSeconds, parseISO, secondsToMinutes } from 'date-fns';
 import PT from 'prop-types';
 import React, { Component } from 'react';
-
-import { sekunderTilMinutter } from '../../utils/dateUtils';
 
 class TimeoutboxNedtelling extends Component {
     componentDidMount() {
@@ -34,7 +32,7 @@ class TimeoutboxNedtelling extends Component {
             );
         }
 
-        const tid = sekunderTilMinutter(sekunderIgjen);
+        const tid = secondsToMinutes(sekunderIgjen);
 
         return (
             <Modal.Content>
@@ -47,7 +45,7 @@ class TimeoutboxNedtelling extends Component {
                 <Button className="mr-4" onClick={() => window.location.reload()}>
                     Last siden på nytt
                 </Button>
-                <Button variant="secondary" onClick={() => document.querySelector('#logout').click()}>
+                <Button variant="secondary" onClick={() => document.querySelector('#login-knapp-id').click()}>
                     Logg ut
                 </Button>
             </Modal.Content>
