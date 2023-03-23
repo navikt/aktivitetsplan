@@ -1,4 +1,4 @@
-import { Label } from '@navikt/ds-react';
+import { Heading, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -19,7 +19,9 @@ const DetaljFelt = (props: Props) => {
                 'flex-auto break-words': beskrivelse,
             })}
         >
-            <Label>{tittel}</Label>
+            <Heading level="2" size="xsmall">
+                {tittel}
+            </Heading>
             {children}
         </div>
     );

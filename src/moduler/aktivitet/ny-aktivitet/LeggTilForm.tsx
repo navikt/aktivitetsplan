@@ -18,7 +18,7 @@ const LeggTilForm = () => {
             feilmeldinger={aktivitetFeilmeldinger}
         >
             <div className="mb-4">
-                <Heading level="2" size="large">
+                <Heading level="1" size="large">
                     Legg til en aktivitet
                 </Heading>
                 {!erVeileder ? (
@@ -29,7 +29,9 @@ const LeggTilForm = () => {
             </div>
             {erVeileder ? (
                 <div className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-8 px-8 py-4">
-                    <Heading size="medium">For NAV-ansatt</Heading>
+                    <Heading level="2" size="medium">
+                        For NAV-ansatt
+                    </Heading>
                     <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
                         Avtale om å søke jobber
                     </Lenkepanel>
@@ -43,7 +45,7 @@ const LeggTilForm = () => {
             ) : null}
             <div className="mt-8">
                 {erVeileder ? (
-                    <Heading size="medium" className="mb-4">
+                    <Heading level="2" size="medium" className="mb-4">
                         For bruker og NAV-ansatt
                     </Heading>
                 ) : null}
