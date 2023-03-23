@@ -73,7 +73,7 @@ function App({ fnr }: { fnr: string }) {
                                 </Route>
                             </Switch>
                         </Router>
-                        <HiddenIf hidden={false || !window.appconfig.TIMEOUTBOX}>
+                        <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
                         </HiddenIf>
                     </div>
