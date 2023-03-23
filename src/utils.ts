@@ -15,7 +15,7 @@ import {
     subDays,
 } from 'date-fns';
 import nb from 'date-fns/locale/nb';
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 export function fn(value: any) {
     return typeof value === 'function' ? value : () => value;
@@ -123,7 +123,7 @@ export function datoComparator(a: string, b: string) {
 
 const oneIfPresent = (x: string | undefined) => (x ? 1 : 0);
 
-export function HiddenIf({ hidden, children }: { hidden: boolean; children: ReactNode }) {
+export function HiddenIf({ hidden, children }: { hidden: boolean; children: ReactElement }): ReactElement | null {
     if (hidden) {
         return null;
     }

@@ -1,3 +1,5 @@
+import { addMinutes, format } from 'date-fns';
+
 import * as Utils from './utils';
 
 describe('app utils', () => {
@@ -97,7 +99,10 @@ describe('app utils', () => {
         it('Formater datoer riktig', () => {
             expect(Utils.formaterDatoTid(null)).toBeUndefined();
             expect(Utils.formaterDatoTid(undefined)).toBeUndefined();
-            expect(Utils.formaterDatoTid('2014-02-13T14:23:21.123Z')).toEqual('13.02.2014 15:23'); // NB zulu-time != paris-time
+            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
+            expect(Utils.formaterDatoTid('2014-02-13T14:23:21.123Z')).toEqual(
+                `13.02.2014 ${zuluDate.getHours()}:${zuluDate.getMinutes()}`
+            ); // NB zulu-time != paris-time
         });
     });
 
@@ -105,7 +110,7 @@ describe('app utils', () => {
         it('Formater datoer riktig', () => {
             expect(Utils.formaterDatoKortManed(null)).toBeUndefined();
             expect(Utils.formaterDatoKortManed(undefined)).toBeUndefined();
-            expect(Utils.formaterDatoKortManed('2014-02-13T14:23:21.123Z')).toEqual('13. feb. 2014'); // NB zulu-time != paris-time
+            expect(Utils.formaterDatoKortManed('2014-02-13T14:21:21.123Z')).toEqual('13. feb. 2014'); // NB zulu-time != paris-time
         });
     });
 
@@ -121,7 +126,10 @@ describe('app utils', () => {
         it('Formater datoer riktig', () => {
             expect(Utils.formaterTid(null)).toBeUndefined();
             expect(Utils.formaterTid(undefined)).toBeUndefined();
-            expect(Utils.formaterTid('2014-02-13T14:23:21.123Z')).toEqual('15:23'); // NB zulu-time != paris-time
+            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
+            expect(Utils.formaterTid('2014-02-13T14:23:21.123Z')).toEqual(
+                `${zuluDate.getHours()}:${zuluDate.getMinutes()}`
+            ); // NB zulu-time != paris-time
         });
     });
 
