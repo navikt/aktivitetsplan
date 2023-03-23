@@ -118,7 +118,10 @@ describe('app utils', () => {
         it('Formater datoer riktig', () => {
             expect(Utils.formaterDatoKortManedTid(null)).toBeUndefined();
             expect(Utils.formaterDatoKortManedTid(undefined)).toBeUndefined();
-            expect(Utils.formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual('13. feb. 2014 kl 15:23'); // NB zulu-time != paris-time
+            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
+            expect(Utils.formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual(
+                `13. feb. 2014 kl ${zuluDate.getHours()}:${zuluDate.getMinutes()}`
+            ); // NB zulu-time != paris-time
         });
     });
 
