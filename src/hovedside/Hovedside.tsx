@@ -35,7 +35,7 @@ const Hovedside = () => {
     }, [dispatch]);
 
     return (
-        <div className="hovedside">
+        <main id="main" className="hovedside">
             <div className="flex items-center flex-col h-full">
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
@@ -52,7 +52,7 @@ const Hovedside = () => {
                 </OppfolgingStatus>
                 <PublicRouting />
             </div>
-        </div>
+        </main>
     );
 };
 
