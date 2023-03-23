@@ -1,5 +1,3 @@
-import { addMinutes, format } from 'date-fns';
-
 import * as Utils from './utils';
 
 describe('app utils', () => {

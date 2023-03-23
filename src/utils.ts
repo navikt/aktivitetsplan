@@ -1,4 +1,4 @@
-//TODO: konvertere dato stuff til date-fns og flytte til dateUtils.ts
+//TODO: flytte til dateUtils.ts
 
 import {
     addDays,
@@ -15,7 +15,7 @@ import {
     subDays,
 } from 'date-fns';
 import nb from 'date-fns/locale/nb';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 export function fn(value: any) {
     return typeof value === 'function' ? value : () => value;
