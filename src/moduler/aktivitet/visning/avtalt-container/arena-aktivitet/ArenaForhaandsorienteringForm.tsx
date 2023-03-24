@@ -1,82 +1,73 @@
-import { Alert, Detail } from '@navikt/ds-react';
-import useFormstate, { FieldState } from '@nutgaard/use-formstate';
-import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { Alert, Checkbox, Detail } from '@navikt/ds-react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { z } from 'zod';
 
 import { STATUS } from '../../../../../api/utils';
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
-import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
+import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
+import { AVTALT_TEKST, AVTALT_TEKST_119 } from '../utilsForhaandsorientering';
 import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
-const avtaltTekst =
-    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
-    'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
-    'ber vi deg ta kontakt med veilederen din så snart som mulig.';
-
-const avtaltTekst119 =
-    'Du kan få redusert utbetaling av arbeidsavklaringspenger med én stønadsdag hvis du lar være å ' +
-    '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
-    'fram av folketrygdloven § 11-9.';
-
-const validate = (val: string) => {
-    if (val.trim().length === 0) {
-        return 'Du må fylle ut teksten';
-    }
-    if (val.length > 500) {
-        return 'Du må korte ned teksten til 500 tegn';
-    }
-};
-
 interface Props {
-    setSendtAtErAvtaltMedNav(): void;
     aktivitet: ArenaAktivitet;
-    hidden: boolean;
+    setSendtAtErAvtaltMedNav(): void;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
-type FormType = {
-    tekst: string;
-    checked: string;
-    forhaandsorienteringType: string;
-};
+const schema = z.discriminatedUnion('forhaandsorienteringType', [
+    z.object({
+        forhaandsorienteringType: z.literal(ForhaandsorienteringType.SEND_STANDARD),
+    }),
+    z.object({
+        forhaandsorienteringType: z.literal(ForhaandsorienteringType.SEND_PARAGRAF_11_9),
+        avtaltText119: z.string().min(1, 'Du må fylle ut teksten').max(500, 'Du må korte ned teksten til 500 tegn'),
+    }),
+]);
+
+export type ArenaForhaandsorienteringFormValues = z.infer<typeof schema>;
 
 const ArenaForhaandsorienteringForm = (props: Props) => {
-    const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;
+    const { aktivitet, setSendtAtErAvtaltMedNav, setForhandsorienteringType } = props;
+
+    const [showForm, setShowForm] = useState(false);
 
     const dialogStatus = useSelector(selectDialogStatus);
     const arenaAktivitetRequestStatus = useSelector(selectArenaAktivitetStatus);
     const dispatch = useDispatch();
 
-    const validator = useFormstate<FormType>({
-        tekst: validate,
-        checked: () => undefined,
-        forhaandsorienteringType: () => undefined,
+    const defaultValues: ArenaForhaandsorienteringFormValues = {
+        forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD as any,
+        avtaltText119: AVTALT_TEKST_119,
+    };
+
+    const { register, handleSubmit, watch } = useForm<ArenaForhaandsorienteringFormValues>({
+        defaultValues,
+        resolver: zodResolver(schema),
     });
 
-    const state = validator({
-        tekst: avtaltTekst119,
-        forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD,
-        checked: '',
-    });
-
-    if (hidden) {
-        return null;
-    }
-
-    const onSubmit = (data: { forhaandsorienteringType: string; tekst: string }) => {
+    const onSubmit = (formValues: ArenaForhaandsorienteringFormValues) => {
         const tekst =
-            data.forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD ? avtaltTekst : data.tekst;
+            formValues.forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD
+                ? AVTALT_TEKST
+                : formValues.avtaltText119;
 
-        setForhandsorienteringType(data.forhaandsorienteringType as ForhaandsorienteringType);
-        return sendForhaandsorienteringArenaAktivitet(aktivitet, {
+        const forhaandsorientering: Forhaandsorientering = {
+            type: formValues.forhaandsorienteringType,
             tekst,
-            type: data.forhaandsorienteringType,
-        })(dispatch).then(() => {
+        };
+
+        setForhandsorienteringType(formValues.forhaandsorienteringType);
+        return sendForhaandsorienteringArenaAktivitet(
+            aktivitet,
+            forhaandsorientering
+        )(dispatch).then(() => {
             setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();
             // @ts-ignore
@@ -92,10 +83,10 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
     return (
         <form
             className="border border-border-alt-3 bg-surface-alt-3-subtle flex flex-col rounded-md p-4"
-            onSubmit={state.onSubmit(onSubmit)}
+            onSubmit={handleSubmit((data) => onSubmit(data))}
         >
             <div className="flex items-center justify-between">
-                <Checkbox disabled={lasterData} {...(state.fields.checked as FieldState & { error: never })}>
+                <Checkbox disabled={lasterData} onChange={() => setShowForm(!showForm)}>
                     Legg til forhåndsorientering
                 </Checkbox>
                 <Detail>FOR NAV-ANSATT</Detail>
@@ -103,11 +94,9 @@ const ArenaForhaandsorienteringForm = (props: Props) => {
             <Alert variant="info" className="mt-2" inline>
                 Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;
             </Alert>
-            <ForhaandsorienteringsMeldingArenaaktivitet
-                visible={state.fields.checked.input.value === 'true'}
-                lasterData={lasterData}
-                state={state}
-            />
+            {showForm && (
+                <ForhaandsorienteringsMeldingArenaaktivitet lasterData={lasterData} register={register} watch={watch} />
+            )}
         </form>
     );
 };

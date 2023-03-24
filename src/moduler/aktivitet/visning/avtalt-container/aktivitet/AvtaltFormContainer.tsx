@@ -26,11 +26,11 @@ const AvtaltFormContainer = (props: Props) => {
 
     return (
         <>
-            {aktivitet.avtalt && aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
+            {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE && aktivitet.avtalt ? (
                 mindreEnnSyvDagerTil ? (
                     <KanIkkeLeggeTilForhaandsorienteringInfotekst />
                 ) : (
-                    <ForhaandsorienteringForm hidden={mindreEnnSyvDagerTil} {...props} />
+                    <ForhaandsorienteringForm {...props} aktivitet={aktivitet} />
                 )
             ) : (
                 <AvtaltForm

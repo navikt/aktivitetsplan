@@ -8,13 +8,13 @@ import ArenaForhaandsorienteringForm from './ArenaForhaandsorienteringForm';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForhaandsorienteringInfotekst';
 
 interface Props {
-    setSendtAtErAvtaltMedNav(): void;
     aktivitet: ArenaAktivitet;
+    setSendtAtErAvtaltMedNav(): void;
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
 const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
-    const { setSendtAtErAvtaltMedNav, aktivitet, setForhandsorienteringType } = props;
+    const { aktivitet, setSendtAtErAvtaltMedNav, setForhandsorienteringType } = props;
 
     const merEnnSyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
     const kanSendeVarsel = useKanSendeVarsel();
@@ -30,10 +30,9 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
                     <KanIkkeLeggeTilForhaandsorienteringInfotekst />
                 ) : (
                     <ArenaForhaandsorienteringForm
-                        setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
                         aktivitet={aktivitet}
+                        setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
                         setForhandsorienteringType={setForhandsorienteringType}
-                        hidden={!merEnnSyvDagerTil}
                     />
                 )}
             </div>

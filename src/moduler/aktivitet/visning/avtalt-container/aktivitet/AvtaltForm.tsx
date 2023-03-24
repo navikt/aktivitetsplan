@@ -86,8 +86,8 @@ const AvtaltForm = (props: Props) => {
         forhaandsorienteringType: kanSendeForhaandsvarsel
             ? ForhaandsorienteringType.SEND_STANDARD
             : ForhaandsorienteringType.IKKE_SEND,
-        avtaltText119: AVTALT_TEKST_119,
         avtaltText: AVTALT_TEKST,
+        avtaltText119: AVTALT_TEKST_119,
     };
 
     const {
@@ -115,7 +115,7 @@ const AvtaltForm = (props: Props) => {
             autoComplete="off"
             noValidate
             onSubmit={handleSubmit((data) => onSubmitHandler(data))}
-            className={classNames('bg-surface-alt-3-subtle py-2 px-4 my-4 border border-border-alt-3 rounded-md')}
+            className="bg-surface-alt-3-subtle py-2 px-4 my-4 border border-border-alt-3 rounded-md"
         >
             <div className="flex items-center">
                 <Checkbox onChange={() => setShowForm(!showForm)}>Avtalt med NAV</Checkbox>
