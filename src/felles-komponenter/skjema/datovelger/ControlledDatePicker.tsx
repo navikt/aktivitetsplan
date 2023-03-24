@@ -1,8 +1,7 @@
 import { UNSAFE_DatePicker as DatePicker } from '@navikt/ds-react';
 import { getLocaleFromString, parseDate } from '@navikt/ds-react/esm/date/utils';
 import { format, isValid } from 'date-fns';
-import React, { ChangeEventHandler } from 'react';
-import { useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { preventCloseOnInsideClick, useOutsideClick } from './common';

@@ -1,5 +1,3 @@
-//TODO: flytte til dateUtils.ts
-
 import { ReactElement } from 'react';
 
 export function fn(value: any) {
