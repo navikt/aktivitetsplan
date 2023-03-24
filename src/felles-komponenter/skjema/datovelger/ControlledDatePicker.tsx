@@ -52,7 +52,7 @@ const ControlledDatePicker = ({
     };
 
     const onBlur = () => {
-        field.onBlur;
+        field.onBlur();
         if (!isValid(field.value)) return;
         setDisplayValue(format(field.value, 'dd.M.y'));
     };
