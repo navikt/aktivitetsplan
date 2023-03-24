@@ -22,7 +22,7 @@ const ControlledDatePicker = ({
     const closePopover = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closePopover);
 
-    const { control, setValue, trigger } = useFormContext();
+    const { control, setValue } = useFormContext();
     const {
         field,
         fieldState: { error },
@@ -45,7 +45,6 @@ const ControlledDatePicker = ({
         setValue(name, date);
         setDisplayValue(date ? format(date, 'dd.M.y') : '');
         if (date) {
-            trigger();
             closePopover();
         }
     };

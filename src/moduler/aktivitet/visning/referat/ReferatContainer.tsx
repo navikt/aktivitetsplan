@@ -30,7 +30,7 @@ const ReferatContainer = (props: Props) => {
     const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
 
     const kanHaReferat =
-        (aktivitetType === MOTE_TYPE && isAfter(parseISO(aktivitet.fraDato), new Date())) ||
+        (aktivitetType === MOTE_TYPE && isAfter(new Date(), parseISO(aktivitet.fraDato))) ||
         aktivitetType === SAMTALEREFERAT_TYPE;
 
     const erAktivAktivitet =
