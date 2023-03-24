@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
-import { endOfDay, endOfToday, parseISO, subDays } from 'date-fns';
+import { endOfToday, parseISO, startOfDay, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
-import { z } from 'zod';
+import { ZodErrorMap, z } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
@@ -29,9 +29,15 @@ type KanDeles = {
     kanDeles: string;
     avtaltDato: string;
 };
-type ValidatorProps = {
-    erVeileder: boolean;
-    opprettetDato: string;
+
+const dateErrorMap = {
+    invalid_type: 'Du må fylle ut datoen for når du var i dialog med brukeren',
+    invalid_date: 'Ikke en gyldig dato',
+};
+const getDateErrorMessage: ZodErrorMap = (issue) => {
+    return {
+        message: dateErrorMap[issue.code],
+    };
 };
 
 const kanDelesField = z.nativeEnum(SvarType, {
@@ -47,8 +53,7 @@ const getSchema = (
             kanDeles: kanDelesField,
             avtaltDato: z
                 .date({
-                    required_error: 'Du må fylle ut datoen for når du var i dialog med brukeren',
-                    invalid_type_error: 'Ugyldig dato',
+                    errorMap: getDateErrorMessage,
                 })
                 .min(disabledBefore, {
                     message: 'Dato for dialog kan ikke være mer enn syv dager før kortet ble opprettet',
@@ -68,7 +73,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const erVeileder = useSelector(selectErVeileder);
     const opprettetDato = aktivitet.opprettetDato;
 
-    const syvDagerFoerOpprettet = subDays(parseISO(opprettetDato), 7);
+    const syvDagerFoerOpprettet = subDays(startOfDay(parseISO(opprettetDato)), 7);
     const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
     const datobegrensninger = {
         before: syvDagerFoerOpprettet,
@@ -78,16 +83,12 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const handlers = useForm<KanDeles>({
         resolver: zodResolver(getSchema(datobegrensninger, erVeileder)),
         defaultValues: { kanDeles: undefined },
-        mode: 'all',
     });
     const {
         handleSubmit,
         control,
-        watch,
         formState: { errors, isSubmitting },
     } = handlers;
-
-    console.log('avtaltDato', watch('avtaltDato'));
 
     const { field: kanDeles } = useController({
         name: 'kanDeles',

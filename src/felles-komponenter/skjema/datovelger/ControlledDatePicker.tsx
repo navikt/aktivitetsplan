@@ -5,7 +5,7 @@ import React, { ChangeEventHandler } from 'react';
 import { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
-import { handlers, preventCloseOnInsideClick, useOutsideClick } from './common';
+import { preventCloseOnInsideClick, useOutsideClick } from './common';
 import { FieldSettings } from './ControlledDateRangePicker';
 
 interface Props {
@@ -14,14 +14,16 @@ interface Props {
 }
 
 const nb = getLocaleFromString('nb');
+
 const ControlledDatePicker = ({
     field: { disabled, name, defaultValue, required = false, label },
     disabledDays,
 }: Props) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-    useOutsideClick(isPopoverOpen, () => setIsPopoverOpen(false));
+    const closePopover = () => setIsPopoverOpen(false);
+    useOutsideClick(isPopoverOpen, closePopover);
 
-    const { control, setValue } = useFormContext();
+    const { control, setValue, trigger } = useFormContext();
     const {
         field,
         fieldState: { error },
@@ -37,14 +39,20 @@ const ControlledDatePicker = ({
         const day = parseDate(event.target.value, new Date(), nb, 'date', true);
         setValue(name, day);
         setDisplayValue(event.target.value);
+        if (isValid(day)) closePopover();
     };
 
     const onChangeDate = (date?: Date) => {
         setValue(name, date);
         setDisplayValue(date ? format(date, 'dd.M.y') : '');
+        if (date) {
+            trigger();
+            closePopover();
+        }
     };
 
-    const formatDate = () => {
+    const onBlur = () => {
+        field.onBlur;
         if (!isValid(field.value)) return;
         setDisplayValue(format(field.value, 'dd.M.y'));
     };
@@ -57,6 +65,7 @@ const ControlledDatePicker = ({
             <div onClick={preventCloseOnInsideClick}>
                 <DatePicker
                     onSelect={onChangeDate}
+                    selected={isValid(field.value) ? field.value : undefined}
                     disabled={disabledDays}
                     onOpenToggle={togglePopover}
                     open={isPopoverOpen}
@@ -68,7 +77,8 @@ const ControlledDatePicker = ({
                         label={label ?? 'Dato' + (required ? ' (obligatorisk)' : '')}
                         name={name}
                         value={displayValue}
-                        onBlur={handlers([field.onBlur, formatDate])}
+                        onFocus={() => setIsPopoverOpen(true)}
+                        onBlur={onBlur}
                         onChange={onChange}
                         ref={field.ref}
                     />
