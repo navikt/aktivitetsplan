@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { GRUPPE_AKTIVITET_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Moteplan } from '../../../../datatypes/arenaAktivitetTypes';
-import { formaterDatoKortManed, formaterDatoKortManedTid, formaterTid } from '../../../../utils';
+import { formaterDatoKortManed, formaterDatoKortManedTid, formaterTid } from '../../../../utils/dateUtils';
 import Informasjonsfelt, { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 

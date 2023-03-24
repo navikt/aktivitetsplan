@@ -1,5 +1,4 @@
 import { addDays, subDays } from 'date-fns';
-import moment from 'moment';
 import { RestRequest } from 'msw';
 
 import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
@@ -311,7 +310,7 @@ export const oppdaterLestFhoArenaaktivitet = (req: RestRequest) => {
 
     lestAktivitet.forhaandsorientering = {
         ...(lestAktivitet.forhaandsorientering as Forhaandsorientering),
-        lestDato: moment().toISOString(),
+        lestDato: new Date().toISOString(),
     };
 
     return lestAktivitet;

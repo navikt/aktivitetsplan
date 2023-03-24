@@ -1,12 +1,12 @@
-import { RenderResult, act, fireEvent, getByRole, render, screen } from '@testing-library/react';
-import moment from 'moment';
+import { RenderResult, fireEvent, getByRole, render, screen } from '@testing-library/react';
+import { addDays, addMinutes, subYears } from 'date-fns';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
 
 import { MOTE_TYPE } from '../../../../constant';
 import reducer from '../../../../reducer';
-import MoteAktivitetForm, { defaultBeskrivelse } from './MoteAktivitetForm';
+import MoteAktivitetForm from './MoteAktivitetForm';
 
 const initialState: any = {
     data: {
@@ -40,8 +40,8 @@ describe('MoteAktivitetForm', () => {
     it.skip('Skal ikke vise feil når obligatoriske felter er oppgitt', () => {
         const aktivitet = {
             tittel: 'Dette er en test',
-            fraDato: moment().add(1, 'days').toISOString(),
-            tilDato: moment().add(1, 'days').add(45, 'minutes').toISOString(),
+            fraDato: addDays(new Date(), 1).toISOString(),
+            tilDato: addMinutes(addDays(new Date(), 1), 45).toISOString(),
             type: MOTE_TYPE,
             adresse: 'Slottet',
             kanal: 'OPPMOTE',
@@ -66,8 +66,8 @@ describe('MoteAktivitetForm', () => {
     it.skip('Skal vise feil når dato er tidligere enn i dag', () => {
         const aktivitet = {
             tittel: 'Anakromisme',
-            fraDato: moment().add(-1, 'years').toISOString(),
-            tilDato: moment().add(-1, 'years').add(45, 'minutes').toISOString(),
+            fraDato: subYears(new Date(), 1).toISOString(),
+            tilDato: addMinutes(subYears(new Date(), 1), 45).toISOString(),
             adresse: 'Fortiden',
             erAvtalt: false,
         };

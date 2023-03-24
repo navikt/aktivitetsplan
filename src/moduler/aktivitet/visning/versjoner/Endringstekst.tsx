@@ -10,7 +10,7 @@ import {
     StillingFraNavTransaksjonsType,
     StillingTransaksjonsType,
 } from '../../../../datatypes/transaksjonstyperTypes';
-import { formaterDatoKortManed } from '../../../../utils';
+import { formaterDatoKortManed } from '../../../../utils/dateUtils';
 import {
     aktivitetStatusMap,
     stillingFraNavSoknadsstatusMapper,

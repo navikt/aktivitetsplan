@@ -3,8 +3,9 @@ import { createSelector } from 'reselect';
 import { STATUS } from '../../api/utils';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
+import { HistoriskOppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { Periode, datoErIPeriode } from '../filtrering/filter/filter-utils';
+import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selectorts';
 
 function erViktigMelding(dialog: Dialog) {
@@ -30,7 +31,7 @@ export function selectAlleDialoger(state: any) {
 const hentDialogerFraState = (
     dialogSlice: any,
     esklaringsFilter: boolean,
-    valgtHistoriskPeriode?: Periode,
+    valgtHistoriskPeriode?: HistoriskOppfolgingsPeriode,
     forrigeSluttDato?: string
 ) =>
     dialogSlice.data

@@ -4,7 +4,7 @@ import React from 'react';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import Radio from '../../../felles-komponenter/skjema/input/Radio';
-import { formaterDatoKortManed } from '../../../utils';
+import { formaterDatoKortManed } from '../../../utils/dateUtils';
 import UtskriftValg from './utskriftValg';
 
 interface KvpPlanValgProps {

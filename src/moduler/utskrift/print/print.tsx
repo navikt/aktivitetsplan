@@ -7,7 +7,7 @@ import { KvpPeriode, Mal } from '../../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../../datatypes/types';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
-import { formaterDatoKortManed } from '../../../utils';
+import { formaterDatoKortManed } from '../../../utils/dateUtils';
 import logoPngImagePath from '../ikoner/logo.png';
 import Adresse from './adresse';
 import Aktiviteter from './aktiviteter/Aktiviteter';

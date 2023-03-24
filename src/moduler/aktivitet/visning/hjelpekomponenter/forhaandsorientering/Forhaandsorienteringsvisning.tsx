@@ -6,7 +6,7 @@ import { AnyAction } from 'redux';
 import { STATUS } from '../../../../../api/utils';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
-import { formaterDatoManed } from '../../../../../utils';
+import { formaterDatoManed } from '../../../../../utils/dateUtils';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
 import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
 import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';

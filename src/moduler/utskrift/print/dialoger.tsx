@@ -2,7 +2,7 @@ import { Heading, Label } from '@navikt/ds-react';
 import React from 'react';
 
 import { Dialog } from '../../../datatypes/dialogTypes';
-import { datoComparator, formaterDatoKortManed } from '../../../utils';
+import { datoComparator, formaterDatoKortManed } from '../../../utils/dateUtils';
 import CustomBodyLong from '../../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 
 interface DialogProps {

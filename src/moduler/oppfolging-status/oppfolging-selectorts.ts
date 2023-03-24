@@ -9,7 +9,7 @@ export const selectHistoriskeOppfolgingsPerioder: (store: Store) => HistoriskOpp
     (oppfolgingsPerioder) => oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsPeriode[]
 );
 
-export const selectForrigeHistoriskeSluttDato: (store: Store) => string = createSelector(
+export const selectForrigeHistoriskeSluttDato: (store: Store) => string | undefined = createSelector(
     selectHistoriskeOppfolgingsPerioder,
     (historiskeOppfolgingsPerioder) =>
         historiskeOppfolgingsPerioder

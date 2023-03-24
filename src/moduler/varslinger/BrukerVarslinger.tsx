@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { addDays, differenceInDays, parseISO, startOfDay } from 'date-fns';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
@@ -40,9 +40,9 @@ const BrukerVarslinger = (props: Props) => {
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const kanReaktiveres = useSelector(selectKanReaktiveres);
 
-    const dagensDato = moment();
-    const dato28dagerEtterIserv = moment(inaktiveringsdato).add(28, 'day');
-    const antallDagerIgjen = dato28dagerEtterIserv.diff(dagensDato, 'days');
+    const dagensDato = startOfDay(new Date());
+    const dato28dagerEtterIserv = addDays(parseISO(inaktiveringsdato), 28);
+    const antallDagerIgjen = differenceInDays(dato28dagerEtterIserv, dagensDato);
 
     return (
         <div className="container">

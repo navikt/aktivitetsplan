@@ -3,7 +3,7 @@ import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
-import { formaterDatoEllerTidSiden } from '../../utils';
+import { formaterDatoEllerTidSiden } from '../../utils/dateUtils';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectMalListe } from './aktivitetsmal-selector';

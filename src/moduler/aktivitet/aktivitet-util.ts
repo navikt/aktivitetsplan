@@ -1,16 +1,18 @@
-import 'moment-duration-format';
-
 import {
     addMinutes,
     differenceInMinutes,
     format,
+    isAfter,
+    isBefore,
     isDate,
+    isValid,
     minutesToHours,
+    parseISO,
     setHours,
     setMinutes,
     startOfDay,
+    subMonths,
 } from 'date-fns';
-import moment from 'moment';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import {
@@ -97,14 +99,15 @@ export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasj
         return true;
     }
 
-    const endretDatoAktivietetMoment = moment(aktivitet.endretDato || aktivitet.opprettetDato);
+    const endretDatoAktivietetMoment = parseISO(aktivitet.endretDato || aktivitet.opprettetDato);
+    const lestTidspunkt = parseISO(lestInformasjon.tidspunkt);
 
-    if (endretDatoAktivietetMoment && moment(lestInformasjon.tidspunkt)) {
+    if (isValid(endretDatoAktivietetMoment) && isValid(lestTidspunkt)) {
         // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfor må
         // vi ha en sjekk att opprettet dato ikke ligger fram i tiden
         return (
-            endretDatoAktivietetMoment.isAfter(lestInformasjon.tidspunkt) &&
-            endretDatoAktivietetMoment.isBefore(moment().add(5, 'minutes'))
+            isAfter(endretDatoAktivietetMoment, lestTidspunkt) &&
+            isBefore(endretDatoAktivietetMoment, addMinutes(new Date(), 5))
         );
     }
     return false;
@@ -151,7 +154,7 @@ const toHourAndMinutes = (klokkeslett: string | number): Klokkeslett => {
             minute,
         };
     } else {
-        const varighetMinutter = parseInt(klokkeslett);
+        const varighetMinutter = parseInt(klokkeslett.toString());
         const hour = minutesToHours(varighetMinutter); // Uses floor rounding
         const minute = varighetMinutter - 60 * hour;
         return { hour, minute };
@@ -253,14 +256,11 @@ export function sorterAktiviteter(
 export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
     const sorteringsDatoString = [aktivitet.endretDato, aktivitet.tilDato, aktivitet.fraDato]
         .filter((possibleDate) => possibleDate !== undefined && possibleDate !== null)
-        .find((possibleDate) => moment(possibleDate).isValid());
+        .find((possibleDate) => possibleDate && isValid(parseISO(possibleDate)));
 
-    const sorteringsDato = sorteringsDatoString ? moment(sorteringsDatoString) : undefined;
+    const sorteringsDato = sorteringsDatoString ? parseISO(sorteringsDatoString) : undefined;
 
-    return (
-        sorteringsDato === undefined ||
-        (sorteringsDato.isValid() && sorteringsDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd'))
-    );
+    return sorteringsDato === undefined || isAfter(sorteringsDato, subMonths(startOfDay(new Date()), 1));
 }
 
 export const splitIEldreOgNyereAktiviteter = (aktiviteter: AlleAktiviteter[]): GamleNyeAktiviteter =>

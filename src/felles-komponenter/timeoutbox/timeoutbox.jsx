@@ -1,5 +1,5 @@
 import { Modal } from '@navikt/ds-react';
-import moment from 'moment';
+import { differenceInMilliseconds, isAfter, parseISO, subMinutes } from 'date-fns';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -21,7 +21,7 @@ class Timeoutbox extends Component {
     componentDidUpdate() {
         const { expirationTime } = this.props;
         if (!this.timeout && expirationTime) {
-            const expirationInMillis = this.visningsTidspunkt().diff(moment(), 'ms');
+            const expirationInMillis = differenceInMilliseconds(this.visningsTidspunkt(), new Date());
             this.timeout = setTimeout(() => {
                 this.forceUpdate();
             }, expirationInMillis + 100);
@@ -34,12 +34,12 @@ class Timeoutbox extends Component {
 
     skalViseModal() {
         const { manueltLukket } = this.state;
-        return moment().isAfter(this.visningsTidspunkt()) && !manueltLukket;
+        return isAfter(new Date(), this.visningsTidspunkt()) && !manueltLukket;
     }
 
     visningsTidspunkt() {
         const { expirationTime } = this.props;
-        return moment(expirationTime).subtract(5, 'minutes');
+        return subMinutes(parseISO(expirationTime), 5);
     }
 
     render() {

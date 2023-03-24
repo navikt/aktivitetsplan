@@ -1,6 +1,5 @@
 import { STATUS } from '../../api/utils';
 import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
-import { getNowAsISODate } from '../../utils';
 import { selectHistoriskeOppfolgingsPerioder } from './oppfolging-selectorts';
 
 type State = any;
@@ -29,7 +28,7 @@ export function selectOppfolgingsPerioder(state: State): OppfolgingsPeriode[] {
 
 export type VistOppfolgingsPeriode = HistoriskOppfolgingsPeriode & { fra: string; til: string };
 export function selectSorterteHistoriskeOppfolgingsPerioder(state: State): VistOppfolgingsPeriode[] {
-    let nesteFra = getNowAsISODate();
+    let nesteFra = new Date().toISOString();
     return selectHistoriskeOppfolgingsPerioder(state)
         .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
         .map((periode) => {

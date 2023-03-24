@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import * as AppPT from '../../../../proptypes';
-import { formaterDatoManed } from '../../../../utils';
+import { formaterDatoManed } from '../../../../utils/dateUtils';
 import Informasjonsfelt, { HiddenIfInformasjonsfelt } from './Informasjonsfelt';
 
 const formatertDato = (dato: string | undefined, visIkkeSatt: boolean) => {
