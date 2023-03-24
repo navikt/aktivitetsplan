@@ -1,4 +1,4 @@
-import { subDays } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
 import { RestRequest } from 'msw';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
@@ -201,16 +201,16 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               arbeidsgiver: 'Historisk',
           }),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør (ikke svart)' }),
               arbeidsgiver: 'Har ikke svart ennå',
               status: 'PLANLAGT',
-              opprettetDato: etTidspunkt(2020),
-              endretDato: etTidspunkt(2018),
+              opprettetDato: subDays(new Date(), 3).toISOString(),
+              endretDato: subDays(new Date(), 3).toISOString(),
               historisk: false,
               transaksjonsType: 'OPPRETTET',
               stillingFraNavData: {
                   ...enStillingFraNavData,
-                  svarfrist: etTidspunkt(2030),
+                  svarfrist: addDays(new Date(), 3).toISOString(),
                   kontaktpersonData: navAnsatt1,
               },
           }),
