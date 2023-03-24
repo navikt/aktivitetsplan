@@ -1,6 +1,6 @@
 import { AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
-import { OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { AKTIVITET_BASE_URL } from '../../environment';
 
 interface FrontendEvent {
@@ -200,7 +200,7 @@ function loggTidBruktFraRegistrert(fraDato: number | string) {
     });
 }
 
-export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, perioder: Array<OppfolgingsPeriode>) {
+export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, perioder: Array<Oppfolgingsperiode>) {
     const periode = perioder.find((p) => p.sluttDato === null);
     if (periode) {
         // Tid brukt fra registrert til aktivitetsplanen

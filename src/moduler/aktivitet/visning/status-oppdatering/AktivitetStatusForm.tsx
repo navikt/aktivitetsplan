@@ -52,8 +52,6 @@ const schema = z
     ])
     .superRefine((values, ctx) => {
         const error = kanOppdatereStatus(values.aktivitet, values.aktivitetstatus);
-        console.log('values.aktivitet', values.aktivitet);
-        console.log('error', error);
         if (error) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
@@ -62,7 +60,7 @@ const schema = z
         }
     });
 
-type AktivitetStatusFormValues = z.infer<typeof schema>;
+export type AktivitetStatusFormValues = z.infer<typeof schema>;
 
 const AktivitetStatusForm = (props: Props) => {
     const { aktivitet, onSubmit, disabled } = props;

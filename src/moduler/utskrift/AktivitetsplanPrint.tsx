@@ -23,8 +23,8 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import ModalHeader from './modalHeader';
 import Print from './print/print';
-import PrintMeldingForm from './printMelding';
-import VelgPlanUtskriftForm from './velgPlan/velgPlanUtskriftForm';
+import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
+import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -59,7 +59,7 @@ interface Props {
     erManuell?: boolean;
 }
 
-function AktivitetsplanPrint(props: Props) {
+const AktivitetsplanPrint = (props: Props) => {
     const {
         doHentMal,
         doHentMalListe,
@@ -80,7 +80,7 @@ function AktivitetsplanPrint(props: Props) {
 
     const fnr = hentFnrFraUrl();
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
-    const [bruker, setBruker] = useState<Bruker>(tomBruker());
+    const [bruker, setBruker] = useState<Bruker>({});
 
     const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
     const [isLoadingBruker, setIsLoadingBruker] = useState(true);
@@ -102,14 +102,14 @@ function AktivitetsplanPrint(props: Props) {
 
     const next = () => setStepIndex(stepIndex + 1);
 
-    const printMeldingSubmit = (printmelding: string) => {
-        setPrintMelding(printmelding);
+    const printMeldingSubmit = (formValues: PrintFormValues) => {
+        setPrintMelding(formValues.beskrivelse);
         next();
         return Promise.resolve();
     };
 
-    const velgPlanSubmint = (plantype: string) => {
-        setUtskriftform(plantype);
+    const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
+        setUtskriftform(formValues.utskritPlanType);
         next();
         return Promise.resolve();
     };
@@ -141,7 +141,7 @@ function AktivitetsplanPrint(props: Props) {
             return (
                 <Modal onClose={goBack} open>
                     <Innholdslaster avhengigheter={avhengigheter}>
-                        <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmint} />
+                        <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmit} />
                     </Innholdslaster>
                 </Modal>
             );
@@ -176,7 +176,7 @@ function AktivitetsplanPrint(props: Props) {
             </div>
         </section>
     );
-}
+};
 
 const mapStateToProps = (state: any) => {
     const aktiviteter = selectAktivitetListe(state);
@@ -202,10 +202,6 @@ const mapStateToProps = (state: any) => {
         erVeileder,
     };
 };
-
-function tomBruker(): Bruker {
-    return {};
-}
 
 function mapDispatchToProps(dispatch: any, props: any) {
     return {

@@ -75,8 +75,6 @@ const IJobbAktivitetForm = (props: Props) => {
         setValue('jobbStatus', value, { shouldValidate: true });
     };
 
-    console.log(errors);
-
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...methods}>

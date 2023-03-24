@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import React, { ChangeEventHandler } from 'react';
 import { connect } from 'react-redux';
 
-import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { ReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import {
@@ -16,8 +16,8 @@ import { selectHistoriskPeriode } from './filter-selector';
 interface Props {
     harHistoriskePerioder: boolean;
     historiskePerioder: VistOppfolgingsPeriode[];
-    historiskPeriode?: OppfolgingsPeriode;
-    doVelgHistoriskPeriode: (periode: null | HistoriskOppfolgingsPeriode) => void;
+    historiskPeriode?: Oppfolgingsperiode;
+    doVelgHistoriskPeriode: (periode: null | HistoriskOppfolgingsperiode) => void;
     skjulInneverende: boolean;
 }
 
@@ -83,8 +83,8 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: ReduxDispatch) => ({
-    doVelgHistoriskPeriode: (aktivitetsType: null | HistoriskOppfolgingsPeriode) =>
-        dispatch(velgHistoriskPeriode(aktivitetsType)),
+    doVelgHistoriskPeriode: (historiskOppfolgingsperiode: null | HistoriskOppfolgingsperiode) =>
+        dispatch(velgHistoriskPeriode(historiskOppfolgingsperiode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeriodeFilter);

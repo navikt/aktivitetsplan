@@ -75,6 +75,7 @@ export function toggleArenaAktivitetsEtikett(arenaAktivitetEtiketter) {
 }
 
 export function velgHistoriskPeriode(historiskPeriode) {
+    // historiskPeriode: HistoriskOppfolgingsperiode
     return {
         type: VELG_HISTORISK_PERIODE,
         data: historiskPeriode,

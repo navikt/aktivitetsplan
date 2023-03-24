@@ -1,4 +1,4 @@
-import { Alert, BodyShort, Detail, Label } from '@navikt/ds-react';
+import { Alert, Detail } from '@navikt/ds-react';
 import useFormstate, { FieldState } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,6 @@ import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
-import styles from './ArenaForhaandsorienteringForm.module.less';
 import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
 const avtaltTekst =

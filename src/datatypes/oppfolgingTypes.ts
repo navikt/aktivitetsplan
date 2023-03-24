@@ -16,7 +16,7 @@ export interface OppfolgingStatus {
 
     kanStarteOppfolging: boolean;
 
-    oppfolgingsPerioder: OppfolgingsPeriode;
+    oppfolgingsPerioder: Oppfolgingsperiode;
     harSkriveTilgang: boolean;
     inaktivIArena: boolean;
     kanReaktiveres: boolean;
@@ -27,16 +27,17 @@ export interface OppfolgingStatus {
     rettighetsgruppe: string;
 }
 
-export interface OppfolgingsPeriode {
+export interface Oppfolgingsperiode {
     uuid: string;
-    begrunnelse: string | null;
-    kvpPerioder?: KvpPeriode[];
+    aktorId: string;
+    veileder?: string | null;
     sluttDato?: string | null;
     startDato: string;
-    veileder?: string | null;
+    begrunnelse: string | null;
+    kvpPerioder?: KvpPeriode[];
 }
 
-export type HistoriskOppfolgingsPeriode = Omit<OppfolgingsPeriode, 'sluttDato'> & {
+export type HistoriskOppfolgingsperiode = Omit<Oppfolgingsperiode, 'sluttDato'> & {
     sluttDato: string;
 };
 

@@ -19,11 +19,6 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
     const merEnnSyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
     const kanSendeVarsel = useKanSendeVarsel();
 
-    console.log({
-        kanSendeVarsel,
-        merEnnSyvDagerTil,
-    });
-
     if (!kanSendeVarsel) {
         return null;
     }

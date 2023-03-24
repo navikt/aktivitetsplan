@@ -5,7 +5,7 @@ import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
 import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Hovedside from './hovedside/Hovedside';
-import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
+import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
 import Provider from './Provider';
 import { HiddenIf, getContextPath } from './utils';
 import { UpdateEventHandler } from './utils/UpdateHandler';

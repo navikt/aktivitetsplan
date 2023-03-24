@@ -1,16 +1,16 @@
 import { createSelector } from 'reselect';
 
-import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { selectOppfolgingsPerioder } from './oppfolging-selector';
 
 export const selectHistoriskeOppfolgingsPerioder: (
-    oppfolgingsPerioder: OppfolgingsPeriode[]
-) => HistoriskOppfolgingsPeriode[] = createSelector(
+    oppfolgingsPerioder: Oppfolgingsperiode[]
+) => HistoriskOppfolgingsperiode[] = createSelector(
     selectOppfolgingsPerioder,
-    (oppfolgingsPerioder) => oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsPeriode[]
+    (oppfolgingsPerioder) => oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsperiode[]
 );
 
-export const selectForrigeHistoriskeSluttDato: (oppfolgingsPerioder: OppfolgingsPeriode[]) => string = createSelector(
+export const selectForrigeHistoriskeSluttDato: (oppfolgingsPerioder: Oppfolgingsperiode[]) => string = createSelector(
     selectHistoriskeOppfolgingsPerioder,
     (historiskeOppfolgingsPerioder) =>
         historiskeOppfolgingsPerioder
