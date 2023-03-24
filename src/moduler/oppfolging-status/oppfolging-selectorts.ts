@@ -1,16 +1,15 @@
+import { Store } from 'redux';
 import { createSelector } from 'reselect';
 
-import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
 import { selectOppfolgingsPerioder } from './oppfolging-selector';
 
-export const selectHistoriskeOppfolgingsPerioder: (
-    oppfolgingsPerioder: OppfolgingsPeriode[]
-) => HistoriskOppfolgingsPeriode[] = createSelector(
+export const selectHistoriskeOppfolgingsPerioder: (store: Store) => HistoriskOppfolgingsPeriode[] = createSelector(
     selectOppfolgingsPerioder,
     (oppfolgingsPerioder) => oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsPeriode[]
 );
 
-export const selectForrigeHistoriskeSluttDato: (oppfolgingsPerioder: OppfolgingsPeriode[]) => string = createSelector(
+export const selectForrigeHistoriskeSluttDato: (store: Store) => string = createSelector(
     selectHistoriskeOppfolgingsPerioder,
     (historiskeOppfolgingsPerioder) =>
         historiskeOppfolgingsPerioder
