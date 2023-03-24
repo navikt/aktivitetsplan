@@ -36,12 +36,12 @@ export function datoErIPeriode(
     valgtHistoriskPeriode?: HistoriskOppfolgingsPeriode,
     sistePeriodeSluttDato?: string
 ) {
-    const datoDate = parseISO(dato);
+    const datoDate = new Date(dato);
 
     if (valgtHistoriskPeriode) {
-        const intervall: Interval = {
-            start: parseISO(valgtHistoriskPeriode.startDato),
-            end: parseISO(valgtHistoriskPeriode.sluttDato),
+        const intervall = {
+            start: new Date(valgtHistoriskPeriode.startDato),
+            end: new Date(valgtHistoriskPeriode.sluttDato),
         };
 
         return isWithinInterval(datoDate, intervall);
