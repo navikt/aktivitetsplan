@@ -29,7 +29,6 @@
     "@navikt/ds-tailwind": "^2.7.7",
     "@navikt/ds-tokens": "^2.7.7",
     "@navikt/navspa": "^5.0.1",
-    "@nutgaard/use-formstate": "^3.0.1",
     "@vitejs/plugin-react-swc": "^3.2.0",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
