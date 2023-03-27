@@ -1,7 +1,7 @@
 import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-import { formaterDatoManed } from '../../../../utils';
+import { formaterDatoManed } from '../../../../utils/dateUtils';
 import CustomBodyLong from '../../../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import styles from './ForhaandsorienteringPrint.module.less';
 

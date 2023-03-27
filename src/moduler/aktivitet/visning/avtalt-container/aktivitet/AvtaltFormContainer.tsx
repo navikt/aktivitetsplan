@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { STATUS } from '../../../../../api/utils';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../../datatypes/internAktivitetTypes';
-import { erMerEnnSyvDagerTil } from '../../../../../utils';
+import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
 import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from '../arena-aktivitet/KanIkkeLeggeTilForhaandsorienteringInfotekst';
 import AvtaltForm from './AvtaltForm';

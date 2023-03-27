@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Spring, SpringSystem } from 'rebound';
 
-import { autobind } from '../../utils';
+import { autobind } from '../../utils/utils';
 
 interface Props {
     autoHeight: boolean;

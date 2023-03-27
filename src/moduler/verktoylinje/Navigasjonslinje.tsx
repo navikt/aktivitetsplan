@@ -1,5 +1,5 @@
 import { Heading, Link } from '@navikt/ds-react';
-import moment from 'moment';
+import { isAfter, parseISO } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -33,9 +33,9 @@ function Navigasjonslinje() {
             const pollForChanges = () =>
                 fetchSistOppdatert()
                     .then((data) => {
-                        const localSistOppdatert = moment(sistOppdatert, moment.ISO_8601);
-                        const remoteSistOppdatert = moment(data.sistOppdatert, moment.ISO_8601);
-                        if (!!data.sistOppdatert && remoteSistOppdatert.isAfter(localSistOppdatert)) {
+                        const localSistOppdatert = parseISO(sistOppdatert);
+                        const remoteSistOppdatert = data.sistOppdatert;
+                        if (!!data.sistOppdatert && isAfter(remoteSistOppdatert, localSistOppdatert)) {
                             doHentDialog();
                         }
                     })
@@ -62,7 +62,6 @@ function Navigasjonslinje() {
                 ) : null}
                 <ReactRouterLink
                     to="/informasjon"
-                    // className="text-text-action underline"
                     className="text-text-action underline hover:no-underline"
                     onClick={() => loggEvent(APNE_OM_TJENESTEN)}
                 >

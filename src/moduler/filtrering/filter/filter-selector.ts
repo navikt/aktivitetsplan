@@ -1,5 +1,6 @@
 import { Store } from 'redux';
 
+import { HistoriskOppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
 import {
     AktivitetFilterType,
     ArenaEtikettFilterType,
@@ -12,7 +13,7 @@ export function selectFilterSlice(state: any) {
     return state.data.filter;
 }
 
-export function selectHistoriskPeriode(state: Store) {
+export function selectHistoriskPeriode(state: Store): HistoriskOppfolgingsPeriode {
     return selectFilterSlice(state).historiskPeriode;
 }
 

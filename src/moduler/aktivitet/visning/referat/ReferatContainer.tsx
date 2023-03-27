@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { isAfter, parseISO } from 'date-fns';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -30,7 +30,7 @@ const ReferatContainer = (props: Props) => {
     const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
 
     const kanHaReferat =
-        (aktivitetType === MOTE_TYPE && moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
+        (aktivitetType === MOTE_TYPE && isAfter(new Date(), parseISO(aktivitet.fraDato))) ||
         aktivitetType === SAMTALEREFERAT_TYPE;
 
     const erAktivAktivitet =

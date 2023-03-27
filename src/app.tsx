@@ -7,8 +7,8 @@ import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Hovedside from './hovedside/Hovedside';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
 import Provider from './Provider';
-import { HiddenIf, getContextPath } from './utils';
 import { UpdateEventHandler } from './utils/UpdateHandler';
+import { HiddenIf, getContextPath } from './utils/utils';
 
 function isValueOrGetDefault(value: any, defaultValue: any) {
     return value === undefined ? defaultValue : value;

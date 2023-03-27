@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import { erMerEnnSyvDagerTil } from '../../../../../utils';
+import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
 import { useKanSendeVarsel } from '../avtaltHooks';
 import ArenaForhaandsorienteringForm from './ArenaForhaandsorienteringForm';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForhaandsorienteringInfotekst';

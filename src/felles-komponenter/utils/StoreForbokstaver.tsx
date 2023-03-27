@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { storeForbokstaver } from '../../utils';
+import { storeForbokstaver } from '../../utils/utils';
 
 function StoreForbokstaver(props: Props) {
     const { tag, children } = props;

@@ -4,8 +4,6 @@ on: [push, workflow_dispatch]
 
 env:
   PRINT_PAYLOAD: true
-  TZ: Europe/Amsterdam
-  CI: true
 
 jobs:
   build:

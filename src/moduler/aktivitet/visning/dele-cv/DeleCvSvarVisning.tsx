@@ -2,7 +2,7 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import { CvKanDelesData } from '../../../../datatypes/internAktivitetTypes';
-import { formaterDatoManed } from '../../../../utils';
+import { formaterDatoManed } from '../../../../utils/dateUtils';
 import { JaSvarTekst, NeiSvarTekst } from './tekster';
 
 interface Props {

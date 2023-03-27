@@ -7,7 +7,7 @@ import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster'
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIfHOC from '../../../../hocs/visible-if';
 import * as AppPT from '../../../../proptypes';
-import { autobind } from '../../../../utils';
+import { autobind } from '../../../../utils/utils';
 import { fjernVersjoner, hentVersjonerForAktivtet } from '../../aktivitet-versjoner/aktivitet-versjoner-reducer';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
 import VersjonInnslag from './VersjonInnslag';

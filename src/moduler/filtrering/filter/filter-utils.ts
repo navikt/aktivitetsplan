@@ -4,6 +4,7 @@ import { Store } from 'redux';
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
@@ -21,14 +22,8 @@ function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
-// TODO depricated see selectDatoErIPeriode
-export interface Periode {
-    fra: string;
-    til: string;
-}
-
-export function selectDatoErIPeriode(dato: string, state: Oppfolgingsperiode[]): boolean {
-    const historiskPeriode = selectHistoriskPeriode(state as unknown as Store);
+export function selectDatoErIPeriode(dato: string, state: Store): boolean {
+    const historiskPeriode = selectHistoriskPeriode(state);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
@@ -37,14 +32,19 @@ export function selectDatoErIPeriode(dato: string, state: Oppfolgingsperiode[]):
 //TODO: Flytte til utils når den er ts
 const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, dateToCompare);
 
-export function datoErIPeriode(dato: string, valgtHistoriskPeriode?: Periode, sistePeriodeSluttDato?: string) {
+export function datoErIPeriode(
+    dato: string,
+    valgtHistoriskPeriode?: HistoriskOppfolgingsPeriode,
+    sistePeriodeSluttDato?: string
+) {
     const datoDate = new Date(dato);
 
     if (valgtHistoriskPeriode) {
         const intervall = {
-            start: new Date(valgtHistoriskPeriode.fra),
-            end: new Date(valgtHistoriskPeriode.til),
+            start: new Date(valgtHistoriskPeriode.startDato),
+            end: new Date(valgtHistoriskPeriode.sluttDato),
         };
+
         return isWithinInterval(datoDate, intervall);
     }
     return !sistePeriodeSluttDato || isAfterOrEqual(datoDate, new Date(sistePeriodeSluttDato));

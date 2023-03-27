@@ -2,7 +2,7 @@ import './mitt-maal.less';
 
 import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import moment from 'moment';
+import { isAfter, parseISO } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -119,7 +119,7 @@ function MittMaal() {
                     })}
                 >
                     <div className="flex sm:flex-row items-center gap-6">
-                        <MaalIkon className="hidden sm:block mx-4 min-w-fit" />
+                        <MaalIkon role="img" className="hidden sm:block mx-4 min-w-fit" />
                         <div>
                             <div className="flex mb-2">
                                 <NotifikasjonMarkering visible={nyEndring} />
@@ -151,7 +151,10 @@ function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boole
         return !sisteEndringVarFraMeg;
     }
 
-    const maalLagdEtterSistLestAktivitetsplan = moment(maal.dato).isAfter(aktivitetsplanLestInfo.tidspunkt);
+    const maalLagdEtterSistLestAktivitetsplan = isAfter(
+        parseISO(maal.dato),
+        parseISO(aktivitetsplanLestInfo.tidspunkt)
+    );
 
     return !sisteEndringVarFraMeg && !maal.lest && maalLagdEtterSistLestAktivitetsplan;
 }

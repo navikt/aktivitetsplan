@@ -3,7 +3,7 @@ import React from 'react';
 
 import { AVBRUTT_AV_SYSTEM, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus, Livslopsstatus } from '../../../../datatypes/aktivitetTypes';
-import { formaterDatoManed } from '../../../../utils';
+import { formaterDatoManed } from '../../../../utils/dateUtils';
 import { overskrift } from './tekster';
 
 const getTekst = (

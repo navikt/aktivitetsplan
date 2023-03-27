@@ -29,7 +29,7 @@ export function selectOppfolgingsPerioder(state: State): Oppfolgingsperiode[] {
 
 export type VistOppfolgingsPeriode = HistoriskOppfolgingsperiode & { fra: string; til: string };
 export function selectSorterteHistoriskeOppfolgingsPerioder(state: State): VistOppfolgingsPeriode[] {
-    let nesteFra = getNowAsISODate();
+    let nesteFra = new Date().toISOString();
     return selectHistoriskeOppfolgingsPerioder(state)
         .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
         .map((periode) => {

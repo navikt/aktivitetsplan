@@ -1,13 +1,14 @@
 import { Select } from '@navikt/ds-react';
 import { format } from 'date-fns';
-import React, { ChangeEventHandler } from 'react';
-import { connect } from 'react-redux';
+import React, { ChangeEventHandler, useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
 
 import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { ReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import {
     VistOppfolgingsPeriode,
+    selectErUnderOppfolging,
     selectSorterteHistoriskeOppfolgingsPerioder,
 } from '../../oppfolging-status/oppfolging-selector';
 import { velgHistoriskPeriode } from './filter-reducer';
@@ -28,6 +29,16 @@ const PeriodeFilter = ({
     doVelgHistoriskPeriode,
     skjulInneverende,
 }: Props) => {
+    const erUnderOppfolging = useSelector(selectErUnderOppfolging);
+    const sorterteHistoriskePerioder = useSelector(selectSorterteHistoriskeOppfolgingsPerioder);
+
+    useEffect(() => {
+        if (!erUnderOppfolging && harHistoriskePerioder) {
+            const nyesteHistoriskPeriode = sorterteHistoriskePerioder[0];
+            doVelgHistoriskPeriode(nyesteHistoriskPeriode);
+        }
+    }, []);
+
     if (!harHistoriskePerioder) return null;
 
     const onPeriodeChange: ChangeEventHandler<HTMLSelectElement> = (val) => {

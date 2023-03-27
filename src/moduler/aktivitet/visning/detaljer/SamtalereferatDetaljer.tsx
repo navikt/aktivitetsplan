@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { SAMTALEREFERAT_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import { formaterDatoKortManed } from '../../../../utils';
+import { formaterDatoKortManed } from '../../../../utils/dateUtils';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 
 interface Props {

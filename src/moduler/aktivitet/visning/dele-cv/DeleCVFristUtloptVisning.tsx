@@ -2,7 +2,7 @@ import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
-import { formaterDatoManed } from '../../../../utils';
+import { formaterDatoManed } from '../../../../utils/dateUtils';
 import { Ingress } from './DeleCvContainer';
 
 interface Props {
