@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Checkbox, Detail, HelpText } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
