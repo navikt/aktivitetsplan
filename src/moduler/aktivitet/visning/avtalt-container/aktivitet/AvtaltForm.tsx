@@ -8,7 +8,7 @@ import { AnyAction } from 'redux';
 import { z } from 'zod';
 
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import { VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
+import { EksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
@@ -19,7 +19,7 @@ import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
 import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsorienteringInfotekst';
 
 interface Props {
-    aktivitet: VeilarbAktivitet;
+    aktivitet: Exclude<VeilarbAktivitet, EksternAktivitet>;
     oppdaterer: boolean;
     lasterData: boolean;
     mindreEnnSyvDagerTil: boolean;
