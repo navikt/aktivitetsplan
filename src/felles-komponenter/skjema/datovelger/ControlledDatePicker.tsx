@@ -32,7 +32,7 @@ const ControlledDatePicker = ({
         name: name,
     });
 
-    const [displayValue, setDisplayValue] = useState<string>('');
+    const [displayValue, setDisplayValue] = useState<string>(defaultValue ? format(defaultValue, 'dd.M.y') : '');
 
     const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const day = parseDate(event.target.value, new Date(), nb, 'date', true);
