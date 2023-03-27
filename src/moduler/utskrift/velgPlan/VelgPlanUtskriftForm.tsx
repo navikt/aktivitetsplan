@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import KvpPlanValg from './KvpPlanValg';
-import UtskriftValg from './UtskriftValg';
+import UtskriftValg from './utskriftValg';
 
 interface Props {
     kvpPerioder?: KvpPeriode[];

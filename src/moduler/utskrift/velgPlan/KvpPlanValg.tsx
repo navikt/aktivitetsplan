@@ -2,8 +2,8 @@ import { BodyShort, Radio } from '@navikt/ds-react';
 import React from 'react';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
-import { formaterDatoKortManed } from '../../../utils';
-import UtskriftValg from './UtskriftValg';
+import { formaterDatoKortManed } from '../../../utils/dateUtils';
+import UtskriftValg from './utskriftValg';
 
 interface Props {
     kvpPerioder?: KvpPeriode[];
@@ -45,7 +45,7 @@ const KvpPlanListeValg = (props: Props) => {
                     >
                         <BodyShort>
                             {`${formaterDatoKortManed(kvpPeriode.opprettetDato)} - ${
-                                formaterDatoKortManed(kvpPeriode.avsluttetDato) || 'nå'
+                                kvpPeriode.avsluttetDato ? formaterDatoKortManed(kvpPeriode.avsluttetDato) : 'nå'
                             }`}
                         </BodyShort>
                     </Radio>
