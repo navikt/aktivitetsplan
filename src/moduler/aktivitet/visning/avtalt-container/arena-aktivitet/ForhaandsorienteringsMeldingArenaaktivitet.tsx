@@ -4,13 +4,14 @@ import { UseFormRegister, UseFormWatch } from 'react-hook-form/dist/types/form';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
+import { ForhaandsorienteringFormValues } from '../aktivitet/ForhaandsorienteringForm';
 import { AVTALT_TEKST } from '../utilsForhaandsorientering';
 import VarslingInfo from '../VarslingInfo';
 
 interface Props {
     lasterData: boolean;
-    register: UseFormRegister<any>;
-    watch: UseFormWatch<any>;
+    register: UseFormRegister<ForhaandsorienteringFormValues>;
+    watch: UseFormWatch<ForhaandsorienteringFormValues>;
 }
 
 const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {

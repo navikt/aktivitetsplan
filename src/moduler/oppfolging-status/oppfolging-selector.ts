@@ -1,6 +1,5 @@
 import { STATUS } from '../../api/utils';
 import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
-import { getNowAsISODate } from '../../utils';
 import { selectHistoriskeOppfolgingsPerioder } from './oppfolging-selectorts';
 
 type State = any;

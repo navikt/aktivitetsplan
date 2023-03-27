@@ -3,8 +3,8 @@ import React from 'react';
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
+import ForhaandsorienteringForm from '../aktivitet/ForhaandsorienteringForm';
 import { useKanSendeVarsel } from '../avtaltHooks';
-import ArenaForhaandsorienteringForm from './ArenaForhaandsorienteringForm';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForhaandsorienteringInfotekst';
 
 interface Props {
@@ -29,7 +29,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
                 {!merEnnSyvDagerTil ? (
                     <KanIkkeLeggeTilForhaandsorienteringInfotekst />
                 ) : (
-                    <ArenaForhaandsorienteringForm
+                    <ForhaandsorienteringForm
                         aktivitet={aktivitet}
                         setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
                         setForhandsorienteringType={setForhandsorienteringType}
