@@ -22,7 +22,7 @@ const ControlledDatePicker = ({
     const closePopover = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closePopover);
 
-    const { control, setValue, setError, clearErrors } = useFormContext();
+    const { control, setValue, clearErrors } = useFormContext();
     const {
         field,
         fieldState: { error },
