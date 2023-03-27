@@ -3,7 +3,7 @@ import { Store } from 'redux';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
-import { HistoriskOppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
@@ -33,7 +33,7 @@ const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, date
 
 export function datoErIPeriode(
     dato: string,
-    valgtHistoriskPeriode?: HistoriskOppfolgingsPeriode,
+    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode,
     sistePeriodeSluttDato?: string
 ) {
     const datoDate = new Date(dato);

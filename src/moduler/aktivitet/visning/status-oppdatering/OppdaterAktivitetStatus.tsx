@@ -14,7 +14,7 @@ import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetlisteSelector';
 import EndreLinje from '../endre-linje/EndreLinje';
-import AktivitetStatusForm from './AktivitetStatusForm';
+import AktivitetStatusForm, { AktivitetStatusFormValues } from './AktivitetStatusForm';
 
 const useDisableStatusEndring = (aktivitet: VeilarbAktivitet) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
@@ -47,9 +47,9 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
     const dispatch = useDispatch();
     const disableStatusEndring = useDisableStatusEndring(aktivitet);
 
-    const onSubmit = (val: any): Promise<any> => {
+    const onSubmit = (formValues: AktivitetStatusFormValues): Promise<any> => {
         setFormIsDirty('status', false);
-        return lagreStatusEndringer(dispatch, val, aktivitet).then(() => {
+        return lagreStatusEndringer(dispatch, formValues, aktivitet).then(() => {
             setIsOpen(false);
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();
@@ -72,7 +72,7 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
             open={open}
             tittel="Hva er status på aktiviteten?"
             subtittel={subtittel}
-            form={form}
+            content={form}
         />
     );
 };

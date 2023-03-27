@@ -1,19 +1,9 @@
 import { Accordion, Heading } from '@navikt/ds-react';
-import React, { MouseEventHandler, ReactNode, useMemo } from 'react';
-
-function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-        .toString()
-        .substring(1);
-}
-
-function guid() {
-    return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-}
+import React, { MouseEventHandler, ReactNode } from 'react';
 
 interface Props {
     tittel: string;
-    form: ReactNode;
+    content: ReactNode;
     subtittel: ReactNode;
     open: boolean;
     onClick: MouseEventHandler;
@@ -21,10 +11,7 @@ interface Props {
 }
 
 const EndreLinje = (props: Props) => {
-    const { tittel, form, subtittel, open, onClick, icon } = props;
-
-    //to get a valid css id it needs to start with a letter
-    const unique = useMemo(() => 'a' + guid(), []);
+    const { tittel, content, subtittel, open, onClick, icon } = props;
 
     return (
         <Accordion.Item open={open} className="first:border-t-2 first:border-border-divider">
@@ -39,9 +26,7 @@ const EndreLinje = (props: Props) => {
                     </div>
                 </div>
             </Accordion.Header>
-            <Accordion.Content>
-                <div id={unique}>{form}</div>
-            </Accordion.Content>
+            <Accordion.Content>{content}</Accordion.Content>
         </Accordion.Item>
     );
 };

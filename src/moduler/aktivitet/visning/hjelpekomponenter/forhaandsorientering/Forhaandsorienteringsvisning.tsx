@@ -64,8 +64,6 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     const lasterDataAktivitet = aktivitetFhoLestStatus === STATUS.PENDING;
     const lasterData = erArenaAktivitet ? lasterDataArena : lasterDataAktivitet;
 
-    console.log({ erLest, kanMarkeresSomLest });
-
     if (!erLest && kanMarkeresSomLest) {
         return (
             <Alert variant="warning">

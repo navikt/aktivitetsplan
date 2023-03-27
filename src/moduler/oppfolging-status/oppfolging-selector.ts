@@ -1,5 +1,5 @@
 import { STATUS } from '../../api/utils';
-import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { selectHistoriskeOppfolgingsPerioder } from './oppfolging-selectorts';
 
 type State = any;
@@ -22,11 +22,11 @@ export function selectServicegruppe(state: State) {
     return selectOppfolgingData(state).servicegruppe;
 }
 
-export function selectOppfolgingsPerioder(state: State): OppfolgingsPeriode[] {
+export function selectOppfolgingsPerioder(state: State): Oppfolgingsperiode[] {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
 
-export type VistOppfolgingsPeriode = HistoriskOppfolgingsPeriode & { fra: string; til: string };
+export type VistOppfolgingsPeriode = HistoriskOppfolgingsperiode & { fra: string; til: string };
 export function selectSorterteHistoriskeOppfolgingsPerioder(state: State): VistOppfolgingsPeriode[] {
     let nesteFra = new Date().toISOString();
     return selectHistoriskeOppfolgingsPerioder(state)
@@ -45,9 +45,9 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state: State): VistO
 }
 
 export function selectKvpPeriodeForValgteOppfolging(state: State) {
-    const valgtOppfolging = state.data.filter.historiskPeriode;
-    const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.id;
-    const oppfolging = selectOppfolgingsPerioder(state).find((p) => p.sluttDato === valgtOppfolgingId);
+    const valgtOppfolging: HistoriskOppfolgingsperiode = state.data.filter.historiskPeriode;
+    const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.uuid;
+    const oppfolging = selectOppfolgingsPerioder(state).find((p) => p.uuid === valgtOppfolgingId);
     return oppfolging && oppfolging.kvpPerioder;
 }
 

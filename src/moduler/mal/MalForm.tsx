@@ -57,8 +57,6 @@ const MalForm = (props: Props) => {
         formState: { errors, isDirty },
     } = useForm<MalFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: true });
 
-    console.log(isDirty);
-
     if (dirtyRef) {
         dirtyRef.current = isDirty;
     }

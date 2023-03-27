@@ -62,7 +62,6 @@ function EndreAktivitet(props) {
     useConfirmOnBeforeUnload(isDirty);
 
     function oppdater(aktivitet) {
-        console.log(aktivitet);
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet };
         return doOppdaterAktivitet(oppdatertAktivitet).then(() => history.push(aktivitetRoute(valgtAktivitet.id)));
