@@ -61,7 +61,7 @@
     "vite-plugin-svgr": "^2.4.0",
     "vitest": "^0.29.1",
     "whatwg-fetch": "^3.6.2",
-    "zod": "^3.20.6"
+    "zod": "^3.21.0"
   },
   "husky": {
     "hooks": {
