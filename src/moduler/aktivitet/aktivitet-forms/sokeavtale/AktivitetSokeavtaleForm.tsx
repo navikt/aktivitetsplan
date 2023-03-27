@@ -70,13 +70,13 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
         return {
             skjemaVersjon: 'ny',
             ...basevalues,
-            antallStillingerIUken: aktivitet?.antallStillingerIUken || undefined,
+            antallStillingerIUken: aktivitet?.antallStillingerIUken ?? undefined,
         };
     } else {
         return {
             skjemaVersjon: 'gammel',
             ...basevalues,
-            antallStillingerSokes: aktivitet?.antallStillingerSokes || undefined,
+            antallStillingerSokes: aktivitet?.antallStillingerSokes ?? undefined,
         };
     }
 };
