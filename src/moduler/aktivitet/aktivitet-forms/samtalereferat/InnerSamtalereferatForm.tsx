@@ -4,7 +4,8 @@ import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
+import { INTERNET_KANAL, OPPMOTE_KANAL, TELEFON_KANAL } from '../../../../constant';
+import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import AktivitetFormHeader from '../AktivitetFormHeader';
@@ -70,7 +71,7 @@ const InnerSamtalereferatForm = (props: Props) => {
         return handleSubmit((data) => {
             onSubmit({
                 ...data,
-                status: STATUS_GJENNOMFOERT,
+                status: AktivitetStatus.GJENNOMFOERT,
                 avtalt: false,
                 ...(erReferatPublisert && { erReferatPublisert: true }),
             });

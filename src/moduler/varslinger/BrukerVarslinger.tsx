@@ -2,7 +2,7 @@ import { addDays, differenceInDays, parseISO, startOfDay } from 'date-fns';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
+import { ARBEIDSSOKERREGISTRERING_URL } from '../../constant';
 import {
     selectErUnderOppfolging,
     selectInaktiveringsDato,
@@ -58,7 +58,7 @@ const BrukerVarslinger = (props: Props) => {
                 tekstId={infotekstTilInaktivertBrukere(antallDagerIgjen)}
                 className="mb-5 mt-4"
                 lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
-                href={arbeidssokerregistreringHref}
+                href={ARBEIDSSOKERREGISTRERING_URL}
                 values={{ antalldagerIgjen: antallDagerIgjen }}
             />
             <HiddenIfAdvarselMedLenke
@@ -66,7 +66,7 @@ const BrukerVarslinger = (props: Props) => {
                 tekstId="ikke.under.oppfolging.reaktivering"
                 className="mb-5 mt-4"
                 lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
-                href={arbeidssokerregistreringHref}
+                href={ARBEIDSSOKERREGISTRERING_URL}
                 values={{ antalldagerIgjen: antallDagerIgjen }}
             />
         </div>

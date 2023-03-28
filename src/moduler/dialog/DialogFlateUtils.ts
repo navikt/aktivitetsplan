@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react';
 
+import { ARBEIDSRETTET_DIALOG_URL } from '../../constant';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 
 interface DialogEventDetails {
@@ -20,7 +21,6 @@ export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialo
     );
 };
 
-const ARBEIDSRETTET_DIALOG_URL = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
 const BASE_URL = import.meta.env.BASE_URL;
 
 export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {

@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-    STATUS_AVBRUTT,
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_FULLFOERT,
-    STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
-} from '../../../../constant';
-import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import Gruppe from './Gruppe';
 
@@ -40,27 +33,27 @@ const Aktiviteter = (props: Props) => {
         <>
             <Gruppe
                 tittel="Aktiviteter jeg gjennomfører nå"
-                aktiviteter={gruperteAktiviteter[STATUS_GJENNOMFOERT]}
+                aktiviteter={gruperteAktiviteter[AktivitetStatus.GJENNOMFOERT]}
                 dialoger={dialoger}
             />
             <Gruppe
                 tittel="Planlagte aktiviteter"
-                aktiviteter={gruperteAktiviteter[STATUS_PLANLAGT]}
+                aktiviteter={gruperteAktiviteter[AktivitetStatus.PLANLAGT]}
                 dialoger={dialoger}
             />
             <Gruppe
                 tittel="Forslag til aktiviteter"
-                aktiviteter={gruperteAktiviteter[STATUS_BRUKER_ER_INTRESSERT]}
+                aktiviteter={gruperteAktiviteter[AktivitetStatus.BRUKER_ER_INTRESSERT]}
                 dialoger={dialoger}
             />
             <Gruppe
                 tittel="Fullførte aktiviteter"
-                aktiviteter={gruperteAktiviteter[STATUS_FULLFOERT]}
+                aktiviteter={gruperteAktiviteter[AktivitetStatus.FULLFOERT]}
                 dialoger={dialoger}
             />
             <Gruppe
                 tittel="Avbrutte aktiviteter"
-                aktiviteter={gruperteAktiviteter[STATUS_AVBRUTT]}
+                aktiviteter={gruperteAktiviteter[AktivitetStatus.AVBRUTT]}
                 dialoger={dialoger}
             />
         </>

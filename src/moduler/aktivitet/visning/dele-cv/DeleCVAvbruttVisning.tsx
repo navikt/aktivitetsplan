@@ -1,7 +1,6 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-import { AVBRUTT_AV_SYSTEM, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus, Livslopsstatus } from '../../../../datatypes/aktivitetTypes';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
 import { overskrift } from './tekster';
@@ -12,15 +11,15 @@ const getTekst = (
     erHistorisk: boolean,
     svarfrist: string
 ): string => {
-    if (status === STATUS_AVBRUTT && livslopsstatus === AVBRUTT_AV_SYSTEM) {
+    if (status === AktivitetStatus.AVBRUTT && livslopsstatus === Livslopsstatus.AVBRUTT_AV_SYSTEM) {
         return `Du kan ikke svare på spørsmålet fordi svarfristen gikk ut ${formaterDatoManed(svarfrist)}`;
     }
 
-    if (status === STATUS_AVBRUTT) {
+    if (status === AktivitetStatus.AVBRUTT) {
         return `Du kan ikke svare på spørsmålet fordi aktiviteten er avbrutt`;
     }
 
-    if (status === STATUS_FULLFOERT) {
+    if (status === AktivitetStatus.FULLFOERT) {
         return `Du kan ikke svare på spørsmålet fordi aktiviteten er fullført`;
     }
 

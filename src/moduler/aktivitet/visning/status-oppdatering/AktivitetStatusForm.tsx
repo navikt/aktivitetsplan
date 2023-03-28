@@ -4,7 +4,6 @@ import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -13,7 +12,7 @@ import { trengerBegrunnelse } from '../../aktivitet-util';
 import { kanOppdatereStatus } from './valideringUtils';
 
 const label = (status: AktivitetStatus) => {
-    if (status === STATUS_FULLFOERT) {
+    if (status === AktivitetStatus.FULLFOERT) {
         return 'Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe NAV bør kjenne til.';
     }
     return 'Skriv en kort begrunnelse om hvorfor du avbryter aktiviteten.';
@@ -95,7 +94,7 @@ const AktivitetStatusForm = (props: Props) => {
     }, [setFormIsDirty, isDirty]);
 
     const status = watch('aktivitetstatus');
-    const visAdvarsel = status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
+    const visAdvarsel = status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT;
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
 
     const onChangeStatus = (value: AktivitetStatus) => {

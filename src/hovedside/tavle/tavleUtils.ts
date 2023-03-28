@@ -1,5 +1,5 @@
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
-import { AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
+import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 
 export function erDroppbar(
@@ -11,7 +11,7 @@ export function erDroppbar(
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
     const erEksternAktivitet = type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
     const historisk = !erArenaAktivitet ? aktivitet.historisk : false;
-    const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
+    const erFerdig = [AktivitetStatus.FULLFOERT, AktivitetStatus.AVBRUTT].includes(status);
     const brukerKanOppdater = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
     return (
         underOppfolging &&

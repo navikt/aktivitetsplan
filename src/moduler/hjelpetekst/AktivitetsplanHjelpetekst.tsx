@@ -1,36 +1,29 @@
 import { HelpText } from '@navikt/ds-react';
 import React from 'react';
 
-import {
-    STATUS_AVBRUTT,
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_FULLFOERT,
-    STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
-} from '../../constant';
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 
 const hjelpetekster: Record<AktivitetStatus, { tittel: string; innhold: string }> = {
-    [STATUS_BRUKER_ER_INTRESSERT]: {
+    BRUKER_ER_INTERESSERT: {
         tittel: 'Informasjon om statusen Forslag',
         innhold:
             'Her kan du legge til en aktivitet du tror du kommer til å gjøre. Dra aktiviteten til "Planlegger" når du bestemmer deg for å gjøre aktiviteten.',
     },
-    [STATUS_PLANLAGT]: {
+    PLANLAGT: {
         tittel: 'Informasjon om statusen Planlegger',
         innhold:
-            'Her kan du legge til en aktivitet som du planlegger å gjøre. Når du starter å gjøre aktiviteten, drar du den til "Gjennomfører".',
+            'Her kan du legge til en aktivitet du tror du kommer til å gjøre. Dra aktiviteten til "Planlegger" når du bestemmer deg for å gjøre aktiviteten.',
     },
-    [STATUS_GJENNOMFOERT]: {
+    GJENNOMFORES: {
         tittel: 'Informasjon om statusen Gjennomfører',
         innhold: 'Aktiviteter som du holder på med, kan du sette til "Gjennomfører".',
     },
-    [STATUS_FULLFOERT]: {
+    FULLFORT: {
         tittel: 'Informasjon om statusen Fullført',
         innhold:
             'Dra aktiviteter hit som du er ferdig med. Flytter du en aktivitet til "Fullført", blir den låst og kan ikke redigeres. Hvis du angrer, kan du legge til en ny aktivitet.',
     },
-    [STATUS_AVBRUTT]: {
+    AVBRUTT: {
         tittel: 'Informasjon om statusen Avbrutt',
         innhold:
             'Dra aktiviteter hit som du avslutter eller ikke begynner på. Flytter du en aktivitet til "Avbrutt", blir den låst og kan ikke redigeres. Hvis du angrer, kan du legge til en ny aktivitet.',

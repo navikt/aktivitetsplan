@@ -5,7 +5,6 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
@@ -42,9 +41,9 @@ function DropTargetKolonne({ status, children }: Props) {
             status !== aktivitet.status && erDroppbar(aktivitet, erBruker, erUnderOppfolging),
         drop: ({ aktivitet }: DragItem<VeilarbAktivitet>) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
-            if (status === STATUS_FULLFOERT) {
+            if (status === AktivitetStatus.FULLFOERT) {
                 navigate(fullforAktivitetRoute(aktivitet.id));
-            } else if (status === STATUS_AVBRUTT) {
+            } else if (status === AktivitetStatus.AVBRUTT) {
                 navigate(avbrytAktivitetRoute(aktivitet.id));
             } else {
                 dispatch(flyttAktivitet(aktivitet, status) as unknown as AnyAction);

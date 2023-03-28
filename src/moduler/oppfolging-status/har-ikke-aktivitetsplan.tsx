@@ -1,7 +1,7 @@
 import { Alert, BodyShort, Link } from '@navikt/ds-react';
 import React from 'react';
 
-export const arbeidssokerregistreringHref = import.meta.env.VITE_ARBEIDSSOKERREGISTRERING_URL;
+import { ARBEIDSSOKERREGISTRERING_URL } from '../../constant';
 
 interface PropTypes {
     erVeileder: boolean;
@@ -17,7 +17,7 @@ function HarIkkeAktivitetsplan(props: PropTypes) {
         <div className="har-ikke-aktivitetsplan-container">
             <Alert variant="warning">
                 <BodyShort>{advarsel}</BodyShort>
-                {!erVeileder && <Link href={arbeidssokerregistreringHref}>Register deg hos NAV</Link>}
+                {!erVeileder && <Link href={ARBEIDSSOKERREGISTRERING_URL}>Register deg hos NAV</Link>}
             </Alert>
         </div>
     );

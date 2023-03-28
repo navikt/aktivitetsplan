@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../../api/utils';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
+import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
@@ -36,8 +37,8 @@ const ReferatContainer = (props: Props) => {
     const erAktivAktivitet =
         !aktivitet.historisk &&
         underOppfolging &&
-        aktivitet.status !== STATUS_AVBRUTT &&
-        aktivitet.status !== STATUS_FULLFOERT;
+        aktivitet.status !== AktivitetStatus.AVBRUTT &&
+        aktivitet.status !== AktivitetStatus.FULLFOERT;
 
     if (!kanHaReferat) return null;
 

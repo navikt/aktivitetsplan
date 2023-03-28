@@ -10,9 +10,9 @@ import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
-    STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
+import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import ErrorBoundry from '../../../felles-komponenter/ErrorBoundry';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/Modal';
@@ -41,7 +41,7 @@ function NyAktivitetForm(props) {
         return (aktivitet) => {
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
             const nyAktivitet = {
-                status: STATUS_PLANLAGT,
+                status: AktivitetStatus.PLANLAGT,
                 type: aktivitetsType,
                 ...filteredAktivitet,
             };

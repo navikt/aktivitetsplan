@@ -4,7 +4,8 @@ import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
+import { INTERNET_KANAL, OPPMOTE_KANAL, TELEFON_KANAL } from '../../../../constant';
+import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
@@ -89,7 +90,7 @@ const MoteAktivitetForm = (props: Props) => {
                 onSubmit({
                     ...data,
                     ...beregnFraTil(data),
-                    status: STATUS_PLANLAGT,
+                    status: AktivitetStatus.PLANLAGT,
                     avtalt: false,
                     // dato: selectedDay!!.toString(),
                 })

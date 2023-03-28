@@ -1,8 +1,7 @@
 import { addDays, subDays } from 'date-fns';
 import { RestRequest } from 'msw';
 
-import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
-import { BrukerType, StillingStatus } from '../datatypes/aktivitetTypes';
+import { AktivitetStatus, BrukerType, StillingFraNavSoknadsstatus, StillingStatus } from '../datatypes/aktivitetTypes';
 import {
     CvKanDelesData,
     MoteAktivitet,
@@ -49,7 +48,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
           wrapAktivitet({
               ...enStillingAktivitet({ tittel: 'Langemann' }),
               beskrivelse: 'Ute på åpent hav, er jeg kjent som sabeltanns skygge',
-              status: 'GJENNOMFORES',
+              status: AktivitetStatus.GJENNOMFOERT,
               etikett: StillingStatus.SOKNAD_SENDT,
               kontaktperson: 'Sabeltann',
               arbeidsgiver: 'Kaptein Sabeltann',
@@ -60,7 +59,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Skal skjules bak nedtrekksmeny for eldre aktiviteter',
               arbeidssted: 'De syv hav',
               arbeidsgiver: 'Uendret i lang tid',
-              status: STATUS_FULLFOERT,
+              status: AktivitetStatus.FULLFOERT,
               fraDato: subDays(new Date(), 120).toISOString(),
               tilDato: undefined,
               endretDato: subDays(new Date(), 100).toISOString(),
@@ -70,7 +69,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Skal ikke skjules bak nedtrekksmeny for eldre aktiviteter',
               arbeidssted: 'Øya Gral',
               arbeidsgiver: 'Endret nylig',
-              status: STATUS_FULLFOERT,
+              status: AktivitetStatus.FULLFOERT,
               fraDato: subDays(new Date(), 120).toISOString(),
               tilDato: undefined,
               endretDato: subDays(new Date(), 1).toISOString(),
@@ -82,7 +81,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Jeg skal bli awesome i html. Sjørøvere trenger å være awesome i html',
               lenke: 'www.nav.no',
               type: 'EGEN',
-              status: 'BRUKER_ER_INTERESSERT',
+              status: AktivitetStatus.BRUKER_ER_INTRESSERT,
               fraDato: '2020-01-01T12:00:00+01:00',
               tilDato: '2020-12-01T12:00:00+01:00',
               opprettetDato: '2018-02-26T15:51:44.197+01:00',
@@ -102,7 +101,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
               lenke: null,
               type: 'MOTE',
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               fraDato: '2030-08-21T08:00:00+02:00',
               tilDato: '2030-08-21T12:15:00+02:00',
               opprettetDato: '2018-08-21T11:55:14.044+02:00',
@@ -140,7 +139,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
               lenke: null,
               type: 'MOTE',
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               fraDato: '2017-02-16T00:00:00+01:00',
               tilDato: '2017-02-16T00:00:00+02:00',
               opprettetDato: '2017-02-16T00:00:00+01:00',
@@ -203,7 +202,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør (ikke svart)' }),
               arbeidsgiver: 'Har ikke svart ennå',
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               opprettetDato: subDays(new Date(), 3).toISOString(),
               endretDato: subDays(new Date(), 3).toISOString(),
               historisk: false,
@@ -217,7 +216,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
               arbeidsgiver: 'Har ikke svart innen fristen',
-              status: STATUS_AVBRUTT,
+              status: AktivitetStatus.AVBRUTT,
               opprettetDato: etTidspunkt(2020),
               endretDato: etTidspunkt(2018),
               historisk: false,
@@ -238,16 +237,20 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
           }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Assisterende skipskokk', arstall: 2020 }),
-              stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles, soknadsstatus: 'CV_DELT' },
-          }),
-          wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Greve av Gral', arstall: 2023 }),
-              status: STATUS_FULLFOERT,
-              transaksjonsType: 'IKKE_FATT_JOBBEN',
               stillingFraNavData: {
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
-                  soknadsstatus: IKKE_FATT_JOBBEN,
+                  soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
+              },
+          }),
+          wrapAktivitet({
+              ...enStillingFraNavAktivitet({ tittel: 'Greve av Gral', arstall: 2023 }),
+              status: AktivitetStatus.FULLFOERT,
+              transaksjonsType: StillingFraNavTransaksjonsType.IKKE_FATT_JOBBEN,
+              stillingFraNavData: {
+                  ...enStillingFraNavData,
+                  cvKanDelesData: jaCvKanDeles,
+                  soknadsstatus: StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN,
                   ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
           }),
@@ -259,7 +262,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
                   'CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager.',
               lenke: null,
               type: 'BEHANDLING',
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               fraDato: '2022-09-13T14:13:49.000+02:00',
               tilDato: '2022-09-14T14:13:58.000+02:00',
               opprettetDato: '2022-09-13T12:16:08.593Z',
@@ -308,7 +311,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
                   'Hvilke jobber kan du ta og hvilke bransjer kan du jobbe i? Er jobbene der du bor eller andre steder i landet? Velg geografisk område og bransje og se om jobbene finnes. Hvis du mener denne aktiviteten ikke passer for deg, kan du sette den til avbrutt.',
               lenke: 'https://mia-q.nav.no',
               type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
-              status: 'BRUKER_ER_INTERESSERT',
+              status: AktivitetStatus.BRUKER_ER_INTRESSERT,
               fraDato: '2019-06-13T10:00:36.255+02:00',
               tilDato: '2019-09-13T10:00:36.255+02:00',
               opprettetDato: '2019-06-13T10:00:36.333+02:00',
@@ -331,7 +334,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
                   'Når du registrerer CV-en og jobbprofilen din, kan vi følge deg opp på en god måte. Du gjør deg synlig for arbeidsgivere som leter etter nye medarbeidere. NAV samarbeider med mange arbeidsgivere og bemanningsbransjen.',
               lenke: 'https://arbeidsplassen-q.nav.no/minside',
               type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
-              status: 'GJENNOMFORES',
+              status: AktivitetStatus.GJENNOMFOERT,
               fraDato: '2021-06-13T10:00:36.699+02:00',
               tilDato: '2021-06-21T10:00:36.699+02:00',
               opprettetDato: '2019-06-13T10:00:36.722+02:00',
@@ -354,7 +357,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
                   'Svar på noen spørsmål om hvordan du søker på jobber. Få råd og tips til søknaden, CV-en, intervjuet og hvordan du finner jobbene.',
               lenke: 'https://jobbsokerkompetanse-q.nav.no/',
               type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
-              status: 'BRUKER_ER_INTERESSERT',
+              status: AktivitetStatus.BRUKER_ER_INTRESSERT,
               fraDato: '2019-06-13T10:00:36.785+02:00',
               tilDato: '2019-06-27T10:00:36.785+02:00',
               opprettetDato: '2019-06-13T10:00:36.81+02:00',
@@ -381,7 +384,7 @@ const ekstraVersjoner = !visTestAktiviteter()
           // }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               transaksjonsType: 'DEL_CV_SVART',
               stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles },
           }),
@@ -580,7 +583,7 @@ export const oppdaterCVKanDelesSvar = async (req: RestRequest) => {
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as StillingFraNavAktivitet;
     const nyeAktivitetAttributter: StillingFraNavAktivitet = {
         ...gammelAktivitet,
-        status: cvKanDelesData.kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
+        status: cvKanDelesData.kanDeles ? AktivitetStatus.GJENNOMFOERT : AktivitetStatus.AVBRUTT,
         transaksjonsType: StillingFraNavTransaksjonsType.DEL_CV_SVART,
         stillingFraNavData: {
             ...gammelAktivitet.stillingFraNavData,
