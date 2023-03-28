@@ -3,6 +3,7 @@ import {
     AktivitetBaseProps,
     AlleAktiviteter,
     BrukerType,
+    Kanal,
     Livslopsstatus,
     StillingFraNavSoknadsstatus,
 } from './aktivitetTypes';
@@ -72,11 +73,7 @@ export interface SamtalereferatAktivitet
     extends AktivitetBaseProps<FellesTransaksjonsTyper | SamtaleReferatTransaksjonsType> {
     type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE;
     fraDato: string;
-    varighet: string;
-    kanal: string;
-    adresse: string;
-    beskrivelse: string;
-    forberedelser: string;
+    kanal: Kanal;
     referat: string;
     erReferatPublisert: boolean;
 }
@@ -87,7 +84,7 @@ export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsType
     tilDato: string;
     klokkeslett: string;
     varighet: string;
-    kanal: string;
+    kanal: Kanal;
     adresse: string;
     beskrivelse: string;
     forberedelser: string;

@@ -39,6 +39,12 @@ export enum Livslopsstatus {
     AVBRUTT_AV_BRUKER = 'AVBRUTT_AV_BRUKER',
 }
 
+export enum Kanal {
+    TELEFON = 'TELEFON',
+    OPPMOTE = 'OPPMOTE',
+    INTERNET = 'INTERNETT',
+}
+
 export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 
 export interface Lest {

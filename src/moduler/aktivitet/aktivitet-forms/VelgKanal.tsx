@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { INTERNET_KANAL, OPPMOTE_KANAL, TELEFON_KANAL } from '../../../constant';
+import { Kanal } from '../../../datatypes/aktivitetTypes';
 import Select from '../../../felles-komponenter/skjema/input/Select';
 
 const VelgKanal = (props: any) => (
     <Select noBlankOption bredde="fullbredde" {...props} required>
-        <option value={OPPMOTE_KANAL}>Oppmøte</option>
-        <option value={TELEFON_KANAL}>Telefonmøte</option>
-        <option value={INTERNET_KANAL}>Videomøte</option>
+        <option value={Kanal.OPPMOTE}>Oppmøte</option>
+        <option value={Kanal.TELEFON}>Telefonmøte</option>
+        <option value={Kanal.INTERNET}>Videomøte</option>
     </Select>
 );
 

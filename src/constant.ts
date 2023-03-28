@@ -1,4 +1,4 @@
-import { erEksternBruker } from './mocks/demo/sessionstorage';
+export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
 export const ARBEIDSRETTET_DIALOG_URL = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
 export const STILLING_FRA_NAV_BASE_URL = import.meta.env.VITE_STILLING_FRA_NAV_BASE_URL;
@@ -10,7 +10,7 @@ export const USE_MOCK = import.meta.env.DEV || USE_HASH_ROUTER;
 
 export const ER_INTERN_FLATE = !USE_MOCK
     ? ['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)
-    : !erEksternBruker();
+    : import('./mocks/demo/sessionstorage').then((sessionStorage) => sessionStorage.erEksternBruker());
 
 export const EGEN_AKTIVITET_TYPE = 'EGEN';
 export const STILLING_AKTIVITET_TYPE = 'STILLING';
@@ -28,10 +28,6 @@ export const EKSTERN_AKTIVITET_TYPE = 'EKSTERNAKTIVITET';
 export const JOBB_STATUS_HELTID = 'HELTID';
 export const JOBB_STATUS_DELTID = 'DELTID';
 
-export const TELEFON_KANAL = 'TELEFON';
-export const OPPMOTE_KANAL = 'OPPMOTE';
-export const INTERNET_KANAL = 'INTERNETT';
-
 export enum TabId {
     AKTIVITETSPLAN = 'AKTIVITETSPLAN',
     DIALOG = 'DIALOG',
@@ -39,5 +35,3 @@ export enum TabId {
     DETALJER = 'DETALJER',
     ARBEIDSMARKEDSTILTAK = 'ARBEIDSMARKEDSTILTAK',
 }
-
-export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';

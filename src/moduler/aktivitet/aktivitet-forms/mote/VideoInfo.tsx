@@ -1,11 +1,11 @@
 import { BodyShort, Link } from '@navikt/ds-react';
 import React from 'react';
 
-import { INTERNET_KANAL } from '../../../../constant';
+import { Kanal } from '../../../../datatypes/aktivitetTypes';
 import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
 
-const VideoInfo = ({ kanal }: { kanal: string }) => {
-    if (kanal === INTERNET_KANAL) {
+const VideoInfo = ({ kanal }: { kanal: Kanal }) => {
+    if (kanal === Kanal.INTERNET) {
         return (
             <BodyShort className="mote-aktivitet-form__video-info">
                 Les om{' '}

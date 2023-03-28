@@ -1,7 +1,13 @@
 import { addDays, subDays } from 'date-fns';
 import { RestRequest } from 'msw';
 
-import { AktivitetStatus, BrukerType, StillingFraNavSoknadsstatus, StillingStatus } from '../datatypes/aktivitetTypes';
+import {
+    AktivitetStatus,
+    BrukerType,
+    Kanal,
+    StillingFraNavSoknadsstatus,
+    StillingStatus,
+} from '../datatypes/aktivitetTypes';
 import {
     CvKanDelesData,
     MoteAktivitet,
@@ -128,7 +134,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               behandlingSted: null,
               effekt: null,
               behandlingOppfolging: null,
-              kanal: 'TELEFON',
+              kanal: Kanal.TELEFON,
               adresse: 'Ditt nærmeste NAV kontor',
               erReferatPublisert: false,
           }),
@@ -166,7 +172,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               behandlingSted: null,
               effekt: null,
               behandlingOppfolging: null,
-              kanal: 'TELEFON',
+              kanal: Kanal.TELEFON,
               erReferatPublisert: false,
           }),
           wrapAktivitet({
@@ -594,7 +600,7 @@ export const oppdaterCVKanDelesSvar = async (req: RestRequest) => {
                 endretAv: bruker ? '843029483' : 'z123',
                 endretAvType: bruker,
             },
-            soknadsstatus: cvKanDelesData.kanDeles ? 'VENTER' : undefined,
+            soknadsstatus: cvKanDelesData.kanDeles ? StillingFraNavSoknadsstatus.VENTER : undefined,
         },
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
