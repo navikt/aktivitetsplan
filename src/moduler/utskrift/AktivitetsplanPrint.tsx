@@ -1,7 +1,7 @@
 import { Loader, Modal } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
@@ -49,7 +49,6 @@ interface Props {
     doHentMal: () => void;
     doHentMalListe: () => void;
     avhengigheter: InnholdslasterProps['avhengigheter'];
-    doResetUtskrift: () => void;
     bruker: Bruker;
     kvpPerioder?: KvpPeriode[];
     dialoger?: Dialog[];
@@ -118,11 +117,8 @@ const AktivitetsplanPrint = (props: Props) => {
     const kanHaPrintMelding = erManuell && erVeileder;
 
     const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
-    const history = useHistory();
-    const goBack = () => {
-        history.goBack();
-    };
-
+    const navigate = useNavigate();
+    const goBack = () => navigate(-1);
     if (fnr && (isLoadingAdresse || isLoadingBruker)) {
         return <Loader />;
     }
@@ -205,9 +201,6 @@ const mapStateToProps = (state: any) => {
 
 function mapDispatchToProps(dispatch: any, props: any) {
     return {
-        doResetUtskrift: () => {
-            props.history.push('/');
-        },
         doHentMal: () => dispatch(hentMal()),
         doHentMalListe: () => dispatch(hentMalListe()),
     };

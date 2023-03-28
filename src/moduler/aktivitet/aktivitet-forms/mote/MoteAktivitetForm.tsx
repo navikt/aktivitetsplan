@@ -36,10 +36,10 @@ const schema = z.object({
     forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
 });
 
-type MoteAktivitetFormValues = z.infer<typeof schema>;
+export type MoteAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
-    onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<any>;
+    onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MoteAktivitet;
 }

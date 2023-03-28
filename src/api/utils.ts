@@ -7,7 +7,7 @@ export const STATUS = {
     OK: 'OK',
     RELOADING: 'RELOADING',
     ERROR: 'ERROR',
-};
+} as const;
 
 const DEFAULT_CONFIG = {
     credentials: 'same-origin',

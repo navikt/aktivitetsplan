@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { byttTilDialogFlate, getDialogLenke } from './DialogFlateUtils';
@@ -15,12 +15,12 @@ interface Props {
 
 const LenkeTilDialog = (props: Props) => {
     const { className, dialogId, aktivitetId, hidden, children } = props;
-    const history = useHistory();
+    const navigate = useNavigate();
     const erVeileder = useSelector(selectErVeileder);
 
     const internalOnClick = (event: MouseEvent) => {
         if (erVeileder) {
-            history.replace('/');
+            navigate('/', { replace: true });
             byttTilDialogFlate(event, aktivitetId, dialogId);
         }
     };

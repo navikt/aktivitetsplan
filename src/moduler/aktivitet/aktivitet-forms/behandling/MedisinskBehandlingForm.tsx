@@ -34,7 +34,7 @@ const schema = z.object({
     beskrivelse: z.string().max(400, 'Du må korte ned teksten til 400 tegn').optional(),
 });
 
-type MedisinskBehandlingFormValues = z.infer<typeof schema>;
+export type MedisinskBehandlingFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: MedisinskBehandlingFormValues) => Promise<void>;

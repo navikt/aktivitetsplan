@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { Lest } from '../../datatypes/aktivitetTypes';
@@ -51,9 +51,9 @@ function MalContent(props: MalContentProps) {
     const { disabled, mal } = props;
     const dispatch = useDispatch();
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
-    const history = useHistory();
+    const navigate = useNavigate();
     const endreMal = () => {
-        history.push('/mal');
+        navigate('/mal');
         loggMittMalKlikk(erVeileder);
         dispatch(lesMal());
     };

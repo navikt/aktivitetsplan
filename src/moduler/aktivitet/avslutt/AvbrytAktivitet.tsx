@@ -1,18 +1,17 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { STATUS } from '../../../api/utils';
-import { STATUS_AVBRUTT } from '../../../constant';
-import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseForm from './BegrunnelseForm';
-import PubliserReferat from './publiser-referat';
+import PubliserReferat from './PubliserReferat';
 import VisAdvarsel from './vis-advarsel';
 
 const headerTekst = 'Avbrutt aktivitet';
@@ -20,18 +19,12 @@ const beskrivelseLabel =
     'Skriv en kort begrunnelse under om hvorfor du avbrøt aktiviteten. ' +
     'Når du lagrer blir aktiviteten låst, og du kan ikke lenger redigere innholdet.';
 
-interface Props {
-    match: { params: { id: string } };
-}
-
-const AvbrytAktivitet = (props: Props) => {
-    const { match } = props;
-    const aktivitetId = match.params.id;
-
-    const valgtAktivitet = useSelector((state) => selectAktivitetMedId(state, aktivitetId));
+const AvbrytAktivitet = () => {
+    const { id: aktivitetId } = useParams<{ id: string }>();
+    const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
     const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
@@ -45,7 +38,7 @@ const AvbrytAktivitet = (props: Props) => {
             beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
-                history.replace('/');
+                navigate('/', { replace: true });
                 lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
         />
@@ -56,18 +49,19 @@ const AvbrytAktivitet = (props: Props) => {
             headerTekst={headerTekst}
             onSubmit={() => {
                 lagreBegrunnelse(valgtAktivitet, null);
-                history.replace('/');
+                navigate('/');
             }}
         />
     ) : null;
 
     const maaBegrunnes =
-        valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, STATUS_AVBRUTT, valgtAktivitet.type);
+        valgtAktivitet &&
+        trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.STATUS_AVBRUTT, valgtAktivitet.type);
 
     return (
         <Modal contentLabel="avbryt-aktivitet">
             {valgtAktivitet ? (
-                <PubliserReferat aktivitet={valgtAktivitet} nyStatus={STATUS_AVBRUTT}>
+                <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.STATUS_AVBRUTT}>
                     {maaBegrunnes ? begrunnelse : advarsel}
                 </PubliserReferat>
             ) : (

@@ -2,7 +2,7 @@ import { PlusIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
@@ -18,7 +18,7 @@ const Verktoylinje = () => {
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang);
     const aktivitetLaster = useSelector(selectHarTilgangTilAktiviteter);
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const hideLeggTil = viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang;
 
@@ -33,7 +33,7 @@ const Verktoylinje = () => {
                             disabled={!aktivitetLaster}
                             onClick={() => {
                                 loggEvent(APNE_NY_AKTIVITET);
-                                history.push('/aktivitet/ny');
+                                navigate('/aktivitet/ny');
                             }}
                         >
                             Legg til aktivitet

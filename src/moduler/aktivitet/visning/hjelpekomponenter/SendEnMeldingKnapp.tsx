@@ -2,7 +2,7 @@ import { ChatElipsisIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
@@ -23,11 +23,11 @@ const SendEnMeldingKnapp = (props: Props) => {
         dialog?.henvendelser?.reduce((totaltUleste, melding) => (melding.lest ? totaltUleste : totaltUleste + 1), 0) ||
         0;
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const veilederOnClick = (event: React.MouseEvent) => {
         if (erVeileder) {
-            history.replace('/');
+            navigate('/', { replace: true });
             byttTilDialogFlate(event, aktivitet.id, dialog?.id);
         }
     };
