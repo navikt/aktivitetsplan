@@ -1,7 +1,7 @@
 import PT from 'prop-types';
 import React, { useRef } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import {
     BEHANDLING_AKTIVITET_TYPE,
@@ -31,7 +31,8 @@ import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStilling
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 function NyAktivitetForm(props) {
-    const { onLagreNyAktivitet, history, match, aktivitetFeilmeldinger, underOppfolging } = props;
+    const navigate = useNavigate();
+    const { onLagreNyAktivitet, aktivitetFeilmeldinger, underOppfolging } = props;
 
     const dirtyRef = useRef(false);
     useConfirmOnBeforeUnload(dirtyRef);
@@ -44,14 +45,14 @@ function NyAktivitetForm(props) {
                 type: aktivitetsType,
                 ...filteredAktivitet,
             };
-            return onLagreNyAktivitet(nyAktivitet).then((action) => history.push(aktivitetRoute(action.data.id)));
+            return onLagreNyAktivitet(nyAktivitet).then((action) => navigate(aktivitetRoute(action.data.id)));
         };
     };
 
     function onRequestClose() {
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
-            history.push('/');
+            navigate('/');
         }
     }
 
@@ -59,7 +60,7 @@ function NyAktivitetForm(props) {
         e.preventDefault();
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
-            history.push('/aktivitet/ny');
+            navigate('/aktivitet/ny');
         }
     };
 
@@ -78,38 +79,66 @@ function NyAktivitetForm(props) {
         >
             <ErrorBoundry>
                 <article>
-                    <Switch>
-                        <Route path={`${match.path}/mote`}>
-                            <MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} dirtyRef={dirtyRef} />
-                        </Route>
-                        <Route path={`${match.path}/samtalereferat`}>
-                            <SamtalereferatForm onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)} dirtyRef={dirtyRef} />
-                        </Route>
-                        <Route path={`${match.path}/stilling`}>
-                            <StillingAktivitetForm
-                                onSubmit={onSubmitFactory(STILLING_AKTIVITET_TYPE)}
-                                dirtyRef={dirtyRef}
-                            />
-                        </Route>
-                        <Route path={`${match.path}/sokeavtale`}>
-                            <SokeAvtaleAktivitetForm
-                                onSubmit={onSubmitFactory(SOKEAVTALE_AKTIVITET_TYPE)}
-                                dirtyRef={dirtyRef}
-                            />
-                        </Route>
-                        <Route path={`${match.path}/behandling`}>
-                            <MedisinskBehandlingForm
-                                onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
-                                dirtyRef={dirtyRef}
-                            />
-                        </Route>
-                        <Route path={`${match.path}/egen`}>
-                            <EgenAktivitetForm onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)} dirtyRef={dirtyRef} />
-                        </Route>
-                        <Route path={`${match.path}/ijobb`}>
-                            <IJobbAktivitetForm onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)} dirtyRef={dirtyRef} />
-                        </Route>
-                    </Switch>
+                    <Routes>
+                        <Route
+                            path={`mote`}
+                            element={<MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} dirtyRef={dirtyRef} />}
+                        />
+                        <Route
+                            path={`samtalereferat`}
+                            element={
+                                <SamtalereferatForm
+                                    onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)}
+                                    dirtyRef={dirtyRef}
+                                />
+                            }
+                        />
+                        <Route
+                            path={`stilling`}
+                            element={
+                                <StillingAktivitetForm
+                                    onSubmit={onSubmitFactory(STILLING_AKTIVITET_TYPE)}
+                                    dirtyRef={dirtyRef}
+                                />
+                            }
+                        />
+                        <Route
+                            path={`sokeavtale`}
+                            element={
+                                <SokeAvtaleAktivitetForm
+                                    onSubmit={onSubmitFactory(SOKEAVTALE_AKTIVITET_TYPE)}
+                                    dirtyRef={dirtyRef}
+                                />
+                            }
+                        />
+                        <Route
+                            path={`behandling`}
+                            element={
+                                <MedisinskBehandlingForm
+                                    onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
+                                    dirtyRef={dirtyRef}
+                                />
+                            }
+                        />
+                        <Route
+                            path={`egen`}
+                            element={
+                                <EgenAktivitetForm
+                                    onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)}
+                                    dirtyRef={dirtyRef}
+                                />
+                            }
+                        />
+                        <Route
+                            path={`ijobb`}
+                            element={
+                                <IJobbAktivitetForm
+                                    onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)}
+                                    dirtyRef={dirtyRef}
+                                />
+                            }
+                        />
+                    </Routes>
                 </article>
             </ErrorBoundry>
         </Modal>
@@ -118,9 +147,8 @@ function NyAktivitetForm(props) {
 
 NyAktivitetForm.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
-    history: PT.object.isRequired,
-    match: PT.object.isRequired,
     aktivitetFeilmeldinger: PT.array.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
@@ -45,7 +45,7 @@ const emptySelector = () => [];
 const AktivitetvisningModal = (props: Props) => {
     const { aktivitet, avhengigheter, children } = props;
     const dirty = useContext(DirtyContext);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const selectFeilMeldinger = (a: AlleAktiviteter) =>
         isArenaAktivitet(a) ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
@@ -74,7 +74,7 @@ const AktivitetvisningModal = (props: Props) => {
                     window.alert('Det er en viktig beskjed om ansvaret ditt som du må lese.');
                     return;
                 }
-                history.push('/');
+                navigate('/');
             }}
             feilmeldinger={alleFeil}
         >

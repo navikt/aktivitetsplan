@@ -22,7 +22,7 @@ const schema = z.object({
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
 
-type SamtalereferatAktivitetFormValues = z.infer<typeof schema>;
+export type SamtalereferatAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (

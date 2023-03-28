@@ -1,10 +1,18 @@
 import PT from 'prop-types';
 import React from 'react';
-import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Hovedside from './hovedside/Hovedside';
+import AvbrytAktivitet from './moduler/aktivitet/avslutt/AvbrytAktivitet';
+import FullforAktivitet from './moduler/aktivitet/avslutt/FullforAktivitet';
+import LeggTilForm from './moduler/aktivitet/ny-aktivitet/LeggTilForm';
+import NyAktivitetForm from './moduler/aktivitet/ny-aktivitet/ny-aktivitet-form';
+import EndreAktivitet from './moduler/aktivitet/rediger/EndreAktivitet';
+import AktivitetvisningContainer from './moduler/aktivitet/visning/AktivitetvisningContainer';
+import InformasjonModal from './moduler/informasjon/informasjon-modal';
+import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
 import Provider from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
@@ -64,14 +72,21 @@ function App({ fnr }: { fnr: string }) {
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <Router fnr={fnr}>
-                            <Switch>
-                                <Route exact path="/utskrift">
-                                    <AktivitetsplanPrint />
+                            <Routes>
+                                <Route path="/utskrift" element={<AktivitetsplanPrint />} />
+                                <Route path="/" element={<Hovedside />}>
+                                    <Route path={'/mal'} element={<Aktivitetsmal />} />
+                                    <Route path={'/informasjon'} element={<InformasjonModal />} />
+                                    <Route path={'/aktivitet'}>
+                                        <Route path={`ny`} element={<LeggTilForm />} />
+                                        <Route path={`ny/*`} element={<NyAktivitetForm />} />
+                                        <Route path={`vis/:id`} element={<AktivitetvisningContainer />} />
+                                        <Route path={`endre/:id`} element={<EndreAktivitet />} />
+                                        <Route path={`avbryt/:id`} element={<AvbrytAktivitet />} />
+                                        <Route path={`fullfor/:id`} element={<FullforAktivitet />} />
+                                    </Route>
                                 </Route>
-                                <Route>
-                                    <Hovedside />
-                                </Route>
-                            </Switch>
+                            </Routes>
                         </Router>
                         <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />

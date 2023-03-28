@@ -47,7 +47,7 @@ const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
     NySokeAvtaleFormValues,
 ]);
 
-type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
+export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
 
 interface Props {
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;

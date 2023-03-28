@@ -1,7 +1,7 @@
 import { PencilIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
@@ -16,7 +16,7 @@ interface Props {
 const EndreAktivitetKnapp = (props: Props) => {
     const { id, tillatEndring, laster, underOppfolging } = props;
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     if (!tillatEndring) {
         return null;
@@ -24,7 +24,7 @@ const EndreAktivitetKnapp = (props: Props) => {
 
     const goToEndre = () => {
         loggEvent(APNE_ENDRE_AKTIVITET);
-        history.push(endreAktivitetRoute(id));
+        navigate(endreAktivitetRoute(id));
     };
 
     return (

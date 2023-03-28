@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
@@ -30,7 +30,7 @@ export const DROP_TYPE = 'AktivitetsKort';
 
 function DropTargetKolonne({ status, children }: Props) {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const erBruker = useSelector(selectErBruker, shallowEqual);
     const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
@@ -43,9 +43,9 @@ function DropTargetKolonne({ status, children }: Props) {
         drop: ({ aktivitet }: DragItem<VeilarbAktivitet>) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
-                history.push(fullforAktivitetRoute(aktivitet.id));
+                navigate(fullforAktivitetRoute(aktivitet.id));
             } else if (status === STATUS_AVBRUTT) {
-                history.push(avbrytAktivitetRoute(aktivitet.id));
+                navigate(avbrytAktivitetRoute(aktivitet.id));
             } else {
                 dispatch(flyttAktivitet(aktivitet, status) as unknown as AnyAction);
             }
