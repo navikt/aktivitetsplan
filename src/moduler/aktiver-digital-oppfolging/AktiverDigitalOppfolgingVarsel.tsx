@@ -27,7 +27,9 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                 For å ta i bruk aktivitetsplanen, må du fjerne reservasjonen din mot digital kommunikasjon. &nbsp;
-                <Link href={'https://www.norge.no/nn/reservasjon'}>Gå til Norge.no for å fjerne reservasjonen</Link>
+                <Link href={'https://www.norge.no/nb/digital-borgar/reservasjon'}>
+                    Gå til Norge.no for å fjerne reservasjonen
+                </Link>
             </Alert>
         );
     }
