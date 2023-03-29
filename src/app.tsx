@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
-import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
+import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
 import Hovedside from './hovedside/Hovedside';
 import AvbrytAktivitet from './moduler/aktivitet/avslutt/AvbrytAktivitet';
 import FullforAktivitet from './moduler/aktivitet/avslutt/FullforAktivitet';

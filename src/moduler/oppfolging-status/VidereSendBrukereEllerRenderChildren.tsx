@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 
+import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
-import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
-import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
+import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigitalOppfolging';
+import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
@@ -10,15 +11,13 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     manuell: boolean;
     underOppfolging: boolean;
     reservasjonKRR: boolean;
-    videreSendTilInfo: boolean;
-    kanStarteOppfolging: boolean;
-    oppfolgingsPerioder: Array<any>;
+    oppfolgingsPerioder: Oppfolgingsperiode[];
     servicegruppe: string;
     ident: string;
     aktorId: string;
 }
 
-function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRenderChildrenProps) {
+const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
     const {
         erVeileder,
         servicegruppe,
@@ -49,7 +48,7 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         return <AktiverDigitalOppfolging />;
     }
 
-    return children;
-}
+    return <>{children}</>;
+};
 
 export default VidereSendBrukereEllerRenderChildren;

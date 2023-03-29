@@ -6,15 +6,16 @@ import { STATUS } from '../../api/utils';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import { settDigital } from '../oppfolging-status/oppfolging-reducer';
 import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
-import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel';
+import AktiverDigitalOppfolgingVarsel from './AktiverDigitalOppfolgingVarsel';
 
 const AktiverDigitalOppfolging = () => {
     const oppfolgingStatus = useSelector(selectOppfolgingStatus);
     const reservertKrr = useSelector(selectReservasjonKRR);
-    const dispatch = useDispatch();
 
     const settOppfolgingFeilet = oppfolgingStatus === STATUS.ERROR;
     const lasterOppfolging = oppfolgingStatus === STATUS.PENDING || oppfolgingStatus === STATUS.RELOADING;
+
+    const dispatch = useDispatch();
 
     return (
         <div className="flex items-center flex-col">

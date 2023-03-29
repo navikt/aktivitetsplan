@@ -51,7 +51,7 @@ export function selectKvpPeriodeForValgteOppfolging(state: State) {
     return oppfolging && oppfolging.kvpPerioder;
 }
 
-export function selectErUnderOppfolging(state: any): boolean {
+export function selectErUnderOppfolging(state: State): boolean {
     return selectOppfolgingData(state).underOppfolging;
 }
 

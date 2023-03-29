@@ -1,3 +1,5 @@
+import { erEksternBruker } from './mocks/demo/sessionstorage';
+
 export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
 export const ARBEIDSRETTET_DIALOG_URL = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
@@ -10,7 +12,7 @@ export const USE_MOCK = import.meta.env.DEV || USE_HASH_ROUTER;
 
 export const ER_INTERN_FLATE = !USE_MOCK
     ? ['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)
-    : import('./mocks/demo/sessionstorage').then((sessionStorage) => sessionStorage.erEksternBruker());
+    : !erEksternBruker();
 
 export const EGEN_AKTIVITET_TYPE = 'EGEN';
 export const STILLING_AKTIVITET_TYPE = 'STILLING';

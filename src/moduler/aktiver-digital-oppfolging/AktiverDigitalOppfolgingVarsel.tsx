@@ -1,12 +1,12 @@
 import { Alert, Link } from '@navikt/ds-react';
 import React from 'react';
 
-interface PropTypes {
+interface Props {
     reservertIKRR: boolean;
     settDigitalFeilet: boolean;
 }
 
-const AktiverDigitalOppfolgingVarsel = (props: PropTypes): React.ReactElement => {
+const AktiverDigitalOppfolgingVarsel = (props: Props) => {
     const { reservertIKRR, settDigitalFeilet } = props;
 
     if (settDigitalFeilet) {
