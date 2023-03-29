@@ -45,6 +45,11 @@ export enum Kanal {
     INTERNET = 'INTERNETT',
 }
 
+export enum JobbStatusType {
+    HELTID = 'HELTID',
+    DELTID = 'DELTID',
+}
+
 export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 
 export interface Lest {
