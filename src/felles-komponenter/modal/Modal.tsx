@@ -1,5 +1,4 @@
-import { AirplaneIcon } from '@navikt/aksel-icons';
-import { Modal as AkselModal, Button } from '@navikt/ds-react';
+import { Modal as AkselModal } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
