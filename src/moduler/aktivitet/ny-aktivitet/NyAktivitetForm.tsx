@@ -1,20 +1,13 @@
-import PT from 'prop-types';
-import React, { useRef } from 'react';
-import { connect } from 'react-redux';
+import React, { MouseEventHandler, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { AnyAction } from 'redux';
 
-import {
-    BEHANDLING_AKTIVITET_TYPE,
-    EGEN_AKTIVITET_TYPE,
-    IJOBB_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-    SOKEAVTALE_AKTIVITET_TYPE,
-    STILLING_AKTIVITET_TYPE,
-} from '../../../constant';
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import ErrorBoundry from '../../../felles-komponenter/ErrorBoundry';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
+import { useReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { aktivitetRoute } from '../../../routes';
@@ -29,23 +22,30 @@ import SamtalereferatForm from '../aktivitet-forms/samtalereferat/Samtalereferat
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { AktivitetFormValues } from '../rediger/EndreAktivitet';
 
-function NyAktivitetForm(props) {
+const NyAktivitetForm = () => {
     const navigate = useNavigate();
-    const { onLagreNyAktivitet, aktivitetFeilmeldinger, underOppfolging } = props;
+    const dispatch = useReduxDispatch();
+
+    const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
+    const underOppfolging = useSelector(selectErUnderOppfolging);
 
     const dirtyRef = useRef(false);
     useConfirmOnBeforeUnload(dirtyRef);
 
-    const onSubmitFactory = (aktivitetsType) => {
-        return (aktivitet) => {
+    const onLagreNyAktivitet = (aktivitet: VeilarbAktivitet) =>
+        dispatch(lagNyAktivitet(aktivitet) as unknown as AnyAction);
+
+    const onSubmitFactory = (aktivitetsType: VeilarbAktivitetType) => {
+        return (aktivitet: AktivitetFormValues) => {
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
-            const nyAktivitet = {
+            const nyAktivitet: VeilarbAktivitet = {
                 status: AktivitetStatus.PLANLAGT,
                 type: aktivitetsType,
                 ...filteredAktivitet,
-            };
-            return onLagreNyAktivitet(nyAktivitet).then((action) => navigate(aktivitetRoute(action.data.id)));
+            } as VeilarbAktivitet;
+            return onLagreNyAktivitet(nyAktivitet).then((action: any) => navigate(aktivitetRoute(action.data.id)));
         };
     };
 
@@ -56,7 +56,7 @@ function NyAktivitetForm(props) {
         }
     }
 
-    const onReqBack = (e) => {
+    const onReqBack: MouseEventHandler = (e) => {
         e.preventDefault();
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
@@ -82,13 +82,18 @@ function NyAktivitetForm(props) {
                     <Routes>
                         <Route
                             path={`mote`}
-                            element={<MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} dirtyRef={dirtyRef} />}
+                            element={
+                                <MoteAktivitetForm
+                                    onSubmit={onSubmitFactory(VeilarbAktivitetType.MOTE_TYPE)}
+                                    dirtyRef={dirtyRef}
+                                />
+                            }
                         />
                         <Route
                             path={`samtalereferat`}
                             element={
                                 <SamtalereferatForm
-                                    onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)}
+                                    onSubmit={onSubmitFactory(VeilarbAktivitetType.SAMTALEREFERAT_TYPE)}
                                     dirtyRef={dirtyRef}
                                 />
                             }
@@ -97,7 +102,7 @@ function NyAktivitetForm(props) {
                             path={`stilling`}
                             element={
                                 <StillingAktivitetForm
-                                    onSubmit={onSubmitFactory(STILLING_AKTIVITET_TYPE)}
+                                    onSubmit={onSubmitFactory(VeilarbAktivitetType.STILLING_AKTIVITET_TYPE)}
                                     dirtyRef={dirtyRef}
                                 />
                             }
@@ -106,7 +111,7 @@ function NyAktivitetForm(props) {
                             path={`sokeavtale`}
                             element={
                                 <SokeAvtaleAktivitetForm
-                                    onSubmit={onSubmitFactory(SOKEAVTALE_AKTIVITET_TYPE)}
+                                    onSubmit={onSubmitFactory(VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE)}
                                     dirtyRef={dirtyRef}
                                 />
                             }
@@ -115,7 +120,7 @@ function NyAktivitetForm(props) {
                             path={`behandling`}
                             element={
                                 <MedisinskBehandlingForm
-                                    onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
+                                    onSubmit={onSubmitFactory(VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE)}
                                     dirtyRef={dirtyRef}
                                 />
                             }
@@ -124,7 +129,7 @@ function NyAktivitetForm(props) {
                             path={`egen`}
                             element={
                                 <EgenAktivitetForm
-                                    onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)}
+                                    onSubmit={onSubmitFactory(VeilarbAktivitetType.EGEN_AKTIVITET_TYPE)}
                                     dirtyRef={dirtyRef}
                                 />
                             }
@@ -133,7 +138,7 @@ function NyAktivitetForm(props) {
                             path={`ijobb`}
                             element={
                                 <IJobbAktivitetForm
-                                    onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)}
+                                    onSubmit={onSubmitFactory(VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE)}
                                     dirtyRef={dirtyRef}
                                 />
                             }
@@ -143,21 +148,6 @@ function NyAktivitetForm(props) {
             </ErrorBoundry>
         </Modal>
     );
-}
-
-NyAktivitetForm.propTypes = {
-    onLagreNyAktivitet: PT.func.isRequired,
-    aktivitetFeilmeldinger: PT.array.isRequired,
-    underOppfolging: PT.bool.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    onLagreNyAktivitet: (aktivitet) => dispatch(lagNyAktivitet(aktivitet)),
-});
-
-const mapStateToProps = (state) => ({
-    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
-    underOppfolging: selectErUnderOppfolging(state),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitetForm);
+export default NyAktivitetForm;

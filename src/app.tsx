@@ -8,7 +8,7 @@ import Hovedside from './hovedside/Hovedside';
 import AvbrytAktivitet from './moduler/aktivitet/avslutt/AvbrytAktivitet';
 import FullforAktivitet from './moduler/aktivitet/avslutt/FullforAktivitet';
 import LeggTilForm from './moduler/aktivitet/ny-aktivitet/LeggTilForm';
-import NyAktivitetForm from './moduler/aktivitet/ny-aktivitet/ny-aktivitet-form';
+import NyAktivitetForm from './moduler/aktivitet/ny-aktivitet/NyAktivitetForm';
 import EndreAktivitet from './moduler/aktivitet/rediger/EndreAktivitet';
 import AktivitetvisningContainer from './moduler/aktivitet/visning/AktivitetvisningContainer';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';

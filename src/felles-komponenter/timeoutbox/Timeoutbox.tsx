@@ -7,7 +7,7 @@ import { AnyAction } from 'redux';
 
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
-import TimeoutboxNedtelling from './timeoutbox-nedtelling';
+import TimeoutboxNedtelling from './TimeoutboxNedtelling';
 
 const Timeoutbox = () => {
     const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const Timeoutbox = () => {
                 setManueltLukket(true);
             }}
         >
-            <TimeoutboxNedtelling utlopsTidspunkt={expirationTimestamp} />
+            <TimeoutboxNedtelling expirationTimestamp={expirationTimestamp} />
         </Modal>
     );
 };

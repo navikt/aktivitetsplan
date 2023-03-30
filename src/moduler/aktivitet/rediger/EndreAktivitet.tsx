@@ -47,7 +47,7 @@ import StillingAktivitetForm, { StillingAktivitetFormValues } from '../aktivitet
 import { selectAktivitetFeilmeldinger, selectAktivitetStatus } from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
 
-type FormValues =
+export type AktivitetFormValues =
     | StillingAktivitetFormValues
     | EgenAktivitetFormValues
     | SokeavtaleAktivitetFormValues
@@ -57,7 +57,7 @@ type FormValues =
     | IJobbAktivitetFormValues;
 
 interface SubComponentProps<Aktivitet extends VeilarbAktivitet> {
-    onSubmit: (values: FormValues) => Promise<void>;
+    onSubmit: (values: AktivitetFormValues) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet: Aktivitet;
 }
