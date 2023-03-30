@@ -1,6 +1,5 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { Oppgave, OppgaveLenke } from '../../../../datatypes/eksternAktivitetTypes';
 import { useErVeileder } from '../../../../Provider';
