@@ -3,7 +3,7 @@ import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds
 import { endOfToday, parseISO, startOfDay, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ZodErrorMap, z } from 'zod';
 
