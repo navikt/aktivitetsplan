@@ -14,7 +14,7 @@ interface Props {
     erVeileder: boolean;
 }
 
-const ErVeilederContext = React.createContext(false);
+export const ErVeilederContext = React.createContext(false);
 export const useErVeileder = (): boolean => {
     return useContext(ErVeilederContext);
 };
