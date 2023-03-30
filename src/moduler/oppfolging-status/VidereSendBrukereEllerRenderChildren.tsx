@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
+import { useErVeileder } from '../../Provider';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigitalOppfolging';
 import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 
@@ -18,18 +19,10 @@ interface VidereSendBrukereEllerRenderChildrenProps {
 }
 
 const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
-    const {
-        erVeileder,
-        servicegruppe,
-        underOppfolging,
-        ident,
-        aktorId,
-        children,
-        manuell,
-        oppfolgingsPerioder,
-        reservasjonKRR,
-    } = props;
+    const { servicegruppe, underOppfolging, ident, aktorId, children, manuell, oppfolgingsPerioder, reservasjonKRR } =
+        props;
 
+    const erVeileder = useErVeileder();
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
 
     useEffect(() => {

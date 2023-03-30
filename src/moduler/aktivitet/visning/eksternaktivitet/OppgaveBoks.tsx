@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Oppgave, OppgaveLenke } from '../../../../datatypes/eksternAktivitetTypes';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
 
 interface Props {
     oppgave?: OppgaveLenke;
@@ -23,7 +23,7 @@ const customAlertStripe = (oppgave: Oppgave) => (
 );
 
 const OppgaveBoks = ({ oppgave }: Props) => {
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
 
     if (!oppgave) return null;
 

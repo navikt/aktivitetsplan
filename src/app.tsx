@@ -31,19 +31,19 @@ const getBasename = (fnr: string) => {
     }
 };
 
-const Router = ({ fnr, children }: { fnr: string; children: React.ReactNode }) => {
+const Router = ({ fnr, children }: { fnr?: string; children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
         return <HashRouter basename={fnr}>{children}</HashRouter>;
     }
 
-    const basename = getBasename(fnr);
+    const basename = fnr ? getBasename(fnr) : undefined;
     return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
 };
 
-function App({ fnr }: { fnr: string }) {
+function App({ fnr }: { fnr?: string }) {
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
-            <Provider key={fnr}>
+            <Provider erVeileder={fnr !== undefined} key={fnr}>
                 <div className="aktivitetsplan-wrapper w-full">
                     <Router fnr={fnr}>
                         <Routes>

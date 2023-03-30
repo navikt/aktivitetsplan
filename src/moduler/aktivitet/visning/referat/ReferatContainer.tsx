@@ -7,7 +7,7 @@ import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
@@ -25,7 +25,7 @@ const ReferatContainer = (props: Props) => {
     const [isOppdaterReferat, setOppdaterReferat] = useState(false);
 
     const publiserer = useSelector(selectAktivitetStatus) === (STATUS.PENDING || STATUS.RELOADING);
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const underOppfolging = useSelector(selectUnderOppfolging);
 
     const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
@@ -52,7 +52,6 @@ const ReferatContainer = (props: Props) => {
             <ReferatVisning
                 referat={referat}
                 erAktivAktivitet={erAktivAktivitet}
-                erVeileder={erVeileder}
                 dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
                 publiserer={publiserer}
                 erReferatPublisert={erReferatPublisert}

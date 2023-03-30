@@ -5,7 +5,8 @@ import { SAMTALEREFERAT_TYPE, STILLING_FRA_NAV_TYPE } from '../../../../constant
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { selectErBruker, selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
+import { selectErBruker } from '../../../identitet/identitet-selector';
 import ForhaandsorienteringsVisningsLinje from './ForhaandsorienteringsVisningsLinje';
 import FormContainer from './FormContainer';
 import SattTilAvtaltVisning from './SattTilAvtaltVisning';
@@ -26,7 +27,7 @@ const AvtaltContainer = (props: Props) => {
         ForhaandsorienteringType.IKKE_SEND
     );
 
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const erBruker = useSelector(selectErBruker);
 
     const skalViseForhondsorentering =

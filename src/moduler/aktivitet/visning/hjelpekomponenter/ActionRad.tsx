@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitetType } from '../../../../datatypes/arenaAktivitetTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
 import ArenaStatusAdministrasjon from './ArenaStatusAdministrasjon';
 import EksternAktivitetHandlingerKnapper from './EksternAktivitetHandlingerKnapper';
 import EndreAktivitetKnapp from './EndreAktivitetKnapp';
@@ -85,7 +85,7 @@ const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging, erVeile
 };
 
 const ActionRad = (props: Props) => {
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const actions = getActions({ ...props, erVeileder });
 
     return <div className="my-4 gap-4 flex flex-wrap">{actions}</div>;

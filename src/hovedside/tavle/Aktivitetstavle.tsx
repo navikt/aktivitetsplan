@@ -17,10 +17,10 @@ import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selecto
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
-import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
+import { useErVeileder } from '../../Provider';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
@@ -42,7 +42,7 @@ const Aktivitetstavle = () => {
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
     const underOppfolging = useSelector(selectUnderOppfolging);
 

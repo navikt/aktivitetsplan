@@ -10,10 +10,10 @@ import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../datatypes/types';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
+import { useErVeileder } from '../../Provider';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
-import { selectErVeileder } from '../identitet/identitet-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { hentMalListe } from '../mal/malliste-reducer';
 import {
@@ -53,24 +53,13 @@ interface Props {
     kvpPerioder?: KvpPeriode[];
     dialoger?: Dialog[];
     mittMal?: Mal;
-    erVeileder?: boolean;
     aktiviteter?: AlleAktiviteter[];
     erManuell?: boolean;
 }
 
 const AktivitetsplanPrint = (props: Props) => {
-    const {
-        doHentMal,
-        doHentMalListe,
-        avhengigheter,
-        kvpPerioder,
-        dialoger,
-        mittMal,
-        erVeileder,
-        aktiviteter,
-        erManuell,
-    } = props;
-
+    const { doHentMal, doHentMalListe, avhengigheter, kvpPerioder, dialoger, mittMal, aktiviteter, erManuell } = props;
+    const erVeileder = useErVeileder();
     useEffect(() => {
         doHentMal();
         doHentMalListe();
@@ -180,7 +169,6 @@ const mapStateToProps = (state: any) => {
     const dialoger = selectDialoger(state);
 
     const mittMal = selectGjeldendeMal(state);
-    const erVeileder = selectErVeileder(state);
     const erManuell = selectErBrukerManuell(state);
 
     return {
@@ -195,7 +183,6 @@ const mapStateToProps = (state: any) => {
         mittMal,
         erManuell,
         kvpPerioder,
-        erVeileder,
     };
 };
 

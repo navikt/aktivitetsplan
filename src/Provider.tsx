@@ -1,4 +1,6 @@
-import React from 'react';
+import exp from 'constants';
+
+import React, { useContext } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -11,19 +13,27 @@ const store = createStore();
 
 interface Props {
     children: React.ReactNode;
+    erVeileder: boolean;
 }
 
-const Provider = ({ children }: Props) => {
+const ErVeilederContext = React.createContext(false);
+export const useErVeileder = (): boolean => {
+    return useContext(ErVeilederContext);
+};
+
+const Provider = ({ children, erVeileder }: Props) => {
     return (
-        <ReduxProvider store={store}>
-            <DndProvider backend={HTML5Backend}>
-                <InitiellDataLast>
-                    <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
-                        {children}
-                    </IntlProvider>
-                </InitiellDataLast>
-            </DndProvider>
-        </ReduxProvider>
+        <ErVeilederContext.Provider value={erVeileder}>
+            <ReduxProvider store={store}>
+                <DndProvider backend={HTML5Backend}>
+                    <InitiellDataLast>
+                        <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
+                            {children}
+                        </IntlProvider>
+                    </InitiellDataLast>
+                </DndProvider>
+            </ReduxProvider>
+        </ErVeilederContext.Provider>
     );
 };
 

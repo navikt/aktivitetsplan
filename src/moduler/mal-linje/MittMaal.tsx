@@ -13,9 +13,10 @@ import { Mal, Me } from '../../datatypes/oppfolgingTypes';
 import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
+import { useErVeileder } from '../../Provider';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
-import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
+import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';
 import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
@@ -50,7 +51,7 @@ interface MalContentProps {
 function MalContent(props: MalContentProps) {
     const { disabled, mal } = props;
     const dispatch = useDispatch();
-    const erVeileder = useSelector(selectErVeileder, shallowEqual);
+    const erVeileder = useErVeileder();
     const navigate = useNavigate();
     const endreMal = () => {
         navigate('/mal');
