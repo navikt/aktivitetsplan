@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 
 import Lenkepanel from '../../../felles-komponenter/Lenkepanel';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import { selectErVeileder } from '../../identitet/identitet-selector';
+import { useErVeileder } from '../../../Provider';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 const LeggTilForm = () => {
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
 
     return (

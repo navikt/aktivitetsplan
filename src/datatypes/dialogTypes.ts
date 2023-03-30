@@ -36,7 +36,7 @@ export interface NyHenvendelse {
 }
 
 export interface SistOppdatert {
-    sistOppdatert: Date;
+    sistOppdatert: number;
 }
 
 export interface Eskaleringsvarsel {

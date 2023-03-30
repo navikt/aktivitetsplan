@@ -3,11 +3,11 @@ import React from 'react';
 
 import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { useErVeileder } from '../../../../Provider';
 
 interface Props {
     referat: string;
     erAktivAktivitet: boolean;
-    erVeileder: boolean;
     dispatchPubliserReferat: () => void;
     publiserer: boolean;
     erReferatPublisert: boolean;
@@ -15,15 +15,9 @@ interface Props {
 }
 
 const ReferatVisning = (props: Props) => {
-    const {
-        erAktivAktivitet,
-        referat,
-        erVeileder,
-        dispatchPubliserReferat,
-        publiserer,
-        erReferatPublisert,
-        startOppdaterReferat,
-    } = props;
+    const erVeileder = useErVeileder();
+    const { erAktivAktivitet, referat, dispatchPubliserReferat, publiserer, erReferatPublisert, startOppdaterReferat } =
+        props;
 
     return (
         <section className="my-4 border-t pt-8">
