@@ -2,13 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -81,7 +80,7 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
 
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
 
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
 
