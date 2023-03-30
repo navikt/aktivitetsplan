@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 
 import { STATUS, aggregerStatus } from '../../api/utils';
-import { AppConfig } from '../../app';
 import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';

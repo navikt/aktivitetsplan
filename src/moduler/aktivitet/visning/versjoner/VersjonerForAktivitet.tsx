@@ -25,7 +25,7 @@ const VersjonerForAktivitet = (props: Props) => {
     const avhengighet = useSelector(selectVersjonerStatus);
 
     useEffect(() => {
-        // TODO burde kanskje være en thunk det her?
+        // TODO burde kanskje være en thunkdispatch det her?
         dispatch(fjernVersjoner() as unknown as AnyAction);
         dispatch(hentVersjonerForAktivtet(aktivitet) as unknown as AnyAction);
         return () => {
