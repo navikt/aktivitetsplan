@@ -1,5 +1,7 @@
 import { subMonths } from 'date-fns';
 
+import { ArenaAktivitetType } from '../../datatypes/arenaAktivitetTypes';
+import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
@@ -7,9 +9,11 @@ import {
     formatterVarighet,
     splitIEldreOgNyereAktiviteter,
 } from './aktivitet-util';
+import { kanEndreAktivitetDetaljer } from './aktivitetlisteSelector';
+
 /* eslint-env mocha */
 
-describe.skip('aktivitet-util', () => {
+describe('aktivitet-util', () => {
     it('beregnFraTil', () => {
         const fraTil = beregnFraTil({
             dato: '2017-08-01T00:00:00.000+02:00',
@@ -57,7 +61,7 @@ describe.skip('aktivitet-util', () => {
         expect(formatterKlokkeslett('115')).toEqual(undefined);
     });
 
-    it('skal splitte basert på sorteringsdato hvor sorteringsdato er endretDato > tilDato > fraDato', () => {
+    it.skip('skal splitte basert på sorteringsdato hvor sorteringsdato er endretDato > tilDato > fraDato', () => {
         const treManederSiden = subMonths(new Date(), 3);
         const now = new Date();
 
@@ -81,5 +85,51 @@ describe.skip('aktivitet-util', () => {
 
         expect(nyereAktiviteter).toEqual([manglerAlleDatoer, bareNyereTilDato, endretDatoMindreEnnToManederSiden]);
         expect(eldreAktiviteter).toEqual([bareEldreTilDato, manglendeEndretDato, endretDatoMerEnnToManederSiden]);
+    });
+
+    describe('kanEndreAktivitetDetaljer', () => {
+        const baseAktivitet = { avtalt: false, historisk: false, type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE };
+        it('bare veileder kan endre samtalereferat', () => {
+            const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE };
+            expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
+            expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
+        });
+        it('bruker og veileder kan endre medisinsk behandling som ikke er avtalt', () => {
+            const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE };
+            expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeTruthy();
+            expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
+            expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
+        });
+        it('bare veileder kan endre avtalte aktiviteter utenom medisinsk behandling og samtalereferat', () => {
+            [
+                VeilarbAktivitetType.MOTE_TYPE,
+                VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE,
+                VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE,
+                VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
+            ].forEach((type) => {
+                const aktivitet = {
+                    ...baseAktivitet,
+                    type,
+                    avtalt: true,
+                };
+                expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
+                expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
+            });
+        });
+
+        describe('aktiviteter styrt eksternt kan ikke endres av noen', () => {
+            it('Arenaaktiviteter', () => {
+                const aktivitet = { ...baseAktivitet, type: ArenaAktivitetType.GRUPPEAKTIVITET };
+                expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
+            });
+            it('Eksterne aktiviteter', () => {
+                const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE };
+                expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
+            });
+            it('Stilling fra NAV', () => {
+                const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE };
+                expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
+            });
+        });
     });
 });

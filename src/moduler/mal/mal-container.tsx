@@ -1,5 +1,3 @@
-import {} from '../identitet/identitet-selector';
-
 import React, { MutableRefObject, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
