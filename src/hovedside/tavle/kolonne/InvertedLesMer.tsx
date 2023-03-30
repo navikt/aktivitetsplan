@@ -35,7 +35,7 @@ export const InvertedLestMer = (props: Props) => {
             <div>
                 <ReadMore open={vis} onClick={toggle} header={vis ? lukkTekst : apneTekst} children={null} />
             </div>
-            <Collapse isOpened={vis}>{children}</Collapse>
+            <Collapse isOpened={vis}>{vis ? children : null}</Collapse>
         </div>
     );
 };

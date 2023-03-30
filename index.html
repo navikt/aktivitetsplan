@@ -24,19 +24,22 @@
     </script>
     <link href="<%=VITE_DEKORATOR_URL%>/css/client.css" rel="stylesheet" />
 </head>
-<body style='background-color: white; min-height: 100vh; display: flex; flex-flow: column'>
-<div style='height: auto; flex-grow: 1'>
+<body style='background-color: white;'>
+<div style='min-height: 100vh; height: auto;'>
     <a style="display: none" href="#main" >Hopp til hovedinnhold</a>
     <div id='decorator-header'></div>
-    <div id='modal-a11y-wrapper'>
-        <div id='demo'></div>
+    <div id='demo'></div>
+    <div id='root'>
+<!--        <dab-aktivitetsplan data-fnr="12345678910"></dab-aktivitetsplan>-->
         <div id='mainapp' class='appContainer'></div>
     </div>
+
+
 </div>
 <div id='decorator-footer'></div>
 <script type="module" src="/src/index.tsx"></script>
-<div id='decorator-env' data-src='<%=VITE_DEKORATOR_URL%>/env?feedback=false&chatbot=false&footer=true'></div>
+<!--<div id='decorator-env' data-src='<%=VITE_DEKORATOR_URL%>/env?feedback=false&chatbot=false&footer=true'></div>-->
 </body>
-<script src='<%=VITE_DEKORATOR_URL%>/client.js'></script>
+<!--<script src='<%=VITE_DEKORATOR_URL%>/client.js'></script>-->
 
 </html>

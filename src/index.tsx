@@ -47,7 +47,7 @@ const renderAsRootApp = (props?: { fnr?: string }) => {
 };
 
 const renderApp = (props?: { fnr?: string }) => {
-    if (['development', 'dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
+    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
         exportToNavSpa();
     } else {
         renderAsRootApp(props);

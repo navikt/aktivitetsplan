@@ -56,7 +56,7 @@ const FullforAktivitet = () => {
     if (!valgtAktivitet) return <Navigate to={'/'} />;
 
     return (
-        <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">
+        <Modal header={<ModalHeader />} contentLabel="Fullfør aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.STATUS_FULLFOERT}>
                 {valgtAktivitet.avtalt &&
                 valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&

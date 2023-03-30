@@ -61,7 +61,6 @@ class Timeoutbox extends Component {
                         manueltLukket: true,
                     });
                 }}
-                contentLabel="Advarsel om utlogging"
             >
                 <TimeoutboxNedtelling utlopsTidspunkt={utlopsTidspunkt} />
             </Modal>

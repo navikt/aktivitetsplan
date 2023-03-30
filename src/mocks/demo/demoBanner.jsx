@@ -23,7 +23,7 @@ class DemoBanner extends React.Component {
     render() {
         return (
             <div>
-                <DemoIkon onClick={this.openModal} />
+                <DemoIkon alt="" onClick={this.openModal} />
                 <Modal open={this.state.modalIsOpen} onClose={this.closeModal}>
                     <DemoDashboard />
                 </Modal>
