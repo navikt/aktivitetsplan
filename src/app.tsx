@@ -44,29 +44,27 @@ function App({ fnr }: { fnr: string }) {
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <Provider key={fnr}>
-                <div className="aktivitetsplan-wrapper">
-                    <div className="fullbredde">
-                        <Router fnr={fnr}>
-                            <Routes>
-                                <Route path="/utskrift" element={<AktivitetsplanPrint />} />
-                                <Route path="/" element={<Hovedside />}>
-                                    <Route path={'/mal'} element={<Aktivitetsmal />} />
-                                    <Route path={'/informasjon'} element={<InformasjonModal />} />
-                                    <Route path={'/aktivitet'}>
-                                        <Route path={`ny`} element={<LeggTilForm />} />
-                                        <Route path={`ny/*`} element={<NyAktivitetForm />} />
-                                        <Route path={`vis/:id`} element={<AktivitetvisningContainer />} />
-                                        <Route path={`endre/:id`} element={<EndreAktivitet />} />
-                                        <Route path={`avbryt/:id`} element={<AvbrytAktivitet />} />
-                                        <Route path={`fullfor/:id`} element={<FullforAktivitet />} />
-                                    </Route>
+                <div className="aktivitetsplan-wrapper w-full">
+                    <Router fnr={fnr}>
+                        <Routes>
+                            <Route path="/utskrift" element={<AktivitetsplanPrint />} />
+                            <Route path="/" element={<Hovedside />}>
+                                <Route path={'/mal'} element={<Aktivitetsmal />} />
+                                <Route path={'/informasjon'} element={<InformasjonModal />} />
+                                <Route path={'/aktivitet'}>
+                                    <Route path={`ny`} element={<LeggTilForm />} />
+                                    <Route path={`ny/*`} element={<NyAktivitetForm />} />
+                                    <Route path={`vis/:id`} element={<AktivitetvisningContainer />} />
+                                    <Route path={`endre/:id`} element={<EndreAktivitet />} />
+                                    <Route path={`avbryt/:id`} element={<AvbrytAktivitet />} />
+                                    <Route path={`fullfor/:id`} element={<FullforAktivitet />} />
                                 </Route>
-                            </Routes>
-                        </Router>
-                        <HiddenIf hidden={ER_INTERN_FLATE}>
-                            <Timeoutbox />
-                        </HiddenIf>
-                    </div>
+                            </Route>
+                        </Routes>
+                    </Router>
+                    <HiddenIf hidden={ER_INTERN_FLATE}>
+                        <Timeoutbox />
+                    </HiddenIf>
                 </div>
                 <UpdateEventHandler />
             </Provider>
