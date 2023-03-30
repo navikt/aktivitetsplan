@@ -57,6 +57,7 @@ const PeriodeFilter = ({
             <Select
                 className="w-full sm:w-64"
                 hideLabel
+                autoComplete="on"
                 defaultValue={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
                 label="Periode"
                 onChange={onPeriodeChange}

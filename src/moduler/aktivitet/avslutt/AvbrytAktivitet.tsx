@@ -59,7 +59,7 @@ const AvbrytAktivitet = () => {
         trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.STATUS_AVBRUTT, valgtAktivitet.type);
 
     return (
-        <Modal contentLabel="avbryt-aktivitet">
+        <Modal contentLabel="Avbryt aktivitet">
             {valgtAktivitet ? (
                 <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.STATUS_AVBRUTT}>
                     {maaBegrunnes ? begrunnelse : advarsel}

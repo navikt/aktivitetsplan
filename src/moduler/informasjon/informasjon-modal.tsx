@@ -34,14 +34,13 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
 
     return (
         <Modal
-            contentLabel="informasjon-modal"
             className="informasjon-visning"
             onRequestClose={() => {
                 navigate('/');
             }}
         >
             <ModalContainer className="max-w-2xl">
-                <Heading level="1" size="large" className="mb-4">
+                <Heading id="modal-heading" level="1" size="large" className="mb-4">
                     Hva er aktivitetsplanen?
                 </Heading>
                 <BodyShort className="pb-4">

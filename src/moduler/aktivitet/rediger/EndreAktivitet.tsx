@@ -153,7 +153,7 @@ function EndreAktivitet() {
             header={header}
             feilmeldinger={aktivitetFeilmeldinger}
             onRequestClose={onReqClose}
-            contentLabel="aktivitet-modal"
+            contentLabel="Endre aktivitet"
         >
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>

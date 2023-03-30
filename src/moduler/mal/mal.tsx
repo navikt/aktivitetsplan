@@ -48,7 +48,7 @@ const Mal = () => {
     return (
         <MalModal onRequestClosed={onModalRequestClosed}>
             <div>
-                <Heading level="1" size="large" className="mb-8">
+                <Heading id="modal-heading" level="1" size="large" className="mb-8">
                     {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
                         ? 'Mitt mål fra en tidligere periode'
                         : 'Mitt mål'}

@@ -32,7 +32,7 @@ const EndreAktivitetKnapp = (props: Props) => {
             disabled={laster || !underOppfolging}
             onClick={goToEndre}
             variant="secondary"
-            icon={<PencilIcon fontSize="1.5rem" />}
+            icon={<PencilIcon aria-hidden fontSize="1.5rem" />}
         >
             Endre på aktiviteten
         </Button>

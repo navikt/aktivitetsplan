@@ -18,6 +18,7 @@ interface Props {
     contentClass?: string;
     onRequestClose?(): void;
     contentLabel: string;
+    ariaLabelledby?: string;
 }
 
 const Modal = (props: Props) => {
@@ -30,6 +31,8 @@ const Modal = (props: Props) => {
         minstEnAvhengighet = false,
         feilmeldinger,
         contentClass,
+        ariaLabelledby,
+        contentLabel,
     } = props;
 
     const navigate = useNavigate();
@@ -46,6 +49,8 @@ const Modal = (props: Props) => {
     return (
         <AkselModal
             open
+            aria-label={contentLabel}
+            aria-labelledby={!contentLabel ? ariaLabelledby || 'modal-heading' : undefined}
             className={classNames(
                 'aktivitet-modal lg:w-120 p-4 md:p-8 max-h-full overscroll-contain w-full rounded-none lg:rounded',
                 className,
