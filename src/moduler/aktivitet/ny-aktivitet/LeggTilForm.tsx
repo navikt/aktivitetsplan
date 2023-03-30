@@ -2,7 +2,7 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Lenkepanel from '../../../felles-komponenter/lenkepanel';
+import Lenkepanel from '../../../felles-komponenter/Lenkepanel';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
@@ -32,15 +32,9 @@ const LeggTilForm = () => {
                     <Heading level="2" size="medium">
                         For NAV-ansatt
                     </Heading>
-                    <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
-                        Avtale om å søke jobber
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
-                        Møte med NAV
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/samtalereferat" hidden={!erVeileder}>
-                        Samtalereferat
-                    </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/sokeavtale">Avtale om å søke jobber</Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/mote">Møte med NAV</Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/samtalereferat">Samtalereferat</Lenkepanel>
                 </div>
             ) : null}
             <div className="mt-8">
@@ -50,18 +44,10 @@ const LeggTilForm = () => {
                     </Heading>
                 ) : null}
                 <div className="space-y-3 flex flex-col">
-                    <Lenkepanel border href="/aktivitet/ny/stilling" hidden={false}>
-                        En jobb jeg vil søke på
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/ijobb" hidden={false}>
-                        Jobb jeg har nå
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/egen" hidden={false}>
-                        Jobbrettet egenaktivitet
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/behandling" hidden={false}>
-                        Medisinsk behandling
-                    </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/stilling">En jobb jeg vil søke på</Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/ijobb">Jobb jeg har nå</Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/egen">Jobbrettet egenaktivitet</Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/behandling">Medisinsk behandling</Lenkepanel>
                 </div>
             </div>
         </Modal>

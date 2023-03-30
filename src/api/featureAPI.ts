@@ -12,7 +12,7 @@ export function hentFeature(enhet?: string): Promise<{ [key: string]: boolean }>
         return Promise.resolve({ ignore: false });
     }
 
-    const path: string = window.appconfig.CONTEXT_PATH;
+    const path: string = import.meta.env.BASE_URL;
     const featuresWithEnhet = (features && enhet && `${features}&enhet=${enhet}`) || features;
     return fetchToJson(`${path}/api/feature${featuresWithEnhet}`);
 }

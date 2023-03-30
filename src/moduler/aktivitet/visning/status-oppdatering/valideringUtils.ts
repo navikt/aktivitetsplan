@@ -1,11 +1,9 @@
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
-import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
-import { ValideringsProps } from './AktivitetStatusForm';
+import { manglerPubliseringAvSamtaleReferat } from '../../aktivitet-util';
 
 export const kanOppdatereStatus = (aktivitet: VeilarbAktivitet, status: AktivitetStatus) => {
-    const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
+    const ferdigStatus = [AktivitetStatus.FULLFOERT, AktivitetStatus.AVBRUTT].includes(status);
     const ferdigOgManglerPubliseringAvSamtaleReferat =
         isSamtaleOrMote(aktivitet) && ferdigStatus && manglerPubliseringAvSamtaleReferat(aktivitet, status);
 
@@ -13,16 +11,5 @@ export const kanOppdatereStatus = (aktivitet: VeilarbAktivitet, status: Aktivite
         return 'Samtalereferatet må deles før du kan sette aktiviteten til denne statusen';
     }
 
-    return undefined;
-};
-
-export const validateBegrunnelse = (value: string, values: ValideringsProps, aktivitet: VeilarbAktivitet) => {
-    const status = values.aktivitetstatus as AktivitetStatus;
-    if (trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type) && value.trim().length === 0) {
-        return 'Du må fylle ut en begrunnelse';
-    }
-    if (value.length > 255) {
-        return 'Du må korte ned teksten til 255 tegn';
-    }
     return undefined;
 };

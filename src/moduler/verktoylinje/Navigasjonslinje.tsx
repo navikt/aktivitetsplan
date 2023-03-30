@@ -6,14 +6,12 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
+import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
 import { Dialog } from '../../datatypes/dialogTypes';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { hentDialog } from '../dialog/dialog-reducer';
 import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
-
-const MINSIDE_PATH = import.meta.env.VITE_MINSIDE_URL;
-const DIALOG_PATH = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
 
 function Navigasjonslinje() {
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
@@ -51,8 +49,8 @@ function Navigasjonslinje() {
             <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
                 {!erVeileder ? (
                     <>
-                        <Link href={MINSIDE_PATH}>Min side</Link>
-                        <Link href={DIALOG_PATH}>
+                        <Link href={MINSIDE_URL}>Min side</Link>
+                        <Link href={ARBEIDSRETTET_DIALOG_URL}>
                             <span>Min dialog med veileder</span>
                             {/*TODO vurder å ta det med i overgang til nytt designsystem*/}
                             {/*<DialogIkon antallUleste={antallUlesteDialoger} />*/}

@@ -1,8 +1,18 @@
-export const STATUS_BRUKER_ER_INTRESSERT = 'BRUKER_ER_INTERESSERT';
-export const STATUS_PLANLAGT = 'PLANLAGT';
-export const STATUS_GJENNOMFOERT = 'GJENNOMFORES';
-export const STATUS_FULLFOERT = 'FULLFORT';
-export const STATUS_AVBRUTT = 'AVBRUTT';
+import { erEksternBruker } from './mocks/demo/sessionstorage';
+
+export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
+
+export const ARBEIDSRETTET_DIALOG_URL = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
+export const STILLING_FRA_NAV_BASE_URL = import.meta.env.VITE_STILLING_FRA_NAV_BASE_URL;
+export const ARBEIDSSOKERREGISTRERING_URL = import.meta.env.VITE_ARBEIDSSOKERREGISTRERING_URL;
+export const MINSIDE_URL = import.meta.env.VITE_MINSIDE_URL;
+
+export const USE_HASH_ROUTER = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
+export const USE_MOCK = import.meta.env.DEV || USE_HASH_ROUTER;
+
+export const ER_INTERN_FLATE = !USE_MOCK
+    ? ['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)
+    : !erEksternBruker();
 
 export const EGEN_AKTIVITET_TYPE = 'EGEN';
 export const STILLING_AKTIVITET_TYPE = 'STILLING';
@@ -17,32 +27,6 @@ export const SAMTALEREFERAT_TYPE = 'SAMTALEREFERAT';
 export const STILLING_FRA_NAV_TYPE = 'STILLING_FRA_NAV';
 export const EKSTERN_AKTIVITET_TYPE = 'EKSTERNAKTIVITET';
 
-export const INGEN_VALGT = 'INGEN_VALGT';
-export const VENTER = 'VENTER';
-export const SOKNAD_SENDT = 'SOKNAD_SENDT';
-export const CV_DELT = 'CV_DELT';
-export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
-export const SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU';
-export const AVSLAG = 'AVSLAG';
-export const IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN';
-export const JOBBTILBUD = 'JOBBTILBUD';
-
-export const PROVER_VARSLING = 'PROVER_VARSLING';
-export const HAR_VARSLET = 'HAR_VARSLET';
-export const KAN_IKKE_VARSLE = 'KAN_IKKE_VARSLE';
-export const HAR_SVART = 'HAR_SVART';
-export const AVBRUTT_AV_SYSTEM = 'AVBRUTT_AV_SYSTEM';
-export const AVBRUTT_AV_BRUKER = 'AVBRUTT_AV_BRUKER';
-
-export const AVTALT_MED_NAV = 'AVTALT_MED_NAV';
-
-export const JOBB_STATUS_HELTID = 'HELTID';
-export const JOBB_STATUS_DELTID = 'DELTID';
-
-export const TELEFON_KANAL = 'TELEFON';
-export const OPPMOTE_KANAL = 'OPPMOTE';
-export const INTERNET_KANAL = 'INTERNETT';
-
 export enum TabId {
     AKTIVITETSPLAN = 'AKTIVITETSPLAN',
     DIALOG = 'DIALOG',
@@ -50,5 +34,3 @@ export enum TabId {
     DETALJER = 'DETALJER',
     ARBEIDSMARKEDSTILTAK = 'ARBEIDSMARKEDSTILTAK',
 }
-
-export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';

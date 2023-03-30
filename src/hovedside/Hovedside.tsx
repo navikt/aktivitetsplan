@@ -9,7 +9,7 @@ import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import Maal from '../moduler/mal-linje/MittMaal';
-import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
+import OppfolgingStatus from '../moduler/oppfolging-status/OppfolgingStatus';
 import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselReducer';
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';

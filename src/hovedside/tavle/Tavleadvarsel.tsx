@@ -5,19 +5,17 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
-    if (aktivitet.status === STATUS_FULLFOERT) {
+    if (aktivitet.status === AktivitetStatus.FULLFOERT) {
         return 'Aktiviteten er fullført og kan ikke endres.';
-    } else if (aktivitet.status === STATUS_AVBRUTT) {
+    } else if (aktivitet.status === AktivitetStatus.AVBRUTT) {
         return 'Aktiviteten er avbrutt og kan ikke endres.';
     } else if (aktivitet.type === MOTE_TYPE) {
         return 'Du kan ikke endre status på møtet. Ta kontakt med veilederen din for å endre møtet.';

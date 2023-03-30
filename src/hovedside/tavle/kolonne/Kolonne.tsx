@@ -9,7 +9,7 @@ import DropTargetKolonne from './DropTargetKolonne';
 import KolonneHeader from './KolonneHeader';
 
 interface Props {
-    status: AktivitetStatus;
+    status: Exclude<AktivitetStatus, AktivitetStatus.FULLFOERT | AktivitetStatus.AVBRUTT>;
 }
 
 const Kolonne = ({ status }: Props) => {

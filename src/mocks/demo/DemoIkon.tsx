@@ -1,8 +1,12 @@
-import './demoIkon.less';
+import './DemoIkon.less';
 
 import React from 'react';
 
-export function DemoIkon({ onClick }) {
+interface Props {
+    onClick: () => void;
+}
+
+const DemoIkon = ({ onClick }: Props) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" height={110} width={110} className="demo-ikon" onClick={onClick}>
             <polygon points="0,0 110,0 110,110" />
@@ -11,4 +15,6 @@ export function DemoIkon({ onClick }) {
             </text>
         </svg>
     );
-}
+};
+
+export default DemoIkon;

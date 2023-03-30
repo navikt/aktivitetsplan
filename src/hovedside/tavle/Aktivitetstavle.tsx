@@ -4,16 +4,8 @@ import { AnyAction } from 'redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
-import {
-    AKTIVITETSPLAN_ROOT_NODE_ID,
-    STATUS_AVBRUTT,
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_FULLFOERT,
-    STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
-    TabId,
-} from '../../constant';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
+import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
@@ -104,11 +96,11 @@ const Aktivitetstavle = () => {
             <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
 
             <Tavle dragging={dragging}>
-                <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} />
-                <Kolonne status={STATUS_PLANLAGT} />
-                <Kolonne status={STATUS_GJENNOMFOERT} />
-                <KolonneSomSkjulerEldreAktiviteter status={STATUS_FULLFOERT} />
-                <KolonneSomSkjulerEldreAktiviteter status={STATUS_AVBRUTT} />
+                <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
+                <Kolonne status={AktivitetStatus.PLANLAGT} />
+                <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
         </Innholdslaster>
     );

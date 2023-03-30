@@ -7,8 +7,8 @@ import React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import AppWebComponent from './AppWebComponent';
-import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
-import DemoBanner from './mocks/demo/demoBanner';
+import { USE_HASH_ROUTER, USE_MOCK } from './constant';
+import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 import { renderAsReactRoot } from './rootWrapper';
 
@@ -16,23 +16,12 @@ declare global {
     interface Window {
         NAVSPA: any;
         Intl: any;
-        appconfig: {
-            CONTEXT_PATH: string;
-            TILLAT_SET_AVTALT: boolean;
-            VIS_MALER: boolean;
-            TIMEOUTBOX: boolean;
-        };
     }
 }
+
 setDefaultOptions({ locale: nn });
 
-const usingHashRouting: boolean = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
-
 const mockfnr = '12345678910';
-
-const useMock = import.meta.env.DEV || usingHashRouting;
-
-const rootElement = document.getElementById('mainapp') as HTMLElement;
 
 const exportToNavSpa = () => {
     NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
@@ -43,7 +32,7 @@ const exportToNavSpa = () => {
 };
 
 const renderAsRootApp = (props?: { fnr?: string }) => {
-    renderAsReactRoot(rootElement, props);
+    renderAsReactRoot(document.getElementById('mainapp') as HTMLElement, props);
 };
 
 const renderApp = (props?: { fnr?: string }) => {
@@ -54,15 +43,13 @@ const renderApp = (props?: { fnr?: string }) => {
     }
 };
 
-if (useMock) {
+if (USE_MOCK) {
     const fnr = mockfnr;
-    const pathnamePrefix = `${import.meta.env.BASE_URL}${usingHashRouting ? '#/' : ''}`;
+    const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
     if (erEksternBruker()) {
         window.history.replaceState({}, '', pathnamePrefix);
-        window.appconfig = eksternBrukerConfig;
     } else if (!erEksternBruker()) {
         window.history.replaceState({}, '', pathnamePrefix + fnr);
-        window.appconfig = veilederConfig;
     }
 
     import('./mocks')

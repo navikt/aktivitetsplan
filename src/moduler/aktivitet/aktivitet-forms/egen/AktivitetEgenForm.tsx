@@ -2,20 +2,17 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
-import { AppConfig } from '../../../../app';
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
+import { selectErVeileder } from '../../../identitet/identitet-selector';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
-
-declare const window: {
-    appconfig: AppConfig;
-};
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut navn på aktiviteten').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -43,6 +40,8 @@ interface Props {
 
 const EgenAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
+
+    const erVeileder = useSelector(selectErVeileder);
 
     const defaultValues: Partial<EgenAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
@@ -95,12 +94,7 @@ const EgenAktivitetForm = (props: Props) => {
                         aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE}
                     />
 
-                    <Malverk
-                        visible={window.appconfig.VIS_MALER}
-                        endre={!!aktivitet}
-                        onChange={onMalChange}
-                        type="EGEN"
-                    />
+                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="EGEN" />
 
                     <TextField
                         disabled={avtalt}

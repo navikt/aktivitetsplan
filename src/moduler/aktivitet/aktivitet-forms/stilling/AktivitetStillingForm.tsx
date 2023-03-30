@@ -28,7 +28,7 @@ export type StillingAktivitetFormValues = z.infer<typeof schema>;
 interface Props {
     onSubmit: (values: StillingAktivitetFormValues) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
-    aktivitet: StillingAktivitet;
+    aktivitet?: StillingAktivitet;
 }
 
 const StillingAktivitetForm = (props: Props) => {

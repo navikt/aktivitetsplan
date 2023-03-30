@@ -4,17 +4,19 @@ import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import * as konstanter from '../../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { DirtyContext } from '../../../context/dirty-context';
 
 interface Props {
-    soknadsstatus?: Exclude<StillingFraNavSoknadsstatus, 'IKKE_FATT_JOBBEN'>; // IKKE_FATT_JOBBEN kan kun endres i backend
+    soknadsstatus?: Exclude<StillingFraNavSoknadsstatus, StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN>; // IKKE_FATT_JOBBEN kan kun endres i backend
     disabled: boolean;
     onSubmit(val: { soknadsstatus: string }): Promise<any>;
 }
 
-const RadioButtons: Record<Exclude<StillingFraNavSoknadsstatus, 'IKKE_FATT_JOBBEN'>, string> = {
+const RadioButtons: Record<
+    Exclude<StillingFraNavSoknadsstatus, StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN>,
+    string
+> = {
     VENTER: 'Venter på å bli kontaktet av NAV eller arbeidsgiver',
     CV_DELT: 'CV er delt med arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
@@ -24,11 +26,11 @@ const RadioButtons: Record<Exclude<StillingFraNavSoknadsstatus, 'IKKE_FATT_JOBBE
 
 const schema = z.object({
     soknadsstatus: z.enum([
-        konstanter.VENTER,
-        konstanter.CV_DELT,
-        konstanter.SKAL_PAA_INTERVJU,
-        konstanter.JOBBTILBUD,
-        konstanter.AVSLAG,
+        StillingFraNavSoknadsstatus.VENTER,
+        StillingFraNavSoknadsstatus.CV_DELT,
+        StillingFraNavSoknadsstatus.SKAL_PAA_INTERVJU,
+        StillingFraNavSoknadsstatus.JOBBTILBUD,
+        StillingFraNavSoknadsstatus.AVSLAG,
     ]),
 });
 
@@ -38,7 +40,7 @@ const SoknadsstatusForm = (props: Props) => {
     const { soknadsstatus, disabled, onSubmit } = props;
 
     const defaultValues: SoknadsstatusFormValues = {
-        soknadsstatus: soknadsstatus || konstanter.VENTER,
+        soknadsstatus: soknadsstatus || StillingFraNavSoknadsstatus.VENTER,
     };
 
     const {
@@ -58,7 +60,9 @@ const SoknadsstatusForm = (props: Props) => {
 
     const disable = isSubmitting || disabled;
 
-    const onChangeSoknadsstatus = (value: Exclude<StillingFraNavSoknadsstatus, 'IKKE_FATT_JOBBEN'>) => {
+    const onChangeSoknadsstatus = (
+        value: Exclude<StillingFraNavSoknadsstatus, StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN>
+    ) => {
         setValue('soknadsstatus', value);
     };
 

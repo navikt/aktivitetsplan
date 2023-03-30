@@ -1,5 +1,4 @@
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { AlleAktiviteter, isVeilarbAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter, isVeilarbAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import { ForhaandsorienteringDialogFormValues } from './aktivitet/AvtaltForm';
 
@@ -39,7 +38,7 @@ export const skalMarkereForhaandsorienteringSomLest = (erBruker: boolean, aktivi
         fho.type !== ForhaandsorienteringType.IKKE_SEND &&
         erBruker &&
         ikkeHistorisk &&
-        aktivitet?.status !== STATUS_FULLFOERT &&
-        aktivitet?.status !== STATUS_AVBRUTT
+        aktivitet?.status !== AktivitetStatus.FULLFOERT &&
+        aktivitet?.status !== AktivitetStatus.AVBRUTT
     );
 };

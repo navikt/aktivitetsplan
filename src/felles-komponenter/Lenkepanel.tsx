@@ -2,10 +2,12 @@ import { LinkPanel } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-import hiddenIf from './hidden-if/hidden-if';
+interface Props {
+    children: ReactNode;
+    href: string;
+}
 
-function Lenkepanel({ children, hidden, href }: { href: string; hidden: boolean; children: ReactNode }) {
-    if (hidden) return null;
+const Lenkepanel = ({ children, href }: Props) => {
     return (
         <Link to={href}>
             <LinkPanel as="div">
@@ -13,6 +15,6 @@ function Lenkepanel({ children, hidden, href }: { href: string; hidden: boolean;
             </LinkPanel>
         </Link>
     );
-}
+};
 
-export default hiddenIf(Lenkepanel);
+export default Lenkepanel;
