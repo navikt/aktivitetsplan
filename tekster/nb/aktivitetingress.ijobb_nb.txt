@@ -1,4 +1,0 @@
-{underOppfolging, select,
-true { Her kan du notere ned en deltidsjobb eller midlertidig stiling du har nå. Da kan vi følge deg opp bedre. Husk å føre opp de timene du har jobbet på meldekortet. }
-false { Her kan du notere ned en deltidsjobb eller midlertidig stiling du har nå, for å holde oversikten. }
-}

@@ -15,7 +15,6 @@ import { renderAsReactRoot } from './rootWrapper';
 declare global {
     interface Window {
         NAVSPA: any;
-        Intl: any;
     }
 }
 

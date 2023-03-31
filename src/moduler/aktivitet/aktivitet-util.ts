@@ -24,6 +24,7 @@ import {
 } from '../../datatypes/aktivitetTypes';
 import {
     MoteAktivitet,
+    SamtalereferatAktivitet,
     StillingFraNavAktivitet,
     VeilarbAktivitet,
     VeilarbAktivitetType,
@@ -203,7 +204,10 @@ function samtalreferatManglerPublisering(type: AktivitetType, erReferatPublisert
     return type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE && !erReferatPublisert;
 }
 
-export function manglerPubliseringAvSamtaleReferat(aktivitet: AlleAktiviteter, status: AktivitetStatus) {
+export function manglerPubliseringAvSamtaleReferat(
+    aktivitet: AlleAktiviteter,
+    status: AktivitetStatus
+): aktivitet is MoteAktivitet | SamtalereferatAktivitet {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||

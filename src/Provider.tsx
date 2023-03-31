@@ -4,7 +4,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import InitiellDataLast from './InitiellDataLast';
-import IntlProvider from './intl-provider';
 import createStore from './store';
 
 const store = createStore();
@@ -24,11 +23,7 @@ const Provider = ({ children, erVeileder }: Props) => {
         <ErVeilederContext.Provider value={erVeileder}>
             <ReduxProvider store={store}>
                 <DndProvider backend={HTML5Backend}>
-                    <InitiellDataLast>
-                        <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
-                            {children}
-                        </IntlProvider>
-                    </InitiellDataLast>
+                    <InitiellDataLast>{children}</InitiellDataLast>
                 </DndProvider>
             </ReduxProvider>
         </ErVeilederContext.Provider>

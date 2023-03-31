@@ -1,1 +1,0 @@
-Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet. 

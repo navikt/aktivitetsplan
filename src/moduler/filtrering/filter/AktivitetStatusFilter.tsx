@@ -18,6 +18,7 @@ const filtreringsRekkefolge = [
 const getType: FilterValueExtractor<AlleAktiviteter, keyof StatusFilterType> = (aktvitet) => {
     return [aktvitet.status];
 };
+
 const getOrder = (filterName: string) => filtreringsRekkefolge.indexOf(filterName as any);
 
 function AktivitetStatusFilter({ className }: { className: string }) {

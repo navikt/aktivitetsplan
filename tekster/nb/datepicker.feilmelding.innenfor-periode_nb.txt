@@ -1,1 +1,0 @@
-Datoen må være innenfor perioden {fradato}-{tildato}

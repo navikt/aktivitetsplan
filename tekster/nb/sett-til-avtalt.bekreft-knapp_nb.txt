@@ -1,4 +1,0 @@
-{ikkeSend, select,
-true { Bekreft }
-false { Bekreft og send }
-}

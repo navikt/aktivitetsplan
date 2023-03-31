@@ -1,4 +1,0 @@
-{underOppfolging, select,
-true { Når du og NAV er enige om målet ditt, kan vi samarbeide om aktuelle aktiviteter. }
-false { Legg inn hva slags arbeidsoppgaver og stillinger du ser etter. }
-}

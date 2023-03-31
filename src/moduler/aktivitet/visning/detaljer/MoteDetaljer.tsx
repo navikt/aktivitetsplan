@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { MOTE_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
+import { kanalMap } from '../../../../utils/textMappers';
 import { beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 
@@ -20,43 +20,31 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <Informasjonsfelt
-                key="dato"
-                tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
-                innhold={formaterDatoManed(aktivitet.fraDato)}
-            />
+            <Informasjonsfelt key="dato" tittel="Dato" innhold={formaterDatoManed(aktivitet.fraDato)} />
             <Informasjonsfelt
                 key="klokkeslett"
-                tittel={<FormattedMessage id="aktivitetdetaljer.klokkeslett" />}
+                tittel="Klokkeslett"
                 innhold={formatterKlokkeslett(moteTid?.klokkeslett)}
             />
-            <Informasjonsfelt
-                key="kanal"
-                tittel={<FormattedMessage id="aktivitetdetaljer.kanal" />}
-                innhold={aktivitet.kanal && <FormattedMessage id={`kanal.${aktivitet.kanal}`.toLowerCase()} />}
-            />
-            <Informasjonsfelt
-                key="varighet"
-                tittel={<FormattedMessage id="aktivitetdetaljer.varighet" />}
-                innhold={formatterVarighet(moteTid?.varighet)}
-            />
+            <Informasjonsfelt key="kanal" tittel="Møteform" innhold={aktivitet.kanal && kanalMap[aktivitet.kanal]} />
+            <Informasjonsfelt key="varighet" tittel="Varighet" innhold={formatterVarighet(moteTid?.varighet)} />
             <Informasjonsfelt
                 key="adresse"
-                tittel={<FormattedMessage id="aktivitetdetaljer.adresse" />}
+                tittel="Møtested eller annen praktisk informasjon"
                 innhold={aktivitet.adresse}
                 formattertTekst
                 fullbredde
             />
             <Informasjonsfelt
                 key="bakgrunn"
-                tittel={<FormattedMessage id="aktivitetdetaljer.bakgrunn" />}
+                tittel="Hensikt med møtet"
                 innhold={aktivitet.beskrivelse}
                 formattertTekst
                 fullbredde
             />
             <Informasjonsfelt
                 key="forberedelser"
-                tittel={<FormattedMessage id="aktivitetdetaljer.forberedelser" />}
+                tittel="Forberedelser til møtet"
                 innhold={aktivitet.forberedelser}
                 formattertTekst
                 fullbredde
