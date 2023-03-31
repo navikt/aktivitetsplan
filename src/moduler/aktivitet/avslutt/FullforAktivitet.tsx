@@ -57,7 +57,7 @@ const FullforAktivitet = () => {
 
     return (
         <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">
-            <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.STATUS_FULLFOERT}>
+            <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.FULLFOERT}>
                 {valgtAktivitet.avtalt &&
                 valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&
                 valgtAktivitet.type !== MOTE_TYPE
