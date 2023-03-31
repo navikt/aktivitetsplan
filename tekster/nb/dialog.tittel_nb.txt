@@ -1,4 +1,0 @@
-{ motpart, select,
-NAV { Dialog mellom deg og NAV }
-other { Dialog med {motpart} }
-}

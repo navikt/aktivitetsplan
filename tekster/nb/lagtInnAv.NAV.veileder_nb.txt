@@ -1,4 +1,0 @@
-{ endretAv, select,
-  undefined { NAV }
-  other { {endretAv} }
-}

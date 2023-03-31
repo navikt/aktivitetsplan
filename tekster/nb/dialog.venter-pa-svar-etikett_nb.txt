@@ -1,4 +1,0 @@
-{erVeileder, select,
-true {Venter på svar fra bruker}
-false {NAV venter på svar fra deg}
-}
