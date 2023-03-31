@@ -1,5 +1,5 @@
 import { Heading, Link } from '@navikt/ds-react';
-import { isAfter, parseISO } from 'date-fns';
+import { isAfter } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -7,18 +7,14 @@ import { AnyAction } from 'redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
-import { Dialog } from '../../datatypes/dialogTypes';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
+import { useErVeileder } from '../../Provider';
 import { hentDialog } from '../dialog/dialog-reducer';
-import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
-import { selectErVeileder } from '../identitet/identitet-selector';
+import { selectSistOppdatert } from '../dialog/dialog-selector';
 
 function Navigasjonslinje() {
-    const erVeileder = useSelector(selectErVeileder, shallowEqual);
+    const erVeileder = useErVeileder();
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
-    const antallUlesteDialoger: number = useSelector(selectDialoger, shallowEqual).filter(
-        (d: Dialog) => !d.lest
-    ).length;
 
     const dispatch = useDispatch();
 
@@ -31,7 +27,7 @@ function Navigasjonslinje() {
             const pollForChanges = () =>
                 fetchSistOppdatert()
                     .then((data) => {
-                        const localSistOppdatert = parseISO(sistOppdatert);
+                        const localSistOppdatert = new Date(sistOppdatert);
                         const remoteSistOppdatert = data.sistOppdatert;
                         if (!!data.sistOppdatert && isAfter(remoteSistOppdatert, localSistOppdatert)) {
                             doHentDialog();

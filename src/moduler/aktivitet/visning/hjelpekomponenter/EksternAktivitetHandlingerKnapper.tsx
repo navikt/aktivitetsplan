@@ -1,9 +1,8 @@
-import { BodyShort, Button, Heading, LinkPanel } from '@navikt/ds-react';
+import { BodyShort, Heading, LinkPanel } from '@navikt/ds-react';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { EksternAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
 
 interface Props {
     aktivitet: EksternAktivitet;
@@ -12,7 +11,7 @@ interface Props {
 const EksternAktivitetHandlingerKnapper = ({ aktivitet }: Props) => {
     const { handlinger } = aktivitet.eksternAktivitet;
 
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
 
     if (!handlinger) {
         return null;

@@ -2,12 +2,11 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -41,7 +40,7 @@ interface Props {
 const EgenAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
 
     const defaultValues: Partial<EgenAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',

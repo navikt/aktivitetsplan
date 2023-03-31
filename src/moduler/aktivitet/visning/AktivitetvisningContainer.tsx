@@ -6,12 +6,13 @@ import { AnyAction } from 'redux';
 import { STATUS } from '../../../api/utils';
 import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
+import { useErVeileder } from '../../../Provider';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { hentAktivitet } from '../aktivitet-actions';
 import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetlisteSelector';
+import { kanEndreAktivitetDetaljer, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './Aktivitetvisning';
@@ -23,6 +24,7 @@ const AktivitetvisningContainer = () => {
 
     const dispatch = useDispatch();
 
+    const erVeileder = useErVeileder();
     const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
 
     const arenaDataStatus = useSelector(selectArenaAktivitetStatus);
@@ -38,9 +40,7 @@ const AktivitetvisningContainer = () => {
         aktivitetDataStatus,
     ]);
 
-    const tillatEndring = useSelector((state) =>
-        selectKanEndreAktivitetDetaljer(state, valgtAktivitet as VeilarbAktivitet)
-    );
+    const tillatEndring = kanEndreAktivitetDetaljer(valgtAktivitet as VeilarbAktivitet, erVeileder);
     const underOppfolging = useSelector(selectErUnderOppfolging);
 
     useEffect(() => {

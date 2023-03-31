@@ -74,10 +74,7 @@ export const handlers = [
         failOrGetResponse(dialogFeilet, () => dialog)
     ),
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
-    rest.get(
-        '/veilarbdialog/api/dialog/sistOppdatert',
-        jsonResponse({ sistOppdatert: '2020-06-25T12:58:12.757+02:00' })
-    ),
+    rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
     rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', jsonResponse(setVenterPaaSvar)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', jsonResponse(setFerdigBehandlet)),
     rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),

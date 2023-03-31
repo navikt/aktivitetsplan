@@ -1,10 +1,12 @@
 import { render, waitFor } from '@testing-library/react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
 import { vi } from 'vitest';
 
 import { STATUS } from '../../api/utils';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
+import { ErVeilederContext } from '../../Provider';
 import reducer from '../../reducer';
 import IkkeNiva4 from './IkkeNiva4';
 
@@ -28,11 +30,13 @@ const createMockStore = () =>
         },
     });
 
-const WrappedIkkeNiva4 = ({ store = createMockStore() }) => {
+const WrappedIkkeNiva4 = ({ store = createMockStore(), erVeileder }) => {
     return (
-        <Provider store={store}>
-            <IkkeNiva4 />
-        </Provider>
+        <ErVeilederContext.Provider value={erVeileder}>
+            <Provider store={store}>
+                <IkkeNiva4 />
+            </Provider>
+        </ErVeilederContext.Provider>
     );
 };
 
@@ -87,7 +91,7 @@ describe('IkkeNiva4', () => {
 
     it('skal ikke logge ikkeRegIKrr når kan varsles && ikke manuell && ikke reservert i KRR', async () => {
         const store = createMockStore();
-        render(<WrappedIkkeNiva4 store={store} />);
+        render(<WrappedIkkeNiva4 erVeileder={true} store={store} />);
         fetchData(store, {
             kanVarsles: true,
             erVeileder: true,
@@ -100,7 +104,7 @@ describe('IkkeNiva4', () => {
 
     it('skal logge både niva4 og ikkeRegIKrr når ikke kan varsles && ikke manuell && ikke reservert i KRR', async () => {
         const store = createMockStore();
-        render(<WrappedIkkeNiva4 store={store} />);
+        render(<WrappedIkkeNiva4 erVeileder={true} store={store} />);
         fetchData(store, {
             kanVarsles: false,
             erVeileder: true,
@@ -113,7 +117,7 @@ describe('IkkeNiva4', () => {
 
     it('should not log when not veileder', async () => {
         const store = createMockStore();
-        render(<WrappedIkkeNiva4 store={store} />);
+        render(<WrappedIkkeNiva4 erVeileder={false} store={store} />);
         fetchData(store, {
             kanVarsles: true,
             erVeileder: false,

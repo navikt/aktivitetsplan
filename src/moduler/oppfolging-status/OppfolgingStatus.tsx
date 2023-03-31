@@ -4,8 +4,9 @@ import { AnyAction } from 'redux';
 
 import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
+import { useErVeileder } from '../../Provider';
 import { hentIdentitet } from '../identitet/identitet-reducer';
-import { selectErVeileder, selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
+import { selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { hentOppfolging } from './oppfolging-reducer';
 import {
     selectAktorId,
@@ -31,7 +32,7 @@ const OppfolgingStatus = ({ children }: Props) => {
         useSelector(selectFeatureStatus),
     ];
 
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
     const manuell = useSelector(selectErBrukerManuell);

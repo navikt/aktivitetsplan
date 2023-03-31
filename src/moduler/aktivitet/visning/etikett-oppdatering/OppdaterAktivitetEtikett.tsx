@@ -4,11 +4,12 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { StillingStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { useErVeileder } from '../../../../Provider';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
-import { selectKanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
+import { kanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
 import StillingEtikett from '../../etikett/StillingEtikett';
 import EndreLinje from '../endre-linje/EndreLinje';
 import StillingEtikettForm, { StillingEtikettFormValues } from './StillingEtikettForm';
@@ -19,12 +20,10 @@ interface Props {
 
 const OppdaterAktivitetEtikett = (props: Props) => {
     const { aktivitet } = props;
+    const erVeileder = useErVeileder();
 
     const lasterAktivitetData = useSelector(selectLasterAktivitetData, shallowEqual);
-    const kanIkkeEndreAktivitet = !useSelector(
-        (state) => selectKanEndreAktivitetEtikett(state, aktivitet),
-        shallowEqual
-    );
+    const kanIkkeEndreAktivitet = !kanEndreAktivitetEtikett(aktivitet, erVeileder);
     const erIkkeUnderOppfolging = !useSelector(selectErUnderOppfolging);
 
     const [open, setIsOpen] = useState(false);
