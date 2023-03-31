@@ -1,4 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
+import { format } from 'date-fns';
 import React from 'react';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
@@ -16,7 +17,9 @@ const VersjonInnslag = (props: Props) => {
     return (
         <div className="m-0 pb-4">
             <Endringstekst aktivitet={aktivitet} forrigeAktivitet={forrigeAktivitet} />
-            <BodyShort>{formaterDatoEllerTidSiden(aktivitet.endretDato)}</BodyShort>
+            <BodyShort>
+                {aktivitet.endretDato ? formaterDatoEllerTidSiden(aktivitet.endretDato) : 'Ingen endret dato funnet'}
+            </BodyShort>
         </div>
     );
 };

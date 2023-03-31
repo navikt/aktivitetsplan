@@ -3,6 +3,7 @@ import {
     differenceInDays,
     differenceInMilliseconds,
     endOfToday,
+    format,
     format as formatDate,
     formatDistance,
     isAfter,
@@ -69,7 +70,7 @@ export function formaterDatoEllerTidSiden(dato: string) {
 
     if (isValid(datoVerdi)) {
         if (erMerEnntoDagerSiden(dato)) {
-            return formaterDatoTidSiden(dato);
+            return format(datoVerdi, 'dd.M.y');
         }
         return formaterDatoKortManedTid(dato);
     }
