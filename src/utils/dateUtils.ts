@@ -68,7 +68,7 @@ export function formaterDatoEllerTidSiden(dato: string) {
     const datoVerdi = parseISO(dato);
 
     if (isValid(datoVerdi)) {
-        if (erMerEnntoDagerSiden(dato)) {
+        if (!erMerEnntoDagerSiden(dato)) {
             return formaterDatoTidSiden(dato);
         }
         return formaterDatoKortManedTid(dato);
