@@ -24,11 +24,7 @@ const Provider = ({ children, erVeileder }: Props) => {
         <ErVeilederContext.Provider value={erVeileder}>
             <ReduxProvider store={store}>
                 <DndProvider backend={HTML5Backend}>
-                    <InitiellDataLast>
-                        <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
-                            {children}
-                        </IntlProvider>
-                    </InitiellDataLast>
+                    <InitiellDataLast>{children}</InitiellDataLast>
                 </DndProvider>
             </ReduxProvider>
         </ErVeilederContext.Provider>

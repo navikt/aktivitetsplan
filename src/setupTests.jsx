@@ -20,9 +20,6 @@ vi.mock('react-dnd', () => ({
     DndProvider: ({ children }) => <>{children}</>,
 }));
 vi.mock('react-dnd-html5-backend', () => ({}));
-vi.mock('react-intl', () => ({
-    FormattedMessage: ({ id }) => id,
-}));
 
 // FAIL LOUDLY on unhandled promise rejections / errors
 process.on('unhandledRejection', (reason) => {
