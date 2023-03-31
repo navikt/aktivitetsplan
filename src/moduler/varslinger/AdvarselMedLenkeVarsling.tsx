@@ -1,17 +1,15 @@
 import { Alert, Link } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 interface Props {
-    tekstId: string | undefined;
-    lenkeTekstId: string;
+    tekst: string;
+    lenkeTekst: string;
     href: string;
-    values: { antalldagerIgjen: number };
     hidden?: boolean;
 }
 
 const AdvarselMedLenkeVarsling = (props: Props) => {
-    const { hidden, tekstId, lenkeTekstId, href, values } = props;
+    const { hidden, tekst, lenkeTekst, href } = props;
 
     if (hidden) {
         return null;
@@ -19,11 +17,9 @@ const AdvarselMedLenkeVarsling = (props: Props) => {
 
     return (
         <Alert variant="warning" className="mb-5 mt-4">
-            <FormattedMessage id={tekstId} values={values} />
+            {tekst}
             &nbsp;
-            <Link href={href}>
-                <FormattedMessage id={lenkeTekstId} />
-            </Link>
+            <Link href={href}>{lenkeTekst}</Link>
         </Alert>
     );
 };

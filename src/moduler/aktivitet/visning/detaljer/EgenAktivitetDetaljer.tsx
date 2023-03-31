@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -18,20 +17,10 @@ const EgenAktivitetDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <FraDato aktivitet={aktivitet} tittel={<FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.egen" />} />
-            <TilDato aktivitet={aktivitet} tittel={<FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />} />
-            <Informasjonsfelt
-                key="hensikt"
-                fullbredde
-                tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
-                innhold={aktivitet.hensikt}
-            />
-            <Informasjonsfelt
-                key="oppfolging"
-                fullbredde
-                tittel={<FormattedMessage id="aktivitetdetaljer.oppfolging-label" />}
-                innhold={aktivitet.oppfolging}
-            />
+            <FraDato aktivitet={aktivitet} />
+            <TilDato aktivitet={aktivitet} />
+            <Informasjonsfelt key="hensikt" fullbredde tittel="Mål med aktiviteten" innhold={aktivitet.hensikt} />
+            <Informasjonsfelt key="oppfolging" fullbredde tittel="Min huskeliste" innhold={aktivitet.oppfolging} />
             <Beskrivelse aktivitet={aktivitet} />
             <DetaljvisningLenke lenke={aktivitet.lenke} />
         </>

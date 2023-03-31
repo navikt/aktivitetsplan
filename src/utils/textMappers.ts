@@ -1,6 +1,9 @@
 import {
+    AktivitetStatus,
     AktivitetType,
     AlleAktiviteter,
+    JobbStatusType,
+    Kanal,
     StillingFraNavSoknadsstatus,
     StillingStatus,
 } from '../datatypes/aktivitetTypes';
@@ -14,7 +17,10 @@ export const getAktivitetType = (aktivitet: AlleAktiviteter): string => {
     return aktivitetTypeMap[aktivitet.type];
 };
 
-type AlleAktivitetTyper = Exclude<AktivitetType, VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE> | EksternAktivitetType;
+// EKSTERN_AKTIVITET har subtyper - sjekk EksternAktivitetType@internAktivitetTypes.ts
+export type AlleAktivitetTyper =
+    | Exclude<AktivitetType, VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE>
+    | EksternAktivitetType;
 
 export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     EGEN: 'Jobbrettet egenaktivitet',
@@ -33,7 +39,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     VARIG_LONNSTILSKUDD: 'Avtale varig lønnstilskudd',
 };
 
-export const aktivitetStatusMap = {
+export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
     PLANLAGT: 'Planlegger',
     BRUKER_ER_INTERESSERT: 'Forslag',
     GJENNOMFORES: 'Gjennomfører',
@@ -41,9 +47,20 @@ export const aktivitetStatusMap = {
     AVBRUTT: 'Avbrutt',
 };
 
+export const jobbStatusTypeMap: Record<JobbStatusType, string> = {
+    DELTID: 'Deltid',
+    HELTID: 'Heltid',
+};
+
+export const kanalMap: Record<Kanal, string> = {
+    INTERNETT: 'Videomøte',
+    OPPMOTE: 'Oppmøte',
+    TELEFON: 'Telefonmøte',
+};
+
 export const avtaltMapper = {
-    avtaltMedNav: 'Avtalt med NAV',
-    ikkeAvtaltMedNav: 'Ikke avtalt med NAV',
+    AVTALT_MED_NAV: 'Avtalt med NAV',
+    IKKE_AVTALT_MED_NAV: 'Ikke avtalt med NAV',
 };
 
 export const stillingsEtikettMapper: Record<StillingStatus, string> = {
@@ -68,7 +85,7 @@ export const stillingOgStillingFraNavEtikettMapper: Record<StillingStatus | Stil
     ...stillingFraNavSoknadsstatusMapper,
 };
 
-export const tiltakEtikettMapper = {
+export const tiltakEtikettMapper: Record<ArenaEtikett, string> = {
     [ArenaEtikett.AKTUELL]: 'Søkt inn på tiltaket',
     [ArenaEtikett.AVSLAG]: 'Fått avslag',
     [ArenaEtikett.IKKAKTUELL]: 'Ikke aktuell for tiltaket',
@@ -89,4 +106,12 @@ export const eksternAktivitetFilterTextMappings = {
     TAKKET_NEI: 'Takket nei til tilbud',
     FATT_PLASS: 'Fått plass på tiltaket',
     VENTELISTE: 'På venteliste',
+};
+
+export const tiltakOgEksternAktivitetEtikettMapper: Record<
+    ArenaEtikett | keyof typeof eksternAktivitetFilterTextMappings,
+    string
+> = {
+    ...tiltakEtikettMapper,
+    ...eksternAktivitetFilterTextMappings,
 };
