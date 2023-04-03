@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useErVeileder } from '../../Provider';
@@ -26,11 +25,7 @@ interface Props {
 const OppfolgingStatus = ({ children }: Props) => {
     const dispatch = useAppDispatch();
 
-    const avhengigheter = [
-        useSelector(selectOppfolgingStatus),
-        useSelector(selectIdentitetStatus),
-        useSelector(selectFeatureStatus),
-    ];
+    const avhengigheter = [useSelector(selectOppfolgingStatus), useSelector(selectIdentitetStatus)];
 
     const erVeileder = useErVeileder();
     const underOppfolging = useSelector(selectErUnderOppfolging);

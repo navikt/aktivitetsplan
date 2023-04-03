@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 
-import featureReducer from './felles-komponenter/feature/feature-reducer';
 import authReducer from './felles-komponenter/timeoutbox/auth-slice';
 import dragAndDropReducer from './moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
@@ -32,7 +31,6 @@ const combinedReducers = combineReducers({
         oppfolging: oppfolgingReducer,
         tilgang: tilgangReducer,
         versjoner: versjonReducer,
-        feature: featureReducer,
         malverk: malverkReducer,
         lest: lestReducer,
         auth: authReducer,

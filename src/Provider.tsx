@@ -3,7 +3,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import InitiellDataLast from './InitiellDataLast';
 import store from './store';
 
 interface Props {
@@ -20,9 +19,7 @@ const Provider = ({ children, erVeileder }: Props) => {
     return (
         <ErVeilederContext.Provider value={erVeileder}>
             <ReduxProvider store={store}>
-                <DndProvider backend={HTML5Backend}>
-                    <InitiellDataLast>{children}</InitiellDataLast>
-                </DndProvider>
+                <DndProvider backend={HTML5Backend}>{children}</DndProvider>
             </ReduxProvider>
         </ErVeilederContext.Provider>
     );

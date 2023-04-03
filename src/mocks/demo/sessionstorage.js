@@ -79,8 +79,4 @@ export const oppdateringKunFeiler = () => erSatt(LocalStorageElement.OPPDATERING
 
 export const ulesteDialoger = () => erSatt(LocalStorageElement.ULESTE_DIALOGER);
 
-const featureprefix = 'mock_feature__';
-export const setFeatureTogle = (name, value) => settLocalStorage(featureprefix + name, value);
-export const featureStatus = (name) => hentFraLocalStorage(featureprefix + name) !== 'false';
-
 export const ingenMal = () => erSatt(LocalStorageElement.INGEN_MAL);
