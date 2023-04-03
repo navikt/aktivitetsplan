@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
 import { DragSourceMonitor, useDrag } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
 import Aktivitetskort from './Aktivitetskort';
 import styles from './Aktivitetskort.module.less';
@@ -15,7 +15,7 @@ interface Props {
 
 function DragbartAktivitetskort(props: Props) {
     const { aktivitet } = props;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [collectedProps, drag] = useDrag({
         type: DROP_TYPE,

@@ -1,4 +1,4 @@
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { selectHistoriskeOppfolgingsPerioder } from './oppfolging-selectorts';
 
@@ -84,6 +84,6 @@ export function selectInaktiveringsDato(state: State) {
 }
 
 export function selectOppfolgingFeilmeldinger(state: State) {
-    const feilMeldingsdata = selectOppfolgingStatus(state) === STATUS.ERROR && selectOppfolgingSlice(state).feil;
+    const feilMeldingsdata = selectOppfolgingStatus(state) === Status.ERROR && selectOppfolgingSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 }

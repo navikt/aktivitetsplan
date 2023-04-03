@@ -1,5 +1,5 @@
 import * as Api from '../../api/lestAPI';
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { createActionsAndReducer } from '../../felles-komponenter/utils/createActionsAndReducer';
 
 const { reducer, action, selectSlice, selectData, selectStatus } = createActionsAndReducer('lest', 'lest', []);
@@ -29,7 +29,7 @@ export function selectLestStatus(state) {
 }
 
 export function selectLestFeilMelding(state) {
-    const feilMeldingsdata = selectLestStatus(state) === STATUS.ERROR && selectSlice(state).feil;
+    const feilMeldingsdata = selectLestStatus(state) === Status.ERROR && selectSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 }
 

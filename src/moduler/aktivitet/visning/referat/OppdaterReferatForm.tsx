@@ -2,13 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Textarea } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 import { z } from 'zod';
 
-import { STATUS } from '../../../../api/utils';
+import { Status } from '../../../../createGenericSlice';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
@@ -29,10 +30,10 @@ const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
     const startTekst = useReferatStartTekst();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
-    const oppdaterer = aktivitetsStatus === STATUS.PENDING || aktivitetsStatus === STATUS.RELOADING;
+    const oppdaterer = aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const erReferatPublisert = aktivitet.erReferatPublisert;
 
@@ -69,7 +70,7 @@ const OppdaterReferatForm = (props: Props) => {
     const updateAndPubliser = handleSubmit((values) => {
         return updateReferat(values).then((response: { data: any }) => {
             if (response.data) {
-                dispatch(publiserReferat(response.data) as unknown as AnyAction);
+                dispatch(publiserReferat(response.data));
             }
         });
     });

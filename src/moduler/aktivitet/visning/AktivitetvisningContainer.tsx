@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
-import { STATUS } from '../../../api/utils';
+import { Status } from '../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../Provider';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
@@ -22,7 +23,7 @@ const AktivitetvisningContainer = () => {
     const { id } = useParams<{ id: string }>();
     const aktivitetId = id;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const erVeileder = useErVeileder();
     const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
@@ -30,7 +31,7 @@ const AktivitetvisningContainer = () => {
     const arenaDataStatus = useSelector(selectArenaAktivitetStatus);
     const aktivitetDataStatus = useSelector(selectAktivitetStatus);
 
-    const laster = arenaDataStatus !== STATUS.OK || aktivitetDataStatus !== STATUS.OK;
+    const laster = arenaDataStatus !== Status.OK || aktivitetDataStatus !== Status.OK;
 
     const avhengigheter = useSelector((state) => [
         selectOppfolgingStatus(state),
@@ -46,9 +47,9 @@ const AktivitetvisningContainer = () => {
     useEffect(() => {
         if (valgtAktivitet) {
             if (isArenaAktivitet(valgtAktivitet)) {
-                dispatch(hentArenaAktiviteter() as unknown as AnyAction);
+                dispatch(hentArenaAktiviteter());
             } else {
-                dispatch(hentAktivitet(valgtAktivitet.id + '') as unknown as AnyAction);
+                dispatch(hentAktivitet(valgtAktivitet.id + ''));
             }
         }
 

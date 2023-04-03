@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { STATUS } from '../../../../../api/utils';
+import { Status } from '../../../../../createGenericSlice';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../../datatypes/internAktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
@@ -34,8 +34,8 @@ const AvtaltFormContainer = (props: Props) => {
                 )
             ) : (
                 <AvtaltForm
-                    oppdaterer={bekreftStatus === STATUS.RELOADING}
-                    lasterData={nettverksStatus !== STATUS.OK}
+                    oppdaterer={bekreftStatus === Status.RELOADING}
+                    lasterData={nettverksStatus !== Status.OK}
                     mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                     {...props}
                 />

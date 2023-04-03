@@ -1,5 +1,6 @@
 import * as Api from '../../api/aktivitetAPI';
-import { STATUS, doThenDispatch } from '../../api/utils';
+import { doThenDispatch } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 // Actions
@@ -17,8 +18,8 @@ export const FHO_LEST_FEILET = 'arenaAktivitet/fho/lest/fail';
 
 const initalState = {
     data: [],
-    status: STATUS.NOT_STARTED,
-    fhoLestStatus: STATUS.NOT_STARTED,
+    status: Status.NOT_STARTED,
+    fhoLestStatus: Status.NOT_STARTED,
 };
 
 const mapArenaType = (arenaAktivitet) => ({
@@ -39,24 +40,24 @@ const reducer = (state = initalState, action) => {
         case HENTET:
             return {
                 ...state,
-                status: STATUS.OK,
+                status: Status.OK,
                 data: action.data.map(mapArenaType),
             };
         case OPPDATER_FEILET:
         case HENTING_FEILET:
-            return { ...state, status: STATUS.ERROR, feil: action.data };
+            return { ...state, status: Status.ERROR, feil: action.data };
         case OPPDATER:
-            return { ...state, status: STATUS.RELOADING };
+            return { ...state, status: Status.RELOADING };
         case OPPDATER_OK:
             widowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, action.data);
+            return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, action.data);
         case FHO_LEST:
-            return { ...state, fhoLestStatus: STATUS.RELOADING };
+            return { ...state, fhoLestStatus: Status.RELOADING };
         case FHO_LEST_OK:
             widowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: STATUS.OK }, action.data);
+            return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: Status.OK }, action.data);
         case FHO_LEST_FEILET:
-            return { ...state, fhoLestStatus: STATUS.ERROR, feil: action.data };
+            return { ...state, fhoLestStatus: Status.ERROR, feil: action.data };
         default:
             return state;
     }

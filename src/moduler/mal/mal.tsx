@@ -1,9 +1,10 @@
 import { Heading, ReadMore } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
@@ -25,12 +26,12 @@ const Mal = () => {
 
     const isDirty = useRef(false);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(hentMal() as unknown as AnyAction);
-        dispatch(hentMalListe() as unknown as AnyAction);
+        dispatch(hentMal());
+        dispatch(hentMalListe());
     }, [dispatch]);
 
     const avhengigheter = [malStatus, malListeStatus];

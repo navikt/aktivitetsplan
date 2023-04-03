@@ -1,9 +1,10 @@
 import { BriefcaseIcon } from '@navikt/aksel-icons';
 import React, { useContext, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 
 import { StillingStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
@@ -27,7 +28,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
     const erIkkeUnderOppfolging = !useSelector(selectErUnderOppfolging);
 
     const [open, setIsOpen] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const lagreEtikett = (formValues: StillingEtikettFormValues): Promise<any> => {
         const { etikettstatus } = formValues;

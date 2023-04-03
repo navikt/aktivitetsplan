@@ -1,11 +1,12 @@
 import { PersonRectangleIcon } from '@navikt/aksel-icons';
 import { Alert } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
@@ -48,7 +49,7 @@ interface SoknadsstatusValue {
 
 const OppdaterSoknadsstatus = (props: Props) => {
     const { aktivitet } = props;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [open, setIsOpen] = useState(false);
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 

@@ -2,7 +2,7 @@ import { Chips, Label } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import {
     aktivitetStatusMap,
     aktivitetTypeMap,
@@ -30,7 +30,7 @@ import FiltreringLabel from './filteringslabel/FiltreringLabel';
 const VisValgtFilter = () => {
     const filterSlice = useSelector(selectFilterSlice);
 
-    const dispatch = useReduxDispatch();
+    const dispatch = useAppDispatch();
 
     const doToggleAktivitetsEtikett = (aktivitetsEtikett: string) =>
         dispatch(toggleAktivitetsEtikett(aktivitetsEtikett));

@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
-import { STATUS } from '../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
+import { Status } from '../../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
-import { useReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { fullforAktivitet } from '../aktivitet-actions';
@@ -22,9 +22,9 @@ const beskrivelseTekst =
 const FullforAktivitet = () => {
     const { id: aktivitetId } = useParams<{ id: string }>();
     const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
-    const lagrer = useSelector((state) => selectAktivitetListeStatus(state)) !== STATUS.OK;
+    const lagrer = useSelector((state) => selectAktivitetListeStatus(state)) !== Status.OK;
 
-    const dispatch = useReduxDispatch();
+    const dispatch = useAppDispatch();
     const doAvsluttOppfolging = (aktivitet: AlleAktiviteter, begrunnelse: string | null) =>
         dispatch(fullforAktivitet(aktivitet, begrunnelse));
 

@@ -1,12 +1,12 @@
 import React, { ReactNode, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
+import { useSelector } from 'react-redux';
 
 import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useErVeileder } from '../../Provider';
-import { hentIdentitet } from '../identitet/identitet-reducer';
 import { selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
+import { fetchIdentitet } from '../identitet/identitet-slice';
 import { hentOppfolging } from './oppfolging-reducer';
 import {
     selectAktorId,
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const OppfolgingStatus = ({ children }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const avhengigheter = [
         useSelector(selectOppfolgingStatus),
@@ -53,14 +53,16 @@ const OppfolgingStatus = ({ children }: Props) => {
     };
 
     useEffect(() => {
-        dispatch(hentOppfolging() as unknown as AnyAction);
-        dispatch(hentIdentitet() as unknown as AnyAction);
+        dispatch(hentOppfolging());
+        dispatch(fetchIdentitet());
     }, []);
 
     return (
         <Innholdslaster className="mt-8" avhengigheter={avhengigheter}>
             <div className="w-full">
-                <VidereSendBrukereEllerRenderChildren {...props}>{children}</VidereSendBrukereEllerRenderChildren>
+                <VidereSendBrukereEllerRenderChildren {...props} ident={ident as string}>
+                    {children}
+                </VidereSendBrukereEllerRenderChildren>
             </div>
         </Innholdslaster>
     );

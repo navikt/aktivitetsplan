@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { STATUS, aggregerStatus } from '../../api/utils';
+import { aggregerStatus } from '../../api/utils';
 import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA_NAV_TYPE } from '../../constant';
+import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { aktivitetMatchesFilters, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
@@ -77,7 +78,7 @@ export const kanEndreAktivitetDetaljer = (aktivitet: AlleAktiviteter, erVeileder
 
 export const selectAktivitetListeFeilMelding = (state: any) => {
     const alleAktiviteterSlice = [selectAktiviteterSlice(state), selectArenaAktiviteterSlice(state)];
-    const feilendeKall = alleAktiviteterSlice.filter((slice) => slice.status === STATUS.ERROR);
+    const feilendeKall = alleAktiviteterSlice.filter((slice) => slice.status === Status.ERROR);
 
     return feilendeKall.map((slice) => slice.feil);
 };

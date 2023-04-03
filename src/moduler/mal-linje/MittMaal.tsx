@@ -4,12 +4,13 @@ import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { Lest } from '../../datatypes/aktivitetTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
@@ -50,7 +51,7 @@ interface MalContentProps {
 
 function MalContent(props: MalContentProps) {
     const { disabled, mal } = props;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const erVeileder = useErVeileder();
     const navigate = useNavigate();
     const endreMal = () => {
@@ -90,10 +91,10 @@ function MalContent(props: MalContentProps) {
 }
 
 function MittMaal() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentMal() as unknown as AnyAction);
+        dispatch(hentMal());
     }, [dispatch]);
 
     const avhengigheter: Avhengighet = useSelector(selectMalStatus, shallowEqual);

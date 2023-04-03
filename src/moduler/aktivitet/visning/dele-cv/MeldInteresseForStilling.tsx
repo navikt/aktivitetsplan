@@ -3,11 +3,11 @@ import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds
 import { endOfToday, parseISO, startOfDay, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ZodErrorMap, z } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
@@ -68,7 +68,7 @@ const getSchema = (
 
 export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const erVeileder = useErVeileder();
     const opprettetDato = aktivitet.opprettetDato;
@@ -105,14 +105,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     }, [kanDeles.value]);
 
     const onSubmit = (data: KanDeles) => {
-        dispatch(
-            oppdaterCVSvar(
-                aktivitet.id,
-                aktivitet.versjon,
-                data.kanDeles === SvarType.JA,
-                data.avtaltDato
-            ) as unknown as AnyAction
-        );
+        dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, data.kanDeles === SvarType.JA, data.avtaltDato));
         return Promise.resolve();
     };
 

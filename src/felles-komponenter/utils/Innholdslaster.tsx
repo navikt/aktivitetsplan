@@ -2,7 +2,7 @@ import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 
 function asArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];
@@ -12,10 +12,10 @@ const harStatus =
     (element: string): boolean =>
         asArray(status).includes(element);
 
-const noenHarFeil = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.ERROR));
-export const minstEnErOK = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.OK));
-const alleLastet = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
-const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK));
+const noenHarFeil = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(Status.ERROR));
+export const minstEnErOK = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(Status.OK));
+const alleLastet = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(Status.OK, Status.RELOADING));
+const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(Status.OK));
 
 export type Avhengighet = Status | { status?: Status } | null | undefined;
 export interface InnholdslasterProps {
@@ -28,7 +28,6 @@ export interface InnholdslasterProps {
     alleOK?: boolean;
 }
 
-export type Status = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
 type InternStatus = Status | 'NOT_SETT';
 
 export const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] => {

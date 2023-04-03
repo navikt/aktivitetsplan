@@ -4,7 +4,7 @@ import React, { ChangeEventHandler, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 
 import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
-import { ReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
+import { AppDispatch } from '../../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import {
     VistOppfolgingsPeriode,
@@ -93,7 +93,7 @@ const mapStateToProps = (state: any) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: ReduxDispatch) => ({
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
     doVelgHistoriskPeriode: (historiskOppfolgingsperiode: null | HistoriskOppfolgingsperiode) =>
         dispatch(velgHistoriskPeriode(historiskOppfolgingsperiode)),
 });

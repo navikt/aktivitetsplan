@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
-import { HistoriskOppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selectorts';
@@ -31,7 +31,7 @@ export function selectAlleDialoger(state: any) {
 const hentDialogerFraState = (
     dialogSlice: any,
     esklaringsFilter: boolean,
-    valgtHistoriskPeriode?: HistoriskOppfolgingsPeriode,
+    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode,
     forrigeSluttDato?: string
 ) =>
     dialogSlice.data
@@ -58,6 +58,6 @@ export function selectDialogForAktivitetId(state: any, aktivitet: AlleAktivitete
 }
 
 export function selectDialogFeilmeldinger(state: any) {
-    const feilmeldinger = selectDialogSlice(state).status === STATUS.ERROR && selectDialogSlice(state).feil;
+    const feilmeldinger = selectDialogSlice(state).status === Status.ERROR && selectDialogSlice(state).feil;
     return feilmeldinger ? feilmeldinger : [];
 }

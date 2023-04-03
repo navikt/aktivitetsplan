@@ -1,4 +1,4 @@
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 
 export function selectArenaAktiviteterSlice(state) {
     return state.data.arenaAktiviteter;
@@ -14,7 +14,7 @@ export function selectArenaAktivitetStatus(state) {
 
 export const selectArenaFeilmeldinger = (state) => {
     const feilMeldingsdata =
-        selectArenaAktivitetStatus(state) === STATUS.ERROR && selectArenaAktiviteterSlice(state).feil;
+        selectArenaAktivitetStatus(state) === Status.ERROR && selectArenaAktiviteterSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };
 

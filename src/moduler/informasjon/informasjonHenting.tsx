@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
 import { fetchHarFlereAktorId } from '../../api/oppfolgingAPI';
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { loggTidBruktGaaInnPaaAktivitetsplanen } from '../../felles-komponenter/utils/logging';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { hentLest, selectLestInformasjon, selectLestStatus } from '../lest/lest-reducer';
@@ -22,8 +22,8 @@ function InformasjonsHenting() {
     const erBruker = useSelector(selectErBruker, shallowEqual);
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder, shallowEqual);
 
-    const dispatch = useDispatch();
-    const doHentLest = useCallback(() => dispatch(hentLest() as unknown as AnyAction), [dispatch]);
+    const dispatch = useAppDispatch();
+    const doHentLest = useCallback(() => dispatch(hentLest()), [dispatch]); // TODO thunkify action
     const setBack = (path: string) => dispatch(setBackPath(path));
 
     useEffect(() => {
@@ -42,7 +42,7 @@ function InformasjonsHenting() {
 
     const correctUrl = pathname === '/';
     const videreSendTilInfo =
-        lestStatus === STATUS.OK && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON) && correctUrl;
+        lestStatus === Status.OK && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON) && correctUrl;
 
     if (videreSendTilInfo && erBruker && !ref.current) {
         ref.current = true;

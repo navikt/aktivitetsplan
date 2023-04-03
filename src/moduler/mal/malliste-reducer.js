@@ -1,5 +1,6 @@
 import * as Api from '../../api/oppfolgingAPI';
-import { STATUS, doThenDispatch } from '../../api/utils';
+import { doThenDispatch } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 
 export const LISTE_OK = 'malListe/OK';
 export const LISTE_FEILET = 'malListe/FEILET';
@@ -7,7 +8,7 @@ export const LISTE_PENDING = 'malListe/PENDING';
 export const LISTE_FJERN = 'malListe/FJERN';
 
 const initalState = {
-    status: STATUS.NOT_STARTED,
+    status: Status.NOT_STARTED,
     data: [],
 };
 
@@ -15,17 +16,17 @@ const initalState = {
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case LISTE_FEILET:
-            return { ...state, status: STATUS.ERROR, feil: action.data };
+            return { ...state, status: Status.ERROR, feil: action.data };
         case LISTE_PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: Status.PENDING };
         case LISTE_OK:
             return {
                 ...state,
-                status: STATUS.OK,
+                status: Status.OK,
                 data: action.data,
             };
         case LISTE_FJERN:
-            return { ...state, status: STATUS.OK, data: [] };
+            return { ...state, status: Status.OK, data: [] };
         default:
             return state;
     }

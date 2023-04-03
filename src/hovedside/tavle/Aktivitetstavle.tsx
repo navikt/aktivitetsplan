@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
-import { STATUS } from '../../api/utils';
 import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
+import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
@@ -38,7 +39,7 @@ function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
 }
 
 const Aktivitetstavle = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);
@@ -47,7 +48,7 @@ const Aktivitetstavle = () => {
     const underOppfolging = useSelector(selectUnderOppfolging);
 
     const aktivitetNotStarted =
-        statusAktiviteter === STATUS.NOT_STARTED && statusArenaAktiviteter === STATUS.NOT_STARTED;
+        statusAktiviteter === Status.NOT_STARTED && statusArenaAktiviteter === Status.NOT_STARTED;
 
     const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
 
@@ -55,11 +56,11 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
-                dispatch(hentNivaa4(hentFnrFraUrl()) as unknown as AnyAction);
-                dispatch(hentVeilederInfo() as unknown as AnyAction);
+                dispatch(hentNivaa4(hentFnrFraUrl()));
+                dispatch(hentVeilederInfo());
             }
-            dispatch(hentAktiviteter() as unknown as AnyAction);
-            dispatch(hentArenaAktiviteter() as unknown as AnyAction);
+            dispatch(hentAktiviteter());
+            dispatch(hentArenaAktiviteter());
         }
     }, [aktivitetNotStarted, erVeileder, dispatch]);
 

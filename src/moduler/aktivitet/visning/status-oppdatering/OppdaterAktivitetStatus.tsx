@@ -1,11 +1,12 @@
 import { HikingTrailSignIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../../../Provider';
 import { aktivitetStatusMap } from '../../../../utils/textMappers';
@@ -45,7 +46,7 @@ interface OppdaterAktivitetStatusProps {
 const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
     const { aktivitet } = props;
     const [open, setIsOpen] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const erVeileder = useErVeileder();
     const disableStatusEndring = useDisableStatusEndring(aktivitet, erVeileder);
 

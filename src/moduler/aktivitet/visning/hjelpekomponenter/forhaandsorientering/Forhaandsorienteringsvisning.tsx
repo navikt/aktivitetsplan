@@ -1,10 +1,11 @@
 import { Alert, BodyLong, BodyShort, Heading, ReadMore } from '@navikt/ds-react';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 
-import { STATUS } from '../../../../../api/utils';
+import { Status } from '../../../../../createGenericSlice';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
+import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
 import { formaterDatoManed } from '../../../../../utils/dateUtils';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
@@ -36,7 +37,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     const arenaAktivitetFhoLestStatus = useSelector(selectArenaAktivitetFhoLestStatus);
     const aktivitetFhoLestStatus = useSelector(selectAktivitetFhoLestStatus);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
 
@@ -48,9 +49,9 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const onMarkerSomLest = () => {
         if (erArenaAktivitet) {
-            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet) as unknown as AnyAction);
+            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet));
         } else {
-            dispatch(markerForhaandsorienteringSomLest(aktivitet) as unknown as AnyAction);
+            dispatch(markerForhaandsorienteringSomLest(aktivitet));
         }
         loggForhaandsorienteringLest(aktivitet.type, true);
     };
@@ -60,8 +61,8 @@ const Forhaandsorienteringsvisning = (props: Props) => {
         setErEkspandert(false);
     };
 
-    const lasterDataArena = arenaAktivitetFhoLestStatus === STATUS.PENDING;
-    const lasterDataAktivitet = aktivitetFhoLestStatus === STATUS.PENDING;
+    const lasterDataArena = arenaAktivitetFhoLestStatus === Status.PENDING;
+    const lasterDataAktivitet = aktivitetFhoLestStatus === Status.PENDING;
     const lasterData = erArenaAktivitet ? lasterDataArena : lasterDataAktivitet;
 
     if (!erLest && kanMarkeresSomLest) {

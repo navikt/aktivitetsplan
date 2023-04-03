@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
@@ -28,7 +29,7 @@ interface DragItem<AktivitetsType> {
 export const DROP_TYPE = 'AktivitetsKort';
 
 function DropTargetKolonne({ status, children }: Props) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const erBruker = useSelector(selectErBruker, shallowEqual);
@@ -46,7 +47,7 @@ function DropTargetKolonne({ status, children }: Props) {
             } else if (status === AktivitetStatus.AVBRUTT) {
                 navigate(avbrytAktivitetRoute(aktivitet.id));
             } else {
-                dispatch(flyttAktivitet(aktivitet, status) as unknown as AnyAction);
+                dispatch(flyttAktivitet(aktivitet, status));
             }
         },
         collect: (monitor) => ({

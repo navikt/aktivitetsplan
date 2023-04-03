@@ -1,11 +1,12 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
-import { STATUS } from '../../../api/utils';
+import { Status } from '../../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
@@ -25,12 +26,12 @@ const AvbrytAktivitet = () => {
     const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
-        dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst) as unknown as AnyAction);
+        dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst));
 
-    const lagrer = aktivitetListeStatus !== STATUS.OK;
+    const lagrer = aktivitetListeStatus !== Status.OK;
 
     const begrunnelse = valgtAktivitet ? (
         <BegrunnelseForm
@@ -55,8 +56,7 @@ const AvbrytAktivitet = () => {
     ) : null;
 
     const maaBegrunnes =
-        valgtAktivitet &&
-        trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.AVBRUTT, valgtAktivitet.type);
+        valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.AVBRUTT, valgtAktivitet.type);
 
     return (
         <Modal contentLabel="avbryt-aktivitet">

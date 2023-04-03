@@ -1,5 +1,6 @@
 import * as API from '../../api/malverkAPI';
-import { STATUS, doThenDispatch } from '../../api/utils';
+import { doThenDispatch } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 
 // Actions
 export const HENT_MALVERK_MED_TYPE_OK = 'malverk/hent_med_type/OK';
@@ -15,7 +16,7 @@ export const SLETT_VALGT_MALVERK = 'malverk/slett_valgt_malverk';
 
 const initialState = {
     data: [],
-    status: STATUS.NOT_STARTED,
+    status: Status.NOT_STARTED,
     valgtMalverk: {},
 };
 
@@ -28,21 +29,21 @@ export default function reducer(state = initialState, action) {
         case HENT_MALVERK_MED_TYPE_OK:
             return {
                 ...state,
-                status: STATUS.OK,
+                status: Status.OK,
                 data,
             };
         case HENT_MALVERK_LISTE_FEILET:
         case HENT_MALVERK_MED_TYPE_FEILET:
             return {
                 ...state,
-                status: STATUS.ERROR,
+                status: Status.ERROR,
                 feil: data,
             };
         case HENT_MALVERK_LISTE_PENDING:
         case HENT_MALVERK_MED_TYPE_PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING,
+                status: state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING,
             };
         case SETT_VALGT_MALVERK:
         case SLETT_VALGT_MALVERK:

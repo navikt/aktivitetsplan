@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { AnyAction } from 'redux';
 
+import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
@@ -27,7 +27,7 @@ export function widowEvent(update: UpdateTypes) {
 }
 
 export function UpdateEventHandler() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEventListener<UpdateEventType>(eventName, (event) => {
         const updateType = event.detail.uppdate;
@@ -39,11 +39,11 @@ export function UpdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return dispatch(hentAktiviteter() as unknown as AnyAction);
+                return dispatch(hentAktiviteter());
             case UpdateTypes.Dialog:
-                return dispatch(hentDialog() as unknown as AnyAction);
+                return dispatch(hentDialog());
             case UpdateTypes.Oppfolging:
-                return dispatch(hentOppfolging() as unknown as AnyAction);
+                return dispatch(hentOppfolging());
         }
     });
 

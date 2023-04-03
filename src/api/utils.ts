@@ -1,13 +1,6 @@
 import { hentFnrFraUrl } from '../utils/fnr-util';
 
 /* eslint-env browser */
-export const STATUS = {
-    NOT_STARTED: 'NOT_STARTED',
-    PENDING: 'PENDING',
-    OK: 'OK',
-    RELOADING: 'RELOADING',
-    ERROR: 'ERROR',
-} as const;
 
 const DEFAULT_CONFIG = {
     credentials: 'same-origin',

@@ -1,5 +1,6 @@
 import * as Api from '../../api/dialogAPI';
-import { STATUS, doThenDispatch } from '../../api/utils';
+import { doThenDispatch } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 // Actions
@@ -14,7 +15,7 @@ export const SEND_FORHANDSORIENTERING_FEILET = 'dialog/forhandsorientering/fail'
 export const SEND_FORHANDSORIENTERING = 'dialog/forhandsorientering';
 
 const initalState = {
-    status: STATUS.NOT_STARTED,
+    status: Status.NOT_STARTED,
     data: [],
     esklaringsFilter: false,
     sistOppdatert: new Date().toISOString(),
@@ -29,7 +30,7 @@ function nyStateMedOppdatertDialog(state, dialog) {
     } else {
         nyData.unshift(dialog); // prepend
     }
-    return { ...state, status: STATUS.OK, data: nyData };
+    return { ...state, status: Status.OK, data: nyData };
 }
 
 // Reducer
@@ -39,7 +40,7 @@ export default function reducer(state = initalState, action) {
         case HENTET:
             return {
                 ...state,
-                status: STATUS.OK,
+                status: Status.OK,
                 sistOppdatert: new Date().toISOString(),
                 data,
             };
@@ -50,7 +51,7 @@ export default function reducer(state = initalState, action) {
             };
         case HENTING_FEILET:
         case SEND_FORHANDSORIENTERING_FEILET:
-            return { ...state, status: STATUS.ERROR, feil: data };
+            return { ...state, status: Status.ERROR, feil: data };
         case SEND_FORHANDSORIENTERING_OK:
             widowEvent(UpdateTypes.Dialog);
             return nyStateMedOppdatertDialog(state, data);

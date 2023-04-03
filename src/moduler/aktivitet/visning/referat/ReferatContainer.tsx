@@ -1,12 +1,13 @@
 import { isAfter, parseISO } from 'date-fns';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 
-import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
+import { Status } from '../../../../createGenericSlice';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
@@ -21,10 +22,10 @@ interface Props {
 const ReferatContainer = (props: Props) => {
     const { aktivitet } = props;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [isOppdaterReferat, setOppdaterReferat] = useState(false);
 
-    const publiserer = useSelector(selectAktivitetStatus) === (STATUS.PENDING || STATUS.RELOADING);
+    const publiserer = useSelector(selectAktivitetStatus) === (Status.PENDING || Status.RELOADING);
     const erVeileder = useErVeileder();
     const underOppfolging = useSelector(selectUnderOppfolging);
 
@@ -47,12 +48,12 @@ const ReferatContainer = (props: Props) => {
         return <OppdaterReferatForm aktivitet={aktivitet} onFerdig={() => setOppdaterReferat(false)} />;
     }
 
-    if (!!referat) {
+    if (referat) {
         return (
             <ReferatVisning
                 referat={referat}
                 erAktivAktivitet={erAktivAktivitet}
-                dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet) as unknown as AnyAction)}
+                dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
                 publiserer={publiserer}
                 erReferatPublisert={erReferatPublisert}
                 startOppdaterReferat={() => setOppdaterReferat(true)}

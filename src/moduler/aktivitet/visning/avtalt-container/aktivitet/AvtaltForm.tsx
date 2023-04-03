@@ -2,12 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Checkbox, Detail, HelpText } from '@navikt/ds-react';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 import { z } from 'zod';
 
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
@@ -57,12 +58,12 @@ const AvtaltForm = (props: Props) => {
 
     const [showForm, setShowForm] = useState(false);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const sendMetrikker = useSendAvtaltMetrikker();
     const avhengigheter = useSelector(selectNivaa4Status);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) =>
-        dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering) as unknown as AnyAction);
+        dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering));
 
     const onSubmitHandler = (
         forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues

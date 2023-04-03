@@ -9,7 +9,7 @@ import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
 import dialogReducer from './moduler/dialog/dialog-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
-import identitetReducer from './moduler/identitet/identitet-reducer';
+import identitetReducer from './moduler/identitet/identitet-slice';
 import informasjonReducer from './moduler/informasjon/informasjon-reducer';
 import lestReducer from './moduler/lest/lest-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';

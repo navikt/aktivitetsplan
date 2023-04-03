@@ -1,14 +1,14 @@
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 import * as AT from './aktivitet-action-types';
 
 const initalState = {
     data: [],
-    status: STATUS.NOT_STARTED,
-    fhoLestStatus: STATUS.NOT_STARTED,
-    fhoBekreftStatus: STATUS.NOT_STARTED,
+    status: Status.NOT_STARTED,
+    fhoLestStatus: Status.NOT_STARTED,
+    fhoBekreftStatus: Status.NOT_STARTED,
     forrigeAktiveAktivitetId: undefined,
-    cvSvarStatus: STATUS.NOT_STARTED,
+    cvSvarStatus: Status.NOT_STARTED,
 };
 
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
@@ -26,56 +26,56 @@ export default function reducer(state = initalState, action) {
         case AT.OPPDATER_REFERAT_OK:
         case AT.PUBLISER_REFERAT_OK:
             widowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, data);
+            return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, data);
         case AT.HENTET:
-            return { ...state, status: STATUS.OK, data: data.aktiviteter };
+            return { ...state, status: Status.OK, data: data.aktiviteter };
         case AT.HENT_AKTIVITET_OK:
             return {
                 ...state,
-                status: STATUS.OK,
+                status: Status.OK,
                 data: state.data.filter((aktivitet) => aktivitet.id !== data.id).concat(data),
             };
         case AT.OPPRETTET:
             widowEvent(UpdateTypes.Aktivitet);
-            return { ...state, status: STATUS.OK, data: [...state.data, data] };
+            return { ...state, status: Status.OK, data: [...state.data, data] };
         case AT.FLYTTER:
-            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.RELOADING }, data.aktivitet, {
+            return nyStateMedOppdatertAktivitet({ ...state, status: Status.RELOADING }, data.aktivitet, {
                 nesteStatus: data.status,
             });
         case AT.OPPDATER:
         case AT.OPPRETT:
         case AT.OPPDATER_REFERAT:
         case AT.PUBLISER_REFERAT:
-            return { ...state, status: STATUS.RELOADING };
+            return { ...state, status: Status.RELOADING };
         case AT.FLYTT_FAIL:
-            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.ERROR, feil: data }, data.aktivitet);
+            return nyStateMedOppdatertAktivitet({ ...state, status: Status.ERROR, feil: data }, data.aktivitet);
         case AT.HENTING_FEILET:
         case AT.HENT_AKTIVITET_FEILET:
         case AT.OPPDATER_FEILET:
         case AT.OPPRETT_FEILET:
-            return { ...state, status: STATUS.ERROR, feil: data };
+            return { ...state, status: Status.ERROR, feil: data };
         case AT.SETT_FORRIGE_AKTIVE_AKTIVITET_ID:
             return { ...state, forrigeAktiveAktivitetId: action.id };
         case AT.FHO_LEST:
-            return { ...state, fhoLestStatus: STATUS.RELOADING };
+            return { ...state, fhoLestStatus: Status.RELOADING };
         case AT.FHO_LEST_OK:
             widowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: STATUS.OK }, data);
+            return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: Status.OK }, data);
         case AT.FHO_LEST_FEILET:
-            return { ...state, fhoLestStatus: STATUS.ERROR, feil: data };
+            return { ...state, fhoLestStatus: Status.ERROR, feil: data };
         case AT.FHO_BEKREFT:
-            return { ...state, fhoBekreftStatus: STATUS.RELOADING };
+            return { ...state, fhoBekreftStatus: Status.RELOADING };
         case AT.FHO_BEKREFT_OK:
             widowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, fhoBekreftStatus: STATUS.OK }, data);
+            return nyStateMedOppdatertAktivitet({ ...state, fhoBekreftStatus: Status.OK }, data);
         case AT.FHO_BEKREFT_FEILET:
-            return { ...state, fhoBekreftStatus: STATUS.ERROR, feil: data };
+            return { ...state, fhoBekreftStatus: Status.ERROR, feil: data };
         case AT.OPPDATER_CV_SVAR_OK:
-            return nyStateMedOppdatertAktivitet({ ...state, cvSvarStatus: STATUS.OK }, data);
+            return nyStateMedOppdatertAktivitet({ ...state, cvSvarStatus: Status.OK }, data);
         case AT.OPPDATER_CV_SVAR_FEILET:
-            return { ...state, cvSvarStatus: STATUS.ERROR, feil: data };
+            return { ...state, cvSvarStatus: Status.ERROR, feil: data };
         case AT.OPPDATER_CV_SVAR_PENDING:
-            return { ...state, cvSvarStatus: STATUS.PENDING };
+            return { ...state, cvSvarStatus: Status.PENDING };
         default:
             return state;
     }

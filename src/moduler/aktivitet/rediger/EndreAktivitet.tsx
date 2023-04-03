@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
-import { STATUS } from '../../../api/utils';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -13,6 +12,7 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
+import { Status } from '../../../createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import {
     EgenAktivitet,
@@ -24,8 +24,8 @@ import {
     StillingAktivitet,
     VeilarbAktivitet,
 } from '../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
-import { useReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
@@ -100,9 +100,8 @@ function getAktivitetsFormComponent<T extends VeilarbAktivitet>(
 }
 
 function EndreAktivitet() {
-    const dispatch = useReduxDispatch();
-    const doOppdaterAktivitet = (aktivitet: AlleAktiviteter) =>
-        dispatch(oppdaterAktivitet(aktivitet) as unknown as AnyAction);
+    const dispatch = useAppDispatch();
+    const doOppdaterAktivitet = (aktivitet: AlleAktiviteter) => dispatch(oppdaterAktivitet(aktivitet));
 
     const isDirty = useRef(false);
     useConfirmOnBeforeUnload(isDirty);
@@ -110,9 +109,9 @@ function EndreAktivitet() {
 
     const { id: aktivitetId } = useParams<{ id: string }>();
     const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
-    const avhengigheter: Avhengighet[] = [valgtAktivitet ? STATUS.OK : STATUS.PENDING];
+    const avhengigheter: Avhengighet[] = [valgtAktivitet ? Status.OK : Status.PENDING];
     const aktivitetFeilmeldinger = useSelector((state) => selectAktivitetFeilmeldinger(state));
-    const lagrer = useSelector((state) => selectAktivitetStatus(state)) !== STATUS.OK;
+    const lagrer = useSelector((state) => selectAktivitetStatus(state)) !== Status.OK;
 
     function oppdater(aktivitet: AlleAktiviteter) {
         if (!valgtAktivitet) return;

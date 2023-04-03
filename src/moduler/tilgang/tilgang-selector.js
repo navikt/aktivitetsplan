@@ -1,4 +1,4 @@
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 
 function selectTilgangSlice(state) {
     return state.data.tilgang;
@@ -13,7 +13,7 @@ export function selectNivaa4(state) {
 }
 
 export function selectNivaa4LastetOk(state) {
-    return selectNivaa4Status(state) === STATUS.OK;
+    return selectNivaa4Status(state) === Status.OK;
 }
 
 export function selectNivaa4Status(state) {
@@ -21,6 +21,6 @@ export function selectNivaa4Status(state) {
 }
 
 export function selectNivaa4Feilmeldinger(state) {
-    const feilmeldinger = selectTilgangSlice(state).status === STATUS.ERROR && selectTilgangSlice(state).feil;
+    const feilmeldinger = selectTilgangSlice(state).status === Status.ERROR && selectTilgangSlice(state).feil;
     return feilmeldinger ? feilmeldinger : [];
 }

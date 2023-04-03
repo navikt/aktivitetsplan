@@ -1,5 +1,6 @@
 import * as Api from '../../api/oppfolgingAPI';
-import { STATUS, doThenDispatch } from '../../api/utils';
+import { doThenDispatch } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { Mal } from '../../datatypes/oppfolgingTypes';
 import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectMalListe } from './aktivitetsmal-selector';
@@ -19,26 +20,26 @@ interface State {
     status: string;
 }
 
-const initialState = { data: {}, status: STATUS.NOT_STARTED };
+const initialState = { data: {}, status: Status.NOT_STARTED };
 
 function reducer(state: State = initialState, action: Action) {
     switch (action.type) {
         case PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING,
+                status: state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING,
             };
         case OK:
             return {
                 ...state,
                 data: { ...state.data, ...action.data },
-                status: STATUS.OK,
+                status: Status.OK,
             };
         case FEILET:
             return {
                 ...state,
                 feil: action.data,
-                status: STATUS.ERROR,
+                status: Status.ERROR,
             };
         case LES:
             return {

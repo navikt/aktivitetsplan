@@ -6,8 +6,8 @@ import { AnyAction } from 'redux';
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import ErrorBoundry from '../../../felles-komponenter/ErrorBoundry';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
-import { useReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { aktivitetRoute } from '../../../routes';
@@ -26,7 +26,7 @@ import { AktivitetFormValues } from '../rediger/EndreAktivitet';
 
 const NyAktivitetForm = () => {
     const navigate = useNavigate();
-    const dispatch = useReduxDispatch();
+    const dispatch = useAppDispatch();
 
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
     const underOppfolging = useSelector(selectErUnderOppfolging);
@@ -34,8 +34,7 @@ const NyAktivitetForm = () => {
     const dirtyRef = useRef(false);
     useConfirmOnBeforeUnload(dirtyRef);
 
-    const onLagreNyAktivitet = (aktivitet: VeilarbAktivitet) =>
-        dispatch(lagNyAktivitet(aktivitet) as unknown as AnyAction);
+    const onLagreNyAktivitet = (aktivitet: VeilarbAktivitet) => dispatch(lagNyAktivitet(aktivitet)); // TODO thunkfiy action
 
     const onSubmitFactory = (aktivitetsType: VeilarbAktivitetType) => {
         return (aktivitet: AktivitetFormValues) => {
@@ -45,7 +44,9 @@ const NyAktivitetForm = () => {
                 type: aktivitetsType,
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
-            return onLagreNyAktivitet(nyAktivitet).then((action: any) => navigate(aktivitetRoute(action.data.id)));
+            return onLagreNyAktivitet(nyAktivitet).then((action: AnyAction) =>
+                navigate(aktivitetRoute(action.data.id))
+            );
         };
     };
 

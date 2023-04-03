@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 
-import { STATUS } from '../../../api/utils';
+import { Status } from '../../../createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
 import { getAktivitetType } from '../../../utils/textMappers';
@@ -34,7 +35,7 @@ export const prefixAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitets
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
     const { id, type } = aktivitet;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const lest = useSelector(selectLestAktivitetsplan, shallowEqual);
     const lestStatus = useSelector(selectLestStatus, shallowEqual);
@@ -49,7 +50,7 @@ const Aktivitetskort = (props: Props) => {
     const me = useSelector(selectIdentitetData, shallowEqual);
 
     const harEndringerIAktivitet =
-        lestStatus === STATUS.OK &&
+        lestStatus === Status.OK &&
         isVeilarbAktivitet(aktivitet) &&
         erNyEndringIAktivitet(aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;

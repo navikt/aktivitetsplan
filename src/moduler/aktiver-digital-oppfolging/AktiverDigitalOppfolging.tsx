@@ -1,9 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
+import { useSelector } from 'react-redux';
 
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { settDigital } from '../oppfolging-status/oppfolging-reducer';
 import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import AktiverDigitalOppfolgingVarsel from './AktiverDigitalOppfolgingVarsel';
@@ -12,10 +12,10 @@ const AktiverDigitalOppfolging = () => {
     const oppfolgingStatus = useSelector(selectOppfolgingStatus);
     const reservertKrr = useSelector(selectReservasjonKRR);
 
-    const settOppfolgingFeilet = oppfolgingStatus === STATUS.ERROR;
-    const lasterOppfolging = oppfolgingStatus === STATUS.PENDING || oppfolgingStatus === STATUS.RELOADING;
+    const settOppfolgingFeilet = oppfolgingStatus === Status.ERROR;
+    const lasterOppfolging = oppfolgingStatus === Status.PENDING || oppfolgingStatus === Status.RELOADING;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <div className="flex items-center flex-col">
@@ -23,7 +23,7 @@ const AktiverDigitalOppfolging = () => {
             <HiddenIfHovedknapp
                 disabled={lasterOppfolging}
                 hidden={reservertKrr}
-                onClick={() => dispatch(settDigital() as unknown as AnyAction)}
+                onClick={() => dispatch(settDigital())}
             >
                 Endre til digital oppfølging
             </HiddenIfHovedknapp>

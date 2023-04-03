@@ -1,8 +1,8 @@
 import React, { ReactNode, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { AnyAction } from 'redux';
 
 import { hentFeature } from './felles-komponenter/feature/feature-reducer';
+import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
 
 function getEnhetFromURL() {
     const queryString = window.location.search;
@@ -17,10 +17,10 @@ function getEnhetFromURL() {
 }
 
 const InitiellDataLast = ({ children }: { children: ReactNode }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentFeature(getEnhetFromURL()) as unknown as AnyAction);
+        dispatch(hentFeature(getEnhetFromURL()));
     }, []);
 
     return <>{children}</>;

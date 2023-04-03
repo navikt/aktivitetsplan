@@ -1,11 +1,11 @@
 import * as Api from '../../../api/aktivitetAPI';
-import { STATUS, doThenDispatch } from '../../../api/utils';
+import { doThenDispatch } from '../../../api/utils';
+import { Status } from '../../../createGenericSlice';
 import {
     FHO_BEKREFT_OK,
     FHO_LEST_OK,
     FLYTT_OK,
     OPPDATER_OK,
-    OPPDATER_REFERAT,
     OPPDATER_REFERAT_FEILET,
     OPPDATER_REFERAT_OK,
     PUBLISER_REFERAT_FEILET,
@@ -20,7 +20,7 @@ export const PENDING = 'versjoner/PENDING';
 export const FJERN = 'versjoner/fjern';
 
 const initalState = {
-    status: STATUS.NOT_STARTED,
+    status: Status.NOT_STARTED,
     data: [],
 };
 
@@ -30,24 +30,24 @@ export default function reducer(state = initalState, action) {
         case PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING,
+                status: state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING,
             };
         case OPPDATER_REFERAT_FEILET:
         case PUBLISER_REFERAT_FEILET:
         case FEILET:
-            return { ...state, status: STATUS.ERROR, feil: action.data };
+            return { ...state, status: Status.ERROR, feil: action.data };
         case OPPDATER_OK:
         case OPPDATER_REFERAT_OK:
         case PUBLISER_REFERAT_OK:
         case FHO_LEST_OK:
         case FHO_BEKREFT_OK:
         case FLYTT_OK:
-            if (state.status === STATUS.NOT_STARTED) {
+            if (state.status === Status.NOT_STARTED) {
                 return state;
             }
             return { ...state, data: [action.data, ...state.data] };
         case OK:
-            return { ...state, status: STATUS.OK, data: action.data };
+            return { ...state, status: Status.OK, data: action.data };
         case FJERN:
             return initalState;
         default:

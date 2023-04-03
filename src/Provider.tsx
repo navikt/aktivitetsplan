@@ -4,9 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import InitiellDataLast from './InitiellDataLast';
-import createStore from './store';
-
-const store = createStore();
+import store from './store';
 
 interface Props {
     children: React.ReactNode;

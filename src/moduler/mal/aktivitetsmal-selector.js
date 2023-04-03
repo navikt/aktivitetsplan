@@ -1,4 +1,4 @@
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectMalSlice } from './aktivitetsmal-reducer';
 
@@ -24,7 +24,7 @@ export function selectMalListeFeilmeldinger(state) {
         malListe: selectMalListeSlice(state),
     };
     return Object.keys(malSlice)
-        .filter((key) => malSlice[key].status === STATUS.ERROR)
+        .filter((key) => malSlice[key].status === Status.ERROR)
         .map((key) => malSlice[key].feil)
         .filter((x) => x);
 }

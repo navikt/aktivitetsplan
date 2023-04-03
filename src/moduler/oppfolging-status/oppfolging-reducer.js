@@ -1,5 +1,6 @@
 import * as Api from '../../api/oppfolgingAPI';
-import { STATUS, doThenDispatch } from '../../api/utils';
+import { doThenDispatch } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 // Actions
@@ -12,7 +13,7 @@ export const SETT_DIGITAL_FEILET = 'oppfolging/digital/FEILET';
 export const SETT_DIGITAL_PENDING = 'oppfolging/digital/PENDING';
 
 const initalState = {
-    status: STATUS.NOT_STARTED,
+    status: Status.NOT_STARTED,
     data: {},
 };
 
@@ -23,27 +24,27 @@ export default function reducer(state = initalState, action) {
             widowEvent(UpdateTypes.Oppfolging);
             return {
                 ...state,
-                status: STATUS.OK,
+                status: Status.OK,
                 data: action.data,
             };
         case OK:
             return {
                 ...state,
-                status: STATUS.OK,
+                status: Status.OK,
                 data: action.data,
             };
         case FEILET:
         case SETT_DIGITAL_FEILET:
             return {
                 ...state,
-                status: STATUS.ERROR,
+                status: Status.ERROR,
                 feil: action.data,
             };
         case PENDING:
         case SETT_DIGITAL_PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING,
+                status: state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING,
             };
         default:
             return state;

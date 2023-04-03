@@ -1,4 +1,5 @@
-import { STATUS, doThenDispatch } from '../../api/utils';
+import { doThenDispatch } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 
 function getActions(navn) {
     const navnUppercase = navn.toUpperCase();
@@ -10,7 +11,7 @@ function getActions(navn) {
 }
 
 export function createActionsAndReducer(navn, statePath = navn, initialData = {}) {
-    const initialState = { data: initialData, status: STATUS.NOT_STARTED };
+    const initialState = { data: initialData, status: Status.NOT_STARTED };
     const actionTypes = getActions(navn);
     const selectSlice = (state) => state.data[statePath];
     const selectStatus = (state) => selectSlice(state).status;
@@ -23,19 +24,19 @@ export function createActionsAndReducer(navn, statePath = navn, initialData = {}
                 case actionTypes.PENDING:
                     return {
                         ...state,
-                        status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING,
+                        status: state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING,
                     };
                 case actionTypes.OK:
                     return {
                         ...state,
                         data: action.data || initialData,
-                        status: STATUS.OK,
+                        status: Status.OK,
                     };
                 case actionTypes.FEILET:
                     return {
                         ...state,
                         feil: action.data,
-                        status: STATUS.ERROR,
+                        status: Status.ERROR,
                     };
                 default:
                     return state;
@@ -49,7 +50,7 @@ export function createActionsAndReducer(navn, statePath = navn, initialData = {}
         action: actionFunction,
         cashedAction: (fn) => (dispatch, getState) => {
             const status = selectStatus(getState());
-            if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
+            if (status === Status.NOT_STARTED || status === Status.ERROR) {
                 promise = actionFunction(fn)(dispatch);
                 return promise;
             }

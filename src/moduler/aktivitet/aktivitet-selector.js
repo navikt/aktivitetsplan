@@ -1,4 +1,4 @@
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
 
 export function selectAktiviteterSlice(state) {
     return state.data.aktiviteter;
@@ -13,15 +13,15 @@ export function selectAktivitetStatus(state) {
 }
 
 export function selectHarTilgangTilAktiviteter(state) {
-    return selectAktivitetStatus(state) === STATUS.OK;
+    return selectAktivitetStatus(state) === Status.OK;
 }
 
 export function selectLasterAktivitetData(state) {
-    return selectAktivitetStatus(state) !== STATUS.OK;
+    return selectAktivitetStatus(state) !== Status.OK;
 }
 
 export const selectAktivitetFeilmeldinger = (state) => {
-    const feilMeldingsdata = selectAktivitetStatus(state) === STATUS.ERROR && selectAktiviteterSlice(state).feil;
+    const feilMeldingsdata = selectAktivitetStatus(state) === Status.ERROR && selectAktiviteterSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };
 

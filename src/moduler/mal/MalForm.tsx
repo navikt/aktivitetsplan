@@ -4,7 +4,7 @@ import React, { MutableRefObject, useLayoutEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { oppdaterMal } from './aktivitetsmal-reducer';
 import { hentMalListe } from './malliste-reducer';
 
@@ -22,7 +22,7 @@ interface Props {
 const MalForm = (props: Props) => {
     const { mal, dirtyRef, handleComplete } = props;
 
-    const dispatch = useReduxDispatch();
+    const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLTextAreaElement | null>(null);
     useLayoutEffect(() => {
@@ -35,7 +35,7 @@ const MalForm = (props: Props) => {
 
     const onSubmit = (data: { mal: string }) => {
         if (data.mal !== props.mal) {
-            dispatch(oppdaterMal({ mal: data.mal }))
+            dispatch(oppdaterMal({ mal: data.mal })) // TODO thunkify action
                 .then(() => dispatch(hentMalListe()))
                 .then(handleComplete());
         } else {
