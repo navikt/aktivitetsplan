@@ -12,7 +12,7 @@ import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
-import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
+import { useRoutes } from '../../../routes';
 import { erDroppbar } from '../tavleUtils';
 
 interface Props {
@@ -34,6 +34,7 @@ function DropTargetKolonne({ status, children }: Props) {
     const erBruker = useSelector(selectErBruker, shallowEqual);
     const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
+    const { avbrytAktivitetRoute, fullforAktivitetRoute } = useRoutes();
 
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,

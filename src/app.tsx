@@ -1,5 +1,5 @@
 import PT from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
@@ -28,6 +28,7 @@ const Router = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
     const fnr = useFnr();
+
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
@@ -48,7 +49,7 @@ function App() {
                                 </Route>
                             </Route>
                         </Route>
-                        <Route path="*" element={<Navigate to={`/${fnr ?? ''}`} />} />
+                        {/*<Route path="*" element={<Navigate to={`/${fnr ?? ''}`} />} />*/}
                     </Routes>
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>

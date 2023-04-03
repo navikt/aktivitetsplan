@@ -6,6 +6,7 @@ import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../../dat
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
+import { useRoutes } from '../../../routes';
 import { aktivitetStatusMap, getAktivitetType } from '../../../utils/textMappers';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
@@ -46,6 +47,7 @@ const AktivitetvisningModal = (props: Props) => {
     const { aktivitet, avhengigheter, children } = props;
     const dirty = useContext(DirtyContext);
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const selectFeilMeldinger = (a: AlleAktiviteter) =>
         isArenaAktivitet(a) ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
@@ -74,7 +76,7 @@ const AktivitetvisningModal = (props: Props) => {
                     window.alert('Det er en viktig beskjed om ansvaret ditt som du må lese.');
                     return;
                 }
-                navigate('/');
+                navigate(hovedsideRoute());
             }}
             feilmeldinger={alleFeil}
         >

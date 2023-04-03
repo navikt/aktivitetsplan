@@ -1,7 +1,9 @@
 import React, { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import hovedside from '../../hovedside/Hovedside';
 import { useErVeileder } from '../../Provider';
+import { useRoutes } from '../../routes';
 import { byttTilDialogFlate, getDialogLenke } from './DialogFlateUtils';
 
 interface Props {
@@ -17,10 +19,11 @@ const LenkeTilDialog = (props: Props) => {
 
     const navigate = useNavigate();
     const erVeileder = useErVeileder();
+    const { hovedsideRoute } = useRoutes();
 
     const internalOnClick = (event: MouseEvent) => {
         if (erVeileder) {
-            navigate('/', { replace: true });
+            navigate(hovedsideRoute(), { replace: true });
             byttTilDialogFlate(event, aktivitetId, dialogId);
         }
     };

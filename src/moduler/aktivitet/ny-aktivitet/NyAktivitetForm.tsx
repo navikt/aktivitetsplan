@@ -10,7 +10,7 @@ import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/h
 import { useReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
-import { aktivitetRoute } from '../../../routes';
+import { useRoutes } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
@@ -27,6 +27,7 @@ import { AktivitetFormValues } from '../rediger/EndreAktivitet';
 const NyAktivitetForm = () => {
     const navigate = useNavigate();
     const dispatch = useReduxDispatch();
+    const { aktivitetRoute, hovedsideRoute, nyAktivitetRoute } = useRoutes();
 
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
     const underOppfolging = useSelector(selectErUnderOppfolging);
@@ -52,7 +53,7 @@ const NyAktivitetForm = () => {
     function onRequestClose() {
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
-            navigate('/');
+            navigate(hovedsideRoute());
         }
     }
 
@@ -60,7 +61,7 @@ const NyAktivitetForm = () => {
         e.preventDefault();
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
-            navigate('/aktivitet/ny');
+            navigate(nyAktivitetRoute());
         }
     };
 

@@ -30,7 +30,7 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
-import { aktivitetRoute } from '../../../routes';
+import { useRoutes } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
@@ -114,6 +114,8 @@ function EndreAktivitet() {
     const aktivitetFeilmeldinger = useSelector((state) => selectAktivitetFeilmeldinger(state));
     const lagrer = useSelector((state) => selectAktivitetStatus(state)) !== STATUS.OK;
 
+    const { aktivitetRoute, hovedsideRoute } = useRoutes();
+
     function oppdater(aktivitet: AlleAktiviteter) {
         if (!valgtAktivitet) return;
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
@@ -123,7 +125,7 @@ function EndreAktivitet() {
 
     const onReqClose = () => {
         if (!isDirty.current || window.confirm(CONFIRM)) {
-            navigate('/');
+            navigate(hovedsideRoute());
         }
     };
 
