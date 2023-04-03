@@ -42,6 +42,7 @@ export class DabAktivitetsplan extends HTMLElement {
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        console.log('attributeChangedCallback', { name, oldValue, newValue });
         if (name === 'data-fnr' && this.setFnr) {
             this.setFnr(newValue);
         }

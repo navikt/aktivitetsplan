@@ -27,6 +27,10 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
         if (setFnrRef) setFnrRef(setFnr);
     }, []);
 
+    useEffect(() => {
+        console.log('Fnr', fnr);
+    }, [fnr]);
+
     return (
         <FnrContext.Provider value={fnr}>
             <ErVeilederContext.Provider value={fnr !== undefined}>
