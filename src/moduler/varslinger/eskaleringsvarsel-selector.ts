@@ -6,4 +6,4 @@ export const selectEskaleringsvarselData = (state: RootState) => selectEskalerin
 
 export const selectEskaleringsvarselStatus = (state: RootState) => selectEskaleringsvarselSlice(state).status;
 
-export const selectErEskalert = (state: RootState): boolean => !!selectEskaleringsvarselData(state).id;
+export const selectErEskalert = (state: RootState): boolean => !!selectEskaleringsvarselData(state)?.id;
