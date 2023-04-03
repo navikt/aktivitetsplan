@@ -14,7 +14,7 @@ import AktivitetvisningContainer from './moduler/aktivitet/visning/Aktivitetvisn
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
-import Provider from './Provider';
+import { useFnr } from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 
@@ -40,34 +40,33 @@ const Router = ({ fnr, children }: { fnr?: string; children: React.ReactNode }) 
     return <BrowserRouter basename={basename}>{children}</BrowserRouter>;
 };
 
-function App({ fnr }: { fnr?: string }) {
+function App() {
+    const fnr = useFnr();
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
-            <Provider erVeileder={fnr !== undefined} key={fnr}>
-                <div className="aktivitetsplan-wrapper w-full">
-                    <Router fnr={fnr}>
-                        <Routes>
-                            <Route path="/utskrift" element={<AktivitetsplanPrint />} />
-                            <Route path="/" element={<Hovedside />}>
-                                <Route path={'/mal'} element={<Aktivitetsmal />} />
-                                <Route path={'/informasjon'} element={<InformasjonModal />} />
-                                <Route path={'/aktivitet'}>
-                                    <Route path={`ny`} element={<LeggTilForm />} />
-                                    <Route path={`ny/*`} element={<NyAktivitetForm />} />
-                                    <Route path={`vis/:id`} element={<AktivitetvisningContainer />} />
-                                    <Route path={`endre/:id`} element={<EndreAktivitet />} />
-                                    <Route path={`avbryt/:id`} element={<AvbrytAktivitet />} />
-                                    <Route path={`fullfor/:id`} element={<FullforAktivitet />} />
-                                </Route>
+            <div className="aktivitetsplan-wrapper w-full">
+                <Router fnr={fnr}>
+                    <Routes>
+                        <Route path="/utskrift" element={<AktivitetsplanPrint />} />
+                        <Route path="/" element={<Hovedside />}>
+                            <Route path={'/mal'} element={<Aktivitetsmal />} />
+                            <Route path={'/informasjon'} element={<InformasjonModal />} />
+                            <Route path={'/aktivitet'}>
+                                <Route path={`ny`} element={<LeggTilForm />} />
+                                <Route path={`ny/*`} element={<NyAktivitetForm />} />
+                                <Route path={`vis/:id`} element={<AktivitetvisningContainer />} />
+                                <Route path={`endre/:id`} element={<EndreAktivitet />} />
+                                <Route path={`avbryt/:id`} element={<AvbrytAktivitet />} />
+                                <Route path={`fullfor/:id`} element={<FullforAktivitet />} />
                             </Route>
-                        </Routes>
-                    </Router>
-                    <HiddenIf hidden={ER_INTERN_FLATE}>
-                        <Timeoutbox />
-                    </HiddenIf>
-                </div>
-                <UpdateEventHandler />
-            </Provider>
+                        </Route>
+                    </Routes>
+                </Router>
+                <HiddenIf hidden={ER_INTERN_FLATE}>
+                    <Timeoutbox />
+                </HiddenIf>
+            </div>
+            <UpdateEventHandler />
         </div>
     );
 }
