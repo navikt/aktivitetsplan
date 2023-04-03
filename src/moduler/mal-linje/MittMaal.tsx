@@ -14,6 +14,7 @@ import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innh
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import { useErVeileder } from '../../Provider';
+import { useRoutes } from '../../routes';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
@@ -53,8 +54,9 @@ function MalContent(props: MalContentProps) {
     const dispatch = useDispatch();
     const erVeileder = useErVeileder();
     const navigate = useNavigate();
+    const { malRoute } = useRoutes();
     const endreMal = () => {
-        navigate('/mal');
+        navigate(malRoute());
         loggMittMalKlikk(erVeileder);
         dispatch(lesMal());
     };

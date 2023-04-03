@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import { useErVeileder } from '../../../../Provider';
+import { useRoutes } from '../../../../routes';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
 
@@ -24,10 +25,11 @@ const SendEnMeldingKnapp = (props: Props) => {
         0;
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const veilederOnClick = (event: React.MouseEvent) => {
         if (erVeileder) {
-            navigate('/', { replace: true });
+            navigate(hovedsideRoute(), { replace: true });
             byttTilDialogFlate(event, aktivitet.id, dialog?.id);
         }
     };

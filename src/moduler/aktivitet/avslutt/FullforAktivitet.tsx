@@ -8,6 +8,7 @@ import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTy
 import { useReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
+import { useRoutes } from '../../../routes';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseForm from './BegrunnelseForm';
@@ -29,6 +30,7 @@ const FullforAktivitet = () => {
         dispatch(fullforAktivitet(aktivitet, begrunnelse));
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const begrunnelse = (
         <BegrunnelseForm
@@ -36,7 +38,7 @@ const FullforAktivitet = () => {
             beskrivelseLabel={beskrivelseTekst}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
-                navigate('/', { replace: true });
+                navigate(hovedsideRoute(), { replace: true });
                 if (!valgtAktivitet) return;
                 doAvsluttOppfolging(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
@@ -48,12 +50,12 @@ const FullforAktivitet = () => {
             headerTekst={headerTekst}
             onSubmit={() => {
                 valgtAktivitet && doAvsluttOppfolging(valgtAktivitet, null);
-                navigate('/', { replace: true });
+                navigate(hovedsideRoute(), { replace: true });
             }}
         />
     );
 
-    if (!valgtAktivitet) return <Navigate to={'/'} />;
+    if (!valgtAktivitet) return <Navigate to={hovedsideRoute()} />;
 
     return (
         <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">

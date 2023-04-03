@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { FeilmeldingType } from '../../moduler/feilmelding/FeilmeldingTypes';
+import { useRoutes } from '../../routes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
 import ModalHeader from './ModalHeader';
 
@@ -33,6 +34,7 @@ const Modal = (props: Props) => {
     } = props;
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const closeFuncOrDefault = () => {
         if (onRequestClose) {
@@ -40,7 +42,7 @@ const Modal = (props: Props) => {
             return;
         }
 
-        navigate('/');
+        navigate(hovedsideRoute());
     };
 
     return (
