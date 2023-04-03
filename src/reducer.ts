@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import featureReducer from './felles-komponenter/feature/feature-reducer';
-import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
+import authReducer from './felles-komponenter/timeoutbox/auth-slice';
 import dragAndDropReducer from './moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
@@ -11,14 +11,14 @@ import dialogReducer from './moduler/dialog/dialog-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import identitetReducer from './moduler/identitet/identitet-slice';
 import informasjonReducer from './moduler/informasjon/informasjon-reducer';
-import lestReducer from './moduler/lest/lest-reducer';
+import lestReducer from './moduler/lest/lest-slice';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
-import tilgangReducer from './moduler/tilgang/tilgang-reducer';
-import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarselReducer';
-import veilederReducer from './moduler/veileder/veilederReducer';
+import tilgangReducer from './moduler/tilgang/tilgang-slice';
+import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-slice';
+import veilederReducer from './moduler/veileder/veileder-slice';
 
 const combinedReducers = combineReducers({
     data: combineReducers({

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Status } from '../../../../createGenericSlice';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { selectVeilederStatus } from '../../../veileder/veilederSelector';
+import { selectVeilederStatus } from '../../../veileder/veileder-selector';
 import InnerSamtalereferatForm from './InnerSamtalereferatForm';
 
 interface Props {

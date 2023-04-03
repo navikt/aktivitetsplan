@@ -34,20 +34,20 @@ const createGenericSlice = <
         },
         extraReducers: (builder) => {
             builder.addMatcher(
-                (action) => action.type.endsWith('/pending'),
+                (action) => action.type.startsWith(name) && action.type.endsWith('/pending'),
                 (state) => {
                     state.status = state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
                 }
             );
             builder.addMatcher(
-                (action) => action.type.endsWith('/fulfilled'),
+                (action) => action.type.startsWith(name) && action.type.endsWith('/fulfilled'),
                 (state, action) => {
                     state.data = action.payload || initialState.data;
                     state.status = Status.OK;
                 }
             );
             builder.addMatcher(
-                (action) => action.type.endsWith('/rejected'),
+                (action) => action.type.startsWith(name) && action.type.endsWith('/rejected'),
                 (state, action) => {
                     state.feil = action.payload;
                     state.status = Status.ERROR;

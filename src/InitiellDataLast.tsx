@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect } from 'react';
-import { AnyAction } from 'redux';
 
 import { hentFeature } from './felles-komponenter/feature/feature-reducer';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';

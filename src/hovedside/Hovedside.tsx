@@ -9,7 +9,7 @@ import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import Maal from '../moduler/mal-linje/MittMaal';
 import OppfolgingStatus from '../moduler/oppfolging-status/OppfolgingStatus';
-import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselReducer';
+import { fetchEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-slice';
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
@@ -28,7 +28,7 @@ const Hovedside = () => {
 
     useEffect(() => {
         dispatch(hentDialog());
-        dispatch(hentEskaleringsvarsel());
+        dispatch(fetchEskaleringsvarsel());
     }, []);
 
     return (

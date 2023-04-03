@@ -86,7 +86,7 @@ export function handterFeil(dispatch, FEILET_TYPE) {
     };
 }
 
-export const getCookie = (name) => {
+export const getCookie = (name: string) => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
@@ -98,12 +98,12 @@ const defaultHeaders = {
     'Nav-Consumer-Id': 'aktivitetsplan',
 };
 
-export function fetchToJsonPlain(url, config = { headers: defaultHeaders }) {
+export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
     return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-export function fetchToJson(url, config = { headers: defaultHeaders }) {
+export function fetchToJson(url: string, config = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 
     const fodselsnummer = hentFnrFraUrl();
@@ -127,15 +127,15 @@ function methodToJson(method, url, data, config) {
     });
 }
 
-export function deleteAsJson(url, config = {}) {
+export function deleteAsJson(url: string, config = {}) {
     return methodToJson('delete', url, null, config);
 }
 
-export function postAsJson(url, data = {}, config = {}) {
+export function postAsJson(url: string, data = {}, config = {}) {
     return methodToJson('post', url, data, config);
 }
 
-export function putAsJson(url, data = {}, config = {}) {
+export function putAsJson(url: string, data = {}, config = {}) {
     return methodToJson('put', url, data, config);
 }
 

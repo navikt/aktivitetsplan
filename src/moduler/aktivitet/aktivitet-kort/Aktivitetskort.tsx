@@ -10,7 +10,7 @@ import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
 import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
-import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
+import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-selector';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
 import {
     selectAktiviteterSomHarBlittVist,
@@ -38,7 +38,7 @@ const Aktivitetskort = (props: Props) => {
     const dispatch = useAppDispatch();
 
     const lest = useSelector(selectLestAktivitetsplan, shallowEqual);
-    const lestStatus = useSelector(selectLestStatus, shallowEqual);
+    const lestStatus = useSelector(selectLestStatus);
     const aktiviteterSomHarBlittVist = useSelector(selectAktiviteterSomHarBlittVist, shallowEqual);
 
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(

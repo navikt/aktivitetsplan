@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { fetchHarFlereAktorId } from '../../api/oppfolgingAPI';
 import { Status } from '../../createGenericSlice';
+import { Lest } from '../../datatypes/lestTypes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { loggTidBruktGaaInnPaaAktivitetsplanen } from '../../felles-komponenter/utils/logging';
 import { selectErBruker } from '../identitet/identitet-selector';
-import { hentLest, selectLestInformasjon, selectLestStatus } from '../lest/lest-reducer';
+import { selectLestInformasjon, selectLestStatus } from '../lest/lest-selector';
+import { fetchLest } from '../lest/lest-slice';
 import { selectErUnderOppfolging, selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
 import { setBackPath } from './informasjon-reducer';
@@ -23,19 +25,16 @@ function InformasjonsHenting() {
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder, shallowEqual);
 
     const dispatch = useAppDispatch();
-    const doHentLest = useCallback(() => dispatch(hentLest()), [dispatch]); // TODO thunkify action
     const setBack = (path: string) => dispatch(setBackPath(path));
 
     useEffect(() => {
         fetchHarFlereAktorId();
 
         if (underOppfolging) {
-            // @ts-ignore
-            doHentLest().then((a) => {
-                loggTidBruktGaaInnPaaAktivitetsplanen(a.data, oppfolgingsPerioder);
+            dispatch(fetchLest()).then((action) => {
+                loggTidBruktGaaInnPaaAktivitetsplanen(action.payload as Lest[], oppfolgingsPerioder);
             });
         }
-        // eslint-disable-next-line
     }, []);
 
     const { pathname } = useLocation();

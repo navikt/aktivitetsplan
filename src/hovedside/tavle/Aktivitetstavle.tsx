@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
@@ -19,8 +18,8 @@ import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
-import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
+import { fetchNivaa4 } from '../../moduler/tilgang/tilgang-slice';
+import { fetchVeilederInfo } from '../../moduler/veileder/veileder-slice';
 import { useErVeileder } from '../../Provider';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 import useIsVisible from '../../utils/useIsVisible';
@@ -56,8 +55,8 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
-                dispatch(hentNivaa4(hentFnrFraUrl()));
-                dispatch(hentVeilederInfo());
+                dispatch(fetchNivaa4(hentFnrFraUrl()));
+                dispatch(fetchVeilederInfo());
             }
             dispatch(hentAktiviteter());
             dispatch(hentArenaAktiviteter());

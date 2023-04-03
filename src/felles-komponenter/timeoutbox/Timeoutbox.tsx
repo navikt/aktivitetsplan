@@ -2,11 +2,10 @@ import { Modal } from '@navikt/ds-react';
 import { differenceInMilliseconds, parseISO, subMinutes } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
 
 import useAppDispatch from '../hooks/useAppDispatch';
-import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
+import { fetchAuthInfo } from './auth-slice';
 import TimeoutboxNedtelling from './TimeoutboxNedtelling';
 
 const Timeoutbox = () => {
@@ -16,7 +15,7 @@ const Timeoutbox = () => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        dispatch(hentGjenstaendeInnloggetTid());
+        dispatch(fetchAuthInfo());
     }, []);
 
     const expirationTimestamp = useSelector(selectExpirationTime);

@@ -4,7 +4,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { selectAktivitetListeFeilMelding } from '../aktivitet/aktivitetlisteSelector';
 import { selectDialogFeilmeldinger } from '../dialog/dialog-selector';
 import { selectIdentitetFeilMelding } from '../identitet/identitet-selector';
-import { selectLestFeilMelding } from '../lest/lest-reducer';
+import { selectLestFeilMelding } from '../lest/lest-selector';
 import { selectOppfolgingFeilmeldinger } from '../oppfolging-status/oppfolging-selector';
 import { selectNivaa4Feilmeldinger } from '../tilgang/tilgang-selector';
 import Feilmelding from './Feilmelding';

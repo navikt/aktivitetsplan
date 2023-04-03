@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/oppfolgingAPI';
-import createGenericSlice from '../../createGenericSlice';
+import createGenericSlice, { GenericState, Status } from '../../createGenericSlice';
 import { Me } from '../../datatypes/oppfolgingTypes';
 
-const identitetSlice = createGenericSlice<Me>({
+const identitetSlice = createGenericSlice({
     name: 'identitet',
+    initialState: { data: {}, status: Status.NOT_STARTED } as GenericState<Me>,
     reducers: {},
 });
 

@@ -52,12 +52,6 @@ export enum JobbStatusType {
 
 export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 
-export interface Lest {
-    tidspunkt: string;
-    verdi?: string;
-    ressurs: string;
-}
-
 export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     id: string;
     versjon: string;
