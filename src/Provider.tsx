@@ -1,12 +1,10 @@
-import React, { Dispatch, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { Dispatch, useContext, useEffect, useMemo, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import InitiellDataLast from './InitiellDataLast';
 import createStore from './store';
-
-// const store = createStore();
 
 interface Props {
     children: React.ReactNode;
@@ -27,9 +25,6 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
         if (setFnrRef) setFnrRef(setFnr);
     }, []);
 
-    useEffect(() => {
-        console.log('Fnr', fnr);
-    }, [fnr]);
     const store = useMemo(createStore, [fnr]);
 
     return (
