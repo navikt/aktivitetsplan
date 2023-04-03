@@ -41,7 +41,7 @@ export class DabAktivitetsplan extends HTMLElement {
         Modal.setAppElement(appRoot);
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         if (name === 'data-fnr' && this.setFnr) {
             this.setFnr(newValue);
         }
