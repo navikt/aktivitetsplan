@@ -5,11 +5,15 @@ import { useSelector } from 'react-redux';
 import Lenkepanel from '../../../felles-komponenter/Lenkepanel';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { useErVeileder } from '../../../Provider';
+import { useRoutes } from '../../../routes';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 const LeggTilForm = () => {
     const erVeileder = useErVeileder();
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
+
+    const { nyAktivitetRoute } = useRoutes();
+    const nyAktivitetBasePath = nyAktivitetRoute();
 
     return (
         <Modal
@@ -32,9 +36,9 @@ const LeggTilForm = () => {
                     <Heading level="2" size="medium">
                         For NAV-ansatt
                     </Heading>
-                    <Lenkepanel href="/aktivitet/ny/sokeavtale">Avtale om å søke jobber</Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/mote">Møte med NAV</Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/samtalereferat">Samtalereferat</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/sokeavtale}`}>Avtale om å søke jobber</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/mote}`}>Møte med NAV</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/samtalereferat}`}>Samtalereferat</Lenkepanel>
                 </div>
             ) : null}
             <div className="mt-8">
@@ -44,10 +48,10 @@ const LeggTilForm = () => {
                     </Heading>
                 ) : null}
                 <div className="space-y-3 flex flex-col">
-                    <Lenkepanel href="/aktivitet/ny/stilling">En jobb jeg vil søke på</Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/ijobb">Jobb jeg har nå</Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/egen">Jobbrettet egenaktivitet</Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/behandling">Medisinsk behandling</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/stilling}`}>En jobb jeg vil søke på</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/ijobb}`}>Jobb jeg har nå</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/egen}`}>Jobbrettet egenaktivitet</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/behandling}`}>Medisinsk behandling</Lenkepanel>
                 </div>
             </div>
         </Modal>
