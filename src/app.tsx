@@ -1,6 +1,6 @@
 import PT from 'prop-types';
-import React, { useEffect } from 'react';
-import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
@@ -28,7 +28,6 @@ const Router = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
     const fnr = useFnr();
-
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
