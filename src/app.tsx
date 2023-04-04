@@ -1,5 +1,6 @@
+import { Loader } from '@navikt/ds-react';
 import PT from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
@@ -28,6 +29,7 @@ const Router = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
     const fnr = useFnr();
+    console.log(fnr);
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
@@ -48,6 +50,14 @@ function App() {
                                 </Route>
                             </Route>
                         </Route>
+                        <Route
+                            path="/:fnr"
+                            element={
+                                <div className="flex justify-center items-center mt-40">
+                                    <Loader size="2xlarge" />
+                                </div>
+                            }
+                        />
                         <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} />
                     </Routes>
                 </Router>
