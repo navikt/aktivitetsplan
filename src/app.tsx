@@ -48,7 +48,7 @@ function App() {
                                 </Route>
                             </Route>
                         </Route>
-                        {/*<Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} />*/}
+                        <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} />
                     </Routes>
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>
