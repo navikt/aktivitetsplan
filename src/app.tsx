@@ -15,7 +15,7 @@ import AktivitetvisningContainer from './moduler/aktivitet/visning/Aktivitetvisn
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
-import { useFnr } from './Provider';
+import { useErVeileder, useFnr } from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 
@@ -29,7 +29,6 @@ const Router = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
     const fnr = useFnr();
-    console.log(fnr);
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
@@ -50,15 +49,7 @@ function App() {
                                 </Route>
                             </Route>
                         </Route>
-                        <Route
-                            path="/:fnr"
-                            element={
-                                <div className="flex justify-center items-center mt-40">
-                                    <Loader size="2xlarge" />
-                                </div>
-                            }
-                        />
-                        <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} />
+                        {/*<Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} />*/}
                     </Routes>
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>
