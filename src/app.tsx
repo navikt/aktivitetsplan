@@ -1,7 +1,6 @@
-import { Loader } from '@navikt/ds-react';
 import PT from 'prop-types';
-import React, { useEffect } from 'react';
-import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
