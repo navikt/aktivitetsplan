@@ -1,6 +1,6 @@
 import PT from 'prop-types';
 import React from 'react';
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
@@ -48,7 +48,7 @@ function App() {
                                 </Route>
                             </Route>
                         </Route>
-                        {/*<Route path="*" element={<Navigate to={`/${fnr ?? ''}`} />} />*/}
+                        <Route path="*" element={<Navigate to={`/${fnr ?? ''}`} />} />
                     </Routes>
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>
