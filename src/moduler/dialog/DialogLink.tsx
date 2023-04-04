@@ -1,7 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import hovedside from '../../hovedside/Hovedside';
 import { useErVeileder } from '../../Provider';
 import { useRoutes } from '../../routes';
 import { byttTilDialogFlate, getDialogLenke } from './DialogFlateUtils';
