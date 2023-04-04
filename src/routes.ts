@@ -1,15 +1,13 @@
 import { useFnr } from './Provider';
 
-const aktivitetRoute = (aktivitetId: string, fnr?: string) => `${fnr ? `/${fnr}` : ''}/aktivitet/vis/${aktivitetId}`;
-const nyAktivitetRoute = (fnr?: string) => `${fnr ? `/${fnr}` : ''}/aktivitet/ny`;
-const endreAktivitetRoute = (aktivitetId: string, fnr?: string) =>
-    `${fnr ? `/${fnr}` : ''}/aktivitet/endre/${aktivitetId}`;
-const fullforAktivitetRoute = (aktivitetId: string, fnr?: string) =>
-    `${fnr ? `/${fnr}` : ''}/aktivitet/fullfor/${aktivitetId}`;
-const avbrytAktivitetRoute = (aktivitetId: string, fnr?: string) =>
-    `${fnr ? `/${fnr}` : ''}/aktivitet/avbryt/${aktivitetId}`;
+const fnrPath = (fnr?: string) => (fnr ? `/${fnr}` : '');
+const aktivitetRoute = (aktivitetId: string, fnr?: string) => fnrPath(fnr) + `/aktivitet/vis/${aktivitetId}`;
+const nyAktivitetRoute = (fnr?: string) => `${fnrPath(fnr)}/aktivitet/ny`;
+const endreAktivitetRoute = (aktivitetId: string, fnr?: string) => fnrPath(fnr) + `/aktivitet/endre/${aktivitetId}`;
+const fullforAktivitetRoute = (aktivitetId: string, fnr?: string) => fnrPath(fnr) + `/aktivitet/fullfor/${aktivitetId}`;
+const avbrytAktivitetRoute = (aktivitetId: string, fnr?: string) => fnrPath(fnr) + `/aktivitet/avbryt/${aktivitetId}`;
 const hovedsideRoute = (fnr?: string) => `${fnr ? `/${fnr}` : '/'}`;
-const malRoute = (fnr?: string) => `${fnr ? `/${fnr}` : ''}/mal`;
+const malRoute = (fnr?: string) => fnrPath(fnr) + `/mal`;
 
 export const useRoutes = () => {
     const fnr = useFnr();
