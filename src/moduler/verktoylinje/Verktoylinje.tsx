@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
+import { useRoutes } from '../../routes';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import Filter from '../filtrering/Filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
@@ -19,6 +20,7 @@ const Verktoylinje = () => {
     const aktivitetLaster = useSelector(selectHarTilgangTilAktiviteter);
 
     const navigate = useNavigate();
+    const { nyAktivitetRoute } = useRoutes();
 
     const hideLeggTil = viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang;
 
@@ -33,7 +35,7 @@ const Verktoylinje = () => {
                             disabled={!aktivitetLaster}
                             onClick={() => {
                                 loggEvent(APNE_NY_AKTIVITET);
-                                navigate('/aktivitet/ny');
+                                navigate(nyAktivitetRoute());
                             }}
                         >
                             Legg til aktivitet
