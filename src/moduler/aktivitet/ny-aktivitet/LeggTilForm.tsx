@@ -36,9 +36,9 @@ const LeggTilForm = () => {
                     <Heading level="2" size="medium">
                         For NAV-ansatt
                     </Heading>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/sokeavtale}`}>Avtale om å søke jobber</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/mote}`}>Møte med NAV</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/samtalereferat}`}>Samtalereferat</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/sokeavtale`}>Avtale om å søke jobber</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/mote`}>Møte med NAV</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/samtalereferat`}>Samtalereferat</Lenkepanel>
                 </div>
             ) : null}
             <div className="mt-8">
@@ -48,10 +48,10 @@ const LeggTilForm = () => {
                     </Heading>
                 ) : null}
                 <div className="space-y-3 flex flex-col">
-                    <Lenkepanel href={`${nyAktivitetBasePath}/stilling}`}>En jobb jeg vil søke på</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/ijobb}`}>Jobb jeg har nå</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/egen}`}>Jobbrettet egenaktivitet</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/behandling}`}>Medisinsk behandling</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/stilling`}>En jobb jeg vil søke på</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/ijobb`}>Jobb jeg har nå</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/egen`}>Jobbrettet egenaktivitet</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/behandling`}>Medisinsk behandling</Lenkepanel>
                 </div>
             </div>
         </Modal>
