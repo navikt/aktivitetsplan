@@ -14,7 +14,7 @@ import AktivitetvisningContainer from './moduler/aktivitet/visning/Aktivitetvisn
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
-import { useErVeileder, useFnr } from './Provider';
+import { useFnr } from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 
