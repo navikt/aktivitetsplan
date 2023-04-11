@@ -1,6 +1,6 @@
 import { ArenaAktivitet } from '../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
-import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 
@@ -53,13 +53,17 @@ export const oppdaterAktivitetStatus = (aktivitet: VeilarbAktivitet): Promise<Ve
 export const oppdaterAktivitetEtikett = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet);
 
-export const publiserReferat = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
+export const publiserReferat = (
+    aktivitet: SamtalereferatAktivitet | MoteAktivitet
+): Promise<SamtalereferatAktivitet | MoteAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`, aktivitet);
 
-export const oppdaterReferat = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
+export const oppdaterReferat = (
+    aktivitet: SamtalereferatAktivitet | MoteAktivitet
+): Promise<SamtalereferatAktivitet | MoteAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet);
 
-export const hentVersjonerTilAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
+export const hentVersjonerTilAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet[]> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
 
 export const oppdaterStillingFraNavSoknadsstatus = (

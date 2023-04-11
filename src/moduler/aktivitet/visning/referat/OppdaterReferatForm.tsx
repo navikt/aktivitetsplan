@@ -3,11 +3,10 @@ import { Button, Textarea } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
 import { z } from 'zod';
 
 import { Status } from '../../../../createGenericSlice';
-import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -61,7 +60,7 @@ const OppdaterReferatForm = (props: Props) => {
             ...aktivitet,
             referat: referatData.referat,
         };
-        return oppdaterReferat(aktivitetMedOppdatertReferat)(dispatch).then((res: any) => {
+        return oppdaterReferat(aktivitetMedOppdatertReferat)(dispatch).then((res: VeilarbAktivitet) => {
             onFerdig();
             return res;
         });

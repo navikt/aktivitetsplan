@@ -60,8 +60,7 @@ const AktivitetvisningContainer = () => {
                 (aktivitetskort as HTMLDivElement).focus();
             }
         };
-        // todo fix
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <DirtyProvider>

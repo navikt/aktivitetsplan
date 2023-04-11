@@ -1,14 +1,13 @@
 import { ReadMore } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { fjernVersjoner, hentVersjonerForAktivtet } from '../../aktivitet-versjoner/aktivitet-versjoner-reducer';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
+import { fetchVersjonerForAktivitet, fjernVersjoner } from '../../aktivitet-versjoner/aktivitet-versjoner-slice';
 import VersjonInnslag from './VersjonInnslag';
 
 const MAX_SIZE = 10;
@@ -26,9 +25,8 @@ const VersjonerForAktivitet = (props: Props) => {
     const avhengighet = useSelector(selectVersjonerStatus);
 
     useEffect(() => {
-        // TODO burde kanskje være en thunkdispatch det her?
         dispatch(fjernVersjoner());
-        dispatch(hentVersjonerForAktivtet(aktivitet));
+        dispatch(fetchVersjonerForAktivitet(aktivitet));
         return () => {
             dispatch(fjernVersjoner());
         };

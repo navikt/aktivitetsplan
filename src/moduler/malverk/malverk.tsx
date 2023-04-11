@@ -1,18 +1,15 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/label-has-for */
-
 import { Select } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { Component, EventHandler } from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
+import { AppDispatch } from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import visibleIfHOC from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
-import { State } from '../../reducer';
-import { hentMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-reducer';
+import { RootState } from '../../store';
 import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
+import { fetchMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-slice';
 
 function lagMalverkOption(mal: any) {
     return (
@@ -94,9 +91,9 @@ class Malverk extends Component<Props> {
     onChange: () => null,
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    doHentMalverMedType: (type: any) => {
-        dispatch(hentMalverkMedType(type) as any);
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+    doHentMalverMedType: (type: string) => {
+        dispatch(fetchMalverkMedType(type));
     },
     doSettValgtMalverk: (valgtMalverk: any) => {
         dispatch(settValgtMalverk(valgtMalverk));
@@ -106,7 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     },
 });
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: RootState) => ({
     malverk: selectMalverkData(state),
     avhengigheter: [selectMalverkStatus(state)],
     doHentMalverkMedTittel: (tittel: string) => selectMalverkMedTittel(state, tittel),

@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
-import { oppdaterMal } from './aktivitetsmal-reducer';
-import { hentMalListe } from './malliste-reducer';
+import { oppdaterMal } from './aktivitetsmal-slice';
+import { fetchMalListe } from './malliste-slice';
 
 const schema = z.object({
     mal: z.string().min(1, 'Feltet må fylles ut').max(500, 'Du må korte ned teksten til 500 tegn'),
@@ -35,8 +35,8 @@ const MalForm = (props: Props) => {
 
     const onSubmit = (data: { mal: string }) => {
         if (data.mal !== props.mal) {
-            dispatch(oppdaterMal({ mal: data.mal })) // TODO thunkify action
-                .then(() => dispatch(hentMalListe()))
+            dispatch(oppdaterMal({ mal: data.mal }))
+                .then(() => dispatch(fetchMalListe()))
                 .then(handleComplete());
         } else {
             handleComplete();

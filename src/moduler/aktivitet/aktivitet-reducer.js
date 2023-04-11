@@ -1,5 +1,5 @@
 import { Status } from '../../createGenericSlice';
-import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
+import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
 import * as AT from './aktivitet-action-types';
 
 const initalState = {
@@ -25,7 +25,7 @@ export default function reducer(state = initalState, action) {
         case AT.FLYTT_OK:
         case AT.OPPDATER_REFERAT_OK:
         case AT.PUBLISER_REFERAT_OK:
-            widowEvent(UpdateTypes.Aktivitet);
+            windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, data);
         case AT.HENTET:
             return { ...state, status: Status.OK, data: data.aktiviteter };
@@ -36,7 +36,7 @@ export default function reducer(state = initalState, action) {
                 data: state.data.filter((aktivitet) => aktivitet.id !== data.id).concat(data),
             };
         case AT.OPPRETTET:
-            widowEvent(UpdateTypes.Aktivitet);
+            windowEvent(UpdateTypes.Aktivitet);
             return { ...state, status: Status.OK, data: [...state.data, data] };
         case AT.FLYTTER:
             return nyStateMedOppdatertAktivitet({ ...state, status: Status.RELOADING }, data.aktivitet, {
@@ -59,14 +59,14 @@ export default function reducer(state = initalState, action) {
         case AT.FHO_LEST:
             return { ...state, fhoLestStatus: Status.RELOADING };
         case AT.FHO_LEST_OK:
-            widowEvent(UpdateTypes.Aktivitet);
+            windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: Status.OK }, data);
         case AT.FHO_LEST_FEILET:
             return { ...state, fhoLestStatus: Status.ERROR, feil: data };
         case AT.FHO_BEKREFT:
             return { ...state, fhoBekreftStatus: Status.RELOADING };
         case AT.FHO_BEKREFT_OK:
-            widowEvent(UpdateTypes.Aktivitet);
+            windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, fhoBekreftStatus: Status.OK }, data);
         case AT.FHO_BEKREFT_FEILET:
             return { ...state, fhoBekreftStatus: Status.ERROR, feil: data };

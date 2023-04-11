@@ -47,8 +47,8 @@ export interface KvpPeriode {
 }
 
 export interface Mal {
-    mal: string;
+    mal?: string;
     endretAv: string;
-    dato: string;
+    dato?: string;
     lest?: boolean;
 }

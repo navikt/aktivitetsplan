@@ -14,6 +14,4 @@ export const fetchIdentitet = createAsyncThunk(`${identitetSlice.name}/fetchIden
     return await Api.fetchIdentitet();
 });
 
-const { reducer } = identitetSlice;
-
-export default reducer;
+export default identitetSlice.reducer;

@@ -61,7 +61,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     endretAvType: BrukerType;
     forhaandsorientering?: Forhaandsorientering;
     endretAv: string;
-    endretDato?: string;
+    endretDato: string;
     avtalt: boolean;
     etikett?: StillingStatus; // todo sjekk ut hvorfor denne ligger på baseprops og ikke i StillingAktivitet
     transaksjonsType: T;

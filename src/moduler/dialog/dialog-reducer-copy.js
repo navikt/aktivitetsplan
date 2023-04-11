@@ -1,7 +1,7 @@
 import * as Api from '../../api/dialogAPI';
 import { doThenDispatch } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
-import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
+import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
 
 // Actions
 export const HENTER = 'dialog/hent';
@@ -21,6 +21,7 @@ const initalState = {
     sistOppdatert: new Date().toISOString(),
 };
 
+// blir ikke brukt slett
 function nyStateMedOppdatertDialog(state, dialog) {
     const { data } = state;
     const dialogIndeks = data.findIndex((d) => d.id === dialog.id);
@@ -53,7 +54,7 @@ export default function reducer(state = initalState, action) {
         case SEND_FORHANDSORIENTERING_FEILET:
             return { ...state, status: Status.ERROR, feil: data };
         case SEND_FORHANDSORIENTERING_OK:
-            widowEvent(UpdateTypes.Dialog);
+            windowEvent(UpdateTypes.Dialog);
             return nyStateMedOppdatertDialog(state, data);
         default:
             return state;

@@ -18,7 +18,8 @@ import { mockOppfolging } from '../../../mocks/data/oppfolging';
 import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
 import { handlers } from '../../../mocks/handlers';
 import reducer, { State } from '../../../reducer';
-import create from '../../../store';
+import create, { RootState } from '../../../store';
+import store from '../../../store';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
 import { HENT_AKTIVITET_OK } from '../../aktivitet/aktivitet-action-types';
 
@@ -52,7 +53,7 @@ const initialStore = {
             data: { ignore: false },
         },
     },
-} as State;
+} as typeof store;
 
 /* Provider both redux-store and "in-memory" router for all sub-components to render correctly */
 const WrappedHovedside = ({ store }: { store: Store }) => {

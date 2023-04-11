@@ -16,6 +16,4 @@ export const fetchEskaleringsvarsel = createAsyncThunk(
     }
 );
 
-const { reducer } = eskaleringsvarselSlice;
-
-export default reducer;
+export default eskaleringsvarselSlice.reducer;

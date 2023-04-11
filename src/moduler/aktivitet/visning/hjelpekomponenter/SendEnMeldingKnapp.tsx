@@ -5,9 +5,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import { Dialog } from '../../../../datatypes/dialogTypes';
 import { useErVeileder } from '../../../../Provider';
-import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
+import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
 
 interface Props {
@@ -17,7 +16,7 @@ interface Props {
 const SendEnMeldingKnapp = (props: Props) => {
     const { aktivitet } = props;
     const erVeileder = useErVeileder();
-    const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
+    const dialog = useSelector(selectDialogForAktivitetId(aktivitet.id));
 
     const ulestMeldinger =
         dialog?.henvendelser?.reduce((totaltUleste, melding) => (melding.lest ? totaltUleste : totaltUleste + 1), 0) ||

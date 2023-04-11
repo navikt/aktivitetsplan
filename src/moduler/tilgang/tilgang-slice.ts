@@ -13,6 +13,4 @@ export const fetchNivaa4 = createAsyncThunk(`${tilgangSlice.name}/fetchHarNivaa4
     return await Api.hentHarNivaa4(fnr);
 });
 
-const { reducer } = tilgangSlice;
-
-export default reducer;
+export default tilgangSlice.reducer;

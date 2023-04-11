@@ -4,7 +4,7 @@ import { Store } from 'redux';
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
-import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
+import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
 import { getStillingStatusFilterValue } from './EtikettFilter';

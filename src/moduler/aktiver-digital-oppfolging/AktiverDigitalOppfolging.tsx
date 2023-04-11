@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Status } from '../../createGenericSlice';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
-import { settDigital } from '../oppfolging-status/oppfolging-reducer';
 import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
+import { settDigital } from '../oppfolging-status/oppfolging-slice';
 import AktiverDigitalOppfolgingVarsel from './AktiverDigitalOppfolgingVarsel';
 
 const AktiverDigitalOppfolging = () => {

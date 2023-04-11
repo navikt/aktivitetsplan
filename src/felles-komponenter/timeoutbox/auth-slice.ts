@@ -13,6 +13,4 @@ export const fetchAuthInfo = createAsyncThunk(`${authSlice.name}/fetchAuthInfo`,
     return await Api.fetchAuthInfo();
 });
 
-const { reducer } = authSlice;
-
-export default reducer;
+export default authSlice.reducer;

@@ -8,14 +8,16 @@ import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../datatypes/types';
+import { AppDispatch } from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
-import { hentMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
-import { hentMalListe } from '../mal/malliste-reducer';
+import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
+import { fetchMal } from '../mal/aktivitetsmal-slice';
+import { fetchMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
@@ -64,7 +66,7 @@ const AktivitetsplanPrint = (props: Props) => {
         doHentMal();
         doHentMalListe();
         loggEvent(PRINT_MODSAL_OPEN);
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
     const fnr = hentFnrFraUrl();
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
@@ -186,10 +188,10 @@ const mapStateToProps = (state: any) => {
     };
 };
 
-function mapDispatchToProps(dispatch: any, props: any) {
+function mapDispatchToProps(dispatch: AppDispatch) {
     return {
-        doHentMal: () => dispatch(hentMal()),
-        doHentMalListe: () => dispatch(hentMalListe()),
+        doHentMal: () => dispatch(fetchMal()),
+        doHentMalListe: () => dispatch(fetchMalListe()),
     };
 }
 

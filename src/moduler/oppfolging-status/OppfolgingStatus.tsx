@@ -6,7 +6,6 @@ import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useErVeileder } from '../../Provider';
 import { selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { fetchIdentitet } from '../identitet/identitet-slice';
-import { hentOppfolging } from './oppfolging-reducer';
 import {
     selectAktorId,
     selectErBrukerManuell,
@@ -16,6 +15,7 @@ import {
     selectReservasjonKRR,
     selectServicegruppe,
 } from './oppfolging-selector';
+import { fetchOppfolging } from './oppfolging-slice';
 import VidereSendBrukereEllerRenderChildren from './VidereSendBrukereEllerRenderChildren';
 
 interface Props {
@@ -48,16 +48,14 @@ const OppfolgingStatus = ({ children }: Props) => {
     };
 
     useEffect(() => {
-        dispatch(hentOppfolging());
+        dispatch(fetchOppfolging());
         dispatch(fetchIdentitet());
     }, []);
 
     return (
         <Innholdslaster className="mt-8" avhengigheter={avhengigheter}>
             <div className="w-full">
-                <VidereSendBrukereEllerRenderChildren {...props} ident={ident as string}>
-                    {children}
-                </VidereSendBrukereEllerRenderChildren>
+                <VidereSendBrukereEllerRenderChildren {...props}>{children}</VidereSendBrukereEllerRenderChildren>
             </div>
         </Innholdslaster>
     );

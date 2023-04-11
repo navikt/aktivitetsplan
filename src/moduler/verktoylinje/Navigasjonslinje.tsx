@@ -3,15 +3,14 @@ import { isAfter } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
-import { hentDialog } from '../dialog/dialog-reducer';
 import { selectSistOppdatert } from '../dialog/dialog-selector';
+import { fetchDialoger } from '../dialog/dialog-slice';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -20,7 +19,7 @@ function Navigasjonslinje() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const doHentDialog = () => dispatch(hentDialog());
+        const doHentDialog = () => dispatch(fetchDialoger());
 
         if (!erVeileder) {
             let interval: NodeJS.Timeout;

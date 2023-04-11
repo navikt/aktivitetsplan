@@ -1,11 +1,10 @@
 import React from 'react';
-import { AnyAction } from 'redux';
 
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
-import { hentDialog } from '../moduler/dialog/dialog-reducer';
-import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-reducer';
+import { fetchDialoger } from '../moduler/dialog/dialog-slice';
+import { fetchOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',
@@ -20,7 +19,7 @@ interface UpdateEventType {
 
 const eventName = 'uppdate';
 
-export function widowEvent(update: UpdateTypes) {
+export function windowEvent(update: UpdateTypes) {
     window.dispatchEvent(
         new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'aktivitetsplan' } })
     );
@@ -41,9 +40,9 @@ export function UpdateEventHandler() {
             case UpdateTypes.Aktivitet:
                 return dispatch(hentAktiviteter());
             case UpdateTypes.Dialog:
-                return dispatch(hentDialog());
+                return dispatch(fetchDialoger());
             case UpdateTypes.Oppfolging:
-                return dispatch(hentOppfolging());
+                return dispatch(fetchOppfolging());
         }
     });
 

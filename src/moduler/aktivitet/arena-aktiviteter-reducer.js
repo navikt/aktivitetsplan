@@ -1,7 +1,7 @@
 import * as Api from '../../api/aktivitetAPI';
 import { doThenDispatch } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
-import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
+import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
 
 // Actions
 export const HENTER = 'arenaAktivitet/hent';
@@ -49,12 +49,12 @@ const reducer = (state = initalState, action) => {
         case OPPDATER:
             return { ...state, status: Status.RELOADING };
         case OPPDATER_OK:
-            widowEvent(UpdateTypes.Aktivitet);
+            windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, action.data);
         case FHO_LEST:
             return { ...state, fhoLestStatus: Status.RELOADING };
         case FHO_LEST_OK:
-            widowEvent(UpdateTypes.Aktivitet);
+            windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: Status.OK }, action.data);
         case FHO_LEST_FEILET:
             return { ...state, fhoLestStatus: Status.ERROR, feil: action.data };

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import ErrorBoundry from '../felles-komponenter/ErrorBoundry';
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
-import { hentDialog } from '../moduler/dialog/dialog-reducer';
+import { fetchDialoger } from '../moduler/dialog/dialog-slice';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
@@ -27,7 +28,7 @@ const Hovedside = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentDialog());
+        dispatch(fetchDialoger());
         dispatch(fetchEskaleringsvarsel());
     }, []);
 

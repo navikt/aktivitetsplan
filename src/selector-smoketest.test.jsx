@@ -4,7 +4,7 @@ import * as arenaAktivitetSelector from './moduler/aktivitet/arena-aktivitet-sel
 import * as dialogSelector from './moduler/dialog/dialog-selector';
 import * as identitetSelector from './moduler/identitet/identitet-selector';
 /* eslint-env mocha */
-import * as malSelector from './moduler/mal/aktivitetsmal-selector';
+import * as malSelector from './moduler/mal/malliste-selector';
 import * as oppfolgingSelector from './moduler/oppfolging-status/oppfolging-selector';
 import reducer from './reducer';
 

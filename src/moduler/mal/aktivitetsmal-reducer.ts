@@ -2,8 +2,6 @@ import * as Api from '../../api/oppfolgingAPI';
 import { doThenDispatch } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
 import { Mal } from '../../datatypes/oppfolgingTypes';
-import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
-import { selectMalListe } from './aktivitetsmal-selector';
 
 const PENDING = `MAL/PENDING`;
 const OK = `MAL/OK`;
@@ -53,9 +51,6 @@ function reducer(state: State = initialState, action: Action) {
 }
 
 const action = (fn: () => void) => doThenDispatch(fn, { PENDING, FEILET, OK });
-const selectSlice = (state: any) => state.data.mal;
-const selectStatus = (state: any) => selectSlice(state).status;
-const selectData = (state: any) => selectSlice(state).data;
 
 export default reducer;
 
@@ -69,20 +64,4 @@ export function hentMal() {
 
 export function oppdaterMal(data: { mal: string }) {
     return action(() => Api.lagreMal(data));
-}
-
-export function selectMalData(state: any) {
-    return selectData(state);
-}
-
-export function selectMalSlice(state: any) {
-    return selectSlice(state);
-}
-
-export function selectMalStatus(state: any) {
-    return selectStatus(state);
-}
-
-export function selectGjeldendeMal(state: any) {
-    return selectViserInneverendePeriode(state) ? selectMalData(state) : selectMalListe(state)[0];
 }

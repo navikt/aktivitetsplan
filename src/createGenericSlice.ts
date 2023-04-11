@@ -11,7 +11,6 @@ export enum Status {
 export interface GenericState<T> {
     data?: T;
     status: Status;
-    feil?: T;
 }
 
 const createGenericSlice = <
@@ -33,23 +32,23 @@ const createGenericSlice = <
             ...reducers,
         },
         extraReducers: (builder) => {
+            // merk: hvis du har flere thunks, så vil siste dispatch overskrive staten
             builder.addMatcher(
-                (action) => action.type.startsWith(name) && action.type.endsWith('/pending'),
+                (action) => action.type.startsWith(`${name}/`) && action.type.endsWith('/pending'),
                 (state) => {
                     state.status = state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
                 }
             );
             builder.addMatcher(
-                (action) => action.type.startsWith(name) && action.type.endsWith('/fulfilled'),
+                (action) => action.type.startsWith(`${name}/`) && action.type.endsWith('/fulfilled'),
                 (state, action) => {
                     state.data = action.payload || initialState.data;
                     state.status = Status.OK;
                 }
             );
             builder.addMatcher(
-                (action) => action.type.startsWith(name) && action.type.endsWith('/rejected'),
-                (state, action) => {
-                    state.feil = action.payload;
+                (action) => action.type.startsWith(`${name}/`) && action.type.endsWith('/rejected'),
+                (state) => {
                     state.status = Status.ERROR;
                 }
             );

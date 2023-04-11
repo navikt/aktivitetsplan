@@ -14,6 +14,4 @@ export const fetchLest = createAsyncThunk(`${lestSlice.name}/fetchSisteLest`, as
     return await Api.fetchSisteLest();
 });
 
-const { reducer } = lestSlice;
-
-export default reducer;
+export default lestSlice.reducer;

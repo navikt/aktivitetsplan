@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import Modal from '../../felles-komponenter/modal/Modal';
-import { selectMalListeFeilmeldinger } from './aktivitetsmal-selector';
+import { selectMalListeFeilmeldinger } from './malliste-selector';
 
 interface Props {
     children: React.ReactNode;

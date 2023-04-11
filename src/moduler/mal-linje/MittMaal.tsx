@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { Status } from '../../createGenericSlice';
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
@@ -18,7 +19,8 @@ import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLon
 import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
-import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
+import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
+import { fetchMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { ReactComponent as MaalIkon } from './Aktivitetsplan_maal.svg';
 
@@ -56,7 +58,6 @@ function MalContent(props: MalContentProps) {
     const endreMal = () => {
         navigate('/mal');
         loggMittMalKlikk(erVeileder);
-        dispatch(lesMal());
     };
     const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
 
@@ -93,10 +94,10 @@ function MittMaal() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentMal());
-    }, [dispatch]);
+        dispatch(fetchMal());
+    }, []);
 
-    const avhengigheter: Avhengighet = useSelector(selectMalStatus, shallowEqual);
+    const avhengigheter = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
 

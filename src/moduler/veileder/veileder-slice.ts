@@ -13,6 +13,4 @@ export const fetchVeilederInfo = createAsyncThunk(`${veilederSlice.name}/fetchVe
     return await Api.fetchVeilederInfo();
 });
 
-const { reducer } = veilederSlice;
-
-export default reducer;
+export default veilederSlice.reducer;

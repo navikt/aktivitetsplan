@@ -22,10 +22,26 @@ export function aggregerStatus(...reducereEllerStatuser) {
     });
 }
 
+// https://redux-toolkit.js.org/api/createAsyncThunk#handling-thunk-errors
+export interface SerializedError {
+    name?: string;
+    message?: string;
+    stack?: string;
+    code?: number;
+}
+
 export function sjekkStatuskode(response) {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
+    // const error: SerializedError = {
+    //     name: 'asd',
+    //     message: '',
+    //     codee: response.status,
+    // };
+    // console.log(error);
+    // throw error;
+
     const error = new Error(response.statusText || response.type);
     error.response = response;
     throw error;
