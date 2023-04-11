@@ -1,6 +1,6 @@
 import PT from 'prop-types';
 import React from 'react';
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
@@ -14,7 +14,7 @@ import AktivitetvisningContainer from './moduler/aktivitet/visning/Aktivitetvisn
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
-import { useFnr } from './Provider';
+import { useErVeileder, useFnr } from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 
@@ -27,6 +27,7 @@ const Router = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
+    const erVeileder = useErVeileder();
     const fnr = useFnr();
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
@@ -48,7 +49,7 @@ function App() {
                                 </Route>
                             </Route>
                         </Route>
-                        {/*<Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} />*/}
+                        {erVeileder ? <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} /> : null}
                     </Routes>
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>
