@@ -13,9 +13,6 @@ import Provider from './Provider';
 export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
     const rootElement = document.getElementById('root') || undefined;
     Modal.setAppElement(appElement);
-
-    const id = document.getElementById('root') || undefined;
-    Modal.setAppElement(id);
     ReactDOM.render(
         <AkselModalMountProvider rootElement={rootElement} appElement={appElement}>
             <Provider fnr={props?.fnr}>
