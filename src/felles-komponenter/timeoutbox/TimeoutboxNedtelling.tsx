@@ -36,7 +36,7 @@ const TimeoutboxNedtelling = (props: Props) => {
 
     return (
         <Modal.Content>
-            <Heading className="blokk-s" level="1" size="large" spacing>
+            <Heading id="modal-heading" className="blokk-s" level="1" size="large" spacing>
                 Obs!
             </Heading>
             <BodyLong className="blokk-xxs" spacing>

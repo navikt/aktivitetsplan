@@ -58,7 +58,7 @@ const FullforAktivitet = () => {
     if (!valgtAktivitet) return <Navigate to={hovedsideRoute()} />;
 
     return (
-        <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">
+        <Modal header={<ModalHeader />} contentLabel="Fullfør aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.FULLFOERT}>
                 {valgtAktivitet.avtalt &&
                 valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&

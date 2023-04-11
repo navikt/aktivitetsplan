@@ -40,7 +40,7 @@ const SendEnMeldingKnapp = (props: Props) => {
                 variant="secondary"
                 as="a"
                 href={getDialogLenke(erVeileder, aktivitet.id, dialog?.id)}
-                icon={<ChatElipsisIcon fontSize="1.5rem" />}
+                icon={<ChatElipsisIcon aria-hidden fontSize="1.5rem" />}
                 onClick={veilederOnClick}
             >
                 {ulestMeldinger > 0

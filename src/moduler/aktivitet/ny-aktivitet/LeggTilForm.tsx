@@ -16,13 +16,9 @@ const LeggTilForm = () => {
     const nyAktivitetBasePath = nyAktivitetRoute();
 
     return (
-        <Modal
-            contentLabel="ny-aktivitet-modal"
-            contentClass="ny-aktivitet-visning"
-            feilmeldinger={aktivitetFeilmeldinger}
-        >
+        <Modal contentClass="ny-aktivitet-visning" feilmeldinger={aktivitetFeilmeldinger}>
             <div className="mb-4">
-                <Heading level="1" size="large">
+                <Heading id="modal-heading" level="1" size="large">
                     Legg til en aktivitet
                 </Heading>
                 {!erVeileder ? (

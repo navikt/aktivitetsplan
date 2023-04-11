@@ -75,7 +75,7 @@ const NyAktivitetForm = () => {
         <Modal
             header={header}
             onRequestClose={onRequestClose}
-            contentLabel="ny-aktivitet-modal"
+            contentLabel="Ny aktivitetstype"
             feilmeldinger={aktivitetFeilmeldinger}
         >
             <ErrorBoundry>

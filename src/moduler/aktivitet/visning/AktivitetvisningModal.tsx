@@ -27,7 +27,6 @@ const header = (valgtAktivitet?: AlleAktiviteter) => {
     return (
         <ModalHeader
             headerTekst={`${aktivitetStatusMap[valgtAktivitet.status]} / ${getAktivitetType(valgtAktivitet)}`}
-            aria-describedby="modal-aktivitetsvisning-header"
             aktivitetErLaast={aktivitetErLaast}
         />
     );
@@ -64,7 +63,6 @@ const AktivitetvisningModal = (props: Props) => {
 
     return (
         <Modal
-            contentLabel="aktivitetsvisning-modal"
             contentClass="aktivitetsvisning"
             avhengigheter={avhengigheter}
             header={header(aktivitet)}

@@ -3,20 +3,25 @@ import '@navikt/ds-css';
 import './tailwind.css';
 import './index.less';
 
-import { Modal } from '@navikt/ds-react';
+import { Provider as AkselModalMountProvider, Modal } from '@navikt/ds-react';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import App from './app';
 import Provider from './Provider';
 
-export const renderAsReactRoot = (rootElement: HTMLElement, props?: { fnr?: string }) => {
-    const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
+export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
+    const rootElement = document.getElementById('root') || undefined;
+    Modal.setAppElement(appElement);
+
+    const id = document.getElementById('root') || undefined;
     Modal.setAppElement(id);
     ReactDOM.render(
-        <Provider fnr={props?.fnr}>
-            <App key={'1'} fnr={props?.fnr} />
-        </Provider>,
-        rootElement
+        <AkselModalMountProvider rootElement={rootElement} appElement={appElement}>
+            <Provider fnr={props?.fnr}>
+                <App key={'1'} fnr={props?.fnr} />
+            </Provider>
+        </AkselModalMountProvider>,
+        appElement
     );
 };

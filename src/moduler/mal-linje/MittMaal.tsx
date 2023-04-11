@@ -122,7 +122,7 @@ function MittMaal() {
                     })}
                 >
                     <div className="flex sm:flex-row items-center gap-6">
-                        <MaalIkon role="img" className="hidden sm:block mx-4 min-w-fit" />
+                        <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />
                         <div>
                             <div className="flex mb-2">
                                 <NotifikasjonMarkering visible={nyEndring} />

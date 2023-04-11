@@ -70,7 +70,7 @@ const Tavle = (props: Props) => {
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
         >
-            <ChevronLeftIcon title="Forrige kolonne" fontSize="4rem" />
+            <ChevronLeftIcon titleId="flytt-venstre" title="Forrige kolonne" aria-hidden fontSize="4rem" />
         </button>
     );
 
@@ -84,7 +84,7 @@ const Tavle = (props: Props) => {
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"
         >
-            <ChevronRightIcon title="Neste kolonne" fontSize="4rem" />
+            <ChevronRightIcon titleId="flytt-hoyre" title="Neste kolonne" aria-hidden fontSize="4rem" />
         </button>
     );
 

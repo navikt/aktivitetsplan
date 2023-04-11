@@ -31,7 +31,7 @@ const Verktoylinje = () => {
                     {!hideLeggTil ? (
                         <Button
                             className="self-stretch sm:self-auto"
-                            icon={<PlusIcon fontSize="1.5rem" />}
+                            icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
                             disabled={!aktivitetLaster}
                             onClick={() => {
                                 loggEvent(APNE_NY_AKTIVITET);
