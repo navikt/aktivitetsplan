@@ -1,1 +1,0 @@
-Du må korte ned teksten til {antall_tegn} tegn

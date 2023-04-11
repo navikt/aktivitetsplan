@@ -6,6 +6,7 @@ import { AnyAction } from 'redux';
 
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
+import { useRoutes } from '../../routes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { hentMal, selectMalStatus } from './aktivitetsmal-reducer';
@@ -27,6 +28,7 @@ const Mal = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     useEffect(() => {
         dispatch(hentMal() as unknown as AnyAction);
@@ -38,10 +40,10 @@ const Mal = () => {
     const onModalRequestClosed = () => {
         if (isDirty.current) {
             if (window.confirm(CONFIRM)) {
-                navigate('/');
+                navigate(hovedsideRoute());
             }
         } else {
-            navigate('/');
+            navigate(hovedsideRoute());
         }
     };
 

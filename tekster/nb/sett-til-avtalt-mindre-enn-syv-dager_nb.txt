@@ -1,1 +1,0 @@
-Du kan ikke sende forhåndsorientering fordi du har satt sluttdatoen til mindre enn 7 dager frem i tid. Hvis du har hatt muntlig dialog med brukeren om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat, så kan du sette aktiviteten til "Avtalt med NAV".

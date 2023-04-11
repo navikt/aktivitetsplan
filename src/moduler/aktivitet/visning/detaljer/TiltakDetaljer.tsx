@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { TILTAK_AKTIVITET_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -18,19 +17,15 @@ const TiltakDetaljer = ({ aktivitet }: Props) => {
         <>
             <FraDato aktivitet={aktivitet} visIkkeSatt />
             <TilDato aktivitet={aktivitet} visIkkeSatt />
-            <Informasjonsfelt
-                key="arrangoer"
-                tittel={<FormattedMessage id="aktivitetdetaljer.aarrangor-label" />}
-                innhold={aktivitet.arrangoer}
-            />
+            <Informasjonsfelt key="arrangoer" tittel="Arrangør" innhold={aktivitet.arrangoer} />
             <Informasjonsfelt
                 key="deltakelsesprosent"
-                tittel={<FormattedMessage id="aktivitetdetaljer.deltakelsesprosent-label" />}
+                tittel="Deltakelse"
                 innhold={!!aktivitet.deltakelseProsent && `${aktivitet.deltakelseProsent}%`}
             />
             <Informasjonsfelt
                 key="dagerPerUke"
-                tittel={<FormattedMessage id="aktivitetdetaljer.antall-dager-per-uke-label" />}
+                tittel="Antall dager per uke"
                 innhold={!!aktivitet.antallDagerPerUke && `${aktivitet.antallDagerPerUke}`}
             />
             <Beskrivelse aktivitet={aktivitet} />

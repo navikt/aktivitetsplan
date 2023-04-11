@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
-import { endreAktivitetRoute } from '../../../../routes';
+import { useRoutes } from '../../../../routes';
 
 interface Props {
     id: string;
@@ -17,6 +17,7 @@ const EndreAktivitetKnapp = (props: Props) => {
     const { id, tillatEndring, laster, underOppfolging } = props;
 
     const navigate = useNavigate();
+    const { endreAktivitetRoute } = useRoutes();
 
     if (!tillatEndring) {
         return null;

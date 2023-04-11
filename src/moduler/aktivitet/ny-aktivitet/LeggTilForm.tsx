@@ -2,14 +2,18 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Lenkepanel from '../../../felles-komponenter/lenkepanel';
+import Lenkepanel from '../../../felles-komponenter/Lenkepanel';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import { selectErVeileder } from '../../identitet/identitet-selector';
+import { useErVeileder } from '../../../Provider';
+import { useRoutes } from '../../../routes';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 const LeggTilForm = () => {
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
+
+    const { nyAktivitetRoute } = useRoutes();
+    const nyAktivitetBasePath = nyAktivitetRoute();
 
     return (
         <Modal contentClass="ny-aktivitet-visning" feilmeldinger={aktivitetFeilmeldinger}>
@@ -28,15 +32,9 @@ const LeggTilForm = () => {
                     <Heading level="2" size="medium">
                         For NAV-ansatt
                     </Heading>
-                    <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
-                        Avtale om å søke jobber
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
-                        Møte med NAV
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/samtalereferat" hidden={!erVeileder}>
-                        Samtalereferat
-                    </Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/sokeavtale`}>Avtale om å søke jobber</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/mote`}>Møte med NAV</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/samtalereferat`}>Samtalereferat</Lenkepanel>
                 </div>
             ) : null}
             <div className="mt-8">
@@ -46,18 +44,10 @@ const LeggTilForm = () => {
                     </Heading>
                 ) : null}
                 <div className="space-y-3 flex flex-col">
-                    <Lenkepanel border href="/aktivitet/ny/stilling" hidden={false}>
-                        En jobb jeg vil søke på
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/ijobb" hidden={false}>
-                        Jobb jeg har nå
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/egen" hidden={false}>
-                        Jobbrettet egenaktivitet
-                    </Lenkepanel>
-                    <Lenkepanel border href="/aktivitet/ny/behandling" hidden={false}>
-                        Medisinsk behandling
-                    </Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/stilling`}>En jobb jeg vil søke på</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/ijobb`}>Jobb jeg har nå</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/egen`}>Jobbrettet egenaktivitet</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/behandling`}>Medisinsk behandling</Lenkepanel>
                 </div>
             </div>
         </Modal>

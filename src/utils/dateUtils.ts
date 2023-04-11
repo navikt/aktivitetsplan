@@ -28,12 +28,8 @@ function formatter(dato: string | Date, format: string) {
     return undefined;
 }
 
-export function formaterDatoTid(dato: string) {
-    return formatter(dato, 'd.LL.y HH:mm');
-}
-
 export function formaterDatoManed(dato: string) {
-    return formatter(dato, 'd. MMMM Y');
+    return formatter(dato, 'PPP');
 }
 
 export function formaterDatoKortManed(dato: string) {
@@ -41,7 +37,7 @@ export function formaterDatoKortManed(dato: string) {
 }
 
 export function formaterDatoKortManedTid(dato: string) {
-    return formatter(dato, "d. MMM Y 'kl' HH:mm");
+    return formatter(dato, "PP 'kl' HH:mm");
 }
 
 export function formaterTid(dato: string) {
@@ -68,7 +64,7 @@ export function formaterDatoEllerTidSiden(dato: string) {
     const datoVerdi = parseISO(dato);
 
     if (isValid(datoVerdi)) {
-        if (erMerEnntoDagerSiden(dato)) {
+        if (!erMerEnntoDagerSiden(dato)) {
             return formaterDatoTidSiden(dato);
         }
         return formaterDatoKortManedTid(dato);

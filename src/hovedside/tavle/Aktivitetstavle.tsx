@@ -4,16 +4,8 @@ import { AnyAction } from 'redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
-import {
-    AKTIVITETSPLAN_ROOT_NODE_ID,
-    STATUS_AVBRUTT,
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_FULLFOERT,
-    STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
-    TabId,
-} from '../../constant';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
+import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
@@ -25,10 +17,10 @@ import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selecto
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
-import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
+import { useErVeileder } from '../../Provider';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
@@ -50,7 +42,7 @@ const Aktivitetstavle = () => {
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
     const underOppfolging = useSelector(selectUnderOppfolging);
 
@@ -104,11 +96,11 @@ const Aktivitetstavle = () => {
             <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
 
             <Tavle dragging={dragging}>
-                <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} />
-                <Kolonne status={STATUS_PLANLAGT} />
-                <Kolonne status={STATUS_GJENNOMFOERT} />
-                <KolonneSomSkjulerEldreAktiviteter status={STATUS_FULLFOERT} />
-                <KolonneSomSkjulerEldreAktiviteter status={STATUS_AVBRUTT} />
+                <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
+                <Kolonne status={AktivitetStatus.PLANLAGT} />
+                <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
         </Innholdslaster>
     );

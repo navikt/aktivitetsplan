@@ -5,7 +5,7 @@ import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetT
 import { ArenaAktivitet } from '../../../datatypes/arenaAktivitetTypes';
 import { EksternAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { ARENA_ETIKETT_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { eksternAktivitetFilterTextMappings, tiltakEtikettMapper } from '../../../utils/textMappers';
+import { tiltakOgEksternAktivitetEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import FilterVisningsKomponent, { ArenaEtikettFilterType, FilterValueExtractor } from './FilterVisning';
 
@@ -30,18 +30,13 @@ const ArenaEtikettFilter = () => {
     const arenaFields = aktiviteter.filter(isArenaAktivitet).flatMap(getArenaFilterableFields);
     const alleEtiketter = new Set([...eksternFields, ...arenaFields]);
 
-    const textMappers = {
-        ...tiltakEtikettMapper,
-        ...eksternAktivitetFilterTextMappings,
-    };
-
     return (
         <FilterVisningsKomponent
             filters={Array.from(alleEtiketter)}
             filterKategori={'arenaEtikett'}
             tekst="Tiltaksstatus"
             metrikkNavn={ARENA_ETIKETT_FILTER_METRIKK}
-            textMapper={textMappers}
+            textMapper={tiltakOgEksternAktivitetEtikettMapper}
         />
     );
 };

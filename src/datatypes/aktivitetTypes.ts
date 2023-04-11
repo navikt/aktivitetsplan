@@ -6,11 +6,11 @@ import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
 export enum AktivitetStatus {
-    STATUS_BRUKER_ER_INTRESSERT = 'BRUKER_ER_INTERESSERT',
-    STATUS_PLANLAGT = 'PLANLAGT',
-    STATUS_GJENNOMFOERT = 'GJENNOMFORES',
-    STATUS_FULLFOERT = 'FULLFORT',
-    STATUS_AVBRUTT = 'AVBRUTT',
+    BRUKER_ER_INTRESSERT = 'BRUKER_ER_INTERESSERT',
+    PLANLAGT = 'PLANLAGT',
+    GJENNOMFOERT = 'GJENNOMFORES',
+    FULLFOERT = 'FULLFORT',
+    AVBRUTT = 'AVBRUTT',
 }
 
 export enum StillingStatus {
@@ -21,20 +21,34 @@ export enum StillingStatus {
     JOBBTILBUD = 'JOBBTILBUD',
 }
 
-export type StillingFraNavSoknadsstatus =
-    | 'VENTER'
-    | 'CV_DELT'
-    | 'SKAL_PAA_INTERVJU'
-    | 'JOBBTILBUD'
-    | 'AVSLAG'
-    | 'IKKE_FATT_JOBBEN';
-export type Livslopsstatus =
-    | 'PROVER_VARSLING'
-    | 'HAR_VARSLET'
-    | 'KAN_IKKE_VARSLE'
-    | 'HAR_SVART'
-    | 'AVBRUTT_AV_SYSTEM'
-    | 'AVBRUTT_AV_BRUKER';
+export enum StillingFraNavSoknadsstatus {
+    VENTER = 'VENTER',
+    CV_DELT = 'CV_DELT',
+    SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU',
+    JOBBTILBUD = 'JOBBTILBUD',
+    AVSLAG = 'AVSLAG',
+    IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
+}
+
+export enum Livslopsstatus {
+    PROVER_VARSLING = 'PROVER_VARSLING',
+    HAR_VARSLET = 'HAR_VARSLET',
+    KAN_IKKE_VARSLE = 'KAN_IKKE_VARSLE',
+    HAR_SVART = 'HAR_SVART',
+    AVBRUTT_AV_SYSTEM = 'AVBRUTT_AV_SYSTEM',
+    AVBRUTT_AV_BRUKER = 'AVBRUTT_AV_BRUKER',
+}
+
+export enum Kanal {
+    TELEFON = 'TELEFON',
+    OPPMOTE = 'OPPMOTE',
+    INTERNET = 'INTERNETT',
+}
+
+export enum JobbStatusType {
+    HELTID = 'HELTID',
+    DELTID = 'DELTID',
+}
 
 export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 

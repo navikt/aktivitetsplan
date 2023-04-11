@@ -1,13 +1,13 @@
 import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from 'redux';
 
-import { AktivitetType, StillingFraNavSoknadsstatus, StillingStatus } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, StillingFraNavSoknadsstatus, StillingStatus } from '../../../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
-import { EksternAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import { AlleAktivitetTyper, avtaltMapper } from '../../../utils/textMappers';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
@@ -24,34 +24,15 @@ import {
 } from './filter-selector';
 import FilterCheckbox from './FilterCheckbox';
 
-export interface AvtaltFilterType {
-    avtaltMedNav: boolean;
-    ikkeAvtaltMedNav: boolean;
-}
+export type AvtaltFilterType = Record<keyof typeof avtaltMapper, boolean>;
 
-export interface StatusFilterType {
-    BRUKER_ER_INTERESSERT: boolean;
-    FULLFORT: boolean;
-    GJENNOMFORES: boolean;
-    PLANLAGT: boolean;
-    AVBRUTT: boolean;
-}
+export type StatusFilterType = Record<AktivitetStatus, boolean>;
 
-export type AktivitetFilterType = Record<AktivitetType, boolean> & Record<EksternAktivitetType, boolean>;
+export type AktivitetFilterType = Record<AlleAktivitetTyper, boolean>;
 
-export interface ArenaEtikettFilterType {
-    AKTUELL: boolean;
-    AVSLAG: boolean;
-    IKKAKTUELL: boolean;
-    IKKEM: boolean;
-    INFOMOETE: boolean;
-    JATAKK: boolean;
-    NEITAKK: boolean;
-    TILBUD: boolean;
-    VENTELISTE: boolean;
-}
+export type ArenaEtikettFilterType = Record<ArenaEtikett, boolean>;
 
-export type EtikettFilterType = Record<ArenaEtikett | StillingStatus | StillingFraNavSoknadsstatus, boolean>;
+export type EtikettFilterType = Record<StillingStatus | StillingFraNavSoknadsstatus, boolean>;
 
 export type FilterKategori = 'avtalt' | 'status' | 'aktivitet' | 'etikett' | 'arenaEtikett';
 export type FilterValueExtractor<AktivitetType, FilterValueType> = (aktvitet: AktivitetType) => FilterValueType[];

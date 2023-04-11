@@ -102,8 +102,8 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
     }
 
     const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
-    const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.avtaltMedNav;
-    const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
+    const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.AVTALT_MED_NAV;
+    const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.IKKE_AVTALT_MED_NAV;
     const { avtalt } = aktivitet;
     const aktivtAvtaltFilter = [avtaltMedNavFilter, ikkeAvtaltMedNavFilter].filter((it) => it).length === 1;
     const muligeAvtaltFiltereringer = (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);

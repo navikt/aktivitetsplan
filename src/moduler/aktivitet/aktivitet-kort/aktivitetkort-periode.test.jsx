@@ -1,23 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { intlShape } from 'react-intl';
 
 import { IJOBB_AKTIVITET_TYPE, MOTE_TYPE, STILLING_FRA_NAV_TYPE } from '../../../constant';
 import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
-
-function nodeWithIntlProp(node) {
-    return React.cloneElement(node, { intl });
-}
-
-function mountWithIntl(node, { context, childContextTypes } = {}) {
-    return mount(nodeWithIntlProp(node), {
-        context: { ...context, intl },
-        childContextTypes: {
-            intl: intlShape,
-            ...childContextTypes,
-        },
-    });
-}
 
 describe('Aktivitet-periode', () => {
     it('Skal vise kun fra dato hvis aktiviten er ett møte med NAV', () => {

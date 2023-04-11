@@ -3,9 +3,9 @@ import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
+import { useErVeileder } from '../../Provider';
 import { formaterDatoEllerTidSiden } from '../../utils/dateUtils';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
-import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectMalListe } from './aktivitetsmal-selector';
 
 const identitetMap = (erVeileder: boolean, endretAv: string) => {
@@ -32,7 +32,7 @@ function malListeVisning(gjeldendeMal: Mal, erVeileder: boolean) {
 
 const MalHistorikk = () => {
     const historiskeMal = useSelector(selectMalListe, shallowEqual);
-    const erVeileder = useSelector(selectErVeileder, shallowEqual);
+    const erVeileder = useErVeileder();
 
     if (historiskeMal.length === 0) {
         return null;

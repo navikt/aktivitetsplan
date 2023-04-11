@@ -1,5 +1,6 @@
 import { addDays, subDays } from 'date-fns';
 
+import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
 import { MoteAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
 
@@ -10,7 +11,7 @@ export const enMoteAktivitet = (): MoteAktivitet => {
         tittel: 'Beste møtet ever',
         beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
         type: VeilarbAktivitetType.MOTE_TYPE,
-        status: 'PLANLAGT',
+        status: AktivitetStatus.PLANLAGT,
         fraDato: subDays(new Date(), 2).toISOString(),
         tilDato: addDays(new Date(), 2).toISOString(),
         opprettetDato: '2018-08-21T11:55:14.044+02:00',
@@ -20,10 +21,9 @@ export const enMoteAktivitet = (): MoteAktivitet => {
         avtalt: false,
         endretAvType: 'NAV',
         forberedelser: 'forberedelser',
-        refereat: 'referet',
         transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         etikett: undefined,
-        kanal: 'TELEFON',
+        kanal: Kanal.TELEFON,
         adresse: 'Ditt nærmeste NAV kontor',
         erReferatPublisert: false,
         klokkeslett: '12:22',
@@ -32,6 +32,5 @@ export const enMoteAktivitet = (): MoteAktivitet => {
         avsluttetKommentar: undefined,
         forhaandsorientering: undefined,
         varighet: '2 timer',
-        filterTags: [],
-    } as MoteAktivitet;
+    };
 };

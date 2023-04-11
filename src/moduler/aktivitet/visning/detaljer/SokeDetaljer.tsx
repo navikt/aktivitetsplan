@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -33,7 +32,7 @@ const SokeDetaljer = ({ aktivitet }: Props) => {
             />
             <HiddenIfInformasjonsfelt
                 key="avtaleOppfolging"
-                tittel={<FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />}
+                tittel="Oppfølging fra NAV"
                 beskrivelse
                 formattertTekst
                 hidden={!aktivitet.avtaleOppfolging}

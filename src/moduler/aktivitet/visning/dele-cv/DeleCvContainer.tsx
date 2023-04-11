@@ -1,7 +1,7 @@
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { DeleCVAvbruttVisning } from './DeleCVAvbruttVisning';
 import { DeleCvSvarVisning } from './DeleCvSvarVisning';
@@ -24,7 +24,7 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
         return <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} />;
     }
 
-    if (erHistorisk || aktivitet.status === STATUS_FULLFOERT || aktivitet.status === STATUS_AVBRUTT) {
+    if (erHistorisk || aktivitet.status === AktivitetStatus.FULLFOERT || aktivitet.status === AktivitetStatus.AVBRUTT) {
         return (
             <DeleCVAvbruttVisning
                 status={aktivitet.status}

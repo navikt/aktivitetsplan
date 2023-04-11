@@ -1,4 +1,0 @@
-{underOppfolging, select,
-true { Her kan du eller veilederen din legge inn aktiviteter som hjelper deg når du skal komme i arbeid. Eksempler kan være å registrere deg hos bemannings- og rekrutteringsbyråer, jobbe godt med CV-en, eller lage oversikt over personer som kan være nyttig å kontakte når du er på jakt etter jobb. }
-false { Her kan du legge inn forskjellige egenaktiviteter du vil gjøre for å finne en ny jobb raskere. Eksempler kan være å ta en interessetest, registrere deg hos flere formidlingsbyråer eller lage en oversikt over nettverket ditt. }
-}

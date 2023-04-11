@@ -1,1 +1,0 @@
-Antall søknader i perioden kan ikke være større enn {MAKS_LENGDE}

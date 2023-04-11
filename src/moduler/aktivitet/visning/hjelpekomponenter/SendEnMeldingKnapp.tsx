@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
+import { useErVeileder } from '../../../../Provider';
+import { useRoutes } from '../../../../routes';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -16,7 +17,7 @@ interface Props {
 
 const SendEnMeldingKnapp = (props: Props) => {
     const { aktivitet } = props;
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
 
     const ulestMeldinger =
@@ -24,10 +25,11 @@ const SendEnMeldingKnapp = (props: Props) => {
         0;
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const veilederOnClick = (event: React.MouseEvent) => {
         if (erVeileder) {
-            navigate('/', { replace: true });
+            navigate(hovedsideRoute(), { replace: true });
             byttTilDialogFlate(event, aktivitet.id, dialog?.id);
         }
     };

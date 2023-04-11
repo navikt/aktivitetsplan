@@ -3,7 +3,7 @@ import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
+import VersjonerForAktivitet from '../versjoner/VersjonerForAktivitet';
 
 interface Props {
     aktivitet: VeilarbAktivitet;
@@ -21,7 +21,7 @@ const EndringsLogg = (props: Props) => {
                 </div>
             </Accordion.Header>
             <Accordion.Content>
-                <VersjonerForAktivitet visible={true} aktivitet={aktivitet} />
+                <VersjonerForAktivitet aktivitet={aktivitet} />
             </Accordion.Content>
         </Accordion.Item>
     );

@@ -1,80 +1,42 @@
-import PT from 'prop-types';
-import { ReactNode } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { ReactNode } from 'react';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import * as AppPT from '../../../../proptypes';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
-import Informasjonsfelt, { HiddenIfInformasjonsfelt } from './Informasjonsfelt';
+import Informasjonsfelt from './Informasjonsfelt';
 
-const formatertDato = (dato: string | undefined, visIkkeSatt: boolean) => {
+const formatertDato = (dato: string | undefined, visIkkeSatt?: boolean) => {
     if (visIkkeSatt && !dato) {
         return 'Dato ikke satt';
     }
     return formaterDatoManed(dato);
 };
 
-interface Props {
+interface DatoFeltProps {
     aktivitet: AlleAktiviteter;
-    tittel: ReactNode;
-    visIkkeSatt: boolean;
-    hidden: boolean;
+    tittel?: ReactNode;
+    visIkkeSatt?: boolean;
 }
 
-export const FraDato = ({ aktivitet, tittel, visIkkeSatt, hidden }: Props) => (
-    <HiddenIfInformasjonsfelt
-        key="fradato"
-        tittel={tittel}
-        innhold={formatertDato(aktivitet.fraDato, visIkkeSatt)}
-        hidden={hidden}
-    />
-);
-
-FraDato.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-    tittel: PT.node,
-    visIkkeSatt: PT.bool,
-    hidden: PT.bool,
-};
-
-FraDato.defaultProps = {
-    tittel: <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />,
-    visIkkeSatt: false,
-    hidden: false,
-};
-
-export const TilDato = ({ aktivitet, tittel, visIkkeSatt, hidden }: Props) => (
-    <HiddenIfInformasjonsfelt
-        key="tildato"
-        tittel={tittel}
-        innhold={formatertDato(aktivitet.tilDato, visIkkeSatt)}
-        hidden={hidden}
-    />
-);
-
-TilDato.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-    tittel: PT.node,
-    visIkkeSatt: PT.bool,
-    hidden: PT.bool,
-};
-
-TilDato.defaultProps = {
-    tittel: <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />,
-    visIkkeSatt: false,
-    hidden: false,
-};
-
-export const Beskrivelse = ({ aktivitet }: { aktivitet: AlleAktiviteter }) => (
+export const FraDato = ({ aktivitet, tittel, visIkkeSatt }: DatoFeltProps) => (
     <Informasjonsfelt
-        tittel={<FormattedMessage id="aktivitetvisning.beskrivelse-label" />}
-        innhold={aktivitet.beskrivelse}
-        beskrivelse
-        fullbredde
-        formattertTekst
+        key="fradato"
+        tittel={tittel || 'Fra dato'}
+        innhold={formatertDato(aktivitet.fraDato, visIkkeSatt)}
     />
 );
 
-Beskrivelse.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-};
+export const TilDato = ({ aktivitet, tittel, visIkkeSatt }: DatoFeltProps) => (
+    <Informasjonsfelt
+        key="tildato"
+        tittel={tittel || 'Til dato'}
+        innhold={formatertDato(aktivitet.tilDato, visIkkeSatt)}
+    />
+);
+
+interface BeskrivelseFeltProps {
+    aktivitet: AlleAktiviteter;
+}
+
+export const Beskrivelse = ({ aktivitet }: BeskrivelseFeltProps) => (
+    <Informasjonsfelt tittel="Beskrivelse" innhold={aktivitet.beskrivelse} beskrivelse fullbredde formattertTekst />
+);

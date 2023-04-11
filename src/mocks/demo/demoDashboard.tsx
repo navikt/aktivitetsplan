@@ -1,9 +1,7 @@
-import './demoDashboard.less';
-
 import { Checkbox, CheckboxGroup, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 
-import Hurtigfilter from './hurtigfilter';
+import Hurtigfilter from './Hurtigfilter';
 import {
     LocalStorageElement,
     aktivitetFeilet,

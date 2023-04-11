@@ -4,7 +4,7 @@ import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
+import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import AktivitetFormHeader from '../AktivitetFormHeader';
@@ -18,7 +18,7 @@ const schema = z.object({
         required_error: 'Fra dato må fylles ut',
         invalid_type_error: 'Ikke en gyldig dato',
     }),
-    kanal: z.string().min(1, 'Du må fylle ut samtaleform'),
+    kanal: z.nativeEnum(Kanal),
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
 
@@ -44,7 +44,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
         fraDato: dateOrUndefined(aktivitet?.fraDato),
-        kanal: aktivitet?.kanal || TELEFON_KANAL,
+        kanal: aktivitet?.kanal || Kanal.TELEFON,
         referat: aktivitet?.referat || startTekst,
     };
 
@@ -70,7 +70,7 @@ const InnerSamtalereferatForm = (props: Props) => {
         return handleSubmit((data) => {
             onSubmit({
                 ...data,
-                status: STATUS_GJENNOMFOERT,
+                status: AktivitetStatus.GJENNOMFOERT,
                 avtalt: false,
                 ...(erReferatPublisert && { erReferatPublisert: true }),
             });
@@ -98,9 +98,9 @@ const InnerSamtalereferatForm = (props: Props) => {
                     />
 
                     <Select label="Møteform (obligatorisk)" {...register('kanal')}>
-                        <option value={OPPMOTE_KANAL}>Oppmøte</option>
-                        <option value={TELEFON_KANAL}>Telefonmøte</option>
-                        <option value={INTERNET_KANAL}>Videomøte</option>
+                        <option value={Kanal.OPPMOTE}>Oppmøte</option>
+                        <option value={Kanal.TELEFON}>Telefonmøte</option>
+                        <option value={Kanal.INTERNET}>Videomøte</option>
                     </Select>
 
                     {nyAktivitet && (

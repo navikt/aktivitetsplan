@@ -8,8 +8,9 @@ import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsoriente
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
+import { useErVeileder } from '../../../../Provider';
 import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/dialog-selector';
-import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';
+import { selectIdentitetStatus } from '../../../identitet/identitet-selector';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -20,7 +21,7 @@ const VarslingBoks = ({ aktivitet }: Props) => {
     const dialogStatus = useSelector(selectDialogStatus);
     const avhengigheter = [identitetStatus, dialogStatus];
 
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const dialogForAktivitetId = useSelector((state) => selectDialogForAktivitetId(state, aktivitet));
     const erDigital = useErBrukerDigital();
     const erAlleredeVarslet =

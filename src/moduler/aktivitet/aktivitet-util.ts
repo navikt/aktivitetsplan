@@ -14,7 +14,7 @@ import {
     subMonths,
 } from 'date-fns';
 
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
 import {
     AktivitetStatus,
     AktivitetType,
@@ -24,6 +24,7 @@ import {
 } from '../../datatypes/aktivitetTypes';
 import {
     MoteAktivitet,
+    SamtalereferatAktivitet,
     StillingFraNavAktivitet,
     VeilarbAktivitet,
     VeilarbAktivitetType,
@@ -80,7 +81,7 @@ export function delCvikkeSvartSkalVises(aktivitet: StillingFraNavAktivitet): boo
     const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
     const status = aktivitet.status;
     const historisk = aktivitet.historisk;
-    const ikkeAktiv = status === STATUS_AVBRUTT || status === STATUS_FULLFOERT || !!historisk;
+    const ikkeAktiv = status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT || !!historisk;
 
     return erStillingFraNav && harIkkeSvart && !ikkeAktiv;
 }
@@ -203,26 +204,32 @@ function samtalreferatManglerPublisering(type: AktivitetType, erReferatPublisert
     return type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE && !erReferatPublisert;
 }
 
-export function manglerPubliseringAvSamtaleReferat(aktivitet: AlleAktiviteter, status: AktivitetStatus) {
+export function manglerPubliseringAvSamtaleReferat(
+    aktivitet: AlleAktiviteter,
+    status: AktivitetStatus
+): aktivitet is MoteAktivitet | SamtalereferatAktivitet {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
-        (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) && status !== STATUS_AVBRUTT) ||
+        (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) && status !== AktivitetStatus.AVBRUTT) ||
         samtalreferatManglerPublisering(type, erReferatPublisert)
     );
 }
 
 function erMoteOgAvbrutt(status: AktivitetStatus, aktivitetType: AktivitetType): boolean {
-    return status === STATUS_AVBRUTT && aktivitetType === MOTE_TYPE;
+    return status === AktivitetStatus.AVBRUTT && aktivitetType === MOTE_TYPE;
 }
 
 function erAvtaltOgAvbrutt(erAvtalt: boolean, status: AktivitetStatus): boolean {
-    return erAvtalt && status === STATUS_AVBRUTT;
+    return erAvtalt && status === AktivitetStatus.AVBRUTT;
 }
 
 function erFullfoertUtenReferat(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType) {
     return (
-        erAvtalt && status === STATUS_FULLFOERT && aktivitetType !== SAMTALEREFERAT_TYPE && aktivitetType !== MOTE_TYPE
+        erAvtalt &&
+        status === AktivitetStatus.FULLFOERT &&
+        aktivitetType !== SAMTALEREFERAT_TYPE &&
+        aktivitetType !== MOTE_TYPE
     );
 }
 

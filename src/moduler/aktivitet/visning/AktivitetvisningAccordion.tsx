@@ -1,11 +1,10 @@
 import { Accordion } from '@navikt/ds-react';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { ArenaAktivitetType } from '../../../datatypes/arenaAktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
-import { selectErVeileder } from '../../identitet/identitet-selector';
+import { useErVeileder } from '../../../Provider';
 import OppdaterAktivitetEtikett from './etikett-oppdatering/OppdaterAktivitetEtikett';
 import OppdaterSoknadsstatus from './soknadsstatus-oppdatering/OppdaterSoknadsstatus';
 import OppdaterAktivitetStatus from './status-oppdatering/OppdaterAktivitetStatus';
@@ -63,7 +62,7 @@ const getAccordionItems = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
 };
 
 const AktivitetvisningAccordion = ({ aktivitet }: Props) => {
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const accordionItems = getAccordionItems(aktivitet, erVeileder);
     if (!accordionItems) return null;
 

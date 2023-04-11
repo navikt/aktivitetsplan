@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
-import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
+import { useRoutes } from '../../../routes';
 import { aktivitetStatusMap, getAktivitetType } from '../../../utils/textMappers';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
@@ -21,7 +21,8 @@ const header = (valgtAktivitet?: AlleAktiviteter) => {
         return null;
     }
 
-    const aktivitetErLaast = valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT;
+    const aktivitetErLaast =
+        valgtAktivitet.status === AktivitetStatus.FULLFOERT || valgtAktivitet.status === AktivitetStatus.AVBRUTT;
 
     return (
         <ModalHeader
@@ -45,6 +46,7 @@ const AktivitetvisningModal = (props: Props) => {
     const { aktivitet, avhengigheter, children } = props;
     const dirty = useContext(DirtyContext);
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const selectFeilMeldinger = (a: AlleAktiviteter) =>
         isArenaAktivitet(a) ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
@@ -72,7 +74,7 @@ const AktivitetvisningModal = (props: Props) => {
                     window.alert('Det er en viktig beskjed om ansvaret ditt som du må lese.');
                     return;
                 }
-                navigate('/');
+                navigate(hovedsideRoute());
             }}
             feilmeldinger={alleFeil}
         >

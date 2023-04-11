@@ -3,13 +3,13 @@ import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds
 import { endOfToday, parseISO, startOfDay, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ZodErrorMap, z } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { useErVeileder } from '../../../../Provider';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import CustomErrorSummary from '../../aktivitet-forms/CustomErrorSummary';
 import { Ingress } from './DeleCvContainer';
@@ -70,7 +70,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
     const dispatch = useDispatch();
 
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const opprettetDato = aktivitet.opprettetDato;
 
     const syvDagerFoerOpprettet = subDays(startOfDay(parseISO(opprettetDato)), 7);

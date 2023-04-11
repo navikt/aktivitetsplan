@@ -4,7 +4,6 @@ import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { IKKE_FATT_JOBBEN } from '../../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
@@ -54,7 +53,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 
     const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
-    const ikkeAvslag = IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
+    const ikkeAvslag = StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
     const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 

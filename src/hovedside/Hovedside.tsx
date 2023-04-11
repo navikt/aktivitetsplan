@@ -9,16 +9,17 @@ import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import Maal from '../moduler/mal-linje/MittMaal';
-import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
+import OppfolgingStatus from '../moduler/oppfolging-status/OppfolgingStatus';
 import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselReducer';
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import { aktivitetRoute } from '../routes';
+import { useRoutes } from '../routes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
     const navigate = useNavigate();
+    const { aktivitetRoute } = useRoutes();
     useEventListener('visAktivitetsplan', (event) => {
         const aktivitetId = event.detail as string | undefined;
         if (!aktivitetId) return;

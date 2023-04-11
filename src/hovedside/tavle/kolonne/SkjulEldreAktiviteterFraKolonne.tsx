@@ -1,10 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
-import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
+import { useErVeileder } from '../../../Provider';
 import InvertedLestMer from './InvertedLesMer';
 
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const SkjulEldreAktiviteterFraKolonne = (props: Props) => {
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const aktiviteter = props.aktiviteteterTilDatoMerEnnToManederSiden;
     const hidden = aktiviteter.length === 0;
     const { aktivitetTekst } = props;

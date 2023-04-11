@@ -1,1 +1,0 @@
-Dra aktiviteter hit som du avbryter eller ikke begynner på. Flytter du en aktivitet til Avbrutt, blir den låst og kan ikke redigeres. Hvis du angrer, kan du opprette en tilsvarende ny aktivitet.

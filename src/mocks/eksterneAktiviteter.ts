@@ -1,6 +1,6 @@
 import { addDays, subDays } from 'date-fns';
 
-import { STATUS_GJENNOMFOERT, STATUS_PLANLAGT } from '../constant';
+import { AktivitetStatus } from '../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { wrapAktivitet } from './aktivitet';
 import { visEksterneAktiviteter } from './demo/sessionstorage';
@@ -12,7 +12,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Nå kan han lukte gull, derfor ror vi inn mot land',
-                  status: STATUS_PLANLAGT,
+                  status: AktivitetStatus.PLANLAGT,
                   avtalt: true,
                   beskrivelse: 'Denne aktiviteten har blitt overført fra Arena og ligger nå i veilarbaktivitet',
                   eksternAktivitet: {
@@ -30,7 +30,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'testestestest',
-                  status: STATUS_PLANLAGT,
+                  status: AktivitetStatus.PLANLAGT,
                   avtalt: false,
                   beskrivelse: 'Denne aktiviteten har blitt overført fra Arena og ligger nå i veilarbaktivitet',
                   eksternAktivitet: {
@@ -50,7 +50,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Saltrød og Høneby',
-                  status: STATUS_GJENNOMFOERT,
+                  status: AktivitetStatus.GJENNOMFOERT,
                   avtalt: false,
                   beskrivelse: 'Beskrivelse asdasdasdsasd',
                   eksternAktivitet: {
@@ -65,7 +65,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Arbeidstrening hos Biggen Blues og Bensin',
-                  status: STATUS_PLANLAGT,
+                  status: AktivitetStatus.PLANLAGT,
                   avtalt: true,
                   beskrivelse: 'Pumpeoperatør',
                   eksternAktivitet: {
@@ -83,7 +83,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Saltrød og Høneby - med oppgave',
-                  status: 'GJENNOMFORES',
+                  status: AktivitetStatus.GJENNOMFOERT,
                   avtalt: true,
                   beskrivelse:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce blandit sollicitudin odio, nec eleifend nibh pulvinar ac. Donec sed sem.',

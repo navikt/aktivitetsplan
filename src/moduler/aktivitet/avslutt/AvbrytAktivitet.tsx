@@ -7,6 +7,7 @@ import { AnyAction } from 'redux';
 import { STATUS } from '../../../api/utils';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
+import { useRoutes } from '../../../routes';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
@@ -25,6 +26,7 @@ const AvbrytAktivitet = () => {
     const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
     const dispatch = useDispatch();
 
     const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
@@ -38,7 +40,7 @@ const AvbrytAktivitet = () => {
             beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
-                navigate('/', { replace: true });
+                navigate(hovedsideRoute(), { replace: true });
                 lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
         />
@@ -49,19 +51,18 @@ const AvbrytAktivitet = () => {
             headerTekst={headerTekst}
             onSubmit={() => {
                 lagreBegrunnelse(valgtAktivitet, null);
-                navigate('/');
+                navigate(hovedsideRoute());
             }}
         />
     ) : null;
 
     const maaBegrunnes =
-        valgtAktivitet &&
-        trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.STATUS_AVBRUTT, valgtAktivitet.type);
+        valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.AVBRUTT, valgtAktivitet.type);
 
     return (
         <Modal contentLabel="Avbryt aktivitet">
             {valgtAktivitet ? (
-                <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.STATUS_AVBRUTT}>
+                <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.AVBRUTT}>
                     {maaBegrunnes ? begrunnelse : advarsel}
                 </PubliserReferat>
             ) : (
