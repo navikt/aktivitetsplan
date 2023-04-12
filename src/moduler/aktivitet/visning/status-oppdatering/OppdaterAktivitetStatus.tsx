@@ -53,8 +53,7 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
         setFormIsDirty('status', false);
         return lagreStatusEndringer(dispatch, formValues, aktivitet).then(() => {
             setIsOpen(false);
-            // @ts-ignore
-            document.querySelector('.aktivitet-modal').focus();
+            document.querySelector('.aktivitet-modal')?.focus();
         });
     };
 
