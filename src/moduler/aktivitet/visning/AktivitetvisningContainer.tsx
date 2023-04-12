@@ -7,6 +7,7 @@ import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../Provider';
+import { RootState } from '../../../store';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { hentAktivitetThunk } from '../aktivitet-actions';
@@ -32,7 +33,7 @@ const AktivitetvisningContainer = () => {
 
     const laster = arenaDataStatus !== Status.OK || aktivitetDataStatus !== Status.OK;
 
-    const avhengigheter = useSelector((state) => [
+    const avhengigheter = useSelector((state: RootState) => [
         selectOppfolgingStatus(state),
         // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
         // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik

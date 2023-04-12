@@ -71,7 +71,7 @@ export function fullforAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar
 }
 
 export const oppdaterCVSvarThunk = createAsyncThunk(
-    'aktivitet/oppdatercvsvar',
+    'aktivitet/oppdaterCvSvar',
     async ({
         aktivitetId,
         aktivitetVersjon,

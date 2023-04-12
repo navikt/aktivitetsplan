@@ -93,13 +93,13 @@ const aktivitetSlice = createSlice({
             state.fhoBekreftStatus = Status.ERROR;
         });
         builder.addCase(oppdaterCVSvarThunk.pending, (state) => {
-            state.status = Status.PENDING;
+            state.cvSvarStatus = Status.PENDING;
         });
         builder.addCase(oppdaterCVSvarThunk.fulfilled, (state, action) => {
             return nyStateMedOppdatertAktivitet({ ...state, cvSvarStatus: Status.OK }, action.payload);
         });
         builder.addCase(oppdaterCVSvarThunk.rejected, (state) => {
-            state.status = Status.ERROR;
+            state.cvSvarStatus = Status.ERROR;
         });
         builder.addMatcher(
             isAnyOf(
