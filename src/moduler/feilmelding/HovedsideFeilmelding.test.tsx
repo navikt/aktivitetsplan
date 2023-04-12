@@ -1,6 +1,4 @@
-import { BodyShort } from '@navikt/ds-react';
 import { render } from '@testing-library/react';
-import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -9,7 +7,6 @@ import reducer from '../../reducer';
 import { HENTING_FEILET as ARENA_HENT_FEILET } from '../aktivitet/arena-aktiviteter-reducer';
 import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../dialog/dialog-reducer';
 import { FEILET as OPPFOLGING_FEILET } from '../oppfolging-status/oppfolging-reducer';
-import Feilmelding from './Feilmelding';
 import { tekster } from './GetErrorText';
 import HovedsideFeilmelding from './HovedsideFeilmelding';
 
@@ -21,24 +18,24 @@ describe('<HovedsideFeilmelding/>', () => {
     it('Skal ikke rendre <Feilmelding/> dersom ingenting feiler', () => {
         const store = createStore(reducer);
 
-        const wrapper = mount(
+        const { queryByText } = render(
             <Provider store={store}>
                 <HovedsideFeilmelding />
             </Provider>
         );
-        expect(wrapper.find(Feilmelding).html()).toBeNull();
+        expect(queryByText('feil')).toBeFalsy();
     });
 
     it('Skal rendre <Feilmelding/> dersom oppfølging feiler', () => {
         const store = createStore(reducer);
 
         store.dispatch(oppfFeilet());
-        const wrapper = mount(
+        const { getByText } = render(
             <Provider store={store}>
                 <HovedsideFeilmelding />
             </Provider>
         );
-        expect(wrapper.find(Feilmelding)).not.toBeNull();
+        getByText('Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.');
     });
 
     it('Skal rendre <Feilmelding/> dersom dialog feiler', () => {
@@ -57,13 +54,11 @@ describe('<HovedsideFeilmelding/>', () => {
         const store = createStore(reducer);
 
         store.dispatch(arenaFeilet());
-        const wrapper = mount(
+        const { getByText } = render(
             <Provider store={store}>
                 <HovedsideFeilmelding />
             </Provider>
         );
-        const feilmelding = wrapper.find(Feilmelding);
-
-        expect(feilmelding.length).toEqual(1);
+        getByText('Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.');
     });
 });
