@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import useAppDispatch from '../hooks/useAppDispatch';
 import { selectExpirationTime } from './auth-selector';
-import { fetchAuthInfo } from './auth-slice';
+import { hentAuthInfo } from './auth-slice';
 import TimeoutboxNedtelling from './TimeoutboxNedtelling';
 
 const Timeoutbox = () => {
@@ -15,7 +15,7 @@ const Timeoutbox = () => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchAuthInfo());
+        dispatch(hentAuthInfo());
     }, []);
 
     const expirationTimestamp = useSelector(selectExpirationTime);

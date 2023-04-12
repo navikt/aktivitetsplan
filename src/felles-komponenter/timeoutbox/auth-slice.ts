@@ -9,7 +9,7 @@ const authSlice = createGenericSlice<AuthInfoResponse>({
     reducers: {},
 });
 
-export const fetchAuthInfo = createAsyncThunk(`${authSlice.name}/fetchAuthInfo`, async () => {
+export const hentAuthInfo = createAsyncThunk(`${authSlice.name}/fetchAuthInfo`, async () => {
     return await Api.fetchAuthInfo();
 });
 

@@ -10,7 +10,7 @@ const oppfolgingSlice = createGenericSlice({
     reducers: {},
 });
 
-export const fetchOppfolging = createAsyncThunk(`${oppfolgingSlice.name}/fetchOppfolging`, async () => {
+export const hentOppfolging = createAsyncThunk(`${oppfolgingSlice.name}/fetchOppfolging`, async () => {
     return await Api.fetchOppfolging();
 });
 

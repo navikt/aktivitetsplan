@@ -12,15 +12,16 @@ import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
 import { hentAktiviteterThunk } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
-import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
+import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
-import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
+import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-slice';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { fetchNivaa4 } from '../../moduler/tilgang/tilgang-slice';
-import { fetchVeilederInfo } from '../../moduler/veileder/veileder-slice';
+import { hentNivaa4 } from '../../moduler/tilgang/tilgang-slice';
+import { hentVeilederInfo } from '../../moduler/veileder/veileder-slice';
 import { useErVeileder } from '../../Provider';
+import { RootState } from '../../store';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
@@ -55,8 +56,8 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
-                dispatch(fetchNivaa4(hentFnrFraUrl()));
-                dispatch(fetchVeilederInfo());
+                dispatch(hentNivaa4(hentFnrFraUrl()));
+                dispatch(hentVeilederInfo());
             }
             dispatch(hentAktiviteterThunk());
             dispatch(hentArenaAktiviteter());
@@ -68,7 +69,7 @@ const Aktivitetstavle = () => {
     const skjulAdvarsel = !dragging || droppable;
 
     // SCROLLING //
-    const sistVisteAktivitetId: string = useSelector<Record<string, any>, string>((state) => {
+    const sistVisteAktivitetId: string = useSelector((state: RootState) => {
         const aktivitet: AlleAktiviteter | undefined = selectSistVisteAktivitet(state);
         return aktivitet ? prefixAktivtetskortId(aktivitet) : 'no-element';
     });

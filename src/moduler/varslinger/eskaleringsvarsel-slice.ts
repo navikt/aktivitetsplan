@@ -9,7 +9,7 @@ const eskaleringsvarselSlice = createGenericSlice<Eskaleringsvarsel>({
     reducers: {},
 });
 
-export const fetchEskaleringsvarsel = createAsyncThunk(
+export const hentEskaleringsvarsel = createAsyncThunk(
     `${eskaleringsvarselSlice.name}/fetchEskaleringsvarsel`,
     async () => {
         return await Api.fetchEskaleringsvarsel();

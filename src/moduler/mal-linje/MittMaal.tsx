@@ -20,7 +20,7 @@ import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../f
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
-import { fetchMal } from '../mal/aktivitetsmal-slice';
+import { hentMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { ReactComponent as MaalIkon } from './Aktivitetsplan_maal.svg';
 
@@ -94,7 +94,7 @@ function MittMaal() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchMal());
+        dispatch(hentMal());
     }, []);
 
     const avhengigheter = useSelector(selectMalStatus, shallowEqual);

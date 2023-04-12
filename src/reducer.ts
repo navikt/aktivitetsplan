@@ -1,15 +1,14 @@
 import { combineReducers } from 'redux';
 
 import authReducer from './felles-komponenter/timeoutbox/auth-slice';
-import dragAndDropReducer from './moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
+import dragAndDropSlice from './moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-slice';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-slice';
-import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
+import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-slice';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-slice';
 import dialogReducer from './moduler/dialog/dialog-slice';
 import filterReducer from './moduler/filtrering/filter/filter-slice';
 import identitetReducer from './moduler/identitet/identitet-slice';
-import informasjonReducer from './moduler/informasjon/informasjon-reducer';
 import lestReducer from './moduler/lest/lest-slice';
 import malReducer from './moduler/mal/aktivitetsmal-slice';
 import malListeReducer from './moduler/mal/malliste-slice';
@@ -39,8 +38,7 @@ const reducer = {
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
-        informasjon: informasjonReducer,
-        dragAndDrop: dragAndDropReducer,
+        dragAndDrop: dragAndDropSlice,
     }),
 };
 

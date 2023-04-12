@@ -7,7 +7,7 @@ import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
 import Aktivitetskort from './Aktivitetskort';
 import styles from './Aktivitetskort.module.less';
-import { startDragging, stopDragging } from './dragAndDropReducer';
+import { startDragging, stopDragging } from './dragAndDropSlice';
 
 interface Props {
     aktivitet: AlleAktiviteter;

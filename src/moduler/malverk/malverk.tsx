@@ -9,7 +9,7 @@ import visibleIfHOC from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
 import { RootState } from '../../store';
 import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
-import { fetchMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-slice';
+import { hentMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-slice';
 
 function lagMalverkOption(mal: any) {
     return (
@@ -93,7 +93,7 @@ class Malverk extends Component<Props> {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
     doHentMalverMedType: (type: string) => {
-        dispatch(fetchMalverkMedType(type));
+        dispatch(hentMalverkMedType(type));
     },
     doSettValgtMalverk: (valgtMalverk: any) => {
         dispatch(settValgtMalverk(valgtMalverk));

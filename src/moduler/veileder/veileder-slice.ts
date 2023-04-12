@@ -9,7 +9,7 @@ const veilederSlice = createGenericSlice<VeilederInfo>({
     reducers: {},
 });
 
-export const fetchVeilederInfo = createAsyncThunk(`${veilederSlice.name}/fetchVeilederInfo`, async () => {
+export const hentVeilederInfo = createAsyncThunk(`${veilederSlice.name}/fetchVeilederInfo`, async () => {
     return await Api.fetchVeilederInfo();
 });
 

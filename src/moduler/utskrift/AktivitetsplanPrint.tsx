@@ -16,8 +16,8 @@ import { hentFnrFraUrl } from '../../utils/fnr-util';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
-import { fetchMal } from '../mal/aktivitetsmal-slice';
-import { fetchMalListe } from '../mal/malliste-slice';
+import { hentMal } from '../mal/aktivitetsmal-slice';
+import { hentMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
@@ -190,8 +190,8 @@ const mapStateToProps = (state: any) => {
 
 function mapDispatchToProps(dispatch: AppDispatch) {
     return {
-        doHentMal: () => dispatch(fetchMal()),
-        doHentMalListe: () => dispatch(fetchMalListe()),
+        doHentMal: () => dispatch(hentMal()),
+        doHentMalListe: () => dispatch(hentMalListe()),
     };
 }
 

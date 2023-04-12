@@ -10,7 +10,7 @@ const lestSlice = createGenericSlice({
     reducers: {},
 });
 
-export const fetchLest = createAsyncThunk(`${lestSlice.name}/fetchSisteLest`, async () => {
+export const hentLest = createAsyncThunk(`${lestSlice.name}/fetchSisteLest`, async () => {
     return await Api.fetchSisteLest();
 });
 

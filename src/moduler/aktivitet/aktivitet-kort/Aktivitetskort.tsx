@@ -12,11 +12,8 @@ import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-selector';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
-import {
-    selectAktiviteterSomHarBlittVist,
-    selectSistVisteAktivitet,
-    settAktivitetSomVist,
-} from '../aktivitetview-reducer';
+import { selectAktiviteterSomHarBlittVist, selectSistVisteAktivitet } from '../aktivitetview-selector';
+import { settAktivitetSomVist } from '../aktivitetview-slice';
 import styles from './Aktivitetskort.module.less';
 import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import AktivitetskortTillegg from './AktivitetskortTillegg';

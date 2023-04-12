@@ -7,12 +7,12 @@ import { createStore } from 'redux';
 import reducer from '../../reducer';
 import { HENTING_FEILET as ARENA_HENT_FEILET } from '../aktivitet/arena-aktiviteter-reducer';
 import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../dialog/dialog-reducer';
-import { fetchOppfolging } from '../oppfolging-status/oppfolging-slice';
+import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import Feilmelding from './Feilmelding';
 import { tekster } from './GetErrorText';
 import HovedsideFeilmelding from './HovedsideFeilmelding';
 
-const oppfFeilet = () => ({ type: [fetchOppfolging.rejected], data: {} });
+const oppfFeilet = () => ({ type: [hentOppfolging.rejected], data: {} });
 const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: { type: DIALOG_HENT_FEILET } });
 const arenaFeilet = () => ({ type: ARENA_HENT_FEILET, data: {} });
 

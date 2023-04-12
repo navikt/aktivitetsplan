@@ -1,4 +1,4 @@
-import { HENTING_FEILET as AKTIVITET_HENT_FEILET, NIVAA_4_FEILET } from '../aktivitet/aktivitet-action-types';
+// import { HENTING_FEILET as AKTIVITET_HENT_FEILET, NIVAA_4_FEILET } from '../aktivitet/aktivitet-action-types';
 // import { HENTING_FEILET as ARENA_HENT_FEILET } from '../aktivitet/arena-aktiviteter-reducer-copy';
 // import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer-copy';
 import { FeilmeldingType } from './FeilmeldingTypes';
@@ -29,18 +29,20 @@ export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
         return tekster.fallback;
     }
 
-    if (feil.type === AKTIVITET_HENT_FEILET) {
-        return tekster.aktivitetFeilet;
-    }
+    // TODO ny: aktivitet/hent/rejected
+    // if (feil.type === AKTIVITET_HENT_FEILET) {
+    //     return tekster.aktivitetFeilet;
+    // }
 
     // TODO ny: arenaAktivitet/fetchArenaAktiviteter/rejected
     // if (feil.type === ARENA_HENT_FEILET) {
     //     return tekster.aktivitetFeilet;
     // }
 
-    if (feil.type === NIVAA_4_FEILET) {
-        return tekster.nivaa4;
-    }
+    // TODO ny: tilgang/fetchHarNivaa4/rejected
+    // if (feil.type === NIVAA_4_FEILET) {
+    //     return tekster.nivaa4;
+    // }
 
     return tekster.fallback;
 }

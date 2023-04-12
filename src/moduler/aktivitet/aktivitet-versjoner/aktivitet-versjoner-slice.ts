@@ -33,14 +33,14 @@ const aktivitetVersjonerSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchVersjonerForAktivitet.pending, (state) => {
+        builder.addCase(hentVersjonerForAktivitet.pending, (state) => {
             state.status = state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
         });
-        builder.addCase(fetchVersjonerForAktivitet.fulfilled, (state, action) => {
+        builder.addCase(hentVersjonerForAktivitet.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = Status.OK;
         });
-        builder.addCase(fetchVersjonerForAktivitet.rejected, (state) => {
+        builder.addCase(hentVersjonerForAktivitet.rejected, (state) => {
             state.status = Status.ERROR;
         });
         builder.addMatcher(
@@ -67,7 +67,7 @@ const aktivitetVersjonerSlice = createSlice({
     },
 });
 
-export const fetchVersjonerForAktivitet = createAsyncThunk(
+export const hentVersjonerForAktivitet = createAsyncThunk(
     `${aktivitetVersjonerSlice.name}/fetchVersjonerForAktivitet`,
     async (aktivitet: VeilarbAktivitet) => {
         return await Api.hentVersjonerTilAktivitet(aktivitet);

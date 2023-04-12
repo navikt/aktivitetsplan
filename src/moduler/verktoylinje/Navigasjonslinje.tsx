@@ -10,7 +10,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
 import { selectSistOppdatert } from '../dialog/dialog-selector';
-import { fetchDialoger } from '../dialog/dialog-slice';
+import { hentDialoger } from '../dialog/dialog-slice';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -19,7 +19,7 @@ function Navigasjonslinje() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const doHentDialog = () => dispatch(fetchDialoger());
+        const doHentDialog = () => dispatch(hentDialoger());
 
         if (!erVeileder) {
             let interval: NodeJS.Timeout;

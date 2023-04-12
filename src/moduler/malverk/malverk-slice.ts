@@ -25,20 +25,20 @@ const malverkSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchMalverkMedType.pending, (state) => {
+        builder.addCase(hentMalverkMedType.pending, (state) => {
             state.status = state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
         });
-        builder.addCase(fetchMalverkMedType.fulfilled, (state, action) => {
+        builder.addCase(hentMalverkMedType.fulfilled, (state, action) => {
             state.malverker = action.payload;
             state.status = Status.OK;
         });
-        builder.addCase(fetchMalverkMedType.rejected, (state) => {
+        builder.addCase(hentMalverkMedType.rejected, (state) => {
             state.status = Status.ERROR;
         });
     },
 });
 
-export const fetchMalverkMedType = createAsyncThunk(
+export const hentMalverkMedType = createAsyncThunk(
     `${malverkSlice.name}/fetchMalverkMedType`,
     async (type: string) => {
         return await Api.hentMalverkMedType(type);

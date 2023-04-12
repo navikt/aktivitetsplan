@@ -5,7 +5,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useErVeileder } from '../../Provider';
 import { selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
-import { fetchIdentitet } from '../identitet/identitet-slice';
+import { hentIdentitet } from '../identitet/identitet-slice';
 import {
     selectAktorId,
     selectErBrukerManuell,
@@ -15,7 +15,7 @@ import {
     selectReservasjonKRR,
     selectServicegruppe,
 } from './oppfolging-selector';
-import { fetchOppfolging } from './oppfolging-slice';
+import { hentOppfolging } from './oppfolging-slice';
 import VidereSendBrukereEllerRenderChildren from './VidereSendBrukereEllerRenderChildren';
 
 interface Props {
@@ -48,8 +48,8 @@ const OppfolgingStatus = ({ children }: Props) => {
     };
 
     useEffect(() => {
-        dispatch(fetchOppfolging());
-        dispatch(fetchIdentitet());
+        dispatch(hentOppfolging());
+        dispatch(hentIdentitet());
     }, []);
 
     return (

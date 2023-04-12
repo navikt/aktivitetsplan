@@ -10,7 +10,7 @@ const malListeSlice = createGenericSlice({
     reducers: {},
 });
 
-export const fetchMalListe = createAsyncThunk(`${malListeSlice.name}/fetchMalListe`, async () => {
+export const hentMalListe = createAsyncThunk(`${malListeSlice.name}/fetchMalListe`, async () => {
     return await Api.fetchMalListe();
 });
 

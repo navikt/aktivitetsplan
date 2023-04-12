@@ -10,7 +10,7 @@ const identitetSlice = createGenericSlice({
     reducers: {},
 });
 
-export const fetchIdentitet = createAsyncThunk(`${identitetSlice.name}/fetchIdentitet`, async () => {
+export const hentIdentitet = createAsyncThunk(`${identitetSlice.name}/fetchIdentitet`, async () => {
     return await Api.fetchIdentitet();
 });
 

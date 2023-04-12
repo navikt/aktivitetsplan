@@ -21,18 +21,18 @@ const dialogSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchDialoger.fulfilled, (state, action) => {
+        builder.addCase(hentDialoger.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = Status.OK;
             state.sistOppdatert = new Date().toISOString();
         });
-        builder.addCase(fetchDialoger.rejected, (state) => {
+        builder.addCase(hentDialoger.rejected, (state) => {
             state.status = Status.ERROR;
         });
     },
 });
 
-export const fetchDialoger = createAsyncThunk(`${dialogSlice.name}/fetchDialoger`, async (_, thunkAPI) => {
+export const hentDialoger = createAsyncThunk(`${dialogSlice.name}/fetchDialoger`, async (_, thunkAPI) => {
     return await Api.fetchDialoger();
 });
 

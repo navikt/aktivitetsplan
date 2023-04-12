@@ -9,7 +9,7 @@ const tilgangSlice = createGenericSlice<HarLoggetInnRespons>({
     reducers: {},
 });
 
-export const fetchNivaa4 = createAsyncThunk(`${tilgangSlice.name}/fetchHarNivaa4`, async (fnr: string) => {
+export const hentNivaa4 = createAsyncThunk(`${tilgangSlice.name}/fetchHarNivaa4`, async (fnr: string) => {
     return await Api.hentHarNivaa4(fnr);
 });
 

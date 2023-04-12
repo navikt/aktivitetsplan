@@ -7,7 +7,7 @@ import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch'
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
-import { fetchVersjonerForAktivitet, fjernVersjoner } from '../../aktivitet-versjoner/aktivitet-versjoner-slice';
+import { fjernVersjoner, hentVersjonerForAktivitet } from '../../aktivitet-versjoner/aktivitet-versjoner-slice';
 import VersjonInnslag from './VersjonInnslag';
 
 const MAX_SIZE = 10;
@@ -26,7 +26,7 @@ const VersjonerForAktivitet = (props: Props) => {
 
     useEffect(() => {
         dispatch(fjernVersjoner());
-        dispatch(fetchVersjonerForAktivitet(aktivitet));
+        dispatch(hentVersjonerForAktivitet(aktivitet));
         return () => {
             dispatch(fjernVersjoner());
         };
