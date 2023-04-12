@@ -2,15 +2,13 @@ import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
-import { vi } from 'vitest';
+import { MockedFunction, vi } from 'vitest';
 
 import { STATUS } from '../../api/utils';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
 import { ErVeilederContext } from '../../Provider';
 import reducer from '../../reducer';
 import IkkeNiva4 from './IkkeNiva4';
-
-import MockedFn = jest.MockedFn;
 
 const createMockStore = () =>
     createStore(reducer, {
@@ -85,8 +83,8 @@ const fetchData = (
 
 describe('IkkeNiva4', () => {
     beforeEach(() => {
-        (loggHarBruktNivaa4 as MockedFn<any>).mockClear();
-        (loggIkkeRegistrertIKrr as MockedFn<any>).mockClear();
+        (loggHarBruktNivaa4 as MockedFunction<any>).mockClear();
+        (loggIkkeRegistrertIKrr as MockedFunction<any>).mockClear();
     });
 
     it('skal ikke logge ikkeRegIKrr når kan varsles && ikke manuell && ikke reservert i KRR', async () => {
