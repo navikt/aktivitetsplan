@@ -1,5 +1,3 @@
-import './polyfill';
-
 import NAVSPA from '@navikt/navspa';
 import { setDefaultOptions } from 'date-fns';
 import nn from 'date-fns/locale/nn';
