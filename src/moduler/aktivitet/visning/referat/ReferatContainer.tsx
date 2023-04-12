@@ -9,7 +9,7 @@ import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/in
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { publiserReferatThunk } from '../../aktivitet-actions';
+import { publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import OppdaterReferatForm from './OppdaterReferatForm';
 import ReferatVisning from './ReferatVisning';
@@ -52,7 +52,7 @@ const ReferatContainer = (props: Props) => {
             <ReferatVisning
                 referat={referat}
                 erAktivAktivitet={erAktivAktivitet}
-                dispatchPubliserReferat={() => dispatch(publiserReferatThunk(aktivitet))}
+                dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
                 publiserer={publiserer}
                 erReferatPublisert={erReferatPublisert}
                 startOppdaterReferat={() => setOppdaterReferat(true)}

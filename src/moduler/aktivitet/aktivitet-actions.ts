@@ -5,33 +5,30 @@ import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 
-export const hentAktiviteterThunk = createAsyncThunk('aktivitet/hent', async () => {
+export const hentAktiviteter = createAsyncThunk('aktivitet/hent', async () => {
     return await Api.hentAktiviteter();
 });
 
-export const hentAktivitetThunk = createAsyncThunk('aktivitet/hent_aktivitet', async (aktivitetId: string) => {
+export const hentAktivitet = createAsyncThunk('aktivitet/hent_aktivitet', async (aktivitetId: string) => {
     return await Api.hentAktivitet(aktivitetId);
 });
 
-export const flyttAktivitetThunk = createAsyncThunk(
+export const flyttAktivitet = createAsyncThunk(
     'aktivitet/flytt',
     async ({ aktivitet, status }: { aktivitet: VeilarbAktivitet; status: AktivitetStatus }) => {
         return await Api.oppdaterAktivitetStatus({ ...aktivitet, status });
     }
 );
 
-export const oppdaterAktivitetEtikettThunk = createAsyncThunk(
-    'aktivitet/oppdater',
-    async (aktivitet: VeilarbAktivitet) => {
-        return await Api.oppdaterAktivitetEtikett(aktivitet);
-    }
-);
+export const oppdaterAktivitetEtikett = createAsyncThunk('aktivitet/oppdater', async (aktivitet: VeilarbAktivitet) => {
+    return await Api.oppdaterAktivitetEtikett(aktivitet);
+});
 
-export const oppdaterAktivitetThunk = createAsyncThunk('aktivitet/oppdater', async (aktivitet: VeilarbAktivitet) => {
+export const oppdaterAktivitet = createAsyncThunk('aktivitet/oppdater', async (aktivitet: VeilarbAktivitet) => {
     return await Api.oppdaterAktivitet(aktivitet);
 });
 
-export const settAktivitetTilAvtaltThunk = createAsyncThunk(
+export const settAktivitetTilAvtalt = createAsyncThunk(
     'aktivitet/fho',
     async ({
         aktivitet,
@@ -44,7 +41,7 @@ export const settAktivitetTilAvtaltThunk = createAsyncThunk(
     }
 );
 
-export const markerForhaandsorienteringSomLestThunk = createAsyncThunk(
+export const markerForhaandsorienteringSomLest = createAsyncThunk(
     'aktivitet/fho/lest',
     async (aktivitet: VeilarbAktivitet) => {
         return await Api.markerForhaandsorienteringSomLest(aktivitet.id, aktivitet.versjon);
@@ -57,20 +54,20 @@ export function flyttAktivitetMedBegrunnelse(
     avsluttetKommentar: string
 ) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
-    return flyttAktivitetThunk({ aktivitet: nyAktivitet, status });
+    return flyttAktivitet({ aktivitet: nyAktivitet, status });
 }
 
 export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
-    return flyttAktivitetThunk({ aktivitet: nyAktivitet, status: AktivitetStatus.AVBRUTT });
+    return flyttAktivitet({ aktivitet: nyAktivitet, status: AktivitetStatus.AVBRUTT });
 }
 
 export function fullforAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
-    return flyttAktivitetThunk({ aktivitet: nyAktivitet, status: AktivitetStatus.FULLFOERT });
+    return flyttAktivitet({ aktivitet: nyAktivitet, status: AktivitetStatus.FULLFOERT });
 }
 
-export const oppdaterCVSvarThunk = createAsyncThunk(
+export const oppdaterCVSvar = createAsyncThunk(
     'aktivitet/oppdaterCvSvar',
     async ({
         aktivitetId,
@@ -87,7 +84,7 @@ export const oppdaterCVSvarThunk = createAsyncThunk(
     }
 );
 
-export const oppdaterStillingFraNavSoknadsstatusThunk = createAsyncThunk(
+export const oppdaterStillingFraNavSoknadsstatus = createAsyncThunk(
     'aktivitet/oppdater',
     async ({
         aktivitetId,
@@ -102,18 +99,18 @@ export const oppdaterStillingFraNavSoknadsstatusThunk = createAsyncThunk(
     }
 );
 
-export const lagNyAktivitetThunk = createAsyncThunk('aktivitet/opprett', async (aktivitet: VeilarbAktivitet) => {
+export const lagNyAktivitet = createAsyncThunk('aktivitet/opprett', async (aktivitet: VeilarbAktivitet) => {
     return await Api.lagNyAktivitet(aktivitet);
 });
 
-export const oppdaterReferatThunk = createAsyncThunk(
+export const oppdaterReferat = createAsyncThunk(
     'referat/oppdater',
     async (aktivitet: SamtalereferatAktivitet | MoteAktivitet) => {
         return await Api.oppdaterReferat(aktivitet);
     }
 );
 
-export const publiserReferatThunk = createAsyncThunk(
+export const publiserReferat = createAsyncThunk(
     'referat/publiser',
     async (aktivitet: SamtalereferatAktivitet | MoteAktivitet) => {
         return await Api.publiserReferat({ ...aktivitet, erReferatPublisert: true });

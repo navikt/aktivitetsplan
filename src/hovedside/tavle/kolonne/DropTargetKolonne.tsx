@@ -8,7 +8,7 @@ import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTy
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
-import { flyttAktivitetThunk } from '../../../moduler/aktivitet/aktivitet-actions';
+import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
@@ -46,7 +46,7 @@ function DropTargetKolonne({ status, children }: Props) {
             } else if (status === AktivitetStatus.AVBRUTT) {
                 navigate(avbrytAktivitetRoute(aktivitet.id));
             } else {
-                dispatch(flyttAktivitetThunk({ aktivitet, status }));
+                dispatch(flyttAktivitet({ aktivitet, status }));
             }
         },
         collect: (monitor) => ({

@@ -13,7 +13,7 @@ import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
-import { lagNyAktivitetThunk } from '../aktivitet-actions';
+import { lagNyAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
@@ -42,7 +42,7 @@ const NyAktivitetForm = () => {
                 type: aktivitetsType,
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
-            return dispatch(lagNyAktivitetThunk(nyAktivitet)).then((action) =>
+            return dispatch(lagNyAktivitet(nyAktivitet)).then((action) =>
                 navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id))
             );
         };

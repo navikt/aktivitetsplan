@@ -4,14 +4,14 @@ import * as Api from '../../../api/aktivitetAPI';
 import { Status } from '../../../createGenericSlice';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import {
-    flyttAktivitetThunk,
-    markerForhaandsorienteringSomLestThunk,
-    oppdaterAktivitetEtikettThunk,
-    oppdaterAktivitetThunk,
-    oppdaterReferatThunk,
-    oppdaterStillingFraNavSoknadsstatusThunk,
-    publiserReferatThunk,
-    settAktivitetTilAvtaltThunk,
+    flyttAktivitet,
+    markerForhaandsorienteringSomLest,
+    oppdaterAktivitet,
+    oppdaterAktivitetEtikett,
+    oppdaterReferat,
+    oppdaterStillingFraNavSoknadsstatus,
+    publiserReferat,
+    settAktivitetTilAvtalt,
 } from '../aktivitet-actions';
 
 interface AktivitetVersjonerState {
@@ -45,14 +45,14 @@ const aktivitetVersjonerSlice = createSlice({
         });
         builder.addMatcher(
             isAnyOf(
-                oppdaterAktivitetEtikettThunk.fulfilled,
-                oppdaterAktivitetThunk.fulfilled,
-                oppdaterStillingFraNavSoknadsstatusThunk.fulfilled,
-                oppdaterReferatThunk.fulfilled,
-                publiserReferatThunk.fulfilled,
-                markerForhaandsorienteringSomLestThunk.fulfilled,
-                settAktivitetTilAvtaltThunk.fulfilled,
-                flyttAktivitetThunk.fulfilled
+                oppdaterAktivitetEtikett.fulfilled,
+                oppdaterAktivitet.fulfilled,
+                oppdaterStillingFraNavSoknadsstatus.fulfilled,
+                oppdaterReferat.fulfilled,
+                publiserReferat.fulfilled,
+                markerForhaandsorienteringSomLest.fulfilled,
+                settAktivitetTilAvtalt.fulfilled,
+                flyttAktivitet.fulfilled
             ),
             (state, action) => {
                 if (state.status === Status.NOT_STARTED) {
@@ -61,7 +61,7 @@ const aktivitetVersjonerSlice = createSlice({
                 return { ...state, data: [action.payload, ...state.data] };
             }
         );
-        builder.addMatcher(isAnyOf(oppdaterReferatThunk.rejected, publiserReferatThunk.rejected), (state) => {
+        builder.addMatcher(isAnyOf(oppdaterReferat.rejected, publiserReferat.rejected), (state) => {
             state.status = Status.ERROR;
         });
     },

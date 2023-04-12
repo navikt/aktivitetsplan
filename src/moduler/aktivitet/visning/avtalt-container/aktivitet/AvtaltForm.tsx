@@ -11,7 +11,7 @@ import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispat
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
-import { settAktivitetTilAvtaltThunk } from '../../../aktivitet-actions';
+import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { useKanSendeVarsel, useSendAvtaltMetrikker } from '../avtaltHooks';
 import { AVTALT_TEKST, AVTALT_TEKST_119, getForhaandsorienteringText } from '../utilsForhaandsorientering';
 import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
@@ -62,7 +62,7 @@ const AvtaltForm = (props: Props) => {
     const avhengigheter = useSelector(selectNivaa4Status);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) =>
-        dispatch(settAktivitetTilAvtaltThunk({ aktivitet: avtaltAktivitet, forhaandsorientering }));
+        dispatch(settAktivitetTilAvtalt({ aktivitet: avtaltAktivitet, forhaandsorientering }));
 
     const onSubmitHandler = (
         forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues

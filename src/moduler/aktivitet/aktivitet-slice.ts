@@ -5,18 +5,18 @@ import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
 import {
-    flyttAktivitetThunk,
-    hentAktivitetThunk,
-    hentAktiviteterThunk,
-    lagNyAktivitetThunk,
-    markerForhaandsorienteringSomLestThunk,
-    oppdaterAktivitetEtikettThunk,
-    oppdaterAktivitetThunk,
-    oppdaterCVSvarThunk,
-    oppdaterReferatThunk,
-    oppdaterStillingFraNavSoknadsstatusThunk,
-    publiserReferatThunk,
-    settAktivitetTilAvtaltThunk,
+    flyttAktivitet,
+    hentAktivitet,
+    hentAktiviteter,
+    lagNyAktivitet,
+    markerForhaandsorienteringSomLest,
+    oppdaterAktivitet,
+    oppdaterAktivitetEtikett,
+    oppdaterCVSvar,
+    oppdaterReferat,
+    oppdaterStillingFraNavSoknadsstatus,
+    publiserReferat,
+    settAktivitetTilAvtalt,
 } from './aktivitet-actions';
 
 interface AktivitetState {
@@ -51,64 +51,64 @@ const aktivitetSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(hentAktiviteterThunk.fulfilled, (state, action) => {
+        builder.addCase(hentAktiviteter.fulfilled, (state, action) => {
             state.status = Status.OK;
             state.data = action.payload.aktiviteter;
         });
-        builder.addCase(hentAktivitetThunk.fulfilled, (state, action) => {
+        builder.addCase(hentAktivitet.fulfilled, (state, action) => {
             state.status = Status.OK;
             state.data = state.data.filter((aktivitet) => aktivitet.id !== action.payload.id).concat(action.payload);
         });
-        builder.addCase(lagNyAktivitetThunk.fulfilled, (state, action) => {
+        builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
             state.status = Status.OK;
             state.data = [...state.data, action.payload];
         });
-        builder.addCase(flyttAktivitetThunk.pending, (state, action) => {
+        builder.addCase(flyttAktivitet.pending, (state, action) => {
             return nyStateMedOppdatertAktivitet({ ...state, status: Status.RELOADING }, action.meta.arg.aktivitet, {
                 nesteStatus: action.meta.arg.status,
             });
         });
-        builder.addCase(flyttAktivitetThunk.rejected, (state, action) => {
+        builder.addCase(flyttAktivitet.rejected, (state, action) => {
             return nyStateMedOppdatertAktivitet({ ...state, status: Status.ERROR }, action.meta.arg.aktivitet);
         });
-        builder.addCase(markerForhaandsorienteringSomLestThunk.pending, (state) => {
+        builder.addCase(markerForhaandsorienteringSomLest.pending, (state) => {
             state.fhoLestStatus = Status.RELOADING;
         });
-        builder.addCase(markerForhaandsorienteringSomLestThunk.fulfilled, (state, action) => {
+        builder.addCase(markerForhaandsorienteringSomLest.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: Status.OK }, action.payload);
         });
-        builder.addCase(markerForhaandsorienteringSomLestThunk.rejected, (state) => {
+        builder.addCase(markerForhaandsorienteringSomLest.rejected, (state) => {
             state.fhoLestStatus = Status.ERROR;
         });
-        builder.addCase(settAktivitetTilAvtaltThunk.pending, (state) => {
+        builder.addCase(settAktivitetTilAvtalt.pending, (state) => {
             state.fhoBekreftStatus = Status.RELOADING;
         });
-        builder.addCase(settAktivitetTilAvtaltThunk.fulfilled, (state, action) => {
+        builder.addCase(settAktivitetTilAvtalt.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, fhoBekreftStatus: Status.OK }, action.payload);
         });
-        builder.addCase(settAktivitetTilAvtaltThunk.rejected, (state) => {
+        builder.addCase(settAktivitetTilAvtalt.rejected, (state) => {
             state.fhoBekreftStatus = Status.ERROR;
         });
-        builder.addCase(oppdaterCVSvarThunk.pending, (state) => {
+        builder.addCase(oppdaterCVSvar.pending, (state) => {
             state.cvSvarStatus = Status.PENDING;
         });
-        builder.addCase(oppdaterCVSvarThunk.fulfilled, (state, action) => {
+        builder.addCase(oppdaterCVSvar.fulfilled, (state, action) => {
             return nyStateMedOppdatertAktivitet({ ...state, cvSvarStatus: Status.OK }, action.payload);
         });
-        builder.addCase(oppdaterCVSvarThunk.rejected, (state) => {
+        builder.addCase(oppdaterCVSvar.rejected, (state) => {
             state.cvSvarStatus = Status.ERROR;
         });
         builder.addMatcher(
             isAnyOf(
-                oppdaterAktivitetEtikettThunk.fulfilled,
-                oppdaterAktivitetThunk.fulfilled,
-                oppdaterStillingFraNavSoknadsstatusThunk.fulfilled,
-                flyttAktivitetThunk.fulfilled,
-                oppdaterReferatThunk.fulfilled,
-                publiserReferatThunk.fulfilled
+                oppdaterAktivitetEtikett.fulfilled,
+                oppdaterAktivitet.fulfilled,
+                oppdaterStillingFraNavSoknadsstatus.fulfilled,
+                flyttAktivitet.fulfilled,
+                oppdaterReferat.fulfilled,
+                publiserReferat.fulfilled
             ),
             (state, action) => {
                 windowEvent(UpdateTypes.Aktivitet);
@@ -117,12 +117,12 @@ const aktivitetSlice = createSlice({
         );
         builder.addMatcher(
             isAnyOf(
-                oppdaterAktivitetEtikettThunk.pending,
-                oppdaterAktivitetThunk.pending,
-                oppdaterStillingFraNavSoknadsstatusThunk.pending,
-                lagNyAktivitetThunk.pending,
-                oppdaterReferatThunk.pending,
-                publiserReferatThunk.pending
+                oppdaterAktivitetEtikett.pending,
+                oppdaterAktivitet.pending,
+                oppdaterStillingFraNavSoknadsstatus.pending,
+                lagNyAktivitet.pending,
+                oppdaterReferat.pending,
+                publiserReferat.pending
             ),
             (state) => {
                 state.status = Status.RELOADING;
@@ -130,11 +130,11 @@ const aktivitetSlice = createSlice({
         );
         builder.addMatcher(
             isAnyOf(
-                hentAktiviteterThunk.rejected,
-                hentAktivitetThunk.rejected,
-                oppdaterAktivitetEtikettThunk.rejected,
-                oppdaterAktivitetThunk.rejected,
-                oppdaterStillingFraNavSoknadsstatusThunk.rejected
+                hentAktiviteter.rejected,
+                hentAktivitet.rejected,
+                oppdaterAktivitetEtikett.rejected,
+                oppdaterAktivitet.rejected,
+                oppdaterStillingFraNavSoknadsstatus.rejected
             ),
             (state) => {
                 state.status = Status.ERROR;

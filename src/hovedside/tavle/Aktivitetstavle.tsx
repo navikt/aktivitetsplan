@@ -10,7 +10,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
-import { hentAktiviteterThunk } from '../../moduler/aktivitet/aktivitet-actions';
+import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
@@ -59,7 +59,7 @@ const Aktivitetstavle = () => {
                 dispatch(hentNivaa4(hentFnrFraUrl()));
                 dispatch(hentVeilederInfo());
             }
-            dispatch(hentAktiviteterThunk());
+            dispatch(hentAktiviteter());
             dispatch(hentArenaAktiviteter());
         }
     }, [aktivitetNotStarted, erVeileder, dispatch]);

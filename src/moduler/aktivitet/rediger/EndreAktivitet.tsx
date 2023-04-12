@@ -32,7 +32,7 @@ import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
-import { oppdaterAktivitetThunk } from '../aktivitet-actions';
+import { oppdaterAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
     MedisinskBehandlingFormValues,
 } from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
@@ -101,7 +101,7 @@ function getAktivitetsFormComponent<T extends VeilarbAktivitet>(
 
 function EndreAktivitet() {
     const dispatch = useAppDispatch();
-    const doOppdaterAktivitet = (aktivitet: VeilarbAktivitet) => dispatch(oppdaterAktivitetThunk(aktivitet));
+    const doOppdaterAktivitet = (aktivitet: VeilarbAktivitet) => dispatch(oppdaterAktivitet(aktivitet));
 
     const isDirty = useRef(false);
     useConfirmOnBeforeUnload(isDirty);

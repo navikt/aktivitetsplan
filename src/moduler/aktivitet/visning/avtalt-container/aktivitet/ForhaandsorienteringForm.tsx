@@ -17,7 +17,7 @@ import {
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
-import { settAktivitetTilAvtaltThunk } from '../../../aktivitet-actions';
+import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-slice';
 import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
@@ -76,7 +76,7 @@ const ForhaandsorienteringForm = (props: Props) => {
         setForhandsorienteringType(formValues.forhaandsorienteringType);
         const settTilAvtalt = isArena
             ? dispatch(sendForhaandsorienteringArenaAktivitet({ arenaAktivitet: aktivitet, forhaandsorientering }))
-            : dispatch(settAktivitetTilAvtaltThunk({ aktivitet, forhaandsorientering }));
+            : dispatch(settAktivitetTilAvtalt({ aktivitet, forhaandsorientering }));
         return settTilAvtalt.then(() => {
             setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();

@@ -9,7 +9,7 @@ import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTy
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
-import { oppdaterCVSvarThunk } from '../../aktivitet-actions';
+import { oppdaterCVSvar } from '../../aktivitet-actions';
 import CustomErrorSummary from '../../aktivitet-forms/CustomErrorSummary';
 import { Ingress } from './DeleCvContainer';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
@@ -105,7 +105,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     const onSubmit = (data: KanDeles) => {
         dispatch(
-            oppdaterCVSvarThunk({
+            oppdaterCVSvar({
                 aktivitetId: aktivitet.id,
                 aktivitetVersjon: aktivitet.versjon,
                 kanDeles: data.kanDeles === SvarType.JA,

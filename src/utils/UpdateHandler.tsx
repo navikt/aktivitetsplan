@@ -2,7 +2,7 @@ import React from 'react';
 
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
-import { hentAktiviteterThunk } from '../moduler/aktivitet/aktivitet-actions';
+import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
 import { hentDialoger } from '../moduler/dialog/dialog-slice';
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 
@@ -38,7 +38,7 @@ export function UpdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return dispatch(hentAktiviteterThunk());
+                return dispatch(hentAktiviteter());
             case UpdateTypes.Dialog:
                 return dispatch(hentDialoger());
             case UpdateTypes.Oppfolging:

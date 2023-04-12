@@ -8,7 +8,7 @@ import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispat
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
 import { formaterDatoManed } from '../../../../../utils/dateUtils';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
-import { markerForhaandsorienteringSomLestThunk } from '../../../aktivitet-actions';
+import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
 import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';
 import { selectArenaAktivitetFhoLestStatus } from '../../../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-slice';
@@ -50,7 +50,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
         if (erArenaAktivitet) {
             dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet));
         } else {
-            dispatch(markerForhaandsorienteringSomLestThunk(aktivitet));
+            dispatch(markerForhaandsorienteringSomLest(aktivitet));
         }
         loggForhaandsorienteringLest(aktivitet.type, true);
     };

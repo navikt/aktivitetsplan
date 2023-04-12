@@ -10,7 +10,7 @@ import { useErVeileder } from '../../../Provider';
 import { RootState } from '../../../store';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
-import { hentAktivitetThunk } from '../aktivitet-actions';
+import { hentAktivitet } from '../aktivitet-actions';
 import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { kanEndreAktivitetDetaljer, selectAktivitetMedId } from '../aktivitetlisteSelector';
@@ -49,7 +49,7 @@ const AktivitetvisningContainer = () => {
             if (isArenaAktivitet(valgtAktivitet)) {
                 dispatch(hentArenaAktiviteter());
             } else {
-                dispatch(hentAktivitetThunk(valgtAktivitet.id));
+                dispatch(hentAktivitet(valgtAktivitet.id));
             }
         }
 

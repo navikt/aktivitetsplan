@@ -11,7 +11,7 @@ import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/in
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
-import { oppdaterReferatThunk, publiserReferatThunk } from '../../aktivitet-actions';
+import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 
@@ -61,7 +61,7 @@ const OppdaterReferatForm = (props: Props) => {
             ...aktivitet,
             referat: referatData.referat,
         };
-        return dispatch(oppdaterReferatThunk(aktivitetMedOppdatertReferat)).then((res) => {
+        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((res) => {
             onFerdig();
             return res;
         });
@@ -70,7 +70,7 @@ const OppdaterReferatForm = (props: Props) => {
     const updateAndPubliser = handleSubmit((values) => {
         return updateReferat(values).then((action: PayloadAction<any>) => {
             if (action.payload) {
-                dispatch(publiserReferatThunk(action.payload));
+                dispatch(publiserReferat(action.payload));
             }
         });
     });

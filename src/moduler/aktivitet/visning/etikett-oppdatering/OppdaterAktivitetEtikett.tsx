@@ -8,7 +8,7 @@ import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch'
 import { useErVeileder } from '../../../../Provider';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { oppdaterAktivitetEtikettThunk } from '../../aktivitet-actions';
+import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { kanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
 import StillingEtikett from '../../etikett/StillingEtikett';
@@ -38,7 +38,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
         }
         const etikett = etikettstatus === StillingStatus.INGEN_VALGT ? undefined : etikettstatus;
 
-        return dispatch(oppdaterAktivitetEtikettThunk({ ...aktivitet, etikett }));
+        return dispatch(oppdaterAktivitetEtikett({ ...aktivitet, etikett }));
     };
 
     const onSubmit = (formValues: StillingEtikettFormValues): Promise<any> => {

@@ -9,7 +9,7 @@ import useAppDispatch, { AppDispatch } from '../../../../felles-komponenter/hook
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { oppdaterStillingFraNavSoknadsstatusThunk } from '../../aktivitet-actions';
+import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
 import EndreLinje from '../endre-linje/EndreLinje';
@@ -36,7 +36,7 @@ const lagreSoknadsstatus = (
     }
 
     return dispatch(
-        oppdaterStillingFraNavSoknadsstatusThunk({
+        oppdaterStillingFraNavSoknadsstatus({
             aktivitetId: aktivitet.id,
             aktivitetVersjon: aktivitet.versjon,
             soknadsstatus: soknadsstatus,
