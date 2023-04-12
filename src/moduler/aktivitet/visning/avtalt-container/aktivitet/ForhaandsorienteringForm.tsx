@@ -81,7 +81,7 @@ const ForhaandsorienteringForm = (props: Props) => {
             setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();
             // @ts-ignore
-            document.querySelector('.aktivitet-modal').focus();
+            document.querySelector('.aktivitet-modal')?.focus();
         });
     };
 
