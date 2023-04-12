@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
 import { Status } from '../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
@@ -10,12 +9,12 @@ import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../Provider';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
-import { hentAktivitet } from '../aktivitet-actions';
+import { hentAktivitetThunk } from '../aktivitet-actions';
 import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { kanEndreAktivitetDetaljer, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
-import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
+import { hentArenaAktiviteter } from '../arena-aktiviteter-slice';
 import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
@@ -49,7 +48,7 @@ const AktivitetvisningContainer = () => {
             if (isArenaAktivitet(valgtAktivitet)) {
                 dispatch(hentArenaAktiviteter());
             } else {
-                dispatch(hentAktivitet(valgtAktivitet.id + ''));
+                dispatch(hentAktivitetThunk(valgtAktivitet.id));
             }
         }
 

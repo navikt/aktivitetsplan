@@ -1,7 +1,7 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import React, { MouseEventHandler, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
@@ -13,7 +13,7 @@ import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
-import { lagNyAktivitet } from '../aktivitet-actions';
+import { lagNyAktivitetThunk } from '../aktivitet-actions';
 import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
@@ -34,8 +34,6 @@ const NyAktivitetForm = () => {
     const dirtyRef = useRef(false);
     useConfirmOnBeforeUnload(dirtyRef);
 
-    const onLagreNyAktivitet = (aktivitet: VeilarbAktivitet) => dispatch(lagNyAktivitet(aktivitet)); // TODO thunkfiy action
-
     const onSubmitFactory = (aktivitetsType: VeilarbAktivitetType) => {
         return (aktivitet: AktivitetFormValues) => {
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
@@ -44,8 +42,8 @@ const NyAktivitetForm = () => {
                 type: aktivitetsType,
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
-            return onLagreNyAktivitet(nyAktivitet).then((action: AnyAction) =>
-                navigate(aktivitetRoute(action.data.id))
+            return dispatch(lagNyAktivitetThunk(nyAktivitet)).then((action) =>
+                navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id))
             );
         };
     };

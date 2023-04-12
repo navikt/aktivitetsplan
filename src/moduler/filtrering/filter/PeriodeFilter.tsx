@@ -11,8 +11,8 @@ import {
     selectErUnderOppfolging,
     selectSorterteHistoriskeOppfolgingsPerioder,
 } from '../../oppfolging-status/oppfolging-selector';
-import { velgHistoriskPeriode } from './filter-reducer';
 import { selectHistoriskPeriode } from './filter-selector';
+import { velgHistoriskPeriode } from './filter-slice';
 
 interface Props {
     harHistoriskePerioder: boolean;

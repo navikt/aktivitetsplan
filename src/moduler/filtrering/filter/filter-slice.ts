@@ -1,22 +1,73 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
+import {
+    AktivitetFilterType,
+    ArenaEtikettFilterType,
+    AvtaltFilterType,
+    EtikettFilterType,
+    StatusFilterType,
+} from './FilterVisning';
 
 interface FilterState {
-    aktivitetTyper: Record<string, boolean>;
-    aktivitetEtiketter: Record<string, boolean>;
-    arenaAktivitetEtiketter: Record<string, boolean>;
-    aktivitetStatus: Record<string, boolean>;
-    aktivitetAvtaltMedNav: Record<string, boolean>;
+    aktivitetTyper: AktivitetFilterType;
+    aktivitetEtiketter: EtikettFilterType;
+    arenaAktivitetEtiketter: ArenaEtikettFilterType;
+    aktivitetStatus: StatusFilterType;
+    aktivitetAvtaltMedNav: AvtaltFilterType;
     historiskPeriode: HistoriskOppfolgingsperiode | null;
 }
 
 const initialState: FilterState = {
-    aktivitetTyper: {},
-    aktivitetEtiketter: {},
-    arenaAktivitetEtiketter: {},
-    aktivitetStatus: {},
-    aktivitetAvtaltMedNav: {},
+    aktivitetTyper: {
+        ARENA_TILTAK: false,
+        BEHANDLING: false,
+        EGEN: false,
+        GRUPPEAKTIVITET: false,
+        IJOBB: false,
+        MIDLERTIDIG_LONNSTILSKUDD: false,
+        MOTE: false,
+        SAMTALEREFERAT: false,
+        SOKEAVTALE: false,
+        STILLING: false,
+        STILLING_FRA_NAV: false,
+        TILTAKSAKTIVITET: false,
+        UTDANNINGSAKTIVITET: false,
+        VARIG_LONNSTILSKUDD: false,
+    },
+    aktivitetEtiketter: {
+        AVSLAG: false,
+        CV_DELT: false,
+        IKKE_FATT_JOBBEN: false,
+        INGEN_VALGT: false,
+        INNKALT_TIL_INTERVJU: false,
+        JOBBTILBUD: false,
+        SKAL_PAA_INTERVJU: false,
+        SOKNAD_SENDT: false,
+        VENTER: false,
+    },
+    arenaAktivitetEtiketter: {
+        AKTUELL: false,
+        AVSLAG: false,
+        IKKAKTUELL: false,
+        IKKEM: false,
+        INFOMOETE: false,
+        JATAKK: false,
+        NEITAKK: false,
+        TILBUD: false,
+        VENTELISTE: false,
+    },
+    aktivitetStatus: {
+        AVBRUTT: false,
+        BRUKER_ER_INTERESSERT: false,
+        FULLFORT: false,
+        GJENNOMFORES: false,
+        PLANLAGT: false,
+    },
+    aktivitetAvtaltMedNav: {
+        AVTALT_MED_NAV: false,
+        IKKE_AVTALT_MED_NAV: false,
+    },
     historiskPeriode: null,
 };
 
@@ -24,20 +75,23 @@ const filterSlice = createSlice({
     name: 'filter',
     initialState: initialState,
     reducers: {
-        toggleAktivitetsType: (state, action) => {
-            return state;
+        toggleAktivitetsType: (state, action: PayloadAction<keyof AktivitetFilterType>) => {
+            state.aktivitetTyper[action.payload] = !state.aktivitetTyper[action.payload];
         },
-        toggleAktivitetsEtikett: (state, action) => {
-            return state;
+        toggleAktivitetsEtikett: (state, action: PayloadAction<keyof EtikettFilterType>) => {
+            state.aktivitetEtiketter[action.payload] = !state.aktivitetEtiketter[action.payload];
         },
-        velgHistoriskPeriode: (state, action) => {
-            return state;
+        toggleArenaAktivitetsEtikett: (state, action: PayloadAction<keyof ArenaEtikettFilterType>) => {
+            state.arenaAktivitetEtiketter[action.payload] = !state.arenaAktivitetEtiketter[action.payload];
         },
-        toggleAktivitetsStatus: (state, action) => {
-            return state;
+        velgHistoriskPeriode: (state, action: PayloadAction<HistoriskOppfolgingsperiode | null>) => {
+            state.historiskPeriode = action.payload;
         },
-        toggleAktivitetAvtaltMedNav: (state, action) => {
-            return state;
+        toggleAktivitetsStatus: (state, action: PayloadAction<keyof AktivitetFilterType>) => {
+            state.aktivitetStatus[action.payload] = !state.aktivitetStatus[action.payload];
+        },
+        toggleAktivitetAvtaltMedNav: (state, action: PayloadAction<keyof AvtaltFilterType>) => {
+            state.aktivitetAvtaltMedNav[action.payload] = !state.aktivitetAvtaltMedNav[action.payload];
         },
     },
 });
@@ -45,6 +99,7 @@ const filterSlice = createSlice({
 export const {
     toggleAktivitetsEtikett,
     toggleAktivitetsStatus,
+    toggleArenaAktivitetsEtikett,
     toggleAktivitetsType,
     toggleAktivitetAvtaltMedNav,
     velgHistoriskPeriode,

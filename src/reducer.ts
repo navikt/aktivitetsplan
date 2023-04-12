@@ -2,10 +2,10 @@ import { combineReducers } from 'redux';
 
 import authReducer from './felles-komponenter/timeoutbox/auth-slice';
 import dragAndDropReducer from './moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
-import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
+import aktiviteterReducer from './moduler/aktivitet/aktivitet-slice';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-slice';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
-import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
+import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-slice';
 import dialogReducer from './moduler/dialog/dialog-slice';
 import filterReducer from './moduler/filtrering/filter/filter-slice';
 import identitetReducer from './moduler/identitet/identitet-slice';

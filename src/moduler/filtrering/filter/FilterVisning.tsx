@@ -10,19 +10,19 @@ import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import { AlleAktivitetTyper, avtaltMapper } from '../../../utils/textMappers';
 import {
-    toggleAktivitetAvtaltMedNav,
-    toggleAktivitetsEtikett,
-    toggleAktivitetsStatus,
-    toggleAktivitetsType,
-    toggleArenaAktivitetsEtikett,
-} from './filter-reducer';
-import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
     selectAktivitetStatusFilter,
     selectAktivitetTyperFilter,
     selectArenaAktivitetEtiketterFilter,
 } from './filter-selector';
+import {
+    toggleAktivitetAvtaltMedNav,
+    toggleAktivitetsEtikett,
+    toggleAktivitetsStatus,
+    toggleAktivitetsType,
+    toggleArenaAktivitetsEtikett,
+} from './filter-slice';
 import FilterCheckbox from './FilterCheckbox';
 
 export type AvtaltFilterType = Record<keyof typeof avtaltMapper, boolean>;

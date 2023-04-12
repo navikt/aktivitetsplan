@@ -7,7 +7,8 @@ import { fetchToJson, postAsJson, putAsJson } from './utils';
 export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
 
-export const hentAktiviteter = (): Promise<VeilarbAktivitet[]> => fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
+export const hentAktiviteter = (): Promise<{ aktiviteter: VeilarbAktivitet[] }> =>
+    fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
 
 export const lagNyAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/ny`, aktivitet);

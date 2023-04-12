@@ -3,14 +3,13 @@ import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds
 import { endOfToday, parseISO, startOfDay, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
-import { AnyAction } from 'redux';
 import { ZodErrorMap, z } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
-import { oppdaterCVSvar } from '../../aktivitet-actions';
+import { oppdaterCVSvarThunk } from '../../aktivitet-actions';
 import CustomErrorSummary from '../../aktivitet-forms/CustomErrorSummary';
 import { Ingress } from './DeleCvContainer';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
@@ -105,7 +104,14 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     }, [kanDeles.value]);
 
     const onSubmit = (data: KanDeles) => {
-        dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, data.kanDeles === SvarType.JA, data.avtaltDato));
+        dispatch(
+            oppdaterCVSvarThunk({
+                aktivitetId: aktivitet.id,
+                aktivitetVersjon: aktivitet.versjon,
+                kanDeles: data.kanDeles === SvarType.JA,
+                avtaltDato: data.avtaltDato,
+            })
+        );
         return Promise.resolve();
     };
 

@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
+import useAppDispatch, { AppDispatch } from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../../../Provider';
 import { aktivitetStatusMap } from '../../../../utils/textMappers';
@@ -27,7 +27,7 @@ const useDisableStatusEndring = (aktivitet: VeilarbAktivitet, erVeileder: boolea
 };
 
 const lagreStatusEndringer = (
-    dispatch: Dispatch,
+    dispatch: AppDispatch,
     values: { aktivitetstatus: AktivitetStatus; begrunnelse?: string },
     aktivitet: VeilarbAktivitet
 ) => {
@@ -36,7 +36,7 @@ const lagreStatusEndringer = (
     }
 
     flyttetAktivitetMetrikk('submit', aktivitet, values.aktivitetstatus);
-    return dispatch<any>(flyttAktivitetMedBegrunnelse(aktivitet, values.aktivitetstatus, values.begrunnelse));
+    return dispatch(flyttAktivitetMedBegrunnelse(aktivitet, values.aktivitetstatus, values.begrunnelse));
 };
 
 interface OppdaterAktivitetStatusProps {

@@ -3,13 +3,12 @@ import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
-import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
+import { flyttAktivitetThunk } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
@@ -47,7 +46,7 @@ function DropTargetKolonne({ status, children }: Props) {
             } else if (status === AktivitetStatus.AVBRUTT) {
                 navigate(avbrytAktivitetRoute(aktivitet.id));
             } else {
-                dispatch(flyttAktivitet(aktivitet, status));
+                dispatch(flyttAktivitetThunk({ aktivitet, status }));
             }
         },
         collect: (monitor) => ({

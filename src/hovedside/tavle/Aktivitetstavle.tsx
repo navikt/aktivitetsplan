@@ -10,13 +10,13 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
-import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
+import { hentAktiviteterThunk } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-reducer';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
-import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
+import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-slice';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { fetchNivaa4 } from '../../moduler/tilgang/tilgang-slice';
 import { fetchVeilederInfo } from '../../moduler/veileder/veileder-slice';
@@ -58,7 +58,7 @@ const Aktivitetstavle = () => {
                 dispatch(fetchNivaa4(hentFnrFraUrl()));
                 dispatch(fetchVeilederInfo());
             }
-            dispatch(hentAktiviteter());
+            dispatch(hentAktiviteterThunk());
             dispatch(hentArenaAktiviteter());
         }
     }, [aktivitetNotStarted, erVeileder, dispatch]);

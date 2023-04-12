@@ -17,9 +17,9 @@ import {
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
-import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
+import { settAktivitetTilAvtaltThunk } from '../../../aktivitet-actions';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
-import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
+import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-slice';
 import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
 import { AVTALT_TEKST, AVTALT_TEKST_119 } from '../utilsForhaandsorientering';
 
@@ -74,11 +74,10 @@ const ForhaandsorienteringForm = (props: Props) => {
         };
 
         setForhandsorienteringType(formValues.forhaandsorienteringType);
-        const settTilAvtalt = isArena ? sendForhaandsorienteringArenaAktivitet : settAktivitetTilAvtalt;
-        return settTilAvtalt(
-            aktivitet,
-            forhaandsorientering
-        )(dispatch).then(() => {
+        const settTilAvtalt = isArena
+            ? dispatch(sendForhaandsorienteringArenaAktivitet({ arenaAktivitet: aktivitet, forhaandsorientering }))
+            : dispatch(settAktivitetTilAvtaltThunk({ aktivitet, forhaandsorientering }));
+        return settTilAvtalt.then(() => {
             setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();
             // @ts-ignore

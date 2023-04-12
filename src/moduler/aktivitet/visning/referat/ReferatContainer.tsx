@@ -1,7 +1,6 @@
 import { isAfter, parseISO } from 'date-fns';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
 import { Status } from '../../../../createGenericSlice';
@@ -10,7 +9,7 @@ import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/in
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { publiserReferat } from '../../aktivitet-actions';
+import { publiserReferatThunk } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import OppdaterReferatForm from './OppdaterReferatForm';
 import ReferatVisning from './ReferatVisning';
@@ -53,7 +52,7 @@ const ReferatContainer = (props: Props) => {
             <ReferatVisning
                 referat={referat}
                 erAktivAktivitet={erAktivAktivitet}
-                dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
+                dispatchPubliserReferat={() => dispatch(publiserReferatThunk(aktivitet))}
                 publiserer={publiserer}
                 erReferatPublisert={erReferatPublisert}
                 startOppdaterReferat={() => setOppdaterReferat(true)}

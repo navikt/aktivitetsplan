@@ -32,7 +32,7 @@ import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
-import { oppdaterAktivitet } from '../aktivitet-actions';
+import { oppdaterAktivitetThunk } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
     MedisinskBehandlingFormValues,
 } from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
@@ -101,7 +101,7 @@ function getAktivitetsFormComponent<T extends VeilarbAktivitet>(
 
 function EndreAktivitet() {
     const dispatch = useAppDispatch();
-    const doOppdaterAktivitet = (aktivitet: AlleAktiviteter) => dispatch(oppdaterAktivitet(aktivitet));
+    const doOppdaterAktivitet = (aktivitet: VeilarbAktivitet) => dispatch(oppdaterAktivitetThunk(aktivitet));
 
     const isDirty = useRef(false);
     useConfirmOnBeforeUnload(isDirty);
@@ -113,10 +113,10 @@ function EndreAktivitet() {
     const aktivitetFeilmeldinger = useSelector((state) => selectAktivitetFeilmeldinger(state));
     const lagrer = useSelector((state) => selectAktivitetStatus(state)) !== Status.OK;
 
-    function oppdater(aktivitet: AlleAktiviteter) {
+    function oppdater(aktivitet: VeilarbAktivitet) {
         if (!valgtAktivitet) return;
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
-        const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as AlleAktiviteter;
+        const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as VeilarbAktivitet;
         return doOppdaterAktivitet(oppdatertAktivitet).then(() => navigate(aktivitetRoute(valgtAktivitet.id)));
     }
 

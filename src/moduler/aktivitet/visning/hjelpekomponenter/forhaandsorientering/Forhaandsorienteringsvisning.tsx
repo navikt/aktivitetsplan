@@ -1,7 +1,6 @@
 import { Alert, BodyLong, BodyShort, Heading, ReadMore } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
 
 import { Status } from '../../../../../createGenericSlice';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
@@ -9,10 +8,10 @@ import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispat
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
 import { formaterDatoManed } from '../../../../../utils/dateUtils';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
-import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
+import { markerForhaandsorienteringSomLestThunk } from '../../../aktivitet-actions';
 import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';
 import { selectArenaAktivitetFhoLestStatus } from '../../../arena-aktivitet-selector';
-import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-reducer';
+import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-slice';
 import { skalMarkereForhaandsorienteringSomLest } from '../../avtalt-container/utilsForhaandsorientering';
 import LestKnapp from './LestKnapp';
 
@@ -51,7 +50,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
         if (erArenaAktivitet) {
             dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet));
         } else {
-            dispatch(markerForhaandsorienteringSomLest(aktivitet));
+            dispatch(markerForhaandsorienteringSomLestThunk(aktivitet));
         }
         loggForhaandsorienteringLest(aktivitet.type, true);
     };

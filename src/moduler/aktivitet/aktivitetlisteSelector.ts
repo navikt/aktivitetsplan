@@ -5,30 +5,30 @@ import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA
 import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import { RootState } from '../../store';
 import { aktivitetMatchesFilters, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterSlice } from './aktivitet-selector';
 import { selectArenaAktiviteterData, selectArenaAktiviteterSlice } from './arena-aktivitet-selector';
 
-export const selectAlleAktiviter: (state: any) => AlleAktiviteter[] = createSelector(
-    selectAktiviteterData,
-    selectArenaAktiviteterData,
+export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
+    [selectAktiviteterData, selectArenaAktiviteterData],
     (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter)
 );
 
-export const selectAktiviterForAktuellePerioden = (state: any): AlleAktiviteter[] =>
+export const selectAktiviterForAktuellePerioden = (state: RootState): AlleAktiviteter[] =>
     selectAlleAktiviter(state).filter((a: AlleAktiviteter) => selectDatoErIPeriode(a.opprettetDato, state));
 
-export const selectAktivitetListe = (state: any) =>
+export const selectAktivitetListe = (state: RootState) =>
     selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetMatchesFilters(a, state));
 
-export const selectAktivitetMedId = (state: any, aktivitetId: string) =>
+export const selectAktivitetMedId = (state: RootState, aktivitetId: string) =>
     selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => {
         return aktivitet.id === aktivitetId;
     });
 
-export const selectAktivitetListeSlice = (state: any) => {
+export const selectAktivitetListeSlice = (state: RootState) => {
     const status = aggregerStatus(
         selectOppfolgingStatus(state),
         selectIdentitetStatus(state),
@@ -40,7 +40,7 @@ export const selectAktivitetListeSlice = (state: any) => {
     };
 };
 
-export const selectAktivitetListeStatus = (state: any) => selectAktivitetListeSlice(state).status;
+export const selectAktivitetListeStatus = (state: RootState) => selectAktivitetListeSlice(state).status;
 
 export const kanEndreAktivitetStatus = (aktivitet: VeilarbAktivitet, erVeileder: boolean) => {
     if (!aktivitet) {
@@ -76,7 +76,7 @@ export const kanEndreAktivitetDetaljer = (aktivitet: AlleAktiviteter, erVeileder
     );
 };
 
-export const selectAktivitetListeFeilMelding = (state: any) => {
+export const selectAktivitetListeFeilMelding = (state: RootState) => {
     const alleAktiviteterSlice = [selectAktiviteterSlice(state), selectArenaAktiviteterSlice(state)];
     const feilendeKall = alleAktiviteterSlice.filter((slice) => slice.status === Status.ERROR);
 
