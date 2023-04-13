@@ -1,7 +1,10 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
+import { selectFeilSlice } from '../feilmelding/feil-slice';
 import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectMalSlice } from './aktivitetsmal-selector';
+import { hentMal } from './aktivitetsmal-slice';
+import { hentMalListe } from './malliste-slice';
 
 function selectMalListeSlice(state: RootState) {
     return state.data.malListe;
@@ -16,16 +19,18 @@ export function selectMalListeStatus(state: RootState) {
 }
 
 export function selectMalListe(state: RootState) {
-    return selectMalListeData(state).filter((mal) => selectDatoErIPeriode(mal.dato, state));
+    return selectMalListeData(state)?.filter((mal) => (mal.dato ? selectDatoErIPeriode(mal.dato, state) : true)) || [];
 }
 
+const exists = (error: any) => !!error;
 export function selectMalListeFeilmeldinger(state: RootState) {
-    const malSlice = {
+    const { feilSlice, mal, malListe } = {
         mal: selectMalSlice(state),
         malListe: selectMalListeSlice(state),
+        feilSlice: selectFeilSlice(state),
     };
-    return Object.keys(malSlice)
-        .filter((key) => malSlice[key].status === Status.ERROR)
-        .map((key) => malSlice[key].feil)
-        .filter((x) => x);
+    return [
+        mal.status === Status.ERROR && feilSlice[hentMal.rejected.type],
+        malListe.status === Status.ERROR && feilSlice[hentMalListe.rejected.type],
+    ].filter(exists);
 }

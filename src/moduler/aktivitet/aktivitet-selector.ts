@@ -1,5 +1,7 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
+import { selectFeilSlice } from '../feilmelding/feil-slice';
+import { hentAktivitet } from './aktivitet-actions';
 
 export function selectAktiviteterSlice(state: RootState) {
     return state.data.aktiviteter;
@@ -22,7 +24,8 @@ export function selectLasterAktivitetData(state: RootState) {
 }
 
 export const selectAktivitetFeilmeldinger = (state: RootState) => {
-    const feilMeldingsdata = selectAktivitetStatus(state) === Status.ERROR && selectAktiviteterSlice(state).feil;
+    const feilMeldingsdata =
+        selectAktivitetStatus(state) === Status.ERROR && selectFeilSlice(state)[hentAktivitet.rejected.type];
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };
 

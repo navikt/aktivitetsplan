@@ -26,12 +26,17 @@ const AktivitetvisningContainer = () => {
     const dispatch = useAppDispatch();
 
     const erVeileder = useErVeileder();
-    const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
+    const valgtAktivitet = useSelector((state: RootState) =>
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+    );
 
-    const arenaDataStatus = useSelector(selectArenaAktivitetStatus);
-    const aktivitetDataStatus = useSelector(selectAktivitetStatus);
+    const aktivitetDataStatus = valgtAktivitet
+        ? isArenaAktivitet(valgtAktivitet)
+            ? useSelector(selectArenaAktivitetStatus)
+            : useSelector(selectAktivitetStatus)
+        : Status.NOT_STARTED;
 
-    const laster = arenaDataStatus !== Status.OK || aktivitetDataStatus !== Status.OK;
+    const laster = aktivitetDataStatus !== Status.OK;
 
     const avhengigheter = useSelector((state: RootState) => [
         selectOppfolgingStatus(state),

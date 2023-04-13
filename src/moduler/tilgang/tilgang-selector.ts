@@ -1,5 +1,7 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
+import { selectFeilSlice } from '../feilmelding/feil-slice';
+import { hentNivaa4 } from './tilgang-slice';
 
 function selectTilgangSlice(state: RootState) {
     return state.data.tilgang;
@@ -22,6 +24,7 @@ export function selectNivaa4Status(state: RootState) {
 }
 
 export function selectNivaa4Feilmeldinger(state: RootState) {
-    const feilmeldinger = selectTilgangSlice(state).status === Status.ERROR && selectTilgangSlice(state).feil;
+    const feilmeldinger =
+        selectTilgangSlice(state).status === Status.ERROR && selectFeilSlice(state)[hentNivaa4.rejected.type];
     return feilmeldinger ? feilmeldinger : [];
 }

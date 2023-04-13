@@ -2,7 +2,7 @@ import { hentFnrFraUrl } from '../utils/fnr-util';
 
 /* eslint-env browser */
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: Partial<RequestInit> = {
     credentials: 'same-origin',
 };
 
@@ -27,79 +27,28 @@ export interface SerializedError {
     name?: string;
     message?: string;
     stack?: string;
-    code?: number;
+    code?: string;
 }
 
-export function sjekkStatuskode(response) {
+export async function sjekkStatuskode(response: Response): Promise<Response> {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
-    // const error: SerializedError = {
-    //     name: 'asd',
-    //     message: '',
-    //     codee: response.status,
-    // };
-    // console.log(error);
-    // throw error;
-
-    const error = new Error(response.statusText || response.type);
-    error.response = response;
-    throw error;
+    // const data = await response.text();
+    const error: SerializedError = {
+        code: response.status.toString(),
+        message: `${response.url}`,
+        name: `${response.statusText} (${response.status})`,
+    };
+    return Promise.reject(error);
 }
 
-export function toJson(response) {
+export function toJson(response: Response) {
     if (response.status !== 204) {
         // No content
         return response.json();
     }
     return response;
-}
-
-export function sendResultatTilDispatch(dispatch, action) {
-    return (...data) => {
-        if (data.length === 1) {
-            return dispatch({ type: action, data: data[0] });
-        }
-        return dispatch({ type: action, data });
-    };
-}
-
-function parseError(errorData) {
-    try {
-        return JSON.parse(errorData);
-    } catch (e) {
-        console.error(e); // eslint-disable-line no-console
-        return errorData;
-    }
-}
-
-export function handterFeil(dispatch, FEILET_TYPE) {
-    return (error) => {
-        const { response } = error;
-        if (response) {
-            response.text().then((data) => {
-                console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({
-                    type: FEILET_TYPE,
-                    data: {
-                        type: FEILET_TYPE,
-                        httpStatus: response.status,
-                        melding: parseError(data),
-                    },
-                });
-            });
-        } else {
-            console.error(error, error.stack); // eslint-disable-line no-console
-            dispatch({
-                type: FEILET_TYPE,
-                data: {
-                    type: FEILET_TYPE,
-                    tekst: error.toString(),
-                },
-            });
-        }
-        return Promise.reject(error);
-    };
 }
 
 export const getCookie = (name: string) => {
@@ -143,23 +92,10 @@ function methodToJson(method, url, data, config) {
     });
 }
 
-export function deleteAsJson(url: string, config = {}) {
-    return methodToJson('delete', url, null, config);
-}
-
 export function postAsJson(url: string, data = {}, config = {}) {
     return methodToJson('post', url, data, config);
 }
 
 export function putAsJson(url: string, data = {}, config = {}) {
     return methodToJson('put', url, data, config);
-}
-
-export function doThenDispatch(fn, { OK, FEILET, PENDING }) {
-    return (dispatch) => {
-        if (PENDING) {
-            dispatch({ type: PENDING });
-        }
-        return fn().then(sendResultatTilDispatch(dispatch, OK)).catch(handterFeil(dispatch, FEILET));
-    };
 }

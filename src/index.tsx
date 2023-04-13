@@ -20,7 +20,7 @@ declare global {
 
 setDefaultOptions({ locale: nn });
 
-const mockfnr = '12345678910';
+export const mockfnr = '12345678910';
 
 const exportToNavSpa = () => {
     NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
@@ -42,12 +42,14 @@ const renderApp = (props?: { fnr?: string }) => {
     }
 };
 
+const isTest = import.meta.env.MODE === 'test';
 if (USE_MOCK) {
     const fnr = mockfnr;
     const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
-    if (erEksternBruker()) {
+
+    if (erEksternBruker() && !isTest) {
         window.history.replaceState({}, '', pathnamePrefix);
-    } else if (!erEksternBruker()) {
+    } else if (!erEksternBruker() && !isTest) {
         window.history.replaceState({}, '', pathnamePrefix + fnr);
     }
 

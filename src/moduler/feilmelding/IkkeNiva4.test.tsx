@@ -1,36 +1,48 @@
+import {} from '../../api/utils';
+
+import { configureStore } from '@reduxjs/toolkit';
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Store, createStore } from 'redux';
+import { Store } from 'redux';
 import { vi } from 'vitest';
 
-import { STATUS } from '../../api/utils';
+import { Status } from '../../createGenericSlice';
+import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
+import { mockfnr } from '../../index';
 import { ErVeilederContext } from '../../Provider';
 import reducer from '../../reducer';
+import { RootState } from '../../store';
+import { hentIdentitet } from '../identitet/identitet-slice';
+import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
+import { hentNivaa4 } from '../tilgang/tilgang-slice';
 import IkkeNiva4 from './IkkeNiva4';
 
 import MockedFn = jest.MockedFn;
 
 const createMockStore = () =>
-    createStore(reducer, {
-        data: {
-            oppfolging: {
-                data: {},
-                status: STATUS.NOT_STARTED,
-            },
-            tilgang: {
-                data: {},
-                status: STATUS.NOT_STARTED,
-            },
-            identitet: {
-                data: {},
-                status: STATUS.NOT_STARTED,
+    configureStore({
+        reducer: reducer,
+        preloadedState: {
+            data: {
+                oppfolging: {
+                    data: {},
+                    status: Status.NOT_STARTED,
+                },
+                tilgang: {
+                    data: {},
+                    status: Status.NOT_STARTED,
+                },
+                identitet: {
+                    data: {},
+                    status: Status.NOT_STARTED,
+                },
             },
         },
     });
 
-const WrappedIkkeNiva4 = ({ store = createMockStore(), erVeileder }) => {
+const WrappedIkkeNiva4 = ({ store = createMockStore(), erVeileder }: { store: RootState; erVeileder: boolean }) => {
     return (
         <ErVeilederContext.Provider value={erVeileder}>
             <Provider store={store}>
@@ -60,27 +72,38 @@ const fetchData = (
         reservasjonKRR: boolean;
     }
 ) => {
-    store.dispatch({
-        type: 'TILGANG/OK',
-        data: {
-            harbruktnivaa4: true,
-            personidentifikator: { fnr: undefined },
-        },
-    });
-    store.dispatch({
-        type: 'IDENTITET/OK',
-        data: {
-            erVeileder,
-        },
-    });
-    store.dispatch({
-        type: 'oppfolging/OK',
-        data: {
-            reservasjonKRR,
-            manuell,
-            kanVarsles,
-        },
-    });
+    store.dispatch(
+        hentNivaa4.fulfilled(
+            {
+                harbruktnivaa4: true,
+                personidentifikator: mockfnr,
+                erRegistrertIdPorten: true,
+            },
+            '12312',
+            mockfnr
+        )
+    );
+    store.dispatch(
+        hentIdentitet.fulfilled(
+            {
+                erVeileder,
+                erBruker: !erVeileder,
+                id: mockfnr,
+            },
+            '1231'
+        )
+    );
+    store.dispatch(
+        hentOppfolging.fulfilled(
+            {
+                reservasjonKRR,
+                manuell,
+                kanVarsles,
+                fnr: mockfnr,
+            } as OppfolgingStatus,
+            '4141'
+        )
+    );
 };
 
 describe('IkkeNiva4', () => {

@@ -1,26 +1,38 @@
 import React from 'react';
 
-import styles from './FeilmeldingDetaljer.module.less';
-import { FeilmeldingType } from './FeilmeldingTypes';
+import { SerializedError } from '../../api/utils';
+import { hentAktiviteter } from '../aktivitet/aktivitet-actions';
+import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
+import { hentDialoger } from '../dialog/dialog-slice';
+import { hentIdentitet } from '../identitet/identitet-slice';
+import { hentLest } from '../lest/lest-slice';
+import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
+import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
 interface PropTypes {
-    feil: FeilmeldingType;
+    feil: SerializedError & { type: string };
 }
 
+const feilmeldingMap: Record<string, any> = {
+    [hentOppfolging.rejected.type]: 'Kunne ikke hente oppfolgings-status',
+    [hentIdentitet.rejected.type]: 'Kunne ikke hente identitet',
+    [hentAktiviteter.rejected.type]: 'Kunne ikke hente aktivteter',
+    [hentArenaAktiviteter.rejected.type]: 'Kunne ikke hente arena-aktivteter',
+    [hentLest.rejected.type]: 'Kunne ikke hente lest-status',
+    [hentDialoger.rejected.type]: 'Kunne ikke hente dialoger',
+    [hentNivaa4.rejected.type]: 'Kunne ikke hente sist innlogget med nivå4 status',
+};
+
 export default function FeilmeldingDetalj(props: PropTypes) {
-    const { melding, type, httpStatus, tekst } = props.feil;
-    const id: string = (melding && melding.id) || type;
-    const detaljer = melding && melding.detaljer;
+    const { message, name, type } = props.feil;
+    console.log({ type, name, message });
+    const tittel = feilmeldingMap[type] || type;
 
     return (
-        <div className={styles.feilmeldingdetaljer}>
-            <h2>{type}</h2>
-            <div>{id}</div>
-            <div>{httpStatus}</div>
-            <div>{detaljer?.detaljertType} </div>
-            <div>{detaljer?.feilMelding}</div>
-            <pre>{detaljer?.stackTrace}</pre>
-            <div>{tekst}</div>
+        <div className="border border-border-default m-4 p-4 rounded-md">
+            <h2 className="font-bold">{tittel}</h2>
+            <div>{name}</div>
+            <div className="break-words">{message}</div>
         </div>
     );
 }

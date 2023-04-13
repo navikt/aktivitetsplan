@@ -7,6 +7,7 @@ import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-ve
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-slice';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-slice';
 import dialogReducer from './moduler/dialog/dialog-slice';
+import errorReducer from './moduler/feilmelding/feil-slice';
 import filterReducer from './moduler/filtrering/filter/filter-slice';
 import identitetReducer from './moduler/identitet/identitet-slice';
 import lestReducer from './moduler/lest/lest-slice';
@@ -35,6 +36,7 @@ const reducer = {
         auth: authReducer,
         veileder: veilederReducer,
         eskaleringsvarsel: eskaleringsvarselReducer,
+        errors: errorReducer,
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,

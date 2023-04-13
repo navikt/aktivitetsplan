@@ -1,23 +1,10 @@
 import * as React from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { selectAktivitetListeFeilMelding } from '../aktivitet/aktivitetlisteSelector';
-import { selectDialogFeilmeldinger } from '../dialog/dialog-selector';
-import { selectIdentitetFeilMelding } from '../identitet/identitet-selector';
-import { selectLestFeilMelding } from '../lest/lest-selector';
-import { selectOppfolgingFeilmeldinger } from '../oppfolging-status/oppfolging-selector';
-import { selectNivaa4Feilmeldinger } from '../tilgang/tilgang-selector';
+import { selectHovedsideFeil } from './feil-slice';
 import Feilmelding from './Feilmelding';
 
 export default function HovedsideFeilmelding() {
-    const oppfFeil = useSelector(selectOppfolgingFeilmeldinger, shallowEqual);
-    const identitetFeil = useSelector(selectIdentitetFeilMelding, shallowEqual);
-    const aktivitetFeil = useSelector(selectAktivitetListeFeilMelding);
-    const lestFeil = useSelector(selectLestFeilMelding, shallowEqual);
-    const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
-    const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
-
-    const alleFeil = oppfFeil.concat(identitetFeil, aktivitetFeil, lestFeil, dialogFeil, nivaa4Feil);
-
-    return <Feilmelding feilmeldinger={alleFeil} className="container" />;
+    const alleFeil = useSelector(selectHovedsideFeil);
+    return <Feilmelding feilmeldinger={alleFeil} />;
 }

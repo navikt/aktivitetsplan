@@ -16,7 +16,7 @@ export interface OppfolgingStatus {
 
     kanStarteOppfolging: boolean;
 
-    oppfolgingsPerioder: Oppfolgingsperiode;
+    oppfolgingsPerioder: Oppfolgingsperiode[];
     harSkriveTilgang: boolean;
     inaktivIArena: boolean;
     kanReaktiveres: boolean;

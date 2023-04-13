@@ -1,4 +1,4 @@
-import { STATUS, aggregerStatus, getCookie, handterFeil, sjekkStatuskode, toJson } from './utils';
+import { STATUS, aggregerStatus, getCookie, sjekkStatuskode, toJson } from './utils';
 
 const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
 
@@ -77,63 +77,6 @@ describe('utils', () => {
                 statusText: 'Feilstatus',
             };
             expect(() => sjekkStatuskode(response)).toThrow(Error);
-        });
-    });
-
-    describe('handterFeil', () => {
-        const action = 'action';
-
-        let consoleOutput = [];
-        const originalError = console.error;
-        afterEach(() => {
-            consoleOutput = [];
-            console.error = originalError;
-        });
-
-        const mockedError = (output) => consoleOutput.push(output);
-        beforeEach(() => {
-            console.error = mockedError;
-        });
-
-        it('Sjekk at funksjonen returnerer et rejected promise', async () => {
-            expect(handterFeil(() => {}, action)(new Error('message'))).rejects.toThrow('message');
-            expect(consoleOutput).toHaveLength(1);
-        });
-        it('Sjekk at funksjonen dispatcher parset feil', () => {
-            const dispatch = vi.fn();
-            const response = {
-                status: 1234,
-                text: () => Promise.resolve('{"type":"FEILTYPE"}'),
-            };
-
-            handterFeil(dispatch, action)({ response }).catch(() => {});
-
-            setTimeout(() => {
-                expect(dispatch.mock.calls).toHaveLength(1);
-                expect(dispatch.mock.calls[0][0]).toEqual({
-                    data: {
-                        melding: { type: 'FEILTYPE' },
-                        type: action,
-                        httpStatus: 1234,
-                    },
-                    type: action,
-                });
-            }, 0);
-
-            expect(consoleOutput).toHaveLength(0);
-        });
-        it('Sjekk at funksjonen dispatcher error message', () => {
-            const dispatch = vi.fn();
-            const error = new Error('message');
-
-            handterFeil(dispatch, action)(error).catch(() => {});
-
-            expect(dispatch.mock.calls[0][0]).toEqual({
-                data: { tekst: error.toString(), type: action },
-                type: action,
-            });
-
-            expect(consoleOutput).toHaveLength(1);
         });
     });
 

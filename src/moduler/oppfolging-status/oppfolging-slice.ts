@@ -6,7 +6,9 @@ import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 
 const oppfolgingSlice = createGenericSlice({
     name: 'oppfolging',
-    initialState: { data: {}, status: Status.NOT_STARTED } as GenericState<OppfolgingStatus>,
+    initialState: { data: undefined, status: Status.NOT_STARTED } as
+        | { data: undefined; status: Status.NOT_STARTED | Status.ERROR | Status.RELOADING | Status.PENDING }
+        | { data: OppfolgingStatus; status: Status.OK },
     reducers: {},
 });
 

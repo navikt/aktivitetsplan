@@ -12,7 +12,6 @@ import {
     selectReservasjonKRR,
 } from '../oppfolging-status/oppfolging-selector';
 import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector';
-import styles from './Feilmelding.module.less';
 
 const Mere = () => (
     <HelpText placement={'bottom'}>
@@ -54,7 +53,7 @@ const Nivaa4Feilmelding = () => {
     }
 
     return (
-        <div className={styles.feilmelding}>
+        <div className="m-4">
             <Alert variant="warning">
                 Denne brukeren kan ikke logge inn i aktivitetsplan og dialog.
                 <Mere />
