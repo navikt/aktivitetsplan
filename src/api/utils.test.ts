@@ -48,7 +48,7 @@ describe('utils', () => {
     });
 
     describe('Sjekk-statuskode', () => {
-        const error = (response) => ({
+        const error = (response: Response) => ({
             code: response.status.toString(),
             message: 'undefined',
             name: `Feilstatus (${response.status.toString()})`,
@@ -59,7 +59,7 @@ describe('utils', () => {
                 ok: true,
                 status: 200,
                 statusText: 'Status OK',
-            };
+            } as Response;
             expect(await sjekkStatuskode(response)).toEqual(response);
         });
         it('Skal returnere error når respons ikke er ok', async () => {
@@ -67,7 +67,7 @@ describe('utils', () => {
                 ok: false,
                 status: 200,
                 statusText: 'Feilstatus',
-            };
+            } as Response;
             await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
         it('Skal returnere error når status er over 299', async () => {
@@ -75,7 +75,7 @@ describe('utils', () => {
                 ok: true,
                 status: 300,
                 statusText: 'Feilstatus',
-            };
+            } as Response;
             await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
         it('Skal returnere error når status er under 200', async () => {
@@ -83,7 +83,7 @@ describe('utils', () => {
                 ok: true,
                 status: 199,
                 statusText: 'Feilstatus',
-            };
+            } as Response;
             await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
         it('Skal returnere error når statuskode er under 200 og ok er false', async () => {
@@ -91,7 +91,7 @@ describe('utils', () => {
                 ok: false,
                 status: 199,
                 statusText: 'Feilstatus',
-            };
+            } as Response;
             await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
     });
@@ -101,14 +101,14 @@ describe('utils', () => {
             const response = {
                 status: 200,
                 json: () => ({ testprop: 'testprop' }),
-            };
+            } as unknown as Response;
             expect(toJson(response)).toEqual(response.json());
         });
         it('Returnerer respons ved 204', () => {
             const response = {
                 status: 204,
                 json: () => ({ testprop: 'testprop' }),
-            };
+            } as unknown as Response;
             expect(toJson(response)).toEqual(response);
         });
     });
