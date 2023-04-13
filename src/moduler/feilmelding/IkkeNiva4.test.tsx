@@ -1,19 +1,18 @@
 import {} from '../../api/utils';
 
 import { configureStore } from '@reduxjs/toolkit';
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { vi } from 'vitest';
 
-import { Status } from '../../createGenericSlice';
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
 import { mockfnr } from '../../index';
 import { ErVeilederContext } from '../../Provider';
 import reducer from '../../reducer';
-import { RootState } from '../../store';
 import { hentIdentitet } from '../identitet/identitet-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
@@ -24,25 +23,9 @@ import MockedFn = jest.MockedFn;
 const createMockStore = () =>
     configureStore({
         reducer: reducer,
-        preloadedState: {
-            data: {
-                oppfolging: {
-                    data: {},
-                    status: Status.NOT_STARTED,
-                },
-                tilgang: {
-                    data: {},
-                    status: Status.NOT_STARTED,
-                },
-                identitet: {
-                    data: {},
-                    status: Status.NOT_STARTED,
-                },
-            },
-        },
     });
 
-const WrappedIkkeNiva4 = ({ store = createMockStore(), erVeileder }: { store: RootState; erVeileder: boolean }) => {
+const WrappedIkkeNiva4 = ({ store = createMockStore(), erVeileder }: { store: ToolkitStore; erVeileder: boolean }) => {
     return (
         <ErVeilederContext.Provider value={erVeileder}>
             <Provider store={store}>

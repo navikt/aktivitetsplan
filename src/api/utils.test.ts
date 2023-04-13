@@ -1,6 +1,16 @@
-import { STATUS, aggregerStatus, getCookie, sjekkStatuskode, toJson } from './utils';
+import { describe, expect, it } from 'vitest';
 
-const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
+import { Status } from '../createGenericSlice';
+import { aggregerStatus, getCookie, sjekkStatuskode, toJson } from './utils';
+
+const lol = {
+    OK: Status.OK,
+    PENDING: Status.PENDING,
+    ERROR: Status.ERROR,
+    RELOADING: Status.RELOADING,
+    NOT_STARTED: Status.NOT_STARTED,
+};
+const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = lol;
 
 describe('utils', () => {
     describe('aggregerStatus', () => {
@@ -38,45 +48,51 @@ describe('utils', () => {
     });
 
     describe('Sjekk-statuskode', () => {
-        it('Skal returnere response når status er ok', () => {
+        const error = (response) => ({
+            code: response.status.toString(),
+            message: 'undefined',
+            name: `Feilstatus (${response.status.toString()})`,
+        });
+
+        it('Skal returnere response når status er ok', async () => {
             const response = {
                 ok: true,
                 status: 200,
                 statusText: 'Status OK',
             };
-            expect(sjekkStatuskode(response)).toEqual(response);
+            expect(await sjekkStatuskode(response)).toEqual(response);
         });
-        it('Skal returnere error når respons ikke er ok', () => {
+        it('Skal returnere error når respons ikke er ok', async () => {
             const response = {
                 ok: false,
                 status: 200,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).toThrow(Error);
+            await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
-        it('Skal returnere error når status er over 299', () => {
+        it('Skal returnere error når status er over 299', async () => {
             const response = {
                 ok: true,
                 status: 300,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).toThrow(Error);
+            await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
-        it('Skal returnere error når status er under 200', () => {
+        it('Skal returnere error når status er under 200', async () => {
             const response = {
                 ok: true,
                 status: 199,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).toThrow(Error);
+            await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
-        it('Skal returnere error når statuskode er under 200 og ok er false', () => {
+        it('Skal returnere error når statuskode er under 200 og ok er false', async () => {
             const response = {
                 ok: false,
                 status: 199,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).toThrow(Error);
+            await expect(sjekkStatuskode(response)).rejects.toEqual(error(response));
         });
     });
 

@@ -14,7 +14,7 @@ const malverkSlice = createSlice({
     initialState: {
         malverker: [],
         valgtMalverk: {},
-        status: Status.OK,
+        status: Status.NOT_STARTED,
     } as MalverkState,
     reducers: {
         settValgtMalverk: (state, action: PayloadAction<object>) => {
@@ -38,12 +38,9 @@ const malverkSlice = createSlice({
     },
 });
 
-export const hentMalverkMedType = createAsyncThunk(
-    `${malverkSlice.name}/fetchMalverkMedType`,
-    async (type: string) => {
-        return await Api.hentMalverkMedType(type);
-    }
-);
+export const hentMalverkMedType = createAsyncThunk(`${malverkSlice.name}/fetchMalverkMedType`, async (type: string) => {
+    return await Api.hentMalverkMedType(type);
+});
 
 export const { settValgtMalverk, slettValgtMalverk } = malverkSlice.actions;
 

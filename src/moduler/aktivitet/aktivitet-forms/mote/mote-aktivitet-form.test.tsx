@@ -1,8 +1,8 @@
+import { configureStore } from '@reduxjs/toolkit';
 import { RenderResult, fireEvent, getByRole, render, screen } from '@testing-library/react';
 import { addDays, addMinutes, subYears } from 'date-fns';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { createStore } from 'redux';
 
 import { MOTE_TYPE } from '../../../../constant';
 import reducer from '../../../../reducer';
@@ -16,7 +16,7 @@ const initialState: any = {
 };
 
 const dirtyRef = { current: false };
-const store = createStore(reducer, initialState);
+const store = configureStore({ reducer, preloadedState: initialState as any });
 
 function mountWithIntl(node: any): RenderResult {
     return render(<ReduxProvider store={store}>{node}</ReduxProvider>);
@@ -24,7 +24,7 @@ function mountWithIntl(node: any): RenderResult {
 
 describe('MoteAktivitetForm', () => {
     it.skip('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', async () => {
-        const { queryByText, getByText, getByDisplayValue, getByRole } = mountWithIntl(
+        const { queryByText, getByText, getByRole } = mountWithIntl(
             <MoteAktivitetForm onSubmit={() => Promise.resolve()} isDirtyRef={dirtyRef} />
         );
         expect(queryByText('For å gå videre må du rette opp følgende')).toBeNull();

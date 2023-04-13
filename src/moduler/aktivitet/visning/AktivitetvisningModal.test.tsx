@@ -1,17 +1,17 @@
 import { Modal } from '@navikt/ds-react';
-import { mount } from 'enzyme';
+import { configureStore } from '@reduxjs/toolkit';
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
-import create from '../../../store';
-import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../../dialog/dialog-reducer';
-import Feilmelding from '../../feilmelding/Feilmelding';
+import reducer from '../../../reducer';
+import { hentDialoger } from '../../dialog/dialog-slice';
+import { tekster } from '../../feilmelding/GetErrorText';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
-const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: {} });
-
-const AktivitetsvisningModalWrapped = (props: { store: any }) => (
+const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
     <div id={'app'}>
         <MemoryRouter>
             <Provider store={props.store}>
@@ -27,17 +27,15 @@ const AktivitetsvisningModalWrapped = (props: { store: any }) => (
 Modal.setAppElement(document.createElement('div'));
 describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
-        const store = create();
-        const wrapper = mount(<AktivitetsvisningModalWrapped store={store} />);
-        expect(wrapper.find(Feilmelding).html()).toBeNull();
+        const store = configureStore({ reducer });
+        const { queryByText } = render(<AktivitetsvisningModalWrapped store={store} />);
+        expect(queryByText(tekster.dialogFeilet)).toBeFalsy();
     });
 
     it('Skal vise feilmelding dersom dialog feiler', () => {
-        const store = create();
-
-        store.dispatch(dialogFeilet());
-
-        const wrapper = mount(<AktivitetsvisningModalWrapped store={store} />);
-        expect(wrapper.find(Feilmelding).html()).not.toBeNull();
+        const store = configureStore({ reducer });
+        store.dispatch(hentDialoger.rejected({ name: 'asd', message: 'asds' }, 'asd'));
+        const { getByText } = render(<AktivitetsvisningModalWrapped store={store} />);
+        getByText(tekster.dialogFeilet);
     });
 });

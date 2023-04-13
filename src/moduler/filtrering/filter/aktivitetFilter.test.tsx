@@ -1,10 +1,14 @@
+import { configureStore } from '@reduxjs/toolkit';
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { fireEvent, getByRole, render, waitFor } from '@testing-library/react';
 import { setupServer } from 'msw/node';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { Store } from 'redux';
 
-import { STATUS } from '../../../api/utils';
+import { Status } from '../../../createGenericSlice';
+// import { STATUS } from '../../../api/utils';
 import {
     AktivitetStatus,
     AlleAktiviteter,
@@ -17,11 +21,9 @@ import { wrapAktivitet } from '../../../mocks/aktivitet';
 import { mockOppfolging } from '../../../mocks/data/oppfolging';
 import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
 import { handlers } from '../../../mocks/handlers';
-import reducer, { State } from '../../../reducer';
-import create, { RootState } from '../../../store';
-import store from '../../../store';
+import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
-import { HENT_AKTIVITET_OK } from '../../aktivitet/aktivitet-action-types';
+import { hentAktivitet } from '../../aktivitet/aktivitet-actions';
 
 const identitet = {
     id: 'Z123456',
@@ -30,33 +32,32 @@ const identitet = {
 };
 
 const initialStore = {
-    ...reducer({} as any, { type: 'INITAL' }),
     data: {
         aktiviteter: {
-            status: STATUS.OK,
+            status: Status.OK,
             data: [],
         },
         arenaAktiviteter: {
-            status: STATUS.OK,
+            status: Status.OK,
             data: [],
         },
         oppfolging: {
-            status: STATUS.OK,
+            status: Status.OK,
             data: mockOppfolging,
         },
         identitet: {
-            status: STATUS.OK,
+            status: Status.OK,
             data: identitet,
         },
         feature: {
-            status: STATUS.OK,
+            status: Status.OK,
             data: { ignore: false },
         },
     },
-} as typeof store;
+};
 
 /* Provider both redux-store and "in-memory" router for all sub-components to render correctly */
-const WrappedHovedside = ({ store }: { store: Store }) => {
+const WrappedHovedside = ({ store }: { store: ToolkitStore }) => {
     return (
         <Provider store={store}>
             <MemoryRouter>
@@ -86,7 +87,7 @@ function makeTestAktiviteter<T>(
         };
     });
     store.dispatch({
-        type: HENT_AKTIVITET_OK,
+        type: hentAktivitet.fulfilled.type,
         data: testAktiviteter,
     });
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
@@ -105,7 +106,7 @@ describe.skip('aktivitets-filter', () => {
     afterEach(() => server.resetHandlers());
 
     it('should filter avtalt med nav', async () => {
-        const store = create(initialStore);
+        const store = configureStore({ reducer, preloadedState: initialStore as any });
         const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
         makeTestAktiviteter(store, [true, false], (aktivitet, value) => {
             return {
@@ -135,7 +136,7 @@ describe.skip('aktivitets-filter', () => {
             VeilarbAktivitetType.MOTE_TYPE,
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
-        const store = create(initialStore);
+        const store = configureStore({ reducer, preloadedState: initialStore as any });
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
             return {
@@ -172,9 +173,12 @@ describe.skip('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling fra NAV)', async () => {
-        const store = create(initialStore);
+        const store = configureStore({ reducer, preloadedState: initialStore as any });
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
-        const statuser: StillingFraNavSoknadsstatus[] = ['AVSLAG', 'VENTER'];
+        const statuser: StillingFraNavSoknadsstatus[] = [
+            StillingFraNavSoknadsstatus.AVSLAG,
+            StillingFraNavSoknadsstatus.VENTER,
+        ];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -197,9 +201,9 @@ describe.skip('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling)', async () => {
-        const store = create(initialStore);
+        const store = configureStore({ reducer, preloadedState: initialStore as any });
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
-        const statuser: StillingStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
+        const statuser: StillingStatus[] = [StillingStatus.INNKALT_TIL_INTERVJU, StillingStatus.SOKNAD_SENDT];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,

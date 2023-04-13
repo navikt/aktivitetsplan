@@ -25,7 +25,6 @@ const feilmeldingMap: Record<string, any> = {
 
 export default function FeilmeldingDetalj(props: PropTypes) {
     const { message, name, type } = props.feil;
-    console.log({ type, name, message });
     const tittel = feilmeldingMap[type] || type;
 
     return (

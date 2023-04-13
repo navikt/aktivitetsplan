@@ -1,6 +1,7 @@
-// import { HENTING_FEILET as AKTIVITET_HENT_FEILET, NIVAA_4_FEILET } from '../aktivitet/aktivitet-action-types';
-// import { HENTING_FEILET as ARENA_HENT_FEILET } from '../aktivitet/arena-aktiviteter-reducer-copy';
-// import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer-copy';
+import { hentAktivitet, hentAktiviteter } from '../aktivitet/aktivitet-actions';
+import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
+import { hentDialoger } from '../dialog/dialog-slice';
+import { hentNivaa4 } from '../tilgang/tilgang-slice';
 import { FeilmeldingType } from './FeilmeldingTypes';
 
 export const tekster = {
@@ -17,10 +18,9 @@ export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
     const antallFeil = feilmeldinger.length;
     const feil = feilmeldinger[0];
 
-    // TODO ny: dialog/fetchDialoger/rejected
-    // if (feil.type === DIALOG_HENT_FEIL && antallFeil === 1) {
-    //     return tekster.dialogFeilet;
-    // }
+    if (feil.type === hentDialoger.rejected.type && antallFeil === 1) {
+        return tekster.dialogFeilet;
+    }
 
     if (feil.httpStatus === 401) return tekster.unauthorized;
     if (feil.httpStatus === 403) return tekster.forbidden;
@@ -29,20 +29,21 @@ export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
         return tekster.fallback;
     }
 
-    // TODO ny: aktivitet/hent/rejected
-    // if (feil.type === AKTIVITET_HENT_FEILET) {
-    //     return tekster.aktivitetFeilet;
-    // }
+    if (feil.type === hentAktiviteter.rejected.type) {
+        return tekster.aktivitetFeilet;
+    }
 
-    // TODO ny: arenaAktivitet/fetchArenaAktiviteter/rejected
-    // if (feil.type === ARENA_HENT_FEILET) {
-    //     return tekster.aktivitetFeilet;
-    // }
+    if (feil.type === hentAktivitet.rejected.type) {
+        return tekster.aktivitetFeilet;
+    }
 
-    // TODO ny: tilgang/fetchHarNivaa4/rejected
-    // if (feil.type === NIVAA_4_FEILET) {
-    //     return tekster.nivaa4;
-    // }
+    if (feil.type === hentArenaAktiviteter.rejected.type) {
+        return tekster.aktivitetFeilet;
+    }
+
+    if (feil.type === hentNivaa4.rejected.type) {
+        return tekster.nivaa4;
+    }
 
     return tekster.fallback;
 }
