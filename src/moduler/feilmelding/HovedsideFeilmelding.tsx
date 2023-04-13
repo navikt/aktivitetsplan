@@ -8,6 +8,7 @@ import { selectLestFeilMelding } from '../lest/lest-reducer';
 import { selectOppfolgingFeilmeldinger } from '../oppfolging-status/oppfolging-selector';
 import { selectNivaa4Feilmeldinger } from '../tilgang/tilgang-selector';
 import Feilmelding from './Feilmelding';
+import {useFeilMetrikker} from "./useFeilMetrikker";
 
 export default function HovedsideFeilmelding() {
     const oppfFeil = useSelector(selectOppfolgingFeilmeldinger, shallowEqual);
@@ -18,6 +19,8 @@ export default function HovedsideFeilmelding() {
     const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
 
     const alleFeil = oppfFeil.concat(identitetFeil, aktivitetFeil, lestFeil, dialogFeil, nivaa4Feil);
+
+    useFeilMetrikker(alleFeil);
 
     return <Feilmelding feilmeldinger={alleFeil} className="container" />;
 }
