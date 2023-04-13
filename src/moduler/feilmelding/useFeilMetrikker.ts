@@ -7,6 +7,7 @@ import {FEILET as OPPFOLGING_FEILET} from "../oppfolging-status/oppfolging-reduc
 import loggEvent from "../../felles-komponenter/utils/logging";
 
 export function useFeilMetrikker(feilmeldinger: FeilmeldingType[]) {
+    useFeilMetrikkerType(feilmeldinger);
     const sentErrors = useRef(new Set());
     const harSendtLastet = useRef(false);
 
@@ -22,6 +23,29 @@ export function useFeilMetrikker(feilmeldinger: FeilmeldingType[]) {
                 if(!sentErrors.current.has(feil)) {
                     sentErrors.current.add(feil);
                     sendFeil(feil);
+                }
+            });
+    }, [feilmeldinger]);
+}
+
+ function useFeilMetrikkerType(feilmeldinger: FeilmeldingType[]) {
+    const sentErrors = useRef(new Set());
+    const harSendtLastet = useRef(false);
+
+    if(!harSendtLastet.current) {
+        loggEvent("aktivitesplan.lastet");
+        harSendtLastet.current = true;
+    }
+
+    useEffect(() => {
+        const feil = feilmeldinger
+            .filter(feil => feil.httpStatus !== 403 && feil.httpStatus !== 401)
+            .map(feil => feil.type);
+        new Set(feil) //fjerner duplikater
+            .forEach(feil => {
+                if(!sentErrors.current.has(feil)) {
+                    sentErrors.current.add(feil);
+                    loggEvent("aktivitetsplan.feiltype", {feil});
                 }
             });
     }, [feilmeldinger]);
@@ -51,6 +75,6 @@ function klassifiserFeil(feil: FeilmeldingType): ErrorSeverity {
 }
 
 function sendFeil(feil_kategori: string) {
-    loggEvent("aktivitetsplan.feil", {feil_kategori});
+    loggEvent("aktivitetsplan.feil", {feil_kategori}, {feil_kategori_tag: feil_kategori});
 }
 
