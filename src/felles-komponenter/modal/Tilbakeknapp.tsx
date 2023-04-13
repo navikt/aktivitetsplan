@@ -3,7 +3,7 @@ import React from 'react';
 
 interface TilbakeknappType {
     tekst: string;
-    onClick: () => void;
+    onClick: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const Tilbakeknapp = (props: TilbakeknappType) => {

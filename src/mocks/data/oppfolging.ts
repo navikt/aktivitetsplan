@@ -1,8 +1,9 @@
 import { RestRequest } from 'msw';
 
+import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from '../demo/sessionstorage';
 
-const oppfPerioder = [
+const oppfolgingsperioder: Oppfolgingsperiode[] = [
     {
         uuid: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
         aktorId: '1234567988888',
@@ -12,28 +13,12 @@ const oppfPerioder = [
         begrunnelse: null,
         kvpPerioder: [
             {
-                aktorId: '1234567988888',
-                enhet: 'Z134',
-                opprettetAv: 'ZOO',
                 opprettetDato: '2017-01-30T10:46:10.971+01:00',
-                opprettetBegrunnelse: 'Vet ikke helt',
-                opprettetKodeVerkbruker: 'NAV',
-                avsluttetAV: 'ZOO',
-                avsluttetDato: '2017-12-01T10:46:10.971+01:00',
-                avsluttetBegrunnelse: 'vet ikke',
-                avsluttetKodeverkbruker: 'NAV',
+                avsluttetDato: '2017-06-01T10:46:10.971+01:00',
             },
             {
-                aktorId: '1234567988888',
-                enhet: 'Z134',
-                opprettetAv: 'ZOO',
-                opprettetDato: '2017-12-01T10:46:10.971+01:00',
-                opprettetBegrunnelse: 'Vet ikke helt',
-                opprettetKodeVerkbruker: 'NAV',
-                avsluttetAV: 'ZOO',
-                avsluttetDato: '2017-12-02T10:46:10.971+01:00',
-                avsluttetBegrunnelse: 'vet ikke',
-                avsluttetKodeverkbruker: 'NAV',
+                opprettetDato: '2017-06-30T10:46:10.971+01:00',
+                avsluttetDato: '2017-12-01T10:46:10.971+01:00',
             },
         ],
     },
@@ -58,7 +43,7 @@ const oppfolging = {
     oppfolgingUtgang: null,
     kanStarteOppfolging: false,
     avslutningStatus: null,
-    oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,
+    oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfolgingsperioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
     servicegruppe: 'IVURD',

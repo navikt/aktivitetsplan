@@ -1,1 +1,0 @@
-Brukeren får ikke automatisk informasjon om møtet. Send en dialog eller forhåndsorientering for at brukeren skal få beskjed.

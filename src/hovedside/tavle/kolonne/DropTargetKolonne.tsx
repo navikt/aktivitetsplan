@@ -2,10 +2,9 @@ import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
@@ -13,7 +12,7 @@ import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
-import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
+import { useRoutes } from '../../../routes';
 import { erDroppbar } from '../tavleUtils';
 
 interface Props {
@@ -30,11 +29,12 @@ export const DROP_TYPE = 'AktivitetsKort';
 
 function DropTargetKolonne({ status, children }: Props) {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const erBruker = useSelector(selectErBruker, shallowEqual);
     const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
+    const { avbrytAktivitetRoute, fullforAktivitetRoute } = useRoutes();
 
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,
@@ -42,10 +42,10 @@ function DropTargetKolonne({ status, children }: Props) {
             status !== aktivitet.status && erDroppbar(aktivitet, erBruker, erUnderOppfolging),
         drop: ({ aktivitet }: DragItem<VeilarbAktivitet>) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
-            if (status === STATUS_FULLFOERT) {
-                history.push(fullforAktivitetRoute(aktivitet.id));
-            } else if (status === STATUS_AVBRUTT) {
-                history.push(avbrytAktivitetRoute(aktivitet.id));
+            if (status === AktivitetStatus.FULLFOERT) {
+                navigate(fullforAktivitetRoute(aktivitet.id));
+            } else if (status === AktivitetStatus.AVBRUTT) {
+                navigate(avbrytAktivitetRoute(aktivitet.id));
             } else {
                 dispatch(flyttAktivitet(aktivitet, status) as unknown as AnyAction);
             }

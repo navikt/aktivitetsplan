@@ -28,7 +28,7 @@ const MalForm = (props: Props) => {
     useLayoutEffect(() => {
         const el = ref.current;
         if (el) {
-            el.focus();
+            el?.focus();
             el.selectionStart = el.selectionEnd = el.value.length;
         }
     }, []);
@@ -42,7 +42,7 @@ const MalForm = (props: Props) => {
             handleComplete();
         }
         const elem = document.querySelector('.aktivitet-modal') as HTMLDivElement;
-        elem && elem.focus();
+        elem && elem?.focus();
         return Promise.resolve();
     };
 
@@ -56,8 +56,6 @@ const MalForm = (props: Props) => {
         watch,
         formState: { errors, isDirty },
     } = useForm<MalFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: true });
-
-    console.log(isDirty);
 
     if (dirtyRef) {
         dirtyRef.current = isDirty;

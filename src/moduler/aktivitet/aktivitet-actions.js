@@ -1,6 +1,6 @@
 import * as Api from '../../api/aktivitetAPI';
 import { doThenDispatch } from '../../api/utils';
-import * as statuskoder from '../../constant';
+import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import * as AT from './aktivitet-action-types';
 
 export function hentAktiviteter() {
@@ -73,12 +73,12 @@ export function flyttAktivitetMedBegrunnelse(aktivitet, status, avsluttetKomment
 
 export function avbrytAktivitet(aktivitet, avsluttetKommentar) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
-    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);
+    return flyttAktivitet(nyAktivitet, AktivitetStatus.AVBRUTT);
 }
 
 export function fullforAktivitet(aktivitet, avsluttetKommentar) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
-    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_FULLFOERT);
+    return flyttAktivitet(nyAktivitet, AktivitetStatus.FULLFOERT);
 }
 
 export function oppdaterCVSvar(aktivitetId, aktivitetVersjon, kanDeles, avtaltDato) {

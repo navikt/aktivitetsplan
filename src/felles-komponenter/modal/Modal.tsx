@@ -1,14 +1,15 @@
 import { Modal as AkselModal } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
-import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { FeilmeldingType } from '../../moduler/feilmelding/FeilmeldingTypes';
+import { useRoutes } from '../../routes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
 import ModalHeader from './ModalHeader';
 
-interface Props extends RouteComponentProps {
+interface Props {
     className?: string;
     header?: ReactNode;
     feilmeldinger?: FeilmeldingType[];
@@ -17,6 +18,8 @@ interface Props extends RouteComponentProps {
     minstEnAvhengighet?: boolean;
     contentClass?: string;
     onRequestClose?(): void;
+    contentLabel: string;
+    ariaLabelledby?: string;
 }
 
 const Modal = (props: Props) => {
@@ -29,10 +32,12 @@ const Modal = (props: Props) => {
         minstEnAvhengighet = false,
         feilmeldinger,
         contentClass,
-        ...rest
+        ariaLabelledby,
+        contentLabel,
     } = props;
 
-    const history = useHistory();
+    const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const closeFuncOrDefault = () => {
         if (onRequestClose) {
@@ -40,13 +45,14 @@ const Modal = (props: Props) => {
             return;
         }
 
-        history.push('/');
+        navigate(hovedsideRoute());
     };
 
     return (
         <AkselModal
-            {...rest}
             open
+            aria-label={contentLabel}
+            aria-labelledby={!contentLabel ? ariaLabelledby || 'modal-heading' : undefined}
             className={classNames(
                 'aktivitet-modal lg:w-120 p-4 md:p-8 max-h-full overscroll-contain w-full rounded-none lg:rounded',
                 className,
@@ -66,4 +72,4 @@ const Modal = (props: Props) => {
     );
 };
 
-export default withRouter(Modal);
+export default Modal;

@@ -9,6 +9,7 @@ function DialogIkonUtenUleste(props: DialogIkonUtenUlesteProps) {
 
     return (
         <svg
+            aria-label="Ingen uleste meldinger"
             className={className}
             width="24"
             height="24"
@@ -40,6 +41,7 @@ function DialogIkonMedUleste(props: DialogIkonMedUlesteProps) {
     return (
         <div>
             <svg
+                aria-label="Aktiviteten har uleste meldinger"
                 className={className}
                 xmlns="http://www.w3.org/2000/svg"
                 width="40"

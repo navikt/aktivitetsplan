@@ -2,9 +2,10 @@ import { PlusIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
+import { useRoutes } from '../../routes';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import Filter from '../filtrering/Filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
@@ -18,7 +19,8 @@ const Verktoylinje = () => {
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang);
     const aktivitetLaster = useSelector(selectHarTilgangTilAktiviteter);
 
-    const history = useHistory();
+    const navigate = useNavigate();
+    const { nyAktivitetRoute } = useRoutes();
 
     const hideLeggTil = viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang;
 
@@ -29,11 +31,11 @@ const Verktoylinje = () => {
                     {!hideLeggTil ? (
                         <Button
                             className="self-stretch sm:self-auto"
-                            icon={<PlusIcon fontSize="1.5rem" />}
+                            icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
                             disabled={!aktivitetLaster}
                             onClick={() => {
                                 loggEvent(APNE_NY_AKTIVITET);
-                                history.push('/aktivitet/ny');
+                                navigate(nyAktivitetRoute());
                             }}
                         >
                             Legg til aktivitet

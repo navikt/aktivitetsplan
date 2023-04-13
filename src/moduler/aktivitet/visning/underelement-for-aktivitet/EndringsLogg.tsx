@@ -3,7 +3,7 @@ import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
+import VersjonerForAktivitet from '../versjoner/VersjonerForAktivitet';
 
 interface Props {
     aktivitet: VeilarbAktivitet;
@@ -16,12 +16,12 @@ const EndringsLogg = (props: Props) => {
         <Accordion.Item className="first:border-t-2 first:border-border-divider">
             <Accordion.Header>
                 <div className="flex gap-4 items-center">
-                    <ClockDashedIcon fontSize="1.5rem" />
+                    <ClockDashedIcon aria-hidden fontSize="1.5rem" />
                     Historikk
                 </div>
             </Accordion.Header>
             <Accordion.Content>
-                <VersjonerForAktivitet visible={true} aktivitet={aktivitet} />
+                <VersjonerForAktivitet aktivitet={aktivitet} />
             </Accordion.Content>
         </Accordion.Item>
     );

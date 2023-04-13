@@ -6,7 +6,7 @@ import { STATUS } from '../../../api/utils';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
-import { aktivitetRoute } from '../../../routes';
+import { useRoutes } from '../../../routes';
 import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
@@ -54,6 +54,7 @@ const Aktivitetskort = (props: Props) => {
         erNyEndringIAktivitet(aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
 
+    const { aktivitetRoute } = useRoutes();
     const headerId = `aktivitetskort__header__${id}`;
     const datoId = `aktivitetskort__dato__${id}`;
     const ariaLabel = `${getAktivitetType(aktivitet)}: ${aktivitet.tittel}`;

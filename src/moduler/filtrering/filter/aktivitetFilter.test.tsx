@@ -5,8 +5,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { Store } from 'redux';
 
 import { STATUS } from '../../../api/utils';
-import { STATUS_GJENNOMFOERT } from '../../../constant';
-import { AlleAktiviteter, StillingFraNavSoknadsstatus, StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import {
+    AktivitetStatus,
+    AlleAktiviteter,
+    StillingFraNavSoknadsstatus,
+    StillingStatus,
+} from '../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import Hovedside from '../../../hovedside/Hovedside';
 import { wrapAktivitet } from '../../../mocks/aktivitet';
@@ -65,7 +69,7 @@ let id = 12012;
 const exampleAktivitet = wrapAktivitet({
     ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2017 }),
     arbeidsgiver: 'Arbeidsgiver',
-    status: STATUS_GJENNOMFOERT,
+    status: AktivitetStatus.GJENNOMFOERT,
 });
 function makeTestAktiviteter<T>(
     store: Store,
@@ -194,7 +198,7 @@ describe.skip('aktivitets-filter', () => {
     it('Should filter based on etiketter (stilling)', async () => {
         const store = create(initialStore);
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
-        const statuser: StillingsStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
+        const statuser: StillingStatus[] = ['INNKALT_TIL_INTERVJU', 'SOKNAD_SENDT'];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,

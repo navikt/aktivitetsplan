@@ -2,10 +2,10 @@ import './mitt-maal.less';
 
 import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import moment from 'moment';
+import { isAfter, parseISO } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { Lest } from '../../datatypes/aktivitetTypes';
@@ -13,9 +13,11 @@ import { Mal, Me } from '../../datatypes/oppfolgingTypes';
 import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
+import { useErVeileder } from '../../Provider';
+import { useRoutes } from '../../routes';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
-import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
+import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';
 import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
@@ -50,10 +52,11 @@ interface MalContentProps {
 function MalContent(props: MalContentProps) {
     const { disabled, mal } = props;
     const dispatch = useDispatch();
-    const erVeileder = useSelector(selectErVeileder, shallowEqual);
-    const history = useHistory();
+    const erVeileder = useErVeileder();
+    const navigate = useNavigate();
+    const { malRoute } = useRoutes();
     const endreMal = () => {
-        history.push('/mal');
+        navigate(malRoute());
         loggMittMalKlikk(erVeileder);
         dispatch(lesMal());
     };
@@ -119,7 +122,7 @@ function MittMaal() {
                     })}
                 >
                     <div className="flex sm:flex-row items-center gap-6">
-                        <MaalIkon className="hidden sm:block mx-4 min-w-fit" />
+                        <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />
                         <div>
                             <div className="flex mb-2">
                                 <NotifikasjonMarkering visible={nyEndring} />
@@ -151,7 +154,10 @@ function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boole
         return !sisteEndringVarFraMeg;
     }
 
-    const maalLagdEtterSistLestAktivitetsplan = moment(maal.dato).isAfter(aktivitetsplanLestInfo.tidspunkt);
+    const maalLagdEtterSistLestAktivitetsplan = isAfter(
+        parseISO(maal.dato),
+        parseISO(aktivitetsplanLestInfo.tidspunkt)
+    );
 
     return !sisteEndringVarFraMeg && !maal.lest && maalLagdEtterSistLestAktivitetsplan;
 }

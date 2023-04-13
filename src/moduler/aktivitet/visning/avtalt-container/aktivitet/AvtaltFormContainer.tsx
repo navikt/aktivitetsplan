@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { STATUS } from '../../../../../api/utils';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../../datatypes/internAktivitetTypes';
-import { erMerEnnSyvDagerTil } from '../../../../../utils';
+import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
 import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from '../arena-aktivitet/KanIkkeLeggeTilForhaandsorienteringInfotekst';
 import AvtaltForm from './AvtaltForm';
@@ -26,11 +26,11 @@ const AvtaltFormContainer = (props: Props) => {
 
     return (
         <>
-            {aktivitet.avtalt && aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
+            {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE && aktivitet.avtalt ? (
                 mindreEnnSyvDagerTil ? (
                     <KanIkkeLeggeTilForhaandsorienteringInfotekst />
                 ) : (
-                    <ForhaandsorienteringForm hidden={mindreEnnSyvDagerTil} {...props} />
+                    <ForhaandsorienteringForm {...props} aktivitet={aktivitet} />
                 )
             ) : (
                 <AvtaltForm

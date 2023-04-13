@@ -1,10 +1,10 @@
 import { PencilIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
-import { endreAktivitetRoute } from '../../../../routes';
+import { useRoutes } from '../../../../routes';
 
 interface Props {
     id: string;
@@ -16,7 +16,8 @@ interface Props {
 const EndreAktivitetKnapp = (props: Props) => {
     const { id, tillatEndring, laster, underOppfolging } = props;
 
-    const history = useHistory();
+    const navigate = useNavigate();
+    const { endreAktivitetRoute } = useRoutes();
 
     if (!tillatEndring) {
         return null;
@@ -24,7 +25,7 @@ const EndreAktivitetKnapp = (props: Props) => {
 
     const goToEndre = () => {
         loggEvent(APNE_ENDRE_AKTIVITET);
-        history.push(endreAktivitetRoute(id));
+        navigate(endreAktivitetRoute(id));
     };
 
     return (
@@ -32,7 +33,7 @@ const EndreAktivitetKnapp = (props: Props) => {
             disabled={laster || !underOppfolging}
             onClick={goToEndre}
             variant="secondary"
-            icon={<PencilIcon fontSize="1.5rem" />}
+            icon={<PencilIcon aria-hidden fontSize="1.5rem" />}
         >
             Endre på aktiviteten
         </Button>

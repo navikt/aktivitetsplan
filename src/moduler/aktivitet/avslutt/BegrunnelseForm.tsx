@@ -16,7 +16,7 @@ interface Props {
     headerTekst: string;
     beskrivelseLabel: string;
     lagrer: boolean;
-    onSubmit: (data: any) => Promise<void>;
+    onSubmit: (data: BegrunnelseFormValues) => Promise<void>;
 }
 
 const BegrunnelseForm = (props: Props) => {
@@ -40,7 +40,7 @@ const BegrunnelseForm = (props: Props) => {
     const begrunnelseValue = watch('begrunnelse'); // for <Textarea /> character-count to work
 
     return (
-        <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div>
                 <Heading level="1" size="large">
                     {headerTekst}

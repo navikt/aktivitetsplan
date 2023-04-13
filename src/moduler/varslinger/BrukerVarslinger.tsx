@@ -1,31 +1,36 @@
-import moment from 'moment';
+import { addDays, differenceInDays, parseISO, startOfDay } from 'date-fns';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
+import { ARBEIDSSOKERREGISTRERING_URL } from '../../constant';
 import {
     selectErUnderOppfolging,
     selectInaktiveringsDato,
     selectKanReaktiveres,
 } from '../oppfolging-status/oppfolging-selector';
 import AdvarselMedDialogLenke from './AdvarselMedDialogLenke';
-import { HiddenIfAdvarselMedLenke } from './varsel-alertstriper';
+import AdvarselMedLenkeVarsling from './AdvarselMedLenkeVarsling';
 
-const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string | undefined => {
+const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string => {
     if (!antallDagerIgjen) {
-        return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
+        // oppfolging.inaktivert-mer-enn-28-dager.reaktiveres_nb.txt
+        return 'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere plan". Hvis du fortsatt skal motta ytelser og få oppfølging fra NAV må du være registrert.';
     }
 
     const mellom10og28 = antallDagerIgjen <= 28 && antallDagerIgjen >= 10;
     const mindreEnn10 = antallDagerIgjen < 10 && antallDagerIgjen >= 1;
 
     if (mellom10og28) {
-        return 'oppfolging.inaktivert-28-til-10-dager.reaktiveres';
+        // oppfolging.inaktivert-28-til-10-dager.reaktiveres_nb.txt
+        return 'Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.';
     }
     if (mindreEnn10) {
-        return 'oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres';
+        // oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres_nb.txt
+        return `Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert. Om ${antallDagerIgjen} dager vil denne aktivitetsplanen bli avsluttet.`;
     }
-    return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
+
+    // oppfolging.inaktivert-mer-enn-28-dager.reaktiveres_nb.txt
+    return 'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere plan". Hvis du fortsatt skal motta ytelser og få oppfølging fra NAV må du være registrert.';
 };
 
 interface Props {
@@ -40,9 +45,9 @@ const BrukerVarslinger = (props: Props) => {
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const kanReaktiveres = useSelector(selectKanReaktiveres);
 
-    const dagensDato = moment();
-    const dato28dagerEtterIserv = moment(inaktiveringsdato).add(28, 'day');
-    const antallDagerIgjen = dato28dagerEtterIserv.diff(dagensDato, 'days');
+    const dagensDato = startOfDay(new Date());
+    const dato28dagerEtterIserv = addDays(parseISO(inaktiveringsdato), 28);
+    const antallDagerIgjen = differenceInDays(dato28dagerEtterIserv, dagensDato);
 
     return (
         <div className="container">
@@ -50,24 +55,21 @@ const BrukerVarslinger = (props: Props) => {
                 lenkeTekst="Les hva du må gjøre."
                 tekst="Du har fått en viktig melding fra NAV."
                 dialogId={tilhorendeDialogId}
-                className="mb-5 mt-4"
                 hidden={!erEskalert}
             />
-            <HiddenIfAdvarselMedLenke
+            <AdvarselMedLenkeVarsling
                 hidden={!kanReaktiveres}
-                tekstId={infotekstTilInaktivertBrukere(antallDagerIgjen)}
-                className="mb-5 mt-4"
-                lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
-                href={arbeidssokerregistreringHref}
-                values={{ antalldagerIgjen: antallDagerIgjen }}
+                tekst={infotekstTilInaktivertBrukere(antallDagerIgjen)}
+                lenkeTekst="Gå til registrering"
+                href={ARBEIDSSOKERREGISTRERING_URL}
             />
-            <HiddenIfAdvarselMedLenke
+            <AdvarselMedLenkeVarsling
                 hidden={underOppfolging}
-                tekstId="ikke.under.oppfolging.reaktivering"
-                className="mb-5 mt-4"
-                lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
-                href={arbeidssokerregistreringHref}
-                values={{ antalldagerIgjen: antallDagerIgjen }}
+                tekst={
+                    'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.'
+                }
+                lenkeTekst="Register deg hos NAV"
+                href={ARBEIDSSOKERREGISTRERING_URL}
             />
         </div>
     );

@@ -1,13 +1,14 @@
 import { Select } from '@navikt/ds-react';
 import { format } from 'date-fns';
-import React, { ChangeEventHandler } from 'react';
-import { connect } from 'react-redux';
+import React, { ChangeEventHandler, useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
 
-import { HistoriskOppfolgingsPeriode, OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { ReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import {
     VistOppfolgingsPeriode,
+    selectErUnderOppfolging,
     selectSorterteHistoriskeOppfolgingsPerioder,
 } from '../../oppfolging-status/oppfolging-selector';
 import { velgHistoriskPeriode } from './filter-reducer';
@@ -16,8 +17,8 @@ import { selectHistoriskPeriode } from './filter-selector';
 interface Props {
     harHistoriskePerioder: boolean;
     historiskePerioder: VistOppfolgingsPeriode[];
-    historiskPeriode?: OppfolgingsPeriode;
-    doVelgHistoriskPeriode: (periode: null | HistoriskOppfolgingsPeriode) => void;
+    historiskPeriode?: Oppfolgingsperiode;
+    doVelgHistoriskPeriode: (periode: null | HistoriskOppfolgingsperiode) => void;
     skjulInneverende: boolean;
 }
 
@@ -28,6 +29,16 @@ const PeriodeFilter = ({
     doVelgHistoriskPeriode,
     skjulInneverende,
 }: Props) => {
+    const erUnderOppfolging = useSelector(selectErUnderOppfolging);
+    const sorterteHistoriskePerioder = useSelector(selectSorterteHistoriskeOppfolgingsPerioder);
+
+    useEffect(() => {
+        if (!erUnderOppfolging && harHistoriskePerioder) {
+            const nyesteHistoriskPeriode = sorterteHistoriskePerioder[0];
+            doVelgHistoriskPeriode(nyesteHistoriskPeriode);
+        }
+    }, []);
+
     if (!harHistoriskePerioder) return null;
 
     const onPeriodeChange: ChangeEventHandler<HTMLSelectElement> = (val) => {
@@ -46,6 +57,7 @@ const PeriodeFilter = ({
             <Select
                 className="w-full sm:w-64"
                 hideLabel
+                autoComplete="on"
                 defaultValue={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
                 label="Periode"
                 onChange={onPeriodeChange}
@@ -83,8 +95,8 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: ReduxDispatch) => ({
-    doVelgHistoriskPeriode: (aktivitetsType: null | HistoriskOppfolgingsPeriode) =>
-        dispatch(velgHistoriskPeriode(aktivitetsType)),
+    doVelgHistoriskPeriode: (historiskOppfolgingsperiode: null | HistoriskOppfolgingsperiode) =>
+        dispatch(velgHistoriskPeriode(historiskOppfolgingsperiode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeriodeFilter);

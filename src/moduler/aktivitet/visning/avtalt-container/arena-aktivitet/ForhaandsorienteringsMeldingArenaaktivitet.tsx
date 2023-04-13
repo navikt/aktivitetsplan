@@ -1,51 +1,48 @@
-import { BodyShort, Button } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { BodyShort, Button, Select, Textarea } from '@navikt/ds-react';
 import React from 'react';
+import { UseFormRegister, UseFormWatch } from 'react-hook-form/dist/types/form';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import Select from '../../../../../felles-komponenter/skjema/input/Select';
-import Textarea from '../../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
+import { ForhaandsorienteringFormValues } from '../aktivitet/ForhaandsorienteringForm';
+import { AVTALT_TEKST } from '../utilsForhaandsorientering';
 import VarslingInfo from '../VarslingInfo';
-import styles from './ForhaandsorienteringsMeldingArenaaktivitet.module.less';
 
 interface Props {
-    visible: boolean;
     lasterData: boolean;
-    state: any;
+    register: UseFormRegister<ForhaandsorienteringFormValues>;
+    watch: UseFormWatch<ForhaandsorienteringFormValues>;
 }
 
 const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
-    const { visible, lasterData, state } = props;
-    const valgtForhaandsorienteringType = state.fields.forhaandsorienteringType.input.value;
+    const { lasterData, register, watch } = props;
 
-    if (!visible) {
-        return null;
-    }
+    const forhaandsorienteringType = watch('forhaandsorienteringType');
+    const avtaltText119 = watch('avtaltText119');
 
     return (
-        <div className={classNames('space-y-8')}>
+        <div className="space-y-8">
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={lasterData}
-                noBlankOption
-                className={styles.selectType}
-                {...state.fields.forhaandsorienteringType}
+                className="mt-4"
+                {...register('forhaandsorienteringType')}
             >
                 <option value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</option>
                 <option value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</option>
             </Select>
-            <VisibleIfDiv visible={valgtForhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
+            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <VarslingInfo />
-                <BodyShort className="blokk-xs">
-                    Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at
-                    stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre
-                    aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.
-                </BodyShort>
+                <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
             </VisibleIfDiv>
 
-            <VisibleIfDiv visible={valgtForhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
-                <Textarea label={<VarslingInfo />} maxLength={500} {...state.fields.tekst} />
+            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
+                <Textarea
+                    label={<VarslingInfo />}
+                    maxLength={500}
+                    value={avtaltText119}
+                    {...register('avtaltText119')}
+                />
             </VisibleIfDiv>
 
             <Button loading={lasterData}>Bekreft</Button>

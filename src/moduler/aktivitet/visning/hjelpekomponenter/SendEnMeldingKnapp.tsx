@@ -2,13 +2,14 @@ import { ChatElipsisIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
+import { useErVeileder } from '../../../../Provider';
+import { useRoutes } from '../../../../routes';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -16,18 +17,19 @@ interface Props {
 
 const SendEnMeldingKnapp = (props: Props) => {
     const { aktivitet } = props;
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const dialog: Dialog | undefined = useSelector(createSelectDialogForAktivitetId(aktivitet));
 
     const ulestMeldinger =
         dialog?.henvendelser?.reduce((totaltUleste, melding) => (melding.lest ? totaltUleste : totaltUleste + 1), 0) ||
         0;
 
-    const history = useHistory();
+    const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const veilederOnClick = (event: React.MouseEvent) => {
         if (erVeileder) {
-            history.replace('/');
+            navigate(hovedsideRoute(), { replace: true });
             byttTilDialogFlate(event, aktivitet.id, dialog?.id);
         }
     };
@@ -38,7 +40,7 @@ const SendEnMeldingKnapp = (props: Props) => {
                 variant="secondary"
                 as="a"
                 href={getDialogLenke(erVeileder, aktivitet.id, dialog?.id)}
-                icon={<ChatElipsisIcon fontSize="1.5rem" />}
+                icon={<ChatElipsisIcon aria-hidden fontSize="1.5rem" />}
                 onClick={veilederOnClick}
             >
                 {ulestMeldinger > 0

@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Checkbox, Detail, HelpText } from '@navikt/ds-react';
-import classNames from 'classnames';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +7,7 @@ import { AnyAction } from 'redux';
 import { z } from 'zod';
 
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import { VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
+import { EksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
@@ -19,7 +18,7 @@ import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
 import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsorienteringInfotekst';
 
 interface Props {
-    aktivitet: VeilarbAktivitet;
+    aktivitet: Exclude<VeilarbAktivitet, EksternAktivitet>;
     oppdaterer: boolean;
     lasterData: boolean;
     mindreEnnSyvDagerTil: boolean;
@@ -86,8 +85,8 @@ const AvtaltForm = (props: Props) => {
         forhaandsorienteringType: kanSendeForhaandsvarsel
             ? ForhaandsorienteringType.SEND_STANDARD
             : ForhaandsorienteringType.IKKE_SEND,
-        avtaltText119: AVTALT_TEKST_119,
         avtaltText: AVTALT_TEKST,
+        avtaltText119: AVTALT_TEKST_119,
     };
 
     const {
@@ -115,11 +114,16 @@ const AvtaltForm = (props: Props) => {
             autoComplete="off"
             noValidate
             onSubmit={handleSubmit((data) => onSubmitHandler(data))}
-            className={classNames('bg-surface-alt-3-subtle py-2 px-4 my-4 border border-border-alt-3 rounded-md')}
+            className="bg-surface-alt-3-subtle py-2 px-4 my-4 border border-border-alt-3 rounded-md"
         >
             <div className="flex items-center">
                 <Checkbox onChange={() => setShowForm(!showForm)}>Avtalt med NAV</Checkbox>
-                <HelpText id="hjelp" className="ml-2 justify-self-start">
+                <HelpText
+                    aria-label="Informasjon om avtalt med NAV"
+                    title="Informasjon om avtalt med NAV"
+                    id="hjelp"
+                    className="ml-2 justify-self-start"
+                >
                     <div className="max-w-[300px]">
                         Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
                         &quot;Avtalt med NAV&quot;

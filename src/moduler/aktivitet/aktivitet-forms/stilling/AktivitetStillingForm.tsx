@@ -23,7 +23,7 @@ const schema = z.object({
     lenke: z.string().max(2000, 'Du må korte ned lenken til 2000 tegn').optional(),
 });
 
-type StillingAktivitetFormValues = z.infer<typeof schema>;
+export type StillingAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: StillingAktivitetFormValues) => Promise<void>;

@@ -1,8 +1,9 @@
-import { JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../constant';
 import {
     AktivitetBaseProps,
     AlleAktiviteter,
     BrukerType,
+    JobbStatusType,
+    Kanal,
     Livslopsstatus,
     StillingFraNavSoknadsstatus,
 } from './aktivitetTypes';
@@ -48,7 +49,7 @@ export interface IJobbAktivitet extends AktivitetBaseProps {
     type: VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE;
     fraDato?: string;
     tilDato?: string;
-    jobbStatus: typeof JOBB_STATUS_HELTID | typeof JOBB_STATUS_DELTID;
+    jobbStatus: JobbStatusType;
     ansettelsesforhold: string;
     arbeidstid: string;
 }
@@ -72,11 +73,7 @@ export interface SamtalereferatAktivitet
     extends AktivitetBaseProps<FellesTransaksjonsTyper | SamtaleReferatTransaksjonsType> {
     type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE;
     fraDato: string;
-    varighet: string;
-    kanal: string;
-    adresse: string;
-    beskrivelse: string;
-    forberedelser: string;
+    kanal: Kanal;
     referat: string;
     erReferatPublisert: boolean;
 }
@@ -87,7 +84,7 @@ export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsType
     tilDato: string;
     klokkeslett: string;
     varighet: string;
-    kanal: string;
+    kanal: Kanal;
     adresse: string;
     beskrivelse: string;
     forberedelser: string;

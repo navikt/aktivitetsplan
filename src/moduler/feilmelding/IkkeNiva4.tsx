@@ -1,10 +1,12 @@
+import {} from '../identitet/identitet-selector';
+
 import { Alert, HelpText } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { STATUS } from '../../api/utils';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
-import { selectErVeileder } from '../identitet/identitet-selector';
+import { useErVeileder } from '../../Provider';
 import {
     selectErBrukerManuell,
     selectOppfolgingSlice,
@@ -25,7 +27,7 @@ const Nivaa4Feilmelding = () => {
     const niva4 = useSelector(selectNivaa4);
     const lastetOk = useSelector(selectNivaa4LastetOk);
     const erreservertKRR = useSelector(selectReservasjonKRR);
-    const erVeileder = useSelector(selectErVeileder);
+    const erVeileder = useErVeileder();
     const erManuell = useSelector(selectErBrukerManuell);
     const oppfolging = useSelector(selectOppfolgingSlice).data;
     const oppfolgingLastetOk = useSelector(selectOppfolgingStatus) === STATUS.OK;

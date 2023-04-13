@@ -1,7 +1,7 @@
 import { Tag, TagProps } from '@navikt/ds-react';
 import React from 'react';
 
-import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { StillingStatus } from '../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../datatypes/internAktivitetTypes';
 
 interface Etikett {
@@ -9,7 +9,7 @@ interface Etikett {
     variant: TagProps['variant'];
 }
 
-const getEtikett: Record<StillingsStatus, Etikett> = {
+const getEtikett: Record<StillingStatus, Etikett> = {
     SOKNAD_SENDT: { text: 'Sendt søknad og venter på svar', variant: 'success' },
     INNKALT_TIL_INTERVJU: { text: 'Skal på intervju', variant: 'info' },
     JOBBTILBUD: { text: 'Fått jobbtilbud 🎉', variant: 'warning' },

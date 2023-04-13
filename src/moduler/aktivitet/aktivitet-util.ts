@@ -1,18 +1,20 @@
-import 'moment-duration-format';
-
 import {
     addMinutes,
     differenceInMinutes,
     format,
+    isAfter,
+    isBefore,
     isDate,
+    isValid,
     minutesToHours,
+    parseISO,
     setHours,
     setMinutes,
     startOfDay,
+    subMonths,
 } from 'date-fns';
-import moment from 'moment';
 
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
 import {
     AktivitetStatus,
     AktivitetType,
@@ -79,7 +81,7 @@ export function delCvikkeSvartSkalVises(aktivitet: StillingFraNavAktivitet): boo
     const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
     const status = aktivitet.status;
     const historisk = aktivitet.historisk;
-    const ikkeAktiv = status === STATUS_AVBRUTT || status === STATUS_FULLFOERT || !!historisk;
+    const ikkeAktiv = status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT || !!historisk;
 
     return erStillingFraNav && harIkkeSvart && !ikkeAktiv;
 }
@@ -97,14 +99,15 @@ export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasj
         return true;
     }
 
-    const endretDatoAktivietetMoment = moment(aktivitet.endretDato || aktivitet.opprettetDato);
+    const endretDatoAktivietetMoment = parseISO(aktivitet.endretDato || aktivitet.opprettetDato);
+    const lestTidspunkt = parseISO(lestInformasjon.tidspunkt);
 
-    if (endretDatoAktivietetMoment && moment(lestInformasjon.tidspunkt)) {
+    if (isValid(endretDatoAktivietetMoment) && isValid(lestTidspunkt)) {
         // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfor må
         // vi ha en sjekk att opprettet dato ikke ligger fram i tiden
         return (
-            endretDatoAktivietetMoment.isAfter(lestInformasjon.tidspunkt) &&
-            endretDatoAktivietetMoment.isBefore(moment().add(5, 'minutes'))
+            isAfter(endretDatoAktivietetMoment, lestTidspunkt) &&
+            isBefore(endretDatoAktivietetMoment, addMinutes(new Date(), 5))
         );
     }
     return false;
@@ -151,7 +154,7 @@ const toHourAndMinutes = (klokkeslett: string | number): Klokkeslett => {
             minute,
         };
     } else {
-        const varighetMinutter = parseInt(klokkeslett);
+        const varighetMinutter = parseInt(klokkeslett.toString());
         const hour = minutesToHours(varighetMinutter); // Uses floor rounding
         const minute = varighetMinutter - 60 * hour;
         return { hour, minute };
@@ -202,32 +205,35 @@ function samtalreferatManglerPublisering(type: AktivitetType, erReferatPublisert
 }
 
 export function manglerPubliseringAvSamtaleReferat(
-    aktivitet: MoteAktivitet | SamtalereferatAktivitet,
+    aktivitet: AlleAktiviteter,
     status: AktivitetStatus
-) {
+): aktivitet is MoteAktivitet | SamtalereferatAktivitet {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
-        (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) && status !== STATUS_AVBRUTT) ||
+        (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) && status !== AktivitetStatus.AVBRUTT) ||
         samtalreferatManglerPublisering(type, erReferatPublisert)
     );
 }
 
 function erMoteOgAvbrutt(status: AktivitetStatus, aktivitetType: AktivitetType): boolean {
-    return status === STATUS_AVBRUTT && aktivitetType === MOTE_TYPE;
+    return status === AktivitetStatus.AVBRUTT && aktivitetType === MOTE_TYPE;
 }
 
 function erAvtaltOgAvbrutt(erAvtalt: boolean, status: AktivitetStatus): boolean {
-    return erAvtalt && status === STATUS_AVBRUTT;
+    return erAvtalt && status === AktivitetStatus.AVBRUTT;
 }
 
 function erFullfoertUtenReferat(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType) {
     return (
-        erAvtalt && status === STATUS_FULLFOERT && aktivitetType !== SAMTALEREFERAT_TYPE && aktivitetType !== MOTE_TYPE
+        erAvtalt &&
+        status === AktivitetStatus.FULLFOERT &&
+        aktivitetType !== SAMTALEREFERAT_TYPE &&
+        aktivitetType !== MOTE_TYPE
     );
 }
 
-export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType) {
+export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType): boolean {
     return (
         erAvtaltOgAvbrutt(erAvtalt, status) ||
         erFullfoertUtenReferat(erAvtalt, status, aktivitetType) ||
@@ -253,14 +259,11 @@ export function sorterAktiviteter(
 export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
     const sorteringsDatoString = [aktivitet.endretDato, aktivitet.tilDato, aktivitet.fraDato]
         .filter((possibleDate) => possibleDate !== undefined && possibleDate !== null)
-        .find((possibleDate) => moment(possibleDate).isValid());
+        .find((possibleDate) => possibleDate && isValid(parseISO(possibleDate)));
 
-    const sorteringsDato = sorteringsDatoString ? moment(sorteringsDatoString) : undefined;
+    const sorteringsDato = sorteringsDatoString ? parseISO(sorteringsDatoString) : undefined;
 
-    return (
-        sorteringsDato === undefined ||
-        (sorteringsDato.isValid() && sorteringsDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd'))
-    );
+    return sorteringsDato === undefined || isAfter(sorteringsDato, subMonths(startOfDay(new Date()), 1));
 }
 
 export const splitIEldreOgNyereAktiviteter = (aktiviteter: AlleAktiviteter[]): GamleNyeAktiviteter =>

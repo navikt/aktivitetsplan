@@ -1,12 +1,12 @@
 import { Heading, ReadMore } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
-import { STATUS } from '../../api/utils';
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
+import { useRoutes } from '../../routes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { hentMal, selectMalStatus } from './aktivitetsmal-reducer';
@@ -27,7 +27,8 @@ const Mal = () => {
     const isDirty = useRef(false);
 
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     useEffect(() => {
         dispatch(hentMal() as unknown as AnyAction);
@@ -39,17 +40,17 @@ const Mal = () => {
     const onModalRequestClosed = () => {
         if (isDirty.current) {
             if (window.confirm(CONFIRM)) {
-                history.push('/');
+                navigate(hovedsideRoute());
             }
         } else {
-            history.push('/');
+            navigate(hovedsideRoute());
         }
     };
 
     return (
         <MalModal onRequestClosed={onModalRequestClosed}>
             <div>
-                <Heading level="1" size="large" className="mb-8">
+                <Heading id="modal-heading" level="1" size="large" className="mb-8">
                     {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
                         ? 'Mitt mål fra en tidligere periode'
                         : 'Mitt mål'}

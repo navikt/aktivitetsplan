@@ -1,6 +1,6 @@
 import React, { ComponentClass, FunctionComponent } from 'react';
 
-import { fn } from '../utils';
+import { fn } from '../utils/utils';
 
 type func = () => void;
 

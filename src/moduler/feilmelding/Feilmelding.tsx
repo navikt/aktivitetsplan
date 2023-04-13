@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import Knappelenke from '../../felles-komponenter/utils/Knappelenke';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import { guid } from '../../utils';
+import { guid } from '../../utils/utils';
 import styles from './Feilmelding.module.less';
 import FeilmeldingDetaljer from './FeilmeldingDetaljer';
 import { FeilmeldingType } from './FeilmeldingTypes';

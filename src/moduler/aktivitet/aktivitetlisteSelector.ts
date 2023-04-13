@@ -1,12 +1,11 @@
 import { createSelector } from 'reselect';
 
 import { STATUS, aggregerStatus } from '../../api/utils';
-import { AppConfig } from '../../app';
-import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA_NAV_TYPE } from '../../constant';
+import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { aktivitetMatchesFilters, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
-import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
+import { selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterSlice } from './aktivitet-selector';
 import { selectArenaAktiviteterData, selectArenaAktiviteterSlice } from './arena-aktivitet-selector';
@@ -42,7 +41,7 @@ export const selectAktivitetListeSlice = (state: any) => {
 
 export const selectAktivitetListeStatus = (state: any) => selectAktivitetListeSlice(state).status;
 
-export const selectKanEndreAktivitetStatus = (state: any, aktivitet: VeilarbAktivitet) => {
+export const kanEndreAktivitetStatus = (aktivitet: VeilarbAktivitet, erVeileder: boolean) => {
     if (!aktivitet) {
         return false;
     }
@@ -50,35 +49,29 @@ export const selectKanEndreAktivitetStatus = (state: any, aktivitet: VeilarbAkti
     return (
         !historisk &&
         type !== VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE &&
-        (selectErVeileder(state) || type !== MOTE_TYPE) &&
-        status !== STATUS_AVBRUTT &&
-        status !== STATUS_FULLFOERT
+        (erVeileder || type !== MOTE_TYPE) &&
+        status !== AktivitetStatus.AVBRUTT &&
+        status !== AktivitetStatus.FULLFOERT
     );
 };
 
-export const selectKanEndreAktivitetEtikett = (state: any, aktivitet: VeilarbAktivitet) => {
+export const kanEndreAktivitetEtikett = (aktivitet: VeilarbAktivitet, erVeileder: boolean) => {
     if (!aktivitet) {
         return false;
     }
     const { historisk, type } = aktivitet;
-
-    return !historisk && (selectErVeileder(state) || type !== MOTE_TYPE);
+    return !historisk && (erVeileder || type !== MOTE_TYPE);
 };
 
-declare const window: {
-    appconfig: AppConfig;
-};
-
-export const selectKanEndreAktivitetDetaljer = (state: any, aktivitet: VeilarbAktivitet) => {
-    if (!aktivitet) {
-        return false;
-    }
+export const kanEndreAktivitetDetaljer = (aktivitet: AlleAktiviteter, erVeileder: boolean): boolean => {
+    if (!aktivitet) return false;
+    if (isArenaAktivitet(aktivitet)) return false;
     const { avtalt, type } = aktivitet;
     return (
-        selectKanEndreAktivitetStatus(state, aktivitet) &&
-        (selectErVeileder(state) || type !== VeilarbAktivitetType.SAMTALEREFERAT_TYPE) &&
-        type !== VeilarbAktivitetType.STILLING_FRA_NAV_TYPE &&
-        (avtalt !== true || !!window.appconfig.TILLAT_SET_AVTALT || type === BEHANDLING_AKTIVITET_TYPE)
+        kanEndreAktivitetStatus(aktivitet, erVeileder) &&
+        (erVeileder || type !== SAMTALEREFERAT_TYPE) &&
+        type !== STILLING_FRA_NAV_TYPE &&
+        (!avtalt || erVeileder || type === BEHANDLING_AKTIVITET_TYPE)
     );
 };
 

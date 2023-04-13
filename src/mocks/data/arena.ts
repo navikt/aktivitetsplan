@@ -1,8 +1,7 @@
 import { addDays, subDays } from 'date-fns';
-import moment from 'moment';
 import { RestRequest } from 'msw';
 
-import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
+import { ArenaAktivitet, ArenaEtikett } from '../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { visArenaAktiviteter } from '../demo/sessionstorage';
 
@@ -256,7 +255,7 @@ export const arena = !visArenaAktiviteter()
               opprettetDato: '2020-05-31T10:46:51.622+01:00',
               avtalt: true,
               forhaandsorientering: null,
-              etikett: 'AVSLAG',
+              etikett: ArenaEtikett.AVSLAG,
               deltakelseProsent: 100,
               tiltaksnavn: 'Arbeidsmarkedsopplæring (AMO)',
               tiltakLokaltNavn: 'Bussertifikat - Kl. D (Akershus)',
@@ -311,7 +310,7 @@ export const oppdaterLestFhoArenaaktivitet = (req: RestRequest) => {
 
     lestAktivitet.forhaandsorientering = {
         ...(lestAktivitet.forhaandsorientering as Forhaandsorientering),
-        lestDato: moment().toISOString(),
+        lestDato: new Date().toISOString(),
     };
 
     return lestAktivitet;

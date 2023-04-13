@@ -1,14 +1,14 @@
 import { PadlockLockedIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 import Tilbakeknapp from './Tilbakeknapp';
 
 interface Props {
     tilbakeTekst?: string;
     headerTekst?: string;
-    onTilbakeClick?(): string;
+    onTilbakeClick?: MouseEventHandler<HTMLAnchorElement>;
     className?: string;
     aktivitetErLaast?: boolean;
 }

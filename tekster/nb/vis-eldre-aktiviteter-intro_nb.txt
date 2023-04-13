@@ -1,1 +1,0 @@
-Aktivitetskort som er eldre enn to måneder vises ikke.

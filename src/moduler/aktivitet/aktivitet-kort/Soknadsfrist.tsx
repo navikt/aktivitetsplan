@@ -2,7 +2,7 @@ import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 
 import { StillingAktivitet } from '../../../datatypes/internAktivitetTypes';
-import { dagerTil, formaterDatoKortManed } from '../../../utils';
+import { dagerTil, formaterDatoKortManed } from '../../../utils/dateUtils';
 import styles from './Aktivitetskort.module.less';
 
 function getClassName(frist: number) {

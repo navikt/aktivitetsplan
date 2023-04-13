@@ -4,7 +4,6 @@ import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { IKKE_FATT_JOBBEN } from '../../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
@@ -14,7 +13,7 @@ import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
 import EndreLinje from '../endre-linje/EndreLinje';
-import SoknadsstatusForm from './SoknadsstatusForm';
+import SoknadsstatusForm, { SoknadsstatusFormValues } from './SoknadsstatusForm';
 
 const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
     const { historisk } = aktivitet;
@@ -49,11 +48,21 @@ interface SoknadsstatusValue {
 
 const OppdaterSoknadsstatus = (props: Props) => {
     const { aktivitet } = props;
-    const [open, setIsOpen] = useState(false);
     const dispatch = useDispatch();
+    const [open, setIsOpen] = useState(false);
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 
-    const onSubmit = (value: SoknadsstatusValue): Promise<any> => {
+    const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
+    const ikkeAvslag = StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
+    const kanEndre = ikkeAvslag || endretAvBruker;
+    const skalViseInfoBoks = !kanEndre;
+
+    const ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
+        aktivitet.stillingFraNavData?.ikkefattjobbendetaljer
+    );
+    const { setFormIsDirty } = useContext(DirtyContext);
+
+    const onSubmitHandler = (value: SoknadsstatusFormValues): Promise<any> => {
         setFormIsDirty('soknadsstatus', false);
         return lagreSoknadsstatus(dispatch, value, aktivitet).then(() => {
             setIsOpen(false);
@@ -61,17 +70,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
         });
     };
 
-    const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
-    const ikkeAvslag = IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
-    const kanEndre = ikkeAvslag || endretAvBruker;
-    const skalViseInfoBoks = !kanEndre;
-
-    const ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
-        aktivitet.stillingFraNavData?.ikkefattjobbendetaljer
-    );
-    const visning = <StillingFraNavEtikett soknadsstatus={aktivitet.stillingFraNavData?.soknadsstatus} />;
-    const { setFormIsDirty } = useContext(DirtyContext);
-    const form = (
+    const content = (
         <>
             {skalViseInfoBoks ? (
                 <Alert variant="info" className="mt-4">
@@ -80,8 +79,8 @@ const OppdaterSoknadsstatus = (props: Props) => {
             ) : null}
             <SoknadsstatusForm
                 disabled={disableSoknadsstatusEndring || !kanEndre}
-                aktivitet={aktivitet}
-                onSubmit={onSubmit}
+                soknadsstatus={aktivitet.stillingFraNavData.soknadsstatus as any}
+                onSubmit={onSubmitHandler}
             />
         </>
     );
@@ -97,8 +96,8 @@ const OppdaterSoknadsstatus = (props: Props) => {
             }}
             open={open}
             tittel="Hvor er du i søknadsprosessen?"
-            form={form}
-            subtittel={visning}
+            subtittel={<StillingFraNavEtikett soknadsstatus={aktivitet.stillingFraNavData?.soknadsstatus} />}
+            content={content}
         />
     );
 };

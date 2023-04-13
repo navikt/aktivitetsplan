@@ -16,7 +16,7 @@ export const coerceToUndefined = (val: string | Date | undefined | null): Date |
 
 export const validateStandardDateErrors = (validation?: DateValidationT, required: boolean): string | undefined => {
     if (!validation) return;
-    if (!validation.isEmpty && !validation.isValidDate) {
+    if (!validation.isEmpty && !validation.isValidDate && !validation.isDisabled) {
         return 'Ikke en gyldig dato';
     }
 };

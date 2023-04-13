@@ -1,11 +1,9 @@
-import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { GRUPPE_AKTIVITET_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Moteplan } from '../../../../datatypes/arenaAktivitetTypes';
-import { formaterDatoKortManed, formaterDatoKortManedTid, formaterTid } from '../../../../utils';
+import { formaterDatoKortManed, formaterDatoKortManedTid, formaterTid } from '../../../../utils/dateUtils';
 import Informasjonsfelt, { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
@@ -34,17 +32,21 @@ const GruppeDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <FraDato aktivitet={aktivitet} visIkkeSatt hidden={erGruppeDatoLike} />
-            <TilDato aktivitet={aktivitet} visIkkeSatt hidden={erGruppeDatoLike} />
+            {!erGruppeDatoLike ? (
+                <>
+                    <FraDato aktivitet={aktivitet} visIkkeSatt />
+                    <TilDato aktivitet={aktivitet} visIkkeSatt />
+                </>
+            ) : null}
             <HiddenIfInformasjonsfelt
                 hidden={!erGruppeDatoLike}
                 key="likeGruppeDato"
-                tittel={<FormattedMessage id="aktivitetdetaljer.dato-tekst.gruppeaktivitet" />}
+                tittel="Dato"
                 innhold={formaterDatoKortManed(fraDato) || 'Dato ikke satt'}
             />
             <Informasjonsfelt
                 key="moteplanutenslutteklokke"
-                tittel={<FormattedMessage id="aktivitetdetaljer.moteplan-label" />}
+                tittel="Tidspunkt og sted"
                 beskrivelse
                 innhold={MoteplanInnhold(moeteplanListe)}
             />

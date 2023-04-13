@@ -1,3 +1,4 @@
+import { AktivitetStatus, Livslopsstatus, StillingFraNavSoknadsstatus } from '../../datatypes/aktivitetTypes';
 import {
     StillingFraNavAktivitet,
     StillingFraNavAktivitetData,
@@ -52,7 +53,7 @@ export const enStillingFraNavAktivitet = ({
         id: `${id}`,
         tittel,
         type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE,
-        status: 'GJENNOMFORES',
+        status: AktivitetStatus.GJENNOMFOERT,
         fraDato: date?.toISOString(),
         opprettetDato: opprettet.toISOString(),
         endretDato: endretDate?.toISOString(),
@@ -62,7 +63,7 @@ export const enStillingFraNavAktivitet = ({
         transaksjonsType: FellesTransaksjonsTyper.STATUS_ENDRET,
         stillingFraNavData: {
             ...enStillingFraNavData,
-            soknadsstatus: 'VENTER',
+            soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
         },
     };
 };
@@ -77,11 +78,11 @@ export const enStillingFraNavData: StillingFraNavAktivitetData = {
     arbeidsgiver: 'Havsalt AS Havsalt AS Havsalt AS Havsalt AS',
     arbeidssted: 'Kristiansand',
     kontaktpersonData: oddFellow,
-    soknadsstatus: 'VENTER',
+    soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
     soknadsfrist: 'Snarest',
     stillingsId: '1231',
     bestillingsId: '12312',
     ikkefattjobbendetaljer: undefined,
     svarfrist: '2022-10-19T14:33:28.518Z',
-    livslopsstatus: 'HAR_VARSLET',
+    livslopsstatus: Livslopsstatus.HAR_VARSLET,
 };

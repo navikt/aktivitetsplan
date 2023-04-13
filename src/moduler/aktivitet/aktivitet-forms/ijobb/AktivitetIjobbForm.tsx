@@ -4,7 +4,7 @@ import React, { MutableRefObject } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
+import { JobbStatusType } from '../../../../datatypes/aktivitetTypes';
 import { IJobbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import AktivitetFormHeader from '../AktivitetFormHeader';
@@ -18,13 +18,13 @@ const schema = z.object({
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     tilDato: z.date({ invalid_type_error: 'Ikke en gyldig dato' }).optional().nullable(),
-    jobbStatus: z.enum([JOBB_STATUS_HELTID, JOBB_STATUS_DELTID], { required_error: 'Du må velge heltid eller deltid' }),
+    jobbStatus: z.nativeEnum(JobbStatusType, { required_error: 'Du må velge heltid eller deltid' }),
     ansettelsesforhold: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
     arbeidstid: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
     beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional().nullable(),
 });
 
-type IJobbAktivitetFormValues = z.infer<typeof schema>;
+export type IJobbAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: IJobbAktivitetFormValues) => Promise<void>;
@@ -71,11 +71,9 @@ const IJobbAktivitetForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
-    const onChangeStillingProsent = (value: typeof JOBB_STATUS_HELTID | typeof JOBB_STATUS_DELTID) => {
+    const onChangeStillingProsent = (value: JobbStatusType) => {
         setValue('jobbStatus', value, { shouldValidate: true });
     };
-
-    console.log(errors);
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
@@ -109,8 +107,8 @@ const IJobbAktivitetForm = (props: Props) => {
                                 onChange={onChangeStillingProsent}
                                 error={errors.jobbStatus && errors.jobbStatus.message}
                             >
-                                <Radio value={JOBB_STATUS_HELTID}>Heltid</Radio>
-                                <Radio value={JOBB_STATUS_DELTID}>Deltid</Radio>
+                                <Radio value={JobbStatusType.HELTID}>Heltid</Radio>
+                                <Radio value={JobbStatusType.DELTID}>Deltid</Radio>
                             </RadioGroup>
                         )}
                     />

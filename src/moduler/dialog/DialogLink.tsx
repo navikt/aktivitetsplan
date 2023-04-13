@@ -1,8 +1,8 @@
 import React, { MouseEvent } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { selectErVeileder } from '../identitet/identitet-selector';
+import { useErVeileder } from '../../Provider';
+import { useRoutes } from '../../routes';
 import { byttTilDialogFlate, getDialogLenke } from './DialogFlateUtils';
 
 interface Props {
@@ -15,12 +15,14 @@ interface Props {
 
 const LenkeTilDialog = (props: Props) => {
     const { className, dialogId, aktivitetId, hidden, children } = props;
-    const history = useHistory();
-    const erVeileder = useSelector(selectErVeileder);
+
+    const navigate = useNavigate();
+    const erVeileder = useErVeileder();
+    const { hovedsideRoute } = useRoutes();
 
     const internalOnClick = (event: MouseEvent) => {
         if (erVeileder) {
-            history.replace('/');
+            navigate(hovedsideRoute(), { replace: true });
             byttTilDialogFlate(event, aktivitetId, dialogId);
         }
     };

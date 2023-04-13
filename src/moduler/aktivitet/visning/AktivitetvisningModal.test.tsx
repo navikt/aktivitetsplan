@@ -1,12 +1,12 @@
 import { Modal } from '@navikt/ds-react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
 import create from '../../../store';
 import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../../dialog/dialog-reducer';
-import Feilmelding from '../../feilmelding/Feilmelding';
+import { tekster } from '../../feilmelding/GetErrorText';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
 const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: {} });
@@ -28,16 +28,14 @@ Modal.setAppElement(document.createElement('div'));
 describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
         const store = create();
-        const wrapper = mount(<AktivitetsvisningModalWrapped store={store} />);
-        expect(wrapper.find(Feilmelding).html()).toBeNull();
+        const { queryByText } = render(<AktivitetsvisningModalWrapped store={store} />);
+        expect(queryByText(tekster.dialogFeilet)).toBeFalsy();
     });
 
     it('Skal vise feilmelding dersom dialog feiler', () => {
         const store = create();
-
         store.dispatch(dialogFeilet());
-
-        const wrapper = mount(<AktivitetsvisningModalWrapped store={store} />);
-        expect(wrapper.find(Feilmelding).html()).not.toBeNull();
+        const { getByText } = render(<AktivitetsvisningModalWrapped store={store} />);
+        getByText('Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.');
     });
 });

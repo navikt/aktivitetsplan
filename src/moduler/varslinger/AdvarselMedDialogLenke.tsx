@@ -8,18 +8,17 @@ interface Props {
     tekst: string;
     hidden?: boolean;
     dialogId?: string;
-    className: string;
 }
 
 const AdvarselMedDialogLenke = (props: Props) => {
-    const { lenkeTekst, tekst, hidden, dialogId, className } = props;
+    const { lenkeTekst, tekst, hidden, dialogId } = props;
 
     if (hidden) {
         return null;
     }
 
     return (
-        <Alert variant="warning" className={className}>
+        <Alert variant="warning" className="mb-5 mt-4">
             <BodyShort>
                 {tekst}
                 &nbsp;

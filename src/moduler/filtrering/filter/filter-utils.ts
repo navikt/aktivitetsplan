@@ -3,7 +3,7 @@ import { Store } from 'redux';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
-import { OppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
@@ -21,14 +21,8 @@ function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
-// TODO depricated see selectDatoErIPeriode
-export interface Periode {
-    fra: string;
-    til: string;
-}
-
-export function selectDatoErIPeriode(dato: string, state: OppfolgingsPeriode[]): boolean {
-    const historiskPeriode = selectHistoriskPeriode(state as unknown as Store);
+export function selectDatoErIPeriode(dato: string, state: Store): boolean {
+    const historiskPeriode = selectHistoriskPeriode(state);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
@@ -37,14 +31,19 @@ export function selectDatoErIPeriode(dato: string, state: OppfolgingsPeriode[]):
 //TODO: Flytte til utils når den er ts
 const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, dateToCompare);
 
-export function datoErIPeriode(dato: string, valgtHistoriskPeriode?: Periode, sistePeriodeSluttDato?: string) {
+export function datoErIPeriode(
+    dato: string,
+    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode,
+    sistePeriodeSluttDato?: string
+) {
     const datoDate = new Date(dato);
 
     if (valgtHistoriskPeriode) {
         const intervall = {
-            start: new Date(valgtHistoriskPeriode.fra),
-            end: new Date(valgtHistoriskPeriode.til),
+            start: new Date(valgtHistoriskPeriode.startDato),
+            end: new Date(valgtHistoriskPeriode.sluttDato),
         };
+
         return isWithinInterval(datoDate, intervall);
     }
     return !sistePeriodeSluttDato || isAfterOrEqual(datoDate, new Date(sistePeriodeSluttDato));
@@ -103,8 +102,8 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
     }
 
     const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
-    const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.avtaltMedNav;
-    const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
+    const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.AVTALT_MED_NAV;
+    const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.IKKE_AVTALT_MED_NAV;
     const { avtalt } = aktivitet;
     const aktivtAvtaltFilter = [avtaltMedNavFilter, ikkeAvtaltMedNavFilter].filter((it) => it).length === 1;
     const muligeAvtaltFiltereringer = (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);

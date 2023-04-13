@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { SAMTALEREFERAT_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import { formaterDatoKortManed } from '../../../../utils';
+import { formaterDatoKortManed } from '../../../../utils/dateUtils';
+import { kanalMap } from '../../../../utils/textMappers';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 
 interface Props {
@@ -17,16 +17,8 @@ const SamtalereferatDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <Informasjonsfelt
-                key="dato"
-                tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
-                innhold={formaterDatoKortManed(aktivitet.fraDato)}
-            />
-            <Informasjonsfelt
-                key="kanal"
-                tittel={<FormattedMessage id="aktivitetdetaljer.kanal" />}
-                innhold={aktivitet.kanal && <FormattedMessage id={`kanal.${aktivitet.kanal}`.toLowerCase()} />}
-            />
+            <Informasjonsfelt key="dato" tittel="Dato" innhold={formaterDatoKortManed(aktivitet.fraDato)} />
+            <Informasjonsfelt key="kanal" tittel="Møteform" innhold={aktivitet.kanal && kanalMap[aktivitet.kanal]} />
         </>
     );
 };

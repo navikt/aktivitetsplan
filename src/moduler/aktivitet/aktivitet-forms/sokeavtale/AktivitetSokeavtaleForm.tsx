@@ -4,18 +4,14 @@ import React, { MutableRefObject, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { AppConfig } from '../../../../app';
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
+import { useErVeileder } from '../../../../Provider';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
-
-declare const window: {
-    appconfig: AppConfig;
-};
 
 const numberErrorMessage = {
     required_error: 'Antall stillinger må fylles ut',
@@ -47,7 +43,7 @@ const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
     NySokeAvtaleFormValues,
 ]);
 
-type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
+export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
 
 interface Props {
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
@@ -70,19 +66,22 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
         return {
             skjemaVersjon: 'ny',
             ...basevalues,
-            antallStillingerIUken: aktivitet?.antallStillingerIUken || undefined,
+            antallStillingerIUken: aktivitet?.antallStillingerIUken ?? undefined,
         };
     } else {
         return {
             skjemaVersjon: 'gammel',
             ...basevalues,
-            antallStillingerSokes: aktivitet?.antallStillingerSokes || undefined,
+            antallStillingerSokes: aktivitet?.antallStillingerSokes ?? undefined,
         };
     }
 };
 
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
+
+    const erVeileder = useErVeileder();
+
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
 
     const defaultValues = getDefaultValues(aktivitet);
@@ -144,12 +143,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                         tittel="Avtale om å søke jobber"
                         aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE}
                     />
-                    <Malverk
-                        visible={window.appconfig.VIS_MALER}
-                        endre={!!aktivitet}
-                        onChange={onMalChange}
-                        type="SOKEAVTALE"
-                    />
+                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="SOKEAVTALE" />
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker
                             aktivitet={aktivitet}

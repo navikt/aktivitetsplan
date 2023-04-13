@@ -1,8 +1,13 @@
-import moment from 'moment';
+import { addDays, subDays } from 'date-fns';
 import { RestRequest } from 'msw';
 
-import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
-import { BrukerType } from '../datatypes/aktivitetTypes';
+import {
+    AktivitetStatus,
+    BrukerType,
+    Kanal,
+    StillingFraNavSoknadsstatus,
+    StillingStatus,
+} from '../datatypes/aktivitetTypes';
 import {
     CvKanDelesData,
     MoteAktivitet,
@@ -49,8 +54,8 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
           wrapAktivitet({
               ...enStillingAktivitet({ tittel: 'Langemann' }),
               beskrivelse: 'Ute på åpent hav, er jeg kjent som sabeltanns skygge',
-              status: 'GJENNOMFORES',
-              etikett: 'SOKNAD_SENDT',
+              status: AktivitetStatus.GJENNOMFOERT,
+              etikett: StillingStatus.SOKNAD_SENDT,
               kontaktperson: 'Sabeltann',
               arbeidsgiver: 'Kaptein Sabeltann',
               arbeidssted: 'Den sorte dame',
@@ -60,20 +65,20 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Skal skjules bak nedtrekksmeny for eldre aktiviteter',
               arbeidssted: 'De syv hav',
               arbeidsgiver: 'Uendret i lang tid',
-              status: STATUS_FULLFOERT,
-              fraDato: moment().subtract(120, 'year').format(),
+              status: AktivitetStatus.FULLFOERT,
+              fraDato: subDays(new Date(), 120).toISOString(),
               tilDato: undefined,
-              endretDato: moment().subtract(100, 'year').format(),
+              endretDato: subDays(new Date(), 100).toISOString(),
           }),
           wrapAktivitet({
               ...enStillingAktivitet({ tittel: 'Ana Baroma' }),
               beskrivelse: 'Skal ikke skjules bak nedtrekksmeny for eldre aktiviteter',
               arbeidssted: 'Øya Gral',
               arbeidsgiver: 'Endret nylig',
-              status: STATUS_FULLFOERT,
-              fraDato: moment().subtract(120, 'year').format(),
+              status: AktivitetStatus.FULLFOERT,
+              fraDato: subDays(new Date(), 120).toISOString(),
               tilDato: undefined,
-              endretDato: moment().subtract(1, 'day').format(),
+              endretDato: subDays(new Date(), 1).toISOString(),
           }),
           wrapAktivitet({
               id: '5',
@@ -82,7 +87,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Jeg skal bli awesome i html. Sjørøvere trenger å være awesome i html',
               lenke: 'www.nav.no',
               type: 'EGEN',
-              status: 'BRUKER_ER_INTERESSERT',
+              status: AktivitetStatus.BRUKER_ER_INTRESSERT,
               fraDato: '2020-01-01T12:00:00+01:00',
               tilDato: '2020-12-01T12:00:00+01:00',
               opprettetDato: '2018-02-26T15:51:44.197+01:00',
@@ -102,7 +107,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
               lenke: null,
               type: 'MOTE',
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               fraDato: '2030-08-21T08:00:00+02:00',
               tilDato: '2030-08-21T12:15:00+02:00',
               opprettetDato: '2018-08-21T11:55:14.044+02:00',
@@ -129,7 +134,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               behandlingSted: null,
               effekt: null,
               behandlingOppfolging: null,
-              kanal: 'TELEFON',
+              kanal: Kanal.TELEFON,
               adresse: 'Ditt nærmeste NAV kontor',
               erReferatPublisert: false,
           }),
@@ -140,7 +145,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
               lenke: null,
               type: 'MOTE',
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               fraDato: '2017-02-16T00:00:00+01:00',
               tilDato: '2017-02-16T00:00:00+02:00',
               opprettetDato: '2017-02-16T00:00:00+01:00',
@@ -167,7 +172,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               behandlingSted: null,
               effekt: null,
               behandlingOppfolging: null,
-              kanal: 'TELEFON',
+              kanal: Kanal.TELEFON,
               erReferatPublisert: false,
           }),
           wrapAktivitet({
@@ -201,23 +206,23 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               arbeidsgiver: 'Historisk',
           }),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør (ikke svart)' }),
               arbeidsgiver: 'Har ikke svart ennå',
-              status: 'PLANLAGT',
-              opprettetDato: etTidspunkt(2020),
-              endretDato: etTidspunkt(2018),
+              status: AktivitetStatus.PLANLAGT,
+              opprettetDato: subDays(new Date(), 3).toISOString(),
+              endretDato: subDays(new Date(), 3).toISOString(),
               historisk: false,
               transaksjonsType: 'OPPRETTET',
               stillingFraNavData: {
                   ...enStillingFraNavData,
-                  svarfrist: etTidspunkt(2030),
+                  svarfrist: addDays(new Date(), 3).toISOString(),
                   kontaktpersonData: navAnsatt1,
               },
           }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
               arbeidsgiver: 'Har ikke svart innen fristen',
-              status: STATUS_AVBRUTT,
+              status: AktivitetStatus.AVBRUTT,
               opprettetDato: etTidspunkt(2020),
               endretDato: etTidspunkt(2018),
               historisk: false,
@@ -238,16 +243,20 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
           }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Assisterende skipskokk', arstall: 2020 }),
-              stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles, soknadsstatus: 'CV_DELT' },
-          }),
-          wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Greve av Gral', arstall: 2023 }),
-              status: STATUS_FULLFOERT,
-              transaksjonsType: 'IKKE_FATT_JOBBEN',
               stillingFraNavData: {
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
-                  soknadsstatus: IKKE_FATT_JOBBEN,
+                  soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
+              },
+          }),
+          wrapAktivitet({
+              ...enStillingFraNavAktivitet({ tittel: 'Greve av Gral', arstall: 2023 }),
+              status: AktivitetStatus.FULLFOERT,
+              transaksjonsType: StillingFraNavTransaksjonsType.IKKE_FATT_JOBBEN,
+              stillingFraNavData: {
+                  ...enStillingFraNavData,
+                  cvKanDelesData: jaCvKanDeles,
+                  soknadsstatus: StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN,
                   ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
           }),
@@ -259,7 +268,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
                   'CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager.',
               lenke: null,
               type: 'BEHANDLING',
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               fraDato: '2022-09-13T14:13:49.000+02:00',
               tilDato: '2022-09-14T14:13:58.000+02:00',
               opprettetDato: '2022-09-13T12:16:08.593Z',
@@ -308,7 +317,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
                   'Hvilke jobber kan du ta og hvilke bransjer kan du jobbe i? Er jobbene der du bor eller andre steder i landet? Velg geografisk område og bransje og se om jobbene finnes. Hvis du mener denne aktiviteten ikke passer for deg, kan du sette den til avbrutt.',
               lenke: 'https://mia-q.nav.no',
               type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
-              status: 'BRUKER_ER_INTERESSERT',
+              status: AktivitetStatus.BRUKER_ER_INTRESSERT,
               fraDato: '2019-06-13T10:00:36.255+02:00',
               tilDato: '2019-09-13T10:00:36.255+02:00',
               opprettetDato: '2019-06-13T10:00:36.333+02:00',
@@ -331,7 +340,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
                   'Når du registrerer CV-en og jobbprofilen din, kan vi følge deg opp på en god måte. Du gjør deg synlig for arbeidsgivere som leter etter nye medarbeidere. NAV samarbeider med mange arbeidsgivere og bemanningsbransjen.',
               lenke: 'https://arbeidsplassen-q.nav.no/minside',
               type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
-              status: 'GJENNOMFORES',
+              status: AktivitetStatus.GJENNOMFOERT,
               fraDato: '2021-06-13T10:00:36.699+02:00',
               tilDato: '2021-06-21T10:00:36.699+02:00',
               opprettetDato: '2019-06-13T10:00:36.722+02:00',
@@ -354,7 +363,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
                   'Svar på noen spørsmål om hvordan du søker på jobber. Få råd og tips til søknaden, CV-en, intervjuet og hvordan du finner jobbene.',
               lenke: 'https://jobbsokerkompetanse-q.nav.no/',
               type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
-              status: 'BRUKER_ER_INTERESSERT',
+              status: AktivitetStatus.BRUKER_ER_INTRESSERT,
               fraDato: '2019-06-13T10:00:36.785+02:00',
               tilDato: '2019-06-27T10:00:36.785+02:00',
               opprettetDato: '2019-06-13T10:00:36.81+02:00',
@@ -381,7 +390,7 @@ const ekstraVersjoner = !visTestAktiviteter()
           // }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
-              status: 'PLANLAGT',
+              status: AktivitetStatus.PLANLAGT,
               transaksjonsType: 'DEL_CV_SVART',
               stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles },
           }),
@@ -400,7 +409,7 @@ function valueOrNow(potentialValue: any) {
     if (potentialValue) {
         return potentialValue;
     }
-    return moment.now().toString();
+    return new Date().toISOString();
 }
 
 function valueOrFalse(potentialValue: any) {
@@ -483,7 +492,7 @@ export const opprettAktivitet = async (req: RestRequest) => {
         id: rndId(),
         opprettetDato: new Date(),
         endretAvType: bruker,
-        endretDato: moment().toISOString(),
+        endretDato: new Date().toISOString(),
         endretAv: bruker,
         versjon: '1',
         erLestAvBruker: eksternBruker,
@@ -521,7 +530,7 @@ function lagNyVersion(aktivitet: VeilarbAktivitet): VeilarbAktivitet {
         ...aktivitet,
         // versjon er typet som string, men er et løpenummer (egentlig global sekvens for alle aktiviteter), derfor denne hacken.
         versjon: String(parseInt(aktivitet.versjon) + 1),
-        endretDato: moment().toISOString(),
+        endretDato: new Date().toISOString(),
         endretAv: bruker,
         endretAvType: bruker,
     };
@@ -580,7 +589,7 @@ export const oppdaterCVKanDelesSvar = async (req: RestRequest) => {
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as StillingFraNavAktivitet;
     const nyeAktivitetAttributter: StillingFraNavAktivitet = {
         ...gammelAktivitet,
-        status: cvKanDelesData.kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
+        status: cvKanDelesData.kanDeles ? AktivitetStatus.GJENNOMFOERT : AktivitetStatus.AVBRUTT,
         transaksjonsType: StillingFraNavTransaksjonsType.DEL_CV_SVART,
         stillingFraNavData: {
             ...gammelAktivitet.stillingFraNavData,
@@ -591,7 +600,7 @@ export const oppdaterCVKanDelesSvar = async (req: RestRequest) => {
                 endretAv: bruker ? '843029483' : 'z123',
                 endretAvType: bruker,
             },
-            soknadsstatus: cvKanDelesData.kanDeles ? 'VENTER' : undefined,
+            soknadsstatus: cvKanDelesData.kanDeles ? StillingFraNavSoknadsstatus.VENTER : undefined,
         },
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
@@ -621,7 +630,7 @@ export const oppdaterLestFho = async (req: RestRequest) => {
         ...gammelAktivitet,
         forhaandsorientering: {
             ...gammelAktivitet.forhaandsorientering!,
-            lestDato: moment().toISOString(),
+            lestDato: new Date().toISOString(),
         },
         transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,
     };

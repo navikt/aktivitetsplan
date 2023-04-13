@@ -1,18 +1,3 @@
-import 'moment-timezone';
-import 'moment/locale/nb';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure } from 'enzyme';
-import moment from 'moment';
-
-moment.locale('nb');
-moment.tz.setDefault('Europe/Oslo');
-moment.updateLocale('nb', {
-    monthsShort: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
-});
-
-configure({ adapter: new Adapter() });
-
 // Ikkje bra!
 import.meta.env.BASE_URL = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 
@@ -30,9 +15,6 @@ vi.mock('react-dnd', () => ({
     DndProvider: ({ children }) => <>{children}</>,
 }));
 vi.mock('react-dnd-html5-backend', () => ({}));
-vi.mock('react-intl', () => ({
-    FormattedMessage: ({ id }) => id,
-}));
 
 // FAIL LOUDLY on unhandled promise rejections / errors
 process.on('unhandledRejection', (reason) => {

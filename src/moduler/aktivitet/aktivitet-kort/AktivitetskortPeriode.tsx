@@ -4,7 +4,7 @@ import React from 'react';
 import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
-import { formaterDatoKortManed } from '../../../utils';
+import { formaterDatoKortManed } from '../../../utils/dateUtils';
 import Soknadfrist from './Soknadsfrist';
 
 interface Props {

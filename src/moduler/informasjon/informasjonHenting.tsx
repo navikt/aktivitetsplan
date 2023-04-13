@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { AnyAction } from 'redux';
 
 import { fetchHarFlereAktorId } from '../../api/oppfolgingAPI';
@@ -47,7 +47,7 @@ function InformasjonsHenting() {
     if (videreSendTilInfo && erBruker && !ref.current) {
         ref.current = true;
         setBack(pathname);
-        return <Redirect to={redirectPath} />;
+        return <Navigate to={redirectPath} />;
     }
 
     return null;

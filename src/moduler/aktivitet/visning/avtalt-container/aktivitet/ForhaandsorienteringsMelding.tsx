@@ -5,6 +5,7 @@ import { UseFormRegister } from 'react-hook-form/dist/types/form';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
+import { AVTALT_TEKST } from '../utilsForhaandsorientering';
 import VarslingInfo from '../VarslingInfo';
 import { ForhaandsorienteringDialogFormValues } from './AvtaltForm';
 
@@ -33,11 +34,7 @@ const ForhaandsorienteringsMelding = (props: Props) => {
             </Select>
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <VarslingInfo />
-                <BodyShort className="blokk-xs">
-                    Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at
-                    stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre
-                    aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.
-                </BodyShort>
+                <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
             </VisibleIfDiv>
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea

@@ -1,10 +1,3 @@
-import {
-    STATUS_AVBRUTT,
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_FULLFOERT,
-    STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
-} from '../constant';
 import { ArenaAktivitet, ArenaAktivitetType } from './arenaAktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
@@ -12,36 +5,52 @@ import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
-export type AktivitetStatus =
-    | typeof STATUS_AVBRUTT
-    | typeof STATUS_FULLFOERT
-    | typeof STATUS_GJENNOMFOERT
-    | typeof STATUS_PLANLAGT
-    | typeof STATUS_BRUKER_ER_INTRESSERT;
+export enum AktivitetStatus {
+    BRUKER_ER_INTRESSERT = 'BRUKER_ER_INTERESSERT',
+    PLANLAGT = 'PLANLAGT',
+    GJENNOMFOERT = 'GJENNOMFORES',
+    FULLFOERT = 'FULLFORT',
+    AVBRUTT = 'AVBRUTT',
+}
 
-export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
-export type StillingFraNavSoknadsstatus =
-    | 'VENTER'
-    | 'CV_DELT'
-    | 'SKAL_PAA_INTERVJU'
-    | 'JOBBTILBUD'
-    | 'AVSLAG'
-    | 'IKKE_FATT_JOBBEN';
-export type Livslopsstatus =
-    | 'PROVER_VARSLING'
-    | 'HAR_VARSLET'
-    | 'KAN_IKKE_VARSLE'
-    | 'HAR_SVART'
-    | 'AVBRUTT_AV_SYSTEM'
-    | 'AVBRUTT_AV_BRUKER';
+export enum StillingStatus {
+    INGEN_VALGT = 'INGEN_VALGT',
+    SOKNAD_SENDT = 'SOKNAD_SENDT',
+    INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU',
+    AVSLAG = 'AVSLAG',
+    JOBBTILBUD = 'JOBBTILBUD',
+}
 
-export type BrukerType =
-    'BRUKER' |
-    'ARBEIDSGIVER' |
-    'TILTAKSARRANGOER' |
-    'NAV' |
-    'SYSTEM' |
-    'ARENAIDENT';
+export enum StillingFraNavSoknadsstatus {
+    VENTER = 'VENTER',
+    CV_DELT = 'CV_DELT',
+    SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU',
+    JOBBTILBUD = 'JOBBTILBUD',
+    AVSLAG = 'AVSLAG',
+    IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
+}
+
+export enum Livslopsstatus {
+    PROVER_VARSLING = 'PROVER_VARSLING',
+    HAR_VARSLET = 'HAR_VARSLET',
+    KAN_IKKE_VARSLE = 'KAN_IKKE_VARSLE',
+    HAR_SVART = 'HAR_SVART',
+    AVBRUTT_AV_SYSTEM = 'AVBRUTT_AV_SYSTEM',
+    AVBRUTT_AV_BRUKER = 'AVBRUTT_AV_BRUKER',
+}
+
+export enum Kanal {
+    TELEFON = 'TELEFON',
+    OPPMOTE = 'OPPMOTE',
+    INTERNET = 'INTERNETT',
+}
+
+export enum JobbStatusType {
+    HELTID = 'HELTID',
+    DELTID = 'DELTID',
+}
+
+export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 
 export interface Lest {
     tidspunkt: string;
@@ -60,7 +69,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     endretAv: string;
     endretDato?: string;
     avtalt: boolean;
-    etikett?: StillingsStatus;
+    etikett?: StillingStatus; // todo sjekk ut hvorfor denne ligger på baseprops og ikke i StillingAktivitet
     transaksjonsType: T;
     historisk: boolean;
     fraDato?: string;

@@ -1,18 +1,18 @@
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
+import { STILLING_FRA_NAV_BASE_URL } from '../../../../constant';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { loggStillingFraNavStillingslenkeKlikk } from '../../../../felles-komponenter/utils/logging';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { useErVeileder } from '../../../../Provider';
 
 interface Props {
     aktivitet: StillingFraNavAktivitet;
 }
 
 const LesMerOmStillingenKnapp = ({ aktivitet }: Props) => {
-    const erVeileder = useSelector(selectErVeileder);
-    const stillingslenke = import.meta.env.VITE_STILLING_FRA_NAV_BASE_URL + aktivitet.stillingFraNavData.stillingsId;
+    const erVeileder = useErVeileder();
+    const stillingslenke = `${STILLING_FRA_NAV_BASE_URL}${aktivitet.stillingFraNavData.stillingsId}`;
 
     return (
         <Button

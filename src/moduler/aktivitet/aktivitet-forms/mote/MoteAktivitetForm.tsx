@@ -4,7 +4,7 @@ import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { INTERNET_KANAL, OPPMOTE_KANAL, STATUS_PLANLAGT, TELEFON_KANAL } from '../../../../constant';
+import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
@@ -24,7 +24,7 @@ const schema = z.object({
     }),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
     varighet: z.string().min(1, 'Du må fylle ut varighet'),
-    kanal: z.string().min(1, 'Du må fylle ut møteform'),
+    kanal: z.nativeEnum(Kanal),
     adresse: z
         .string()
         .min(1, 'Du må fylle ut møtested eller annen praktisk informasjon')
@@ -36,10 +36,10 @@ const schema = z.object({
     forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
 });
 
-type MoteAktivitetFormValues = z.infer<typeof schema>;
+export type MoteAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
-    onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<any>;
+    onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MoteAktivitet;
 }
@@ -54,7 +54,7 @@ const MoteAktivitetForm = (props: Props) => {
         klokkeslett: moteTid?.klokkeslett ? moteTid.klokkeslett : '10:00',
         // Keep field as string since input natively returns string
         varighet: moteTid?.varighet ? formatterVarighet(moteTid.varighet) : '00:45',
-        kanal: aktivitet?.kanal || OPPMOTE_KANAL,
+        kanal: aktivitet?.kanal || Kanal.OPPMOTE,
         adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse,
         forberedelser: aktivitet?.forberedelser ?? undefined,
@@ -89,7 +89,7 @@ const MoteAktivitetForm = (props: Props) => {
                 onSubmit({
                     ...data,
                     ...beregnFraTil(data),
-                    status: STATUS_PLANLAGT,
+                    status: AktivitetStatus.PLANLAGT,
                     avtalt: false,
                     // dato: selectedDay!!.toString(),
                 })
@@ -124,9 +124,9 @@ const MoteAktivitetForm = (props: Props) => {
                         step="900"
                     />
                     <Select label="Møteform (obligatorisk)" {...register('kanal')}>
-                        <option value={OPPMOTE_KANAL}>Oppmøte</option>
-                        <option value={TELEFON_KANAL}>Telefonmøte</option>
-                        <option value={INTERNET_KANAL}>Videomøte</option>
+                        <option value={Kanal.OPPMOTE}>Oppmøte</option>
+                        <option value={Kanal.TELEFON}>Telefonmøte</option>
+                        <option value={Kanal.INTERNET}>Videomøte</option>
                     </Select>
                     <VideoInfo kanal={watch('kanal')} />
 

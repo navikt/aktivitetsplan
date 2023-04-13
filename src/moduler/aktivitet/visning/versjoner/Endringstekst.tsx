@@ -10,7 +10,7 @@ import {
     StillingFraNavTransaksjonsType,
     StillingTransaksjonsType,
 } from '../../../../datatypes/transaksjonstyperTypes';
-import { formaterDatoKortManed } from '../../../../utils';
+import { formaterDatoKortManed } from '../../../../utils/dateUtils';
 import {
     aktivitetStatusMap,
     stillingFraNavSoknadsstatusMapper,
@@ -18,7 +18,6 @@ import {
 } from '../../../../utils/textMappers';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import { hentBrukeravhengigTekst } from './brukeravhengigTekst';
-import styles from './Endringstekst.module.less';
 
 interface Props {
     aktivitet: VeilarbAktivitet;
@@ -30,7 +29,7 @@ const Endringstekst = (props: Props) => {
     const erBruker = useSelector(selectErBruker);
 
     const brukeravhengigTekst = (
-        <Label className={styles.identitet}>
+        <Label className="inline">
             {hentBrukeravhengigTekst(erBruker, aktivitet.endretAvType, aktivitet.endretAv)}
         </Label>
     );

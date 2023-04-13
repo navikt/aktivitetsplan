@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
@@ -17,27 +16,14 @@ const BehandlingsDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <Informasjonsfelt
-                key="behandlingtype"
-                tittel={<FormattedMessage id="aktivitetdetaljer.behandling-type-label" />}
-                innhold={aktivitet.behandlingType}
-            />
-            <Informasjonsfelt
-                key="behandlingsted"
-                tittel={<FormattedMessage id="aktivitetdetaljer.behandling-sted-label" />}
-                innhold={aktivitet.behandlingSted}
-            />
+            <Informasjonsfelt key="behandlingtype" tittel="Type behandling" innhold={aktivitet.behandlingType} />
+            <Informasjonsfelt key="behandlingsted" tittel="Behandlingssted" innhold={aktivitet.behandlingSted} />
             <FraDato aktivitet={aktivitet} />
             <TilDato aktivitet={aktivitet} />
-            <Informasjonsfelt
-                key="effekt"
-                tittel={<FormattedMessage id="aktivitetdetaljer.effekt-label" />}
-                innhold={aktivitet.effekt}
-                fullbredde
-            />
+            <Informasjonsfelt key="effekt" tittel="Mål for behandlingen" innhold={aktivitet.effekt} fullbredde />
             <Informasjonsfelt
                 key="behandlingOppfolging"
-                tittel={<FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />}
+                tittel="Oppfølging fra NAV"
                 innhold={aktivitet.behandlingOppfolging}
                 fullbredde
             />

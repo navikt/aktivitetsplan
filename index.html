@@ -11,24 +11,14 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <title>Aktivitetsplan</title>
-    <script>
-        window.app = 'aktivitetsplan';
-
-        // NOTE: This is bad, don't use it if you don't HAVE to
-        window.appconfig = {
-            CONTEXT_PATH: '',
-            TILLAT_SET_AVTALT: false,
-            VIS_MALER: false,
-            TIMEOUTBOX: true
-        };
-    </script>
     <link href="<%=VITE_DEKORATOR_URL%>/css/client.css" rel="stylesheet" />
 </head>
-<body style='background-color: white;'>
-<div style='min-height: 100vh; height: auto;'>
+<body style='background-color: white; min-height: 100vh; display: flex; flex-flow: column'>
+<div style='height: auto; flex-grow: 1'>
+    <a style="display: none" href="#main" >Hopp til hovedinnhold</a>
     <div id='decorator-header'></div>
-    <div id='modal-a11y-wrapper'>
-        <div id='demo'></div>
+    <div id='demo'></div>
+    <div id='root'>
         <div id='mainapp' class='appContainer'></div>
     </div>
 </div>

@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
+import { Oppfolgingsperiode } from '../../../../datatypes/oppfolgingTypes';
 import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
-import { erGyldigISODato, msSince } from '../../../../utils';
+import { erGyldigISODato, msSince } from '../../../../utils/dateUtils';
 import { selectErUnderKvp, selectOppfolgingsPerioder } from '../../../oppfolging-status/oppfolging-selector';
 import { selectAktiviteterData } from '../../aktivitet-selector';
 
@@ -23,7 +23,7 @@ export const useSendAvtaltMetrikker = () => {
             .filter((aktivitet) => aktivitet.avtalt)
             .filter((a) => !a.historisk).length !== 0;
 
-    const aktivOppfolgingsPeriode = useSelector<any, OppfolgingsPeriode[]>(selectOppfolgingsPerioder).filter(
+    const aktivOppfolgingsPeriode = useSelector<any, Oppfolgingsperiode[]>(selectOppfolgingsPerioder).filter(
         (periode) => !periode.sluttDato
     )[0];
     const kanSendeVarsel = useKanSendeVarsel();
