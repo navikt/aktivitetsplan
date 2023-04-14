@@ -1,9 +1,12 @@
+import { SerializedError } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
+import { exist } from '../../utils/utils';
 import { selectFeilSlice } from '../feilmelding/feil-slice';
 import {
     hentAktivitet,
+    lagNyAktivitet,
     oppdaterAktivitet,
     oppdaterAktivitetEtikett,
     oppdaterStillingFraNavSoknadsstatus,
@@ -31,18 +34,26 @@ export function selectLasterAktivitetData(state: RootState) {
     return selectAktivitetStatus(state) !== Status.OK;
 }
 
-export const selectAktivitetFeilmeldinger = (state: RootState) => {
-    const feilMeldingsdata =
-        selectAktivitetStatus(state) === Status.ERROR && selectFeilSlice(state)[hentAktivitet.rejected.type];
-    return feilMeldingsdata;
+export const selectAktivitetFeilmeldinger = (state: RootState): SerializedError | undefined => {
+    return selectAktivitetStatus(state) === Status.ERROR
+        ? selectFeilSlice(state)[hentAktivitet.rejected.type]
+        : undefined;
 };
-export const selecteEndreAktivitetFeilmeldinger = (state: RootState) => {
+export const selectOpprettAktivitetFeilmeldinger = (state: RootState): SerializedError | undefined => {
+    return selectAktivitetStatus(state) === Status.ERROR
+        ? selectFeilSlice(state)[lagNyAktivitet.rejected.type]
+        : undefined;
+};
+export const selecteEndreAktivitetFeilmeldinger = (state: RootState): SerializedError[] => {
     const aktivitetError = selectAktivitetStatus(state) === Status.ERROR;
-    const oppdaterError = aktivitetError && selectFeilSlice(state)[oppdaterAktivitet.rejected.type];
-    const oppdaterEtikettError = aktivitetError && selectFeilSlice(state)[oppdaterAktivitetEtikett.rejected.type];
-    const oppdaterStillingFraNavError =
-        aktivitetError && selectFeilSlice(state)[oppdaterStillingFraNavSoknadsstatus.rejected.type];
-    return [oppdaterError, oppdaterEtikettError, oppdaterStillingFraNavError].filter((it) => it);
+    const oppdaterError = aktivitetError ? selectFeilSlice(state)[oppdaterAktivitet.rejected.type] : undefined;
+    const oppdaterEtikettError = aktivitetError
+        ? selectFeilSlice(state)[oppdaterAktivitetEtikett.rejected.type]
+        : undefined;
+    const oppdaterStillingFraNavError = aktivitetError
+        ? selectFeilSlice(state)[oppdaterStillingFraNavSoknadsstatus.rejected.type]
+        : undefined;
+    return [oppdaterError, oppdaterEtikettError, oppdaterStillingFraNavError].filter(exist);
 };
 
 export function selectAktivitetFhoLestStatus(state: RootState) {

@@ -2,13 +2,13 @@ import { Alert, ReadMore } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
+import { SerializedError } from '../../api/utils';
 import { guid } from '../../utils/utils';
 import FeilmeldingDetaljer from './FeilmeldingDetaljer';
-import { FeilmeldingType } from './FeilmeldingTypes';
 import { getErrorText } from './GetErrorText';
 
 interface PropTypes {
-    feilmeldinger: FeilmeldingType[];
+    feilmeldinger: SerializedError[];
 }
 
 export default function Feilmelding(props: PropTypes) {

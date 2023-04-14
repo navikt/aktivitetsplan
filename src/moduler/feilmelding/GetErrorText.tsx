@@ -1,8 +1,8 @@
+import { SerializedError } from '../../api/utils';
 import { hentAktivitet, hentAktiviteter } from '../aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
-import { FeilmeldingType } from './FeilmeldingTypes';
 
 export const tekster = {
     fallback: 'Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.',
@@ -14,16 +14,16 @@ export const tekster = {
 };
 
 // TODO feilmelding skal ikke komme fra state, men catches gjennom errorboundary
-export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
+export function getErrorText(feilmeldinger: SerializedError[]): string {
     const antallFeil = feilmeldinger.length;
     const feil = feilmeldinger[0];
 
-    if (feil.type === hentDialoger.rejected.type && antallFeil === 1) {
+    if (feil?.type === hentDialoger.rejected.type && antallFeil === 1) {
         return tekster.dialogFeilet;
     }
 
-    if (feil.httpStatus === 401) return tekster.unauthorized;
-    if (feil.httpStatus === 403) return tekster.forbidden;
+    if (feil?.code === '401') return tekster.unauthorized;
+    if (feil?.code === '403') return tekster.forbidden;
 
     if (antallFeil > 1) {
         return tekster.fallback;

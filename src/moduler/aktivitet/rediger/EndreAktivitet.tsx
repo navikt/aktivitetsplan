@@ -1,7 +1,7 @@
+import { isFulfilled, isRejected } from '@reduxjs/toolkit';
 import React, { FunctionComponent, MouseEventHandler, MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
 import {
     BEHANDLING_AKTIVITET_TYPE,
@@ -33,6 +33,7 @@ import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/I
 import { aktivitetRoute } from '../../../routes';
 import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
+import { exist } from '../../../utils/utils';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
     MedisinskBehandlingFormValues,
@@ -117,7 +118,7 @@ function EndreAktivitet() {
         aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
     );
     const avhengigheter: Avhengighet[] = [valgtAktivitet ? Status.OK : Status.PENDING];
-    const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
+    const aktivitetFeilmelding = useSelector(selectAktivitetFeilmeldinger);
     const oppdaterFeilmelding = useSelector(selecteEndreAktivitetFeilmeldinger);
     const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
 
@@ -125,7 +126,14 @@ function EndreAktivitet() {
         if (!valgtAktivitet) return;
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as VeilarbAktivitet;
-        return doOppdaterAktivitet(oppdatertAktivitet).then(() => navigate(aktivitetRoute(valgtAktivitet.id)));
+        return doOppdaterAktivitet(oppdatertAktivitet).then((action) => {
+            if (isRejected(action)) {
+                return;
+            }
+            if (isFulfilled(action)) {
+                navigate(aktivitetRoute(valgtAktivitet.id));
+            }
+        });
     }
 
     const onReqClose = () => {
@@ -155,10 +163,11 @@ function EndreAktivitet() {
         valgtAktivitet && isVeilarbAktivitet(valgtAktivitet)
             ? getAktivitetsFormComponent(valgtAktivitet, formProps)
             : null;
+
     return (
         <Modal
             header={header}
-            feilmeldinger={aktivitetFeilmeldinger.concat(oppdaterFeilmelding)}
+            feilmeldinger={[...oppdaterFeilmelding, aktivitetFeilmelding].filter(exist)}
             onRequestClose={onReqClose}
             contentLabel="aktivitet-modal"
         >

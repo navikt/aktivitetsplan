@@ -2,6 +2,7 @@ import { createSlice, isAsyncThunkAction, isFulfilled, isRejected } from '@redux
 import { AnyAction } from 'redux';
 import { createSelector } from 'reselect';
 
+import { SerializedError } from '../../api/utils';
 import { RootState } from '../../store';
 import { hentAktiviteter } from '../aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
@@ -11,7 +12,7 @@ import { hentLest } from '../lest/lest-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
-type ErrorSliceType = Record<string, any>;
+type ErrorSliceType = Record<string, SerializedError>;
 
 const errorSlice = createSlice({
     name: 'dialog',

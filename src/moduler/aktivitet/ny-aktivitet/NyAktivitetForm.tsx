@@ -1,4 +1,4 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, isFulfilled, isRejected } from '@reduxjs/toolkit';
 import React, { MouseEventHandler, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
+import { exist } from '../../../utils/utils';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
@@ -21,14 +22,14 @@ import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/SamtalereferatForm';
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
-import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { selectAktivitetFeilmeldinger, selectOpprettAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { AktivitetFormValues } from '../rediger/EndreAktivitet';
 
 const NyAktivitetForm = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
+    const aktivitetFeilmeldinger = useSelector(selectOpprettAktivitetFeilmeldinger);
     const underOppfolging = useSelector(selectErUnderOppfolging);
 
     const dirtyRef = useRef(false);
@@ -42,9 +43,13 @@ const NyAktivitetForm = () => {
                 type: aktivitetsType,
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
-            return dispatch(lagNyAktivitet(nyAktivitet)).then((action) =>
-                navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id))
-            );
+            return dispatch(lagNyAktivitet(nyAktivitet)).then((action) => {
+                if (isRejected(action)) {
+                    return;
+                } else if (isFulfilled(action)) {
+                    navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id));
+                }
+            });
         };
     };
 
@@ -74,7 +79,7 @@ const NyAktivitetForm = () => {
             header={header}
             onRequestClose={onRequestClose}
             contentLabel="ny-aktivitet-modal"
-            feilmeldinger={aktivitetFeilmeldinger}
+            feilmeldinger={[aktivitetFeilmeldinger].filter(exist)}
         >
             <ErrorBoundry>
                 <article>

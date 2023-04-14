@@ -28,6 +28,7 @@ export interface SerializedError {
     message?: string;
     stack?: string;
     code?: string;
+    type: string;
 }
 
 export async function sjekkStatuskode(response: Response): Promise<Response> {
