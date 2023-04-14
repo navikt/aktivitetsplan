@@ -26,5 +26,5 @@ export function selectNivaa4Status(state: RootState) {
 export function selectNivaa4Feilmeldinger(state: RootState) {
     const feilmeldinger =
         selectTilgangSlice(state).status === Status.ERROR && selectFeilSlice(state)[hentNivaa4.rejected.type];
-    return feilmeldinger ? feilmeldinger : [];
+    return feilmeldinger;
 }

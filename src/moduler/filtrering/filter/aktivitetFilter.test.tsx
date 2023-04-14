@@ -6,16 +6,20 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { Store } from 'redux';
+import { vi } from 'vitest';
 
 import { Status } from '../../../createGenericSlice';
-// import { STATUS } from '../../../api/utils';
 import {
     AktivitetStatus,
     AlleAktiviteter,
     StillingFraNavSoknadsstatus,
     StillingStatus,
 } from '../../../datatypes/aktivitetTypes';
-import { StillingFraNavAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import {
+    StillingFraNavAktivitet,
+    VeilarbAktivitet,
+    VeilarbAktivitetType,
+} from '../../../datatypes/internAktivitetTypes';
 import Hovedside from '../../../hovedside/Hovedside';
 import { wrapAktivitet } from '../../../mocks/aktivitet';
 import { mockOppfolging } from '../../../mocks/data/oppfolging';
@@ -23,7 +27,7 @@ import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNa
 import { handlers } from '../../../mocks/handlers';
 import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
-import { hentAktivitet } from '../../aktivitet/aktivitet-actions';
+import { hentAktiviteter } from '../../aktivitet/aktivitet-actions';
 
 const identitet = {
     id: 'Z123456',
@@ -49,12 +53,19 @@ const initialStore = {
             status: Status.OK,
             data: identitet,
         },
-        feature: {
-            status: Status.OK,
-            data: { ignore: false },
-        },
     },
 };
+
+vi.mock('../../../felles-komponenter/utils/logging', async () => {
+    const actual: any = await vi.importActual('../../../felles-komponenter/utils/logging');
+    return {
+        ...actual,
+        default: vi.fn(),
+        loggTidBruktGaaInnPaaAktivitetsplanen: vi.fn(),
+        logTimeToAktivitestavlePaint: vi.fn(),
+        loggingAntallBrukere: vi.fn(),
+    };
+});
 
 /* Provider both redux-store and "in-memory" router for all sub-components to render correctly */
 const WrappedHovedside = ({ store }: { store: ToolkitStore }) => {
@@ -85,17 +96,21 @@ function makeTestAktiviteter<T>(
             id,
             tittel: `Aktivitet: ${filterValue}`,
         };
-    });
-    store.dispatch({
-        type: hentAktivitet.fulfilled.type,
-        data: testAktiviteter,
-    });
+    }) as unknown as VeilarbAktivitet[];
+    store.dispatch(
+        hentAktiviteter.fulfilled(
+            {
+                aktiviteter: testAktiviteter,
+            },
+            'asd'
+        )
+    );
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
 
 const server = setupServer(...handlers);
 
-describe.skip('aktivitets-filter', () => {
+describe('aktivitets-filter', () => {
     // Start server before all tests
     beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
@@ -107,13 +122,14 @@ describe.skip('aktivitets-filter', () => {
 
     it('should filter avtalt med nav', async () => {
         const store = configureStore({ reducer, preloadedState: initialStore as any });
-        const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
         makeTestAktiviteter(store, [true, false], (aktivitet, value) => {
             return {
                 ...aktivitet,
                 avtalt: value,
             };
         });
+        const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
+
         await waitFor(() =>
             expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
         );
@@ -123,8 +139,8 @@ describe.skip('aktivitets-filter', () => {
 
         getByText('Aktivitet: false');
         expect(queryByText('Aktivitet: true')).toBeFalsy();
-        fireEvent.click(getByText('Avtalt med NAV'));
-        fireEvent.click(getByText('Ikke avtalt med NAV'));
+        fireEvent.click(getByLabelText('Avtalt med NAV'));
+        fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
         getByText('Aktivitet: true');
         expect(queryByText('Aktivitet: false')).toBeFalsy();
         expect(queryByText('Assisterende skipskokk')).toBeNull();
@@ -137,7 +153,6 @@ describe.skip('aktivitets-filter', () => {
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
         const store = configureStore({ reducer, preloadedState: initialStore as any });
-        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -150,6 +165,7 @@ describe.skip('aktivitets-filter', () => {
                 | VeilarbAktivitetType.MOTE_TYPE
                 | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
         }[];
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         for await (const { tittel, type } of aktiviteter) {
             await waitFor(() =>
                 expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
@@ -174,7 +190,6 @@ describe.skip('aktivitets-filter', () => {
 
     it('Should filter based on etiketter (stilling fra NAV)', async () => {
         const store = configureStore({ reducer, preloadedState: initialStore as any });
-        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const statuser: StillingFraNavSoknadsstatus[] = [
             StillingFraNavSoknadsstatus.AVSLAG,
             StillingFraNavSoknadsstatus.VENTER,
@@ -188,6 +203,7 @@ describe.skip('aktivitets-filter', () => {
                 },
             };
         });
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         getByText(`Aktivitet: VENTER`);
         getByText(`Aktivitet: AVSLAG`);
         await waitFor(() =>
@@ -202,7 +218,6 @@ describe.skip('aktivitets-filter', () => {
 
     it('Should filter based on etiketter (stilling)', async () => {
         const store = configureStore({ reducer, preloadedState: initialStore as any });
-        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         const statuser: StillingStatus[] = [StillingStatus.INNKALT_TIL_INTERVJU, StillingStatus.SOKNAD_SENDT];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
@@ -211,6 +226,7 @@ describe.skip('aktivitets-filter', () => {
                 type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
             } as AlleAktiviteter;
         });
+        const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
         getByText(`Aktivitet: SOKNAD_SENDT`);
         await waitFor(() =>

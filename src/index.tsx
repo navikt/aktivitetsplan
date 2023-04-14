@@ -10,6 +10,7 @@ import AppWebComponent from './AppWebComponent';
 import { USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
+import { mockfnr } from './mocks/utils';
 import { renderAsReactRoot } from './rootWrapper';
 
 declare global {
@@ -19,8 +20,6 @@ declare global {
 }
 
 setDefaultOptions({ locale: nn });
-
-export const mockfnr = '12345678910';
 
 const exportToNavSpa = () => {
     NAVSPA.eksporter('aktivitetsplan', AppWebComponent);

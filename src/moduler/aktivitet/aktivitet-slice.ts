@@ -19,8 +19,8 @@ import {
     settAktivitetTilAvtalt,
 } from './aktivitet-actions';
 
-interface AktivitetState {
-    data: VeilarbAktivitet[] & { nesteStatus?: AktivitetStatus };
+export interface AktivitetState {
+    data: VeilarbAktivitet[];
     status: Status;
     fhoLestStatus: Status;
     fhoBekreftStatus: Status;

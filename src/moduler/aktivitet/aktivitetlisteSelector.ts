@@ -1,3 +1,4 @@
+import { retry } from '@reduxjs/toolkit/query';
 import { createSelector } from 'reselect';
 
 import { aggregerStatus } from '../../api/utils';
@@ -74,11 +75,4 @@ export const kanEndreAktivitetDetaljer = (aktivitet: AlleAktiviteter, erVeileder
         type !== STILLING_FRA_NAV_TYPE &&
         (!avtalt || erVeileder || type === BEHANDLING_AKTIVITET_TYPE)
     );
-};
-
-export const selectAktivitetListeFeilMelding = (state: RootState) => {
-    const alleAktiviteterSlice = [selectAktiviteterSlice(state), selectArenaAktiviteterSlice(state)];
-    const feilendeKall = alleAktiviteterSlice.filter((slice) => slice.status === Status.ERROR);
-
-    return feilendeKall.map((slice) => slice.feil);
 };

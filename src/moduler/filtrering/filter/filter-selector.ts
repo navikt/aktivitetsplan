@@ -1,5 +1,6 @@
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { RootState } from '../../../store';
+import { FilterState } from './filter-slice';
 import {
     AktivitetFilterType,
     ArenaEtikettFilterType,
@@ -8,7 +9,7 @@ import {
     StatusFilterType,
 } from './FilterVisning';
 
-export function selectFilterSlice(state: RootState) {
+export function selectFilterSlice(state: RootState): FilterState {
     return state.data.filter;
 }
 

@@ -1,14 +1,22 @@
 import { Status } from '../../createGenericSlice';
+import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
 import { selectFeilSlice } from '../feilmelding/feil-slice';
-import { hentAktivitet } from './aktivitet-actions';
+import {
+    hentAktivitet,
+    oppdaterAktivitet,
+    oppdaterAktivitetEtikett,
+    oppdaterStillingFraNavSoknadsstatus,
+} from './aktivitet-actions';
+import { AktivitetState } from './aktivitet-slice';
 
-export function selectAktiviteterSlice(state: RootState) {
+export function selectAktiviteterSlice(state: RootState): AktivitetState {
     return state.data.aktiviteter;
 }
 
-export function selectAktiviteterData(state: RootState) {
-    return selectAktiviteterSlice(state).data;
+export function selectAktiviteterData(state: RootState): VeilarbAktivitet[] {
+    // TODO: Find out why this returns [undefined] in one of the tests
+    return selectAktiviteterSlice(state).data.filter((it) => it) || [];
 }
 
 export function selectAktivitetStatus(state: RootState) {
@@ -26,7 +34,15 @@ export function selectLasterAktivitetData(state: RootState) {
 export const selectAktivitetFeilmeldinger = (state: RootState) => {
     const feilMeldingsdata =
         selectAktivitetStatus(state) === Status.ERROR && selectFeilSlice(state)[hentAktivitet.rejected.type];
-    return feilMeldingsdata ? [feilMeldingsdata] : [];
+    return feilMeldingsdata;
+};
+export const selecteEndreAktivitetFeilmeldinger = (state: RootState) => {
+    const aktivitetError = selectAktivitetStatus(state) === Status.ERROR;
+    const oppdaterError = aktivitetError && selectFeilSlice(state)[oppdaterAktivitet.rejected.type];
+    const oppdaterEtikettError = aktivitetError && selectFeilSlice(state)[oppdaterAktivitetEtikett.rejected.type];
+    const oppdaterStillingFraNavError =
+        aktivitetError && selectFeilSlice(state)[oppdaterStillingFraNavSoknadsstatus.rejected.type];
+    return [oppdaterError, oppdaterEtikettError, oppdaterStillingFraNavError].filter((it) => it);
 };
 
 export function selectAktivitetFhoLestStatus(state: RootState) {

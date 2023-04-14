@@ -31,6 +31,7 @@ import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { aktivitetRoute } from '../../../routes';
+import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
@@ -44,7 +45,11 @@ import SokeavtaleAktivitetForm, {
     SokeavtaleAktivitetFormValues,
 } from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
 import StillingAktivitetForm, { StillingAktivitetFormValues } from '../aktivitet-forms/stilling/AktivitetStillingForm';
-import { selectAktivitetFeilmeldinger, selectAktivitetStatus } from '../aktivitet-selector';
+import {
+    selectAktivitetFeilmeldinger,
+    selectAktivitetStatus,
+    selecteEndreAktivitetFeilmeldinger,
+} from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
 
 export type AktivitetFormValues =
@@ -108,10 +113,13 @@ function EndreAktivitet() {
     const navigate = useNavigate();
 
     const { id: aktivitetId } = useParams<{ id: string }>();
-    const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
+    const valgtAktivitet = useSelector((state: RootState) =>
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+    );
     const avhengigheter: Avhengighet[] = [valgtAktivitet ? Status.OK : Status.PENDING];
-    const aktivitetFeilmeldinger = useSelector((state) => selectAktivitetFeilmeldinger(state));
-    const lagrer = useSelector((state) => selectAktivitetStatus(state)) !== Status.OK;
+    const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
+    const oppdaterFeilmelding = useSelector(selecteEndreAktivitetFeilmeldinger);
+    const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
 
     function oppdater(aktivitet: VeilarbAktivitet) {
         if (!valgtAktivitet) return;
@@ -150,7 +158,7 @@ function EndreAktivitet() {
     return (
         <Modal
             header={header}
-            feilmeldinger={aktivitetFeilmeldinger}
+            feilmeldinger={aktivitetFeilmeldinger.concat(oppdaterFeilmelding)}
             onRequestClose={onReqClose}
             contentLabel="aktivitet-modal"
         >

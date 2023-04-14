@@ -43,7 +43,8 @@ const OppdaterAktivitetEtikett = (props: Props) => {
 
     const onSubmit = (formValues: StillingEtikettFormValues): Promise<any> => {
         setFormIsDirty('etikett', false);
-        return lagreEtikett(formValues).then(() => {
+        return lagreEtikett(formValues).then((action) => {
+            if (action.error) return;
             setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });

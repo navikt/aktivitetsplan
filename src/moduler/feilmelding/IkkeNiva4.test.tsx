@@ -10,7 +10,7 @@ import { vi } from 'vitest';
 
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
-import { mockfnr } from '../../index';
+import { mockfnr } from '../../mocks/utils';
 import { ErVeilederContext } from '../../Provider';
 import reducer from '../../reducer';
 import { hentIdentitet } from '../identitet/identitet-slice';

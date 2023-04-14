@@ -1,3 +1,4 @@
+import { isFulfilled } from '@reduxjs/toolkit';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
@@ -30,7 +31,9 @@ function InformasjonsHenting() {
 
         if (underOppfolging) {
             dispatch(hentLest()).then((action) => {
-                loggTidBruktGaaInnPaaAktivitetsplanen(action.payload as Lest[], oppfolgingsPerioder);
+                if (isFulfilled(action)) {
+                    loggTidBruktGaaInnPaaAktivitetsplanen(action.payload as Lest[], oppfolgingsPerioder);
+                }
             });
         }
     }, []);

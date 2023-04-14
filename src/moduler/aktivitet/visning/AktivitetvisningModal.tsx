@@ -11,7 +11,7 @@ import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { selectErBruker } from '../../identitet/identitet-selector';
 import { selectNivaa4Feilmeldinger } from '../../tilgang/tilgang-selector';
-import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { selectAktivitetFeilmeldinger, selecteEndreAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { skalMarkereForhaandsorienteringSomLest } from './avtalt-container/utilsForhaandsorientering';
 
@@ -40,7 +40,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-const emptySelector = () => [];
+const emptySelector = () => undefined;
 
 const AktivitetvisningModal = (props: Props) => {
     const { aktivitet, avhengigheter, children } = props;
@@ -54,7 +54,8 @@ const AktivitetvisningModal = (props: Props) => {
     const aktivitetFeil = useSelector(aktivitetFeilSelector, shallowEqual);
     const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
-    const alleFeil = aktivitetFeil.concat(dialogFeil).concat(nivaa4Feil);
+    const oppdaterFeil = useSelector(selecteEndreAktivitetFeilmeldinger);
+    const alleFeil = [...oppdaterFeil, aktivitetFeil, dialogFeil, nivaa4Feil].filter((it) => it);
     const erBruker = useSelector(selectErBruker);
 
     const fho = aktivitet?.forhaandsorientering;

@@ -15,10 +15,15 @@ interface Props {
     tillatEndring: boolean;
     laster: boolean;
     underOppfolging: boolean;
-    erVeileder: boolean;
 }
 
-const getActions = ({ aktivitet, tillatEndring, laster, underOppfolging, erVeileder }: Props) => {
+const getActions = ({
+    aktivitet,
+    tillatEndring,
+    laster,
+    underOppfolging,
+    erVeileder,
+}: Props & { erVeileder: boolean }) => {
     switch (aktivitet.type) {
         case VeilarbAktivitetType.MOTE_TYPE:
         case VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE:

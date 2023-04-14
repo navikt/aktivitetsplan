@@ -1,5 +1,7 @@
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure } from 'enzyme';
+// import { fetch } from 'undici';
+// globalThis.fetch = fetch;
 
 configure({ adapter: new Adapter() });
 

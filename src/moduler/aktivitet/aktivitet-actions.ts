@@ -5,11 +5,11 @@ import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 
-export const hentAktiviteter = createAsyncThunk('aktivitet/hent', async () => {
+export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => {
     return await Api.hentAktiviteter();
 });
 
-export const hentAktivitet = createAsyncThunk('aktivitet/hent_aktivitet', async (aktivitetId: string) => {
+export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: string) => {
     return await Api.hentAktivitet(aktivitetId);
 });
 
@@ -20,9 +20,12 @@ export const flyttAktivitet = createAsyncThunk(
     }
 );
 
-export const oppdaterAktivitetEtikett = createAsyncThunk('aktivitet/oppdater', async (aktivitet: VeilarbAktivitet) => {
-    return await Api.oppdaterAktivitetEtikett(aktivitet);
-});
+export const oppdaterAktivitetEtikett = createAsyncThunk(
+    'aktivitet-etikett/oppdater',
+    async (aktivitet: VeilarbAktivitet) => {
+        return await Api.oppdaterAktivitetEtikett(aktivitet);
+    }
+);
 
 export const oppdaterAktivitet = createAsyncThunk('aktivitet/oppdater', async (aktivitet: VeilarbAktivitet) => {
     return await Api.oppdaterAktivitet(aktivitet);
@@ -85,7 +88,7 @@ export const oppdaterCVSvar = createAsyncThunk(
 );
 
 export const oppdaterStillingFraNavSoknadsstatus = createAsyncThunk(
-    'aktivitet/oppdater',
+    'aktivitet-stilling-fra-nav-status/oppdater',
     async ({
         aktivitetId,
         aktivitetVersjon,

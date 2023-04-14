@@ -9,7 +9,7 @@ import {
     StatusFilterType,
 } from './FilterVisning';
 
-interface FilterState {
+export interface FilterState {
     aktivitetTyper: AktivitetFilterType;
     aktivitetEtiketter: EtikettFilterType;
     arenaAktivitetEtiketter: ArenaEtikettFilterType;
