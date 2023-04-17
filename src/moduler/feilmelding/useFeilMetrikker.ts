@@ -38,13 +38,13 @@ function sendFeiltyperMetrikk(feilmeldinger: FeilmeldingType[], sendtFeiltype: R
 
 function sendFeilMetrikk(feilmeldinger: FeilmeldingType[], sentErrors: React.MutableRefObject<Set<any>>) {
     const feil = feilmeldinger
-        .filter(feil => feil.httpStatus !== 403 && feil.httpStatus !== 401)
-        .map(feil => feil.type);
+        .filter(feil => feil.httpStatus !== 403 && feil.httpStatus !== 401);
     new Set(feil) //fjerner duplikater
-        .forEach(feil => {
+        .forEach(feilmelding => {
+            const feil = feilmelding.type;
             if(!sentErrors.current.has(feil)) {
                 sentErrors.current.add(feil);
-                loggEvent("aktivitetsplan.feiltype", {feil});
+                loggEvent("aktivitetsplan.feiltype", {feil, feil_kategori: klassifiserFeil(feilmelding)});
             }
         });
 }
