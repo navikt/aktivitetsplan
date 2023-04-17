@@ -7,11 +7,10 @@ import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Status } from '../../createGenericSlice';
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
-import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
+import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import { useErVeileder } from '../../Provider';

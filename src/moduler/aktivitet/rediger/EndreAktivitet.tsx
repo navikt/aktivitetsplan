@@ -13,7 +13,7 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import { Status } from '../../../createGenericSlice';
-import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import {
     EgenAktivitet,
     IJobbAktivitet,

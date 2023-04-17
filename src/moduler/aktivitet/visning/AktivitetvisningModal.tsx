@@ -12,7 +12,7 @@ import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { selectErBruker } from '../../identitet/identitet-selector';
 import { selectNivaa4Feilmeldinger } from '../../tilgang/tilgang-selector';
-import { selectAktivitetFeilmeldinger, selecteEndreAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { skalMarkereForhaandsorienteringSomLest } from './avtalt-container/utilsForhaandsorientering';
 

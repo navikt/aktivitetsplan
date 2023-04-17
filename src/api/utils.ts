@@ -35,8 +35,7 @@ export async function sjekkStatuskode(response: Response): Promise<Response> {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
-    // const data = await response.text();
-    const error: SerializedError = {
+    const error: Omit<SerializedError, 'type'> = {
         code: response.status.toString(),
         message: `${response.url}`,
         name: `${response.statusText} (${response.status})`,

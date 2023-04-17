@@ -1,9 +1,7 @@
-import { fireEvent, queryAllByText, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 
-import tekster from '../../tekster';
 import { hentAktivitet } from '../aktivitet/aktivitet-actions';
-import { hentDialoger } from '../dialog/dialog-slice';
 import Feilmelding, { getErrorText } from './Feilmelding';
 
 describe('Feilmelding', () => {

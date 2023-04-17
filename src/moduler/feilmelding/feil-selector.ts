@@ -1,4 +1,3 @@
-import { SerializedError } from '../../api/utils';
 import { RootState } from '../../store';
 import {
     flyttAktivitet,

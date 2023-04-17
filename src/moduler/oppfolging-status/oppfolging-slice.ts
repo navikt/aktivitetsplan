@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/oppfolgingAPI';
-import createGenericSlice, { GenericState, Status } from '../../createGenericSlice';
+import createGenericSlice, { Status } from '../../createGenericSlice';
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 
 const oppfolgingSlice = createGenericSlice({

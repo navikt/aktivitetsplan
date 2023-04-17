@@ -1,17 +1,15 @@
-import { retry } from '@reduxjs/toolkit/query';
 import { createSelector } from 'reselect';
 
 import { aggregerStatus } from '../../api/utils';
 import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA_NAV_TYPE } from '../../constant';
-import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
 import { aktivitetMatchesFilters, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
-import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterSlice } from './aktivitet-selector';
-import { selectArenaAktiviteterData, selectArenaAktiviteterSlice } from './arena-aktivitet-selector';
+import { selectAktivitetStatus, selectAktiviteterData } from './aktivitet-selector';
+import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],

@@ -7,7 +7,6 @@ import { selectFeilSlice } from '../feilmelding/feil-selector';
 import {
     flyttAktivitet,
     hentAktivitet,
-    lagNyAktivitet,
     oppdaterAktivitet,
     oppdaterAktivitetEtikett,
     oppdaterStillingFraNavSoknadsstatus,

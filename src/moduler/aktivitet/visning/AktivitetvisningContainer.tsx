@@ -30,11 +30,13 @@ const AktivitetvisningContainer = () => {
         aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
     );
 
-    const aktivitetDataStatus = valgtAktivitet
-        ? isArenaAktivitet(valgtAktivitet)
-            ? useSelector(selectArenaAktivitetStatus)
-            : useSelector(selectAktivitetStatus)
-        : Status.NOT_STARTED;
+    const aktivitetDataStatus = useSelector((state: RootState) => {
+        return valgtAktivitet
+            ? isArenaAktivitet(valgtAktivitet)
+                ? selectArenaAktivitetStatus(state)
+                : selectAktivitetStatus(state)
+            : Status.NOT_STARTED;
+    });
 
     const laster = aktivitetDataStatus !== Status.OK;
 

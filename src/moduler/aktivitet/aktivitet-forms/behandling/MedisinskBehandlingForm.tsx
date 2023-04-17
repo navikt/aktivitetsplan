@@ -78,8 +78,6 @@ const MedisinskBehandlingForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
-    const feil = aktivitet ? useSelector(selectOppdaterAktivitetFeil) : useSelector(selectLagNyAktivitetFeil);
-
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
@@ -130,7 +128,6 @@ const MedisinskBehandlingForm = (props: Props) => {
                         value={beskrivelseValue}
                     />
                     <CustomErrorSummary errors={errors} />
-                    <Feilmelding feilmeldinger={feil} />
                     <LagreAktivitetKnapp loading={isSubmitting} />
                 </div>
             </FormProvider>
