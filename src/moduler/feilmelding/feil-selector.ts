@@ -33,7 +33,8 @@ export const selectHovedsideFeil = (state: RootState) => {
         hentArenaAktiviteter.rejected.type,
         hentLest.rejected.type,
         hentDialoger.rejected.type,
-        hentNivaa4.rejected.type
+        hentNivaa4.rejected.type,
+        flyttAktivitet.rejected.type
     )(state);
 };
 
@@ -59,4 +60,8 @@ export const selectOppdaterStillingFraNavSoknadsstatusFeil = (state: RootState) 
 
 export const selectSettAktivitetTilAvtaltFeil = (state: RootState) => {
     return selectFeil(settAktivitetTilAvtalt.rejected.type)(state);
+};
+
+export const selectCanPrint = (state: RootState) => {
+    return selectFeil(hentAktiviteter.rejected.type, hentDialoger.rejected.type)(state).length === 0;
 };

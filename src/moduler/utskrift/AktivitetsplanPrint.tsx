@@ -51,7 +51,6 @@ interface Props {
     doHentMal: () => void;
     doHentMalListe: () => void;
     avhengigheter: InnholdslasterProps['avhengigheter'];
-    bruker: Bruker;
     kvpPerioder?: KvpPeriode[];
     dialoger?: Dialog[];
     mittMal?: Mal;

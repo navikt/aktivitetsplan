@@ -61,11 +61,11 @@ export default function Feilmelding(props: Props) {
                 {tekst}
             </Alert>
 
-            <ReadMore className="mt-2 " header={'Vis detaljer'}>
-                {feilmeldinger.map((feil) => (
-                    <FeilmeldingDetaljer feil={feil} key={guid()} />
-                ))}
-            </ReadMore>
+            {/*<ReadMore className="mt-2 " header={'Vis detaljer'}>*/}
+            {/*    {feilmeldinger.map((feil) => (*/}
+            {/*        <FeilmeldingDetaljer feil={feil} key={guid()} />*/}
+            {/*    ))}*/}
+            {/*</ReadMore>*/}
         </div>
     );
 }

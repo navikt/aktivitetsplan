@@ -5,7 +5,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentDialoger } from '../moduler/dialog/dialog-slice';
-import { selectHovedsideFeil } from '../moduler/feilmelding/feil-selector';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';

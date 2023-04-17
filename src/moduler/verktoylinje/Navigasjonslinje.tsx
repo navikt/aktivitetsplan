@@ -11,6 +11,7 @@ import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/log
 import { useErVeileder } from '../../Provider';
 import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
+import { selectCanPrint } from '../feilmelding/feil-selector';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -40,6 +41,8 @@ function Navigasjonslinje() {
         }
     }, [dispatch, erVeileder, sistOppdatert]);
 
+    const canPrint = useSelector(selectCanPrint);
+
     return (
         <div className="flex flex-col gap-y-2">
             <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
@@ -48,9 +51,6 @@ function Navigasjonslinje() {
                         <Link href={MINSIDE_URL}>Min side</Link>
                         <Link href={ARBEIDSRETTET_DIALOG_URL}>
                             <span>Min dialog med veileder</span>
-                            {/*TODO vurder å ta det med i overgang til nytt designsystem*/}
-                            {/*<DialogIkon antallUleste={antallUlesteDialoger} />*/}
-                            {/*<span className={styles.avstand} hidden={antallUlesteDialoger > 0} />*/}
                         </Link>
                     </>
                 ) : null}
@@ -61,9 +61,11 @@ function Navigasjonslinje() {
                 >
                     Hva er aktivitetsplanen?
                 </ReactRouterLink>
-                <ReactRouterLink to="/utskrift" className="text-text-action underline hover:no-underline">
-                    Skriv ut
-                </ReactRouterLink>
+                {canPrint && (
+                    <ReactRouterLink to="/utskrift" className="text-text-action underline hover:no-underline">
+                        Skriv ut
+                    </ReactRouterLink>
+                )}
             </div>
             <Heading level="1" size="xlarge">
                 Aktivitetsplan
