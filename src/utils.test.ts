@@ -3,7 +3,6 @@ import {
     erGyldigISODato,
     formaterDatoKortManed,
     formaterDatoKortManedTid,
-    formaterDatoTid,
     formaterTid,
 } from './utils/dateUtils';
 import { autobind, erInternlenke, fn, guid, storeForbokstaver } from './utils/utils';
@@ -98,17 +97,6 @@ describe('app utils', () => {
             expect(erGyldigISODato('')).toEqual(false);
             expect(erGyldigISODato(null)).toEqual(false);
             expect(erGyldigISODato(undefined)).toEqual(false);
-        });
-    });
-
-    describe('formaterDatoTid', () => {
-        it('Formater datoer riktig', () => {
-            expect(formaterDatoTid(null)).toBeUndefined();
-            expect(formaterDatoTid(undefined)).toBeUndefined();
-            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
-            expect(formaterDatoTid('2014-02-13T14:23:21.123Z')).toEqual(
-                `13.02.2014 ${zuluDate.getHours()}:${zuluDate.getMinutes()}`
-            ); // NB zulu-time != paris-time
         });
     });
 

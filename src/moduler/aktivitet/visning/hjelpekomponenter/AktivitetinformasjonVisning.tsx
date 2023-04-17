@@ -50,7 +50,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
     return (
         <div className="space-y-8 mb-8">
             <div className="space-y-8">
-                <Heading level="1" className="my-4" size="large" id="modal-aktivitetsvisning-header">
+                <Heading level="1" className="my-4" size="large" id="modal-heading">
                     {tittel}
                 </Heading>
                 <VisningIngress aktivitetstype={type} />

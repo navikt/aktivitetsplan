@@ -122,7 +122,12 @@ const AvtaltForm = (props: Props) => {
         >
             <div className="flex items-center">
                 <Checkbox onChange={() => setShowForm(!showForm)}>Avtalt med NAV</Checkbox>
-                <HelpText id="hjelp" className="ml-2 justify-self-start">
+                <HelpText
+                    aria-label="Informasjon om avtalt med NAV"
+                    title="Informasjon om avtalt med NAV"
+                    id="hjelp"
+                    className="ml-2 justify-self-start"
+                >
                     <div className="max-w-[300px]">
                         Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
                         &quot;Avtalt med NAV&quot;

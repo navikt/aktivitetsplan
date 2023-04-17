@@ -1,12 +1,10 @@
-import {} from '../../api/utils';
-
 import { configureStore } from '@reduxjs/toolkit';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { vi } from 'vitest';
+import { MockedFunction, vi } from 'vitest';
 
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';
@@ -17,8 +15,6 @@ import { hentIdentitet } from '../identitet/identitet-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
 import IkkeNiva4 from './IkkeNiva4';
-
-import MockedFn = jest.MockedFn;
 
 const createMockStore = () =>
     configureStore({
@@ -91,8 +87,8 @@ const fetchData = (
 
 describe('IkkeNiva4', () => {
     beforeEach(() => {
-        (loggHarBruktNivaa4 as MockedFn<any>).mockClear();
-        (loggIkkeRegistrertIKrr as MockedFn<any>).mockClear();
+        (loggHarBruktNivaa4 as MockedFunction<any>).mockClear();
+        (loggIkkeRegistrertIKrr as MockedFunction<any>).mockClear();
     });
 
     it('skal ikke logge ikkeRegIKrr når kan varsles && ikke manuell && ikke reservert i KRR', async () => {

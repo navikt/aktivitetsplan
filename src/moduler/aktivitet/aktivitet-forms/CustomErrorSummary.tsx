@@ -14,7 +14,7 @@ const CustomErrorSummary = <T extends FieldValues>(props: Props<T>) => {
     const errorRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        errorRef?.current && errorRef.current.focus();
+        errorRef?.current && errorRef.current?.focus();
     }, [errors]);
 
     if (Object.keys(errors).length === 0) {

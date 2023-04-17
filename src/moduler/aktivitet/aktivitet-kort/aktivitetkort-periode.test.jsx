@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 
 import { IJOBB_AKTIVITET_TYPE, MOTE_TYPE, STILLING_FRA_NAV_TYPE } from '../../../constant';
@@ -12,8 +12,8 @@ describe('Aktivitet-periode', () => {
             opprettetDato: '2017-03-17T09:00:00.000',
             type: MOTE_TYPE,
         };
-        const wrapper = mount(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
-        expect(wrapper.text()).toEqual('17. aug. 2017');
+        const { getByText } = render(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
+        getByText('17. aug. 2017');
     });
 
     it('Skal vise til og fra dato hvis aktiviten er ikke ett møte med NAV', () => {
@@ -23,8 +23,8 @@ describe('Aktivitet-periode', () => {
             opprettetDato: '2017-08-17T09:00:00.000',
             type: IJOBB_AKTIVITET_TYPE,
         };
-        const wrapper = mount(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
-        expect(wrapper.text()).toEqual('17. aug. 2017 - 20. aug. 2017');
+        const { getByText } = render(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
+        getByText('17. aug. 2017 - 20. aug. 2017');
     });
 
     it('Skal ikke rendere perioden hvis aktiviten er en stilling fra NAV', () => {
@@ -34,7 +34,7 @@ describe('Aktivitet-periode', () => {
             opprettetDato: '2015-08-20',
             type: STILLING_FRA_NAV_TYPE,
         };
-        const wrapper = mount(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
-        expect(wrapper.isEmptyRender()).toBe(true);
+        const { queryByText } = render(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
+        expect(queryByText('17. aug. 2017 - 20. aug. 2017')).toBeFalsy();
     });
 });

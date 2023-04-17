@@ -2,12 +2,12 @@ import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
 import { Status } from '../../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
+import { useRoutes } from '../../../routes';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
@@ -26,6 +26,7 @@ const AvbrytAktivitet = () => {
     const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
     const dispatch = useAppDispatch();
 
     const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
@@ -39,7 +40,7 @@ const AvbrytAktivitet = () => {
             beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
-                navigate('/', { replace: true });
+                navigate(hovedsideRoute(), { replace: true });
                 lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
         />
@@ -50,7 +51,7 @@ const AvbrytAktivitet = () => {
             headerTekst={headerTekst}
             onSubmit={() => {
                 lagreBegrunnelse(valgtAktivitet, null);
-                navigate('/');
+                navigate(hovedsideRoute());
             }}
         />
     ) : null;
@@ -59,7 +60,7 @@ const AvbrytAktivitet = () => {
         valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.AVBRUTT, valgtAktivitet.type);
 
     return (
-        <Modal contentLabel="avbryt-aktivitet">
+        <Modal contentLabel="Avbryt aktivitet">
             {valgtAktivitet ? (
                 <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.AVBRUTT}>
                     {maaBegrunnes ? begrunnelse : advarsel}

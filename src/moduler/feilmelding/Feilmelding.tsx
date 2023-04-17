@@ -1,16 +1,14 @@
-import { Alert, ReadMore } from '@navikt/ds-react';
+import { Alert } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
 import { SerializedError } from '../../api/utils';
-import { guid } from '../../utils/utils';
 import { flyttAktivitet, hentAktivitet, hentAktiviteter } from '../aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
-import FeilmeldingDetaljer from './FeilmeldingDetaljer';
 
-const getErrorText = (feilmeldinger: SerializedError[]) => {
+export const getErrorText = (feilmeldinger: SerializedError[]) => {
     const antallFeil = feilmeldinger.length;
     const feil = feilmeldinger[0];
 

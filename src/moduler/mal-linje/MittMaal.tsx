@@ -15,6 +15,7 @@ import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innh
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import { useErVeileder } from '../../Provider';
+import { useRoutes } from '../../routes';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
@@ -55,8 +56,9 @@ function MalContent(props: MalContentProps) {
     const dispatch = useAppDispatch();
     const erVeileder = useErVeileder();
     const navigate = useNavigate();
+    const { malRoute } = useRoutes();
     const endreMal = () => {
-        navigate('/mal');
+        navigate(malRoute());
         loggMittMalKlikk(erVeileder);
     };
     const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
@@ -124,7 +126,7 @@ function MittMaal() {
                     })}
                 >
                     <div className="flex sm:flex-row items-center gap-6">
-                        <MaalIkon role="img" className="hidden sm:block mx-4 min-w-fit" />
+                        <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />
                         <div>
                             <div className="flex mb-2">
                                 <NotifikasjonMarkering visible={nyEndring} />

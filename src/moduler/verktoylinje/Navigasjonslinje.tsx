@@ -55,14 +55,14 @@ function Navigasjonslinje() {
                     </>
                 ) : null}
                 <ReactRouterLink
-                    to="/informasjon"
+                    to="informasjon"
                     className="text-text-action underline hover:no-underline"
                     onClick={() => loggEvent(APNE_OM_TJENESTEN)}
                 >
                     Hva er aktivitetsplanen?
                 </ReactRouterLink>
                 {canPrint && (
-                    <ReactRouterLink to="/utskrift" className="text-text-action underline hover:no-underline">
+                    <ReactRouterLink to="utskrift" className="text-text-action underline hover:no-underline">
                         Skriv ut
                     </ReactRouterLink>
                 )}

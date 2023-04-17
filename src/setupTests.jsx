@@ -1,10 +1,3 @@
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure } from 'enzyme';
-// import { fetch } from 'undici';
-// globalThis.fetch = fetch;
-
-configure({ adapter: new Adapter() });
-
 // Ikkje bra!
 import.meta.env.BASE_URL = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 

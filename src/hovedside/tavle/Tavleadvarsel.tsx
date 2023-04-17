@@ -29,7 +29,7 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     } else if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
         if (erVeileder) {
             // TODO finn bedre tekst
-            return 'Denne aktiviteten er opprettet av et annet team. Ta kontakt med relevant team dersom endringer er nødvendig';
+            return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status';
         } // TODO bedre tekst
         return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
     }

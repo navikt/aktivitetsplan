@@ -57,8 +57,7 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
                 return null;
             }
             setIsOpen(false);
-            // @ts-ignore
-            document.querySelector('.aktivitet-modal').focus();
+            document.querySelector('.aktivitet-modal')?.focus();
         });
     };
 
@@ -68,7 +67,7 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
 
     return (
         <EndreLinje
-            icon={<HikingTrailSignIcon fontSize="1.5rem" />}
+            icon={<HikingTrailSignIcon aria-hidden fontSize="1.5rem" />}
             onClick={() => {
                 if (open) {
                     setFormIsDirty('status', false);

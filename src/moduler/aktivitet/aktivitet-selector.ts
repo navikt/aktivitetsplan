@@ -40,11 +40,6 @@ export const selectAktivitetFeilmeldinger = (state: RootState): SerializedError 
         ? selectFeilSlice(state)[hentAktivitet.rejected.type]
         : undefined;
 };
-export const selectOpprettAktivitetFeilmeldinger = (state: RootState): SerializedError | undefined => {
-    return selectAktivitetStatus(state) === Status.ERROR
-        ? selectFeilSlice(state)[lagNyAktivitet.rejected.type]
-        : undefined;
-};
 export const selecteEndreAktivitetFeilmeldinger = (state: RootState): SerializedError[] => {
     const oppdaterError = selectFeilSlice(state)[oppdaterAktivitet.rejected.type];
     const oppdaterEtikettError = selectFeilSlice(state)[oppdaterAktivitetEtikett.rejected.type];

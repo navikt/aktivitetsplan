@@ -7,7 +7,7 @@ import reducer from '../../reducer';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
-import { tekster } from './GetErrorText';
+import { getErrorText } from './Feilmelding';
 import HovedsideFeilmelding from './HovedsideFeilmelding';
 
 const error = {
@@ -23,7 +23,7 @@ describe('<HovedsideFeilmelding/>', () => {
                 <HovedsideFeilmelding />
             </Provider>
         );
-        expect(queryByText(tekster.fallback)).toBeFalsy();
+        expect(queryByText(getErrorText([{ type: hentDialoger.rejected.type }]))).toBeFalsy();
     });
 
     it('Skal rendre <Feilmelding/> dersom oppfølging feiler', () => {
@@ -34,7 +34,7 @@ describe('<HovedsideFeilmelding/>', () => {
                 <HovedsideFeilmelding />
             </Provider>
         );
-        getByText(tekster.fallback);
+        getByText(getErrorText([{ type: hentOppfolging.rejected.type }]));
     });
 
     it('Skal rendre <Feilmelding/> dersom dialog feiler', () => {
@@ -46,7 +46,7 @@ describe('<HovedsideFeilmelding/>', () => {
                 <HovedsideFeilmelding />
             </Provider>
         );
-        getByText(tekster.dialogFeilet);
+        getByText(getErrorText([{ type: hentDialoger.rejected.type }]));
     });
 
     it('Skal rendre <Feilmelding/> dersom arena feiler', () => {
@@ -58,6 +58,6 @@ describe('<HovedsideFeilmelding/>', () => {
                 <HovedsideFeilmelding />
             </Provider>
         );
-        getByText(tekster.aktivitetFeilet);
+        getByText(getErrorText([{ type: hentArenaAktiviteter.rejected.type }]));
     });
 });

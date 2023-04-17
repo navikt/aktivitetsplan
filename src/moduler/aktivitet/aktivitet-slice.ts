@@ -89,12 +89,6 @@ const aktivitetSlice = createSlice({
                 return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, action.payload);
             }
         );
-        builder.addMatcher(
-            isAnyOf(lagNyAktivitet.pending, oppdaterReferat.pending, publiserReferat.pending),
-            (state) => {
-                state.status = Status.RELOADING;
-            }
-        );
         builder.addMatcher(isAnyOf(hentAktiviteter.rejected, hentAktivitet.rejected), (state) => {
             state.status = Status.ERROR;
         });

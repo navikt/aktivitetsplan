@@ -8,7 +8,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import reducer from '../../../reducer';
 import { hentDialoger } from '../../dialog/dialog-slice';
-import { tekster } from '../../feilmelding/GetErrorText';
+import { getErrorText } from '../../feilmelding/Feilmelding';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
 const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
@@ -29,13 +29,13 @@ describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
         const store = configureStore({ reducer });
         const { queryByText } = render(<AktivitetsvisningModalWrapped store={store} />);
-        expect(queryByText(tekster.dialogFeilet)).toBeFalsy();
+        expect(queryByText(getErrorText([{ type: hentDialoger.rejected.type }]))).toBeFalsy();
     });
 
     it('Skal vise feilmelding dersom dialog feiler', () => {
         const store = configureStore({ reducer });
         store.dispatch(hentDialoger.rejected({ name: 'asd', message: 'asds' }, 'asd'));
         const { getByText } = render(<AktivitetsvisningModalWrapped store={store} />);
-        getByText(tekster.dialogFeilet);
+        getByText(getErrorText([{ type: hentDialoger.rejected.type }]));
     });
 });

@@ -115,6 +115,7 @@ const EgenAktivitetForm = (props: Props) => {
                         error={errors.hensikt && errors.hensikt.message}
                     />
                     <Textarea
+                        disabled={avtalt}
                         label="Kort beskrivelse av aktiviteten (valgfri)"
                         maxLength={5000}
                         {...register('beskrivelse')}
@@ -122,6 +123,7 @@ const EgenAktivitetForm = (props: Props) => {
                         value={beskrivelseValue}
                     />
                     <TextField
+                        disabled={avtalt}
                         label="Min huskeliste for denne aktiviteten (valgfri)"
                         id={'huskeliste'}
                         {...register('oppfolging')}

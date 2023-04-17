@@ -7,7 +7,7 @@ import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivite
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
-import { aktivitetRoute } from '../../../routes';
+import { useRoutes } from '../../../routes';
 import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-selector';
@@ -52,6 +52,7 @@ const Aktivitetskort = (props: Props) => {
         erNyEndringIAktivitet(aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
 
+    const { aktivitetRoute } = useRoutes();
     const headerId = `aktivitetskort__header__${id}`;
     const datoId = `aktivitetskort__dato__${id}`;
     const ariaLabel = `${getAktivitetType(aktivitet)}: ${aktivitet.tittel}`;

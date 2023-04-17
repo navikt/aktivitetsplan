@@ -62,7 +62,7 @@ const AktivitetvisningContainer = () => {
             const aktivitetskort =
                 valgtAktivitet && document.querySelector(`#${prefixAktivtetskortId(valgtAktivitet)}`);
             if (aktivitetskort) {
-                (aktivitetskort as HTMLDivElement).focus();
+                (aktivitetskort as HTMLDivElement)?.focus();
             }
         };
     }, []);

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { useErVeileder } from '../../../../Provider';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
+import { useRoutes } from '../../../../routes';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
 
 interface Props {
@@ -23,10 +24,11 @@ const SendEnMeldingKnapp = (props: Props) => {
         0;
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const veilederOnClick = (event: React.MouseEvent) => {
         if (erVeileder) {
-            navigate('/', { replace: true });
+            navigate(hovedsideRoute(), { replace: true });
             byttTilDialogFlate(event, aktivitet.id, dialog?.id);
         }
     };
@@ -37,7 +39,7 @@ const SendEnMeldingKnapp = (props: Props) => {
                 variant="secondary"
                 as="a"
                 href={getDialogLenke(erVeileder, aktivitet.id, dialog?.id)}
-                icon={<ChatElipsisIcon fontSize="1.5rem" />}
+                icon={<ChatElipsisIcon aria-hidden fontSize="1.5rem" />}
                 onClick={veilederOnClick}
             >
                 {ulestMeldinger > 0

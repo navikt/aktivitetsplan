@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
+import { useRoutes } from '../../routes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { selectMalStatus } from './aktivitetsmal-selector';
@@ -28,6 +29,7 @@ const Mal = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     useEffect(() => {
         dispatch(hentMal());
@@ -39,17 +41,17 @@ const Mal = () => {
     const onModalRequestClosed = () => {
         if (isDirty.current) {
             if (window.confirm(CONFIRM)) {
-                navigate('/');
+                navigate(hovedsideRoute());
             }
         } else {
-            navigate('/');
+            navigate(hovedsideRoute());
         }
     };
 
     return (
         <MalModal onRequestClosed={onModalRequestClosed}>
             <div>
-                <Heading level="1" size="large" className="mb-8">
+                <Heading id="modal-heading" level="1" size="large" className="mb-8">
                     {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
                         ? 'Mitt mål fra en tidligere periode'
                         : 'Mitt mål'}

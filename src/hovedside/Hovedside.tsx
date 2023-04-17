@@ -14,11 +14,12 @@ import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-s
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import { aktivitetRoute } from '../routes';
+import { useRoutes } from '../routes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
     const navigate = useNavigate();
+    const { aktivitetRoute } = useRoutes();
     useEventListener('visAktivitetsplan', (event) => {
         const aktivitetId = event.detail as string | undefined;
         if (!aktivitetId) return;

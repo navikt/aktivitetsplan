@@ -8,6 +8,7 @@ import * as Api from '../../api/lestAPI';
 import Modal from '../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../felles-komponenter/modal/ModalContainer';
 import * as AppPT from '../../proptypes';
+import { useRoutes } from '../../routes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon } from '../lest/lest-selector';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
@@ -26,6 +27,7 @@ interface Props {
 
 const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
     useEffect(() => {
         if (erBruker && underOppfolging && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)) {
             Api.postLest(INFORMASJON_MODAL_VERSJON);
@@ -34,14 +36,13 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
 
     return (
         <Modal
-            contentLabel="informasjon-modal"
             className="informasjon-visning"
             onRequestClose={() => {
-                navigate('/');
+                navigate(hovedsideRoute());
             }}
         >
             <ModalContainer className="max-w-2xl">
-                <Heading level="1" size="large" className="mb-4">
+                <Heading id="modal-heading" level="1" size="large" className="mb-4">
                     Hva er aktivitetsplanen?
                 </Heading>
                 <BodyShort className="pb-4">

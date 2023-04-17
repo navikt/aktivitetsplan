@@ -3,12 +3,15 @@ import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds
 import { endOfToday, parseISO, startOfDay, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { ZodErrorMap, z } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
+import { selectDeleCVFeil } from '../../../feilmelding/feil-selector';
+import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import CustomErrorSummary from '../../aktivitet-forms/CustomErrorSummary';
 import { Ingress } from './DeleCvContainer';
@@ -115,6 +118,8 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
         return Promise.resolve();
     };
 
+    const oppdaterCvFeil = useSelector(selectDeleCVFeil);
+
     return (
         <form
             className={'bg-surface-subtle rounded-md border-border-default border p-4 space-y-8'}
@@ -147,6 +152,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 </RadioGroup>
 
                 <CustomErrorSummary errors={errors} />
+                <Feilmelding feilmeldinger={oppdaterCvFeil} />
                 <div className="flex gap-4 items-center mt-8">
                     <Button disabled={isSubmitting}>Lagre</Button>
                     {infoTekst && (

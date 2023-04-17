@@ -1,5 +1,5 @@
 import { isFulfilled } from '@reduxjs/toolkit';
-import React, { FunctionComponent, MouseEventHandler, MutableRefObject, useRef } from 'react';
+import React, { MouseEventHandler, MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -30,10 +30,11 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
-import { aktivitetRoute } from '../../../routes';
+import { useRoutes } from '../../../routes';
 import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { exist } from '../../../utils/utils';
+import Feilmelding from '../../feilmelding/Feilmelding';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
     MedisinskBehandlingFormValues,
@@ -62,17 +63,9 @@ export type AktivitetFormValues =
     | { status: string; avtalt: boolean }
     | IJobbAktivitetFormValues;
 
-interface SubComponentProps<Aktivitet extends VeilarbAktivitet> {
-    onSubmit: (values: AktivitetFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
-    aktivitet: Aktivitet;
-}
-
-type EndreForm<Aktivitet extends VeilarbAktivitet> = FunctionComponent<SubComponentProps<Aktivitet>>;
-
-interface FormProps<T extends AlleAktiviteter> {
+interface FormProps<T extends VeilarbAktivitet> {
     aktivitet: T;
-    onSubmit: (aktivitet: Record<any, any>) => Promise<void>;
+    onSubmit: (aktivitet: AktivitetFormValues) => Promise<void>;
     endre: boolean;
     dirtyRef: MutableRefObject<boolean>;
     lagrer: boolean;
@@ -125,8 +118,10 @@ function EndreAktivitet() {
 
     const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
 
-    function oppdater(aktivitet: VeilarbAktivitet) {
-        if (!valgtAktivitet) return;
+    const { aktivitetRoute } = useRoutes();
+
+    function oppdater(aktivitet: AktivitetFormValues): Promise<void> {
+        if (!valgtAktivitet) return Promise.resolve();
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as VeilarbAktivitet;
         return doOppdaterAktivitet(oppdatertAktivitet).then((action) => {
@@ -152,7 +147,6 @@ function EndreAktivitet() {
     const header = <ModalHeader tilbakeTekst="Tilbake" onTilbakeClick={onReqBack} />;
 
     const formProps = {
-        aktivitet: valgtAktivitet,
         onSubmit: oppdater,
         endre: true,
         dirtyRef: isDirty,
@@ -161,16 +155,17 @@ function EndreAktivitet() {
 
     const aktivitetForm =
         valgtAktivitet && isVeilarbAktivitet(valgtAktivitet)
-            ? getAktivitetsFormComponent(valgtAktivitet, formProps)
+            ? getAktivitetsFormComponent(valgtAktivitet, { ...formProps, aktivitet: valgtAktivitet })
             : null;
 
     return (
-        <Modal header={header} feilmeldinger={alleFeil} onRequestClose={onReqClose} contentLabel="aktivitet-modal">
+        <Modal header={header} onRequestClose={onReqClose} contentLabel="Endre aktivitet">
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>{aktivitetForm}</ModalContainer>
                 </Innholdslaster>
             </article>
+            <Feilmelding feilmeldinger={alleFeil} />
         </Modal>
     );
 }

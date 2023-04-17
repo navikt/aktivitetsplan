@@ -39,7 +39,7 @@ const AktivitetsplanHjelpetekst = ({ status }: Props) => {
     const { tittel, innhold } = config;
 
     return (
-        <HelpText placement={'bottom-end'} id={status} title={tittel}>
+        <HelpText placement={'bottom-end'} id={status} aria-label={tittel} title={tittel}>
             <div className="w-80">{innhold}</div>
         </HelpText>
     );

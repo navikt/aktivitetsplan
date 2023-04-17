@@ -28,7 +28,7 @@ const MalForm = (props: Props) => {
     useLayoutEffect(() => {
         const el = ref.current;
         if (el) {
-            el.focus();
+            el?.focus();
             el.selectionStart = el.selectionEnd = el.value.length;
         }
     }, []);
@@ -42,7 +42,7 @@ const MalForm = (props: Props) => {
             handleComplete();
         }
         const elem = document.querySelector('.aktivitet-modal') as HTMLDivElement;
-        elem && elem.focus();
+        elem && elem?.focus();
         return Promise.resolve();
     };
 

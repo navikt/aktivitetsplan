@@ -1,3 +1,4 @@
+import { SerializedError } from '../../api/utils';
 import { RootState } from '../../store';
 import {
     flyttAktivitet,
@@ -5,6 +6,7 @@ import {
     lagNyAktivitet,
     oppdaterAktivitet,
     oppdaterAktivitetEtikett,
+    oppdaterCVSvar,
     oppdaterStillingFraNavSoknadsstatus,
     settAktivitetTilAvtalt,
 } from '../aktivitet/aktivitet-actions';
@@ -56,6 +58,10 @@ export const selectOppdaterAktivitetEtikettFeil = (state: RootState) => {
 
 export const selectOppdaterStillingFraNavSoknadsstatusFeil = (state: RootState) => {
     return selectFeil(oppdaterStillingFraNavSoknadsstatus.rejected.type)(state);
+};
+
+export const selectDeleCVFeil = (state: RootState) => {
+    return selectFeil(oppdaterCVSvar.rejected.type)(state);
 };
 
 export const selectSettAktivitetTilAvtaltFeil = (state: RootState) => {

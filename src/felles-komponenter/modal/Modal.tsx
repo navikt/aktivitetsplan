@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { FeilmeldingType } from '../../moduler/feilmelding/FeilmeldingTypes';
+import { useRoutes } from '../../routes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
 import ModalHeader from './ModalHeader';
 
@@ -19,6 +20,7 @@ interface Props {
     contentClass?: string;
     onRequestClose?(): void;
     contentLabel: string;
+    ariaLabelledby?: string;
 }
 
 const Modal = (props: Props) => {
@@ -31,9 +33,12 @@ const Modal = (props: Props) => {
         minstEnAvhengighet = false,
         feilmeldinger,
         contentClass,
+        ariaLabelledby,
+        contentLabel,
     } = props;
 
     const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
 
     const closeFuncOrDefault = () => {
         if (onRequestClose) {
@@ -41,12 +46,14 @@ const Modal = (props: Props) => {
             return;
         }
 
-        navigate('/');
+        navigate(hovedsideRoute());
     };
 
     return (
         <AkselModal
             open
+            aria-label={contentLabel}
+            aria-labelledby={!contentLabel ? ariaLabelledby || 'modal-heading' : undefined}
             className={classNames(
                 'aktivitet-modal lg:w-120 p-4 md:p-8 max-h-full overscroll-contain w-full rounded-none lg:rounded',
                 className,
