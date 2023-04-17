@@ -43,6 +43,13 @@ spec:
         - application: pto-proxy
       external:
         - host: navtestb2c.b2clogin.com
+        - host: veilarbdialog.dev-fss-pub.nais.io
+        - host: veilarbaktivitet.dev-fss-pub.nais.io
+        - host: veilarblest.dev-fss-pub.nais.io
+        - host: veilarbmalverk.dev-fss-pub.nais.io
+        - host: veilarbperson.dev-fss-pub.nais.io
+        - host: veilarboppfolging.dev-fss-pub.nais.io
+        - host: veilarbveileder.dev-fss-pub.nais.io
   gcp:
     buckets:
       - name: aktivitetsplan-dev
