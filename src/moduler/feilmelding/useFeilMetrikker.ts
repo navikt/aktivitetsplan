@@ -6,9 +6,11 @@ import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer';
 import {FEILET as OPPFOLGING_FEILET} from "../oppfolging-status/oppfolging-reducer";
 import loggEvent from "../../felles-komponenter/utils/logging";
 
+
 export function useFeilMetrikker(feilmeldinger: FeilmeldingType[]) {
-    useFeilMetrikkerType(feilmeldinger);
+    const sendtFeiltype = useRef(new Set());
     const sentErrors = useRef(new Set());
+
     const harSendtLastet = useRef(false);
 
     if(!harSendtLastet.current) {
@@ -17,38 +19,34 @@ export function useFeilMetrikker(feilmeldinger: FeilmeldingType[]) {
     }
 
     useEffect(() => {
-        const feil = feilmeldinger.map(feil => klassifiserFeil(feil));
-        new Set(feil) //fjerner duplikater
-            .forEach(feil => {
-                if(!sentErrors.current.has(feil)) {
-                    sentErrors.current.add(feil);
-                    sendFeil(feil);
-                }
-            });
+        sendFeiltyperMetrikk(feilmeldinger, sendtFeiltype);
+        sendFeilMetrikk(feilmeldinger, sentErrors);
     }, [feilmeldinger]);
 }
 
- function useFeilMetrikkerType(feilmeldinger: FeilmeldingType[]) {
-    const sentErrors = useRef(new Set());
-    const harSendtLastet = useRef(false);
 
-    if(!harSendtLastet.current) {
-        loggEvent("aktivitesplan.lastet");
-        harSendtLastet.current = true;
-    }
+function sendFeiltyperMetrikk(feilmeldinger: FeilmeldingType[], sendtFeiltype: React.MutableRefObject<Set<any>>) {
+    const feil = feilmeldinger.map(feil => klassifiserFeil(feil));
+    new Set(feil) //fjerner duplikater
+        .forEach(feil => {
+            if (!sendtFeiltype.current.has(feil)) {
+                sendtFeiltype.current.add(feil);
+                loggEvent("aktivitetsplan.feil", {feil_kategori: feil}, {feil_kategori_tag: feil});
+            }
+        });
+}
 
-    useEffect(() => {
-        const feil = feilmeldinger
-            .filter(feil => feil.httpStatus !== 403 && feil.httpStatus !== 401)
-            .map(feil => feil.type);
-        new Set(feil) //fjerner duplikater
-            .forEach(feil => {
-                if(!sentErrors.current.has(feil)) {
-                    sentErrors.current.add(feil);
-                    loggEvent("aktivitetsplan.feiltype", {feil});
-                }
-            });
-    }, [feilmeldinger]);
+function sendFeilMetrikk(feilmeldinger: FeilmeldingType[], sentErrors: React.MutableRefObject<Set<any>>) {
+    const feil = feilmeldinger
+        .filter(feil => feil.httpStatus !== 403 && feil.httpStatus !== 401);
+    new Set(feil) //fjerner duplikater
+        .forEach(feilmelding => {
+            const feil = feilmelding.type;
+            if(!sentErrors.current.has(feil)) {
+                sentErrors.current.add(feil);
+                loggEvent("aktivitetsplan.feiltype", {feil, feil_kategori: klassifiserFeil(feilmelding)});
+            }
+        });
 }
 
 type ErrorSeverity = "unauthorized" | "forbidden" | "critical" | "degraded" | "unknown";
@@ -72,9 +70,5 @@ function klassifiserFeil(feil: FeilmeldingType): ErrorSeverity {
         default:
             return "unknown";
     }
-}
-
-function sendFeil(feil_kategori: string) {
-    loggEvent("aktivitetsplan.feil", {feil_kategori}, {feil_kategori_tag: feil_kategori});
 }
 
