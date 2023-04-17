@@ -10,6 +10,8 @@ import { EksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/int
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../../../context/dirty-context';
+import { selectSettAktivitetTilAvtaltFeil } from '../../../../feilmelding/feil-selector';
+import Feilmelding from '../../../../feilmelding/Feilmelding';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { useKanSendeVarsel, useSendAvtaltMetrikker } from '../avtaltHooks';
@@ -104,6 +106,8 @@ const AvtaltForm = (props: Props) => {
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
+    const feil = useSelector(selectSettAktivitetTilAvtaltFeil);
+
     useEffect(() => {
         setFormIsDirty('avtalt', isDirty);
         return () => setFormIsDirty('avtalt', false);
@@ -142,6 +146,7 @@ const AvtaltForm = (props: Props) => {
                                 errors={errors}
                             />
                         ) : null}
+                        <Feilmelding feilmeldinger={feil} />
                         <Button loading={oppdaterer} disabled={lasterData}>
                             Bekreft
                         </Button>

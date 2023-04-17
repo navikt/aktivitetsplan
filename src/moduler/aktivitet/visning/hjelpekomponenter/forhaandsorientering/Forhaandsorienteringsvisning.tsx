@@ -2,15 +2,12 @@ import { Alert, BodyLong, BodyShort, Heading, ReadMore } from '@navikt/ds-react'
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Status } from '../../../../../createGenericSlice';
 import { AlleAktiviteter, isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import { loggForhaandsorienteringLest } from '../../../../../felles-komponenter/utils/logging';
 import { formaterDatoManed } from '../../../../../utils/dateUtils';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
 import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
-import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';
-import { selectArenaAktivitetFhoLestStatus } from '../../../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-slice';
 import { skalMarkereForhaandsorienteringSomLest } from '../../avtalt-container/utilsForhaandsorientering';
 import LestKnapp from './LestKnapp';
@@ -33,8 +30,6 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     const erLest = !!forhaandsorienteringLestDato;
 
     const erBruker = useSelector(selectErBruker);
-    const arenaAktivitetFhoLestStatus = useSelector(selectArenaAktivitetFhoLestStatus);
-    const aktivitetFhoLestStatus = useSelector(selectAktivitetFhoLestStatus);
 
     const dispatch = useAppDispatch();
 
@@ -42,15 +37,18 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const [erEkspandert, setErEkspandert] = useState(startAapen);
 
+    const [laster, setLaster] = useState(false);
+
     if (!forhaandsorienteringTekst) {
         return null;
     }
 
     const onMarkerSomLest = () => {
+        setLaster(true);
         if (erArenaAktivitet) {
-            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet));
+            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet)).then((_) => setLaster(false));
         } else {
-            dispatch(markerForhaandsorienteringSomLest(aktivitet));
+            dispatch(markerForhaandsorienteringSomLest(aktivitet)).then((_) => setLaster(false));
         }
         loggForhaandsorienteringLest(aktivitet.type, true);
     };
@@ -60,10 +58,6 @@ const Forhaandsorienteringsvisning = (props: Props) => {
         setErEkspandert(false);
     };
 
-    const lasterDataArena = arenaAktivitetFhoLestStatus === Status.PENDING;
-    const lasterDataAktivitet = aktivitetFhoLestStatus === Status.PENDING;
-    const lasterData = erArenaAktivitet ? lasterDataArena : lasterDataAktivitet;
-
     if (!erLest && kanMarkeresSomLest) {
         return (
             <Alert variant="warning">
@@ -71,7 +65,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
                     {tittelTekst}
                 </Heading>
                 <BodyLong>{forhaandsorienteringTekst}</BodyLong>
-                <LestKnapp onClick={onClickLestKnapp} lasterData={lasterData} />
+                <LestKnapp onClick={onClickLestKnapp} lasterData={laster} />
             </Alert>
         );
     }

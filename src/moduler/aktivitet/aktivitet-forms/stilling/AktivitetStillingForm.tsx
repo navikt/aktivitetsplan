@@ -55,7 +55,7 @@ const StillingAktivitetForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty },
+        formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -121,7 +121,7 @@ const StillingAktivitetForm = (props: Props) => {
                         error={errors.lenke && errors.lenke.message}
                     />
                     <CustomErrorSummary errors={errors} />
-                    <LagreAktivitetKnapp />
+                    <LagreAktivitetKnapp loading={isSubmitting} />
                 </div>
             </FormProvider>
         </form>

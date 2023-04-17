@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/aktivitetAPI';
 import { Status } from '../../createGenericSlice';
@@ -9,24 +9,17 @@ import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
 interface ArenaAktivitetState {
     data: ArenaAktivitet[];
     status: Status;
-    fhoLestStatus: Status;
 }
 
 const initialState: ArenaAktivitetState = {
     data: [],
     status: Status.NOT_STARTED,
-    fhoLestStatus: Status.NOT_STARTED,
 };
-
-const mapArenaType = (arenaAktivitet: ArenaAktivitet) => ({
-    ...arenaAktivitet,
-    arenaAktivitet: true,
-});
 
 const nyStateMedOppdatertAktivitet = (state: ArenaAktivitetState, aktivitet: ArenaAktivitet) => {
     const aktivitetIndex = state.data.findIndex((a: ArenaAktivitet) => a.id === aktivitet.id);
     const nyState = [...state.data];
-    nyState[aktivitetIndex] = mapArenaType(aktivitet);
+    nyState[aktivitetIndex] = aktivitet;
     return { ...state, data: nyState };
 };
 
@@ -36,33 +29,20 @@ const arenaAktivitetSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(hentArenaAktiviteter.fulfilled, (state, action) => {
-            state.data = action.payload.map(mapArenaType);
+            state.data = action.payload;
             state.status = Status.OK;
+        });
+        builder.addCase(hentArenaAktiviteter.rejected, (state) => {
+            state.status = Status.ERROR;
         });
         builder.addCase(sendForhaandsorienteringArenaAktivitet.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, action.payload);
-        });
-        builder.addCase(sendForhaandsorienteringArenaAktivitet.pending, (state) => {
-            state.status = Status.RELOADING;
+            return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
         });
         builder.addCase(markerForhaandsorienteringSomLestArenaAktivitet.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: Status.OK }, action.payload);
+            return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
         });
-        builder.addCase(markerForhaandsorienteringSomLestArenaAktivitet.pending, (state) => {
-            state.fhoLestStatus = Status.RELOADING;
-        });
-        builder.addMatcher(
-            isAnyOf(
-                hentArenaAktiviteter.rejected,
-                sendForhaandsorienteringArenaAktivitet.rejected,
-                markerForhaandsorienteringSomLestArenaAktivitet.rejected
-            ),
-            (state) => {
-                state.status = Status.ERROR;
-            }
-        );
     },
 });
 

@@ -1,8 +1,8 @@
 import { HikingTrailSignIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
+import { isRejected } from '@reduxjs/toolkit';
 import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
@@ -52,7 +52,10 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
 
     const onSubmit = (formValues: AktivitetStatusFormValues): Promise<any> => {
         setFormIsDirty('status', false);
-        return lagreStatusEndringer(dispatch, formValues, aktivitet).then(() => {
+        return lagreStatusEndringer(dispatch, formValues, aktivitet).then((action) => {
+            if (isRejected(action)) {
+                return null;
+            }
             setIsOpen(false);
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();

@@ -1,4 +1,4 @@
-import { PayloadAction, isFulfilled, isRejected } from '@reduxjs/toolkit';
+import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
 import React, { MouseEventHandler, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -22,7 +22,7 @@ import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/SamtalereferatForm';
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
-import { selectAktivitetFeilmeldinger, selectOpprettAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { selectOpprettAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { AktivitetFormValues } from '../rediger/EndreAktivitet';
 
 const NyAktivitetForm = () => {
@@ -44,9 +44,7 @@ const NyAktivitetForm = () => {
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
             return dispatch(lagNyAktivitet(nyAktivitet)).then((action) => {
-                if (isRejected(action)) {
-                    return;
-                } else if (isFulfilled(action)) {
+                if (isFulfilled(action)) {
                     navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id));
                 }
             });

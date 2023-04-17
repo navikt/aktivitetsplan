@@ -1,6 +1,6 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
-import { selectFeilSlice } from '../feilmelding/feil-slice';
+import { selectFeilSlice } from '../feilmelding/feil-selector';
 import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectMalSlice } from './aktivitetsmal-selector';
 import { hentMal } from './aktivitetsmal-slice';

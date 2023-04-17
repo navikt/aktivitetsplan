@@ -13,13 +13,6 @@ export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitet
     return await Api.hentAktivitet(aktivitetId);
 });
 
-export const flyttAktivitet = createAsyncThunk(
-    'aktivitet/flytt',
-    async ({ aktivitet, status }: { aktivitet: VeilarbAktivitet; status: AktivitetStatus }) => {
-        return await Api.oppdaterAktivitetStatus({ ...aktivitet, status });
-    }
-);
-
 export const oppdaterAktivitetEtikett = createAsyncThunk(
     'aktivitet-etikett/oppdater',
     async (aktivitet: VeilarbAktivitet) => {
@@ -48,6 +41,13 @@ export const markerForhaandsorienteringSomLest = createAsyncThunk(
     'aktivitet/fho/lest',
     async (aktivitet: VeilarbAktivitet) => {
         return await Api.markerForhaandsorienteringSomLest(aktivitet.id, aktivitet.versjon);
+    }
+);
+
+export const flyttAktivitet = createAsyncThunk(
+    'aktivitet/flytt',
+    async ({ aktivitet, status }: { aktivitet: VeilarbAktivitet; status: AktivitetStatus }) => {
+        return await Api.oppdaterAktivitetStatus({ ...aktivitet, status });
     }
 );
 

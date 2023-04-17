@@ -54,8 +54,7 @@ const AktivitetvisningModal = (props: Props) => {
     const aktivitetFeil = useSelector(aktivitetFeilSelector, shallowEqual);
     const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
-    const oppdaterFeil = useSelector(selecteEndreAktivitetFeilmeldinger);
-    const alleFeil = [...oppdaterFeil, aktivitetFeil, dialogFeil, nivaa4Feil].filter((it) => it);
+    const alleFeil = [aktivitetFeil, dialogFeil, nivaa4Feil].filter((it) => it);
     const erBruker = useSelector(selectErBruker);
 
     const fho = aktivitet?.forhaandsorientering;

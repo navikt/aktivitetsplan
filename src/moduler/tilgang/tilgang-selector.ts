@@ -1,6 +1,6 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
-import { selectFeilSlice } from '../feilmelding/feil-slice';
+import { selectFeilSlice } from '../feilmelding/feil-selector';
 import { hentNivaa4 } from './tilgang-slice';
 
 function selectTilgangSlice(state: RootState) {

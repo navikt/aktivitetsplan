@@ -1,7 +1,6 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
-import { selectFeilSlice } from '../feilmelding/feil-slice';
-import { hentNivaa4 } from '../tilgang/tilgang-slice';
+import { selectFeilSlice } from '../feilmelding/feil-selector';
 import { hentArenaAktiviteter } from './arena-aktiviteter-slice';
 
 export const selectArenaAktiviteterSlice = (state: RootState) => state.data.arenaAktiviteter;
@@ -16,7 +15,3 @@ export const selectArenaFeilmeldinger = (state: RootState) => {
         selectFeilSlice(state)[hentArenaAktiviteter.rejected.type];
     return feilMeldingsdata;
 };
-
-export function selectArenaAktivitetFhoLestStatus(state: RootState) {
-    return selectArenaAktiviteterSlice(state).fhoLestStatus;
-}

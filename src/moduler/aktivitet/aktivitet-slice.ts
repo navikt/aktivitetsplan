@@ -10,11 +10,8 @@ import {
     hentAktiviteter,
     lagNyAktivitet,
     markerForhaandsorienteringSomLest,
-    oppdaterAktivitet,
-    oppdaterAktivitetEtikett,
     oppdaterCVSvar,
     oppdaterReferat,
-    oppdaterStillingFraNavSoknadsstatus,
     publiserReferat,
     settAktivitetTilAvtalt,
 } from './aktivitet-actions';
@@ -22,7 +19,6 @@ import {
 export interface AktivitetState {
     data: VeilarbAktivitet[];
     status: Status;
-    fhoLestStatus: Status;
     fhoBekreftStatus: Status;
     cvSvarStatus: Status;
 }
@@ -30,7 +26,6 @@ export interface AktivitetState {
 const initialState: AktivitetState = {
     data: [],
     status: Status.NOT_STARTED,
-    fhoLestStatus: Status.NOT_STARTED,
     fhoBekreftStatus: Status.NOT_STARTED,
     cvSvarStatus: Status.NOT_STARTED,
 };
@@ -64,23 +59,9 @@ const aktivitetSlice = createSlice({
             state.status = Status.OK;
             state.data = [...state.data, action.payload];
         });
-        builder.addCase(flyttAktivitet.pending, (state, action) => {
-            return nyStateMedOppdatertAktivitet({ ...state, status: Status.RELOADING }, action.meta.arg.aktivitet, {
-                nesteStatus: action.meta.arg.status,
-            });
-        });
-        builder.addCase(flyttAktivitet.rejected, (state, action) => {
-            return nyStateMedOppdatertAktivitet({ ...state, status: Status.ERROR }, action.meta.arg.aktivitet);
-        });
-        builder.addCase(markerForhaandsorienteringSomLest.pending, (state) => {
-            state.fhoLestStatus = Status.RELOADING;
-        });
         builder.addCase(markerForhaandsorienteringSomLest.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: Status.OK }, action.payload);
-        });
-        builder.addCase(markerForhaandsorienteringSomLest.rejected, (state) => {
-            state.fhoLestStatus = Status.ERROR;
+            return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
         });
         builder.addCase(settAktivitetTilAvtalt.pending, (state) => {
             state.fhoBekreftStatus = Status.RELOADING;
@@ -102,44 +83,21 @@ const aktivitetSlice = createSlice({
             state.cvSvarStatus = Status.ERROR;
         });
         builder.addMatcher(
-            isAnyOf(
-                oppdaterAktivitetEtikett.fulfilled,
-                oppdaterAktivitet.fulfilled,
-                oppdaterStillingFraNavSoknadsstatus.fulfilled,
-                flyttAktivitet.fulfilled,
-                oppdaterReferat.fulfilled,
-                publiserReferat.fulfilled
-            ),
+            isAnyOf(flyttAktivitet.fulfilled, oppdaterReferat.fulfilled, publiserReferat.fulfilled),
             (state, action) => {
                 windowEvent(UpdateTypes.Aktivitet);
                 return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, action.payload);
             }
         );
         builder.addMatcher(
-            isAnyOf(
-                oppdaterAktivitetEtikett.pending,
-                oppdaterAktivitet.pending,
-                oppdaterStillingFraNavSoknadsstatus.pending,
-                lagNyAktivitet.pending,
-                oppdaterReferat.pending,
-                publiserReferat.pending
-            ),
+            isAnyOf(lagNyAktivitet.pending, oppdaterReferat.pending, publiserReferat.pending),
             (state) => {
                 state.status = Status.RELOADING;
             }
         );
-        builder.addMatcher(
-            isAnyOf(
-                hentAktiviteter.rejected,
-                hentAktivitet.rejected,
-                oppdaterAktivitetEtikett.rejected,
-                oppdaterAktivitet.rejected,
-                oppdaterStillingFraNavSoknadsstatus.rejected
-            ),
-            (state) => {
-                state.status = Status.ERROR;
-            }
-        );
+        builder.addMatcher(isAnyOf(hentAktiviteter.rejected, hentAktivitet.rejected), (state) => {
+            state.status = Status.ERROR;
+        });
     },
 });
 

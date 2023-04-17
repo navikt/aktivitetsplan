@@ -4,7 +4,7 @@ import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { HistoriskOppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { RootState } from '../../store';
-import { selectFeilSlice } from '../feilmelding/feil-slice';
+import { selectFeilSlice } from '../feilmelding/feil-selector';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';

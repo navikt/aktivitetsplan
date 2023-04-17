@@ -1,4 +1,4 @@
-import { isFulfilled, isRejected } from '@reduxjs/toolkit';
+import { isFulfilled } from '@reduxjs/toolkit';
 import React, { FunctionComponent, MouseEventHandler, MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -120,6 +120,9 @@ function EndreAktivitet() {
     const avhengigheter: Avhengighet[] = [valgtAktivitet ? Status.OK : Status.PENDING];
     const aktivitetFeilmelding = useSelector(selectAktivitetFeilmeldinger);
     const oppdaterFeilmelding = useSelector(selecteEndreAktivitetFeilmeldinger);
+
+    const alleFeil = [...oppdaterFeilmelding, aktivitetFeilmelding].filter(exist);
+
     const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
 
     function oppdater(aktivitet: VeilarbAktivitet) {
@@ -127,9 +130,6 @@ function EndreAktivitet() {
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as VeilarbAktivitet;
         return doOppdaterAktivitet(oppdatertAktivitet).then((action) => {
-            if (isRejected(action)) {
-                return;
-            }
             if (isFulfilled(action)) {
                 navigate(aktivitetRoute(valgtAktivitet.id));
             }
@@ -165,12 +165,7 @@ function EndreAktivitet() {
             : null;
 
     return (
-        <Modal
-            header={header}
-            feilmeldinger={[...oppdaterFeilmelding, aktivitetFeilmelding].filter(exist)}
-            onRequestClose={onReqClose}
-            contentLabel="aktivitet-modal"
-        >
+        <Modal header={header} feilmeldinger={alleFeil} onRequestClose={onReqClose} contentLabel="aktivitet-modal">
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>{aktivitetForm}</ModalContainer>

@@ -44,8 +44,6 @@ const Modal = (props: Props) => {
         navigate('/');
     };
 
-    console.log('Modal', feilmeldinger);
-
     return (
         <AkselModal
             open
