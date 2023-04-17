@@ -1,4 +1,3 @@
-import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
 
 function selectLestSlice(state: RootState) {
@@ -23,9 +22,4 @@ export function selectLestAktivitetsplan(state: RootState) {
 
 export function selectLestStatus(state: RootState) {
     return selectLestSlice(state).status;
-}
-
-export function selectLestFeilMelding(state: RootState) {
-    const feilMeldingsdata = selectLestStatus(state) === Status.ERROR && selectLestSlice(state).feil;
-    return feilMeldingsdata ? [feilMeldingsdata] : [];
 }

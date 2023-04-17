@@ -61,9 +61,6 @@ const aktivitetVersjonerSlice = createSlice({
                 return { ...state, data: [action.payload, ...state.data] };
             }
         );
-        builder.addMatcher(isAnyOf(oppdaterReferat.rejected, publiserReferat.rejected), (state) => {
-            state.status = Status.ERROR;
-        });
     },
 });
 

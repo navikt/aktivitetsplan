@@ -19,15 +19,11 @@ import {
 export interface AktivitetState {
     data: VeilarbAktivitet[];
     status: Status;
-    fhoBekreftStatus: Status;
-    cvSvarStatus: Status;
 }
 
 const initialState: AktivitetState = {
     data: [],
     status: Status.NOT_STARTED,
-    fhoBekreftStatus: Status.NOT_STARTED,
-    cvSvarStatus: Status.NOT_STARTED,
 };
 
 function nyStateMedOppdatertAktivitet(
@@ -63,30 +59,18 @@ const aktivitetSlice = createSlice({
             windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
         });
-        builder.addCase(settAktivitetTilAvtalt.pending, (state) => {
-            state.fhoBekreftStatus = Status.RELOADING;
-        });
         builder.addCase(settAktivitetTilAvtalt.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet({ ...state, fhoBekreftStatus: Status.OK }, action.payload);
-        });
-        builder.addCase(settAktivitetTilAvtalt.rejected, (state) => {
-            state.fhoBekreftStatus = Status.ERROR;
-        });
-        builder.addCase(oppdaterCVSvar.pending, (state) => {
-            state.cvSvarStatus = Status.PENDING;
+            return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
         });
         builder.addCase(oppdaterCVSvar.fulfilled, (state, action) => {
-            return nyStateMedOppdatertAktivitet({ ...state, cvSvarStatus: Status.OK }, action.payload);
-        });
-        builder.addCase(oppdaterCVSvar.rejected, (state) => {
-            state.cvSvarStatus = Status.ERROR;
+            return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
         });
         builder.addMatcher(
             isAnyOf(flyttAktivitet.fulfilled, oppdaterReferat.fulfilled, publiserReferat.fulfilled),
             (state, action) => {
                 windowEvent(UpdateTypes.Aktivitet);
-                return nyStateMedOppdatertAktivitet({ ...state, status: Status.OK }, action.payload);
+                return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
             }
         );
         builder.addMatcher(isAnyOf(hentAktiviteter.rejected, hentAktivitet.rejected), (state) => {

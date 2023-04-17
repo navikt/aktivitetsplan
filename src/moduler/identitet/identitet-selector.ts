@@ -1,4 +1,4 @@
-import { GenericState, Status } from '../../createGenericSlice';
+import { GenericState } from '../../createGenericSlice';
 import { Me } from '../../datatypes/oppfolgingTypes';
 import { RootState } from '../../store';
 
@@ -20,9 +20,4 @@ export function selectIdentitetId(state: RootState) {
 
 export function selectIdentitetStatus(state: RootState) {
     return selectIdentitetSlice(state).status;
-}
-
-export function selectIdentitetFeilMelding(state: RootState) {
-    const feilMeldingsdata = selectIdentitetStatus(state) === Status.ERROR && selectIdentitetSlice(state).feil;
-    return feilMeldingsdata ? [feilMeldingsdata] : [];
 }

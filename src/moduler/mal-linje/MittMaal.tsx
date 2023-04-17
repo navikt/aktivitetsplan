@@ -52,7 +52,6 @@ interface MalContentProps {
 
 function MalContent(props: MalContentProps) {
     const { disabled, mal } = props;
-    const dispatch = useAppDispatch();
     const erVeileder = useErVeileder();
     const navigate = useNavigate();
     const { malRoute } = useRoutes();
