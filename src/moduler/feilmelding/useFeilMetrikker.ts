@@ -8,7 +8,6 @@ import { hentDialoger } from '../dialog/dialog-slice';
 import { hentIdentitet } from '../identitet/identitet-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
-import { FeilmeldingType } from './FeilmeldingTypes';
 
 export function useFeilMetrikker(feilmeldinger: SerializedError[]) {
     const sendtFeiltype = useRef(new Set());
@@ -27,7 +26,7 @@ export function useFeilMetrikker(feilmeldinger: SerializedError[]) {
     }, [feilmeldinger]);
 }
 
-function sendFeiltyperMetrikk(feilmeldinger: FeilmeldingType[], sendtFeiltype: React.MutableRefObject<Set<any>>) {
+function sendFeiltyperMetrikk(feilmeldinger: SerializedError[], sendtFeiltype: React.MutableRefObject<Set<any>>) {
     const feil = feilmeldinger.map((feil) => klassifiserFeil(feil));
     new Set(feil) //fjerner duplikater
         .forEach((feil) => {
@@ -38,15 +37,16 @@ function sendFeiltyperMetrikk(feilmeldinger: FeilmeldingType[], sendtFeiltype: R
         });
 }
 
-function sendFeilMetrikk(feilmeldinger: FeilmeldingType[], sentErrors: React.MutableRefObject<Set<any>>) {
+function sendFeilMetrikk(feilmeldinger: SerializedError[], sentErrors: React.MutableRefObject<Set<any>>) {
     const feil = feilmeldinger
-        .filter((feil) => feil.httpStatus !== 403 && feil.httpStatus !== 401)
+        .filter((feil) => feil.code !== '403' && feil.code !== '401')
         .map((feil) => feil.type);
     new Set(feil) //fjerner duplikater
-        .forEach((feil) => {
-            if (!sentErrors.current.has(feil)) {
+        .forEach((feilmelding) => {
+            const feil = feilmelding.type;
+            if(!sentErrors.current.has(feil)) {
                 sentErrors.current.add(feil);
-                loggEvent('aktivitetsplan.feiltype', { feil });
+                loggEvent("aktivitetsplan.feiltype", {feil, feil_kategori: klassifiserFeil(feilmelding)});
             }
         });
 }
