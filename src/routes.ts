@@ -8,6 +8,7 @@ const fullforAktivitetRoute = (aktivitetId: string, fnr?: string) => fnrPath(fnr
 const avbrytAktivitetRoute = (aktivitetId: string, fnr?: string) => fnrPath(fnr) + `/aktivitet/avbryt/${aktivitetId}`;
 const hovedsideRoute = (fnr?: string) => `${fnr ? `/${fnr}` : '/'}`;
 const malRoute = (fnr?: string) => fnrPath(fnr) + `/mal`;
+const informasjonRoute = (fnr?: string) => fnrPath(fnr) + `/informasjon`;
 
 export const useRoutes = () => {
     const fnr = useFnr();
@@ -19,5 +20,6 @@ export const useRoutes = () => {
         avbrytAktivitetRoute: (aktivitetId: string) => avbrytAktivitetRoute(aktivitetId, fnr),
         hovedsideRoute: () => hovedsideRoute(fnr),
         malRoute: () => malRoute(fnr),
+        informasjonRoute: () => informasjonRoute(fnr),
     };
 };

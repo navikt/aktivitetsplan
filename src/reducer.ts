@@ -10,7 +10,6 @@ import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reduc
 import dialogReducer from './moduler/dialog/dialog-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import identitetReducer from './moduler/identitet/identitet-reducer';
-import informasjonReducer from './moduler/informasjon/informasjon-reducer';
 import lestReducer from './moduler/lest/lest-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
@@ -41,7 +40,6 @@ const combinedReducers = combineReducers({
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
-        informasjon: informasjonReducer,
         dragAndDrop: dragAndDropReducer,
     }),
 });
