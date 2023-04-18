@@ -3,7 +3,6 @@ import {
     flyttAktivitet,
     hentAktiviteter,
     lagNyAktivitet,
-    oppdaterAktivitet,
     oppdaterAktivitetEtikett,
     oppdaterCVSvar,
     oppdaterStillingFraNavSoknadsstatus,
@@ -13,6 +12,8 @@ import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { hentIdentitet } from '../identitet/identitet-slice';
 import { hentLest } from '../lest/lest-slice';
+import { hentMal, oppdaterMal } from '../mal/aktivitetsmal-slice';
+import { hentMalListe } from '../mal/malliste-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
@@ -37,10 +38,6 @@ export const selectHovedsideFeil = (state: RootState) => {
         hentNivaa4.rejected.type,
         flyttAktivitet.rejected.type
     )(state);
-};
-
-export const selectOppdaterAktivitetFeil = (state: RootState) => {
-    return selectFeil(oppdaterAktivitet.rejected.type, lagNyAktivitet.rejected.type)(state);
 };
 
 export const selectLagNyAktivitetFeil = (state: RootState) => {
@@ -69,4 +66,12 @@ export const selectSettAktivitetTilAvtaltFeil = (state: RootState) => {
 
 export const selectCanPrint = (state: RootState) => {
     return selectFeil(hentAktiviteter.rejected.type, hentDialoger.rejected.type)(state).length === 0;
+};
+
+export const selectHentMalListeFeil = (state: RootState) => {
+    return selectFeil(hentMal.rejected.type, hentMalListe.rejected.type)(state);
+};
+
+export const selectOppdaterMalFeil = (state: RootState) => {
+    return selectFeil(oppdaterMal.rejected.type)(state);
 };

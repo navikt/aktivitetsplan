@@ -14,6 +14,7 @@ import {
     publiserReferat,
     settAktivitetTilAvtalt,
 } from '../aktivitet/aktivitet-actions';
+import { oppdaterMal } from '../mal/aktivitetsmal-slice';
 
 type ErrorSliceType = Record<string, SerializedError>;
 
@@ -28,6 +29,7 @@ const dismissableErrors = [
     publiserReferat.rejected.type,
     oppdaterCVSvar.rejected.type,
     markerForhaandsorienteringSomLest.rejected.type,
+    oppdaterMal.rejected.type,
 ];
 
 const errorSlice = createSlice({

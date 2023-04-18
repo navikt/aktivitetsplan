@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Modal from '../../felles-komponenter/modal/Modal';
-import { selectMalListeFeilmeldinger } from './malliste-selector';
+import { selectHentMalListeFeil } from '../feilmelding/feil-selector';
 
 interface Props {
     children: React.ReactNode;
@@ -11,10 +11,10 @@ interface Props {
 
 export function MalModal(props: Props) {
     const { children } = props;
-    const feil = useSelector(selectMalListeFeilmeldinger, shallowEqual);
+    const feil = useSelector(selectHentMalListeFeil);
 
     return (
-        <Modal onRequestClose={props.onRequestClosed} feilmeldinger={feil} header={null}>
+        <Modal onRequestClose={props.onRequestClosed} feilmeldinger={feil} header={null} contentLabel={'Mitt mål'}>
             {children}
         </Modal>
     );

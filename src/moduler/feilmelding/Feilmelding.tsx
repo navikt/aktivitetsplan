@@ -6,6 +6,7 @@ import { SerializedError } from '../../api/utils';
 import { flyttAktivitet, hentAktivitet, hentAktiviteter } from '../aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
+import { oppdaterMal } from '../mal/aktivitetsmal-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
 export const getErrorText = (feilmeldinger: SerializedError[]) => {
@@ -34,6 +35,8 @@ export const getErrorText = (feilmeldinger: SerializedError[]) => {
             return 'Noe gikk galt, og du får dessverre ikke sett dialogmeldinger. Prøv igjen senere.';
         case flyttAktivitet.rejected.type:
             return 'Noe gikk galt, og du får dessverre ikke oppdatert status på aktiviteten. Prøv igjen senere.';
+        case oppdaterMal.rejected.type:
+            return 'Noe gikk galt, og du får dessverre ikke oppdatert mål. Prøv igjen senere.';
         default:
             return 'Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.';
     }
@@ -58,12 +61,6 @@ export default function Feilmelding(props: Props) {
             <Alert variant="error" inline={inline}>
                 {tekst}
             </Alert>
-
-            {/*<ReadMore className="mt-2 " header={'Vis detaljer'}>*/}
-            {/*    {feilmeldinger.map((feil) => (*/}
-            {/*        <FeilmeldingDetaljer feil={feil} key={guid()} />*/}
-            {/*    ))}*/}
-            {/*</ReadMore>*/}
         </div>
     );
 }
