@@ -1,63 +1,33 @@
 import { createSelector } from 'reselect';
 
-import { STATUS } from '../../api/utils';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
-import { HistoriskOppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
+import { RootState } from '../../store';
+import { selectFeil, selectFeilSlice } from '../feilmelding/feil-selector';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
-import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selectorts';
+import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
+import { hentDialoger } from './dialog-slice';
 
-function erViktigMelding(dialog: Dialog) {
-    return (dialog?.egenskaper?.length || 0) > 0;
-}
+const selectDialogerSlice = (state: RootState) => state.data.dialog;
 
-function selectDialogSlice(state: any) {
-    return state.data.dialog;
-}
-
-export function selectDialogStatus(state: any) {
-    return selectDialogSlice(state).status;
-}
-
-export function selectEskaleringsFilter(state: any) {
-    return selectDialogSlice(state).esklaringsFilter;
-}
-
-export function selectAlleDialoger(state: any) {
-    return selectDialogSlice(state).data;
-}
-
-const hentDialogerFraState = (
-    dialogSlice: any,
-    esklaringsFilter: boolean,
-    valgtHistoriskPeriode?: HistoriskOppfolgingsPeriode,
-    forrigeSluttDato?: string
-) =>
-    dialogSlice.data
-        .filter((d: Dialog) => datoErIPeriode(d.opprettetDato, valgtHistoriskPeriode, forrigeSluttDato))
-        .filter((d: Dialog) => erViktigMelding(d) || !esklaringsFilter);
-
+export const selectDialogStatus = (state: RootState) => selectDialogerSlice(state).status;
+export const selectDialogerData = (state: RootState) => selectDialogerSlice(state).data;
+export const selectSistOppdatert = (state: RootState) => selectDialogerSlice(state).sistOppdatert;
 export const selectDialoger = createSelector(
-    [selectDialogSlice, selectEskaleringsFilter, selectHistoriskPeriode, selectForrigeHistoriskeSluttDato],
-    hentDialogerFraState
+    [selectDialogerData, selectHistoriskPeriode, selectForrigeHistoriskeSluttDato],
+    (dialoger: Dialog[], valgtHistoriskPeriode: HistoriskOppfolgingsperiode | null, forrigeSluttDato?: string) => {
+        return dialoger.filter((d: Dialog) =>
+            datoErIPeriode(d.opprettetDato, valgtHistoriskPeriode ?? undefined, forrigeSluttDato)
+        );
+    }
 );
-
-export function selectSistOppdatert(state: any) {
-    return selectDialogSlice(state).sistOppdatert;
-}
-
-export function createSelectDialogForAktivitetId(aktivitet: AlleAktiviteter) {
-    return (state: any) => selectDialogForAktivitetId(state, aktivitet);
-}
-
-export function selectDialogForAktivitetId(state: any, aktivitet: AlleAktiviteter) {
-    return selectAlleDialoger(state).find((d: Dialog) => {
-        return d.aktivitetId === aktivitet.id;
+export const selectDialogForAktivitetId = (aktivitetId: string) => (state: RootState) => {
+    return selectDialogerData(state).find((d: Dialog) => {
+        return d.aktivitetId === aktivitetId;
     });
-}
-
-export function selectDialogFeilmeldinger(state: any) {
-    const feilmeldinger = selectDialogSlice(state).status === STATUS.ERROR && selectDialogSlice(state).feil;
-    return feilmeldinger ? feilmeldinger : [];
+};
+export function selectDialogFeilmeldinger(state: RootState) {
+    return selectDialogerSlice(state).status === Status.ERROR ? selectFeil(hentDialoger.rejected.type)(state) : [];
 }

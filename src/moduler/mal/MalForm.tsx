@@ -1,12 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Textarea } from '@navikt/ds-react';
+import { isFulfilled } from '@reduxjs/toolkit';
 import React, { MutableRefObject, useLayoutEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
-import { oppdaterMal } from './aktivitetsmal-reducer';
-import { hentMalListe } from './malliste-reducer';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
+import { selectOppdaterMalFeil } from '../feilmelding/feil-selector';
+import Feilmelding from '../feilmelding/Feilmelding';
+import { oppdaterMal } from './aktivitetsmal-slice';
+import { hentMalListe } from './malliste-slice';
 
 const schema = z.object({
     mal: z.string().min(1, 'Feltet må fylles ut').max(500, 'Du må korte ned teksten til 500 tegn'),
@@ -22,7 +26,7 @@ interface Props {
 const MalForm = (props: Props) => {
     const { mal, dirtyRef, handleComplete } = props;
 
-    const dispatch = useReduxDispatch();
+    const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLTextAreaElement | null>(null);
     useLayoutEffect(() => {
@@ -35,9 +39,11 @@ const MalForm = (props: Props) => {
 
     const onSubmit = (data: { mal: string }) => {
         if (data.mal !== props.mal) {
-            dispatch(oppdaterMal({ mal: data.mal }))
-                .then(() => dispatch(hentMalListe()))
-                .then(handleComplete());
+            dispatch(oppdaterMal({ mal: data.mal })).then((action) => {
+                if (isFulfilled(action)) {
+                    dispatch(hentMalListe()).then(() => handleComplete());
+                }
+            });
         } else {
             handleComplete();
         }
@@ -63,6 +69,9 @@ const MalForm = (props: Props) => {
 
     const malValue = watch('mal'); // for <Textarea /> character-count to work
 
+    const feil = useSelector(selectOppdaterMalFeil);
+    console.log(feil);
+
     return (
         <form className="my-4 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))}>
             <Textarea
@@ -73,6 +82,7 @@ const MalForm = (props: Props) => {
                 error={errors.mal && errors.mal.message}
                 value={malValue}
             />
+            <Feilmelding feilmeldinger={feil} />
             <Button>Lagre</Button>
         </form>
     );

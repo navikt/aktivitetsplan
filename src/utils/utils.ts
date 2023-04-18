@@ -50,3 +50,5 @@ function erGCP() {
 export function getContextPath() {
     return erGCP() ? '' : import.meta.env.BASE_URL;
 }
+
+export const exist = <T>(thing: T | undefined): thing is T => thing !== undefined && thing !== null;

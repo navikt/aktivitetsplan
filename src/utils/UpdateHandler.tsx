@@ -1,11 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { AnyAction } from 'redux';
 
+import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
-import { hentDialog } from '../moduler/dialog/dialog-reducer';
-import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-reducer';
+import { hentDialoger } from '../moduler/dialog/dialog-slice';
+import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',
@@ -20,14 +19,14 @@ interface UpdateEventType {
 
 const eventName = 'uppdate';
 
-export function widowEvent(update: UpdateTypes) {
+export function windowEvent(update: UpdateTypes) {
     window.dispatchEvent(
         new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'aktivitetsplan' } })
     );
 }
 
 export function UpdateEventHandler() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEventListener<UpdateEventType>(eventName, (event) => {
         const updateType = event.detail.uppdate;
@@ -39,11 +38,11 @@ export function UpdateEventHandler() {
 
         switch (updateType) {
             case UpdateTypes.Aktivitet:
-                return dispatch(hentAktiviteter() as unknown as AnyAction);
+                return dispatch(hentAktiviteter());
             case UpdateTypes.Dialog:
-                return dispatch(hentDialog() as unknown as AnyAction);
+                return dispatch(hentDialoger());
             case UpdateTypes.Oppfolging:
-                return dispatch(hentOppfolging() as unknown as AnyAction);
+                return dispatch(hentOppfolging());
         }
     });
 

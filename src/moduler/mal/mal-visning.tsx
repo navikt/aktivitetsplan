@@ -5,8 +5,8 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { selectGjeldendeMal } from './aktivitetsmal-reducer';
-import { selectMalListe } from './aktivitetsmal-selector';
+import { selectGjeldendeMal } from './aktivitetsmal-selector';
+import { selectMalListe } from './malliste-selector';
 
 interface Props {
     onClick: () => void;

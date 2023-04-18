@@ -8,6 +8,7 @@ import AppWebComponent from './AppWebComponent';
 import { USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
+import { mockfnr } from './mocks/utils';
 import { renderAsReactRoot } from './rootWrapper';
 
 declare global {
@@ -17,8 +18,6 @@ declare global {
 }
 
 setDefaultOptions({ locale: nn });
-
-const mockfnr = '12345678910';
 
 const exportToNavSpa = () => {
     NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
@@ -40,12 +39,14 @@ const renderApp = (props?: { fnr?: string }) => {
     }
 };
 
+const isTest = import.meta.env.MODE === 'test';
 if (USE_MOCK) {
     const fnr = mockfnr;
     const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
-    if (erEksternBruker()) {
+
+    if (erEksternBruker() && !isTest) {
         window.history.replaceState({}, '', pathnamePrefix);
-    } else if (!erEksternBruker()) {
+    } else if (!erEksternBruker() && !isTest) {
         window.history.replaceState({}, '', pathnamePrefix + fnr);
     }
 

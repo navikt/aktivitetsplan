@@ -9,7 +9,7 @@ import {
     selectErEskalert,
     selectEskaleringsvarselData,
     selectEskaleringsvarselStatus,
-} from './eskaleringsvarselSelector';
+} from './eskaleringsvarsel-selector';
 import VeilederVarsel from './VeilederVarsel';
 
 const Varslinger = () => {

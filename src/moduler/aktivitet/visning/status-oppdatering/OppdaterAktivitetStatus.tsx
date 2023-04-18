@@ -1,11 +1,12 @@
 import { HikingTrailSignIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
+import { isRejected } from '@reduxjs/toolkit';
 import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
 
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch, { AppDispatch } from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../../../Provider';
 import { aktivitetStatusMap } from '../../../../utils/textMappers';
@@ -26,7 +27,7 @@ const useDisableStatusEndring = (aktivitet: VeilarbAktivitet, erVeileder: boolea
 };
 
 const lagreStatusEndringer = (
-    dispatch: Dispatch,
+    dispatch: AppDispatch,
     values: { aktivitetstatus: AktivitetStatus; begrunnelse?: string },
     aktivitet: VeilarbAktivitet
 ) => {
@@ -35,7 +36,7 @@ const lagreStatusEndringer = (
     }
 
     flyttetAktivitetMetrikk('submit', aktivitet, values.aktivitetstatus);
-    return dispatch<any>(flyttAktivitetMedBegrunnelse(aktivitet, values.aktivitetstatus, values.begrunnelse));
+    return dispatch(flyttAktivitetMedBegrunnelse(aktivitet, values.aktivitetstatus, values.begrunnelse));
 };
 
 interface OppdaterAktivitetStatusProps {
@@ -45,13 +46,16 @@ interface OppdaterAktivitetStatusProps {
 const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
     const { aktivitet } = props;
     const [open, setIsOpen] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const erVeileder = useErVeileder();
     const disableStatusEndring = useDisableStatusEndring(aktivitet, erVeileder);
 
     const onSubmit = (formValues: AktivitetStatusFormValues): Promise<any> => {
         setFormIsDirty('status', false);
-        return lagreStatusEndringer(dispatch, formValues, aktivitet).then(() => {
+        return lagreStatusEndringer(dispatch, formValues, aktivitet).then((action) => {
+            if (isRejected(action)) {
+                return null;
+            }
             setIsOpen(false);
             document.querySelector('.aktivitet-modal')?.focus();
         });

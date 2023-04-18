@@ -6,7 +6,7 @@ interface RequiredLenkeProps {
 
 type LenkeType = 'EKSTERN' | 'INTERN' | 'FELLES';
 
-interface Lenke extends RequiredLenkeProps {}
+type Lenke = RequiredLenkeProps
 
 export interface Oppgave extends Lenke {
     knapptekst: string;

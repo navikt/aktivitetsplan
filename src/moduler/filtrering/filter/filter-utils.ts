@@ -1,10 +1,10 @@
 import { isBefore, isWithinInterval } from 'date-fns';
-import { Store } from 'redux';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
-import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
+import { RootState } from '../../../store';
+import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
 import { getStillingStatusFilterValue } from './EtikettFilter';
@@ -21,7 +21,7 @@ function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
-export function selectDatoErIPeriode(dato: string, state: Store): boolean {
+export function selectDatoErIPeriode(dato: string, state: RootState): boolean {
     const historiskPeriode = selectHistoriskPeriode(state);
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 

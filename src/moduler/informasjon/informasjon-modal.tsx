@@ -10,7 +10,7 @@ import ModalContainer from '../../felles-komponenter/modal/ModalContainer';
 import * as AppPT from '../../proptypes';
 import { useRoutes } from '../../routes';
 import { selectErBruker } from '../identitet/identitet-selector';
-import { selectLestInformasjon } from '../lest/lest-reducer';
+import { selectLestInformasjon } from '../lest/lest-selector';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { BrukePlanenPanel } from './brukePlanenPanel';
 import { OkonomiskStotte } from './okonomiskStottePanel';

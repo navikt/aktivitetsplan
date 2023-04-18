@@ -5,7 +5,7 @@ type Handler = React.FocusEventHandler | React.ChangeEventHandler<HTMLInputEleme
 
 export function handlers<Event = React.FocusEvent | React.ChangeEvent<HTMLInputElement>>(handlers: Handler[]) {
     return (event: Event) => {
-        handlers.filter((it) => it).forEach((handler) => handler!!(event as any));
+        handlers.filter((it) => it).forEach((handler) => handler!(event as any));
     };
 }
 

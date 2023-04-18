@@ -17,6 +17,12 @@ export interface RegoppslagDto {
     adresse: Postadresse;
 }
 
+export interface HarLoggetInnRespons {
+    harbruktnivaa4: boolean;
+    erRegistrertIdPorten: boolean;
+    personidentifikator: string; // fnr
+}
+
 export interface Postadresse {
     type: string;
     adresselinje1: string;
@@ -37,4 +43,12 @@ export interface VeilederInfo {
 
 export interface TabChangeEvent {
     tabId: string;
+}
+
+// https://github.com/navikt/poao-frontend/blob/main/src/route/auth-info-route.ts#L5
+export interface AuthInfoResponse {
+    loggedIn: boolean;
+    remainingSeconds: number | null;
+    expirationTime: string | null;
+    securityLevel: string | null;
 }

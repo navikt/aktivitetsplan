@@ -52,12 +52,6 @@ export enum JobbStatusType {
 
 export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 
-export interface Lest {
-    tidspunkt: string;
-    verdi?: string;
-    ressurs: string;
-}
-
 export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     id: string;
     versjon: string;
@@ -67,7 +61,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     endretAvType: BrukerType;
     forhaandsorientering?: Forhaandsorientering;
     endretAv: string;
-    endretDato?: string;
+    endretDato: string;
     avtalt: boolean;
     etikett?: StillingStatus; // todo sjekk ut hvorfor denne ligger på baseprops og ikke i StillingAktivitet
     transaksjonsType: T;

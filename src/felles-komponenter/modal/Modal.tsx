@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
-import { FeilmeldingType } from '../../moduler/feilmelding/FeilmeldingTypes';
 import { useRoutes } from '../../routes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
 import ModalHeader from './ModalHeader';
@@ -12,7 +12,7 @@ import ModalHeader from './ModalHeader';
 interface Props {
     className?: string;
     header?: ReactNode;
-    feilmeldinger?: FeilmeldingType[];
+    feilmeldinger?: SerializedError[];
     children: ReactNode;
     avhengigheter?: Avhengighet[] | Avhengighet;
     minstEnAvhengighet?: boolean;

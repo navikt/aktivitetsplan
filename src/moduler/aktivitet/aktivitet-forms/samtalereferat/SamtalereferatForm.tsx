@@ -1,9 +1,9 @@
 import React, { MutableRefObject, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { STATUS } from '../../../../api/utils';
+import { Status } from '../../../../createGenericSlice';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { selectVeilederStatus } from '../../../veileder/veilederSelector';
+import { selectVeilederStatus } from '../../../veileder/veileder-selector';
 import InnerSamtalereferatForm from './InnerSamtalereferatForm';
 
 interface Props {
@@ -18,7 +18,7 @@ const SamtalereferatForm = (props: Props) => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (status === STATUS.PENDING) {
+            if (status === Status.PENDING) {
                 setIgnorePending(true);
             }
         }, 400);
@@ -26,7 +26,7 @@ const SamtalereferatForm = (props: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (status === STATUS.PENDING && !ignorePending) {
+    if (status === Status.PENDING && !ignorePending) {
         return null;
     }
 

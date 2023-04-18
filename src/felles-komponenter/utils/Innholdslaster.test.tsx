@@ -2,13 +2,13 @@ import { render } from '@testing-library/react';
 /* eslint-env mocha */
 import React from 'react';
 
-import { STATUS } from '../../api/utils';
-import Innholdslaster, { Status } from './Innholdslaster';
+import { Status } from '../../createGenericSlice';
+import Innholdslaster from './Innholdslaster';
 
 describe('innholdslaster', () => {
     it('Skal rendre spinner hvis ikke alle avhengigheter har blitt lastet og det ikke er noen feil', () => {
         const { queryByText } = render(
-            <Innholdslaster avhengigheter={[{ status: STATUS.PENDING as Status }]}>
+            <Innholdslaster avhengigheter={[{ status: Status.PENDING as Status }]}>
                 <div>yay</div>
             </Innholdslaster>
         );
@@ -19,7 +19,7 @@ describe('innholdslaster', () => {
     it('Skal ikke rendre children hvis det har oppstått en feil på noen avhengigheter', () => {
         const innhold = <div>yay</div>;
         const { queryByText } = render(
-            <Innholdslaster avhengigheter={[{ status: STATUS.ERROR as Status }]}>{innhold}</Innholdslaster>
+            <Innholdslaster avhengigheter={[{ status: Status.ERROR as Status }]}>{innhold}</Innholdslaster>
         );
 
         expect(queryByText('yay')).toBeFalsy();
@@ -28,7 +28,7 @@ describe('innholdslaster', () => {
     it('Skal rendre children hvis alle avhengigheter har blitt lastet', () => {
         const innhold = <div>yay</div>;
         const { getByText } = render(
-            <Innholdslaster avhengigheter={[{ status: STATUS.OK as Status }]}>{innhold}</Innholdslaster>
+            <Innholdslaster avhengigheter={[{ status: Status.OK as Status }]}>{innhold}</Innholdslaster>
         );
         getByText('yay');
     });
@@ -37,7 +37,7 @@ describe('innholdslaster', () => {
         const innhold = <div>yay</div>;
         const renderDiv = () => innhold;
         const { getByText } = render(
-            <Innholdslaster avhengigheter={[{ status: STATUS.OK as Status }]}>{renderDiv}</Innholdslaster>
+            <Innholdslaster avhengigheter={[{ status: Status.OK as Status }]}>{renderDiv}</Innholdslaster>
         );
         getByText('yay');
     });
@@ -46,7 +46,7 @@ describe('innholdslaster', () => {
         const innhold = <div>yay</div>;
 
         const { queryByText } = render(
-            <Innholdslaster avhengigheter={[{ status: STATUS.OK as Status }, { status: STATUS.ERROR as Status }]}>
+            <Innholdslaster avhengigheter={[{ status: Status.OK as Status }, { status: Status.ERROR as Status }]}>
                 {innhold}
             </Innholdslaster>
         );
@@ -60,9 +60,9 @@ describe('innholdslaster', () => {
         const { queryByText } = render(
             <Innholdslaster
                 avhengigheter={[
-                    { status: STATUS.OK as Status },
-                    STATUS.ERROR as Status,
-                    { status: STATUS.OK as Status },
+                    { status: Status.OK as Status },
+                    Status.ERROR as Status,
+                    { status: Status.OK as Status },
                 ]}
             >
                 {innhold}
@@ -74,7 +74,7 @@ describe('innholdslaster', () => {
 
     it('Takler null og undefined', () => {
         const { queryByText } = render(
-            <Innholdslaster avhengigheter={[null, undefined, { status: STATUS.OK as Status }]}>
+            <Innholdslaster avhengigheter={[null, undefined, { status: Status.OK as Status }]}>
                 <div>yay</div>
             </Innholdslaster>
         );

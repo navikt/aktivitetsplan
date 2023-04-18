@@ -71,7 +71,7 @@ const MoteAktivitetForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty },
+        formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -153,7 +153,7 @@ const MoteAktivitetForm = (props: Props) => {
                         value={forberedelserValue}
                     />
                     <CustomErrorSummary errors={errors} />
-                    <LagreAktivitetKnapp />
+                    <LagreAktivitetKnapp loading={isSubmitting} />
                 </div>
             </FormProvider>
         </form>

@@ -1,9 +1,10 @@
 import { BriefcaseIcon } from '@navikt/aksel-icons';
 import React, { useContext, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 
 import { StillingStatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
@@ -27,7 +28,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
     const erIkkeUnderOppfolging = !useSelector(selectErUnderOppfolging);
 
     const [open, setIsOpen] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const lagreEtikett = (formValues: StillingEtikettFormValues): Promise<any> => {
         const { etikettstatus } = formValues;
@@ -35,17 +36,15 @@ const OppdaterAktivitetEtikett = (props: Props) => {
         if (etikettstatus === aktivitet.etikett) {
             return Promise.resolve();
         }
-        const etikett = etikettstatus === StillingStatus.INGEN_VALGT ? null : etikettstatus;
+        const etikett = etikettstatus === StillingStatus.INGEN_VALGT ? undefined : etikettstatus;
 
-        return oppdaterAktivitetEtikett({
-            ...aktivitet,
-            etikett,
-        })(dispatch);
+        return dispatch(oppdaterAktivitetEtikett({ ...aktivitet, etikett }));
     };
 
     const onSubmit = (formValues: StillingEtikettFormValues): Promise<any> => {
         setFormIsDirty('etikett', false);
-        return lagreEtikett(formValues).then(() => {
+        return lagreEtikett(formValues).then((action) => {
+            if (action.error) return;
             setIsOpen(false);
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });

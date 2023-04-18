@@ -1,11 +1,11 @@
 import { PersonRectangleIcon } from '@navikt/aksel-icons';
 import { Alert } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
 
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import useAppDispatch, { AppDispatch } from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
@@ -25,7 +25,7 @@ const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
 };
 
 const lagreSoknadsstatus = (
-    dispatch: Dispatch,
+    dispatch: AppDispatch,
     value: SoknadsstatusValue,
     aktivitet: StillingFraNavAktivitet
 ): Promise<any> => {
@@ -35,7 +35,13 @@ const lagreSoknadsstatus = (
         return Promise.resolve();
     }
 
-    return oppdaterStillingFraNavSoknadsstatus(aktivitet.id, aktivitet.versjon, soknadsstatus)(dispatch);
+    return dispatch(
+        oppdaterStillingFraNavSoknadsstatus({
+            aktivitetId: aktivitet.id,
+            aktivitetVersjon: aktivitet.versjon,
+            soknadsstatus: soknadsstatus,
+        })
+    );
 };
 
 interface Props {
@@ -48,7 +54,7 @@ interface SoknadsstatusValue {
 
 const OppdaterSoknadsstatus = (props: Props) => {
     const { aktivitet } = props;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [open, setIsOpen] = useState(false);
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 

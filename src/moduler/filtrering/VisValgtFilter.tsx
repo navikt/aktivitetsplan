@@ -2,7 +2,7 @@ import { Chips, Label } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import {
     aktivitetStatusMap,
     aktivitetTypeMap,
@@ -10,14 +10,14 @@ import {
     stillingOgStillingFraNavEtikettMapper,
     tiltakOgEksternAktivitetEtikettMapper,
 } from '../../utils/textMappers';
+import { selectFilterSlice } from './filter/filter-selector';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
     toggleAktivitetsStatus,
     toggleAktivitetsType,
     toggleArenaAktivitetsEtikett,
-} from './filter/filter-reducer';
-import { selectFilterSlice } from './filter/filter-selector';
+} from './filter/filter-slice';
 import {
     AktivitetFilterType,
     ArenaEtikettFilterType,
@@ -30,12 +30,12 @@ import FiltreringLabel from './filteringslabel/FiltreringLabel';
 const VisValgtFilter = () => {
     const filterSlice = useSelector(selectFilterSlice);
 
-    const dispatch = useReduxDispatch();
+    const dispatch = useAppDispatch();
 
     const doToggleAktivitetsEtikett = (aktivitetsEtikett: string) =>
         dispatch(toggleAktivitetsEtikett(aktivitetsEtikett));
-    const doToggleArenaAktivitetsEtikett = (aktivitetsEtikett: string) =>
-        dispatch(toggleArenaAktivitetsEtikett(aktivitetsEtikett));
+    const doToggleArenaAktivitetsEtikett = (arenaEtikett: string) =>
+        dispatch(toggleArenaAktivitetsEtikett(arenaEtikett));
     const doToggleAktivitetsStatus = (aktivitetsStatus: string) => dispatch(toggleAktivitetsStatus(aktivitetsStatus));
     const doToggleAktivitetsType = (aktivitetsType: string) => dispatch(toggleAktivitetsType(aktivitetsType));
     const doToggleAktivitetAvtaltMedNav = (aktivitetsStatus: string) =>

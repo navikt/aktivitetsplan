@@ -1,13 +1,11 @@
 import React, { ReactNode, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
+import { useSelector } from 'react-redux';
 
-import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useErVeileder } from '../../Provider';
-import { hentIdentitet } from '../identitet/identitet-reducer';
 import { selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
-import { hentOppfolging } from './oppfolging-reducer';
+import { hentIdentitet } from '../identitet/identitet-slice';
 import {
     selectAktorId,
     selectErBrukerManuell,
@@ -17,6 +15,7 @@ import {
     selectReservasjonKRR,
     selectServicegruppe,
 } from './oppfolging-selector';
+import { hentOppfolging } from './oppfolging-slice';
 import VidereSendBrukereEllerRenderChildren from './VidereSendBrukereEllerRenderChildren';
 
 interface Props {
@@ -24,13 +23,9 @@ interface Props {
 }
 
 const OppfolgingStatus = ({ children }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const avhengigheter = [
-        useSelector(selectOppfolgingStatus),
-        useSelector(selectIdentitetStatus),
-        useSelector(selectFeatureStatus),
-    ];
+    const avhengigheter = [useSelector(selectOppfolgingStatus), useSelector(selectIdentitetStatus)];
 
     const erVeileder = useErVeileder();
     const underOppfolging = useSelector(selectErUnderOppfolging);
@@ -53,8 +48,8 @@ const OppfolgingStatus = ({ children }: Props) => {
     };
 
     useEffect(() => {
-        dispatch(hentOppfolging() as unknown as AnyAction);
-        dispatch(hentIdentitet() as unknown as AnyAction);
+        dispatch(hentOppfolging());
+        dispatch(hentIdentitet());
     }, []);
 
     return (

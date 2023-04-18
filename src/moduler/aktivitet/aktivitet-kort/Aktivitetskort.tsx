@@ -1,21 +1,19 @@
 import classNames from 'classnames';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 
-import { STATUS } from '../../../api/utils';
+import { Status } from '../../../createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { useRoutes } from '../../../routes';
 import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
-import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
+import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-selector';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
-import {
-    selectAktiviteterSomHarBlittVist,
-    selectSistVisteAktivitet,
-    settAktivitetSomVist,
-} from '../aktivitetview-reducer';
+import { selectAktiviteterSomHarBlittVist, selectSistVisteAktivitet } from '../aktivitetview-selector';
+import { settAktivitetSomVist } from '../aktivitetview-slice';
 import styles from './Aktivitetskort.module.less';
 import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import AktivitetskortTillegg from './AktivitetskortTillegg';
@@ -34,10 +32,10 @@ export const prefixAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitets
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
     const { id, type } = aktivitet;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const lest = useSelector(selectLestAktivitetsplan, shallowEqual);
-    const lestStatus = useSelector(selectLestStatus, shallowEqual);
+    const lestStatus = useSelector(selectLestStatus);
     const aktiviteterSomHarBlittVist = useSelector(selectAktiviteterSomHarBlittVist, shallowEqual);
 
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
@@ -49,7 +47,7 @@ const Aktivitetskort = (props: Props) => {
     const me = useSelector(selectIdentitetData, shallowEqual);
 
     const harEndringerIAktivitet =
-        lestStatus === STATUS.OK &&
+        lestStatus === Status.OK &&
         isVeilarbAktivitet(aktivitet) &&
         erNyEndringIAktivitet(aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;

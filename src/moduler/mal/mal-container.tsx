@@ -5,7 +5,7 @@ import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { selectGjeldendeMal } from './aktivitetsmal-reducer';
+import { selectGjeldendeMal } from './aktivitetsmal-selector';
 import Malvisning from './mal-visning';
 import MalForm from './MalForm';
 

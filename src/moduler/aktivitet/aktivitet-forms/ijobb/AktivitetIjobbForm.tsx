@@ -62,7 +62,7 @@ const IJobbAktivitetForm = (props: Props) => {
         handleSubmit,
         watch,
         control,
-        formState: { errors, isDirty },
+        formState: { errors, isDirty, isSubmitting },
     } = methods;
 
     if (dirtyRef) {
@@ -137,7 +137,7 @@ const IJobbAktivitetForm = (props: Props) => {
                         value={beskrivelseValue || ''}
                     />
                     <CustomErrorSummary errors={errors} />
-                    <LagreAktivitetKnapp />
+                    <LagreAktivitetKnapp loading={isSubmitting} />
                 </div>
             </FormProvider>
         </form>

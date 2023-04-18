@@ -1,15 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Textarea } from '@navikt/ds-react';
+import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
-import { STATUS } from '../../../../api/utils';
+import { Status } from '../../../../createGenericSlice';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
+import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-selector';
+import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
@@ -29,10 +32,10 @@ const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
     const startTekst = useReferatStartTekst();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
-    const oppdaterer = aktivitetsStatus === STATUS.PENDING || aktivitetsStatus === STATUS.RELOADING;
+    const oppdaterer = aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const erReferatPublisert = aktivitet.erReferatPublisert;
 
@@ -60,19 +63,23 @@ const OppdaterReferatForm = (props: Props) => {
             ...aktivitet,
             referat: referatData.referat,
         };
-        return oppdaterReferat(aktivitetMedOppdatertReferat)(dispatch).then((res: any) => {
-            onFerdig();
-            return res;
+        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((action) => {
+            if (isFulfilled(action)) {
+                onFerdig();
+            }
+            return action;
         });
     };
 
     const updateAndPubliser = handleSubmit((values) => {
-        return updateReferat(values).then((response: { data: any }) => {
-            if (response.data) {
-                dispatch(publiserReferat(response.data) as unknown as AnyAction);
+        return updateReferat(values).then((action: PayloadAction<any>) => {
+            if (action.payload) {
+                dispatch(publiserReferat(action.payload));
             }
         });
     });
+
+    const feil = useSelector(selectPubliserOgOppdaterReferatFeil);
 
     const referatValue = watch('referat');
 
@@ -90,6 +97,7 @@ const OppdaterReferatForm = (props: Props) => {
                 value={referatValue}
             />
 
+            <Feilmelding feilmeldinger={feil} />
             <div className="space-x-4">
                 <HiddenIfHovedknapp
                     loading={oppdaterer}
