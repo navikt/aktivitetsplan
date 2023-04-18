@@ -40,7 +40,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-const emptySelector = () => undefined;
+const emptySelector = () => [];
 
 const AktivitetvisningModal = (props: Props) => {
     const { aktivitet, avhengigheter, children } = props;
@@ -55,7 +55,7 @@ const AktivitetvisningModal = (props: Props) => {
     const aktivitetFeil = useSelector(aktivitetFeilSelector, shallowEqual);
     const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
-    const alleFeil = [aktivitetFeil, dialogFeil, nivaa4Feil].filter((it) => it);
+    const alleFeil = [...aktivitetFeil, ...dialogFeil, ...nivaa4Feil];
     const erBruker = useSelector(selectErBruker);
 
     const fho = aktivitet?.forhaandsorientering;
@@ -64,6 +64,7 @@ const AktivitetvisningModal = (props: Props) => {
     return (
         <Modal
             contentClass="aktivitetsvisning"
+            contentLabel={'Aktivitetvisning'}
             avhengigheter={avhengigheter}
             header={header(aktivitet)}
             onRequestClose={() => {

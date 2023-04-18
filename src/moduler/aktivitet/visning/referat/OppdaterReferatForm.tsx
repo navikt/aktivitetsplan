@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Textarea } from '@navikt/ds-react';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,8 @@ import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/in
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
+import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-selector';
+import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
@@ -61,9 +63,11 @@ const OppdaterReferatForm = (props: Props) => {
             ...aktivitet,
             referat: referatData.referat,
         };
-        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((res) => {
-            onFerdig();
-            return res;
+        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((action) => {
+            if (isFulfilled(action)) {
+                onFerdig();
+            }
+            return action;
         });
     };
 
@@ -74,6 +78,8 @@ const OppdaterReferatForm = (props: Props) => {
             }
         });
     });
+
+    const feil = useSelector(selectPubliserOgOppdaterReferatFeil);
 
     const referatValue = watch('referat');
 
@@ -91,6 +97,7 @@ const OppdaterReferatForm = (props: Props) => {
                 value={referatValue}
             />
 
+            <Feilmelding feilmeldinger={feil} />
             <div className="space-x-4">
                 <HiddenIfHovedknapp
                     loading={oppdaterer}

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import { SerializedError } from '../../api/utils';
-import { flyttAktivitet, hentAktivitet, hentAktiviteter } from '../aktivitet/aktivitet-actions';
+import { flyttAktivitet, hentAktivitet, hentAktiviteter, publiserReferat } from '../aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { oppdaterMal } from '../mal/aktivitetsmal-slice';
@@ -37,6 +37,8 @@ export const getErrorText = (feilmeldinger: SerializedError[]) => {
             return 'Noe gikk galt, og du får dessverre ikke oppdatert status på aktiviteten. Prøv igjen senere.';
         case oppdaterMal.rejected.type:
             return 'Noe gikk galt, og du får dessverre ikke oppdatert mål. Prøv igjen senere.';
+        case publiserReferat.rejected.type:
+            return 'Noe gikk dessverre galt med deling av referat. Prøv igjen senere.';
         default:
             return 'Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.';
     }

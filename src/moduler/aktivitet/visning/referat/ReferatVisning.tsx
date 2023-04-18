@@ -1,9 +1,12 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { useErVeileder } from '../../../../Provider';
+import { selectPubliserReferatFeil } from '../../../feilmelding/feil-selector';
+import Feilmelding from '../../../feilmelding/Feilmelding';
 
 interface Props {
     referat: string;
@@ -19,6 +22,8 @@ const ReferatVisning = (props: Props) => {
     const { erAktivAktivitet, referat, dispatchPubliserReferat, publiserer, erReferatPublisert, startOppdaterReferat } =
         props;
 
+    const feil = useSelector(selectPubliserReferatFeil);
+
     return (
         <section className="my-4 border-t pt-8">
             <Heading level="2" size="large" className="mb-4">
@@ -31,6 +36,7 @@ const ReferatVisning = (props: Props) => {
                         Delt med bruker
                     </Alert>
                 ) : null}
+                <Feilmelding feilmeldinger={feil} />
                 <div className="space-x-4">
                     <Button hidden={erReferatPublisert} onClick={dispatchPubliserReferat} loading={publiserer}>
                         Del med bruker

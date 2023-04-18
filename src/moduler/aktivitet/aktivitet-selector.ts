@@ -2,8 +2,7 @@ import { SerializedError } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
-import { exist } from '../../utils/utils';
-import { selectFeilSlice } from '../feilmelding/feil-selector';
+import { selectFeil } from '../feilmelding/feil-selector';
 import {
     flyttAktivitet,
     hentAktivitet,
@@ -34,19 +33,14 @@ export function selectLasterAktivitetData(state: RootState) {
     return selectAktivitetStatus(state) !== Status.OK;
 }
 
-export const selectAktivitetFeilmeldinger = (state: RootState): SerializedError | undefined => {
-    return selectAktivitetStatus(state) === Status.ERROR
-        ? selectFeilSlice(state)[hentAktivitet.rejected.type]
-        : undefined;
-};
-export const selecteEndreAktivitetFeilmeldinger = (state: RootState): SerializedError[] => {
-    const oppdaterError = selectFeilSlice(state)[oppdaterAktivitet.rejected.type];
-    const oppdaterEtikettError = selectFeilSlice(state)[oppdaterAktivitetEtikett.rejected.type];
-    const oppdaterStillingFraNavError = selectFeilSlice(state)[oppdaterStillingFraNavSoknadsstatus.rejected.type];
-    const flyttAktivitetError = selectFeilSlice(state)[flyttAktivitet.rejected.type];
-    return [oppdaterError, oppdaterEtikettError, oppdaterStillingFraNavError, flyttAktivitetError].filter(exist);
+export const selectAktivitetFeilmeldinger = (state: RootState) => {
+    return selectAktivitetStatus(state) === Status.ERROR ? selectFeil(hentAktivitet.rejected.type)(state) : [];
 };
 
-export function selectAktivitetFhoBekreftStatus(state: RootState) {
-    return selectAktiviteterSlice(state).fhoBekreftStatus;
-}
+export const selecteEndreAktivitetFeilmeldinger = (state: RootState): SerializedError[] => {
+    const oppdaterError = selectFeil(oppdaterAktivitet.rejected.type)(state);
+    const oppdaterEtikettError = selectFeil(oppdaterAktivitetEtikett.rejected.type)(state);
+    const oppdaterStillingFraNavError = selectFeil(oppdaterStillingFraNavSoknadsstatus.rejected.type)(state);
+    const flyttAktivitetError = selectFeil(flyttAktivitet.rejected.type)(state);
+    return [...oppdaterError, ...oppdaterEtikettError, ...oppdaterStillingFraNavError, ...flyttAktivitetError];
+};

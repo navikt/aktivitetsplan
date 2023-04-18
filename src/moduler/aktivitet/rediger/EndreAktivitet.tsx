@@ -33,7 +33,6 @@ import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/I
 import { useRoutes } from '../../../routes';
 import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
-import { exist } from '../../../utils/utils';
 import Feilmelding from '../../feilmelding/Feilmelding';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
@@ -114,7 +113,7 @@ function EndreAktivitet() {
     const aktivitetFeilmelding = useSelector(selectAktivitetFeilmeldinger);
     const oppdaterFeilmelding = useSelector(selecteEndreAktivitetFeilmeldinger);
 
-    const alleFeil = [...oppdaterFeilmelding, aktivitetFeilmelding].filter(exist);
+    const alleFeil = [...oppdaterFeilmelding, ...aktivitetFeilmelding];
 
     const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
 

@@ -21,7 +21,6 @@ import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsor
 
 interface Props {
     aktivitet: Exclude<VeilarbAktivitet, EksternAktivitet>;
-    oppdaterer: boolean;
     lasterData: boolean;
     mindreEnnSyvDagerTil: boolean;
     setSendtAtErAvtaltMedNav(): void;
@@ -48,14 +47,7 @@ const schema = z.discriminatedUnion('forhaandsorienteringType', [
 export type ForhaandsorienteringDialogFormValues = z.infer<typeof schema>;
 
 const AvtaltForm = (props: Props) => {
-    const {
-        aktivitet,
-        oppdaterer,
-        lasterData,
-        mindreEnnSyvDagerTil,
-        setSendtAtErAvtaltMedNav,
-        setForhandsorienteringType,
-    } = props;
+    const { aktivitet, lasterData, mindreEnnSyvDagerTil, setSendtAtErAvtaltMedNav, setForhandsorienteringType } = props;
 
     const [showForm, setShowForm] = useState(false);
 
@@ -95,7 +87,7 @@ const AvtaltForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty },
+        formState: { errors, isDirty, isSubmitting },
     } = useForm<ForhaandsorienteringDialogFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
@@ -147,12 +139,12 @@ const AvtaltForm = (props: Props) => {
                                 register={register}
                                 forhaandsorienteringType={forhaandsorienteringType}
                                 avtaltText119={avtaltText119}
-                                oppdaterer={oppdaterer}
+                                oppdaterer={isSubmitting}
                                 errors={errors}
                             />
                         ) : null}
                         <Feilmelding feilmeldinger={feil} />
-                        <Button loading={oppdaterer} disabled={lasterData}>
+                        <Button loading={isSubmitting} disabled={lasterData}>
                             Bekreft
                         </Button>
                     </div>

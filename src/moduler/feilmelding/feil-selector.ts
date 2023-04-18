@@ -1,3 +1,4 @@
+import { SerializedError } from '../../api/utils';
 import { RootState } from '../../store';
 import {
     flyttAktivitet,
@@ -5,7 +6,9 @@ import {
     lagNyAktivitet,
     oppdaterAktivitetEtikett,
     oppdaterCVSvar,
+    oppdaterReferat,
     oppdaterStillingFraNavSoknadsstatus,
+    publiserReferat,
     settAktivitetTilAvtalt,
 } from '../aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
@@ -17,12 +20,10 @@ import { hentMalListe } from '../mal/malliste-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
-export const selectFeilSlice = (state: RootState) => state.data.errors;
-
-const selectFeil =
+export const selectFeil =
     (...types: string[]) =>
-    (state: RootState) => {
-        return Object.entries(selectFeilSlice(state))
+    (state: RootState): SerializedError[] => {
+        return Object.entries(state.data.errors)
             .filter(([type, _]) => types.includes(type))
             .map(([_, val]) => val);
     };
@@ -74,4 +75,12 @@ export const selectHentMalListeFeil = (state: RootState) => {
 
 export const selectOppdaterMalFeil = (state: RootState) => {
     return selectFeil(oppdaterMal.rejected.type)(state);
+};
+
+export const selectPubliserReferatFeil = (state: RootState) => {
+    return selectFeil(publiserReferat.rejected.type)(state);
+};
+
+export const selectPubliserOgOppdaterReferatFeil = (state: RootState) => {
+    return selectFeil(publiserReferat.rejected.type, oppdaterReferat.rejected.type)(state);
 };

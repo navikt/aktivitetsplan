@@ -4,13 +4,14 @@ import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { HistoriskOppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { RootState } from '../../store';
-import { selectFeilSlice } from '../feilmelding/feil-selector';
+import { selectFeil, selectFeilSlice } from '../feilmelding/feil-selector';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
 import { hentDialoger } from './dialog-slice';
 
 const selectDialogerSlice = (state: RootState) => state.data.dialog;
+
 export const selectDialogStatus = (state: RootState) => selectDialogerSlice(state).status;
 export const selectDialogerData = (state: RootState) => selectDialogerSlice(state).data;
 export const selectSistOppdatert = (state: RootState) => selectDialogerSlice(state).sistOppdatert;
@@ -28,7 +29,5 @@ export const selectDialogForAktivitetId = (aktivitetId: string) => (state: RootS
     });
 };
 export function selectDialogFeilmeldinger(state: RootState) {
-    const feilmeldinger =
-        selectDialogerSlice(state).status === Status.ERROR && selectFeilSlice(state)[hentDialoger.rejected.type];
-    return feilmeldinger;
+    return selectDialogerSlice(state).status === Status.ERROR ? selectFeil(hentDialoger.rejected.type)(state) : [];
 }

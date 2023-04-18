@@ -5,7 +5,7 @@ import { Status } from '../../../../../createGenericSlice';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../../../datatypes/internAktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
-import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
+import { selectAktivitetStatus } from '../../../aktivitet-selector';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from '../arena-aktivitet/KanIkkeLeggeTilForhaandsorienteringInfotekst';
 import AvtaltForm from './AvtaltForm';
 import ForhaandsorienteringForm from './ForhaandsorienteringForm';
@@ -19,7 +19,6 @@ interface Props {
 const AvtaltFormContainer = (props: Props) => {
     const { aktivitet } = props;
 
-    const bekreftStatus = useSelector(selectAktivitetFhoBekreftStatus);
     const nettverksStatus = useSelector(selectAktivitetStatus);
 
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
@@ -34,7 +33,6 @@ const AvtaltFormContainer = (props: Props) => {
                 )
             ) : (
                 <AvtaltForm
-                    oppdaterer={bekreftStatus === Status.RELOADING}
                     lasterData={nettverksStatus !== Status.OK}
                     mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                     {...props}
