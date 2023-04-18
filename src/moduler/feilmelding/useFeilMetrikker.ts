@@ -38,15 +38,13 @@ function sendFeiltyperMetrikk(feilmeldinger: SerializedError[], sendtFeiltype: R
 }
 
 function sendFeilMetrikk(feilmeldinger: SerializedError[], sentErrors: React.MutableRefObject<Set<any>>) {
-    const feil = feilmeldinger
-        .filter((feil) => feil.code !== '403' && feil.code !== '401')
-        .map((feil) => feil.type);
+    const feil = feilmeldinger.filter((feil) => feil.code !== '403' && feil.code !== '401');
     new Set(feil) //fjerner duplikater
         .forEach((feilmelding) => {
             const feil = feilmelding.type;
-            if(!sentErrors.current.has(feil)) {
+            if (!sentErrors.current.has(feil)) {
                 sentErrors.current.add(feil);
-                loggEvent("aktivitetsplan.feiltype", {feil, feil_kategori: klassifiserFeil(feilmelding)});
+                loggEvent('aktivitetsplan.feiltype', { feil, feil_kategori: klassifiserFeil(feilmelding) });
             }
         });
 }
