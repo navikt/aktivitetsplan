@@ -16,7 +16,7 @@ export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: strin
     ReactDOM.render(
         <AkselModalMountProvider rootElement={rootElement} appElement={appElement}>
             <Provider fnr={props?.fnr}>
-                <App key={'1'} fnr={props?.fnr} />
+                <App key={'1'} />
             </Provider>
         </AkselModalMountProvider>,
         appElement

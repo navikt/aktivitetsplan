@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
+import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
-import { hentDialog } from '../moduler/dialog/dialog-reducer';
+import { hentDialoger } from '../moduler/dialog/dialog-slice';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import Maal from '../moduler/mal-linje/MittMaal';
 import OppfolgingStatus from '../moduler/oppfolging-status/OppfolgingStatus';
-import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarselReducer';
+import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-slice';
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
@@ -26,12 +25,12 @@ const Hovedside = () => {
         navigate(aktivitetRoute(aktivitetId));
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentDialog() as unknown as AnyAction);
-        dispatch(hentEskaleringsvarsel() as unknown as AnyAction);
-    }, [dispatch]);
+        dispatch(hentDialoger());
+        dispatch(hentEskaleringsvarsel());
+    }, []);
 
     return (
         <main id="main" className="hovedside">

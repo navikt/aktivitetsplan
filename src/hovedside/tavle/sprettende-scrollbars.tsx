@@ -27,7 +27,7 @@ class SprettendeScrollbars extends Component<Props, {}> {
     }
 
     componentWillUnmount() {
-        this.springSystem?.deregisterSpring(this.spring!!);
+        this.springSystem?.deregisterSpring(this.spring!);
         this.springSystem?.removeAllListeners();
         this.springSystem = undefined;
         this.spring?.destroy();
@@ -44,7 +44,7 @@ class SprettendeScrollbars extends Component<Props, {}> {
 
     scrollLeft(left: number) {
         const scrolLeft = this.scrollbars?.getScrollLeft();
-        this.spring?.setCurrentValue(scrolLeft!!).setAtRest();
+        this.spring?.setCurrentValue(scrolLeft!).setAtRest();
         this.spring?.setEndValue(left);
     }
 

@@ -1,4 +1,6 @@
-export const auth = {
+import { AuthInfoResponse } from '../../datatypes/types';
+
+export const auth: AuthInfoResponse = {
     expirationTime: '2025-03-15T13:43:51.000Z',
     loggedIn: true,
     remainingSeconds: 99999, // Dette blir ikke brukt, vi ser på expirationTime

@@ -2,11 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Alert, Button, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { DirtyContext } from '../../../context/dirty-context';
+import { selectOppdaterAktivitetStatusFeil } from '../../../feilmelding/feil-selector';
+import Feilmelding from '../../../feilmelding/Feilmelding';
 import CustomErrorSummary from '../../aktivitet-forms/CustomErrorSummary';
 import { trengerBegrunnelse } from '../../aktivitet-util';
 import { kanOppdatereStatus } from './valideringUtils';
@@ -137,6 +140,7 @@ const AktivitetStatusForm = (props: Props) => {
                 />
             ) : null}
             <CustomErrorSummary errors={errors} />
+            <Feilmelding feilmeldinger={useSelector(selectOppdaterAktivitetStatusFeil)} />
             <Button loading={isSubmitting} className="mt-4" disabled={disabled}>
                 Lagre
             </Button>

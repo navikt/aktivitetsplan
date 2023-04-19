@@ -3,7 +3,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import InitiellDataLast from './InitiellDataLast';
 import createStore from './store';
 
 interface Props {
@@ -31,9 +30,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
         <FnrContext.Provider value={fnr}>
             <ErVeilederContext.Provider value={fnr !== undefined}>
                 <ReduxProvider store={store}>
-                    <DndProvider backend={HTML5Backend}>
-                        <InitiellDataLast>{children}</InitiellDataLast>
-                    </DndProvider>
+                    <DndProvider backend={HTML5Backend}>{children}</DndProvider>
                 </ReduxProvider>
             </ErVeilederContext.Provider>
         </FnrContext.Provider>

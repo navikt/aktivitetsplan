@@ -102,7 +102,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         watch,
         setValue,
         reset,
-        formState: { errors: formStateErrors, isDirty },
+        formState: { errors: formStateErrors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -197,7 +197,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                         value={beskrivelseValue}
                     />
                     <CustomErrorSummary errors={errorWrapper.errors} />
-                    <LagreAktivitetKnapp />
+                    <LagreAktivitetKnapp loading={isSubmitting} />
                 </div>
             </FormProvider>
         </form>

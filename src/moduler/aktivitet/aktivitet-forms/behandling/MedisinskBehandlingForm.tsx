@@ -66,7 +66,7 @@ const MedisinskBehandlingForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty },
+        formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -125,7 +125,7 @@ const MedisinskBehandlingForm = (props: Props) => {
                         value={beskrivelseValue}
                     />
                     <CustomErrorSummary errors={errors} />
-                    <LagreAktivitetKnapp />
+                    <LagreAktivitetKnapp loading={isSubmitting} />
                 </div>
             </FormProvider>
         </form>

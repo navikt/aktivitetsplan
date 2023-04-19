@@ -2,10 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Alert, Checkbox, Detail } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
-import { STATUS } from '../../../../../api/utils';
+import { Status } from '../../../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
@@ -14,11 +14,12 @@ import {
     EksternAktivitetType,
     isEksternAktivitet,
 } from '../../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
-import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
+import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-slice';
 import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
 import { AVTALT_TEKST, AVTALT_TEKST_119 } from '../utilsForhaandsorientering';
 
@@ -47,7 +48,7 @@ const ForhaandsorienteringForm = (props: Props) => {
 
     const dialogStatus = useSelector(selectDialogStatus);
     const arenaAktivitetRequestStatus = useSelector(selectArenaAktivitetStatus);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const defaultValues: ForhaandsorienteringFormValues = {
         forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD as any,
@@ -73,11 +74,10 @@ const ForhaandsorienteringForm = (props: Props) => {
         };
 
         setForhandsorienteringType(formValues.forhaandsorienteringType);
-        const settTilAvtalt = isArena ? sendForhaandsorienteringArenaAktivitet : settAktivitetTilAvtalt;
-        return settTilAvtalt(
-            aktivitet,
-            forhaandsorientering
-        )(dispatch).then(() => {
+        const settTilAvtalt = isArena
+            ? dispatch(sendForhaandsorienteringArenaAktivitet({ arenaAktivitet: aktivitet, forhaandsorientering }))
+            : dispatch(settAktivitetTilAvtalt({ aktivitet, forhaandsorientering }));
+        return settTilAvtalt.then(() => {
             setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();
             // @ts-ignore
@@ -86,9 +86,9 @@ const ForhaandsorienteringForm = (props: Props) => {
     };
 
     const lasterData =
-        dialogStatus !== STATUS.OK ||
-        arenaAktivitetRequestStatus === STATUS.RELOADING ||
-        arenaAktivitetRequestStatus === STATUS.PENDING;
+        dialogStatus !== Status.OK ||
+        arenaAktivitetRequestStatus === Status.RELOADING ||
+        arenaAktivitetRequestStatus === Status.PENDING;
 
     const isGammelArenaAktivitet = isEksternAktivitet(aktivitet)
         ? [EksternAktivitetType.ARENA_TILTAK_TYPE].includes(aktivitet.eksternAktivitet.type)

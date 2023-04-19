@@ -2,14 +2,16 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Checkbox, Detail, HelpText } from '@navikt/ds-react';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../../../context/dirty-context';
+import { selectSettAktivitetTilAvtaltFeil } from '../../../../feilmelding/feil-selector';
+import Feilmelding from '../../../../feilmelding/Feilmelding';
 import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { useKanSendeVarsel, useSendAvtaltMetrikker } from '../avtaltHooks';
@@ -19,7 +21,6 @@ import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsor
 
 interface Props {
     aktivitet: Exclude<VeilarbAktivitet, EksternAktivitet>;
-    oppdaterer: boolean;
     lasterData: boolean;
     mindreEnnSyvDagerTil: boolean;
     setSendtAtErAvtaltMedNav(): void;
@@ -46,23 +47,16 @@ const schema = z.discriminatedUnion('forhaandsorienteringType', [
 export type ForhaandsorienteringDialogFormValues = z.infer<typeof schema>;
 
 const AvtaltForm = (props: Props) => {
-    const {
-        aktivitet,
-        oppdaterer,
-        lasterData,
-        mindreEnnSyvDagerTil,
-        setSendtAtErAvtaltMedNav,
-        setForhandsorienteringType,
-    } = props;
+    const { aktivitet, lasterData, mindreEnnSyvDagerTil, setSendtAtErAvtaltMedNav, setForhandsorienteringType } = props;
 
     const [showForm, setShowForm] = useState(false);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const sendMetrikker = useSendAvtaltMetrikker();
     const avhengigheter = useSelector(selectNivaa4Status);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) =>
-        dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering) as unknown as AnyAction);
+        dispatch(settAktivitetTilAvtalt({ aktivitet: avtaltAktivitet, forhaandsorientering }));
 
     const onSubmitHandler = (
         forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues
@@ -93,7 +87,7 @@ const AvtaltForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty },
+        formState: { errors, isDirty, isSubmitting },
     } = useForm<ForhaandsorienteringDialogFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
@@ -103,6 +97,8 @@ const AvtaltForm = (props: Props) => {
     const avtaltText119 = watch('avtaltText119');
 
     const { setFormIsDirty } = useContext(DirtyContext);
+
+    const feil = useSelector(selectSettAktivitetTilAvtaltFeil);
 
     useEffect(() => {
         setFormIsDirty('avtalt', isDirty);
@@ -143,11 +139,12 @@ const AvtaltForm = (props: Props) => {
                                 register={register}
                                 forhaandsorienteringType={forhaandsorienteringType}
                                 avtaltText119={avtaltText119}
-                                oppdaterer={oppdaterer}
+                                oppdaterer={isSubmitting}
                                 errors={errors}
                             />
                         ) : null}
-                        <Button loading={oppdaterer} disabled={lasterData}>
+                        <Feilmelding feilmeldinger={feil} />
+                        <Button loading={isSubmitting} disabled={lasterData}>
                             Bekreft
                         </Button>
                     </div>

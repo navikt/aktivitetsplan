@@ -2,10 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Radio, RadioGroup } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { DirtyContext } from '../../../context/dirty-context';
+import { selectOppdaterStillingFraNavSoknadsstatusFeil } from '../../../feilmelding/feil-selector';
+import Feilmelding from '../../../feilmelding/Feilmelding';
 
 interface Props {
     soknadsstatus?: Exclude<StillingFraNavSoknadsstatus, StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN>; // IKKE_FATT_JOBBEN kan kun endres i backend
@@ -82,6 +85,7 @@ const SoknadsstatusForm = (props: Props) => {
                     ))}
                 </RadioGroup>
             </div>
+            <Feilmelding feilmeldinger={useSelector(selectOppdaterStillingFraNavSoknadsstatusFeil)} />
             <Button className="oppdater-status" disabled={disable} loading={isSubmitting}>
                 Lagre
             </Button>

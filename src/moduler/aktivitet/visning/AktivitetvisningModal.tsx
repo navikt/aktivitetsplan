@@ -55,7 +55,7 @@ const AktivitetvisningModal = (props: Props) => {
     const aktivitetFeil = useSelector(aktivitetFeilSelector, shallowEqual);
     const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
-    const alleFeil = aktivitetFeil.concat(dialogFeil).concat(nivaa4Feil);
+    const alleFeil = [...aktivitetFeil, ...dialogFeil, ...nivaa4Feil];
     const erBruker = useSelector(selectErBruker);
 
     const fho = aktivitet?.forhaandsorientering;
@@ -64,6 +64,7 @@ const AktivitetvisningModal = (props: Props) => {
     return (
         <Modal
             contentClass="aktivitetsvisning"
+            contentLabel={'Aktivitetvisning'}
             avhengigheter={avhengigheter}
             header={header(aktivitet)}
             onRequestClose={() => {

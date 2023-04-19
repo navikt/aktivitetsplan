@@ -1,17 +1,17 @@
 import { Modal } from '@navikt/ds-react';
+import { configureStore } from '@reduxjs/toolkit';
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
-import create from '../../../store';
-import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../../dialog/dialog-reducer';
-import { tekster } from '../../feilmelding/GetErrorText';
+import reducer from '../../../reducer';
+import { hentDialoger } from '../../dialog/dialog-slice';
+import { getErrorText } from '../../feilmelding/Feilmelding';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
-const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: {} });
-
-const AktivitetsvisningModalWrapped = (props: { store: any }) => (
+const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
     <div id={'app'}>
         <MemoryRouter>
             <Provider store={props.store}>
@@ -27,15 +27,15 @@ const AktivitetsvisningModalWrapped = (props: { store: any }) => (
 Modal.setAppElement(document.createElement('div'));
 describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
-        const store = create();
+        const store = configureStore({ reducer });
         const { queryByText } = render(<AktivitetsvisningModalWrapped store={store} />);
-        expect(queryByText(tekster.dialogFeilet)).toBeFalsy();
+        expect(queryByText(getErrorText([{ type: hentDialoger.rejected.type }]))).toBeFalsy();
     });
 
     it('Skal vise feilmelding dersom dialog feiler', () => {
-        const store = create();
-        store.dispatch(dialogFeilet());
+        const store = configureStore({ reducer });
+        store.dispatch(hentDialoger.rejected({ name: 'asd', message: 'asds' }, 'asd'));
         const { getByText } = render(<AktivitetsvisningModalWrapped store={store} />);
-        getByText('Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.');
+        getByText(getErrorText([{ type: hentDialoger.rejected.type }]));
     });
 });

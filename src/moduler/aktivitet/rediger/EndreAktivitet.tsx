@@ -1,9 +1,8 @@
-import React, { FunctionComponent, MouseEventHandler, MutableRefObject, useRef } from 'react';
+import { isFulfilled } from '@reduxjs/toolkit';
+import React, { MouseEventHandler, MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
-import { STATUS } from '../../../api/utils';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -13,7 +12,8 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
-import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { Status } from '../../../createGenericSlice';
+import { isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import {
     EgenAktivitet,
     IJobbAktivitet,
@@ -24,14 +24,16 @@ import {
     StillingAktivitet,
     VeilarbAktivitet,
 } from '../../../datatypes/internAktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
-import { useReduxDispatch } from '../../../felles-komponenter/hooks/useReduxDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../../routes';
+import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
+import Feilmelding from '../../feilmelding/Feilmelding';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm, {
     MedisinskBehandlingFormValues,
@@ -44,7 +46,11 @@ import SokeavtaleAktivitetForm, {
     SokeavtaleAktivitetFormValues,
 } from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
 import StillingAktivitetForm, { StillingAktivitetFormValues } from '../aktivitet-forms/stilling/AktivitetStillingForm';
-import { selectAktivitetFeilmeldinger, selectAktivitetStatus } from '../aktivitet-selector';
+import {
+    selectAktivitetFeilmeldinger,
+    selectAktivitetStatus,
+    selecteEndreAktivitetFeilmeldinger,
+} from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
 
 export type AktivitetFormValues =
@@ -56,17 +62,9 @@ export type AktivitetFormValues =
     | { status: string; avtalt: boolean }
     | IJobbAktivitetFormValues;
 
-interface SubComponentProps<Aktivitet extends VeilarbAktivitet> {
-    onSubmit: (values: AktivitetFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
-    aktivitet: Aktivitet;
-}
-
-type EndreForm<Aktivitet extends VeilarbAktivitet> = FunctionComponent<SubComponentProps<Aktivitet>>;
-
-interface FormProps<T extends AlleAktiviteter> {
+interface FormProps<T extends VeilarbAktivitet> {
     aktivitet: T;
-    onSubmit: (aktivitet: Record<any, any>) => Promise<void>;
+    onSubmit: (aktivitet: AktivitetFormValues) => Promise<void>;
     endre: boolean;
     dirtyRef: MutableRefObject<boolean>;
     lagrer: boolean;
@@ -100,32 +98,41 @@ function getAktivitetsFormComponent<T extends VeilarbAktivitet>(
 }
 
 function EndreAktivitet() {
-    const dispatch = useReduxDispatch();
-    const doOppdaterAktivitet = (aktivitet: AlleAktiviteter) =>
-        dispatch(oppdaterAktivitet(aktivitet) as unknown as AnyAction);
+    const dispatch = useAppDispatch();
+    const doOppdaterAktivitet = (aktivitet: VeilarbAktivitet) => dispatch(oppdaterAktivitet(aktivitet));
 
     const isDirty = useRef(false);
     useConfirmOnBeforeUnload(isDirty);
     const navigate = useNavigate();
 
     const { id: aktivitetId } = useParams<{ id: string }>();
-    const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
-    const avhengigheter: Avhengighet[] = [valgtAktivitet ? STATUS.OK : STATUS.PENDING];
-    const aktivitetFeilmeldinger = useSelector((state) => selectAktivitetFeilmeldinger(state));
-    const lagrer = useSelector((state) => selectAktivitetStatus(state)) !== STATUS.OK;
+    const valgtAktivitet = useSelector((state: RootState) =>
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+    );
+    const avhengigheter: Avhengighet[] = [valgtAktivitet ? Status.OK : Status.PENDING];
+    const aktivitetFeilmelding = useSelector(selectAktivitetFeilmeldinger);
+    const oppdaterFeilmelding = useSelector(selecteEndreAktivitetFeilmeldinger);
 
-    const { aktivitetRoute, hovedsideRoute } = useRoutes();
+    const alleFeil = [...oppdaterFeilmelding, ...aktivitetFeilmelding];
 
-    function oppdater(aktivitet: AlleAktiviteter) {
-        if (!valgtAktivitet) return;
+    const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
+
+    const { aktivitetRoute } = useRoutes();
+
+    function oppdater(aktivitet: AktivitetFormValues): Promise<void> {
+        if (!valgtAktivitet) return Promise.resolve();
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
-        const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as AlleAktiviteter;
-        return doOppdaterAktivitet(oppdatertAktivitet).then(() => navigate(aktivitetRoute(valgtAktivitet.id)));
+        const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as VeilarbAktivitet;
+        return doOppdaterAktivitet(oppdatertAktivitet).then((action) => {
+            if (isFulfilled(action)) {
+                navigate(aktivitetRoute(valgtAktivitet.id));
+            }
+        });
     }
 
     const onReqClose = () => {
         if (!isDirty.current || window.confirm(CONFIRM)) {
-            navigate(hovedsideRoute());
+            navigate('/');
         }
     };
 
@@ -139,7 +146,6 @@ function EndreAktivitet() {
     const header = <ModalHeader tilbakeTekst="Tilbake" onTilbakeClick={onReqBack} />;
 
     const formProps = {
-        aktivitet: valgtAktivitet,
         onSubmit: oppdater,
         endre: true,
         dirtyRef: isDirty,
@@ -148,20 +154,17 @@ function EndreAktivitet() {
 
     const aktivitetForm =
         valgtAktivitet && isVeilarbAktivitet(valgtAktivitet)
-            ? getAktivitetsFormComponent(valgtAktivitet, formProps)
+            ? getAktivitetsFormComponent(valgtAktivitet, { ...formProps, aktivitet: valgtAktivitet })
             : null;
+
     return (
-        <Modal
-            header={header}
-            feilmeldinger={aktivitetFeilmeldinger}
-            onRequestClose={onReqClose}
-            contentLabel="Endre aktivitet"
-        >
+        <Modal header={header} onRequestClose={onReqClose} contentLabel="Endre aktivitet">
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>{aktivitetForm}</ModalContainer>
                 </Innholdslaster>
             </article>
+            <Feilmelding feilmeldinger={alleFeil} />
         </Modal>
     );
 }

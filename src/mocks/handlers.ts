@@ -78,7 +78,6 @@ export const handlers = [
     rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', jsonResponse(setVenterPaaSvar)),
     rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', jsonResponse(setFerdigBehandlet)),
     rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),
-    rest.post('/veilarbdialog/api/dialog/forhandsorientering', jsonResponse(opprettDialog)),
 
     // veilarbaktivitet
     rest.post('/veilarbaktivitet/api/logger/event', (_, res, ctx) => res(ctx.status(200))),

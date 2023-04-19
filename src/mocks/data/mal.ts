@@ -1,8 +1,9 @@
 import { RestRequest } from 'msw';
 
+import { Mal } from '../../datatypes/oppfolgingTypes';
 import { erEksternBruker, ingenMal } from '../demo/sessionstorage';
 
-let maler = [
+let maler: Mal[] = [
     {
         mal: 'Jeg vil bli stor og sterk',
         endretAv: 'BRUKER',
@@ -11,9 +12,11 @@ let maler = [
     {
         mal: 'Jeg vil bli sjørøver',
         endretAv: 'BRUKER',
-        dato: new Date(),
+        dato: new Date().toISOString(),
     },
 ];
+
+const tomMal: Mal = { dato: undefined, endretAv: 'VEILEDER', mal: undefined };
 
 maler = ingenMal() ? [] : maler;
 
@@ -22,7 +25,7 @@ export function malListe() {
 }
 
 export function sisteMal() {
-    if (maler.length === 0) return maler;
+    if (maler.length === 0) return tomMal;
     return maler[maler.length - 1];
 }
 

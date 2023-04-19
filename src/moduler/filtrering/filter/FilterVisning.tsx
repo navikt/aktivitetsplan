@@ -1,20 +1,14 @@
 import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Store } from 'redux';
 
 import { AktivitetStatus, StillingFraNavSoknadsstatus, StillingStatus } from '../../../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import { AlleAktivitetTyper, avtaltMapper } from '../../../utils/textMappers';
-import {
-    toggleAktivitetAvtaltMedNav,
-    toggleAktivitetsEtikett,
-    toggleAktivitetsStatus,
-    toggleAktivitetsType,
-    toggleArenaAktivitetsEtikett,
-} from './filter-reducer';
 import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
@@ -22,6 +16,13 @@ import {
     selectAktivitetTyperFilter,
     selectArenaAktivitetEtiketterFilter,
 } from './filter-selector';
+import {
+    toggleAktivitetAvtaltMedNav,
+    toggleAktivitetsEtikett,
+    toggleAktivitetsStatus,
+    toggleAktivitetsType,
+    toggleArenaAktivitetsEtikett,
+} from './filter-slice';
 import FilterCheckbox from './FilterCheckbox';
 
 export type AvtaltFilterType = Record<keyof typeof avtaltMapper, boolean>;
@@ -73,7 +74,7 @@ const useFilterType = (
     // get selector for filterKategori
     const filterState = useSelector(selectorMap[filterKategori]);
     // get dispatcher for filterKategori
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const toggleForKategori = togglerMap[filterKategori];
     const toggle = (filterKode: string) => dispatch(toggleForKategori(filterKode));
     return {

@@ -15,13 +15,7 @@ import {
 } from 'date-fns';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
-import {
-    AktivitetStatus,
-    AktivitetType,
-    AlleAktiviteter,
-    Lest,
-    isArenaAktivitet,
-} from '../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AktivitetType, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import {
     MoteAktivitet,
     SamtalereferatAktivitet,
@@ -29,6 +23,7 @@ import {
     VeilarbAktivitet,
     VeilarbAktivitetType,
 } from '../../datatypes/internAktivitetTypes';
+import { Lest } from '../../datatypes/lestTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
 
 interface MoteTid {

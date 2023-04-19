@@ -12,8 +12,5 @@ export const postNyHenvendelse = (henvendelse: NyHenvendelse): Promise<Dialog> =
 export const postDialogLest = (dialogId: string): Promise<Dialog> =>
     putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
 
-export const postForhandsorientering = (henvendelse: NyHenvendelse): Promise<Dialog> =>
-    postAsJson(`${DIALOG_BASE_URL}/dialog/forhandsorientering`, henvendelse);
-
 export const fetchEskaleringsvarsel = (): Promise<Eskaleringsvarsel> =>
     fetchToJson(`${DIALOG_BASE_URL}/eskaleringsvarsel/gjeldende`);

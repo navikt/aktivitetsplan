@@ -1,5 +1,6 @@
-import { AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AktivitetType } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
+import { Lest } from '../../datatypes/lestTypes';
 import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { AKTIVITET_BASE_URL } from '../../environment';
 
@@ -200,7 +201,7 @@ function loggTidBruktFraRegistrert(fraDato: number | string) {
     });
 }
 
-export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, perioder: Array<Oppfolgingsperiode>) {
+export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Lest[], perioder: Oppfolgingsperiode[]) {
     const periode = perioder.find((p) => p.sluttDato === null);
     if (periode) {
         // Tid brukt fra registrert til aktivitetsplanen

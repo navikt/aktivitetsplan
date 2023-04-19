@@ -16,7 +16,7 @@ export interface OppfolgingStatus {
 
     kanStarteOppfolging: boolean;
 
-    oppfolgingsPerioder: Oppfolgingsperiode;
+    oppfolgingsPerioder: Oppfolgingsperiode[];
     harSkriveTilgang: boolean;
     inaktivIArena: boolean;
     kanReaktiveres: boolean;
@@ -47,8 +47,8 @@ export interface KvpPeriode {
 }
 
 export interface Mal {
-    mal: string;
+    mal?: string;
     endretAv: string;
-    dato: string;
+    dato?: string;
     lest?: boolean;
 }

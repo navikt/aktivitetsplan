@@ -65,7 +65,7 @@ const EgenAktivitetForm = (props: Props) => {
         handleSubmit,
         reset,
         watch,
-        formState: { errors, isDirty },
+        formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -137,7 +137,7 @@ const EgenAktivitetForm = (props: Props) => {
                         error={errors.lenke && errors.lenke.message}
                     />
                     <CustomErrorSummary errors={errors} />
-                    <LagreAktivitetKnapp />
+                    <LagreAktivitetKnapp loading={isSubmitting} />
                 </div>
             </FormProvider>
         </form>

@@ -6,7 +6,7 @@ import { Mal } from '../../datatypes/oppfolgingTypes';
 import { useErVeileder } from '../../Provider';
 import { formaterDatoEllerTidSiden } from '../../utils/dateUtils';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
-import { selectMalListe } from './aktivitetsmal-selector';
+import { selectMalListe } from './malliste-selector';
 
 const identitetMap = (erVeileder: boolean, endretAv: string) => {
     if (erVeileder) {

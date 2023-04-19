@@ -4,13 +4,13 @@ import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AnyAction } from 'redux';
 
-import { Lest } from '../../datatypes/aktivitetTypes';
+import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
-import Innholdslaster, { Avhengighet } from '../../felles-komponenter/utils/Innholdslaster';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
+import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import { useErVeileder } from '../../Provider';
@@ -18,8 +18,9 @@ import { useRoutes } from '../../routes';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
-import { selectLestAktivitetsplan } from '../lest/lest-reducer';
-import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
+import { selectLestAktivitetsplan } from '../lest/lest-selector';
+import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
+import { hentMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { ReactComponent as MaalIkon } from './Aktivitetsplan_maal.svg';
 
@@ -51,14 +52,12 @@ interface MalContentProps {
 
 function MalContent(props: MalContentProps) {
     const { disabled, mal } = props;
-    const dispatch = useDispatch();
     const erVeileder = useErVeileder();
     const navigate = useNavigate();
     const { malRoute } = useRoutes();
     const endreMal = () => {
         navigate(malRoute());
         loggMittMalKlikk(erVeileder);
-        dispatch(lesMal());
     };
     const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
 
@@ -92,13 +91,13 @@ function MalContent(props: MalContentProps) {
 }
 
 function MittMaal() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentMal() as unknown as AnyAction);
-    }, [dispatch]);
+        dispatch(hentMal());
+    }, []);
 
-    const avhengigheter: Avhengighet = useSelector(selectMalStatus, shallowEqual);
+    const avhengigheter = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
 
@@ -108,8 +107,11 @@ function MittMaal() {
 
     const disabled = !underOppfolging || viserHistoriskPeriode || !harSkriveTilgang;
     const nyEndring =
-        erNyEndringIMal(malData, useSelector(selectLestAktivitetsplan), useSelector(selectIdentitetData)) &&
-        harSkriveTilgang;
+        erNyEndringIMal(
+            malData,
+            useSelector(selectLestAktivitetsplan) as any,
+            useSelector(selectIdentitetData) as any
+        ) && harSkriveTilgang;
 
     const noeHarFeilet = avhengigheter === 'ERROR';
     return (

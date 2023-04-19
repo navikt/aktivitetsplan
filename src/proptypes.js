@@ -1,6 +1,5 @@
 import PT from 'prop-types';
 
-import { STATUS } from './api/utils';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -13,6 +12,7 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from './constant';
+import { Status } from './createGenericSlice';
 
 export const aktivitet = PT.shape({
     tittel: PT.string,
@@ -66,7 +66,7 @@ export const slice = PT.shape({
     data: PT.any,
 });
 
-export const status = PT.oneOf(Object.keys(STATUS));
+export const status = PT.oneOf(Object.keys(Status));
 
 export const avhengighet = PT.oneOfType([slice, status]);
 
