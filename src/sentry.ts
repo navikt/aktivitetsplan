@@ -67,7 +67,8 @@ Sentry.init({
     integrations: [
         new Sentry.BrowserTracing({
             tracePropagationTargets: [
-                /aktivitetsplan(\.dev)?.nav.no/,
+                'aktivitetsplan.nav.no',
+                'aktivitetsplan.dev.nav.no',
                 // /(\.dev)?nav.no\/veilarbdialog/,
                 // /(\.dev)?nav.no\/veilarbpersonflate/,
                 // /(\.dev)?nav.no\/veilarboppfolging/,
