@@ -65,15 +65,14 @@ const fjernPersonopplysninger = (event: Event): Event => {
 Sentry.init({
     dsn: 'https://1ab82c2af7614a74b134e36b3bd2e0b4@sentry.gc.nav.no/163',
     integrations: [
-        new BrowserTracing({
-            tracingOrigins: [
-                /veilarbvisittkortfs(\.dev)?.intern.nav.no/,
-                /veilarbvedtaksstottefs(\.dev)?.intern.nav.no/,
-                /arbeidsrettet-dialog(\.dev)?.intern.nav.no/,
-                /veilarbpersonflate(\.dev)?.intern.nav.no/,
-                // Can't trace these apps, current CORS-config does not allow tracing headers
-                // /registrer-tilretteleggingsbehov(\.dev)?.intern.nav.no/
-                // /mulighetsrommet-veileder-flate(\.dev)?.intern.nav.no/,
+        new Sentry.BrowserTracing({
+            tracePropagationTargets: [
+                /aktivitetsplan(\.dev)?.nav.no/,
+                // /(\.dev)?nav.no\/veilarbdialog/,
+                // /(\.dev)?nav.no\/veilarbpersonflate/,
+                // /(\.dev)?nav.no\/veilarboppfolging/,
+                // /(\.dev)?nav.no\/veilarbaktivitet/,
+                // /(\.dev)?nav.no\/veilarblest/,
             ],
         }),
     ],
