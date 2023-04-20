@@ -9,7 +9,6 @@ import { USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 import { mockfnr } from './mocks/utils';
-import { renderAsReactRoot } from './rootWrapper';
 
 declare global {
     interface Window {
@@ -28,7 +27,9 @@ const exportToNavSpa = () => {
 };
 
 const renderAsRootApp = (props?: { fnr?: string }) => {
-    renderAsReactRoot(document.getElementById('mainapp') as HTMLElement, props);
+    import('./rootWrapper').then(({ renderAsReactRoot }) => {
+        renderAsReactRoot(document.getElementById('mainapp') as HTMLElement, props);
+    });
 };
 
 const renderApp = (props?: { fnr?: string }) => {
