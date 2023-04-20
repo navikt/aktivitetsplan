@@ -29,6 +29,8 @@
     "@navikt/ds-tokens": "^2.7.7",
     "@navikt/navspa": "^5.0.1",
     "@reduxjs/toolkit": "^1.9.3",
+    "@sentry/react": "^7.48.0",
+    "@sentry/tracing": "^7.48.0",
     "@vitejs/plugin-react-swc": "^3.2.0",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",

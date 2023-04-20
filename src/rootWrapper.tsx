@@ -2,6 +2,7 @@ import '@navikt/ds-css';
 
 import './tailwind.css';
 import './index.less';
+import './sentry';
 
 import { Provider as AkselModalMountProvider, Modal } from '@navikt/ds-react';
 import React from 'react';
