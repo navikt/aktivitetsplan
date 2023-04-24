@@ -35,9 +35,9 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
                 case EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE:
                     return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status';
             }
+        }
         return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
     }
-
     return 'Du kan ikke endre status på denne aktiviteten. Ta kontakt med veilederen din for å gjøre endringer.';
 };
 
@@ -47,7 +47,7 @@ interface Props {
     erVeileder: boolean;
 }
 
-const Tavleadvarsel = (props: Props) => {
+export const Tavleadvarsel = (props: Props) => {
     const { hidden, draggingAktivitet, erVeileder } = props;
 
     if (hidden || !draggingAktivitet) {
@@ -62,5 +62,3 @@ const Tavleadvarsel = (props: Props) => {
         </div>
     );
 };
-
-export default Tavleadvarsel;
