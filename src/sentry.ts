@@ -78,7 +78,7 @@ Sentry.init({
         }),
     ],
     environment: getEnv(),
-    enabled: getEnv() === Env.Local,
+    enabled: getEnv() !== Env.Local,
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
