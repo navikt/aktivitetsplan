@@ -1,6 +1,4 @@
 // Ikkje bra!
-import loggEvent from './felles-komponenter/utils/logging';
-
 import.meta.env.BASE_URL = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 
 window.IntersectionObserver = vi.fn();

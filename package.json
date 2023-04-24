@@ -8,7 +8,7 @@
     "build:dev-ekstern": "vite build --mode=dev-ekstern",
     "build:dev-intern": "vite build --mode=dev-intern --base=https://aktivitetsplan.intern.dev.nav.no",
     "build:prod-ekstern": "vite build --mode=prod-ekstern",
-    "build:prod-intern": "vite build --mode=prod-intern",
+    "build:prod-intern": "vite build --mode=prod-intern --base=https://aktivitetsplan.intern.nav.no",
     "build": "vite build",
     "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/aktivitetsplan/",
     "test": "vitest",

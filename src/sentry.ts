@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
 import { Breadcrumb, Event } from '@sentry/types';
 
 enum Env {
