@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { RootState } from '../../store';
+import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 export function selectOppfolgingSlice(state: RootState) {
     return state.data.oppfolging;
@@ -25,6 +26,10 @@ export function selectOppfolgingsPerioder(state: RootState): Oppfolgingsperiode[
     return selectOppfolgingData(state)?.oppfolgingsPerioder || [];
 }
 
+export function selectNyesteOppfolgingsperiode(state: RootState) {
+    return selectOppfolgingsPerioder(state).find((oppfolgingsperiode) => !oppfolgingsperiode.sluttDato);
+}
+
 export type VistOppfolgingsPeriode = HistoriskOppfolgingsperiode & { fra: string; til: string };
 export function selectSorterteHistoriskeOppfolgingsPerioder(state: RootState): VistOppfolgingsPeriode[] {
     let nesteFra = new Date().toISOString();
@@ -43,8 +48,14 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state: RootState): V
         .reverse();
 }
 
+// TODO refaktorer, må fikse typer oppfolgingsperioder-typene i hele appen
 export function selectKvpPeriodeForValgteOppfolging(state: RootState) {
-    const valgtOppfolging: HistoriskOppfolgingsperiode | null = state.data.filter.historiskPeriode;
+    let valgtOppfolging: any = selectHistoriskPeriode(state);
+    if (!valgtOppfolging) {
+        // valgtOppfolging er null når man ikke har brukt periodefilteret, eller når man ikke har noen historiske oppfolgingsperioder
+        valgtOppfolging =
+            selectNyesteOppfolgingsperiode(state) ?? selectSorterteHistoriskeOppfolgingsPerioder(state)[0];
+    }
     const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.uuid;
     const oppfolging = selectOppfolgingsPerioder(state).find((p) => p.uuid === valgtOppfolgingId);
     return oppfolging && oppfolging.kvpPerioder;
