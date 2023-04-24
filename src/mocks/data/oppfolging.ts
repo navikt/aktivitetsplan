@@ -27,37 +27,10 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2018-01-31T10:46:10.971+01:00',
-        kvpPerioder: [
-            {
-                opprettetDato: '2017-01-30T10:46:10.971+01:00',
-                avsluttetDato: '2017-06-01T10:46:10.971+01:00',
-            },
-            {
-                opprettetDato: '2017-06-30T10:46:10.971+01:00',
-                avsluttetDato: '2017-12-01T10:46:10.971+01:00',
-            },
-        ],
         sluttDato: null,
         begrunnelse: null,
     },
 ];
-
-// const oppfolgingsperioder: Oppfolgingsperiode[] = [
-//     {
-//         uuid: 'e093a5c9-1d56-4d64-97a8-26d947e1541d',
-//         aktorId: '2683577964741',
-//         veileder: null,
-//         startDato: '2023-04-24T15:52:07.531679+02:00',
-//         sluttDato: null,
-//         begrunnelse: null,
-//         kvpPerioder: [
-//             {
-//                 opprettetDato: '2023-04-24T15:53:02.432314+02:00',
-//                 avsluttetDato: '2023-04-24T15:53:20.697187+02:00',
-//             },
-//         ],
-//     },
-// ];
 
 const oppfolging = {
     fnr: null,
