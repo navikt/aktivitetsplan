@@ -1,6 +1,7 @@
 const removeHostPartOfUrl = (fullUrl: string) => {
+    if (import.meta.env.MODE === 'test') return fullUrl;
     if (fullUrl.length < 2) return fullUrl;
-    const pathParts = fullUrl.replace('https://', '').split('/');
+    const pathParts = fullUrl.replace('https://', '').replace('http://', '').split('/');
     if (pathParts.length === 1) return '/';
     return [...pathParts.slice(1)].join('/');
 };

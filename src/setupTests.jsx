@@ -1,4 +1,6 @@
 // Ikkje bra!
+import loggEvent from './felles-komponenter/utils/logging';
+
 import.meta.env.BASE_URL = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 
 window.IntersectionObserver = vi.fn();
@@ -15,7 +17,9 @@ vi.mock('react-dnd', () => ({
     DndProvider: ({ children }) => <>{children}</>,
 }));
 vi.mock('react-dnd-html5-backend', () => ({}));
-
+vi.mock('./felles-komponenter/utils/logging', () => ({
+    default: vi.fn(),
+}));
 // FAIL LOUDLY on unhandled promise rejections / errors
 process.on('unhandledRejection', (reason) => {
     // eslint-disable-next-line no-console

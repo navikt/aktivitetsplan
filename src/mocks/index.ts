@@ -11,9 +11,11 @@ export default () =>
         },
         onUnhandledRequest: (req, print) => {
             const hostBlacklist = ['amplitude.nav.no', 'nav.psplugin.com'];
+            const ignoredFileExtensions = ['.ts', '.js', '.tsx', '.jsx', 'css', 'svg', 'png', '.less'];
 
-            const ignore = hostBlacklist.some((route) => req.url.host.includes(route));
-
+            const ignore =
+                hostBlacklist.some((route) => req.url.host.includes(route)) ||
+                ignoredFileExtensions.some((fileExtension) => req.url.pathname.endsWith(fileExtension));
             if (ignore) {
                 return;
             }
