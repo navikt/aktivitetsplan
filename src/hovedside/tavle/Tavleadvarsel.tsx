@@ -9,7 +9,7 @@ import {
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
-import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import { EksternAktivitetType, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
@@ -28,12 +28,16 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
         return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
     } else if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
         if (erVeileder) {
-            // TODO finn bedre tekst
-            return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status';
-        } // TODO bedre tekst
+            switch (aktivitet.eksternAktivitet.type) {
+                case EksternAktivitetType.ARENA_TILTAK_TYPE:
+                    return 'For å endre aktiviteten må du gå til Arena.';
+                case EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE:
+                case EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE:
+                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status';
+            }
+        }
         return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
     }
-
     return 'Du kan ikke endre status på denne aktiviteten. Ta kontakt med veilederen din for å gjøre endringer.';
 };
 
@@ -43,7 +47,7 @@ interface Props {
     erVeileder: boolean;
 }
 
-const Tavleadvarsel = (props: Props) => {
+export const Tavleadvarsel = (props: Props) => {
     const { hidden, draggingAktivitet, erVeileder } = props;
 
     if (hidden || !draggingAktivitet) {
@@ -58,5 +62,3 @@ const Tavleadvarsel = (props: Props) => {
         </div>
     );
 };
-
-export default Tavleadvarsel;
