@@ -44,15 +44,17 @@ jobs:
   prod-ekstern-sentry-release:
     needs: prod-ekstern
     name: Upload sourcemaps to sentry (ekstern)
-    uses: getsentry/action-release@v1
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: nav
-      SENTRY_PROJECT: aktivitetsplan
-      SENTRY_URL: https://sentry.gc.nav.no/
-    with:
-      environment: prod
-      sourcemaps: './build'
+    steps:
+        - uses: getsentry/action-release@v1
+          env:
+            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+            SENTRY_ORG: nav
+            SENTRY_PROJECT: aktivitetsplan
+            SENTRY_URL: https://sentry.gc.nav.no/
+          with:
+            environment: prod
+            version: ${{ github.sha }}
+            sourcemaps: './build'
 
   prod-intern:
     name: Deploy application to prod intern
