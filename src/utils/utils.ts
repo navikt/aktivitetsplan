@@ -42,13 +42,3 @@ export function HiddenIf({ hidden, children }: { hidden: boolean; children: Reac
     }
     return children;
 }
-
-function erGCP() {
-    return window.location.hostname.endsWith('intern.nav.no');
-}
-
-export function getContextPath() {
-    return erGCP() ? '' : import.meta.env.BASE_URL;
-}
-
-export const exist = <T>(thing: T | undefined): thing is T => thing !== undefined && thing !== null;

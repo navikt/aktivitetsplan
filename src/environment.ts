@@ -1,4 +1,12 @@
-const BASE_URL = import.meta.env.BASE_URL;
+const removeHostPartOfUrl = (fullUrl: string) => {
+    if (import.meta.env.MODE === 'test') return fullUrl;
+    if (fullUrl.length < 2) return fullUrl;
+    const pathParts = fullUrl.replace('https://', '').replace('http://', '').split('/');
+    if (pathParts.length === 1) return '/';
+    return [...pathParts.slice(1)].join('/');
+};
+
+export const BASE_URL = removeHostPartOfUrl(import.meta.env.BASE_URL);
 
 const erGHpages = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
 

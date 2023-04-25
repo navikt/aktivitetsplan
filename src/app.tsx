@@ -23,8 +23,7 @@ const Router = ({ children }: { children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
         return <HashRouter>{children}</HashRouter>;
     }
-    const pathnamePrefix = import.meta.env.BASE_URL;
-    return <BrowserRouter basename={pathnamePrefix}>{children}</BrowserRouter>;
+    return <BrowserRouter>{children}</BrowserRouter>;
 };
 
 const ErrorCleanerOnRouteChange = () => {
