@@ -44,9 +44,9 @@ jobs:
   prod-ekstern-sentry-release:
     needs: prod-ekstern
     name: Upload sourcemaps to sentry (ekstern)
+    runs-on: ubuntu-latest
     steps:
         - uses: getsentry/action-release@v1
-          runs-on: ubuntu-latest
           env:
             SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
             SENTRY_ORG: nav
