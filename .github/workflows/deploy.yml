@@ -19,6 +19,7 @@ jobs:
       releaseName: dev-ekstern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   dev-intern:
     name: Deploy application to dev intern
@@ -40,6 +41,7 @@ jobs:
       releaseName: prod-ekstern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   prod-intern:
     name: Deploy application to prod intern
