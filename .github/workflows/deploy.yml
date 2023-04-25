@@ -33,25 +33,28 @@ jobs:
   prod-ekstern:
     name: Deploy application to prod ekstern
     needs: dev-ekstern
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
+    with:
+      kommando: npm run build:prod-ekstern
+      bucket: aktivitetsplan-prod
+      releaseName: prod-ekstern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
+
+  prod-ekstern-sentry-release:
+    needs: prod-ekstern
+    name: Upload sourcemaps to sentry (ekstern)
     steps:
-      - name: Upload to gcp-bucket
-        uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
-        with:
-          kommando: npm run build:prod-ekstern
-          bucket: aktivitetsplan-prod
-          releaseName: prod-ekstern
-        secrets:
-          GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
-      - name: Upload sourcemaps to sentry (ekstern)
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: nav
-          SENTRY_PROJECT: aktivitetsplan
-          SENTRY_URL: https://sentry.gc.nav.no/
-        with:
-          environment: prod
-          sourcemaps: './dist'
+        - uses: getsentry/action-release@v1
+          env:
+            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+            SENTRY_ORG: nav
+            SENTRY_PROJECT: aktivitetsplan
+            SENTRY_URL: https://sentry.gc.nav.no/
+          with:
+            environment: prod
+            version: ${{ github.sha }}
+            sourcemaps: './build'
 
   prod-intern:
     name: Deploy application to prod intern
