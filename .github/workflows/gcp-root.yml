@@ -42,14 +42,6 @@ jobs:
         run: gsutil -m rsync -r build "$BUCKET"
         env:
           BUCKET: gs://${{ inputs.bucket }}
-      - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: release/dev/${{inputs.releaseName}}@${{ github.sha }}
-          release_name: ${{ inputs.releaseName }}
-          prerelease: true
       - name: Create sentry release
         if: ${{ inputs.bucket }} == 'aktivitetsplan-prod' # Bare ekstern
         uses: getsentry/action-release@v1
