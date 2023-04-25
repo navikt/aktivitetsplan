@@ -52,7 +52,7 @@ jobs:
       SENTRY_URL: https://sentry.gc.nav.no/
     with:
       environment: prod
-      sourcemaps: './dist'
+      sourcemaps: './build'
 
   prod-intern:
     name: Deploy application to prod intern
