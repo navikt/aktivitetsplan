@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
         build: {
             manifest: 'asset-manifest.json',
             outDir: 'build',
+            sourcemap: true,
         },
         plugins: [
             react(),
