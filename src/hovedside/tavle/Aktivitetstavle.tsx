@@ -27,7 +27,7 @@ import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
-import Tavleadvarsel from './Tavleadvarsel';
+import { Tavleadvarsel } from './Tavleadvarsel';
 import { erDroppbar } from './tavleUtils';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
