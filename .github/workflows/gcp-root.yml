@@ -45,8 +45,8 @@ jobs:
         env:
           BUCKET: gs://${{ inputs.bucket }}
       - name: Create sentry release
-        if: ${{ inputs.bucket }} == 'aktivitetsplan-prod' # Bare ekstern
         uses: getsentry/action-release@v1
+        if: ${{ inputs.bucket }} == 'aktivitetsplan-prod'
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: nav
@@ -54,5 +54,4 @@ jobs:
           SENTRY_URL: https://sentry.gc.nav.no/
         with:
           environment: prod
-          version: ${{ github.sha }}
           sourcemaps: './build'
