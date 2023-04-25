@@ -16,7 +16,7 @@ on:
       GCS_SA_KEY:
         required: true
       SENTRY_AUTH_TOKEN:
-        required: true
+        required: false
 
 jobs:
   deploy:
