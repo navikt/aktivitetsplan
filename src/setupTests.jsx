@@ -1,5 +1,5 @@
 // Ikkje bra!
-import.meta.env.BASE_URL = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
+import.meta.env.VITE_API_URL_BASE = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 
 window.IntersectionObserver = vi.fn();
 // Mocked because react-dnd uses es6 import and have to be transpiled to work in these tests
