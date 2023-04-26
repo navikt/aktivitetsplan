@@ -1,5 +1,7 @@
 import * as Sentry from '@sentry/react';
 import { Breadcrumb, Event } from '@sentry/types';
+import React from 'react';
+import { createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
 
 enum Env {
     Local = 'local',
@@ -65,6 +67,13 @@ Sentry.init({
     dsn: 'https://1ab82c2af7614a74b134e36b3bd2e0b4@sentry.gc.nav.no/163',
     integrations: [
         new Sentry.BrowserTracing({
+            routingInstrumentation: Sentry.reactRouterV6Instrumentation(
+                React.useEffect,
+                useLocation,
+                useNavigationType,
+                createRoutesFromChildren,
+                matchRoutes
+            ),
             tracePropagationTargets: [
                 'aktivitetsplan.nav.no',
                 'aktivitetsplan.dev.nav.no',
