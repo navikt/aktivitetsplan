@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 import { Breadcrumb, Event } from '@sentry/types';
 import React from 'react';
-import { createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
+import { Routes, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
 
 enum Env {
     Local = 'local',
@@ -93,3 +93,5 @@ Sentry.init({
     tracesSampleRate: 0.2,
     beforeSend: fjernPersonopplysninger,
 });
+
+export const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
