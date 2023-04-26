@@ -81,7 +81,7 @@ spec:
           },
           "dekorator": {
             "env": "prod",
-            "simple": true,
+            "simple": false,
             "chatbot": false
           },
           "fallbackStrategy": "SERVE_INDEX_HTML",

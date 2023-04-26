@@ -77,7 +77,7 @@ spec:
           },
           "dekorator": {
             "env": "dev",
-            "simple": true,
+            "simple": false,
             "chatbot": false
           },
           "fallbackStrategy": "SERVE_INDEX_HTML",
