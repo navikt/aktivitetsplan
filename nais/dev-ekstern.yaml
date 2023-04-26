@@ -79,7 +79,7 @@ spec:
             "env": "dev",
             "simple": true,
             "chatbot": false
-          }
+          },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
             { "fromPath": "/veilarbvedtakinfo", "toUrl": "https://veilarbvedtakinfo.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "dev-fss" } },
