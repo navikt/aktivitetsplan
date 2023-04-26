@@ -1,6 +1,5 @@
-import * as Sentry from '@sentry/react';
 import React, { useEffect } from 'react';
-import { BrowserRouter, HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, useLocation } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
@@ -36,16 +35,14 @@ const ErrorCleanerOnRouteChange = () => {
     return null;
 };
 
-const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
-
-function App() {
+function App({ Routes }: { Routes: any }) {
     const erVeileder = useErVeileder();
     const fnr = useFnr();
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
                 <Router>
-                    <SentryRoutes>
+                    <Routes>
                         <Route path={`/${fnr ?? ''}`}>
                             <Route path="utskrift" element={<AktivitetsplanPrint />} />
                             <Route path="" element={<Hovedside />}>
@@ -62,7 +59,7 @@ function App() {
                             </Route>
                         </Route>
                         {erVeileder ? <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} /> : null}
-                    </SentryRoutes>
+                    </Routes>
                     <ErrorCleanerOnRouteChange />
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>

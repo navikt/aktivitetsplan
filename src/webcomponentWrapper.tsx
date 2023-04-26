@@ -2,6 +2,7 @@ import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Routes } from 'react-router-dom';
 
 import App from './app';
 import lessCss from './index.less?inline';
@@ -31,7 +32,7 @@ export class DabAktivitetsplan extends HTMLElement {
         ReactDOM.render(
             <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
                 <Provider key={fnr} fnr={fnr} setFnrRef={(setFnr) => (this.setFnr = setFnr)}>
-                    <App key={'1'} />
+                    <App Routes={Routes} key={'1'} />
                 </Provider>
             </ModalProvider>,
             appRoot

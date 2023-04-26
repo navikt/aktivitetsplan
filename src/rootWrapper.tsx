@@ -10,6 +10,7 @@ import * as ReactDOM from 'react-dom';
 
 import App from './app';
 import Provider from './Provider';
+import { SentryRoutes } from './sentry';
 
 export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
     const rootElement = document.getElementById('root') || undefined;
@@ -17,7 +18,7 @@ export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: strin
     ReactDOM.render(
         <AkselModalMountProvider rootElement={rootElement} appElement={appElement}>
             <Provider fnr={props?.fnr}>
-                <App key={'1'} />
+                <App Routes={SentryRoutes} key={'1'} />
             </Provider>
         </AkselModalMountProvider>,
         appElement
