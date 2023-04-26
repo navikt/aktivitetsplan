@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react';
 import React, { useEffect } from 'react';
 import { BrowserRouter, HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
@@ -35,6 +36,8 @@ const ErrorCleanerOnRouteChange = () => {
     return null;
 };
 
+const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
+
 function App() {
     const erVeileder = useErVeileder();
     const fnr = useFnr();
@@ -42,7 +45,7 @@ function App() {
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
                 <Router>
-                    <Routes>
+                    <SentryRoutes>
                         <Route path={`/${fnr ?? ''}`}>
                             <Route path="utskrift" element={<AktivitetsplanPrint />} />
                             <Route path="" element={<Hovedside />}>
@@ -59,7 +62,7 @@ function App() {
                             </Route>
                         </Route>
                         {erVeileder ? <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} /> : null}
-                    </Routes>
+                    </SentryRoutes>
                     <ErrorCleanerOnRouteChange />
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>
