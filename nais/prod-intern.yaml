@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.04.14_11.14-66f2c0b9e68b
+  image: ghcr.io/navikt/aktivitetsplan/aktivitetsplan:{{version}}
   port: 8080
   liveness:
     path: /internal/isAlive
