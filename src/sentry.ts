@@ -92,6 +92,7 @@ Sentry.init({
     // We recommend adjusting this value in production
     tracesSampleRate: 0.2,
     beforeSend: fjernPersonopplysninger,
+    release: import.meta.env.VITE_SENTRY_RELEASE,
 });
 
 export const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
