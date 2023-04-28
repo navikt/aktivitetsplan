@@ -79,6 +79,12 @@ spec:
               "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com"]
             }
           },
+          "cors": {
+            "origin": ["https://oidc.difi.no"],
+            "credentials": true,
+            "maxAge": 7200,
+            "allowedHeaders": ["Nav-Consumer-Id"]
+          },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
             { "fromPath": "/veilarbvedtakinfo", "toUrl": "https://veilarbvedtakinfo.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "prod-fss" } },
