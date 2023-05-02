@@ -35,13 +35,12 @@ const OppdaterReferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
 
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
-    const oppdaterer = aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const erReferatPublisert = aktivitet.erReferatPublisert;
 
     const {
         watch,
-        formState: { isDirty },
+        formState: { isDirty, isSubmitting },
         register,
         handleSubmit,
     } = useForm<ReferatInputProps>({
@@ -50,6 +49,7 @@ const OppdaterReferatForm = (props: Props) => {
             referat: aktivitet.referat || startTekst,
         },
     });
+    const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
