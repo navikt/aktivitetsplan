@@ -77,7 +77,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: ${{ inputs.cluster }}
           RESOURCE: nais/${{ inputs.naisfile }}.yaml
-          VAR: version=${{ env.IMAGE_TAG }},namespace=q1
+          VAR: version=${{ env.IMAGE_TAG }}
           BUCKET: gs://${{ inputs.bucket }}
       - name: Create sentry release
         uses: getsentry/action-release@v1
