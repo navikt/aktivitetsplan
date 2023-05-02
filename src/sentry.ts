@@ -76,7 +76,7 @@ Sentry.init({
             ),
             tracePropagationTargets: [
                 'aktivitetsplan.nav.no',
-                'aktivitetsplan.dev.nav.no',
+                'aktivitetsplan.ekstern.dev.nav.no',
                 // /(\.dev)?nav.no\/veilarbdialog/,
                 // /(\.dev)?nav.no\/veilarbpersonflate/,
                 // /(\.dev)?nav.no\/veilarboppfolging/,
