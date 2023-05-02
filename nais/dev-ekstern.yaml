@@ -36,7 +36,7 @@ spec:
   tokenx:
     enabled: true
   ingresses:
-    - https://aktivitetsplan.dev.nav.no
+    - https://aktivitetsplan.intern.dev.nav.no
   accessPolicy:
     outbound:
       rules:
