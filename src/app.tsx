@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, HashRouter, Navigate, Route, useLocation } from 'react-router-dom';
 
-import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
+import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
 import Hovedside from './hovedside/Hovedside';
 import AvbrytAktivitet from './moduler/aktivitet/avslutt/AvbrytAktivitet';
@@ -16,7 +16,6 @@ import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
 import { useErVeileder, useFnr } from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
-import { HiddenIf } from './utils/utils';
 
 const Router = ({ children }: { children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
