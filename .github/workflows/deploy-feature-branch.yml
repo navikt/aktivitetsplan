@@ -28,6 +28,3 @@ jobs:
       bucket: aktivitetsplan-dev-intern
       cluster: dev-gcp
       cdnEnv: cdn.dev.nav.no
-    secrets:
-      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
-      NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}

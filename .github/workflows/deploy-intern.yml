@@ -9,12 +9,6 @@ on:
       bucket:
         required: true
         type: string
-      naisfile:
-        required: true
-        type: string
-      cluster:
-        required: true
-        type: string
       cdnEnv:
         required: true
         type: string
