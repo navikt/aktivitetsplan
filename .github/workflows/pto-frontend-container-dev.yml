@@ -1,4 +1,4 @@
-name: pto frontend container dev
+name: POAO-frontend container dev
 
 on:
   push:
@@ -7,7 +7,6 @@ on:
     paths:
       - '.github/workflows/pto-frontend-container-dev.yml'
       - 'nais/dev-ekstern.yaml'
-      - 'nais/dev-intern.yaml'
   workflow_dispatch:
 
 concurrency:
@@ -20,7 +19,6 @@ env:
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v1
       - name: deploy gcp dev ekstern
@@ -28,8 +26,3 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
-      - name: deploy gcp dev intern
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-gcp
-          RESOURCE: nais/dev-intern.yaml

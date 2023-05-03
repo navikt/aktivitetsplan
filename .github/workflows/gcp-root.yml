@@ -9,9 +9,6 @@ on:
       bucket:
         required: true
         type: string
-      releaseName:
-        required: true
-        type: string
     secrets:
       GCS_SA_KEY:
         required: true

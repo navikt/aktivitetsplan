@@ -6,7 +6,7 @@ const removeHostPartOfUrl = (fullUrl: string) => {
     return [...pathParts.slice(1)].join('/');
 };
 
-export const BASE_URL = removeHostPartOfUrl(import.meta.env.BASE_URL);
+export const BASE_URL = removeHostPartOfUrl(import.meta.env.VITE_API_URL_BASE ?? '/');
 
 const erGHpages = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
 

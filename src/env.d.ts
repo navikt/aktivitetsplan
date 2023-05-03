@@ -10,6 +10,7 @@ interface ImportMetaEnv {
     readonly VITE_MINSIDE_URL: string;
     readonly VITE_ARBEIDSSOKERREGISTRERING_URL: string;
     readonly VITE_ARBEIDSRETTET_DIALOG_URL: string;
+    readonly VITE_API_URL_BASE: string;
     readonly VITE_SENTRY_RELEASE: string;
 }
 

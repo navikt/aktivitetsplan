@@ -1,4 +1,4 @@
-name: pto frontend container prod
+name: POAO-frontend container prod
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
       - 'main'
     paths:
       - '.github/workflows/pto-frontend-container-prod.yml'
-      - 'nais/prod-intern.yaml'
       - 'nais/prod-ekstern.yaml'
 
 concurrency:
@@ -21,11 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: deploy gcp prod intern
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: prod-gcp
-          RESOURCE: nais/prod-intern.yaml
       - name: deploy gcp prod ekstern
         uses: nais/deploy/actions/deploy@v1
         env:

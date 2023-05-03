@@ -1,0 +1,44 @@
+name: GCP root
+
+on:
+  workflow_call:
+    inputs:
+      kommando:
+        required: true
+        type: string
+      bucket:
+        required: true
+        type: string
+      cdnEnv:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy application to dev
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      packages: 'write'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
+      - name: Build application
+        run: ${{ inputs.kommando }}
+      - name: Upload to CDN
+        uses: navikt/frontend/actions/cdn-upload/v1@main
+        with:
+          cdn-environment: ${{ inputs.cdnEnv }}
+          cdn-team-name: dab
+          source: ./build/
+          destination: /${{ inputs.bucket }}/
