@@ -14,7 +14,6 @@ jobs:
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
-      cluster: dev-gcp
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
 
@@ -24,5 +23,4 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
-      cluster: dev-gcp
       cdnEnv: cdn.dev.nav.no
