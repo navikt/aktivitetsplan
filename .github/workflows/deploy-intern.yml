@@ -12,9 +12,6 @@ on:
       cdnEnv:
         required: true
         type: string
-    secrets:
-      NAIS_DEPLOY_APIKEY:
-        required: true
 
 jobs:
   deploy:
