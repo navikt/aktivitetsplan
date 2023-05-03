@@ -1,4 +1,5 @@
 import { BriefcaseIcon } from '@navikt/aksel-icons';
+import { isRejected } from '@reduxjs/toolkit';
 import React, { useContext, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
@@ -30,24 +31,25 @@ const OppdaterAktivitetEtikett = (props: Props) => {
     const [open, setIsOpen] = useState(false);
     const dispatch = useAppDispatch();
 
-    const lagreEtikett = (formValues: StillingEtikettFormValues): Promise<any> => {
+    const lagreEtikett = async (formValues: StillingEtikettFormValues) => {
         const { etikettstatus } = formValues;
 
         if (etikettstatus === aktivitet.etikett) {
-            return Promise.resolve();
+            setIsOpen(false);
+            return;
         }
         const etikett = etikettstatus === StillingStatus.INGEN_VALGT ? undefined : etikettstatus;
 
-        return dispatch(oppdaterAktivitetEtikett({ ...aktivitet, etikett }));
+        return dispatch(oppdaterAktivitetEtikett({ ...aktivitet, etikett })).then((action) => {
+            if (isRejected(action)) return;
+            setIsOpen(false);
+            document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
+        });
     };
 
     const onSubmit = (formValues: StillingEtikettFormValues): Promise<any> => {
         setFormIsDirty('etikett', false);
-        return lagreEtikett(formValues).then((action) => {
-            if (action.error) return;
-            setIsOpen(false);
-            document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
-        });
+        return lagreEtikett(formValues);
     };
 
     const disableEtikettEndringer = lasterAktivitetData || kanIkkeEndreAktivitet || erIkkeUnderOppfolging;

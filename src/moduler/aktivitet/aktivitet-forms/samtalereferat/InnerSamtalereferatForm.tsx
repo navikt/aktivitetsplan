@@ -68,11 +68,11 @@ const InnerSamtalereferatForm = (props: Props) => {
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
         return handleSubmit((data) => {
-            onSubmit({
+            return onSubmit({
                 ...data,
                 status: AktivitetStatus.GJENNOMFOERT,
                 avtalt: false,
-                ...(erReferatPublisert && { erReferatPublisert: true }),
+                erReferatPublisert,
             });
         });
     };
