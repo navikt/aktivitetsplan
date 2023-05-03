@@ -1,4 +1,4 @@
-name: pto frontend container prod
+name: POAO-frontend container prod
 
 on:
   push:

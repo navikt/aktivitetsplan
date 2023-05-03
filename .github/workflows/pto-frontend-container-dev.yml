@@ -1,4 +1,4 @@
-name: pto frontend container dev
+name: POAO-frontend container dev
 
 on:
   push:
