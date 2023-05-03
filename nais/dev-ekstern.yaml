@@ -36,7 +36,7 @@ spec:
   tokenx:
     enabled: true
   ingresses:
-    - https://aktivitetsplan.dev.nav.no
+    - https://aktivitetsplan.ekstern.dev.nav.no
   accessPolicy:
     outbound:
       rules:
@@ -61,6 +61,9 @@ spec:
       # CSP for dekoratoren er hentet fra https://www.nav.no/dekoratoren/api/csp
       value: >
         {
+          "gcs": {
+            "bucketName": "aktivitetsplan-dev"
+          },
           "auth": {
             "loginProvider": "ID_PORTEN"
           },
@@ -75,11 +78,12 @@ spec:
               "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com"]
             }
           },
-          "dekorator": {
-            "env": "dev",
-            "simple": false,
-            "chatbot": false
-          },
+          "cors": {
+              "origin": ["https://oidc-ver2.difi.no"],
+              "credentials": true,
+              "maxAge": 7200,
+              "allowedHeaders": ["Nav-Consumer-Id"]
+            },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
             { "fromPath": "/veilarbvedtakinfo", "toUrl": "https://veilarbvedtakinfo.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "dev-fss" } },
@@ -87,33 +91,5 @@ spec:
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "dev-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "dev-fss" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "dev-fss" } }
-          ],
-          "redirects": [
-              {
-                "fromPath": "/api/auth",
-                "toUrl": "/auth/info"
-              },
-              {
-                "fromPath": "/aktivitetsplan",
-                "toUrl": "\{{AKTIVITETSPLAN_URL}}"
-              },              {
-                "fromPath": "/arbeidssokerregistrering",
-                "toUrl": "\{{ARBEIDSSOKERREGISTRERING_URL}}"
-              },              {
-                "fromPath": "/minside",
-                "toUrl": "\{{MINSIDE_URL}}"
-              },              {
-                "fromPath": "/veientilarbeid",
-                "toUrl": "\{{VEIENTILARBEID_URL}}"
-              },              {
-                "fromPath": "/arbeidsrettet-dialog",
-                "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
-                "preserveFromPath": "true"
-              },
-              {
-                "fromPath": "/dialog",
-                "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
-                "preserveFromPath": "true"
-              }
           ]
         }

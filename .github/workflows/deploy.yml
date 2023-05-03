@@ -18,7 +18,6 @@ jobs:
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
-      releaseName: dev-ekstern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
@@ -38,7 +37,6 @@ jobs:
     with:
       kommando: npm run build:prod-ekstern
       bucket: aktivitetsplan-prod
-      releaseName: prod-ekstern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

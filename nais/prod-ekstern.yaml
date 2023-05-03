@@ -79,10 +79,11 @@ spec:
               "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com"]
             }
           },
-          "dekorator": {
-            "env": "prod",
-            "simple": false,
-            "chatbot": false
+          "cors": {
+            "origin": ["https://oidc.difi.no"],
+            "credentials": true,
+            "maxAge": 7200,
+            "allowedHeaders": ["Nav-Consumer-Id"]
           },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
@@ -91,37 +92,5 @@ spec:
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
-          ],
-          "redirects": [
-            {
-              "fromPath": "/api/auth",
-              "toUrl": "/auth/info"
-            },
-            {
-              "fromPath": "/aktivitetsplan",
-              "toUrl": "\{{AKTIVITETSPLAN_URL}}"
-            },
-            {
-              "fromPath": "/arbeidssokerregistrering",
-              "toUrl": "\{{ARBEIDSSOKERREGISTRERING_URL}}"
-            },
-            {
-              "fromPath": "/minside",
-              "toUrl": "\{{MINSIDE_URL}}"
-            },
-            {
-              "fromPath": "/veientilarbeid",
-              "toUrl": "\{{VEIENTILARBEID_URL}}"
-            },
-            {
-              "fromPath": "/arbeidsrettet-dialog",
-              "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
-              "preserveFromPath": "true"
-            },
-            {
-              "fromPath": "/dialog",
-              "toUrl": "\{{ARBEIDSRETTET_DIALOG_URL}}",
-              "preserveFromPath": "true"
-            }
           ]
         }

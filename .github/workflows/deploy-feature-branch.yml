@@ -10,24 +10,22 @@ concurrency:
 jobs:
   dev-ekstern:
     name: Deploy to dev extern
-    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@CDN-2
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
       naisfile: dev-ekstern
       cluster: dev-gcp
-      cdnEnv: cdn.dev.nav.no
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
       NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
 
   dev-intern:
     name: Deploy application to dev intern
-    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@CDN-2
+    uses: navikt/aktivitetsplan/.github/workflows/deploy-intern.yml@CDN-2
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
-      naisfile: dev-intern
       cluster: dev-gcp
       cdnEnv: cdn.dev.nav.no
     secrets:
