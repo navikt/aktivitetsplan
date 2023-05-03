@@ -14,7 +14,6 @@ jobs:
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
-      naisfile: dev-ekstern
       cluster: dev-gcp
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
