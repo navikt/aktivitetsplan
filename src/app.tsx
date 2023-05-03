@@ -3,7 +3,6 @@ import { BrowserRouter, HashRouter, Navigate, Route, useLocation } from 'react-r
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
-import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
 import Hovedside from './hovedside/Hovedside';
 import AvbrytAktivitet from './moduler/aktivitet/avslutt/AvbrytAktivitet';
 import FullforAktivitet from './moduler/aktivitet/avslutt/FullforAktivitet';
@@ -62,9 +61,6 @@ function App({ Routes }: { Routes: any }) {
                     </Routes>
                     <ErrorCleanerOnRouteChange />
                 </Router>
-                <HiddenIf hidden={ER_INTERN_FLATE}>
-                    <Timeoutbox />
-                </HiddenIf>
             </div>
             <UpdateEventHandler />
         </div>
