@@ -1,3 +1,4 @@
+import { CaptureConsole as CaptureConsoleIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
 import { Breadcrumb, Event } from '@sentry/types';
 import React from 'react';
@@ -83,6 +84,11 @@ Sentry.init({
                 // /(\.dev)?nav.no\/veilarbaktivitet/,
                 // /(\.dev)?nav.no\/veilarblest/,
             ],
+        }),
+        new CaptureConsoleIntegration({
+            // array of methods that should be captured
+            // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
+            levels: ['warn', 'error'],
         }),
     ],
     environment: getEnv(),
