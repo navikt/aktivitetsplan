@@ -54,7 +54,7 @@ const OppdaterReferatForm = (props: Props) => {
     const { setFormIsDirty } = useContext(DirtyContext);
 
     useEffect(() => {
-        setFormIsDirty('referat', !isDirty);
+        setFormIsDirty('referat', isDirty);
         return () => setFormIsDirty('referat', false);
     }, [setFormIsDirty, isDirty]);
 

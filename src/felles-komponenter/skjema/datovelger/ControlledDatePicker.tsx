@@ -45,7 +45,7 @@ const ControlledDatePicker = ({
     };
 
     const onChangeDate = (date?: Date) => {
-        setValue(name, date);
+        setValue(name, date, { shouldDirty: true });
         setDisplayValue(date ? format(date, 'dd.M.y') : '');
         if (date) {
             closePopover();
