@@ -10,8 +10,10 @@ import {
     hentAktiviteter,
     lagNyAktivitet,
     markerForhaandsorienteringSomLest,
+    oppdaterAktivitetEtikett,
     oppdaterCVSvar,
     oppdaterReferat,
+    oppdaterStillingFraNavSoknadsstatus,
     publiserReferat,
     settAktivitetTilAvtalt,
 } from './aktivitet-actions';
@@ -63,9 +65,16 @@ const aktivitetSlice = createSlice({
             windowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
         });
-        builder.addCase(oppdaterCVSvar.fulfilled, (state, action) => {
-            return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
-        });
+        builder.addMatcher(
+            isAnyOf(
+                oppdaterCVSvar.fulfilled,
+                oppdaterAktivitetEtikett.fulfilled,
+                oppdaterStillingFraNavSoknadsstatus.fulfilled
+            ),
+            (state, action) => {
+                return nyStateMedOppdatertAktivitet({ ...state }, action.payload);
+            }
+        );
         builder.addMatcher(
             isAnyOf(flyttAktivitet.fulfilled, oppdaterReferat.fulfilled, publiserReferat.fulfilled),
             (state, action) => {
