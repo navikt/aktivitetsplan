@@ -91,6 +91,7 @@ Sentry.init({
             levels: ['warn', 'error'],
         }),
     ],
+    allowUrls: [/https?:\/\/(cdn\.)?(aktivitetsplan\.)?(ekstern\.)?(dev\.)?nav\.no/],
     environment: getEnv(),
     enabled: getEnv() !== Env.Local,
     ignoreErrors: [
