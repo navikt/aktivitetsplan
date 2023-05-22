@@ -26,7 +26,6 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
-      cdnEnv: cdn.dev.nav.no
 
   prod-ekstern:
     name: Deploy application to prod ekstern
@@ -46,4 +45,3 @@ jobs:
     with:
       kommando: npm run build:prod-intern
       bucket: aktivitetsplan-prod-intern
-      cdnEnv: cdn.nav.no

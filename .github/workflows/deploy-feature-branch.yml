@@ -23,4 +23,3 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
-      cdnEnv: cdn.dev.nav.no
