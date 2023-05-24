@@ -18,6 +18,7 @@ const Timeoutbox = () => {
         dispatch(hentAuthInfo());
     }, []);
 
+
     const expirationTimestamp = useSelector(selectExpirationTime);
     const expirationTimestampMinusFiveMinutes = subMinutes(parseISO(expirationTimestamp), 5);
 
