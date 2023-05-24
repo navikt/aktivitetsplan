@@ -11,7 +11,7 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
-const schema = z.object({
+const object = z.object({
     tittel: z.string(),
     fraDato: z.date({
         required_error: 'Fra dato må fylles ut',
@@ -34,6 +34,20 @@ const schema = z.object({
     beskrivelse: z.string().max(400, 'Du må korte ned teksten til 400 tegn').optional(),
 });
 
+const schema = z.discriminatedUnion('avtalt', [
+    object.extend({
+        avtalt: z.literal(false),
+    }),
+    object.extend({
+        avtalt: z.literal(true),
+        behandlingType: z.string(),
+        behandlingSted: z.string(),
+        effekt: z.string().optional(),
+        behandlingOppfolging: z.string().optional(),
+        beskrivelse: z.string().optional(),
+    }),
+]);
+
 export type MedisinskBehandlingFormValues = z.infer<typeof schema>;
 
 interface Props {
@@ -45,7 +59,9 @@ interface Props {
 const MedisinskBehandlingForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
+    const avtalt = aktivitet?.avtalt || false;
     const defaultValues: Partial<MedisinskBehandlingFormValues> = {
+        avtalt: avtalt,
         tittel: aktivitet?.tittel || 'Medisinsk behandling',
         behandlingType: aktivitet?.behandlingType || '',
         behandlingSted: aktivitet?.behandlingSted || '',
@@ -55,7 +71,6 @@ const MedisinskBehandlingForm = (props: Props) => {
         beskrivelse: aktivitet?.beskrivelse || '',
         behandlingOppfolging: aktivitet?.behandlingOppfolging || '',
     };
-    const avtalt = aktivitet?.avtalt || false;
 
     const formHandlers = useForm<MedisinskBehandlingFormValues>({
         defaultValues,
