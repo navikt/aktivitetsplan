@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
+import { isAfter } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -13,21 +14,34 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
-const schema = z.object({
-    tittel: z.string().min(1, 'Du må fylle ut navn på aktiviteten').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.date({
-        required_error: 'Fra dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }),
-    tilDato: z.date({
-        required_error: 'Fra dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }),
-    hensikt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
-    beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
-    oppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
-    lenke: z.string().max(2000, 'Du må korte ned lenken til 2000 tegn').optional(),
-});
+const schema = z
+    .object({
+        tittel: z
+            .string()
+            .min(1, 'Du må fylle ut navn på aktiviteten')
+            .max(100, 'Du må korte ned teksten til 100 tegn'),
+        fraDato: z.date({
+            required_error: 'Fra dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        }),
+        tilDato: z.date({
+            required_error: 'Fra dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        }),
+        hensikt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+        beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
+        oppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+        lenke: z.string().max(2000, 'Du må korte ned lenken til 2000 tegn').optional(),
+    })
+    .superRefine((formValues, context) => {
+        if (isAfter(formValues.fraDato, formValues.tilDato)) {
+            context.addIssue({
+                path: ['tilDato'],
+                code: z.ZodIssueCode.custom,
+                message: 'Til dato kan ikke være før fra dato',
+            });
+        }
+    });
 
 export type EgenAktivitetFormValues = z.infer<typeof schema>;
 
