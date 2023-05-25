@@ -25,8 +25,9 @@ const CustomBodyLong = (props: Props) => {
         newChildren = newChildren.flatMap((el) => {
             if (typeof el === 'string') {
                 return replaceMatchesWithNode(el, linkRegex, (value, index) => {
+                    const href = value.toLowerCase().startsWith('www.') ? `https://${value}` : value;
                     return (
-                        <Link target="_blank" href={value} key={`link-${index}`}>{`${value} (åpnes i ny fane)`}</Link>
+                        <Link target="_blank" href={href} key={`link-${index}`}>{`${value} (åpnes i ny fane)`}</Link>
                     );
                 });
             }
