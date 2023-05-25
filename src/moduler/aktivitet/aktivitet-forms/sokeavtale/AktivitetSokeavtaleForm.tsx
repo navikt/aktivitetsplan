@@ -5,8 +5,8 @@ import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/common';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/PartialDateRangePicker';
 import { useErVeileder } from '../../../../Provider';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';

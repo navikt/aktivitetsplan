@@ -1,38 +1,50 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
+import { isAfter } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { MedisinskBehandlingAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
+import { avtaltResolver } from '../../../../utils/avtaltResolver';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
-const schema = z.object({
-    tittel: z.string(),
-    fraDato: z.date({
-        required_error: 'Fra dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }),
-    tilDato: z.date({
-        required_error: 'Til dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }),
-    behandlingType: z
-        .string()
-        .min(1, 'Du må fylle ut type behandling')
-        .max(100, 'Du må korte ned teksten til 100 tegn'),
-    behandlingSted: z
-        .string()
-        .min(1, 'Du må fylle ut behandlingssted')
-        .max(255, 'Du må korte ned teksten til 100 tegn'),
-    effekt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
-    behandlingOppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
-    beskrivelse: z.string().max(400, 'Du må korte ned teksten til 400 tegn').optional(),
-});
+const schema = z
+    .object({
+        tittel: z.string(),
+        fraDato: z.date({
+            required_error: 'Fra dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        }),
+        tilDato: z.date({
+            required_error: 'Til dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        }),
+        behandlingType: z
+            .string()
+            .min(1, 'Du må fylle ut type behandling')
+            .max(100, 'Du må korte ned teksten til 100 tegn'),
+        behandlingSted: z
+            .string()
+            .min(1, 'Du må fylle ut behandlingssted')
+            .max(255, 'Du må korte ned teksten til 100 tegn'),
+        effekt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+        behandlingOppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
+        beskrivelse: z.string().max(400, 'Du må korte ned teksten til 400 tegn').optional(),
+    })
+    .superRefine((formValues, context) => {
+        if (isAfter(formValues.fraDato, formValues.tilDato)) {
+            context.addIssue({
+                path: ['tilDato'],
+                code: z.ZodIssueCode.custom,
+                message: 'Til dato kan ikke være før fra dato',
+            });
+        }
+    });
 
 export type MedisinskBehandlingFormValues = z.infer<typeof schema>;
 
@@ -41,6 +53,8 @@ interface Props {
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MedisinskBehandlingAktivitet;
 }
+
+const medisinskZodResolver = zodResolver(schema);
 
 const MedisinskBehandlingForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
@@ -59,7 +73,7 @@ const MedisinskBehandlingForm = (props: Props) => {
 
     const formHandlers = useForm<MedisinskBehandlingFormValues>({
         defaultValues,
-        resolver: zodResolver(schema),
+        resolver: avtaltResolver(avtalt, ['tilDato'], medisinskZodResolver),
         shouldFocusError: false,
     });
     const {
@@ -99,8 +113,8 @@ const MedisinskBehandlingForm = (props: Props) => {
                     />
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato', required: true }}
+                        from={{ name: 'fraDato', required: true, label: 'Fra dato' }}
+                        to={{ name: 'tilDato', required: true, label: 'Til dato' }}
                     />
                     <TextField
                         disabled={avtalt}

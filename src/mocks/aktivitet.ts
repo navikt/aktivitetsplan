@@ -93,7 +93,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               opprettetDato: '2018-02-26T15:51:44.197+01:00',
               endretDato: '2018-02-26T15:51:44.85+01:00',
               endretAv: 'Z123456',
-              avtalt: false,
+              avtalt: true,
               endretAvType: 'NAV',
               transaksjonsType: 'OPPRETTET',
               hensikt: 'Lære meg HTML',
@@ -265,7 +265,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               versjon: '1',
               tittel: 'Medisinsk behandling',
               beskrivelse:
-                  'CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager.',
+                  'CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager. CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager.',
               lenke: null,
               type: 'BEHANDLING',
               status: AktivitetStatus.PLANLAGT,

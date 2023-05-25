@@ -3,7 +3,7 @@ import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepi
 import { MutableRefObject, RefCallback } from 'react';
 import { UseFormRegisterReturn, UseFormTrigger } from 'react-hook-form/dist/types/form';
 
-import { DateRange } from './PartialDateRangePicker';
+import { DateRange } from './common';
 
 interface Props {
     onChange?: (val?: Partial<DateRange>) => void;
