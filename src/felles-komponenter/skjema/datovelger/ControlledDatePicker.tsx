@@ -1,5 +1,5 @@
 import { UNSAFE_DatePicker as DatePicker } from '@navikt/ds-react';
-import { getLocaleFromString, parseDate } from '@navikt/ds-react/esm/date/utils';
+import { getLocaleFromString, isValidDate, parseDate } from '@navikt/ds-react/esm/date/utils';
 import { format, isValid } from 'date-fns';
 import React, { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
@@ -36,7 +36,11 @@ const ControlledDatePicker = ({
 
     const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const day = parseDate(event.target.value, new Date(), nb, 'date', true);
-        setValue(name, day);
+        if (isValidDate(day)) {
+            setValue(name, day);
+        } else {
+            setValue(name, undefined);
+        }
         setDisplayValue(event.target.value);
         if (isValid(day)) {
             closePopover();
