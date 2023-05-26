@@ -13,7 +13,6 @@ export function avtaltResolver<FormValues extends object>(
     ): Promise<ResolverResult<FormValues>> => {
         const result = await resolver(values, context, options);
         if (!avtalt) return result;
-        debugger;
         return {
             values: result.values,
             errors: Object.entries(result.errors)
