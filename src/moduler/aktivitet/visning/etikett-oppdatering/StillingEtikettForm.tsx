@@ -59,7 +59,7 @@ const StillingEtikettForm = (props: Props) => {
         <form onSubmit={handleSubmit((data) => onSubmit(data))}>
             <div className="mb-4">
                 <RadioGroup
-                    legend={''}
+                    legend={'Hvor langt har du kommet i søknadsprosessen?'}
                     hideLegend
                     defaultValue={defaultValues.etikettstatus}
                     onChange={onChangeStillingStatus}
