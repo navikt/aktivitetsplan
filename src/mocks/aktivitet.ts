@@ -260,15 +260,15 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
                   ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
           }),
-        wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Hertug av Hirtzenhaus', arstall: 2023 }),
+          wrapAktivitet({
+              ...enStillingFraNavAktivitet({ tittel: 'Hertug av Hirtzenhaus', arstall: 2021 }),
               status: AktivitetStatus.FULLFOERT,
-              transaksjonsType: StillingFraNavTransaksjonsType.IKKE_FATT_JOBBEN,
+              transaksjonsType: StillingFraNavTransaksjonsType.FATT_JOBBEN,
               stillingFraNavData: {
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
                   soknadsstatus: StillingFraNavSoknadsstatus.FATT_JOBBEN,
-                  ikkefattjobbendetaljer: ``,
+                  ikkefattjobbendetaljer: undefined,
               },
           }),
           wrapAktivitet({
