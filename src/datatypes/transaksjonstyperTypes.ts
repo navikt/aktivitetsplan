@@ -28,6 +28,7 @@ export enum SamtaleReferatTransaksjonsType {
 export enum StillingFraNavTransaksjonsType {
     SOKNADSSTATUS_ENDRET = 'SOKNADSSTATUS_ENDRET',
     IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
+    FATT_JOBBEN = 'FATT_JOBBEN',
     DEL_CV_SVART = 'DEL_CV_SVART',
 }
 
