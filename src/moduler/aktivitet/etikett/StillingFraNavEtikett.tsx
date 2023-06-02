@@ -15,6 +15,7 @@ const getEtikett: Record<StillingFraNavSoknadsstatus, Etikett> = {
     JOBBTILBUD: { text: 'Fått jobbtilbud 🎉', variant: 'neutral' },
     AVSLAG: { text: 'Ikke fått jobben', variant: 'neutral' },
     IKKE_FATT_JOBBEN: { text: 'Ikke fått jobben', variant: 'neutral' },
+    FATT_JOBBEN: { text: 'Fått jobben 🎉', variant: 'neutral' },
 };
 
 export interface Props {

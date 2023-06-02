@@ -59,8 +59,9 @@ const OppdaterSoknadsstatus = (props: Props) => {
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 
     const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
-    const ikkeAvslag = StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
-    const kanEndre = ikkeAvslag || endretAvBruker;
+    const endeligeStatuser = [StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN, StillingFraNavSoknadsstatus.FATT_JOBBEN]
+    const harEndeligStatus = aktivitet.stillingFraNavData?.soknadsstatus !== undefined && endeligeStatuser.includes(aktivitet.stillingFraNavData?.soknadsstatus);
+    const kanEndre = !harEndeligStatus || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 
     const ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(

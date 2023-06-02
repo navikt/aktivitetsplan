@@ -10,18 +10,19 @@ import { DirtyContext } from '../../../context/dirty-context';
 import { selectOppdaterStillingFraNavSoknadsstatusFeil } from '../../../feilmelding/feil-selector';
 import Feilmelding from '../../../feilmelding/Feilmelding';
 
+type StatuserFraBackend = StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN | StillingFraNavSoknadsstatus.FATT_JOBBEN | StillingFraNavSoknadsstatus.CV_DELT
 interface Props {
-    soknadsstatus?: Exclude<StillingFraNavSoknadsstatus, StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN>; // IKKE_FATT_JOBBEN kan kun endres i backend
+    soknadsstatus?: Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend>; // IKKE_FATT_JOBBEN, FATT_JOBBEN og CV_DELT kan kun endres i backend
     disabled: boolean;
     onSubmit(val: { soknadsstatus: string }): Promise<any>;
 }
 
+
 const RadioButtons: Record<
-    Exclude<StillingFraNavSoknadsstatus, StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN>,
+    Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend>,
     string
 > = {
     VENTER: 'Venter på å bli kontaktet av NAV eller arbeidsgiver',
-    CV_DELT: 'CV er delt med arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Ikke fått jobben',
@@ -30,7 +31,6 @@ const RadioButtons: Record<
 const schema = z.object({
     soknadsstatus: z.enum([
         StillingFraNavSoknadsstatus.VENTER,
-        StillingFraNavSoknadsstatus.CV_DELT,
         StillingFraNavSoknadsstatus.SKAL_PAA_INTERVJU,
         StillingFraNavSoknadsstatus.JOBBTILBUD,
         StillingFraNavSoknadsstatus.AVSLAG,
@@ -64,7 +64,7 @@ const SoknadsstatusForm = (props: Props) => {
     const disable = isSubmitting || disabled;
 
     const onChangeSoknadsstatus = (
-        value: Exclude<StillingFraNavSoknadsstatus, StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN>
+        value: Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend >
     ) => {
         setValue('soknadsstatus', value);
     };
