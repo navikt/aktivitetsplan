@@ -3,10 +3,9 @@ import { Alert } from '@navikt/ds-react';
 import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch, { AppDispatch } from '../../../../felles-komponenter/hooks/useAppDispatch';
-import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
@@ -19,7 +18,8 @@ const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
     const { historisk } = aktivitet;
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
     const erUnderOppfolging = useSelector(selectErUnderOppfolging);
-    const kanEndreAktivitet = !historisk;
+    const kanEndreAktivitet =
+        !historisk && aktivitet.status !== AktivitetStatus.FULLFOERT && aktivitet.status !== AktivitetStatus.AVBRUTT;
 
     return lasterAktivitet || !erUnderOppfolging || !kanEndreAktivitet;
 };
@@ -52,21 +52,35 @@ interface SoknadsstatusValue {
     soknadsstatus: StillingFraNavSoknadsstatus;
 }
 
+const getDetaljer = ({ stillingFraNavData }: StillingFraNavAktivitet) => {
+    const { soknadsstatus, detaljer } = stillingFraNavData;
+
+    if (!soknadsstatus) return null;
+
+    if (
+        soknadsstatus === StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN &&
+        detaljer === 'KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN'
+    ) {
+        return 'Vi har fått beskjed om at arbeidsgiver har ansatt en person. Dessverre var det ikke deg denne gangen. Ansettelsesprosessen er ferdig.';
+    } else if (
+        soknadsstatus === StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN &&
+        detaljer === 'KANDIDATLISTE_LUKKET_INGEN_FIKK_JOBBEN'
+    ) {
+        return 'Vi har fått beskjed om at arbeidsgiveren ikke skal ansatte en person allikevel. Vi beklager at det ikke ble en jobbmulighet denne gangen. Lykke til videre med jobbsøkingen.';
+    } else if (soknadsstatus === StillingFraNavSoknadsstatus.FATT_JOBBEN) {
+        return 'Ansettelsesprosessen er ferdig.';
+    }
+
+    return null;
+};
+
 const OppdaterSoknadsstatus = (props: Props) => {
     const { aktivitet } = props;
     const dispatch = useAppDispatch();
     const [open, setIsOpen] = useState(false);
     const disableSoknadsstatusEndring = useDisableSoknadsstatusEndring(aktivitet);
 
-    const endretAvBruker = aktivitet.endretAvType === 'BRUKER';
-    const endeligeStatuser = [StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN, StillingFraNavSoknadsstatus.FATT_JOBBEN]
-    const harEndeligStatus = aktivitet.stillingFraNavData?.soknadsstatus !== undefined && endeligeStatuser.includes(aktivitet.stillingFraNavData?.soknadsstatus);
-    const kanEndre = !harEndeligStatus || endretAvBruker;
-    const skalViseInfoBoks = !kanEndre;
-
-    const ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
-        aktivitet.stillingFraNavData?.ikkefattjobbendetaljer
-    );
+    const detaljer = getDetaljer(aktivitet);
     const { setFormIsDirty } = useContext(DirtyContext);
 
     const onSubmitHandler = (value: SoknadsstatusFormValues): Promise<any> => {
@@ -79,13 +93,13 @@ const OppdaterSoknadsstatus = (props: Props) => {
 
     const content = (
         <>
-            {skalViseInfoBoks ? (
+            {detaljer ? (
                 <Alert variant="info" className="mt-4">
-                    {ikkefattjobbendetaljer}
+                    {detaljer}
                 </Alert>
             ) : null}
             <SoknadsstatusForm
-                disabled={disableSoknadsstatusEndring || !kanEndre}
+                disabled={disableSoknadsstatusEndring}
                 soknadsstatus={aktivitet.stillingFraNavData.soknadsstatus as any}
                 onSubmit={onSubmitHandler}
             />

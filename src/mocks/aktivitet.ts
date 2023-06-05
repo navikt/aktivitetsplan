@@ -257,7 +257,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
                   soknadsstatus: StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN,
-                  ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
+                  detaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
           }),
           wrapAktivitet({
@@ -268,7 +268,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
                   soknadsstatus: StillingFraNavSoknadsstatus.FATT_JOBBEN,
-                  ikkefattjobbendetaljer: undefined,
+                  detaljer: undefined,
               },
           }),
           wrapAktivitet({
