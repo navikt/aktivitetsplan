@@ -13,11 +13,15 @@ export function avtaltResolver<FormValues extends object>(
     ): Promise<ResolverResult<FormValues>> => {
         const result = await resolver(values, context, options);
         if (!avtalt) return result;
+
+        const newErrors = Object.entries(result.errors)
+            .filter(([fieldKey, _]) => validatedFields.includes(fieldKey as keyof FormValues))
+            .reduce((values, [key, val]) => ({ ...values, [key]: val }), {});
+        const newValues = Object.keys(newErrors).length > 0 ? {} : values;
+
         return {
-            values: result.values,
-            errors: Object.entries(result.errors)
-                .filter(([fieldKey, _]) => validatedFields.includes(fieldKey as keyof FormValues))
-                .reduce((values, [key, val]) => ({ ...values, [key]: val }), {}),
+            values: newValues,
+            errors: newErrors,
         };
     };
 }
