@@ -133,7 +133,7 @@ export interface StillingFraNavAktivitetData {
     arbeidssted: string;
     kontaktpersonData: KontaktInfo;
     soknadsstatus?: StillingFraNavSoknadsstatus;
-    ikkefattjobbendetaljer?: string;
+    detaljer?: string;
     livslopsstatus: Livslopsstatus;
 }
 

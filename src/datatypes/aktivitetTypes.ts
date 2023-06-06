@@ -28,6 +28,7 @@ export enum StillingFraNavSoknadsstatus {
     JOBBTILBUD = 'JOBBTILBUD',
     AVSLAG = 'AVSLAG',
     IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
+    FATT_JOBBEN = 'FATT_JOBBEN',
 }
 
 export enum Livslopsstatus {

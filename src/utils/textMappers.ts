@@ -78,6 +78,7 @@ export const stillingFraNavSoknadsstatusMapper: Record<StillingFraNavSoknadsstat
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Ikke fått jobben',
     IKKE_FATT_JOBBEN: 'Ikke fått jobben',
+    FATT_JOBBEN: 'Fått jobben',
 };
 
 export const stillingOgStillingFraNavEtikettMapper: Record<StillingStatus | StillingFraNavSoknadsstatus, string> = {

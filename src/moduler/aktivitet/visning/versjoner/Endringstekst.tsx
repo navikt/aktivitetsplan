@@ -109,7 +109,8 @@ const Endringstekst = (props: Props) => {
                 </>
             );
         }
-        case StillingFraNavTransaksjonsType.IKKE_FATT_JOBBEN: {
+        case StillingFraNavTransaksjonsType.IKKE_FATT_JOBBEN:
+        case StillingFraNavTransaksjonsType.FATT_JOBBEN: {
             // Denne transaksjonen endrer også på aktivitetsstatus, som settes til fullført
             const tilStatus = aktivitet.stillingFraNavData?.soknadsstatus
                 ? stillingFraNavSoknadsstatusMapper[aktivitet.stillingFraNavData.soknadsstatus]

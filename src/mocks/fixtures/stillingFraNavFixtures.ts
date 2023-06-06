@@ -82,7 +82,7 @@ export const enStillingFraNavData: StillingFraNavAktivitetData = {
     soknadsfrist: 'Snarest',
     stillingsId: '1231',
     bestillingsId: '12312',
-    ikkefattjobbendetaljer: undefined,
+    detaljer: undefined,
     svarfrist: '2022-10-19T14:33:28.518Z',
     livslopsstatus: Livslopsstatus.HAR_VARSLET,
 };
