@@ -116,7 +116,13 @@ const AktivitetStatusForm = (props: Props) => {
 
     return (
         <form onSubmit={handleSubmit((data) => onSubmit(data))} className="space-y-4">
-            <RadioGroup legend={null} hideLegend value={status} onChange={onChangeStatus} disabled={disabled}>
+            <RadioGroup
+                legend={'Hva er status på aktiviteten?'}
+                hideLegend
+                value={status}
+                onChange={onChangeStatus}
+                disabled={disabled}
+            >
                 {Object.entries(RadioButtons).map(([key, value]) => (
                     <Radio key={key} value={key}>
                         {value}
