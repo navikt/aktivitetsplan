@@ -14,6 +14,8 @@ export const ER_INTERN_FLATE = !USE_MOCK
     ? ['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)
     : !erEksternBruker();
 
+export const ER_PROD = ['prod-ekstern', 'prod-intern'].includes(import.meta.env.MODE);
+
 export const EGEN_AKTIVITET_TYPE = 'EGEN';
 export const STILLING_AKTIVITET_TYPE = 'STILLING';
 export const TILTAK_AKTIVITET_TYPE = 'TILTAKSAKTIVITET';

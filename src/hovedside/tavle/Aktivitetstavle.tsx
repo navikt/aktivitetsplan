@@ -10,6 +10,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
+import UxSignals from '../../felles-komponenter/UxSignals';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
@@ -103,6 +104,7 @@ const Aktivitetstavle = () => {
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
+            <UxSignals />
         </Innholdslaster>
     );
 };
