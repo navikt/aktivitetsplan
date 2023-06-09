@@ -1,14 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { ER_PROD, USE_HASH_ROUTER } from '../constant';
-import { useErVeileder } from '../Provider';
+import { ER_PROD } from '../constant';
 
 const UxSignalsWidget = () => {
-    if (USE_HASH_ROUTER) return null; // ghpages
-
-    const erVeileder = useErVeileder();
-    if (erVeileder) return null;
-
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
