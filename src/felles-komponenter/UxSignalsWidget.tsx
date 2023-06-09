@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { ER_PROD, USE_HASH_ROUTER } from '../constant';
 import { useErVeileder } from '../Provider';
 
-const UxSignals = () => {
+const UxSignalsWidget = () => {
     if (USE_HASH_ROUTER) return null; // ghpages
 
     const erVeileder = useErVeileder();
@@ -33,4 +33,4 @@ const UxSignals = () => {
     );
 };
 
-export default UxSignals;
+export default UxSignalsWidget;
