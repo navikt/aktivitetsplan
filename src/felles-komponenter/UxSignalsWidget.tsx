@@ -22,7 +22,7 @@ const UxSignalsWidget = () => {
         <div
             data-uxsignals-embed="study-b6mh8y7gdw"
             data-uxsignals-mode={!ER_PROD ? 'demo' : ''}
-            className="max-w-[620px] mx-auto pb-8"
+            className="uxsignalswidget max-w-[620px] mx-auto pb-8"
         />
     );
 };
