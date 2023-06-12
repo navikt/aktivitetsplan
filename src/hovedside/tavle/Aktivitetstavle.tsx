@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
-import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
+import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId, USE_HASH_ROUTER } from '../../constant';
 import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
@@ -10,6 +10,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
+import UxSignalsWidget from '../../felles-komponenter/UxSignalsWidget';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
@@ -68,6 +69,8 @@ const Aktivitetstavle = () => {
     const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, underOppfolging);
     const skjulAdvarsel = !dragging || droppable;
 
+    const showUxSignalsWidget = !erVeileder && !USE_HASH_ROUTER;
+
     // SCROLLING //
     const sistVisteAktivitetId: string = useSelector((state: RootState) => {
         const aktivitet: AlleAktiviteter | undefined = selectSistVisteAktivitet(state);
@@ -103,6 +106,7 @@ const Aktivitetstavle = () => {
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
+            {showUxSignalsWidget && <UxSignalsWidget />}
         </Innholdslaster>
     );
 };

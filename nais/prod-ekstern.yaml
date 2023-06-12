@@ -71,12 +71,12 @@ spec:
           "header": {
             "csp": {
               "defaultSrc":["'self'", "*.nav.no"],
-              "scriptSrc":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'", "blob:", "*.boost.ai"],
+              "scriptSrc":["*.nav.no","*.psplugin.com","*.hotjar.com","*.taskanalytics.com","'unsafe-inline'","'unsafe-eval'", "blob:", "*.boost.ai", "uxsignals-frontend.uxsignals.app.iterate.no"],
               "styleSrc":["*.nav.no","*.psplugin.com","'unsafe-inline'"],
               "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
-              "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com","data:"],
+              "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com","data:","uxsignals-frontend.uxsignals.app.iterate.no"],
               "frameSrc":["*.hotjar.com","player.vimeo.com","video.qbrick.com"],
-              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com"]
+              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com","*.uxsignals.com"]
             }
           },
           "cors": {
