@@ -42,6 +42,8 @@ spec:
     outbound:
       rules:
         - application: pto-proxy
+        - application: poao-unleash
+          namespace: poao
       external:
         - host: navnob2c.b2clogin.com
         - host: veilarbmalverk.prod-fss-pub.nais.io
@@ -91,6 +93,16 @@ spec:
             { "fromPath": "/veilarblest", "toUrl": "https://veilarblest.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
+            { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } },
+            {
+              "fromPath": "/veilarbpersonflatefs",
+              "toUrl": "http://poao-unleash.poao.svc.cluster.local",
+              "preserveFromPath": false,
+               "toApp": {
+                "name": "poao-unleash",
+                "namespace": "poao",
+                "cluster": "prod-gcp"
+              }
+            }
           ]
         }
