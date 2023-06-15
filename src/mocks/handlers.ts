@@ -19,6 +19,7 @@ import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './
 import { auth } from './data/auth';
 import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaaSvar } from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
+import { features } from './data/feature';
 import { innstillingsHistorikk } from './data/innstillings-historikk';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
@@ -153,4 +154,7 @@ export const handlers = [
 
     // veilarbmalverk
     rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverkMedType)),
+
+    // veilarbpersonflatefs
+    rest.get('/veilarbpersonflatefs/api/feature', jsonResponse(features)),
 ];
