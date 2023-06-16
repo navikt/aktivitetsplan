@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
-import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_PROD, TabId, USE_HASH_ROUTER } from '../../constant';
+import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
 import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
@@ -69,8 +69,6 @@ const Aktivitetstavle = () => {
     const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, underOppfolging);
     const skjulAdvarsel = !dragging || droppable;
 
-    const showUxSignalsWidget = !erVeileder && !USE_HASH_ROUTER && ER_PROD;
-
     // SCROLLING //
     const sistVisteAktivitetId: string = useSelector((state: RootState) => {
         const aktivitet: AlleAktiviteter | undefined = selectSistVisteAktivitet(state);
@@ -106,7 +104,7 @@ const Aktivitetstavle = () => {
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
-            {showUxSignalsWidget && <UxSignalsWidget />}
+            <UxSignalsWidget />
         </Innholdslaster>
     );
 };
