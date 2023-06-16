@@ -3,6 +3,7 @@ import nn from 'date-fns/locale/nn';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import { initAmplitude } from './amplitude/amplitude';
 import { USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
@@ -50,5 +51,6 @@ if (USE_MOCK) {
             renderApp(props);
         });
 } else {
+    initAmplitude();
     renderApp();
 }
