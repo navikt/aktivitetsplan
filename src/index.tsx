@@ -1,25 +1,16 @@
-import NAVSPA from '@navikt/navspa';
 import { setDefaultOptions } from 'date-fns';
 import nn from 'date-fns/locale/nn';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import AppWebComponent from './AppWebComponent';
 import { USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 import { mockfnr } from './mocks/utils';
 
-declare global {
-    interface Window {
-        NAVSPA: any;
-    }
-}
-
 setDefaultOptions({ locale: nn });
 
 const exportToNavSpa = () => {
-    NAVSPA.eksporter('aktivitetsplan', AppWebComponent);
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
     import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
