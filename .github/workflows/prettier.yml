@@ -10,10 +10,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          registry-url: "https://npm.pkg.github.com"
       - name: Kjør prettier
         run: |
           npm ci
           npm run format-all
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.6.0
         with:
