@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build:dev-ekstern": "vite build --mode=dev-ekstern",
-    "build:dev-intern": "vite build --mode=dev-intern --base=https://cdn.dev.nav.no/dab/aktivitetsplan-dev-intern/build/",
+    "build:dev-intern": "vite build --mode=dev-intern --base=https://cdn.nav.no/dab/aktivitetsplan-dev-intern/build/",
     "build:prod-ekstern": "vite build --mode=prod-ekstern",
     "build:prod-intern": "vite build --mode=prod-intern --base=https://cdn.nav.no/dab/aktivitetsplan-prod-intern/build/",
     "build": "vite build",
