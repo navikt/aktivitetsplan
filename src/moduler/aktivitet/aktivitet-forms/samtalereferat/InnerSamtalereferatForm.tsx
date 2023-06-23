@@ -134,7 +134,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                                             logToggleSpraksjekkToggle(!open);
                                         }}
                                     >
-                                        Slå på klarspråkhjelp
+                                        Klarspråkhjelpen
                                     </Switch>
                                     <Spraksjekk value={referatValue} open={open} options={{ tools: false }} />
                                 </>
