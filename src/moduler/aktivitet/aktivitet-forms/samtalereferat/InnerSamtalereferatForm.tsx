@@ -1,12 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Select, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject } from 'react';
+import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
+import { Button, Select, Switch, TextField, Textarea } from '@navikt/ds-react';
+import React, { MutableRefObject, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
+import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../amplitude/amplitude';
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
+import { VIS_SPRAKSJEKK } from '../../../feature/feature';
+import { selectFeature } from '../../../feature/feature-selector';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
@@ -38,6 +43,10 @@ interface Props {
 
 const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
+
+    const [open, setOpen] = useState(false);
+    const visSpraksjekk = useSelector(selectFeature(VIS_SPRAKSJEKK));
+
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
 
@@ -73,6 +82,9 @@ const InnerSamtalereferatForm = (props: Props) => {
                 status: AktivitetStatus.GJENNOMFOERT,
                 avtalt: false,
                 erReferatPublisert,
+            }).then(() => {
+                const analysis = checkText(data.referat);
+                logReferatFullfort(analysis, erReferatPublisert, open);
             });
         });
     };
@@ -104,13 +116,30 @@ const InnerSamtalereferatForm = (props: Props) => {
                     </Select>
 
                     {nyAktivitet && (
-                        <Textarea
-                            label="Samtalereferat (obligatorisk)"
-                            maxLength={5000}
-                            {...register('referat')}
-                            error={errors.referat && errors.referat.message}
-                            value={referatValue}
-                        />
+                        <>
+                            <Textarea
+                                label="Samtalereferat (obligatorisk)"
+                                maxLength={5000}
+                                {...register('referat')}
+                                error={errors.referat && errors.referat.message}
+                                value={referatValue}
+                            />
+
+                            {visSpraksjekk && (
+                                <>
+                                    <Switch
+                                        checked={open}
+                                        onChange={() => {
+                                            setOpen(!open);
+                                            logToggleSpraksjekkToggle(!open);
+                                        }}
+                                    >
+                                        Slå på klarspråkhjelp
+                                    </Switch>
+                                    <Spraksjekk value={referatValue} open={open} options={{ tools: false }} />
+                                </>
+                            )}
+                        </>
                     )}
 
                     <CustomErrorSummary errors={errors} />

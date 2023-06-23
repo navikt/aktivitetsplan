@@ -1,11 +1,12 @@
+import { TextCheckerAmplitudeAnalysis } from './amplitude';
+
 export type AmplitudeEvent =
     | {
-          name: 'referat fullført';
+          name: 'referat lagret';
           data: {
-              analysis: unknown;
-              type: 'CREATE' | 'UPDATE';
-              spraksjekkVersjon: string;
+              analysis: TextCheckerAmplitudeAnalysis;
+              referatPublisert: boolean;
               spraksjekkEnabled: boolean;
           };
       }
-    | { name: 'språksjekk toggle'; data: { enabled: boolean } };
+    | { name: 'toggle'; data: { text: string; enabled: boolean } };

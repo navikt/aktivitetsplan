@@ -1,16 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Textarea } from '@navikt/ds-react';
+import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
+import { Button, Switch, Textarea } from '@navikt/ds-react';
 import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
+import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../amplitude/amplitude';
 import { Status } from '../../../../createGenericSlice';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
+import { VIS_SPRAKSJEKK } from '../../../feature/feature';
+import { selectFeature } from '../../../feature/feature-selector';
 import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-selector';
 import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
@@ -30,6 +34,10 @@ interface Props {
 
 const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
+
+    const [open, setOpen] = useState(false);
+    const visSpraksjekk = useSelector(selectFeature(VIS_SPRAKSJEKK));
+
     const startTekst = useReferatStartTekst();
 
     const dispatch = useAppDispatch();
@@ -58,12 +66,16 @@ const OppdaterReferatForm = (props: Props) => {
         return () => setFormIsDirty('referat', false);
     }, [setFormIsDirty, isDirty]);
 
-    const updateReferat = (referatData: ReferatInputProps) => {
+    const updateReferat = (referatData: ReferatInputProps, log = true) => {
         const aktivitetMedOppdatertReferat = {
             ...aktivitet,
             referat: referatData.referat,
         };
         return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((action) => {
+            if (log) {
+                const analysis = checkText(referatData.referat);
+                logReferatFullfort(analysis, aktivitet.erReferatPublisert, open);
+            }
             if (isFulfilled(action)) {
                 onFerdig();
             }
@@ -72,9 +84,12 @@ const OppdaterReferatForm = (props: Props) => {
     };
 
     const updateAndPubliser = handleSubmit((values) => {
-        return updateReferat(values).then((action: PayloadAction<any>) => {
+        return updateReferat(values, false).then((action: PayloadAction<any>) => {
             if (action.payload) {
-                dispatch(publiserReferat(action.payload));
+                dispatch(publiserReferat(action.payload)).then(() => {
+                    const analysis = checkText(values.referat);
+                    logReferatFullfort(analysis, true, open);
+                });
             }
         });
     });
@@ -85,7 +100,7 @@ const OppdaterReferatForm = (props: Props) => {
 
     return (
         <form
-            onSubmit={handleSubmit(updateReferat)}
+            onSubmit={handleSubmit((values) => updateReferat(values))}
             className="space-y-4 bg-surface-alt-3-subtle p-4 border border-border-alt-3 rounded-md"
         >
             <Textarea
@@ -96,6 +111,21 @@ const OppdaterReferatForm = (props: Props) => {
                 {...register('referat')}
                 value={referatValue}
             />
+
+            {visSpraksjekk && (
+                <>
+                    <Switch
+                        checked={open}
+                        onChange={() => {
+                            setOpen(!open);
+                            logToggleSpraksjekkToggle(!open);
+                        }}
+                    >
+                        Slå på klarspråkhjelp
+                    </Switch>
+                    <Spraksjekk value={referatValue} open={open} options={{ tools: false }} />
+                </>
+            )}
 
             <Feilmelding feilmeldinger={feil} />
             <div className="space-x-4">
