@@ -27,13 +27,21 @@ export function logToggleSpraksjekkToggle(enabled: boolean) {
     return logAmplitudeEvent({ name: 'toggle', data: { text: 'Slå på klarspråkhjelp', enabled: enabled } });
 }
 
-export function logReferatFullfort(analysis: TextCheckerResult, referatPublisert: boolean, spraksjekkEnabled: boolean) {
+export function logReferatFullfort(
+    analysis: TextCheckerResult,
+    referatPublisert: boolean,
+    spraksjekkEnabled: boolean,
+    variant: 'A' | 'B'
+) {
     const mappedAnalysis = mapSpraksjekkAnalysis(analysis);
 
-    return logAmplitudeEvent({
-        name: 'referat lagret',
-        data: { analysis: mappedAnalysis, referatPublisert, spraksjekkEnabled },
-    });
+    return logAmplitudeEvent(
+        {
+            name: 'referat lagret',
+            data: { analysis: mappedAnalysis, referatPublisert, spraksjekkEnabled },
+        },
+        { variant }
+    );
 }
 
 type Modify<T, U> = Omit<T, keyof U> & U;
