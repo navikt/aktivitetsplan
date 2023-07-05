@@ -8,7 +8,7 @@ import * as Api from '../../api/lestAPI';
 import Modal from '../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../felles-komponenter/modal/ModalContainer';
 import * as AppPT from '../../proptypes';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routes/useRoutes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon } from '../lest/lest-selector';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';

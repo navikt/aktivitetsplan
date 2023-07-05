@@ -6,7 +6,7 @@ import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../../dat
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routes/useRoutes';
 import { aktivitetStatusMap, getAktivitetType } from '../../../utils/textMappers';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';

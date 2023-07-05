@@ -12,7 +12,7 @@ import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routes/useRoutes';
 import { erDroppbar } from '../tavleUtils';
 
 interface Props {

@@ -8,7 +8,7 @@ import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTy
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routes/useRoutes';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseForm from './BegrunnelseForm';

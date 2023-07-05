@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, HashRouter, Navigate, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
@@ -35,7 +35,23 @@ const ErrorCleanerOnRouteChange = () => {
     return null;
 };
 
-function App({ Routes }: { Routes: any }) {
+const GoToInitialRouteIfExist = ({ initialRoute }: { initialRoute: string | undefined }) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (initialRoute) {
+            navigate(initialRoute);
+        }
+    }, []);
+    return null;
+};
+
+function App({
+    Routes,
+    initialRoute = undefined,
+}: {
+    Routes: React.FunctionComponent;
+    initialRoute: string | undefined;
+}) {
     const erVeileder = useErVeileder();
     const fnr = useFnr();
     return (
@@ -61,6 +77,7 @@ function App({ Routes }: { Routes: any }) {
                         {erVeileder ? <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} /> : null}
                     </Routes>
                     <ErrorCleanerOnRouteChange />
+                    <GoToInitialRouteIfExist initialRoute={initialRoute} />
                 </Router>
                 <HiddenIf hidden={ER_INTERN_FLATE}>
                     <Timeoutbox />

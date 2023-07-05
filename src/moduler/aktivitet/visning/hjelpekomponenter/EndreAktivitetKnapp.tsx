@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
-import { useRoutes } from '../../../../routes';
+import { useRoutes } from '../../../../routes/useRoutes';
 
 interface Props {
     id: string;

@@ -7,7 +7,7 @@ import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivite
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routes/useRoutes';
 import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-selector';

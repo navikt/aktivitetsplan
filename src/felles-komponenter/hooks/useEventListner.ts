@@ -1,5 +1,9 @@
 import { useCallback, useEffect } from 'react';
 
+export enum AktivitetsplanEvents {
+    visAktivitetsplan = 'visAktivitetsplan',
+}
+
 export function useEventListener<T>(name: string, listener: (event: CustomEvent<T>) => void) {
     const callback = useCallback(
         (event: Event) => {

@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useErVeileder } from '../../Provider';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routes/useRoutes';
 import { byttTilDialogFlate, getDialogLenke } from './DialogFlateUtils';
 
 interface Props {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
-import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
+import { AktivitetsplanEvents, useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentDialoger } from '../moduler/dialog/dialog-slice';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
@@ -13,13 +13,13 @@ import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-s
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import { useRoutes } from '../routes';
+import { useRoutes } from '../routes/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 const Hovedside = () => {
     const navigate = useNavigate();
     const { aktivitetRoute } = useRoutes();
-    useEventListener('visAktivitetsplan', (event) => {
+    useEventListener(AktivitetsplanEvents.visAktivitetsplan, (event) => {
         const aktivitetId = event.detail as string | undefined;
         if (!aktivitetId) return;
         navigate(aktivitetRoute(aktivitetId));

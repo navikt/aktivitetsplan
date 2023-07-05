@@ -9,7 +9,7 @@ import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routes/useRoutes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectLagNyAktivitetFeil } from '../../feilmelding/feil-selector';
 import Feilmelding from '../../feilmelding/Feilmelding';

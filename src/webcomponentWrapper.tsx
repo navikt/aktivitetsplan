@@ -5,10 +5,25 @@ import * as ReactDOM from 'react-dom';
 import { Routes } from 'react-router-dom';
 
 import App from './app';
+import { AktivitetsplanEvents } from './felles-komponenter/hooks/useEventListner';
 import lessCss from './index.less?inline';
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
+import { aktivitetRoute } from './routes/routes';
 import tailwindCss from './tailwind.css?inline';
+
+// Hvis bruker står i dialog og navigarer til en spesifikk aktivitet uten at aktivitetsplanen er
+// mountet må dette fanges opp
+let initalRouteAktivitetsId: string | undefined = undefined;
+window.addEventListener(
+    AktivitetsplanEvents.visAktivitetsplan,
+    (event) => {
+        const aktivitetId = event.detail as string | undefined;
+        if (!aktivitetId) return;
+        initalRouteAktivitetsId = aktivitetId;
+    },
+    { once: true }
+);
 
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
@@ -28,11 +43,12 @@ export class DabAktivitetsplan extends HTMLElement {
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
+        const initialRoute = !initalRouteAktivitetsId ? undefined : aktivitetRoute(initalRouteAktivitetsId, fnr);
 
         ReactDOM.render(
             <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
                 <Provider key={fnr} fnr={fnr} setFnrRef={(setFnr) => (this.setFnr = setFnr)}>
-                    <App Routes={Routes} key={'1'} />
+                    <App initialRoute={initialRoute} Routes={Routes} key={'1'} />
                 </Provider>
             </ModalProvider>,
             appRoot

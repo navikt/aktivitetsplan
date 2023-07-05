@@ -30,7 +30,7 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routes/useRoutes';
 import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import Feilmelding from '../../feilmelding/Feilmelding';

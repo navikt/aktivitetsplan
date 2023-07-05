@@ -8,7 +8,7 @@ import { Status } from '../../createGenericSlice';
 import { Lest } from '../../datatypes/lestTypes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { loggTidBruktGaaInnPaaAktivitetsplanen } from '../../felles-komponenter/utils/logging';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routes/useRoutes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon, selectLestStatus } from '../lest/lest-selector';
 import { hentLest } from '../lest/lest-slice';

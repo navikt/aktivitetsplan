@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routes/useRoutes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
 import ModalHeader from './ModalHeader';
 
