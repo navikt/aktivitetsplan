@@ -50,6 +50,8 @@ export const hentArenaAktiviteter = createAsyncThunk(`${arenaAktivitetSlice.name
     return await Api.hentArenaAktiviteter();
 });
 
+const validArenaPrefixes = ['TA', 'UA', 'GA', 'ARENATA', 'ARENAUA', 'ARENAGA'];
+const erArenaId = (id: string) => validArenaPrefixes.some((prefix) => id.startsWith(prefix));
 export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
     `${arenaAktivitetSlice.name}/oppdater`,
     async ({
@@ -59,7 +61,15 @@ export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
         arenaAktivitet: ArenaAktivitet;
         forhaandsorientering: Forhaandsorientering;
     }) => {
-        return await Api.sendForhaandsorienteringArenaAktivitet(arenaAktivitet.id, forhaandsorientering);
+        if (erArenaId(arenaAktivitet.id)) {
+            return await Api.sendForhaandsorienteringArenaAktivitet(arenaAktivitet.id, forhaandsorientering);
+        } else {
+            return await Api.settAktivitetTilAvtalt(
+                arenaAktivitet.id,
+                arenaAktivitet.versjon.toString(),
+                forhaandsorientering
+            );
+        }
     }
 );
 
