@@ -29,6 +29,7 @@ export interface Moteplan {
 export interface ArenaAktivitet {
     //Felles
     id: string; // Enten tekniskid eller arenaid
+    versjon: number;
     status: AktivitetStatus;
     type: ArenaAktivitetType;
     tittel: string;
