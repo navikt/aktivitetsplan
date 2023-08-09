@@ -14,8 +14,14 @@ jobs:
         with:
           node-version: 18
           registry-url: "https://npm.pkg.github.com"
-          cache: 'npm'
+
       - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: sjekk feil
+        if: failure()
+        run: |
+          curl -H "Authorization: Bearer $NODE_AUTH_TOKEN" 'https://api.github.com/rate_limit'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - run: npm run test
