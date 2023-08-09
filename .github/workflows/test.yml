@@ -19,8 +19,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: sjekk feil
-
         run: |
           curl -H "Authorization: Bearer $NODE_AUTH_TOKEN" 'https://api.github.com/rate_limit'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - run: npm run test
       - run: npm run build
