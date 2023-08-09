@@ -23,8 +23,18 @@ const schema = z.object({
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
+
     varighet: z.string().min(1, 'Du må fylle ut varighet'),
-    kanal: z.nativeEnum(Kanal),
+    kanal: z.nativeEnum(Kanal, {
+        errorMap: (issue) => {
+            switch (issue.code) {
+                case 'invalid_enum_value':
+                    return { message: 'Du må velge møteform' };
+                default:
+                    return { message: 'Noe har gått galt' };
+            }
+        },
+    }),
     adresse: z
         .string()
         .min(1, 'Du må fylle ut møtested eller annen praktisk informasjon')
@@ -51,10 +61,10 @@ const MoteAktivitetForm = (props: Props) => {
 
     const defaultValues: Partial<MoteAktivitetFormValues> = {
         tittel: aktivitet?.tittel,
-        klokkeslett: moteTid?.klokkeslett ? moteTid.klokkeslett : '10:00',
+        klokkeslett: moteTid?.klokkeslett,
         // Keep field as string since input natively returns string
-        varighet: moteTid?.varighet ? formatterVarighet(moteTid.varighet) : '00:45',
-        kanal: aktivitet?.kanal || Kanal.OPPMOTE,
+        varighet: formatterVarighet(moteTid?.varighet),
+        kanal: aktivitet?.kanal,
         adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse,
         forberedelser: aktivitet?.forberedelser ?? undefined,
@@ -116,14 +126,17 @@ const MoteAktivitetForm = (props: Props) => {
                         {...register('klokkeslett')}
                         type={'time' as any}
                         step="300"
+                        error={errors.klokkeslett && errors.klokkeslett.message}
                     />
                     <TextField
                         label="Varighet (obligatorisk)"
                         {...register('varighet')}
                         type={'time' as any}
                         step="900"
+                        error={errors.varighet && errors.varighet.message}
                     />
-                    <Select label="Møteform (obligatorisk)" {...register('kanal')}>
+                    <Select label="Møteform (obligatorisk)" {...register('kanal')} error={errors.kanal && errors.kanal.message}>
+                        <option value="">Velg møteform</option>
                         <option value={Kanal.OPPMOTE}>Oppmøte</option>
                         <option value={Kanal.TELEFON}>Telefonmøte</option>
                         <option value={Kanal.INTERNET}>Videomøte</option>
