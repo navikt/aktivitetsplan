@@ -2,6 +2,9 @@ name: GCP root
 
 on:
   workflow_call:
+    secrets:
+      READER_TOKEN:
+        required: true
     inputs:
       kommando:
         required: true

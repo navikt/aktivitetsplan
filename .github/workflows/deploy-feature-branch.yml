@@ -10,16 +10,19 @@ concurrency:
 jobs:
   dev-ekstern:
     name: Deploy to dev extern
-    uses: navikt/aktivitetsplan/.github/workflows/deploy-ekstern.yml@main
+    uses: navikt/aktivitetsplan/.github/workflows/deploy-ekstern.yml
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
 
   dev-intern:
     name: Deploy application to dev intern
-    uses: navikt/aktivitetsplan/.github/workflows/deploy-intern.yml@main
+    uses: navikt/aktivitetsplan/.github/workflows/deploy-intern.yml
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
+    secrets:
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
