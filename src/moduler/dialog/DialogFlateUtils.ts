@@ -1,7 +1,6 @@
 import { MouseEvent } from 'react';
 
 import { ARBEIDSRETTET_DIALOG_URL } from '../../constant';
-import { BASE_URL } from '../../environment';
 
 interface DialogEventDetails {
     dialogId?: string;
@@ -24,19 +23,19 @@ export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialo
 export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
     if (erVeileder) {
         if (dialogId) {
-            return `${BASE_URL}/${dialogId}`;
+            return `/${dialogId}`;
         }
         if (aktiviteId) {
-            return `${BASE_URL}/ny?aktivitetId=${aktiviteId}`;
+            return `/ny?aktivitetId=${aktiviteId}`;
         }
-        return `${BASE_URL}`;
+        return `/`;
+    } else {
+        if (dialogId) {
+            return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;
+        }
+        if (aktiviteId) {
+            return `${ARBEIDSRETTET_DIALOG_URL}/ny?aktivitetId=${aktiviteId}`;
+        }
+        return `${ARBEIDSRETTET_DIALOG_URL}`;
     }
-
-    if (dialogId) {
-        return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;
-    }
-    if (aktiviteId) {
-        return `${ARBEIDSRETTET_DIALOG_URL}/ny?aktivitetId=${aktiviteId}`;
-    }
-    return `${ARBEIDSRETTET_DIALOG_URL}`;
 };
