@@ -150,6 +150,8 @@ const toHourAndMinutes = (klokkeslett: string | number): Klokkeslett => {
         };
     } else {
         const varighetMinutter = parseInt(klokkeslett.toString());
+        console.log({ varighetMinutter });
+
         const hour = minutesToHours(varighetMinutter); // Uses floor rounding
         const minute = varighetMinutter - 60 * hour;
         return { hour, minute };

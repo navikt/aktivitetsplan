@@ -17,6 +17,9 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
     }
 
     const moteTid = beregnKlokkeslettVarighet(aktivitet);
+    console.log('Mote: ', aktivitet.fraDato);
+    console.log('Mote: ', aktivitet.adresse);
+    console.log('Formattert:', formatterKlokkeslett(moteTid?.klokkeslett));
 
     return (
         <>

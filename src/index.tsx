@@ -7,7 +7,6 @@ import { initAmplitude } from './amplitude/amplitude';
 import { USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/localStorage';
-import { mockfnr } from './mocks/utils';
 
 setDefaultOptions({ locale: nn });
 
@@ -18,37 +17,35 @@ const exportToNavSpa = () => {
     });
 };
 
-const renderAsRootApp = (props?: { fnr?: string }) => {
+const renderAsRootApp = () => {
     import('./rootWrapper').then(({ renderAsReactRoot }) => {
-        renderAsReactRoot(document.getElementById('mainapp') as HTMLElement, props);
+        renderAsReactRoot(document.getElementById('mainapp') as HTMLElement);
     });
 };
 
-const renderApp = (props?: { fnr?: string }) => {
+const renderApp = () => {
     if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
         exportToNavSpa();
     } else {
-        renderAsRootApp(props);
+        renderAsRootApp();
     }
 };
 
 const isTest = import.meta.env.MODE === 'test';
 if (USE_MOCK) {
-    const fnr = mockfnr;
     const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
 
     if (erEksternBruker() && !isTest) {
         window.history.replaceState({}, '', pathnamePrefix);
     } else if (!erEksternBruker() && !isTest) {
-        window.history.replaceState({}, '', pathnamePrefix + fnr);
+        window.history.replaceState({}, '', pathnamePrefix);
     }
 
     import('./mocks')
         .then(({ default: startWorker }) => startWorker())
         .then(() => {
             ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
-            const props = { fnr: erEksternBruker() ? undefined : mockfnr };
-            renderApp(props);
+            renderApp();
         });
 } else {
     initAmplitude();

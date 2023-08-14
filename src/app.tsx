@@ -15,7 +15,6 @@ import { fjernDismissableErrors } from './moduler/feilmelding/feil-slice';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
-import { useErVeileder, useFnr } from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 
@@ -36,14 +35,12 @@ const ErrorCleanerOnRouteChange = () => {
 };
 
 function App({ Routes }: { Routes: any }) {
-    const erVeileder = useErVeileder();
-    const fnr = useFnr();
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
                 <Router>
                     <Routes>
-                        <Route path={`/${fnr ?? ''}`}>
+                        <Route path={`/`}>
                             <Route path="utskrift" element={<AktivitetsplanPrint />} />
                             <Route path="" element={<Hovedside />}>
                                 <Route path={'mal'} element={<Aktivitetsmal />} />
@@ -58,7 +55,7 @@ function App({ Routes }: { Routes: any }) {
                                 </Route>
                             </Route>
                         </Route>
-                        {erVeileder ? <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} /> : null}
+                        <Route path="*" element={<Navigate replace to={`/`} />} />
                     </Routes>
                     <ErrorCleanerOnRouteChange />
                 </Router>
