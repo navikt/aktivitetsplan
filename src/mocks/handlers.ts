@@ -136,6 +136,7 @@ export const handlers = [
         '/veilarbaktivitet/api/stillingFraNav/soknadStatus',
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
     ),
+    rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
 
     // veilarblest
     rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),
@@ -154,7 +155,4 @@ export const handlers = [
 
     // veilarbmalverk
     rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverkMedType)),
-
-    // veilarbpersonflatefs
-    rest.get('/veilarbpersonflatefs/api/feature', jsonResponse(features)),
 ];
