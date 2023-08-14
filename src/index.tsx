@@ -4,7 +4,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { initAmplitude } from './amplitude/amplitude';
-import { USE_HASH_ROUTER, USE_MOCK } from './constant';
+import { ER_INTERN_FLATE, USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
 import { erEksternBruker } from './mocks/demo/localStorage';
 
@@ -24,7 +24,7 @@ const renderAsRootApp = () => {
 };
 
 const renderApp = () => {
-    if (['dev-intern', 'prod-intern'].includes(import.meta.env.MODE)) {
+    if (ER_INTERN_FLATE) {
         exportToNavSpa();
     } else {
         renderAsRootApp();

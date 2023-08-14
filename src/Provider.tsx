@@ -5,6 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import FeatureToggle from './moduler/feature/FeatureToggle';
 import createStore from './store';
+import { ER_INTERN_FLATE } from './constant';
 
 interface Props {
     children: React.ReactNode;
@@ -29,7 +30,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
 
     return (
         <FnrContext.Provider value={fnr}>
-            <ErVeilederContext.Provider value={fnr !== undefined}>
+            <ErVeilederContext.Provider value={ER_INTERN_FLATE}>
                 <ReduxProvider store={store}>
                     <DndProvider backend={HTML5Backend}>
                         <FeatureToggle>{children}</FeatureToggle>
