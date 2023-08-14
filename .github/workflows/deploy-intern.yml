@@ -45,3 +45,9 @@ jobs:
           source: ./build/
           destination: /${{ inputs.bucket }}/
           cache-invalidate: true
+      - name: Sjekk rate limit hvis feil
+        if: failure()
+        run: |
+          curl -H "Authorization: Bearer $NODE_AUTH_TOKEN" 'https://api.github.com/rate_limit'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
