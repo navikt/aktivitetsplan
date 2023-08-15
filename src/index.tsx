@@ -4,9 +4,8 @@ import React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { initAmplitude } from './amplitude/amplitude';
-import { ER_INTERN_FLATE, USE_HASH_ROUTER, USE_MOCK } from './constant';
+import { ER_INTERN_FLATE, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
-import { erEksternBruker } from './mocks/demo/localStorage';
 
 setDefaultOptions({ locale: nn });
 
@@ -31,16 +30,7 @@ const renderApp = () => {
     }
 };
 
-const isTest = import.meta.env.MODE === 'test';
 if (USE_MOCK) {
-    const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
-
-    // if (erEksternBruker() && !isTest) {
-    //     window.history.replaceState({}, '', pathnamePrefix);
-    // } else if (!erEksternBruker() && !isTest) {
-    //     window.history.replaceState({}, '', pathnamePrefix);
-    // }
-
     import('./mocks')
         .then(({ default: startWorker }) => startWorker())
         .then(() => {
