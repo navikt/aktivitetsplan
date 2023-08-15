@@ -12,7 +12,7 @@ concurrency:
 jobs:
   dev-ekstern:
     name: Deploy to dev extern
-    uses: navikt/aktivitetsplan/.github/workflows/deploy-ekstern.yml
+    uses: ./.github/workflows/deploy-ekstern.yml
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
@@ -23,7 +23,7 @@ jobs:
 
   dev-intern:
     name: Deploy application to dev intern
-    uses: navikt/aktivitetsplan/.github/workflows/deploy-intern.yml
+    uses: ./.github/workflows/deploy-intern.yml
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
@@ -33,7 +33,7 @@ jobs:
   prod-ekstern:
     name: Deploy application to prod ekstern
     needs: dev-ekstern
-    uses: navikt/aktivitetsplan/.github/workflows/deploy-ekstern.yml
+    uses: ./.github/workflows/deploy-ekstern.yml
     with:
       kommando: npm run build:prod-ekstern
       bucket: aktivitetsplan-prod
@@ -45,7 +45,7 @@ jobs:
   prod-intern:
     name: Deploy application to prod intern
     needs: dev-intern
-    uses: navikt/aktivitetsplan/.github/workflows/deploy-intern.yml
+    uses: ./.github/workflows/deploy-intern.yml
     with:
       kommando: npm run build:prod-intern
       bucket: aktivitetsplan-prod-intern
