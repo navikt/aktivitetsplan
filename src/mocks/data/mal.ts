@@ -1,7 +1,7 @@
 import { RestRequest } from 'msw';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
-import { erEksternBruker, ingenMal } from '../demo/sessionstorage';
+import { erEksternBruker, ingenMal } from '../demo/localStorage';
 
 let maler: Mal[] = [
     {

@@ -1,4 +1,4 @@
-import { erEskalertBruker } from './demo/sessionstorage';
+import { erEskalertBruker } from './demo/localStorage';
 
 export const eskaleringsvarsel = erEskalertBruker()
     ? {

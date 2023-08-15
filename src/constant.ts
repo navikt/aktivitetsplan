@@ -1,4 +1,4 @@
-import { erEksternBruker } from './mocks/demo/sessionstorage';
+import { erEksternBruker } from './mocks/demo/localStorage';
 
 export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 

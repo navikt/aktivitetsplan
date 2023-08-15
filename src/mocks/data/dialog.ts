@@ -1,6 +1,6 @@
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
-import { erEksternBruker, ulesteDialoger } from '../demo/sessionstorage';
+import { erEksternBruker, ulesteDialoger } from '../demo/localStorage';
 import { rndId } from '../utils';
 
 const dialoger = [

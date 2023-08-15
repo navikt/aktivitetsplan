@@ -26,7 +26,7 @@ import {
     visAutomatiskeAktiviteter,
     visEksterneAktiviteter,
     visTestAktiviteter,
-} from './sessionstorage';
+} from './localStorage';
 
 const brukertype = {
     ekstern: 'eksternbruker',

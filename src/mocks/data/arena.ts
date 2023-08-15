@@ -3,7 +3,7 @@ import { RestRequest } from 'msw';
 
 import { ArenaAktivitet, ArenaEtikett } from '../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
-import { visArenaAktiviteter } from '../demo/sessionstorage';
+import { visArenaAktiviteter } from '../demo/localStorage';
 
 export const arena = !visArenaAktiviteter()
     ? []
