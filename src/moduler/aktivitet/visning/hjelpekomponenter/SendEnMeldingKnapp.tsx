@@ -30,7 +30,7 @@ const SendEnMeldingKnapp = (props: Props) => {
     const veilederOnClick = (event: React.MouseEvent) => {
         if (erVeileder) {
             navigate(hovedsideRoute(), { replace: true });
-            byttTilDialogFlate(event, aktivitet.id, dialog?.id);
+            byttTilDialogFlate({ event, fnr, aktivitetId: aktivitet?.id, dialogId: dialog?.id });
         }
     };
 
@@ -39,7 +39,7 @@ const SendEnMeldingKnapp = (props: Props) => {
             <Button
                 variant="secondary"
                 as="a"
-                href={getDialogLenke(erVeileder, fnr, aktivitet.id, dialog?.id)}
+                href={getDialogLenke({ erVeileder, fnr, aktivitetId: aktivitet.id, dialogId: dialog?.id })}
                 icon={<ChatElipsisIcon aria-hidden fontSize="1.5rem" />}
                 onClick={veilederOnClick}
             >
