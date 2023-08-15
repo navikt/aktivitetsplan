@@ -7,9 +7,9 @@ interface DialogEventDetails {
     aktivitetId?: string;
 }
 
-export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) => {
+export const byttTilDialogFlate = (event: MouseEvent, fnr?: string, aktiviteId?: string, dialogId?: string) => {
     event.preventDefault();
-    window.history.pushState('', 'Dialog', getDialogLenke(true, aktiviteId, dialogId));
+    window.history.pushState('', 'Dialog', getDialogLenke(true, fnr, aktiviteId, dialogId));
     window.dispatchEvent(
         new CustomEvent<DialogEventDetails>('visDialog', {
             detail: {
@@ -20,15 +20,15 @@ export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialo
     );
 };
 
-export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
-    if (erVeileder) {
+export const getDialogLenke = (erVeileder: boolean, fnr?: string, aktiviteId?: string, dialogId?: string) => {
+    if (erVeileder && fnr) {
         if (dialogId) {
-            return `/${dialogId}`;
+            return `/${fnr}/${dialogId}`;
         }
         if (aktiviteId) {
-            return `/ny?aktivitetId=${aktiviteId}`;
+            return `/${fnr}/ny?aktivitetId=${aktiviteId}`;
         }
-        return `/`;
+        return `/${fnr}`;
     } else {
         if (dialogId) {
             return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;
