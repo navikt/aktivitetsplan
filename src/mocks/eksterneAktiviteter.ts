@@ -3,7 +3,7 @@ import { addDays, subDays } from 'date-fns';
 import { AktivitetStatus } from '../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { wrapAktivitet } from './aktivitet';
-import { visEksterneAktiviteter } from './demo/sessionstorage';
+import { visEksterneAktiviteter } from './demo/localStorage';
 import { enEksternAktivitet } from './fixtures/eksternAktivitetFixtures';
 
 export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()

@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 import { initAmplitude } from './amplitude/amplitude';
 import { USE_HASH_ROUTER, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
-import { erEksternBruker } from './mocks/demo/sessionstorage';
+import { erEksternBruker } from './mocks/demo/localStorage';
 import { mockfnr } from './mocks/utils';
 
 setDefaultOptions({ locale: nn });

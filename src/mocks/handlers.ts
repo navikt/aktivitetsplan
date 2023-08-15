@@ -39,7 +39,7 @@ import {
     nivaa4Feilet,
     oppdateringKunFeiler,
     oppfFeilet,
-} from './demo/sessionstorage';
+} from './demo/localStorage';
 import { failOrGetResponse, jsonResponse } from './utils';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();

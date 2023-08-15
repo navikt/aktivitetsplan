@@ -22,7 +22,7 @@ import {
     StillingFraNavTransaksjonsType,
     StillingTransaksjonsType,
 } from '../datatypes/transaksjonstyperTypes';
-import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
+import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/localStorage';
 import { eksterneAktiviteter } from './eksterneAktiviteter';
 import { enStillingAktivitet } from './fixtures/stillingFixtures';
 import {

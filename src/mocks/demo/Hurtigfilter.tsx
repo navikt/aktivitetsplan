@@ -1,7 +1,7 @@
 import { Select } from '@navikt/ds-react';
 import React from 'react';
 
-import { LocalStorageElement, settLocalStorage } from './sessionstorage';
+import { LocalStorageElement, settLocalStorage } from './localStorage';
 
 const hurtigfilterType = [
     {

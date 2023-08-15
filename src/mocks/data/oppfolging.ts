@@ -1,7 +1,7 @@
 import { RestRequest } from 'msw';
 
 import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
-import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from '../demo/sessionstorage';
+import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from '../demo/localStorage';
 
 const oppfolgingsperioder: Oppfolgingsperiode[] = [
     {
