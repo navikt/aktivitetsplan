@@ -10,7 +10,7 @@ import { erEksternBruker } from './mocks/demo/localStorage';
 
 setDefaultOptions({ locale: nn });
 
-const exportToNavSpa = () => {
+const exportAsWebcomponent = () => {
     // Denne må lazy importeres fordi den laster inn all css selv inn under sin egen shadow-root
     import('./webcomponentWrapper').then(({ DabAktivitetsplan }) => {
         customElements.define('dab-aktivitetsplan', DabAktivitetsplan);
@@ -25,7 +25,7 @@ const renderAsRootApp = () => {
 
 const renderApp = () => {
     if (ER_INTERN_FLATE) {
-        exportToNavSpa();
+        exportAsWebcomponent();
     } else {
         renderAsRootApp();
     }
@@ -35,11 +35,11 @@ const isTest = import.meta.env.MODE === 'test';
 if (USE_MOCK) {
     const pathnamePrefix = `${import.meta.env.BASE_URL}${USE_HASH_ROUTER ? '#/' : ''}`;
 
-    if (erEksternBruker() && !isTest) {
-        window.history.replaceState({}, '', pathnamePrefix);
-    } else if (!erEksternBruker() && !isTest) {
-        window.history.replaceState({}, '', pathnamePrefix);
-    }
+    // if (erEksternBruker() && !isTest) {
+    //     window.history.replaceState({}, '', pathnamePrefix);
+    // } else if (!erEksternBruker() && !isTest) {
+    //     window.history.replaceState({}, '', pathnamePrefix);
+    // }
 
     import('./mocks')
         .then(({ default: startWorker }) => startWorker())

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, HashRouter, Navigate, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, useLocation, useParams } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
@@ -55,6 +55,8 @@ function App({ Routes }: { Routes: any }) {
                                 </Route>
                             </Route>
                         </Route>
+                        {/* Brukes for å ikke brekke lenker fra dialoger til aktiviteter inn fnr er helt ute av urler */}
+                        <Route path="/:fnr/aktivitet/vis/:id" element={<RedirectToAktivitetWithoutFnr />} />
                         <Route path="*" element={<Navigate replace to={`/`} />} />
                     </Routes>
                     <ErrorCleanerOnRouteChange />
@@ -67,5 +69,10 @@ function App({ Routes }: { Routes: any }) {
         </div>
     );
 }
+
+const RedirectToAktivitetWithoutFnr = () => {
+    const params = useParams();
+    return <Navigate replace to={`/aktivitet/vis/` + params.id} />;
+};
 
 export default App;
