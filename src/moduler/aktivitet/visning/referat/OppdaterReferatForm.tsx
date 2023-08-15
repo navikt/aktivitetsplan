@@ -123,7 +123,7 @@ const OppdaterReferatForm = (props: Props) => {
                     >
                         Klarspråkhjelpen
                     </Switch>
-                    <Spraksjekk value={referatValue} open={open} options={{ tools: false }} />
+                    <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
                 </>
             )}
 
