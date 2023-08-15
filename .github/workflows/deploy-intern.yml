@@ -2,6 +2,9 @@ name: GCP root
 
 on:
   workflow_call:
+    secrets:
+      READER_TOKEN:
+        required: true
     inputs:
       kommando:
         required: true
@@ -41,3 +44,4 @@ jobs:
           cdn-team-name: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
+          cache-invalidate: true
