@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, HashRouter, Navigate, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, useLocation, useParams } from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
@@ -15,7 +15,6 @@ import { fjernDismissableErrors } from './moduler/feilmelding/feil-slice';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
-import { useErVeileder, useFnr } from './Provider';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 
@@ -36,14 +35,12 @@ const ErrorCleanerOnRouteChange = () => {
 };
 
 function App({ Routes }: { Routes: any }) {
-    const erVeileder = useErVeileder();
-    const fnr = useFnr();
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
                 <Router>
                     <Routes>
-                        <Route path={`/${fnr ?? ''}`}>
+                        <Route path={`/`}>
                             <Route path="utskrift" element={<AktivitetsplanPrint />} />
                             <Route path="" element={<Hovedside />}>
                                 <Route path={'mal'} element={<Aktivitetsmal />} />
@@ -58,7 +55,9 @@ function App({ Routes }: { Routes: any }) {
                                 </Route>
                             </Route>
                         </Route>
-                        {erVeileder ? <Route path="*" element={<Navigate replace to={`/${fnr ?? ''}`} />} /> : null}
+                        {/* Brukes for å ikke brekke lenker fra dialoger til aktiviteter inn fnr er helt ute av urler */}
+                        <Route path="/:fnr/aktivitet/vis/:id" element={<RedirectToAktivitetWithoutFnr />} />
+                        <Route path="*" element={<Navigate replace to={`/`} />} />
                     </Routes>
                     <ErrorCleanerOnRouteChange />
                 </Router>
@@ -70,5 +69,10 @@ function App({ Routes }: { Routes: any }) {
         </div>
     );
 }
+
+const RedirectToAktivitetWithoutFnr = () => {
+    const params = useParams();
+    return <Navigate replace to={`/aktivitet/vis/` + params.id} />;
+};
 
 export default App;

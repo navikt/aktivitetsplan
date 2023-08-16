@@ -11,8 +11,7 @@ import { Bruker, Postadresse } from '../../datatypes/types';
 import { AppDispatch } from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
-import { useErVeileder } from '../../Provider';
-import { hentFnrFraUrl } from '../../utils/fnr-util';
+import { useErVeileder, useFnr } from '../../Provider';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
@@ -67,7 +66,7 @@ const AktivitetsplanPrint = (props: Props) => {
         loggEvent(PRINT_MODSAL_OPEN);
     }, []);
 
-    const fnr = hentFnrFraUrl();
+    const fnr = useFnr();
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
     const [bruker, setBruker] = useState<Bruker>({});
 

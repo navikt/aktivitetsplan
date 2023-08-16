@@ -14,3 +14,4 @@ dist
 dist-ssr
 /build
 bundle-stats.html
+/.npmrc

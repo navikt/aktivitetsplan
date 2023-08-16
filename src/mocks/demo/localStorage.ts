@@ -21,6 +21,7 @@ export const LocalStorageElement = {
     TEST_DIALOGER: 'test_dialoger',
     INGEN_MAL: 'ingen_mal',
     ULESTE_DIALOGER: 'uleste_dialoger',
+    FNR: 'fnr',
 };
 
 export const settLocalStorage = (key, value) => {

@@ -44,4 +44,4 @@ jobs:
           cdn-team-name: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          cache-invalidate: true
+          cache-invalidation: true
