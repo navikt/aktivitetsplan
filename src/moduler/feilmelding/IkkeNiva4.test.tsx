@@ -4,7 +4,7 @@ import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { MockedFunction, vi } from 'vitest';
+import { MockedFunction } from 'vitest';
 
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { loggHarBruktNivaa4, loggIkkeRegistrertIKrr } from '../../felles-komponenter/utils/logging';

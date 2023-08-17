@@ -9,7 +9,7 @@ const DemoBanner = () => {
 
     return (
         <div>
-            <DemoIkon alt="" onClick={() => setOpen(true)} />
+            <DemoIkon onClick={() => setOpen(true)} />
             <Modal open={open} onClose={() => setOpen(false)}>
                 <DemoDashboard />
             </Modal>

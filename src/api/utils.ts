@@ -1,3 +1,4 @@
+import { Status } from '../createGenericSlice';
 import { hentFnrFraUrl } from '../utils/fnr-util';
 
 /* eslint-env browser */
@@ -6,7 +7,7 @@ const DEFAULT_CONFIG: Partial<RequestInit> = {
     credentials: 'same-origin',
 };
 
-const statusPrioritet = {
+const statusPrioritet: Record<Status, number> = {
     ERROR: 5,
     NOT_STARTED: 4,
     PENDING: 3,
@@ -14,11 +15,9 @@ const statusPrioritet = {
     OK: 1,
 };
 
-export function aggregerStatus(...reducereEllerStatuser) {
+export function aggregerStatus(...reducereEllerStatuser: Status[]) {
     return reducereEllerStatuser.reduce((a, b) => {
-        const aStatus = a && (a.status || a);
-        const bStatus = b && (b.status || b);
-        return (statusPrioritet[aStatus] || 0) > (statusPrioritet[bStatus] || 0) ? aStatus : bStatus;
+        return statusPrioritet[a] > statusPrioritet[b] ? a : b;
     });
 }
 
@@ -80,8 +79,7 @@ export function fetchToJson(url: string, config = { headers: defaultHeaders }) {
     return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-function methodToJson(method, url, data, config) {
-    // prettier-ignore
+function methodToJson(method: 'PUT' | 'POST', url: string, data: any, config: any) {
     return fetchToJson(url, {
         ...{
             method,
@@ -93,9 +91,9 @@ function methodToJson(method, url, data, config) {
 }
 
 export function postAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('post', url, data, config);
+    return methodToJson('POST', url, data, config);
 }
 
 export function putAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('put', url, data, config);
+    return methodToJson('PUT', url, data, config);
 }

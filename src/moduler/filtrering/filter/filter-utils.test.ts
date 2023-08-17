@@ -1,4 +1,4 @@
-import { HistoriskOppfolgingsPeriode } from '../../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { datoErIPeriode } from './filter-utils';
 
 describe('datoErIPeriode', () => {
@@ -16,7 +16,7 @@ describe('datoErIPeriode', () => {
         const valgtHistorisk = {
             startDato: '2020-01-23T12:00:00+00:00',
             sluttDato: '2020-01-25T12:00:00+00:00',
-        } as HistoriskOppfolgingsPeriode;
+        } as HistoriskOppfolgingsperiode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -29,7 +29,7 @@ describe('datoErIPeriode', () => {
         const valgtHistorisk = {
             startDato: '2020-01-24T13:00:00+02:00', //11
             sluttDato: '2020-01-24T15:00:00+02:00', //13
-        } as HistoriskOppfolgingsPeriode;
+        } as HistoriskOppfolgingsperiode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -42,7 +42,7 @@ describe('datoErIPeriode', () => {
         const valgtHistorisk = {
             startDato: '2020-01-25T12:00:00+00:00',
             sluttDato: '2020-01-26T12:00:00+00:00',
-        } as HistoriskOppfolgingsPeriode;
+        } as HistoriskOppfolgingsperiode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -55,7 +55,7 @@ describe('datoErIPeriode', () => {
         const valgtHistorisk = {
             startDato: '2020-01-24T13:00:00+00:00',
             sluttDato: '2020-01-24T15:00:00+00:00',
-        } as HistoriskOppfolgingsPeriode;
+        } as HistoriskOppfolgingsperiode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
@@ -68,7 +68,7 @@ describe('datoErIPeriode', () => {
         const valgtHistorisk = {
             startDato: '2020-01-24T14:00:00+02:00',
             sluttDato: '2020-01-24T14:00:00+02:00',
-        } as HistoriskOppfolgingsPeriode;
+        } as HistoriskOppfolgingsperiode;
 
         const sistePeriodeSlutt = undefined;
         const resultat = datoErIPeriode(dato, valgtHistorisk, sistePeriodeSlutt);
