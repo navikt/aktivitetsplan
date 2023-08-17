@@ -163,17 +163,6 @@ export function loggStillingFraNavStillingslenkeKlikk(veileder: boolean) {
     loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, { erVeileder: veileder });
 }
 
-const HAR_BRUKT_NIVAA_4 = 'aktivitetsplan.innsikt.harBruktNivaa4';
-const IKKE_REGISTRERT_I_KRR = 'aktivitetsplan.innsikt.ikkeRegistrertIKrr';
-
-export function loggHarBruktNivaa4(harBruktNivaa4: boolean) {
-    loggEvent(HAR_BRUKT_NIVAA_4, { harBruktNivaa4: harBruktNivaa4 });
-}
-
-export function loggIkkeRegistrertIKrr() {
-    loggEvent(IKKE_REGISTRERT_I_KRR);
-}
-
 function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
     const tilD = tilDato ? new Date(tilDato).getTime() : new Date().getTime();
     return Math.ceil(Math.abs(new Date(fraDato).getTime() - tilD) / (1000 * 3600 * 24));
