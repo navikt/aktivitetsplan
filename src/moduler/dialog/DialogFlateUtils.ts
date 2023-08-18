@@ -11,7 +11,6 @@ export const byttTilDialogFlate = ({
     event,
     aktivitetId,
     dialogId,
-    fnr,
 }: {
     event: MouseEvent;
     fnr?: string;
@@ -19,7 +18,7 @@ export const byttTilDialogFlate = ({
     dialogId?: string;
 }) => {
     event.preventDefault();
-    window.history.pushState('', 'Dialog', getDialogLenke({ erVeileder: true, fnr, aktivitetId, dialogId }));
+    window.history.pushState('', 'Dialog', getDialogLenke({ erVeileder: true, aktivitetId, dialogId }));
     window.dispatchEvent(
         new CustomEvent<DialogEventDetails>('visDialog', {
             detail: {
@@ -32,7 +31,6 @@ export const byttTilDialogFlate = ({
 
 export const getDialogLenke = ({
     dialogId,
-    fnr,
     aktivitetId,
     erVeileder,
 }: {
@@ -41,14 +39,14 @@ export const getDialogLenke = ({
     aktivitetId?: string;
     dialogId?: string;
 }) => {
-    if (erVeileder && fnr) {
+    if (erVeileder) {
         if (dialogId) {
-            return `/${fnr}/${dialogId}`;
+            return `/${dialogId}`;
         }
         if (aktivitetId) {
-            return `/${fnr}/ny?aktivitetId=${aktivitetId}`;
+            return `/ny?aktivitetId=${aktivitetId}`;
         }
-        return `/${fnr}`;
+        return `/`;
     } else {
         if (dialogId) {
             return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;
