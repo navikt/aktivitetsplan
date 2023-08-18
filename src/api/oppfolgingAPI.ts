@@ -1,6 +1,5 @@
 import { Mal, Me, OppfolgingStatus } from '../datatypes/oppfolgingTypes';
 import { OPPFOLGING_BASE_URL } from '../environment';
-import { hentFnrFraUrl } from '../utils/fnr-util';
 import { fetchToJson, postAsJson } from './utils';
 
 export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);
@@ -18,7 +17,6 @@ export const lagreMal = (mal: any): Promise<Mal> => postAsJson(`${OPPFOLGING_BAS
 export const fetchHarFlereAktorId = (): Promise<boolean> =>
     fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/harFlereAktorIderMedOppfolging`);
 
-export const doLesAktivitetsplan = () => {
-    const fnr = hentFnrFraUrl();
+export const doLesAktivitetsplan = (fnr: string) => {
     return postAsJson(`${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`);
 };

@@ -1,44 +1,59 @@
 import { MouseEvent } from 'react';
 
 import { ARBEIDSRETTET_DIALOG_URL } from '../../constant';
-import { BASE_URL } from '../../environment';
-import { hentFnrFraUrl } from '../../utils/fnr-util';
 
 interface DialogEventDetails {
     dialogId?: string;
     aktivitetId?: string;
 }
 
-export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) => {
+export const byttTilDialogFlate = ({
+    event,
+    aktivitetId,
+    dialogId,
+}: {
+    event: MouseEvent;
+    fnr?: string;
+    aktivitetId?: string;
+    dialogId?: string;
+}) => {
     event.preventDefault();
-    window.history.pushState('', 'Dialog', getDialogLenke(true, aktiviteId, dialogId));
+    window.history.pushState('', 'Dialog', getDialogLenke({ erVeileder: true, aktivitetId, dialogId }));
     window.dispatchEvent(
         new CustomEvent<DialogEventDetails>('visDialog', {
             detail: {
                 dialogId: dialogId,
-                aktivitetId: aktiviteId,
+                aktivitetId: aktivitetId,
             },
         })
     );
 };
 
-export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
+export const getDialogLenke = ({
+    dialogId,
+    aktivitetId,
+    erVeileder,
+}: {
+    erVeileder: boolean;
+    fnr?: string;
+    aktivitetId?: string;
+    dialogId?: string;
+}) => {
     if (erVeileder) {
-        const fnr = hentFnrFraUrl();
         if (dialogId) {
-            return `${BASE_URL}${fnr}/${dialogId}`;
+            return `/${dialogId}`;
         }
-        if (aktiviteId) {
-            return `${BASE_URL}${fnr}/ny?aktivitetId=${aktiviteId}`;
+        if (aktivitetId) {
+            return `/ny?aktivitetId=${aktivitetId}`;
         }
-        return `${BASE_URL}${fnr}`;
+        return `/`;
+    } else {
+        if (dialogId) {
+            return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;
+        }
+        if (aktivitetId) {
+            return `${ARBEIDSRETTET_DIALOG_URL}/ny?aktivitetId=${aktivitetId}`;
+        }
+        return `${ARBEIDSRETTET_DIALOG_URL}`;
     }
-
-    if (dialogId) {
-        return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;
-    }
-    if (aktiviteId) {
-        return `${ARBEIDSRETTET_DIALOG_URL}/ny?aktivitetId=${aktiviteId}`;
-    }
-    return `${ARBEIDSRETTET_DIALOG_URL}`;
 };

@@ -21,9 +21,8 @@ import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-slice';
 import { hentVeilederInfo } from '../../moduler/veileder/veileder-slice';
-import { useErVeileder } from '../../Provider';
+import { useErVeileder, useFnr } from '../../Provider';
 import { RootState } from '../../store';
-import { hentFnrFraUrl } from '../../utils/fnr-util';
 import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
@@ -41,6 +40,7 @@ function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
 
 const Aktivitetstavle = () => {
     const dispatch = useAppDispatch();
+    const fnr = useFnr();
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);
@@ -55,9 +55,9 @@ const Aktivitetstavle = () => {
 
     useEffect(() => {
         if (aktivitetNotStarted) {
-            if (erVeileder) {
-                doLesAktivitetsplan();
-                dispatch(hentNivaa4(hentFnrFraUrl()));
+            if (erVeileder && fnr) {
+                doLesAktivitetsplan(fnr);
+                dispatch(hentNivaa4(fnr));
                 dispatch(hentVeilederInfo());
             }
             dispatch(hentAktiviteter());

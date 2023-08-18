@@ -1,5 +1,5 @@
 import { Status } from '../createGenericSlice';
-import { hentFnrFraUrl } from '../utils/fnr-util';
+import { LocalStorageElement, hentFraLocalStorage } from '../mocks/demo/localStorage';
 
 /* eslint-env browser */
 
@@ -67,19 +67,21 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
     return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-export function fetchToJson(url: string, config = { headers: defaultHeaders }) {
+export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 
-    const fodselsnummer = hentFnrFraUrl();
+    const fnr = hentFraLocalStorage(LocalStorageElement.FNR);
     let fetchUrl = url;
-    if (fodselsnummer) {
-        fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fodselsnummer}`;
+    if (fnr) {
+        fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
     }
 
     return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-function methodToJson(method: 'PUT' | 'POST', url: string, data: any, config: any) {
+type HttpMethod = 'post' | 'put' | 'get' | 'patch';
+function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, config: RequestInit) {
+    // prettier-ignore
     return fetchToJson(url, {
         ...{
             method,
@@ -91,9 +93,9 @@ function methodToJson(method: 'PUT' | 'POST', url: string, data: any, config: an
 }
 
 export function postAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('POST', url, data, config);
+    return methodToJson('post', url, data, config);
 }
 
 export function putAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('PUT', url, data, config);
+    return methodToJson('put', url, data, config);
 }

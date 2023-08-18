@@ -3,6 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
 
+import { ER_INTERN_FLATE } from './constant';
 import FeatureToggle from './moduler/feature/FeatureToggle';
 import createStore from './store';
 
@@ -29,7 +30,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
 
     return (
         <FnrContext.Provider value={fnr}>
-            <ErVeilederContext.Provider value={fnr !== undefined}>
+            <ErVeilederContext.Provider value={ER_INTERN_FLATE}>
                 <ReduxProvider store={store}>
                     <DndProvider backend={HTML5Backend}>
                         <FeatureToggle>{children}</FeatureToggle>

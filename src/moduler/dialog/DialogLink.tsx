@@ -23,7 +23,7 @@ const LenkeTilDialog = (props: Props) => {
     const internalOnClick = (event: MouseEvent) => {
         if (erVeileder) {
             navigate(hovedsideRoute(), { replace: true });
-            byttTilDialogFlate(event, aktivitetId, dialogId);
+            byttTilDialogFlate({ event, aktivitetId, dialogId });
         }
     };
 
@@ -32,7 +32,7 @@ const LenkeTilDialog = (props: Props) => {
     }
 
     return (
-        <a href={getDialogLenke(erVeileder, aktivitetId, dialogId)} onClick={internalOnClick} className={className}>
+        <a href={getDialogLenke({ erVeileder, aktivitetId, dialogId })} onClick={internalOnClick} className={className}>
             {children}
         </a>
     );
