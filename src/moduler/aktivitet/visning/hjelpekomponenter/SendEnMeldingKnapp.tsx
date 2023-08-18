@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import { useErVeileder, useFnr } from '../../../../Provider';
+import { useErVeileder } from '../../../../Provider';
 import { useRoutes } from '../../../../routes';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
@@ -16,7 +16,6 @@ interface Props {
 
 const SendEnMeldingKnapp = (props: Props) => {
     const { aktivitet } = props;
-    const fnr = useFnr();
     const erVeileder = useErVeileder();
     const dialog = useSelector(selectDialogForAktivitetId(aktivitet.id));
 
@@ -30,7 +29,7 @@ const SendEnMeldingKnapp = (props: Props) => {
     const veilederOnClick = (event: React.MouseEvent) => {
         if (erVeileder) {
             navigate(hovedsideRoute(), { replace: true });
-            byttTilDialogFlate({ event, fnr, aktivitetId: aktivitet?.id, dialogId: dialog?.id });
+            byttTilDialogFlate({ event, aktivitetId: aktivitet?.id, dialogId: dialog?.id });
         }
     };
 
@@ -39,7 +38,7 @@ const SendEnMeldingKnapp = (props: Props) => {
             <Button
                 variant="secondary"
                 as="a"
-                href={getDialogLenke({ erVeileder, fnr, aktivitetId: aktivitet.id, dialogId: dialog?.id })}
+                href={getDialogLenke({ erVeileder, aktivitetId: aktivitet.id, dialogId: dialog?.id })}
                 icon={<ChatElipsisIcon aria-hidden fontSize="1.5rem" />}
                 onClick={veilederOnClick}
             >
