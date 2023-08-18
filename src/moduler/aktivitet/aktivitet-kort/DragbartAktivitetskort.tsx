@@ -30,7 +30,7 @@ function DragbartAktivitetskort(props: Props) {
         }),
     });
 
-    const className = classNames((collectedProps as any).isDragging && styles.drag, styles.flyttbar);
+    const className = classNames(collectedProps.isDragging && styles.drag, styles.flyttbar);
 
     return (
         <div ref={drag}>

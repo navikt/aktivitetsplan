@@ -1,16 +1,13 @@
 import { Loader, Modal } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
-import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
-import { Dialog } from '../../datatypes/dialogTypes';
-import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import { Bruker, Postadresse } from '../../datatypes/types';
-import { AppDispatch } from '../../felles-komponenter/hooks/useAppDispatch';
-import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
-import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
+import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
+import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
+import loggEvent, { PRINT_MODAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
@@ -47,24 +44,27 @@ function getSteps(kanHaPrintValg?: boolean, kanHaPrintMelding?: boolean): string
     return steps;
 }
 
-interface Props {
-    doHentMal: () => void;
-    doHentMalListe: () => void;
-    avhengigheter: InnholdslasterProps['avhengigheter'];
-    kvpPerioder?: KvpPeriode[];
-    dialoger?: Dialog[];
-    mittMal?: Mal;
-    aktiviteter?: AlleAktiviteter[];
-    erManuell?: boolean;
-}
+const AktivitetsplanPrint = () => {
+    const aktiviteter = useSelector(selectAktivitetListe);
+    const kvpPerioder = useSelector(selectKvpPeriodeForValgteOppfolging);
+    const dialoger = useSelector(selectDialoger);
+    const mittMal = useSelector(selectGjeldendeMal);
+    const erManuell = useSelector(selectErBrukerManuell);
 
-const AktivitetsplanPrint = (props: Props) => {
-    const { doHentMal, doHentMalListe, avhengigheter, kvpPerioder, dialoger, mittMal, aktiviteter, erManuell } = props;
+    const avhengigheter = [
+        useSelector(selectMalStatus),
+        useSelector(selectOppfolgingStatus),
+        useSelector(selectAktivitetListeStatus),
+        useSelector(selectDialogStatus),
+    ];
+
+    const dispatch = useAppDispatch();
+
     const erVeileder = useErVeileder();
     useEffect(() => {
-        doHentMal();
-        doHentMalListe();
-        loggEvent(PRINT_MODSAL_OPEN);
+        dispatch(hentMal());
+        dispatch(hentMalListe());
+        loggEvent(PRINT_MODAL_OPEN);
     }, []);
 
     const fnr = hentFnrFraUrl();
@@ -164,34 +164,4 @@ const AktivitetsplanPrint = (props: Props) => {
     );
 };
 
-const mapStateToProps = (state: any) => {
-    const aktiviteter = selectAktivitetListe(state);
-    const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
-    const dialoger = selectDialoger(state);
-
-    const mittMal = selectGjeldendeMal(state);
-    const erManuell = selectErBrukerManuell(state);
-
-    return {
-        avhengigheter: [
-            selectMalStatus(state),
-            selectOppfolgingStatus(state),
-            selectAktivitetListeStatus(state),
-            selectDialogStatus(state),
-        ],
-        aktiviteter,
-        dialoger,
-        mittMal,
-        erManuell,
-        kvpPerioder,
-    };
-};
-
-function mapDispatchToProps(dispatch: AppDispatch) {
-    return {
-        doHentMal: () => dispatch(hentMal()),
-        doHentMalListe: () => dispatch(hentMalListe()),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsplanPrint);
+export default AktivitetsplanPrint;

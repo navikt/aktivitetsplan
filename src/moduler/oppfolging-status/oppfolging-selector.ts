@@ -73,10 +73,6 @@ export function selectAktorId(state: RootState) {
     return selectOppfolgingData(state)?.aktorId;
 }
 
-export function selectUnderOppfolging(state: RootState) {
-    return selectOppfolgingData(state)?.underOppfolging;
-}
-
 export function selectErUnderKvp(state: RootState) {
     return selectOppfolgingData(state)?.underKvp;
 }

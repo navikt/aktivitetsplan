@@ -39,10 +39,10 @@ const Aktivitetskort = (props: Props) => {
     const aktiviteterSomHarBlittVist = useSelector(selectAktiviteterSomHarBlittVist, shallowEqual);
 
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
-        (vistAktivitet: VeilarbAktivitet) => aktivitet.id === vistAktivitet.id
+        (vistAktivitet) => aktivitet.id === vistAktivitet.id
     );
 
-    const aktivitetBleVistSist: boolean = aktivitet.id === useSelector((state) => selectSistVisteAktivitet(state))?.id;
+    const aktivitetBleVistSist: boolean = aktivitet.id === useSelector(selectSistVisteAktivitet)?.id;
 
     const me = useSelector(selectIdentitetData, shallowEqual);
 

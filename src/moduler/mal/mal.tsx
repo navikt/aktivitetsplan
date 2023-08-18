@@ -8,7 +8,7 @@ import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../routes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectMalStatus } from './aktivitetsmal-selector';
 import { hentMal } from './aktivitetsmal-slice';
 import MalContainer from './mal-container';
@@ -21,7 +21,7 @@ const Mal = () => {
     const malStatus = useSelector(selectMalStatus, shallowEqual);
     const malListeStatus = useSelector(selectMalListeStatus, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
-    const underOppfolging = useSelector(selectUnderOppfolging, shallowEqual);
+    const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
     const historiskeMal = useSelector(selectMalListe, shallowEqual);
 

@@ -76,7 +76,7 @@ export function delCvikkeSvartSkalVises(aktivitet: StillingFraNavAktivitet): boo
     const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
     const status = aktivitet.status;
     const historisk = aktivitet.historisk;
-    const ikkeAktiv = status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT || !!historisk;
+    const ikkeAktiv = status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT || historisk;
 
     return erStillingFraNav && harIkkeSvart && !ikkeAktiv;
 }
@@ -205,7 +205,6 @@ export function manglerPubliseringAvSamtaleReferat(
 ): aktivitet is MoteAktivitet | SamtalereferatAktivitet {
     const { type, erReferatPublisert } = aktivitet;
     return (
-        !type ||
         (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) && status !== AktivitetStatus.AVBRUTT) ||
         samtalreferatManglerPublisering(type, erReferatPublisert)
     );

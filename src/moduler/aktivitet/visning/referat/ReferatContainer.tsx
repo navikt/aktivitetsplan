@@ -8,7 +8,7 @@ import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
-import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import OppdaterReferatForm from './OppdaterReferatForm';
@@ -26,7 +26,7 @@ const ReferatContainer = (props: Props) => {
 
     const publiserer = useSelector(selectAktivitetStatus) === (Status.PENDING || Status.RELOADING);
     const erVeileder = useErVeileder();
-    const underOppfolging = useSelector(selectUnderOppfolging);
+    const underOppfolging = useSelector(selectErUnderOppfolging);
 
     const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
 

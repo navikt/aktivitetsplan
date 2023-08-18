@@ -1,7 +1,7 @@
 import { Modal } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
-import DemoDashboard from './demoDashboard';
+import DemoDashboard from './DemoDashboard';
 import DemoIkon from './DemoIkon';
 
 const DemoBanner = () => {
