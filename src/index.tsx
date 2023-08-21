@@ -6,6 +6,7 @@ import * as ReactDOM from 'react-dom';
 import { initAmplitude } from './amplitude/amplitude';
 import { ER_INTERN_FLATE, USE_MOCK } from './constant';
 import DemoBanner from './mocks/demo/DemoBanner';
+import {mockfnr} from "./mocks/utils";
 
 setDefaultOptions({ locale: nn });
 
@@ -23,7 +24,7 @@ const renderAsRootApp = () => {
 };
 
 const renderApp = () => {
-    if (ER_INTERN_FLATE) {
+    if (false) {
         exportAsWebcomponent();
     } else {
         renderAsRootApp();

@@ -1,4 +1,4 @@
-import { UNSAFE_DatePicker as DatePicker } from '@navikt/ds-react';
+import { DatePicker } from '@navikt/ds-react';
 import { getLocaleFromString, isValidDate, parseDate } from '@navikt/ds-react/esm/date/utils';
 import { format, isValid } from 'date-fns';
 import React, { ChangeEventHandler, useState } from 'react';
