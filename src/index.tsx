@@ -32,6 +32,9 @@ const renderApp = () => {
 };
 
 if (USE_MOCK) {
+    const webComponentTag = document.createElement("dab-aktivitetsplan")
+    webComponentTag.setAttribute("data-fnr", mockfnr)
+    document.getElementById("root")!!.appendChild(webComponentTag)
     import('./mocks')
         .then(({ default: startWorker }) => startWorker())
         .then(() => {
