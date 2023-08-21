@@ -16,7 +16,6 @@ const EndringsLogg = (props: Props) => {
         <Accordion.Item className="first:border-t-2 first:border-border-divider">
             <Accordion.Header>
                 <div className="flex gap-4 items-center">
-                    <ClockDashedIcon aria-hidden fontSize="1.5rem" />
                     Historikk
                 </div>
             </Accordion.Header>

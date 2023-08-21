@@ -1,4 +1,4 @@
-import { UNSAFE_DatePicker as DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
+import { DatePicker as DatePicker, useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
 import { MutableRefObject, RefCallback } from 'react';
 import { UseFormRegisterReturn, UseFormTrigger } from 'react-hook-form/dist/types/form';
@@ -41,7 +41,7 @@ const DateRangePicker = ({
     toRegisterProps,
     fromRegisterProps,
 }: Props) => {
-    const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
+    const { datepickerProps, toInputProps, fromInputProps } = useRangeDatepicker({
         defaultSelected: defaultValue?.from ? { from: defaultValue.from, to: undefined } : undefined,
         fromDate: from,
         disabled: disabledDays,
