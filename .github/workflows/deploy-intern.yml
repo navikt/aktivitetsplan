@@ -44,4 +44,4 @@ jobs:
           cdn-team-name: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          cache-invalidation: true
+          no-cache-paths: ${{ inputs.bucket }}/build/asset-manifest.json
