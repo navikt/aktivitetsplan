@@ -24,7 +24,7 @@ const renderAsRootApp = () => {
 };
 
 const renderApp = () => {
-    if (ER_INTERN_FLATE) {
+    if (false) {
         exportAsWebcomponent();
     } else {
         renderAsRootApp();
