@@ -1,4 +1,3 @@
-import { ClockDashedIcon } from '@navikt/aksel-icons';
 import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
@@ -13,10 +12,9 @@ const EndringsLogg = (props: Props) => {
     const { aktivitet } = props;
 
     return (
-        <Accordion.Item className="first:border-t-2 first:border-border-divider">
+        <Accordion.Item>
             <Accordion.Header>
                 <div className="flex gap-4 items-center">
-                    <ClockDashedIcon aria-hidden fontSize="1.5rem" />
                     Historikk
                 </div>
             </Accordion.Header>

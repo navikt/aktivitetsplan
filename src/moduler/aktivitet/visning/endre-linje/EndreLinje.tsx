@@ -11,14 +11,13 @@ interface Props {
 }
 
 const EndreLinje = (props: Props) => {
-    const { tittel, content, subtittel, open, onClick, icon } = props;
+    const { tittel, content, subtittel, open, onClick } = props;
 
     return (
         <>
-            <Accordion.Item open={open} className="first:border-t-2 first:border-border-divider">
+            <Accordion.Item open={open}>
                 <Accordion.Header onClick={onClick} className="items-center">
                     <div className="flex flex-row gap-4 items-center">
-                        {icon}
                         <div>
                             <Heading size="small" level="2">
                                 {tittel}
