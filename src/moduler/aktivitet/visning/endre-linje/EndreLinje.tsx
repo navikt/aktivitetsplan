@@ -11,7 +11,7 @@ interface Props {
 }
 
 const EndreLinje = (props: Props) => {
-    const { tittel, content, subtittel, open, onClick, icon } = props;
+    const { tittel, content, subtittel, open, onClick } = props;
 
     return (
         <>

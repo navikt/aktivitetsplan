@@ -1,4 +1,3 @@
-import { ClockDashedIcon } from '@navikt/aksel-icons';
 import { Accordion } from '@navikt/ds-react';
 import React from 'react';
 
