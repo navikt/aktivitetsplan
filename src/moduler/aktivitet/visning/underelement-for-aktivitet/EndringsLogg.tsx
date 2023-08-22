@@ -13,7 +13,7 @@ const EndringsLogg = (props: Props) => {
     const { aktivitet } = props;
 
     return (
-        <Accordion.Item className="first:border-t-2 first:border-border-divider">
+        <Accordion.Item>
             <Accordion.Header>
                 <div className="flex gap-4 items-center">
                     Historikk
