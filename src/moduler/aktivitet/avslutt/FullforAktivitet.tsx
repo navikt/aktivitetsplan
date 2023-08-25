@@ -25,9 +25,8 @@ const beskrivelseTekst =
 const FullforAktivitet = () => {
     const { id: aktivitetId } = useParams<{ id: string }>();
     const valgtAktivitet = useSelector((state: RootState) =>
-        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
     );
-    console.log({ valgtAktivitet });
     const lagrer = useSelector((state: RootState) => selectAktivitetListeStatus(state)) !== Status.OK;
 
     const dispatch = useAppDispatch();
