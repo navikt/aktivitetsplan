@@ -1,4 +1,4 @@
-import { UNSAFE_DatePicker as DatePicker, UNSAFE_useRangeDatepicker } from '@navikt/ds-react';
+import { DatePicker as DatePicker, useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
 import React, { useEffect, useMemo } from 'react';
 import { ChangeEventHandler, MutableRefObject, useState } from 'react';
@@ -61,7 +61,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         validateRemoveErrors(rangeValidation);
     };
 
-    const { datepickerProps, toInputProps, fromInputProps, reset, setSelected } = UNSAFE_useRangeDatepicker({
+    const { datepickerProps, toInputProps, fromInputProps, reset, setSelected } = useRangeDatepicker({
         defaultSelected: { from: from.defaultValue, to: to.defaultValue },
         disabled: disabledDays,
         onValidate: (validation) => {

@@ -5,7 +5,7 @@ import * as ReactDOM from 'react-dom';
 
 import { initAmplitude } from './amplitude/amplitude';
 import { ER_INTERN_FLATE, USE_MOCK } from './constant';
-import DemoBanner from './mocks/demo/DemoBanner';
+import { mockfnr } from './mocks/utils';
 
 setDefaultOptions({ locale: nn });
 
@@ -31,12 +31,16 @@ const renderApp = () => {
 };
 
 if (USE_MOCK) {
-    import('./mocks')
-        .then(({ default: startWorker }) => startWorker())
-        .then(() => {
+    const webComponentTag = document.createElement('dab-aktivitetsplan');
+    webComponentTag.setAttribute('data-fnr', mockfnr);
+    document.getElementById('root')?.appendChild(webComponentTag);
+    Promise.all([import('./mocks'), import('./mocks/demo/DemoBanner')]).then(
+        ([{ default: startWorker }, { default: DemoBanner }]) => {
+            startWorker();
             ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
             renderApp();
-        });
+        },
+    );
 } else {
     initAmplitude();
     renderApp();

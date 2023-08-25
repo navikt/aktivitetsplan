@@ -40,7 +40,7 @@ const MalHistorikk = () => {
 
     return (
         <Accordion>
-            <Accordion.Item className="first:border-t-2 first:border-border-divider">
+            <Accordion.Item>
                 <Accordion.Header>
                     <Heading level="2" size="small">
                         Tidligere lagrede mål
