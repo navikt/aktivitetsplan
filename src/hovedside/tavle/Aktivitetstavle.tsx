@@ -18,7 +18,7 @@ import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selecto
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-slice';
-import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-slice';
 import { hentVeilederInfo } from '../../moduler/veileder/veileder-slice';
 import { useErVeileder, useFnr } from '../../Provider';
@@ -46,7 +46,7 @@ const Aktivitetstavle = () => {
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);
     const erVeileder = useErVeileder();
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
-    const underOppfolging = useSelector(selectUnderOppfolging);
+    const underOppfolging = useSelector(selectErUnderOppfolging);
 
     const aktivitetNotStarted =
         statusAktiviteter === Status.NOT_STARTED && statusArenaAktiviteter === Status.NOT_STARTED;

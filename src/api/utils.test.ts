@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest';
-
 import { Status } from '../createGenericSlice';
 import { aggregerStatus, getCookie, sjekkStatuskode, toJson } from './utils';
 
@@ -34,16 +32,6 @@ describe('utils', () => {
             expect(aggregerStatus(RELOADING, ERROR, RELOADING)).toEqual(ERROR);
             expect(aggregerStatus(PENDING, ERROR, PENDING)).toEqual(ERROR);
             expect(aggregerStatus(NOT_STARTED, ERROR, NOT_STARTED)).toEqual(ERROR);
-        });
-
-        it('ignorerer null/undefined', () => {
-            expect(aggregerStatus(OK, null, OK, undefined)).toEqual(OK);
-            expect(aggregerStatus(null, null)).toEqual(null);
-            expect(aggregerStatus(undefined, undefined)).toEqual(undefined);
-        });
-
-        it('aksepterer reducere som argument', () => {
-            expect(aggregerStatus(OK, { status: ERROR }, OK)).toEqual(ERROR);
         });
     });
 

@@ -1,3 +1,4 @@
+import { Status } from '../createGenericSlice';
 import { LocalStorageElement, hentFraLocalStorage } from '../mocks/demo/localStorage';
 
 /* eslint-env browser */
@@ -6,7 +7,7 @@ const DEFAULT_CONFIG: Partial<RequestInit> = {
     credentials: 'same-origin',
 };
 
-const statusPrioritet = {
+const statusPrioritet: Record<Status, number> = {
     ERROR: 5,
     NOT_STARTED: 4,
     PENDING: 3,
@@ -14,11 +15,9 @@ const statusPrioritet = {
     OK: 1,
 };
 
-export function aggregerStatus(...reducereEllerStatuser) {
+export function aggregerStatus(...reducereEllerStatuser: Status[]) {
     return reducereEllerStatuser.reduce((a, b) => {
-        const aStatus = a && (a.status || a);
-        const bStatus = b && (b.status || b);
-        return (statusPrioritet[aStatus] || 0) > (statusPrioritet[bStatus] || 0) ? aStatus : bStatus;
+        return statusPrioritet[a] > statusPrioritet[b] ? a : b;
     });
 }
 

@@ -28,19 +28,19 @@ function formatter(dato: string | Date, format: string) {
     return undefined;
 }
 
-export function formaterDatoManed(dato: string) {
+export function formaterDatoManed(dato: string | Date) {
     return formatter(dato, 'PPP');
 }
 
-export function formaterDatoKortManed(dato: string) {
+export function formaterDatoKortManed(dato: string | Date) {
     return formatter(dato, 'PP');
 }
 
-export function formaterDatoKortManedTid(dato: string) {
+export function formaterDatoKortManedTid(dato: string | Date) {
     return formatter(dato, "PP 'kl' HH:mm");
 }
 
-export function formaterTid(dato: string) {
+export function formaterTid(dato: string | Date) {
     return formatter(dato, 'HH:mm');
 }
 

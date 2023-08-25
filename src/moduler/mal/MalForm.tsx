@@ -70,7 +70,6 @@ const MalForm = (props: Props) => {
     const malValue = watch('mal'); // for <Textarea /> character-count to work
 
     const feil = useSelector(selectOppdaterMalFeil);
-    console.log(feil);
 
     return (
         <form className="my-4 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))}>

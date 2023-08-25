@@ -5,10 +5,12 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { Status } from '../../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { useRoutes } from '../../../routes';
+import { RootState } from '../../../store';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseForm from './BegrunnelseForm';
@@ -22,11 +24,14 @@ const beskrivelseTekst =
 
 const FullforAktivitet = () => {
     const { id: aktivitetId } = useParams<{ id: string }>();
-    const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
-    const lagrer = useSelector((state) => selectAktivitetListeStatus(state)) !== Status.OK;
+    const valgtAktivitet = useSelector((state: RootState) =>
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+    );
+    console.log({ valgtAktivitet });
+    const lagrer = useSelector((state: RootState) => selectAktivitetListeStatus(state)) !== Status.OK;
 
     const dispatch = useAppDispatch();
-    const doAvsluttOppfolging = (aktivitet: AlleAktiviteter, begrunnelse: string | null) =>
+    const doAvsluttOppfolging = (aktivitet: VeilarbAktivitet, begrunnelse: string | null) =>
         dispatch(fullforAktivitet(aktivitet, begrunnelse));
 
     const navigate = useNavigate();

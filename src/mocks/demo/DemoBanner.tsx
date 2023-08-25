@@ -6,7 +6,7 @@ import '@navikt/ds-css';
 import '../../tailwind.css';
 import '../../index.less';
 
-import DemoDashboard from './demoDashboard';
+import DemoDashboard from './DemoDashboard';
 import DemoIkon from './DemoIkon';
 
 const DemoBanner = () => {

@@ -35,8 +35,8 @@ export async function opprettMal(req: RestRequest) {
     const nyMal = {
         mal: body.mal,
         endretAv: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
-        dato: new Date(),
-    };
+        dato: new Date().toISOString(),
+    } as Mal;
     maler.push(nyMal);
     return nyMal;
 }

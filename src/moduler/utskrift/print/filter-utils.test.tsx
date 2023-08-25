@@ -1,4 +1,4 @@
-import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
@@ -20,7 +20,8 @@ const aktivitetIKvp: EgenAktivitet = {
     versjon: '1',
     id: 'aktivitetIKvp',
     opprettetDato: '2019-07-01T11:41:50.761983+02:00',
-    status: 'GJENNOMFORES',
+    endretDato: '2022-09-13T12:16:08.593Z',
+    status: AktivitetStatus.GJENNOMFOERT,
     endretAv: '',
 };
 
@@ -34,7 +35,8 @@ const aktivitetIKvpUTC0: EgenAktivitet = {
     versjon: '1',
     id: 'aktivitetIKvpUTC0',
     opprettetDato: '2019-07-01T09:41:50.206+00:00',
-    status: 'GJENNOMFORES',
+    endretDato: '2022-09-13T12:16:08.593Z',
+    status: AktivitetStatus.GJENNOMFOERT,
     endretAv: '',
 };
 const aktivitetForKvp: EgenAktivitet = {
@@ -47,7 +49,8 @@ const aktivitetForKvp: EgenAktivitet = {
     versjon: '1',
     id: 'aktivitetForKvp',
     opprettetDato: '2019-07-01T09:41:50.761983+02:00',
-    status: 'GJENNOMFORES',
+    endretDato: '2022-09-13T12:16:08.593Z',
+    status: AktivitetStatus.GJENNOMFOERT,
     endretAv: '',
 };
 const aktivitetEtterKvp: EgenAktivitet = {
@@ -60,7 +63,8 @@ const aktivitetEtterKvp: EgenAktivitet = {
     versjon: '1',
     id: 'aktivitetEtterKvp',
     opprettetDato: '2019-07-29T11:41:50.761983+02:00',
-    status: 'GJENNOMFORES',
+    endretDato: '2022-09-13T12:16:08.593Z',
+    status: AktivitetStatus.GJENNOMFOERT,
     endretAv: '',
 };
 

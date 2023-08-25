@@ -1,42 +1,40 @@
-export const LocalStorageElement = {
-    PRIVAT_BRUKER: 'privatbruker',
-    MANUELL_BRUKER: 'manuellbruker',
-    KRR_BRUKER: 'krrbruker',
-    GAMMEL_ESKALERT_BRUKER: 'eskalertbruker_gammel',
-    ESKALERT_BRUKER: 'eskalertbruker',
-    INNLOGGET_NIVAA4: 'innlogget_nivaa4',
-    OPPF_FEILET: 'oppffeilet',
-    DIALOG_FEILET: 'dialogfeilet',
-    AKTIVITET_FEILET: 'aktivitetfeilet',
-    ARENA_FEILET: 'arenafeilet',
-    MAAL_FEILET: 'maalfeilet',
-    NIVAA4_FEILET: 'nivaa4feilet',
-    OPPDATERING_KUN_FEILER: 'oppdonlyfeiler',
-    EKSTERN_BRUKER: 'eksternbruker',
-    INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
-    AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
-    TEST_AKTIVITETER: 'testaktiviteter',
-    ARENA_AKTIVITETER: 'arena_aktiviteter',
-    EKSTERNE_AKTIVITETER: 'eksterne_aktiviteter',
-    TEST_DIALOGER: 'test_dialoger',
-    INGEN_MAL: 'ingen_mal',
-    ULESTE_DIALOGER: 'uleste_dialoger',
-    FNR: 'fnr',
+export enum LocalStorageElement {
+    PRIVAT_BRUKER = 'privatbruker',
+    MANUELL_BRUKER = 'manuellbruker',
+    KRR_BRUKER = 'krrbruker',
+    GAMMEL_ESKALERT_BRUKER = 'eskalertbruker_gammel',
+    ESKALERT_BRUKER = 'eskalertbruker',
+    INNLOGGET_NIVAA4 = 'innlogget_nivaa4',
+    OPPF_FEILET = 'oppffeilet',
+    DIALOG_FEILET = 'dialogfeilet',
+    AKTIVITET_FEILET = 'aktivitetfeilet',
+    ARENA_FEILET = 'arenafeilet',
+    MAAL_FEILET = 'maalfeilet',
+    NIVAA4_FEILET = 'nivaa4feilet',
+    OPPDATERING_KUN_FEILER = 'oppdonlyfeiler',
+    EKSTERN_BRUKER = 'eksternbruker',
+    INGEN_OPPF_PERIODER = 'ingen_oppf_perioder',
+    AUTOMATISKE_AKTIVITETER = 'automatiske_aktiviteter',
+    TEST_AKTIVITETER = 'testaktiviteter',
+    ARENA_AKTIVITETER = 'arena_aktiviteter',
+    EKSTERNE_AKTIVITETER = 'eksterne_aktiviteter',
+    TEST_DIALOGER = 'test_dialoger',
+    INGEN_MAL = 'ingen_mal',
+    ULESTE_DIALOGER = 'uleste_dialoger',
+    FNR = 'fnr',
+}
+
+export const settLocalStorage = (key: string, value: string | boolean) => {
+    window.localStorage.setItem(key, String(value));
 };
 
-export const settLocalStorage = (key, value) => {
-    window.localStorage.setItem(key, value);
-};
-
-export const hentFraLocalStorage = (key) => {
+export const hentFraLocalStorage = (key: string) => {
     return window.localStorage.getItem(key);
 };
 
-const erSatt = (localStorageElement) => {
-    return hentFraLocalStorage(localStorageElement) === 'true';
-};
+const erSatt = (localStorageElement: LocalStorageElement) => hentFraLocalStorage(localStorageElement) === 'true';
 
-const erSkrudAv = (localStorageElement) => hentFraLocalStorage(localStorageElement) === 'false';
+const erSkrudAv = (localStorageElement: LocalStorageElement) => hentFraLocalStorage(localStorageElement) === 'false';
 
 export const erEksternBruker = () => erSatt(LocalStorageElement.EKSTERN_BRUKER);
 

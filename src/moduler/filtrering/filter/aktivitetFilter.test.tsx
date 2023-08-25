@@ -6,7 +6,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { Store } from 'redux';
-import { vi } from 'vitest';
 
 import { Status } from '../../../createGenericSlice';
 import {
