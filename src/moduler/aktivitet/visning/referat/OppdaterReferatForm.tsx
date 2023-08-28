@@ -35,7 +35,7 @@ interface Props {
 const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const visSpraksjekk = useSelector(selectFeature(VIS_SPRAKSJEKK));
 
     const startTekst = useReferatStartTekst();
@@ -74,7 +74,7 @@ const OppdaterReferatForm = (props: Props) => {
         return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((action) => {
             if (log) {
                 const analysis = checkText(referatData.referat);
-                logReferatFullfort(analysis, aktivitet.erReferatPublisert, open, visSpraksjekk ? 'B' : 'A');
+                logReferatFullfort(analysis, aktivitet.erReferatPublisert, open, visSpraksjekk ? 'C' : 'A');
             }
             if (isFulfilled(action)) {
                 onFerdig();
@@ -88,7 +88,7 @@ const OppdaterReferatForm = (props: Props) => {
             if (action.payload) {
                 dispatch(publiserReferat(action.payload)).then(() => {
                     const analysis = checkText(values.referat);
-                    logReferatFullfort(analysis, true, open, visSpraksjekk ? 'B' : 'A');
+                    logReferatFullfort(analysis, true, open, visSpraksjekk ? 'C' : 'A');
                 });
             }
         });
