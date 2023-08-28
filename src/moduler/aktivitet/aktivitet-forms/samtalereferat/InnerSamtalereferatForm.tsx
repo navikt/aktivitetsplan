@@ -44,7 +44,7 @@ interface Props {
 const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const visSpraksjekk = useSelector(selectFeature(VIS_SPRAKSJEKK));
 
     const startTekst = useReferatStartTekst();
@@ -84,7 +84,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                 erReferatPublisert,
             }).then(() => {
                 const analysis = checkText(data.referat);
-                logReferatFullfort(analysis, erReferatPublisert, open, visSpraksjekk ? 'B' : 'A');
+                logReferatFullfort(analysis, erReferatPublisert, open, visSpraksjekk ? 'C' : 'A');
             });
         });
     };

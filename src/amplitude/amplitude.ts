@@ -31,7 +31,7 @@ export function logReferatFullfort(
     analysis: TextCheckerResult,
     referatPublisert: boolean,
     spraksjekkEnabled: boolean,
-    variant: 'A' | 'B'
+    variant: 'A' | 'C'
 ) {
     const mappedAnalysis = mapSpraksjekkAnalysis(analysis);
 
