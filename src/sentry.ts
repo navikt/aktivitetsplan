@@ -73,13 +73,12 @@ Sentry.init({
                 useLocation,
                 useNavigationType,
                 createRoutesFromChildren,
-                matchRoutes
+                matchRoutes,
             ),
             tracePropagationTargets: [
                 'aktivitetsplan.nav.no',
                 'aktivitetsplan.ekstern.dev.nav.no',
                 // /(\.dev)?nav.no\/veilarbdialog/,
-                // /(\.dev)?nav.no\/veilarbpersonflate/,
                 // /(\.dev)?nav.no\/veilarboppfolging/,
                 // /(\.dev)?nav.no\/veilarbaktivitet/,
                 // /(\.dev)?nav.no\/veilarblest/,
