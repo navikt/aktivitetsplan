@@ -27,7 +27,7 @@ const UxSignalsWidget = () => {
 
     if (!showUxSignalsWidget) return null;
 
-    return <div data-uxsignals-embed="panel-838jxh69e" className="uxsignalswidget max-w-[620px] mx-auto pb-8" />;
+    return <div data-uxsignals-embed="panel-838jxh69e" data-uxsignals-mode="demo" className="uxsignalswidget max-w-[620px] mx-auto pb-8" />;
 };
 
 export default UxSignalsWidget;
