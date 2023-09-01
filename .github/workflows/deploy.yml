@@ -5,6 +5,11 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: 'read'
+  id-token: 'write'
+  packages: 'write'
+
 concurrency:
   group: deploy
   cancel-in-progress: true
