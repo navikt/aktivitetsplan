@@ -33,6 +33,7 @@ spec:
       # Chrome does not send cookie with the site.webmanifest request, dont require login for that file
       autoLoginIgnorePaths:
         - /site.webmanifest
+        - /assets/*
   tokenx:
     enabled: true
   ingresses:
