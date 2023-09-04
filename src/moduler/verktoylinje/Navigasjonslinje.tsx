@@ -9,13 +9,17 @@ import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
-import { selectSistOppdatert } from '../dialog/dialog-selector';
+import { selectDialogerData, selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
+import DialogIkon, { DialogIkonUtenUleste } from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
+    const antallUlesteDialoger = (useSelector(selectDialogerData) || []).filter(
+        (dialog) => !dialog.erLestAvBruker,
+    ).length;
 
     const dispatch = useAppDispatch();
 
@@ -51,6 +55,14 @@ function Navigasjonslinje() {
                         <Link href={MINSIDE_URL}>Min side</Link>
                         <Link href={ARBEIDSRETTET_DIALOG_URL}>
                             <span>Min dialog med veileder</span>
+                            {antallUlesteDialoger > 0 ? (
+                                <>
+                                    <DialogIkonUtenUleste />
+                                    <span className="relative no-underline right-2 bottom-1 bg-red-500 w-5 h-5 flex items-center justify-center rounded-full text-white">
+                                        {antallUlesteDialoger}
+                                    </span>
+                                </>
+                            ) : null}
                         </Link>
                     </>
                 ) : null}

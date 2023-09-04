@@ -4,7 +4,7 @@ interface DialogIkonUtenUlesteProps {
     className?: string;
 }
 
-function DialogIkonUtenUleste(props: DialogIkonUtenUlesteProps) {
+export function DialogIkonUtenUleste(props: DialogIkonUtenUlesteProps) {
     const { className } = props;
 
     return (
