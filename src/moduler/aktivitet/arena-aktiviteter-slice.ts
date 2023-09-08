@@ -76,7 +76,14 @@ export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
 export const markerForhaandsorienteringSomLestArenaAktivitet = createAsyncThunk(
     `${arenaAktivitetSlice.name}/fho/lest`,
     async (arenaAktivitet: ArenaAktivitet) => {
-        return await Api.markerForhaandsorienteringSomLestArenaAktivitet(arenaAktivitet.id);
+        if (erArenaId((arenaAktivitet.id))) {
+            return await Api.markerForhaandsorienteringSomLestArenaAktivitet(arenaAktivitet.id);
+        } else {
+            return await Api.markerForhaandsorienteringSomLest(
+                arenaAktivitet.id,
+                arenaAktivitet.versjon.toString()
+            )
+        }
     }
 );
 
