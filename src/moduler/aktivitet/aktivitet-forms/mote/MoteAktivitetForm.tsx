@@ -23,8 +23,7 @@ const schema = z.object({
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
-
-    varighet: z.string().min(1, 'Du må fylle ut varighet'),
+    varighet: z.string().min(1, 'Du må velge varighet'),
     kanal: z.nativeEnum(Kanal, {
         errorMap: (issue) => {
             switch (issue.code) {
@@ -128,13 +127,24 @@ const MoteAktivitetForm = (props: Props) => {
                         step="300"
                         error={errors.klokkeslett && errors.klokkeslett.message}
                     />
-                    <TextField
-                        label="Varighet (obligatorisk)"
-                        {...register('varighet')}
-                        type={'time' as any}
-                        step="900"
-                        error={errors.varighet && errors.varighet.message}
-                    />
+                    <Select label="Varighet (obligatorisk)" {...register('varighet')} error={errors.varighet && errors.varighet.message} >
+                        <option value={30}>30 minutter</option>
+                        <option value={45}>45 minutter</option>
+                        <option value={60}>1 time</option>
+                        <option value={90}>1 time, 30 minutter</option>
+                        <option value={120}>2 timer</option>
+                        <option value={150}>2 timer, 30 minutter</option>
+                        <option value={180}>3 timer</option>
+                        <option value={210}>3 timer, 30 minutter</option>
+                        <option value={240}>4 timer</option>
+                        <option value={270}>4 timer, 30 minutter</option>
+                        <option value={300}>5 timer</option>
+                        <option value={330}>5 timer, 30 minutter</option>
+                        <option value={360}>6 timer</option>
+                        <option value={390}>6 timer, 30 minutter</option>
+                        <option value={420}>7 timer</option>
+                        <option value={450}>7 timer, 30 minutter</option>
+                    </Select>
                     <Select label="Møteform (obligatorisk)" {...register('kanal')} error={errors.kanal && errors.kanal.message}>
                         <option value="">Velg møteform</option>
                         <option value={Kanal.OPPMOTE}>Oppmøte</option>

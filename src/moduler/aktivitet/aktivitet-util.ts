@@ -162,8 +162,7 @@ export function beregnFraTil(data: MoteTid): FraTil {
     if (dato && klokkeslett && validKlokkeslett(klokkeslett) && varighet !== undefined && varighet !== null) {
         const { hour, minute } = toHourAndMinutes(klokkeslett);
         const fraDato = setMinutes(setHours(startOfDay(toDate(dato)), hour), minute);
-        const { hour: varighetHours, minute: varighetMinutes } = toHourAndMinutes(varighet);
-        const tilDato = addMinutes(fraDato, varighetHours * 60 + varighetMinutes);
+        const tilDato = addMinutes(fraDato, varighet);
         return {
             fraDato: fraDato.toISOString(),
             tilDato: tilDato.toISOString(),
@@ -176,7 +175,15 @@ export function formatterVarighet(varighet?: string | number): string | undefine
     if (!varighet) return undefined;
     if (typeof varighet === 'number' || !isNaN(parseInt(varighet))) {
         const { hour, minute } = toHourAndMinutes(varighet);
-        return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
+        if (hour > 0) {
+            if (minute > 0) {
+                return `${hour.toString()} ${hour === 1 ? 'time' : 'timer'}, ${prefixMed0(minute.toString())} minutter`;
+            } else {
+                return `${hour.toString()} ${hour === 1 ? 'time' : 'timer'}`;
+            }
+        } else {
+            return `${prefixMed0(minute.toString())} minutter`;
+        }
     } else {
         // Assuming this is correctly formatted "HH:ss"
         return varighet;
