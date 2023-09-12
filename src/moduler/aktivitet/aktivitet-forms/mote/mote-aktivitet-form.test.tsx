@@ -7,6 +7,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { MOTE_TYPE } from '../../../../constant';
 import reducer from '../../../../reducer';
 import MoteAktivitetForm from './MoteAktivitetForm';
+import {expect} from "vitest";
+import {Kanal} from "../../../../datatypes/aktivitetTypes";
 
 const initialState: any = {
     data: {
@@ -107,6 +109,22 @@ describe('MoteAktivitetForm', () => {
         mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
         screen.getByDisplayValue('Dette er en beskrivelse');
     });
+
+    it('Skal få riktig varighet', () => {
+        const mock = vi.fn()
+        mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef}  />);
+
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)'), {target: {value: "Møte med NAV"}})
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)'), {target: {value: "21.09.2023"}})
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)'), {target: {value: "08:00"}})
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Varighet (obligatorisk)'), {target: {value: "30"}})
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Møteform (obligatorisk)'), {target: {value: Kanal.TELEFON}})
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Møtested eller annen praktisk informasjon (obligatorisk)'),{target: {value: "Kontor"}})
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)'), {target: {value: "Møte med NAV"}})
+        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)'))
+        fireEvent.click(screen.getByText('Lagre'));
+        expect(mock).toHaveBeenCalled()
+    })
 
     it('Skal være disablede felter ved endring av aktivitet', () => {
         const aktivitet = {

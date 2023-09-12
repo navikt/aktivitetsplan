@@ -102,7 +102,9 @@ const MoteAktivitetForm = (props: Props) => {
                     avtalt: false,
                     // dato: selectedDay!!.toString(),
                 })
-            )}
+            , (error) => {
+                    console.log(error)
+                } )}
         >
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
