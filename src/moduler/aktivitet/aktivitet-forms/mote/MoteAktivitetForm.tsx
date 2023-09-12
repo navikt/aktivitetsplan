@@ -94,14 +94,15 @@ const MoteAktivitetForm = (props: Props) => {
         <form
             autoComplete="off"
             noValidate
-            onSubmit={handleSubmit((data) =>
-                onSubmit({
+            onSubmit={handleSubmit((data) => {
+                    const formValues = {
                     ...data,
                     ...beregnFraTil(data),
-                    status: AktivitetStatus.PLANLAGT,
-                    avtalt: false,
-                    // dato: selectedDay!!.toString(),
-                })
+                        status: AktivitetStatus.PLANLAGT,
+                        avtalt: false,
+                        // dato: selectedDay!!.toString(),
+                    }
+                onSubmit(formValues)}
             , (error) => {
                     console.log(error)
                 } )}
