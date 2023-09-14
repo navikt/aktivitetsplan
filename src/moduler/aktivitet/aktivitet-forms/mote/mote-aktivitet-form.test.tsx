@@ -154,7 +154,7 @@ describe('MoteAktivitetForm', () => {
             status: 'PLANLAGT',
             tilDato: '2023-09-21T06:30:00.000Z',
             tittel: 'Møte med NAV',
-            varighet: '30',
+            varighet: 30,
         });
     });
 
@@ -199,7 +199,7 @@ describe('MoteAktivitetForm', () => {
             status: 'PLANLAGT',
             tilDato: '2023-09-21T08:30:00.000Z',
             tittel: 'Møte med NAV',
-            varighet: '150',
+            varighet: 150,
         });
     });
 

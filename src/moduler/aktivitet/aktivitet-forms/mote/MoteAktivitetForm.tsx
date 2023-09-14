@@ -143,8 +143,7 @@ const MoteAktivitetForm = (props: Props) => {
                     <TextField
                         label="Klokkeslett (obligatorisk)"
                         {...register('klokkeslett')}
-                        type={'time' as any}
-                        step="300"
+                        type="time"
                         error={errors.klokkeslett && errors.klokkeslett.message}
                     />
                     <Select
