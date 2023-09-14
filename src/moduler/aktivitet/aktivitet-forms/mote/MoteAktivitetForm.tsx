@@ -90,6 +90,26 @@ const MoteAktivitetForm = (props: Props) => {
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const forberedelserValue = watch('forberedelser'); // for <Textarea /> character-count to work
 
+    const varighet = [
+        { minutter: 15, tekst: '15 minutter' },
+        { minutter: 30, tekst: '30 minutter' },
+        { minutter: 45, tekst: '45 minutter' },
+        { minutter: 60, tekst: '1 time' },
+        { minutter: 90, tekst: '1 time, 30 minutter' },
+        { minutter: 120, tekst: '2 timer' },
+        { minutter: 150, tekst: '2 timer, 30 minutter' },
+        { minutter: 180, tekst: '3 timer' },
+        { minutter: 210, tekst: '3 timer, 30 minutter' },
+        { minutter: 240, tekst: '4 timer' },
+        { minutter: 270, tekst: '4 timer, 30 minutter' },
+        { minutter: 300, tekst: '5 timer' },
+        { minutter: 330, tekst: '5 timer, 30 minutter' },
+        { minutter: 360, tekst: '6 timer' },
+        { minutter: 390, tekst: '6 timer, 30 minutter' },
+        { minutter: 420, tekst: '7 timer' },
+        { minutter: 450, tekst: '7 timer, 30 minutter' },
+    ];
+
     return (
         <form
             autoComplete="off"
@@ -101,7 +121,7 @@ const MoteAktivitetForm = (props: Props) => {
                     status: AktivitetStatus.PLANLAGT,
                     avtalt: false,
                     // dato: selectedDay!!.toString(),
-                })
+                }),
             )}
         >
             <FormProvider {...formHandlers}>
@@ -127,25 +147,23 @@ const MoteAktivitetForm = (props: Props) => {
                         step="300"
                         error={errors.klokkeslett && errors.klokkeslett.message}
                     />
-                    <Select label="Varighet (obligatorisk)" {...register('varighet')} error={errors.varighet && errors.varighet.message} >
-                        <option value={30}>30 minutter</option>
-                        <option value={45}>45 minutter</option>
-                        <option value={60}>1 time</option>
-                        <option value={90}>1 time, 30 minutter</option>
-                        <option value={120}>2 timer</option>
-                        <option value={150}>2 timer, 30 minutter</option>
-                        <option value={180}>3 timer</option>
-                        <option value={210}>3 timer, 30 minutter</option>
-                        <option value={240}>4 timer</option>
-                        <option value={270}>4 timer, 30 minutter</option>
-                        <option value={300}>5 timer</option>
-                        <option value={330}>5 timer, 30 minutter</option>
-                        <option value={360}>6 timer</option>
-                        <option value={390}>6 timer, 30 minutter</option>
-                        <option value={420}>7 timer</option>
-                        <option value={450}>7 timer, 30 minutter</option>
+                    <Select
+                        label="Varighet (obligatorisk)"
+                        {...register('varighet')}
+                        error={errors.varighet && errors.varighet.message}
+                    >
+                        <option value="">Velg varighet</option>
+                        {varighet.map((item) => (
+                            <option value={item.minutter} key={item.minutter}>
+                                {item.tekst}
+                            </option>
+                        ))}
                     </Select>
-                    <Select label="Møteform (obligatorisk)" {...register('kanal')} error={errors.kanal && errors.kanal.message}>
+                    <Select
+                        label="Møteform (obligatorisk)"
+                        {...register('kanal')}
+                        error={errors.kanal && errors.kanal.message}
+                    >
                         <option value="">Velg møteform</option>
                         <option value={Kanal.OPPMOTE}>Oppmøte</option>
                         <option value={Kanal.TELEFON}>Telefonmøte</option>
