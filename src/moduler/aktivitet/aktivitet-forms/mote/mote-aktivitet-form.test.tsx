@@ -25,6 +25,28 @@ function mountWithIntl(node: any): RenderResult {
     return render(<ReduxProvider store={store}>{node}</ReduxProvider>);
 }
 
+const fillForm = () => {
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)'), {
+        target: { value: 'Møte med NAV' },
+    });
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)'), {
+        target: { value: '21.09.2023' },
+    });
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)'), {
+        target: { value: '08:00' },
+    });
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('Møteform (obligatorisk)'), {
+        target: { value: Kanal.TELEFON },
+    });
+    fireEvent.change(
+        screen.getByLabelText<HTMLInputElement>('Møtested eller annen praktisk informasjon (obligatorisk)'),
+        { target: { value: 'Kontor' } },
+    );
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)'), {
+        target: { value: 'Møte med NAV' },
+    });
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)'));
+};
 describe('MoteAktivitetForm', () => {
     it.skip('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', async () => {
         const { queryByText, getByText, getByRole } = mountWithIntl(
@@ -115,29 +137,10 @@ describe('MoteAktivitetForm', () => {
         const mock = vi.fn();
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
 
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)'), {
-            target: { value: 'Møte med NAV' },
-        });
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)'), {
-            target: { value: '21.09.2023' },
-        });
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)'), {
-            target: { value: '08:00' },
-        });
+        fillForm();
         fireEvent.change(screen.getByLabelText<HTMLInputElement>('Varighet (obligatorisk)'), {
             target: { value: '30' },
         });
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Møteform (obligatorisk)'), {
-            target: { value: Kanal.TELEFON },
-        });
-        fireEvent.change(
-            screen.getByLabelText<HTMLInputElement>('Møtested eller annen praktisk informasjon (obligatorisk)'),
-            { target: { value: 'Kontor' } },
-        );
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)'), {
-            target: { value: 'Møte med NAV' },
-        });
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)'));
         await act(async () => {
             fireEvent.click(screen.getByText('Lagre'));
         });
@@ -162,27 +165,9 @@ describe('MoteAktivitetForm', () => {
         const mock = vi.fn();
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
 
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)'), {
-            target: { value: 'Møte med NAV' },
-        });
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)'), {
-            target: { value: '21.09.2023' },
-        });
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)'), {
-            target: { value: '08:00' },
-        });
+        fillForm();
         await userEvent.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '2 timer, 30 minutter');
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Møteform (obligatorisk)'), {
-            target: { value: Kanal.TELEFON },
-        });
-        fireEvent.change(
-            screen.getByLabelText<HTMLInputElement>('Møtested eller annen praktisk informasjon (obligatorisk)'),
-            { target: { value: 'Kontor' } },
-        );
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)'), {
-            target: { value: 'Møte med NAV' },
-        });
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)'));
+
         await act(async () => {
             fireEvent.click(screen.getByText('Lagre'));
         });
