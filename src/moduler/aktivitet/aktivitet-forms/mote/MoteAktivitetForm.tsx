@@ -62,7 +62,7 @@ const MoteAktivitetForm = (props: Props) => {
         tittel: aktivitet?.tittel,
         klokkeslett: moteTid?.klokkeslett,
         // Keep field as string since input natively returns string
-        varighet: formatterVarighet(moteTid?.varighet),
+        varighet: moteTid?.varighet.toString(),
         kanal: aktivitet?.kanal,
         adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse,
