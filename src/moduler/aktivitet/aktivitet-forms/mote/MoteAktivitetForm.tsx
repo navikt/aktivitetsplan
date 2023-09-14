@@ -8,7 +8,7 @@ import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
-import { beregnFraTil, beregnKlokkeslettVarighet, formatterVarighet } from '../../aktivitet-util';
+import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
@@ -23,8 +23,7 @@ const schema = z.object({
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
-
-    varighet: z.string().min(1, 'Du må fylle ut varighet'),
+    varighet: z.number({ invalid_type_error: 'Du må velge varighet' }), // Blir NaN på default value
     kanal: z.nativeEnum(Kanal, {
         errorMap: (issue) => {
             switch (issue.code) {
@@ -63,7 +62,7 @@ const MoteAktivitetForm = (props: Props) => {
         tittel: aktivitet?.tittel,
         klokkeslett: moteTid?.klokkeslett,
         // Keep field as string since input natively returns string
-        varighet: formatterVarighet(moteTid?.varighet),
+        varighet: moteTid?.varighet,
         kanal: aktivitet?.kanal,
         adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse,
@@ -91,6 +90,26 @@ const MoteAktivitetForm = (props: Props) => {
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const forberedelserValue = watch('forberedelser'); // for <Textarea /> character-count to work
 
+    const varighet = [
+        { minutter: 15, tekst: '15 minutter' },
+        { minutter: 30, tekst: '30 minutter' },
+        { minutter: 45, tekst: '45 minutter' },
+        { minutter: 60, tekst: '1 time' },
+        { minutter: 90, tekst: '1 time, 30 minutter' },
+        { minutter: 120, tekst: '2 timer' },
+        { minutter: 150, tekst: '2 timer, 30 minutter' },
+        { minutter: 180, tekst: '3 timer' },
+        { minutter: 210, tekst: '3 timer, 30 minutter' },
+        { minutter: 240, tekst: '4 timer' },
+        { minutter: 270, tekst: '4 timer, 30 minutter' },
+        { minutter: 300, tekst: '5 timer' },
+        { minutter: 330, tekst: '5 timer, 30 minutter' },
+        { minutter: 360, tekst: '6 timer' },
+        { minutter: 390, tekst: '6 timer, 30 minutter' },
+        { minutter: 420, tekst: '7 timer' },
+        { minutter: 450, tekst: '7 timer, 30 minutter' },
+    ];
+
     return (
         <form
             autoComplete="off"
@@ -102,7 +121,7 @@ const MoteAktivitetForm = (props: Props) => {
                     status: AktivitetStatus.PLANLAGT,
                     avtalt: false,
                     // dato: selectedDay!!.toString(),
-                })
+                }),
             )}
         >
             <FormProvider {...formHandlers}>
@@ -124,18 +143,26 @@ const MoteAktivitetForm = (props: Props) => {
                     <TextField
                         label="Klokkeslett (obligatorisk)"
                         {...register('klokkeslett')}
-                        type={'time' as any}
-                        step="300"
+                        type="time"
                         error={errors.klokkeslett && errors.klokkeslett.message}
                     />
-                    <TextField
+                    <Select
                         label="Varighet (obligatorisk)"
-                        {...register('varighet')}
-                        type={'time' as any}
-                        step="900"
+                        {...register('varighet', { valueAsNumber: true })}
                         error={errors.varighet && errors.varighet.message}
-                    />
-                    <Select label="Møteform (obligatorisk)" {...register('kanal')} error={errors.kanal && errors.kanal.message}>
+                    >
+                        <option value="">Velg varighet</option>
+                        {varighet.map((item) => (
+                            <option value={item.minutter} key={item.minutter}>
+                                {item.tekst}
+                            </option>
+                        ))}
+                    </Select>
+                    <Select
+                        label="Møteform (obligatorisk)"
+                        {...register('kanal')}
+                        error={errors.kanal && errors.kanal.message}
+                    >
                         <option value="">Velg møteform</option>
                         <option value={Kanal.OPPMOTE}>Oppmøte</option>
                         <option value={Kanal.TELEFON}>Telefonmøte</option>
