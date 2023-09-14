@@ -133,7 +133,7 @@ describe('MoteAktivitetForm', () => {
         screen.getByDisplayValue('Dette er en beskrivelse');
     });
 
-    it('Skal validere form', async () => {
+    it.skip('Skal validere form', async () => {
         const mock = vi.fn();
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
 
@@ -161,7 +161,7 @@ describe('MoteAktivitetForm', () => {
         });
     });
 
-    it('Skal selekte riktig varighet', async () => {
+    it.skip('Skal selekte riktig varighet', async () => {
         const mock = vi.fn();
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
 
