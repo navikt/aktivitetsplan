@@ -23,7 +23,7 @@ const schema = z.object({
         invalid_type_error: 'Ikke en gyldig dato',
     }),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
-    varighet: z.string().min(1, 'Du må velge varighet'),
+    varighet: z.number({ invalid_type_error: 'Du må velge varighet' }), // Blir NaN på default value
     kanal: z.nativeEnum(Kanal, {
         errorMap: (issue) => {
             switch (issue.code) {
@@ -62,7 +62,7 @@ const MoteAktivitetForm = (props: Props) => {
         tittel: aktivitet?.tittel,
         klokkeslett: moteTid?.klokkeslett,
         // Keep field as string since input natively returns string
-        varighet: moteTid?.varighet.toString(),
+        varighet: moteTid?.varighet,
         kanal: aktivitet?.kanal,
         adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse,
@@ -149,7 +149,7 @@ const MoteAktivitetForm = (props: Props) => {
                     />
                     <Select
                         label="Varighet (obligatorisk)"
-                        {...register('varighet')}
+                        {...register('varighet', { valueAsNumber: true })}
                         error={errors.varighet && errors.varighet.message}
                     >
                         <option value="">Velg varighet</option>
