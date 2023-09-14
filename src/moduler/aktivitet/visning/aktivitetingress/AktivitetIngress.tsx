@@ -14,7 +14,7 @@ const aktivitetingress: Record<AktivitetType, string | ReactElement | undefined>
             <BodyShort>Eksempler:</BodyShort>
             <ul className="list-disc ml-4">
                 <li>Oppfølging hos fastlege</li>
-                <li>Behandling og veiledning hos fysioterapaut</li>
+                <li>Behandling og veiledning hos fysioterapeut</li>
                 <li>Behandling hos psykolog</li>
                 <li> Behandling hos spesialist</li>
             </ul>
