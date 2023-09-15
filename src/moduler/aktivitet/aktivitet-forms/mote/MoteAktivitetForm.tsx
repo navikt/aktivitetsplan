@@ -48,7 +48,9 @@ const schema = z.object({
 export type MoteAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
-    onSubmit: (data: MoteAktivitetFormValues & { status: string; avtalt: boolean }) => Promise<void>;
+    onSubmit: (
+        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string; avtalt: boolean },
+    ) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MoteAktivitet;
 }
@@ -114,15 +116,16 @@ const MoteAktivitetForm = (props: Props) => {
         <form
             autoComplete="off"
             noValidate
-            onSubmit={handleSubmit((data) =>
-                onSubmit({
-                    ...data,
+            onSubmit={handleSubmit((data) => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { klokkeslett, ...rest } = data;
+                return onSubmit({
+                    ...rest,
                     ...beregnFraTil(data),
                     status: AktivitetStatus.PLANLAGT,
                     avtalt: false,
-                    // dato: selectedDay!!.toString(),
-                }),
-            )}
+                });
+            })}
         >
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">

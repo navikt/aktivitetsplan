@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { RenderResult, fireEvent, render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { addDays, addMinutes, subYears } from 'date-fns';
+import { addDays, addMinutes, differenceInMinutes, subYears } from 'date-fns';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
@@ -32,8 +32,9 @@ const fillForm = () => {
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)'), {
         target: { value: '21.09.2023' },
     });
+    const klokkeslett = new Date('2023-09-20T06:00:00.000Z').getHours();
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)'), {
-        target: { value: '08:00' },
+        target: { value: '0' + klokkeslett + ':00' },
     });
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Møteform (obligatorisk)'), {
         target: { value: Kanal.TELEFON },
@@ -133,10 +134,23 @@ describe('MoteAktivitetForm', () => {
         screen.getByDisplayValue('Dette er en beskrivelse');
     });
 
-    it.skip('Skal validere form', async () => {
+    it('Skal validere form', async () => {
+        const expectedResult = {
+            adresse: 'Kontor',
+            avtalt: false,
+            beskrivelse: 'Møte med NAV',
+            // dato: new Date('2023-09-20T22:00:00.000Z'),
+            forberedelser: '',
+            //  fraDato: '2023-09-21T06:00:00.000Z',
+            kanal: 'TELEFON',
+            status: 'PLANLAGT',
+            // tilDato: '2023-09-21T06:30:00.000Z',
+            tittel: 'Møte med NAV',
+            varighet: 30,
+        };
+
         const mock = vi.fn();
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
-
         fillForm();
         fireEvent.change(screen.getByLabelText<HTMLInputElement>('Varighet (obligatorisk)'), {
             target: { value: '30' },
@@ -145,23 +159,14 @@ describe('MoteAktivitetForm', () => {
             fireEvent.click(screen.getByText('Lagre'));
         });
 
-        expect(mock).toHaveBeenCalledWith({
-            adresse: 'Kontor',
-            avtalt: false,
-            beskrivelse: 'Møte med NAV',
-            dato: new Date('2023-09-20T22:00:00.000Z'),
-            forberedelser: '',
-            fraDato: '2023-09-21T06:00:00.000Z',
-            kanal: 'TELEFON',
-            klokkeslett: '08:00',
-            status: 'PLANLAGT',
-            tilDato: '2023-09-21T06:30:00.000Z',
-            tittel: 'Møte med NAV',
-            varighet: 30,
-        });
+        const lastcall = mock.mock.lastCall[0];
+        const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
+        expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
+
+        expect(lastcall).toEqual(expect.objectContaining(expectedResult));
     });
 
-    it.skip('Skal selekte riktig varighet', async () => {
+    it('Skal selekte riktig varighet', async () => {
         const mock = vi.fn();
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
 
@@ -172,20 +177,25 @@ describe('MoteAktivitetForm', () => {
             fireEvent.click(screen.getByText('Lagre'));
         });
 
-        expect(mock).toHaveBeenCalledWith({
-            adresse: 'Kontor',
-            avtalt: false,
-            beskrivelse: 'Møte med NAV',
-            dato: new Date('2023-09-20T22:00:00.000Z'),
-            forberedelser: '',
-            fraDato: '2023-09-21T06:00:00.000Z',
-            kanal: 'TELEFON',
-            klokkeslett: '08:00',
-            status: 'PLANLAGT',
-            tilDato: '2023-09-21T08:30:00.000Z',
-            tittel: 'Møte med NAV',
-            varighet: 150,
-        });
+        const lastcall = mock.mock.lastCall[0];
+        const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
+        expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
+
+        expect(lastcall).toEqual(
+            expect.objectContaining({
+                adresse: 'Kontor',
+                avtalt: false,
+                beskrivelse: 'Møte med NAV',
+                // dato: new Date('2023-09-20T22:00:00.000Z'),
+                forberedelser: '',
+                // fraDato: '2023-09-21T06:00:00.000Z',
+                kanal: 'TELEFON',
+                status: 'PLANLAGT',
+                //  tilDato: '2023-09-21T08:30:00.000Z',
+                tittel: 'Møte med NAV',
+                varighet: 150,
+            }),
+        );
     });
 
     it('Skal være disablede felter ved endring av aktivitet', () => {
