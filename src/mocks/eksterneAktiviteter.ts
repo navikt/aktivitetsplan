@@ -80,6 +80,49 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   },
               }),
           }),
+            wrapAktivitet({
+                ...enEksternAktivitet({
+                    tittel: 'Oppfølging hos Biggen',
+                    status: AktivitetStatus.PLANLAGT,
+                    avtalt: true,
+                    beskrivelse: '',
+                    eksternAktivitet: {
+                        type: EksternAktivitetType.INDOPPFAG,
+                        oppgave: undefined,
+                        handlinger: undefined,
+                        detaljer: [
+                            { label: 'Arrangør', verdi: 'Biggen Oppfølging' },
+                            { label: 'Oppfølging', verdi: 'ukentlig' },
+                        ],
+                        etiketter: undefined,
+                    },
+                }),
+            }),
+            wrapAktivitet({
+                ...enEksternAktivitet({
+                    tittel: 'Tilrettelags arbeid hos Biggen',
+                    status: AktivitetStatus.PLANLAGT,
+                    avtalt: true,
+                    beskrivelse: '',
+                    eksternAktivitet: {
+                        type: EksternAktivitetType.VASV,
+                        oppgave: undefined,
+                        handlinger: [
+                            {
+                                tekst: 'Biggens hjemmeside',
+                                subtekst: '',
+                                url: 'https://www.nav.no/',
+                                lenkeType: 'FELLES',
+                            }
+                        ],
+                        detaljer: [
+                            { label: 'Arrangør', verdi: 'Biggen verna avdeling' },
+                            { label: 'Stillingsprosent', verdi: '5%' },
+                        ],
+                        etiketter: undefined,
+                    },
+                }),
+            }),
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Saltrød og Høneby - med oppgave',
