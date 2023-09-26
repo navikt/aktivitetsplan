@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, HashRouter, Navigate, Route, useLocation, useParams } from 'react-router-dom';
 
-import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
+import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
-import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
 import Hovedside from './hovedside/Hovedside';
 import AvbrytAktivitet from './moduler/aktivitet/avslutt/AvbrytAktivitet';
 import FullforAktivitet from './moduler/aktivitet/avslutt/FullforAktivitet';
@@ -16,7 +15,6 @@ import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
 import { UpdateEventHandler } from './utils/UpdateHandler';
-import { HiddenIf } from './utils/utils';
 
 const Router = ({ children }: { children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
@@ -61,9 +59,6 @@ function App({ Routes }: { Routes: any }) {
                     </Routes>
                     <ErrorCleanerOnRouteChange />
                 </Router>
-                <HiddenIf hidden={ER_INTERN_FLATE}>
-                    <Timeoutbox />
-                </HiddenIf>
             </div>
             <UpdateEventHandler />
         </div>
