@@ -37,6 +37,15 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     ARENA_TILTAK: 'Tiltak gjennom NAV',
     MIDLERTIDIG_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
     VARIG_LONNSTILSKUDD: 'Avtale varig lønnstilskudd',
+    INDOPPFAG: 'Oppfølging',
+    ARBFORB: 'Arbeidsforberedende trening',
+    AVKLARAG: 'Avklaring',
+    VASV: 'Tilrettelagt arbeid',
+    ARBRRHDAG: 'Arbeidsrettet rehabilitering',
+    DIGIOPPARB: 'Digitalt oppfølgingstiltak',
+    JOBBK: 'Jobbklubb',
+    GRUPPEAMO: 'Gruppe AMO',
+    GRUFAGYRKE: 'Gruppe Fag- og yrkesopplæring'
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
