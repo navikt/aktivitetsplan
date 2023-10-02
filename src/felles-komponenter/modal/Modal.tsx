@@ -54,9 +54,11 @@ const Modal = (props: Props) => {
 
     return (
         <AkselModal open onClose={closeFuncOrDefault} className="lg:w-120">
-            <AkselModal.Header closeButton={true}>
+            <AkselModal.Header closeButton={true} aria-labelledby="modal-heading">
                 <div className="space-y-2">
-                    <Heading size="large">{heading}</Heading>
+                    <Heading id="modal-heading" size="large">
+                        {heading}
+                    </Heading>
                     {tilbakeLenke ? (
                         <>
                             <Link className="hover:cursor-pointer" onClick={tilbakeLenke.onTilbakeKlikk} tabIndex={0}>
@@ -68,7 +70,7 @@ const Modal = (props: Props) => {
             </AkselModal.Header>
             <AkselModal.Body>
                 <div className="flex flex-col max-w-2xl mx-auto">
-                    <Heading level="2" size="small">
+                    <Heading className="text-text-subtle" level="2" size="small">
                         {subHeading}
                     </Heading>
                     {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
