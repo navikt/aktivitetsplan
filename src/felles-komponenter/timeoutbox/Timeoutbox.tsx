@@ -40,11 +40,10 @@ const Timeoutbox = () => {
         <Modal
             open={open && !manueltLukket}
             className="max-w-2xl"
-            shouldCloseOnOverlayClick={false}
-            overlayClassName="aktivitet-modal__overlay"
             onClose={() => {
                 setManueltLukket(true);
             }}
+            header={{ heading: 'Obs!', closeButton: true }}
         >
             <TimeoutboxNedtelling expirationTimestamp={expirationTimestamp} />
         </Modal>

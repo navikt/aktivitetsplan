@@ -4,11 +4,10 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { Status } from '../../../createGenericSlice';
-import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { useRoutes } from '../../../routes';
 import { RootState } from '../../../store';
 import { fullforAktivitet } from '../aktivitet-actions';
@@ -62,7 +61,7 @@ const FullforAktivitet = () => {
     if (!valgtAktivitet) return <Navigate to={hovedsideRoute()} />;
 
     return (
-        <Modal header={<ModalHeader />} contentLabel="Fullfør aktivitet">
+        <Modal heading="Fullfør aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.FULLFOERT}>
                 {valgtAktivitet.avtalt &&
                 valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&

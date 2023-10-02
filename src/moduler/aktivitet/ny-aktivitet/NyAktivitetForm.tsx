@@ -66,14 +66,16 @@ const NyAktivitetForm = () => {
         }
     };
 
-    const header = <ModalHeader tilbakeTekst="Tilbake til kategorier" onTilbakeClick={onReqBack} />;
-
     if (!underOppfolging) {
         return null;
     }
 
     return (
-        <Modal header={header} onRequestClose={onRequestClose} contentLabel="Ny aktivitetstype">
+        <Modal
+            heading="Tilbake til kategorier"
+            tilbakeLenke={{ tekst: 'Tilbake til kategorier', onTilbakeKlikk: onReqBack }}
+            onRequestClose={onRequestClose}
+        >
             <article>
                 <Routes>
                     <Route
