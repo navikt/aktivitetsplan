@@ -26,7 +26,7 @@ const Aktivitetvisning = (props: Props) => {
     const visBegrunnelse = !erArenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     return (
-        <div className="mt-4 space-y-8">
+        <div className=" space-y-8">
             <VarslingBoks aktivitet={aktivitet} />
             {visBegrunnelse && aktivitet.avsluttetKommentar ? (
                 <BegrunnelseBoks begrunnelse={aktivitet.avsluttetKommentar} />

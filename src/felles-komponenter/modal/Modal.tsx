@@ -53,7 +53,7 @@ const Modal = (props: Props) => {
     };
 
     return (
-        <AkselModal open onClose={closeFuncOrDefault}>
+        <AkselModal open onClose={closeFuncOrDefault} className="lg:w-120">
             <AkselModal.Header closeButton={true}>
                 <div className="space-y-2">
                     <Heading size="large">{heading}</Heading>
@@ -68,7 +68,9 @@ const Modal = (props: Props) => {
             </AkselModal.Header>
             <AkselModal.Body>
                 <div className="flex flex-col max-w-2xl mx-auto">
-                    {subHeading}
+                    <Heading level="2" size="small">
+                        {subHeading}
+                    </Heading>
                     {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
                     <Innholdslaster
                         className="flex m-auto my-8"
