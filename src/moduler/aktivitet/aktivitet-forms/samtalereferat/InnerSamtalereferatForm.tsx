@@ -35,7 +35,7 @@ interface Props {
             status: string;
             avtalt: boolean;
             erReferatPublisert?: boolean;
-        }
+        },
     ) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: SamtalereferatAktivitet;
@@ -93,10 +93,7 @@ const InnerSamtalereferatForm = (props: Props) => {
         <form autoComplete="off" noValidate>
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
-                    <AktivitetFormHeader
-                        tittel="Samtalereferat"
-                        aktivitetstype={VeilarbAktivitetType.SAMTALEREFERAT_TYPE}
-                    />
+                    <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.SAMTALEREFERAT_TYPE} />
 
                     <TextField
                         label="Tema for samtalen (obligatorisk)"

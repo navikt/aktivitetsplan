@@ -1,5 +1,5 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
-import { Modal, Provider as ModalProvider } from '@navikt/ds-react';
+import { Provider as ModalProvider } from '@navikt/ds-react';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Routes } from 'react-router-dom';
@@ -36,11 +36,8 @@ export class DabAktivitetsplan extends HTMLElement {
                     <App Routes={Routes} key={'1'} />
                 </Provider>
             </ModalProvider>,
-            appRoot
+            appRoot,
         );
-
-        // Mount modal under correct root-node
-        Modal.setAppElement(appRoot);
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
