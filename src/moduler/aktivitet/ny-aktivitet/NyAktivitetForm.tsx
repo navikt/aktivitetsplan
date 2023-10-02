@@ -1,7 +1,7 @@
 import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
 import React, { MouseEventHandler, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Routes, useLocation, useMatch, useNavigate, useParams } from 'react-router-dom';
+import { Route, Routes, useMatch, useNavigate } from 'react-router-dom';
 
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
@@ -89,7 +89,7 @@ const NyAktivitetForm = () => {
     return (
         <Modal
             heading={match?.params?.aktivitetType ? aktivitetHeadings[match.params.aktivitetType] : ''}
-            tilbakeLenke={{ tekst: 'Tilbake til kategorier', onTilbakeKlikk: onReqBack }}
+            tilbakeLenke={{ tekst: 'Til kategoriene', onTilbakeKlikk: onReqBack }}
             onRequestClose={onRequestClose}
         >
             <article>

@@ -1,4 +1,4 @@
-import { Modal as AkselModal } from '@navikt/ds-react';
+import { Button, Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { MouseEventHandler, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { useRoutes } from '../../routes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
+import { ChevronLeftCircleIcon, ChevronLeftIcon } from '@navikt/aksel-icons';
 
 interface Props {
     className?: string;
@@ -52,25 +53,32 @@ const Modal = (props: Props) => {
     };
 
     return (
-        <AkselModal
-            header={{ heading, closeButton: true }}
-            open
-            // aria-label={contentLabel}
-            // aria-labelledby={!contentLabel ? ariaLabelledby || 'modal-heading' : undefined}
-            className={classNames(
-                'aktivitet-modal lg:w-120 md:p-8 md:px-8  max-h-full overscroll-contain w-full rounded-none lg:rounded',
-                className,
-                contentClass,
-            )}
-            onClose={closeFuncOrDefault}
-        >
-            <div className="flex flex-col max-w-2xl mx-auto">
-                {subHeading}
-                {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
-                <Innholdslaster className="flex m-auto my-8" minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
-                    {children}
-                </Innholdslaster>
-            </div>
+        <AkselModal open onClose={closeFuncOrDefault}>
+            <AkselModal.Header closeButton={true}>
+                <div className="space-y-2">
+                    <Heading size="large">{heading}</Heading>
+                    {tilbakeLenke ? (
+                        <>
+                            <Link className="hover:cursor-pointer" onClick={tilbakeLenke.onTilbakeKlikk} tabIndex={0}>
+                                {tilbakeLenke.tekst}
+                            </Link>
+                        </>
+                    ) : null}
+                </div>
+            </AkselModal.Header>
+            <AkselModal.Body>
+                <div className="flex flex-col max-w-2xl mx-auto">
+                    {subHeading}
+                    {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
+                    <Innholdslaster
+                        className="flex m-auto my-8"
+                        minstEn={minstEnAvhengighet}
+                        avhengigheter={avhengigheter}
+                    >
+                        {children}
+                    </Innholdslaster>
+                </div>
+            </AkselModal.Body>
         </AkselModal>
     );
 };
