@@ -72,7 +72,7 @@ interface FormProps<T extends VeilarbAktivitet> {
 
 function getAktivitetsFormComponent<T extends VeilarbAktivitet>(
     aktivitet: VeilarbAktivitet | null,
-    formProps: FormProps<T>
+    formProps: FormProps<T>,
 ) {
     if (!aktivitet) {
         return null;
@@ -107,7 +107,7 @@ function EndreAktivitet() {
 
     const { id: aktivitetId } = useParams<{ id: string }>();
     const valgtAktivitet = useSelector((state: RootState) =>
-        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
     );
     const avhengigheter: Avhengighet[] = [valgtAktivitet ? Status.OK : Status.PENDING];
     const aktivitetFeilmelding = useSelector(selectAktivitetFeilmeldinger);
@@ -158,7 +158,7 @@ function EndreAktivitet() {
             : null;
 
     return (
-        <Modal header={header} onRequestClose={onReqClose} contentLabel="Endre aktivitet">
+        <Modal heading="Endre aktivitet" onRequestClose={onReqClose}>
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>{aktivitetForm}</ModalContainer>
