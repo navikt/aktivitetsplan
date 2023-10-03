@@ -1,5 +1,4 @@
-import { Button, Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
-import classNames from 'classnames';
+import { Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
 import React, { MouseEventHandler, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +6,6 @@ import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { useRoutes } from '../../routes';
 import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
-import { ChevronLeftCircleIcon, ChevronLeftIcon } from '@navikt/aksel-icons';
 
 interface Props {
     className?: string;

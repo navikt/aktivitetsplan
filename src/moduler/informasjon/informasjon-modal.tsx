@@ -1,4 +1,4 @@
-import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
+import { Accordion, BodyShort, Link } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';

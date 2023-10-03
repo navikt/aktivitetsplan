@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { Button, Heading, Textarea } from '@navikt/ds-react';
+import { Button, Textarea } from '@navikt/ds-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -22,7 +22,7 @@ const schema = z.object({
 export type PrintFormValues = z.infer<typeof schema>;
 
 const PrintMeldingForm = (props: Props) => {
-    const { bruker, onSubmit } = props;
+    const { onSubmit } = props;
 
     const defaultValues: PrintFormValues = { beskrivelse: defaultBeskrivelse };
 
