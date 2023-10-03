@@ -37,7 +37,6 @@ const FullforAktivitet = () => {
 
     const begrunnelse = (
         <BegrunnelseForm
-            headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseTekst}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Heading, Textarea } from '@navikt/ds-react';
+import { Button, Textarea } from '@navikt/ds-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const BegrunnelseForm = (props: Props) => {
-    const { beskrivelseLabel, headerTekst, lagrer, onSubmit } = props;
+    const { beskrivelseLabel, lagrer, onSubmit } = props;
 
     const defaultValues: BegrunnelseFormValues = {
         begrunnelse: '',
@@ -42,11 +42,9 @@ const BegrunnelseForm = (props: Props) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <Heading level="1" size="large">
-                    {headerTekst}
-                </Heading>
                 <Textarea
-                    label={beskrivelseLabel}
+                    label="Begrunnelse"
+                    description={beskrivelseLabel}
                     maxLength={255}
                     disabled={lagrer}
                     {...register('begrunnelse')}

@@ -1,18 +1,16 @@
-import { Alert, Button, Heading } from '@navikt/ds-react';
-import React from 'react';
+import { Alert, Button } from '@navikt/ds-react';
+import React, { MouseEventHandler } from 'react';
 
 interface Props {
-    headerTekst: string;
-    onSubmit: (value: any) => any;
+    onSubmit: MouseEventHandler<HTMLButtonElement>;
 }
 
-const VisAdvarsel = ({ onSubmit, headerTekst }: Props) => {
+const VisAdvarsel = ({ onSubmit }: Props) => {
     return (
         <div className="flex flex-col gap-8">
-            <Heading level="1" size="large">
-                {headerTekst}
-            </Heading>
-            <Alert variant="warning">Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.</Alert>
+            <Alert variant="warning" inline>
+                Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
+            </Alert>
             <Button className="self-baseline" onClick={onSubmit}>
                 Lagre
             </Button>

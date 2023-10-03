@@ -1,4 +1,3 @@
-import { Modal } from '@navikt/ds-react';
 import { configureStore } from '@reduxjs/toolkit';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { render } from '@testing-library/react';

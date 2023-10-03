@@ -7,14 +7,15 @@ import { selectHentMalListeFeil } from '../feilmelding/feil-selector';
 interface Props {
     children: React.ReactNode;
     onRequestClosed: () => void;
+    heading: string;
 }
 
 export function MalModal(props: Props) {
-    const { children } = props;
+    const { children, heading } = props;
     const feil = useSelector(selectHentMalListeFeil);
 
     return (
-        <Modal onRequestClose={props.onRequestClosed} feilmeldinger={feil} header={null} contentLabel={'Mitt mål'}>
+        <Modal onRequestClose={props.onRequestClosed} feilmeldinger={feil} heading={heading}>
             {children}
         </Modal>
     );

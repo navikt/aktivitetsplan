@@ -44,9 +44,8 @@ const PrintMeldingForm = (props: Props) => {
     const begrunnelseValue = watch('beskrivelse');
 
     return (
-        <form onSubmit={handleSubmit((data) => submit(data))} className="p-4 space-y-8">
+        <form onSubmit={handleSubmit((data) => submit(data))} className="space-y-8">
             <div className="space-y-8">
-                <Heading size="large" level="1">{`Aktivitetsplan for ${bruker.fornavn}`}</Heading>
                 <Textarea
                     label="Rediger teksten under så den passer til brukeren."
                     maxLength={2000}

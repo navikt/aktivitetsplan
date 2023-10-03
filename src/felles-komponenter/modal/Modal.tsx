@@ -31,10 +31,8 @@ const Modal = (props: Props) => {
         children,
         avhengigheter,
         onRequestClose,
-        className,
         minstEnAvhengighet = false,
         feilmeldinger,
-        contentClass,
         tilbakeLenke,
         // ariaLabelledby,
         // contentLabel,
@@ -70,7 +68,7 @@ const Modal = (props: Props) => {
             </AkselModal.Header>
             <AkselModal.Body>
                 <div className="flex flex-col max-w-2xl mx-auto">
-                    <Heading className="text-text-subtle" level="2" size="small">
+                    <Heading className="" level="2" size="xsmall">
                         {subHeading}
                     </Heading>
                     {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
