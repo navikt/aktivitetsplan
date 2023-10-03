@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { Button, Heading, Textarea } from '@navikt/ds-react';
+import { Button, Textarea } from '@navikt/ds-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -22,7 +22,7 @@ const schema = z.object({
 export type PrintFormValues = z.infer<typeof schema>;
 
 const PrintMeldingForm = (props: Props) => {
-    const { bruker, onSubmit } = props;
+    const { onSubmit } = props;
 
     const defaultValues: PrintFormValues = { beskrivelse: defaultBeskrivelse };
 
@@ -44,9 +44,8 @@ const PrintMeldingForm = (props: Props) => {
     const begrunnelseValue = watch('beskrivelse');
 
     return (
-        <form onSubmit={handleSubmit((data) => submit(data))} className="p-4 space-y-8">
+        <form onSubmit={handleSubmit((data) => submit(data))} className="space-y-8">
             <div className="space-y-8">
-                <Heading size="large" level="1">{`Aktivitetsplan for ${bruker.fornavn}`}</Heading>
                 <Textarea
                     label="Rediger teksten under så den passer til brukeren."
                     maxLength={2000}

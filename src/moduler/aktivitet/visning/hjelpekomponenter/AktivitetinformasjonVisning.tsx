@@ -1,4 +1,3 @@
-import { Heading } from '@navikt/ds-react';
 import React from 'react';
 
 import {
@@ -41,7 +40,7 @@ interface Props {
 
 const AktivitetinformasjonVisning = (props: Props) => {
     const { valgtAktivitet, underOppfolging } = props;
-    const { tittel, type, avtalt } = valgtAktivitet;
+    const { type, avtalt } = valgtAktivitet;
 
     const deltFerdigMarkeringSkalVises = isSamtaleOrMote(valgtAktivitet)
         ? SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet)
@@ -50,9 +49,6 @@ const AktivitetinformasjonVisning = (props: Props) => {
     return (
         <div className="space-y-8 mb-8">
             <div className="space-y-8">
-                <Heading level="1" className="my-4" size="large" id="modal-heading">
-                    {tittel}
-                </Heading>
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
                 {deltFerdigMarkeringSkalVises ? <IkkeDeltFerdigMarkering /> : null}

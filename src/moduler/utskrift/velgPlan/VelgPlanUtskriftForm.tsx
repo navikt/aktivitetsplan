@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { Button, Radio, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -34,13 +34,10 @@ const VelgPlanUtskriftForm = (props: Props) => {
     };
 
     return (
-        <form onSubmit={handleSubmit((data) => onSubmit(data))} className="p-4 space-y-8">
+        <form onSubmit={handleSubmit((data) => onSubmit(data))} className="space-y-8">
             <RadioGroup
-                legend={
-                    <Heading className="mb-4" level="1" size="medium">
-                        Velg hva du ønsker å skrive ut
-                    </Heading>
-                }
+                legend="Velg hva du ønsker å skrive ut"
+                hideLegend
                 defaultValue={'helePlanen'}
                 onChange={onChangeRadioGroup}
             >

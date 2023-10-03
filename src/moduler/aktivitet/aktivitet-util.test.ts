@@ -1,7 +1,14 @@
 import { subMonths } from 'date-fns';
 
-import { ArenaAktivitetType } from '../../datatypes/arenaAktivitetTypes';
-import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import { ArenaAktivitet, ArenaAktivitetType } from '../../datatypes/arenaAktivitetTypes';
+import {
+    EksternAktivitet,
+    MedisinskBehandlingAktivitet,
+    MoteAktivitet,
+    SamtalereferatAktivitet,
+    StillingFraNavAktivitet,
+    VeilarbAktivitetType,
+} from '../../datatypes/internAktivitetTypes';
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
@@ -10,32 +17,33 @@ import {
     splitIEldreOgNyereAktiviteter,
 } from './aktivitet-util';
 import { kanEndreAktivitetDetaljer } from './aktivitetlisteSelector';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 
 /* eslint-env mocha */
 
 describe('aktivitet-util', () => {
     it.skip('beregnFraTil', () => {
         const fraTil = beregnFraTil({
-            dato: '2017-08-01T00:00:00.000+02:00',
+            dato: new Date('2017-08-01T00:00:00.000+02:00'),
             klokkeslett: '15:00',
-            varighet: '00:15',
+            varighet: 15,
         });
         expect(fraTil.fraDato).toEqual('2017-08-01T13:00:00.000Z');
         expect(fraTil.tilDato).toEqual('2017-08-01T13:15:00.000Z');
 
-        expect(beregnFraTil({})).toEqual({});
+        expect(beregnFraTil({} as never)).toEqual({});
     });
 
     it.skip('beregnKlokkeslettVarighet', () => {
         const klokkeslettVarighet = beregnKlokkeslettVarighet({
             fraDato: '2017-08-01T04:00:00.000+02:00',
             tilDato: '2017-08-01T06:15:00.000+02:00',
-        });
-        expect(klokkeslettVarighet.klokkeslett).toEqual('04:00');
-        expect(klokkeslettVarighet.varighet).toEqual(135);
-        expect(klokkeslettVarighet.dato).toEqual(new Date('2017-07-31T22:00:00.000Z'));
+        } as unknown as MoteAktivitet);
+        expect(klokkeslettVarighet?.klokkeslett).toEqual('04:00');
+        expect(klokkeslettVarighet?.varighet).toEqual(135);
+        expect(klokkeslettVarighet?.dato).toEqual(new Date('2017-07-31T22:00:00.000Z'));
 
-        expect(beregnKlokkeslettVarighet({})).toBeUndefined();
+        expect(beregnKlokkeslettVarighet({} as never)).toBeUndefined();
     });
 
     it.skip('beregnFraTil + beregnKlokkeslettVarighet', () => {
@@ -45,8 +53,8 @@ describe('aktivitet-util', () => {
         const moteTid = beregnKlokkeslettVarighet({
             fraDato,
             tilDato,
-        });
-        const fraTil = beregnFraTil(moteTid);
+        } as MoteAktivitet);
+        const fraTil = beregnFraTil(moteTid!);
 
         expect(fraTil.fraDato).toEqual(fraDato);
         expect(fraTil.tilDato).toEqual(tilDato);
@@ -79,7 +87,7 @@ describe('aktivitet-util', () => {
             manglendeEndretDato,
             endretDatoMerEnnToManederSiden,
             endretDatoMindreEnnToManederSiden,
-        ];
+        ] as unknown as AlleAktiviteter[];
 
         const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(aktiviteter);
 
@@ -88,14 +96,24 @@ describe('aktivitet-util', () => {
     });
 
     describe('kanEndreAktivitetDetaljer', () => {
-        const baseAktivitet = { avtalt: false, historisk: false, type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE };
+        const baseAktivitet = {
+            avtalt: false,
+            historisk: false,
+            type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
+        };
         it('bare veileder kan endre samtalereferat', () => {
-            const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE };
+            const aktivitet = {
+                ...baseAktivitet,
+                type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE,
+            } as SamtalereferatAktivitet;
             expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
             expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
         });
         it('bruker og veileder kan endre medisinsk behandling som ikke er avtalt', () => {
-            const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE };
+            const aktivitet = {
+                ...baseAktivitet,
+                type: VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE,
+            } as MedisinskBehandlingAktivitet;
             expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeTruthy();
             expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
             expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
@@ -111,7 +129,7 @@ describe('aktivitet-util', () => {
                     ...baseAktivitet,
                     type,
                     avtalt: true,
-                };
+                } as AlleAktiviteter;
                 expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
                 expect(kanEndreAktivitetDetaljer(aktivitet, true)).toBeTruthy();
             });
@@ -119,15 +137,24 @@ describe('aktivitet-util', () => {
 
         describe('aktiviteter styrt eksternt kan ikke endres av noen', () => {
             it('Arenaaktiviteter', () => {
-                const aktivitet = { ...baseAktivitet, type: ArenaAktivitetType.GRUPPEAKTIVITET };
+                const aktivitet = {
+                    ...baseAktivitet,
+                    type: ArenaAktivitetType.GRUPPEAKTIVITET,
+                } as unknown as ArenaAktivitet;
                 expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
             });
             it('Eksterne aktiviteter', () => {
-                const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE };
+                const aktivitet = {
+                    ...baseAktivitet,
+                    type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE,
+                } as EksternAktivitet;
                 expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
             });
             it('Stilling fra NAV', () => {
-                const aktivitet = { ...baseAktivitet, type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE };
+                const aktivitet = {
+                    ...baseAktivitet,
+                    type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE,
+                } as StillingFraNavAktivitet;
                 expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
             });
         });

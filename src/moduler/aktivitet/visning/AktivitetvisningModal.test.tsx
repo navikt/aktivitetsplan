@@ -1,4 +1,3 @@
-import { Modal } from '@navikt/ds-react';
 import { configureStore } from '@reduxjs/toolkit';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { render } from '@testing-library/react';
@@ -23,8 +22,6 @@ const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
     </div>
 );
 
-// Hack to remove warnings from tests https://github.com/reactjs/react-modal/issues/632
-Modal.setAppElement(document.createElement('div'));
 describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
         const store = configureStore({ reducer });

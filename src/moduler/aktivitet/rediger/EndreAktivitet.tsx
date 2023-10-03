@@ -28,7 +28,6 @@ import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
-import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../../routes';
 import { RootState } from '../../../store';
@@ -72,7 +71,7 @@ interface FormProps<T extends VeilarbAktivitet> {
 
 function getAktivitetsFormComponent<T extends VeilarbAktivitet>(
     aktivitet: VeilarbAktivitet | null,
-    formProps: FormProps<T>
+    formProps: FormProps<T>,
 ) {
     if (!aktivitet) {
         return null;
@@ -107,7 +106,7 @@ function EndreAktivitet() {
 
     const { id: aktivitetId } = useParams<{ id: string }>();
     const valgtAktivitet = useSelector((state: RootState) =>
-        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
     );
     const avhengigheter: Avhengighet[] = [valgtAktivitet ? Status.OK : Status.PENDING];
     const aktivitetFeilmelding = useSelector(selectAktivitetFeilmeldinger);
@@ -143,8 +142,6 @@ function EndreAktivitet() {
         }
     };
 
-    const header = <ModalHeader tilbakeTekst="Tilbake" onTilbakeClick={onReqBack} />;
-
     const formProps = {
         onSubmit: oppdater,
         endre: true,
@@ -158,7 +155,11 @@ function EndreAktivitet() {
             : null;
 
     return (
-        <Modal header={header} onRequestClose={onReqClose} contentLabel="Endre aktivitet">
+        <Modal
+            heading="Endre aktivitet"
+            onRequestClose={onReqClose}
+            tilbakeLenke={{ tekst: 'Tilbake', onTilbakeKlikk: onReqBack }}
+        >
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>{aktivitetForm}</ModalContainer>

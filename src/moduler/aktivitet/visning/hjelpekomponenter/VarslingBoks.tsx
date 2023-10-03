@@ -36,7 +36,7 @@ const VarslingBoks = ({ aktivitet }: Props) => {
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
                 <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
-                    <Alert variant="warning">
+                    <Alert variant="warning" className="mt-4">
                         Brukeren får ikke automatisk beskjed om at aktiviteten er opprettet. <br />
                         Send en dialogmelding slik at bruker får informasjon om møtet.
                     </Alert>

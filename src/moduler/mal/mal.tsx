@@ -1,4 +1,4 @@
-import { Heading, ReadMore } from '@navikt/ds-react';
+import { ReadMore } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -49,13 +49,15 @@ const Mal = () => {
     };
 
     return (
-        <MalModal onRequestClosed={onModalRequestClosed}>
+        <MalModal
+            onRequestClosed={onModalRequestClosed}
+            heading={
+                viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
+                    ? 'Mitt mål fra en tidligere periode'
+                    : 'Mitt mål'
+            }
+        >
             <div>
-                <Heading id="modal-heading" level="1" size="large" className="mb-8">
-                    {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
-                        ? 'Mitt mål fra en tidligere periode'
-                        : 'Mitt mål'}
-                </Heading>
                 <ReadMore className="mb-8" header="Tips til mål" defaultOpen={historiskeMal.length === 0}>
                     Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
                     <ul className="list-disc mt-4 pl-8">

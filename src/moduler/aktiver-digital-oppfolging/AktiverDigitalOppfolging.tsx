@@ -19,7 +19,10 @@ const AktiverDigitalOppfolging = () => {
 
     return (
         <div className="flex items-center flex-col">
-            <AktiverDigitalOppfolgingVarsel reservertIKRR={reservertKrr} settDigitalFeilet={settOppfolgingFeilet} />
+            <AktiverDigitalOppfolgingVarsel
+                reservertIKRR={reservertKrr || false}
+                settDigitalFeilet={settOppfolgingFeilet}
+            />
             <HiddenIfHovedknapp
                 disabled={lasterOppfolging}
                 hidden={reservertKrr}

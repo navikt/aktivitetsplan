@@ -1,4 +1,4 @@
-import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
+import { Accordion, BodyShort, Link } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -40,11 +40,9 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
             onRequestClose={() => {
                 navigate(hovedsideRoute());
             }}
+            heading="Hva er aktivitetsplanen?"
         >
             <ModalContainer className="max-w-2xl">
-                <Heading id="modal-heading" level="1" size="large" className="mb-4">
-                    Hva er aktivitetsplanen?
-                </Heading>
                 <BodyShort className="pb-4">
                     I aktivitetsplanen holder du oversikt over det du gjør for å komme i jobb eller annen aktivitet.
                     Både du og veilederen din kan se og endre aktivitetsplanen.

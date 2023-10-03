@@ -139,10 +139,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
-                    <AktivitetFormHeader
-                        tittel="Avtale om å søke jobber"
-                        aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE}
-                    />
+                    <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE} />
                     <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="SOKEAVTALE" />
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker

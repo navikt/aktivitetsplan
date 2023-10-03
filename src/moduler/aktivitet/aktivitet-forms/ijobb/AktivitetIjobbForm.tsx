@@ -79,10 +79,7 @@ const IJobbAktivitetForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...methods}>
                 <div className="space-y-8">
-                    <AktivitetFormHeader
-                        tittel="Jobb jeg har nå"
-                        aktivitetstype={VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE}
-                    />
+                    <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE} />
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"

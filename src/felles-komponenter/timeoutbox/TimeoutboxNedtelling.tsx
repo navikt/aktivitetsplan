@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Modal } from '@navikt/ds-react';
 import { differenceInSeconds, parseISO, secondsToMinutes } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 
@@ -19,15 +19,12 @@ const TimeoutboxNedtelling = (props: Props) => {
 
     if (sekunderIgjen <= 0) {
         return (
-            <Modal.Content>
-                <Heading level="1" size="large" spacing>
-                    Obs!
-                </Heading>
+            <Modal.Body>
                 <BodyShort spacing>Sesjonen har utløpt. Du må logge inn igjen for å fortsette.</BodyShort>
                 <Button variant="primary" className="mt-2" onClick={() => window.location.reload()}>
                     Last siden på nytt
                 </Button>
-            </Modal.Content>
+            </Modal.Body>
         );
     }
 
@@ -35,10 +32,7 @@ const TimeoutboxNedtelling = (props: Props) => {
     const tekst = tid === 0 ? `${sekunderIgjen} sekunder` : `${tid} minutter`;
 
     return (
-        <Modal.Content>
-            <Heading id="modal-heading" className="blokk-s" level="1" size="large" spacing>
-                Obs!
-            </Heading>
+        <Modal.Body>
             <BodyLong className="blokk-xxs" spacing>
                 {`Din sesjon vil utløpe om ${tekst}. Dersom du ikke laster siden på nytt, vil du bli logget ut. Ta vare på alt ulagret arbeid. For å laste siden på nytt, vennligst trykk "Last siden på nytt".`}
             </BodyLong>
@@ -48,7 +42,7 @@ const TimeoutboxNedtelling = (props: Props) => {
             <Button variant="secondary" onClick={() => document.querySelector('#login-knapp-id').click()}>
                 Logg ut
             </Button>
-        </Modal.Content>
+        </Modal.Body>
     );
 };
 

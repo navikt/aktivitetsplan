@@ -110,7 +110,7 @@ function MittMaal() {
         erNyEndringIMal(
             malData,
             useSelector(selectLestAktivitetsplan) as any,
-            useSelector(selectIdentitetData) as any
+            useSelector(selectIdentitetData) as any,
         ) && harSkriveTilgang;
 
     const noeHarFeilet = avhengigheter === 'ERROR';
@@ -158,7 +158,7 @@ function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boole
 
     const maalLagdEtterSistLestAktivitetsplan = isAfter(
         parseISO(maal.dato),
-        parseISO(aktivitetsplanLestInfo.tidspunkt)
+        parseISO(aktivitetsplanLestInfo.tidspunkt),
     );
 
     return !sisteEndringVarFraMeg && !maal.lest && maalLagdEtterSistLestAktivitetsplan;

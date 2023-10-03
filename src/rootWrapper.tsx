@@ -3,7 +3,7 @@ import '@navikt/ds-css';
 import './tailwind.css';
 import './index.less';
 
-import { Provider as AkselModalMountProvider, Modal } from '@navikt/ds-react';
+import { Provider as AkselModalMountProvider } from '@navikt/ds-react';
 import * as Sentry from '@sentry/react';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -15,7 +15,6 @@ import { SentryRoutes } from './sentry';
 
 export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
     const rootElement = document.getElementById('root') || undefined;
-    Modal.setAppElement(appElement);
     Sentry.setUser({
         id: hash(props?.fnr),
     });
@@ -25,6 +24,6 @@ export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: strin
                 <App Routes={SentryRoutes} key={'1'} />
             </Provider>
         </AkselModalMountProvider>,
-        appElement
+        appElement,
     );
 };

@@ -102,10 +102,7 @@ const EgenAktivitetForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
-                    <AktivitetFormHeader
-                        tittel="Jobbrettet egenaktivitet"
-                        aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE}
-                    />
+                    <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE} />
 
                     <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="EGEN" />
 

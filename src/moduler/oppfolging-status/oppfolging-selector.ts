@@ -78,7 +78,7 @@ export function selectErUnderKvp(state: RootState) {
 }
 
 export function selectHarSkriveTilgang(state: RootState) {
-    return selectOppfolgingData(state)?.harSkriveTilgang;
+    return selectOppfolgingData(state)?.harSkriveTilgang || false;
 }
 
 export function selectKanReaktiveres(state: RootState) {
@@ -92,7 +92,7 @@ export function selectInaktiveringsDato(state: RootState) {
 export const selectHistoriskeOppfolgingsPerioder: (state: RootState) => HistoriskOppfolgingsperiode[] = createSelector(
     selectOppfolgingsPerioder,
     (oppfolgingsPerioder: Oppfolgingsperiode[]) =>
-        oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsperiode[]
+        oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsperiode[],
 );
 
 export const selectForrigeHistoriskeSluttDato: (store: RootState) => string | undefined = createSelector(
@@ -101,5 +101,5 @@ export const selectForrigeHistoriskeSluttDato: (store: RootState) => string | un
         historiskeOppfolgingsPerioder
             .map((p) => p.sluttDato)
             .sort()
-            .reverse()[0]
+            .reverse()[0],
 );

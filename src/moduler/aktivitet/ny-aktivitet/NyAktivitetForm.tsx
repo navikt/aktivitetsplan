@@ -1,14 +1,13 @@
 import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
 import React, { MouseEventHandler, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useMatch, useNavigate } from 'react-router-dom';
 
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { useRoutes } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectLagNyAktivitetFeil } from '../../feilmelding/feil-selector';
@@ -24,8 +23,25 @@ import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSoke
 import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
 import { AktivitetFormValues } from '../rediger/EndreAktivitet';
 
+const aktivitetHeadings = {
+    mote: 'Møte med NAV',
+    samtalereferat: 'Samtalereferat',
+    stilling: 'En jobb jeg vil søke på',
+    sokeavtale: 'Avtale om å søke jobber',
+    behandling: 'Medisinsk behandling',
+    egen: 'Jobbrettet egenaktivitet',
+    ijobb: 'Jobb jeg har nå',
+};
+type AktivitetRoutes = keyof typeof aktivitetHeadings;
+interface RouteMatch {
+    params: {
+        aktivitetType: AktivitetRoutes;
+    };
+}
+
 const NyAktivitetForm = () => {
     const navigate = useNavigate();
+    const match = useMatch('/aktivitet/ny/:aktivitetType') as RouteMatch;
     const dispatch = useAppDispatch();
     const { aktivitetRoute, hovedsideRoute, nyAktivitetRoute } = useRoutes();
 
@@ -66,14 +82,16 @@ const NyAktivitetForm = () => {
         }
     };
 
-    const header = <ModalHeader tilbakeTekst="Tilbake til kategorier" onTilbakeClick={onReqBack} />;
-
     if (!underOppfolging) {
         return null;
     }
 
     return (
-        <Modal header={header} onRequestClose={onRequestClose} contentLabel="Ny aktivitetstype">
+        <Modal
+            heading={match?.params?.aktivitetType ? aktivitetHeadings[match.params.aktivitetType] : ''}
+            tilbakeLenke={{ tekst: 'Til kategoriene', onTilbakeKlikk: onReqBack }}
+            onRequestClose={onRequestClose}
+        >
             <article>
                 <Routes>
                     <Route

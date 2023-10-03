@@ -115,7 +115,11 @@ const AktivitetsplanPrint = () => {
     const getPrompt = () => {
         if (steps[stepIndex] === STEP_MELDING_FORM) {
             return (
-                <Modal onClose={goBack} open>
+                <Modal
+                    onClose={goBack}
+                    open
+                    header={{ heading: `Aktivitetsplan for ${bruker.fornavn}`, closeButton: true }}
+                >
                     <Innholdslaster avhengigheter={avhengigheter}>
                         <PrintMeldingForm bruker={bruker} onSubmit={printMeldingSubmit} />
                     </Innholdslaster>
@@ -124,10 +128,12 @@ const AktivitetsplanPrint = () => {
         }
         if (steps[stepIndex] === STEP_VELG_PLAN) {
             return (
-                <Modal onClose={goBack} open>
-                    <Innholdslaster avhengigheter={avhengigheter}>
-                        <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmit} />
-                    </Innholdslaster>
+                <Modal onClose={goBack} open header={{ heading: 'Velg hva du ønsker å skrive ut', closeButton: true }}>
+                    <Modal.Body>
+                        <Innholdslaster avhengigheter={avhengigheter}>
+                            <VelgPlanUtskriftForm kvpPerioder={kvpPerioder} onSubmit={velgPlanSubmit} />
+                        </Innholdslaster>
+                    </Modal.Body>
                 </Modal>
             );
         }

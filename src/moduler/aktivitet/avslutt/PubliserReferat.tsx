@@ -22,7 +22,11 @@ const getManglerPubliseringTekst = (aktivitet: SamtalereferatAktivitet | MoteAkt
 
 const PubliserReferat = ({ aktivitet, nyStatus, children }: Props) => {
     if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
-        return <Alert variant="error">{getManglerPubliseringTekst(aktivitet)}</Alert>;
+        return (
+            <Alert variant="error" inline>
+                {getManglerPubliseringTekst(aktivitet)}
+            </Alert>
+        );
     }
     return children;
 };

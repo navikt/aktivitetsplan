@@ -63,10 +63,11 @@ const AktivitetvisningModal = (props: Props) => {
 
     return (
         <Modal
-            contentClass="aktivitetsvisning"
-            contentLabel={'Aktivitetvisning'}
             avhengigheter={avhengigheter}
-            header={header(aktivitet)}
+            subHeading={
+                aktivitet ? `${aktivitetStatusMap[aktivitet.status]} / ${getAktivitetType(aktivitet)}` : undefined
+            }
+            heading={aktivitet?.tittel || ''}
             onRequestClose={() => {
                 if (dirty.isDirty && !window.confirm(DIALOG_TEKST)) {
                     return;

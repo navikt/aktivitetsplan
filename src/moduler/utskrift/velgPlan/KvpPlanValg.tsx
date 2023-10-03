@@ -33,7 +33,7 @@ const KvpPlanListeValg = (props: Props) => {
     const { kvpPerioder } = props;
 
     return (
-        <div className="pl-6">
+        <div className="">
             <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />
             {kvpPerioder &&
                 kvpPerioder.map((kvpPeriode) => (

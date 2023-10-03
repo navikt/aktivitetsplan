@@ -93,10 +93,7 @@ const MedisinskBehandlingForm = (props: Props) => {
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
-                    <AktivitetFormHeader
-                        tittel="Medisinsk behandling"
-                        aktivitetstype={VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE}
-                    />
+                    <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE} />
                     <TextField
                         disabled={avtalt}
                         label="Type behandling (obligatorisk)"
