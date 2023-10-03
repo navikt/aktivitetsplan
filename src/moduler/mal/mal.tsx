@@ -1,4 +1,4 @@
-import { Heading, ReadMore } from '@navikt/ds-react';
+import { ReadMore } from '@navikt/ds-react';
 import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
