@@ -84,7 +84,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                 erReferatPublisert,
             }).then(() => {
                 const analysis = checkText(data.referat);
-                logReferatFullfort(analysis, erReferatPublisert, open, visSpraksjekk ? 'C' : 'A');
+                logReferatFullfort(analysis, erReferatPublisert, open);
             });
         });
     };

@@ -27,20 +27,14 @@ export function logToggleSpraksjekkToggle(enabled: boolean) {
     return logAmplitudeEvent({ name: 'toggle', data: { text: 'Slå på klarspråkhjelp', enabled: enabled } });
 }
 
-export function logReferatFullfort(
-    analysis: TextCheckerResult,
-    referatPublisert: boolean,
-    spraksjekkEnabled: boolean,
-    variant: 'A' | 'C'
-) {
+export function logReferatFullfort(analysis: TextCheckerResult, referatPublisert: boolean, spraksjekkEnabled: boolean) {
     const mappedAnalysis = mapSpraksjekkAnalysis(analysis);
-
     return logAmplitudeEvent(
         {
             name: 'referat lagret',
             data: { analysis: mappedAnalysis, referatPublisert, spraksjekkEnabled },
         },
-        { variant }
+        { variant: 'D' },
     );
 }
 
