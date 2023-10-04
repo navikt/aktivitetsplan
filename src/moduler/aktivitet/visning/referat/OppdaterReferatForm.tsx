@@ -13,8 +13,6 @@ import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/in
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
-import { VIS_SPRAKSJEKK } from '../../../feature/feature';
-import { selectFeature } from '../../../feature/feature-selector';
 import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-selector';
 import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
@@ -34,16 +32,10 @@ interface Props {
 
 const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
-
     const [open, setOpen] = useState(true);
-    const visSpraksjekk = useSelector(selectFeature(VIS_SPRAKSJEKK));
-
     const startTekst = useReferatStartTekst();
-
     const dispatch = useAppDispatch();
-
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
-
     const erReferatPublisert = aktivitet.erReferatPublisert;
 
     const {
@@ -111,22 +103,18 @@ const OppdaterReferatForm = (props: Props) => {
                 {...register('referat')}
                 value={referatValue}
             />
-
-            {visSpraksjekk && (
-                <>
-                    <Switch
-                        checked={open}
-                        onChange={() => {
-                            setOpen(!open);
-                            logToggleSpraksjekkToggle(!open);
-                        }}
-                    >
-                        Klarspråkhjelpen
-                    </Switch>
-                    <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
-                </>
-            )}
-
+            <>
+                <Switch
+                    checked={open}
+                    onChange={() => {
+                        setOpen(!open);
+                        logToggleSpraksjekkToggle(!open);
+                    }}
+                >
+                    Klarspråkhjelpen
+                </Switch>
+                <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
+            </>
             <Feilmelding feilmeldinger={feil} />
             <div className="space-x-4">
                 <HiddenIfHovedknapp
