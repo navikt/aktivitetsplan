@@ -31,7 +31,7 @@ export class DabAktivitetsplan extends HTMLElement {
         const fnr = this.getAttribute('data-fnr') ?? undefined;
         settLocalStorage(LocalStorageElement.FNR, fnr);
         ReactDOM.render(
-            <ModalProvider appElement={appRoot} rootElement={shadowDomFirstChild}>
+            <ModalProvider rootElement={shadowDomFirstChild}>
                 <Provider key={fnr} fnr={fnr} setFnrRef={(setFnr) => (this.setFnr = setFnr)}>
                     <App Routes={Routes} key={'1'} />
                 </Provider>
