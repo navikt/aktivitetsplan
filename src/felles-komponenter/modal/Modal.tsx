@@ -49,8 +49,8 @@ const Modal = (props: Props) => {
     };
 
     return (
-        <AkselModal open onClose={closeFuncOrDefault} className="lg:w-120">
-            <AkselModal.Header closeButton={true} aria-labelledby="modal-heading">
+        <AkselModal open onClose={closeFuncOrDefault} className="lg:w-120" aria-labelledby="modal-heading">
+            <AkselModal.Header closeButton={true}>
                 <div className="space-y-2">
                     <Heading id="modal-heading" size="large">
                         {heading}
