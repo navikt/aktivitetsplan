@@ -55,7 +55,8 @@ const Modal = (props: Props) => {
                 modalRef.current.showModal();
             }
         }
-    }, [modalRef]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modalRef.current]);
 
     return (
         <AkselModal ref={modalRef} portal onClose={closeFuncOrDefault} className="lg:w-120">
