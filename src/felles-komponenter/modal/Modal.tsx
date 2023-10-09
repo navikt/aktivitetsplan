@@ -18,8 +18,6 @@ interface Props {
     contentClass?: string;
     onRequestClose?(): void;
     tilbakeLenke?: { tekst: string; onTilbakeKlikk: MouseEventHandler };
-    // contentLabel: string;
-    // ariaLabelledby?: string;
 }
 
 const Modal = (props: Props) => {
