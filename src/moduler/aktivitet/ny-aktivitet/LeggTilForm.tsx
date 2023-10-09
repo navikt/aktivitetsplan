@@ -29,7 +29,7 @@ const LeggTilForm = () => {
                 ) : null}
             </div>
             {erVeileder ? (
-                <div className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-8 px-8 py-4">
+                <div className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-[24px] px-8 py-4">
                     <Heading level="2" size="medium">
                         For NAV-ansatt
                     </Heading>
