@@ -1,5 +1,4 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
-import { Provider as ModalProvider } from '@navikt/ds-react';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Routes } from 'react-router-dom';
@@ -10,9 +9,16 @@ import { LocalStorageElement, settLocalStorage } from './mocks/demo/localStorage
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
+import { createRoot, Root } from 'react-dom/client';
 
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
+    root: Root | undefined;
+
+    disconnectedCallback() {
+        this.root?.unmount();
+    }
+
     connectedCallback() {
         // Cant mount on shadowRoot, create a extra div for mounting modal
         const shadowDomFirstChild = document.createElement('div');
@@ -29,14 +35,16 @@ export class DabAktivitetsplan extends HTMLElement {
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
-        settLocalStorage(LocalStorageElement.FNR, fnr);
-        ReactDOM.render(
+        if (fnr) {
+            settLocalStorage(LocalStorageElement.FNR, fnr);
+        }
+        this.root = createRoot(appRoot);
+        this.root.render(
             // <ModalProvider rootElement={shadowDomFirstChild}>
             <Provider key={fnr} fnr={fnr} setFnrRef={(setFnr) => (this.setFnr = setFnr)}>
                 <App Routes={Routes} key={'1'} />
             </Provider>,
             // </ModalProvider>,
-            appRoot,
         );
     }
 
