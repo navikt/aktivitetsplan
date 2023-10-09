@@ -39,11 +39,9 @@ export class DabAktivitetsplan extends HTMLElement {
         }
         this.root = createRoot(appRoot);
         this.root.render(
-            // <ModalProvider rootElement={shadowDomFirstChild}>
             <Provider key={fnr} fnr={fnr} setFnrRef={(setFnr) => (this.setFnr = setFnr)}>
                 <App Routes={Routes} key={'1'} />
             </Provider>,
-            // </ModalProvider>,
         );
     }
 
