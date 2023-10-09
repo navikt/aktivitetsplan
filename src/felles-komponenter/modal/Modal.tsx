@@ -1,5 +1,5 @@
 import { Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
-import React, { MouseEventHandler, ReactNode, RefCallback } from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { SerializedError } from '../../api/utils';
