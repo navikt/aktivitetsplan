@@ -36,12 +36,19 @@ interface Props {
 const EksterneEtiketter = ({ aktivitet }: Props) => {
     const { etiketter, type } = aktivitet.eksternAktivitet;
 
-    if (!etiketter) return null;
+    if (!etiketter || etiketter.length == 0) return null;
 
     return (
         <>
             {etiketter
-                .map((etikett) => getEtikettByKode(type, etikett.kode))
+                .map((etikett) => {
+                    if (etikett.tekst && etikett.sentiment) {
+                        const variant = etikett.sentiment === 'POSITIVE' ? ('success' as const) : ('neutral' as const);
+                        return { variant, tekst: etikett.tekst };
+                    } else {
+                        return getEtikettByKode(type, etikett.kode);
+                    }
+                })
                 .map((eksternEtikett, i) => {
                     return eksternEtikett ? (
                         <Tag variant={eksternEtikett.variant} size="small" key={i}>
