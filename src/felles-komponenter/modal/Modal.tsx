@@ -1,5 +1,5 @@
 import { Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
-import React, { MouseEventHandler, ReactNode, RefCallback, useEffect, useRef } from 'react';
+import React, { MouseEventHandler, ReactNode, RefCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { SerializedError } from '../../api/utils';
@@ -23,7 +23,6 @@ interface Props {
 }
 
 const Modal = (props: Props) => {
-    // const modalRef = useRef<HTMLDialogElement | null>(null);
     const {
         heading,
         subHeading,
@@ -33,8 +32,6 @@ const Modal = (props: Props) => {
         minstEnAvhengighet = false,
         feilmeldinger,
         tilbakeLenke,
-        // ariaLabelledby,
-        // contentLabel,
     } = props;
 
     const navigate = useNavigate();
@@ -53,14 +50,6 @@ const Modal = (props: Props) => {
         if (ref?.open) return;
         ref?.showModal();
     };
-    // useEffect(() => {
-    //     if (modalRef.current) {
-    //         if (!modalRef.current.open) {
-    //             modalRef.current.showModal();
-    //         }
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [modalRef.current]);
 
     return (
         <AkselModal ref={onRefSet} onClose={closeFuncOrDefault} className="lg:w-120">

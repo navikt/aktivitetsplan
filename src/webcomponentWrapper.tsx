@@ -1,6 +1,5 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Routes } from 'react-router-dom';
 
 import App from './app';
