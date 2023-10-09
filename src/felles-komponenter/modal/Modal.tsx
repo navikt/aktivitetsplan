@@ -63,7 +63,7 @@ const Modal = (props: Props) => {
     // }, [modalRef.current]);
 
     return (
-        <AkselModal portal ref={onRefSet} onClose={closeFuncOrDefault} className="lg:w-120">
+        <AkselModal ref={onRefSet} onClose={closeFuncOrDefault} className="lg:w-120">
             <AkselModal.Header closeButton={true} aria-labelledby="modal-heading">
                 <div className="space-y-2">
                     <Heading id="modal-heading" size="large">
