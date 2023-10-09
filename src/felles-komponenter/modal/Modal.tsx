@@ -30,8 +30,6 @@ const Modal = (props: Props) => {
         minstEnAvhengighet = false,
         feilmeldinger,
         tilbakeLenke,
-        // ariaLabelledby,
-        // contentLabel,
     } = props;
 
     const navigate = useNavigate();
