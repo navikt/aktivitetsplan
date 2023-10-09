@@ -6,7 +6,9 @@ interface RequiredLenkeProps {
 
 type LenkeType = 'EKSTERN' | 'INTERN' | 'FELLES';
 
-type Lenke = RequiredLenkeProps
+type Lenke = RequiredLenkeProps;
+
+type SentimentType = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE';
 
 export interface Oppgave extends Lenke {
     knapptekst: string;
@@ -22,6 +24,8 @@ export interface OppgaveLenke {
 }
 
 export interface Etikett {
+    tekst: string | null;
+    sentiment: SentimentType | null;
     kode: string;
 }
 
