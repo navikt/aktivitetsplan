@@ -20,10 +20,17 @@ export const useErVeileder = (): boolean => {
 export const FnrContext = React.createContext<undefined | string>(undefined);
 export const useFnr = () => useContext(FnrContext);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const noOp = (_: string | undefined) => {};
 const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
     const [fnr, setFnr] = useState(propFnr);
     useEffect(() => {
         if (setFnrRef) setFnrRef(setFnr);
+        return () => {
+            if (setFnrRef) {
+                setFnrRef(noOp);
+            }
+        };
     }, []);
 
     const store = useMemo(createStore, [fnr]);
