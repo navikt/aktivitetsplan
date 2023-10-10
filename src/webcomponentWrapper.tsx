@@ -16,8 +16,8 @@ import {
     saveReduxStateToSessionStorage,
 } from './store';
 
-// Ikkje bra
-console.log('Clearing cached state');
+// Clear redux-cache from session storage on page load to make sure new data is fetched
+// Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
 
 export class DabAktivitetsplan extends HTMLElement {

@@ -21,13 +21,11 @@ export const getPreloadedStateFromSessionStorage = (fnr: string | undefined): Ro
     const serializedState = sessionStorage.getItem(key);
     if (serializedState) {
         try {
-            console.log('Cache hit');
             const state: RootState = JSON.parse(serializedState);
             // Only use cache if correct user
             if (fnr === state.data.oppfolging?.data?.fnr) {
                 return JSON.parse(serializedState);
             }
-            console.log('New user, clearing store');
             sessionStorage.removeItem(key);
             return undefined;
         } catch (e) {
