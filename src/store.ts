@@ -16,12 +16,19 @@ const createStore = (preloadedState: any = undefined) => {
 type Store = ReturnType<typeof createStore>;
 
 const key = 'aktivitetsplan-state';
-export const getPreloadedStoreFromSessionStorage = (): Store | undefined => {
+export const getPreloadedStoreFromSessionStorage = (fnr: string | undefined): Store | undefined => {
+    if (!fnr) return undefined;
     const serializedState = sessionStorage.getItem(key);
     if (serializedState) {
         try {
             console.log('Cache hit');
-            return JSON.parse(serializedState);
+            const state: RootState = JSON.parse(serializedState);
+            // Only use cache if correct user
+            if (fnr === state.data.oppfolging?.data?.fnr) {
+                return JSON.parse(serializedState);
+            }
+            sessionStorage.removeItem(key);
+            return undefined;
         } catch (e) {
             console.warn(e);
             return undefined;

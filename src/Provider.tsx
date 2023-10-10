@@ -34,7 +34,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
     }, []);
 
     const store = useMemo(() => {
-        return createStore(getPreloadedStoreFromSessionStorage());
+        return createStore(getPreloadedStoreFromSessionStorage(propFnr));
     }, [fnr]);
 
     return (
