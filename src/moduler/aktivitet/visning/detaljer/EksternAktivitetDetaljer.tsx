@@ -3,7 +3,6 @@ import React from 'react';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import Detaljer from '../eksternaktivitet/Detaljer';
-import OppgaveBoks from '../eksternaktivitet/OppgaveBoks';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 type Props = {
@@ -17,7 +16,6 @@ const EksternAktivitetDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <OppgaveBoks oppgave={aktivitet.eksternAktivitet.oppgave} />
             <FraDato aktivitet={aktivitet} />
             <TilDato aktivitet={aktivitet} />
             <Detaljer detaljer={aktivitet.eksternAktivitet.detaljer} />
