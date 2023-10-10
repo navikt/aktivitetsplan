@@ -9,24 +9,32 @@ import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
 import { createRoot, Root } from 'react-dom/client';
+import {
+    clearReduxCache,
+    getPreloadedStateFromSessionStorage,
+    RootState,
+    saveReduxStateToSessionStorage,
+} from './store';
+
+// Clear redux-cache from session storage on page load to make sure new data is fetched
+// Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
+clearReduxCache();
 
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     root: Root | undefined;
 
     disconnectedCallback() {
+        saveReduxStateToSessionStorage();
         this.root?.unmount();
     }
 
     connectedCallback() {
-        // Cant mount on shadowRoot, create a extra div for mounting modal
-        const shadowDomFirstChild = document.createElement('div');
         // This will be app entry point, need to be outside modal-mount node
         const appRoot = document.createElement('div');
         appRoot.id = 'aktivitetsplan-root';
         const shadowRoot = this.attachShadow({ mode: 'closed' });
-        shadowRoot.appendChild(shadowDomFirstChild);
-        shadowDomFirstChild.appendChild(appRoot);
+        shadowRoot.appendChild(appRoot);
 
         // Load styles under this shadowDom-node, not root element
         const styleElem = document.createElement('style');
@@ -34,12 +42,19 @@ export class DabAktivitetsplan extends HTMLElement {
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
+        let preloadedState: RootState | undefined = undefined;
         if (fnr) {
             settLocalStorage(LocalStorageElement.FNR, fnr);
+            preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         this.root = createRoot(appRoot);
         this.root.render(
-            <Provider key={fnr} fnr={fnr} setFnrRef={(setFnr) => (this.setFnr = setFnr)}>
+            <Provider
+                preloadedState={preloadedState}
+                key={fnr}
+                fnr={fnr}
+                setFnrRef={(setFnr) => (this.setFnr = setFnr)}
+            >
                 <App Routes={Routes} key={'1'} />
             </Provider>,
         );

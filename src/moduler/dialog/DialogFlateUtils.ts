@@ -25,7 +25,7 @@ export const byttTilDialogFlate = ({
                 dialogId: dialogId,
                 aktivitetId: aktivitetId,
             },
-        })
+        }),
     );
 };
 
