@@ -2,11 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/featureAPI';
 import createGenericSlice, { GenericState, Status } from '../../createGenericSlice';
-import { Features, VIS_SPRAKSJEKK } from './feature';
+import { Features } from './feature';
 
-const initialFeatures: Features = {
-    [VIS_SPRAKSJEKK]: false,
-};
+const initialFeatures: Features = {};
 
 const featureSlice = createGenericSlice({
     name: 'feature',
