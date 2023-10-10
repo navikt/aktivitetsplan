@@ -16,7 +16,7 @@ const createStore = (preloadedState: any = undefined) => {
 type Store = ReturnType<typeof createStore>;
 
 const key = 'aktivitetsplan-state';
-export const getPreloadedStoreFromSessionStorage = (fnr: string | undefined): Store | undefined => {
+export const getPreloadedStateFromSessionStorage = (fnr: string | undefined): RootState | undefined => {
     if (!fnr) return undefined;
     const serializedState = sessionStorage.getItem(key);
     if (serializedState) {
@@ -40,6 +40,7 @@ export const saveReduxStateToSessionStorage = () => {
     const state = store?.getState();
     sessionStorage.setItem(key, JSON.stringify(state));
 };
+export const clearReduxCache = () => sessionStorage.removeItem(key);
 
 export type RootState = ReturnType<Store['getState']>;
 export type Dispatch = Store['dispatch'];
