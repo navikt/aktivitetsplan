@@ -27,6 +27,7 @@ export const getPreloadedStateFromSessionStorage = (fnr: string | undefined): Ro
             if (fnr === state.data.oppfolging?.data?.fnr) {
                 return JSON.parse(serializedState);
             }
+            console.log('New user, clearing store');
             sessionStorage.removeItem(key);
             return undefined;
         } catch (e) {

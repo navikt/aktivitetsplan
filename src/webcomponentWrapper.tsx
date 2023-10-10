@@ -16,15 +16,13 @@ import {
     saveReduxStateToSessionStorage,
 } from './store';
 
+// Ikkje bra
+console.log('Clearing cached state');
+clearReduxCache();
+
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     root: Root | undefined;
-
-    constructor() {
-        super();
-        console.log('Clearing cached state');
-        clearReduxCache();
-    }
 
     disconnectedCallback() {
         saveReduxStateToSessionStorage();
