@@ -9,12 +9,14 @@ import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
 import { createRoot, Root } from 'react-dom/client';
+import { saveReduxStateToSessionStorage } from './store';
 
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     root: Root | undefined;
 
     disconnectedCallback() {
+        saveReduxStateToSessionStorage();
         this.root?.unmount();
     }
 
