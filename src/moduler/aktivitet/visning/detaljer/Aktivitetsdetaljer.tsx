@@ -13,6 +13,8 @@ import StillingDetaljer from './StillingDetaljer';
 import { StillingFraNavDetaljer } from './StillingFraNavDetaljer';
 import TiltakDetaljer from './TiltakDetaljer';
 import UtdanningDetaljer from './UtdanningDetaljer';
+import OppgaveBoks from '../eksternaktivitet/OppgaveBoks';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 
 interface Props {
     valgtAktivitet: AlleAktiviteter;
@@ -20,7 +22,11 @@ interface Props {
 
 const Aktivitetsdetaljer = ({ valgtAktivitet }: Props) => {
     return (
-        <section>
+        <section className="space-y-4">
+            {valgtAktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
+                <OppgaveBoks oppgave={valgtAktivitet.eksternAktivitet.oppgave} />
+            ) : null}
+
             <div className="flex flex-row flex-wrap w-full gap-y-4">
                 <BehandlingsDetaljer aktivitet={valgtAktivitet} />
                 <EgenAktivitetDetaljer aktivitet={valgtAktivitet} />

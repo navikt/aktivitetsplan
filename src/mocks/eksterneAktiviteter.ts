@@ -37,16 +37,16 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                       type: EksternAktivitetType.ARENA_TILTAK_TYPE,
                       oppgave: {
                           ekstern: {
-                              tekst: 'Ekstern tekst på oppgave',
-                              knapptekst: 'Ekstern knapp',
+                              tekst: 'Evaluer deltakelsen',
+                              knapptekst: 'Gi din evaluering',
                               url: 'http://localhost:8080/ekstern',
-                              subtekst: 'SUBTEKST HER',
+                              subtekst: 'Du har vært hos muligheter i 5 måneder',
                           },
                           intern: {
-                              tekst: 'Intern tekst på oppgave',
-                              knapptekst: 'Intern knapp',
+                              tekst: 'Evaluer deltakelsen',
+                              knapptekst: 'Gi din evaluering',
                               url: 'http://localhost:8080/ekstern',
-                              subtekst: 'SUBTEKST HER',
+                              subtekst: 'Du har vært hos muligheter i 5 måneder',
                           },
                       },
                       handlinger: undefined,
