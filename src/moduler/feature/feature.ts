@@ -1,6 +1,4 @@
-export const VIS_SPRAKSJEKK = 'aktivitetsplan.vis-spraksjekk';
-
-const ALL_TOGGLES = [VIS_SPRAKSJEKK] as const;
+const ALL_TOGGLES = [] as const;
 
 export type Feature = (typeof ALL_TOGGLES)[number];
 export type Features = Record<Feature, boolean>;

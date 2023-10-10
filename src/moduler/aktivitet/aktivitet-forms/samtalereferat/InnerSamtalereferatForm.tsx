@@ -3,15 +3,12 @@ import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
 import { Button, Select, Switch, TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../amplitude/amplitude';
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
-import { VIS_SPRAKSJEKK } from '../../../feature/feature';
-import { selectFeature } from '../../../feature/feature-selector';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
@@ -43,10 +40,7 @@ interface Props {
 
 const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
-
     const [open, setOpen] = useState(true);
-    const visSpraksjekk = useSelector(selectFeature(VIS_SPRAKSJEKK));
-
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
 
@@ -121,25 +115,16 @@ const InnerSamtalereferatForm = (props: Props) => {
                                 error={errors.referat && errors.referat.message}
                                 value={referatValue}
                             />
-
-                            {visSpraksjekk && (
-                                <>
-                                    <Switch
-                                        checked={open}
-                                        onChange={() => {
-                                            setOpen(!open);
-                                            logToggleSpraksjekkToggle(!open);
-                                        }}
-                                    >
-                                        Klarspråkhjelpen
-                                    </Switch>
-                                    <Spraksjekk
-                                        value={referatValue}
-                                        open={open}
-                                        options={{ tools: false, longWords: false }}
-                                    />
-                                </>
-                            )}
+                            <Switch
+                                checked={open}
+                                onChange={() => {
+                                    setOpen(!open);
+                                    logToggleSpraksjekkToggle(!open);
+                                }}
+                            >
+                                Klarspråkhjelpen
+                            </Switch>
+                            <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
                         </>
                     )}
 
