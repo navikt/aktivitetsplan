@@ -3,17 +3,17 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
 import { EnhancedStore } from '@reduxjs/toolkit/src/configureStore';
 
-type Store = ReturnType<typeof createStore>;
-
 let store: EnhancedStore | null = null;
-const createStore = (preloadedState: any = undefined): EnhancedStore => {
-    const newStore: EnhancedStore = configureStore({
+const createStore = (preloadedState: any = undefined) => {
+    const newStore = configureStore({
         reducer: reducer,
         preloadedState,
     });
     store = newStore;
     return newStore;
 };
+
+type Store = ReturnType<typeof createStore>;
 
 const key = 'aktivitetsplan-state';
 export const getPreloadedStoreFromSessionStorage = (): Store | undefined => {

@@ -17,6 +17,7 @@ import {
 } from './oppfolging-selector';
 import { hentOppfolging } from './oppfolging-slice';
 import VidereSendBrukereEllerRenderChildren from './VidereSendBrukereEllerRenderChildren';
+import { Status } from '../../createGenericSlice';
 
 interface Props {
     children: ReactNode;
@@ -48,8 +49,12 @@ const OppfolgingStatus = ({ children }: Props) => {
     };
 
     useEffect(() => {
-        dispatch(hentOppfolging());
-        dispatch(hentIdentitet());
+        if (avhengigheter[0] === Status.NOT_STARTED) {
+            dispatch(hentOppfolging());
+        }
+        if (avhengigheter[1] === Status.NOT_STARTED) {
+            dispatch(hentIdentitet());
+        }
     }, []);
 
     return (
