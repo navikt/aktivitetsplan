@@ -37,7 +37,7 @@ export const getPreloadedStoreFromSessionStorage = (fnr: string | undefined): St
     return undefined;
 };
 export const saveReduxStateToSessionStorage = () => {
-    const state = JSON.stringify(store?.getState());
+    const state = store?.getState();
     sessionStorage.setItem(key, JSON.stringify(state));
 };
 
