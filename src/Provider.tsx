@@ -5,12 +5,13 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { ER_INTERN_FLATE } from './constant';
 import FeatureToggle from './moduler/feature/FeatureToggle';
-import createStore, { getPreloadedStoreFromSessionStorage } from './store';
+import createStore, { RootState } from './store';
 
 interface Props {
     children: React.ReactNode;
     setFnrRef?: (setFnr: Dispatch<string>) => void;
     fnr?: string;
+    preloadedState?: RootState | undefined;
 }
 
 export const ErVeilederContext = React.createContext(false);
@@ -22,7 +23,7 @@ export const useFnr = () => useContext(FnrContext);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const noOp = (_: string | undefined) => {};
-const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
+const Provider = ({ children, setFnrRef, fnr: propFnr, preloadedState }: Props) => {
     const [fnr, setFnr] = useState(propFnr);
     useEffect(() => {
         if (setFnrRef) setFnrRef(setFnr);
@@ -34,7 +35,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
     }, []);
 
     const store = useMemo(() => {
-        return createStore(getPreloadedStoreFromSessionStorage(propFnr));
+        return createStore(preloadedState);
     }, [fnr]);
 
     return (
