@@ -11,7 +11,7 @@ interface Props {
     children: React.ReactNode;
     setFnrRef?: (setFnr: Dispatch<string>) => void;
     fnr?: string;
-    preloadedState?: RootState | undefined;
+    preloadedState?: RootState;
 }
 
 export const ErVeilederContext = React.createContext(false);
