@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react';
 
 import { ARBEIDSRETTET_DIALOG_URL } from '../../constant';
+import { saveReduxStateToSessionStorage } from '../../store';
 
 interface DialogEventDetails {
     dialogId?: string;
@@ -18,6 +19,7 @@ export const byttTilDialogFlate = ({
     dialogId?: string;
 }) => {
     event.preventDefault();
+    saveReduxStateToSessionStorage();
     window.history.pushState('', 'Dialog', getDialogLenke({ erVeileder: true, aktivitetId, dialogId }));
     window.dispatchEvent(
         new CustomEvent<DialogEventDetails>('visDialog', {
@@ -25,7 +27,7 @@ export const byttTilDialogFlate = ({
                 dialogId: dialogId,
                 aktivitetId: aktivitetId,
             },
-        })
+        }),
     );
 };
 

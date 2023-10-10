@@ -5,7 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { ER_INTERN_FLATE } from './constant';
 import FeatureToggle from './moduler/feature/FeatureToggle';
-import createStore from './store';
+import createStore, { getPreloadedStoreFromSessionStorage } from './store';
 
 interface Props {
     children: React.ReactNode;
@@ -33,7 +33,9 @@ const Provider = ({ children, setFnrRef, fnr: propFnr }: Props) => {
         };
     }, []);
 
-    const store = useMemo(createStore, [fnr]);
+    const store = useMemo(() => {
+        return createStore(getPreloadedStoreFromSessionStorage());
+    }, [fnr]);
 
     return (
         <FnrContext.Provider value={fnr}>
