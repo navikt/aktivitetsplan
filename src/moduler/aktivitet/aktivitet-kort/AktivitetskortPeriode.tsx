@@ -23,8 +23,8 @@ function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
         return <Soknadfrist aktivitet={aktivitet} />;
     }
 
-    const formatertFraDato = fraDato ? formaterDatoKortManed(fraDato) : undefined;
-    const formatertTilDato = tilDato ? formaterDatoKortManed(tilDato) : undefined;
+    const formatertFraDato = fraDato ? formaterDatoKortManed(fraDato) : 'Dato ikke satt';
+    const formatertTilDato = tilDato ? formaterDatoKortManed(tilDato) : 'Dato ikke satt';
 
     function periodeVisning() {
         if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) {
@@ -41,6 +41,10 @@ function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
 
         if (!tilDato && fraDato) {
             return `Fra: ${formatertFraDato}`;
+        }
+
+        if (!tilDato && !fraDato) {
+            return 'Dato ikke satt';
         }
 
         return [formatertFraDato, formatertTilDato].filter((dato) => dato).join(' - ');
