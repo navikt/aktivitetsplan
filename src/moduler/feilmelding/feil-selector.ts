@@ -27,7 +27,7 @@ export const selectFeil = (errors: RootState['data']['errors'], ...types: string
         .map(([_, val]) => val);
 };
 
-const selectErrors = (state: RootState) => state.data.errors;
+export const selectErrors = (state: RootState) => state.data.errors;
 
 const hovedsideFeil = [
     hentOppfolging.rejected.type,

@@ -5,11 +5,7 @@ import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
-import {
-    aktivitetMatchesFilters,
-    selectDatoErIPeriode,
-    selectDatoErIPeriodeUtenState,
-} from '../filtrering/filter/filter-utils';
+import { aktivitetMatchesFilters, selectDatoErIPeriodeUtenState } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectForrigeHistoriskeSluttDato, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriode } from './aktivitet-selector';

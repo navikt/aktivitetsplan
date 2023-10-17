@@ -2,7 +2,7 @@ import { SerializedError } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
-import { selectFeil } from '../feilmelding/feil-selector';
+import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import {
     flyttAktivitet,
     hentAktivitet,
@@ -11,19 +11,19 @@ import {
     oppdaterStillingFraNavSoknadsstatus,
 } from './aktivitet-actions';
 import { AktivitetState } from './aktivitet-slice';
+import { createSelector } from 'reselect';
 
 export function selectAktiviteterSlice(state: RootState): AktivitetState {
     return state.data.aktiviteter;
 }
 
-export function selectAktiviteterData(state: RootState): VeilarbAktivitet[] {
-    // TODO: Find out why this returns [undefined] in one of the tests
-    return (
-        selectAktiviteterSlice(state)
-            .data.perioder.flatMap((periode) => periode.aktiviteter)
-            .filter((it) => it) || []
-    );
-}
+export const selectAktiviteterData: (state: RootState) => VeilarbAktivitet[] = createSelector(
+    selectAktiviteterSlice,
+    (aktiviteter) => {
+        // TODO: Find out why this returns [undefined] in one of the tests
+        return aktiviteter.data.perioder.flatMap((periode) => periode.aktiviteter).filter((it) => it) || [];
+    },
+);
 export const selectAktiviteterByPeriode = (state: RootState) => {
     return selectAktiviteterSlice(state).data.perioder || [];
 };
@@ -40,14 +40,21 @@ export function selectLasterAktivitetData(state: RootState) {
     return selectAktivitetStatus(state) !== Status.OK;
 }
 
-export const selectAktivitetFeilmeldinger = (state: RootState) => {
-    return selectAktivitetStatus(state) === Status.ERROR ? selectFeil(hentAktivitet.rejected.type)(state) : [];
-};
+export const selectAktivitetFeilmeldinger = createSelector(
+    selectAktivitetStatus,
+    selectErrors,
+    (aktiviteterStatus, errors) => {
+        return aktiviteterStatus === Status.ERROR ? selectFeil(errors, hentAktivitet.rejected.type) : [];
+    },
+);
 
-export const selecteEndreAktivitetFeilmeldinger = (state: RootState): SerializedError[] => {
-    const oppdaterError = selectFeil(oppdaterAktivitet.rejected.type)(state);
-    const oppdaterEtikettError = selectFeil(oppdaterAktivitetEtikett.rejected.type)(state);
-    const oppdaterStillingFraNavError = selectFeil(oppdaterStillingFraNavSoknadsstatus.rejected.type)(state);
-    const flyttAktivitetError = selectFeil(flyttAktivitet.rejected.type)(state);
-    return [...oppdaterError, ...oppdaterEtikettError, ...oppdaterStillingFraNavError, ...flyttAktivitetError];
-};
+export const selecteEndreAktivitetFeilmeldinger: (state: RootState) => SerializedError[] = createSelector(
+    selectErrors,
+    (errors) => {
+        const oppdaterError = selectFeil(errors, oppdaterAktivitet.rejected.type);
+        const oppdaterEtikettError = selectFeil(errors, oppdaterAktivitetEtikett.rejected.type);
+        const oppdaterStillingFraNavError = selectFeil(errors, oppdaterStillingFraNavSoknadsstatus.rejected.type);
+        const flyttAktivitetError = selectFeil(errors, flyttAktivitet.rejected.type);
+        return [...oppdaterError, ...oppdaterEtikettError, ...oppdaterStillingFraNavError, ...flyttAktivitetError];
+    },
+);
