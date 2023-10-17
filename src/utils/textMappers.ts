@@ -45,7 +45,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     DIGIOPPARB: 'Digitalt oppfølgingstiltak',
     JOBBK: 'Jobbklubb',
     GRUPPEAMO: 'Arbeidsmarkedsopplæring (Gruppe)',
-    GRUFAGYRKE: 'Fag- og yrkesopplæring (Gruppe)g'
+    GRUFAGYRKE: 'Fag- og yrkesopplæring (Gruppe)'
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
