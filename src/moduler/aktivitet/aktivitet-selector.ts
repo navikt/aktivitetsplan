@@ -18,8 +18,15 @@ export function selectAktiviteterSlice(state: RootState): AktivitetState {
 
 export function selectAktiviteterData(state: RootState): VeilarbAktivitet[] {
     // TODO: Find out why this returns [undefined] in one of the tests
-    return selectAktiviteterSlice(state).data.filter((it) => it) || [];
+    return (
+        selectAktiviteterSlice(state)
+            .data.perioder.flatMap((periode) => periode.aktiviteter)
+            .filter((it) => it) || []
+    );
 }
+export const selectAktiviteterByPeriode = (state: RootState) => {
+    return selectAktiviteterSlice(state).data.perioder || [];
+};
 
 export function selectAktivitetStatus(state: RootState) {
     return selectAktiviteterSlice(state).status;

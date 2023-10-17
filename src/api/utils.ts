@@ -3,7 +3,7 @@ import { LocalStorageElement, hentFraLocalStorage } from '../mocks/demo/localSto
 
 /* eslint-env browser */
 
-const DEFAULT_CONFIG: Partial<RequestInit> = {
+export const DEFAULT_CONFIG: Partial<RequestInit> = {
     credentials: 'same-origin',
 };
 

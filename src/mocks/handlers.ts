@@ -59,11 +59,11 @@ export const handlers = [
     rest.get('/veilarboppfolging/api/oppfolging/avslutningStatus', jsonResponse(avslutningStatus)),
     rest.get(
         '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
-        failOrGetResponse(getOppfFeiler, () => innstillingsHistorikk)
+        failOrGetResponse(getOppfFeiler, () => innstillingsHistorikk),
     ),
     rest.get(
         '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',
-        failOrGetResponse(oppfFeilet, () => oppfoelgingsstatus)
+        failOrGetResponse(oppfFeilet, () => oppfoelgingsstatus),
     ),
     rest.post('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(maalFeilet, opprettMal)),
     rest.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
@@ -72,7 +72,7 @@ export const handlers = [
     // veilarbdialog
     rest.get(
         '/veilarbdialog/api/dialog',
-        failOrGetResponse(dialogFeilet, () => dialog)
+        failOrGetResponse(dialogFeilet, () => dialog),
     ),
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
     rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
@@ -84,57 +84,73 @@ export const handlers = [
     rest.post('/veilarbaktivitet/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
     rest.get(
         '/veilarbaktivitet/api/aktivitet',
-        failOrGetResponse(getAktivitetFeiler, () => aktiviteterData)
+        failOrGetResponse(getAktivitetFeiler, () => aktiviteterData),
+    ),
+    rest.post(
+        '/veilarbaktivitet/graphql',
+        failOrGetResponse(getAktivitetFeiler, () => {
+            const perioder = Array.from(
+                new Set(aktiviteterData.aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)),
+            );
+            return {
+                perioder: perioder.map((periodeId) => ({
+                    id: periodeId,
+                    aktiviteter: aktiviteterData.aktiviteter.filter(
+                        (aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId,
+                    ),
+                })),
+            };
+        }),
     ),
     rest.get(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(
             () => arenaFeilet() && !oppdateringKunFeiler(),
-            () => arena
-        )
+            () => arena,
+        ),
     ),
     rest.get(
         '/veilarbaktivitet/api/aktivitet/kanaler',
-        failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON'])
+        failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON']),
     ),
     rest.put(
         '/veilarbaktivitet/api/arena/forhaandsorientering',
-        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterArenaaktivitet)
+        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterArenaaktivitet),
     ),
     rest.put(
         '/veilarbaktivitet/api/arena/forhaandsorientering/lest',
-        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterLestFhoArenaaktivitet)
+        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterLestFhoArenaaktivitet),
     ),
     rest.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet)),
     rest.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet)),
     rest.post('/veilarbaktivitet/api/aktivitet/ny', failOrGetResponse(aktivitetFeilet, opprettAktivitet)),
     rest.get(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner',
-        failOrGetResponse(getAktivitetFeiler, getAktivitetVersjoner)
+        failOrGetResponse(getAktivitetFeiler, getAktivitetVersjoner),
     ),
     rest.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/status',
-        failOrGetResponse(aktivitetFeilet, oppdaterAktivitetStatus)
+        failOrGetResponse(aktivitetFeilet, oppdaterAktivitetStatus),
     ),
     // todo sjekk ut denne, tror ikke det kun er stillingsaktivitet
     rest.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett',
-        failOrGetResponse(aktivitetFeilet, oppdaterEtikett)
+        failOrGetResponse(aktivitetFeilet, oppdaterEtikett),
     ),
     rest.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser',
-        failOrGetResponse(aktivitetFeilet, publiserReferat)
+        failOrGetResponse(aktivitetFeilet, publiserReferat),
     ),
     rest.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetResponse(aktivitetFeilet, endreReferat)),
     rest.put('/veilarbaktivitet/api/avtaltMedNav', failOrGetResponse(aktivitetFeilet, oppdaterAvtaltMedNav)),
     rest.put('/veilarbaktivitet/api/avtaltMedNav/lest', failOrGetResponse(aktivitetFeilet, oppdaterLestFho)),
     rest.put(
         '/veilarbaktivitet/api/stillingFraNav/kanDeleCV',
-        failOrGetResponse(aktivitetFeilet, oppdaterCVKanDelesSvar)
+        failOrGetResponse(aktivitetFeilet, oppdaterCVKanDelesSvar),
     ),
     rest.put(
         '/veilarbaktivitet/api/stillingFraNav/soknadStatus',
-        failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
+        failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
 

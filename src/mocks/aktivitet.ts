@@ -99,6 +99,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               hensikt: 'Lære meg HTML',
               oppfolging: 'Bli en bedre sjørøver',
               erReferatPublisert: false,
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
           }),
           wrapAktivitet({
               id: '6871',
@@ -137,6 +138,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               kanal: Kanal.TELEFON,
               adresse: 'Ditt nærmeste NAV kontor',
               erReferatPublisert: false,
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
           }),
           wrapAktivitet({
               id: '10',
@@ -174,6 +176,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               behandlingOppfolging: null,
               kanal: Kanal.TELEFON,
               erReferatPublisert: false,
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
           }),
           wrapAktivitet({
               ...enSokeAktivitet({ tittel: 'Denne har en ulest forhåndsorientering' }),
@@ -314,6 +317,7 @@ const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter()
               erReferatPublisert: false,
               forhaandsorientering: null,
               stillingFraNavData: null,
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
           }),
       ];
 
@@ -342,6 +346,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
               etikett: undefined,
               hensikt: 'Bli bedre kjent med arbeidsmarkedet',
               oppfolging: undefined,
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
           },
           {
               id: '141439',
@@ -365,6 +370,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
               etikett: undefined,
               hensikt: 'Bli synlig for arbeidsgivere',
               oppfolging: undefined,
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
           },
           {
               id: '141440',
@@ -388,6 +394,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
               etikett: undefined,
               hensikt: 'Få råd og tips når du søker jobber',
               oppfolging: undefined,
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
           },
       ];
 const ekstraVersjoner = !visTestAktiviteter()
@@ -508,6 +515,7 @@ export const opprettAktivitet = async (req: RestRequest) => {
         versjon: '1',
         erLestAvBruker: eksternBruker,
         transaksjonsType: 'OPPRETTET',
+        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         ...body,
     });
     aktiviteter.push(nyAktivitet);
@@ -518,7 +526,7 @@ export const opprettAktivitet = async (req: RestRequest) => {
 
 function doOppdaterInternMockStateOgReturnerNyAktivitet(
     aktivitetId: string,
-    nyeAktivitetAttributter: Partial<VeilarbAktivitet>
+    nyeAktivitetAttributter: Partial<VeilarbAktivitet>,
 ) {
     // Hent den gamle aktiviteten
     const gammelAktivitet = aktiviteter.find((a) => a.id === aktivitetId) as VeilarbAktivitet;

@@ -1,5 +1,4 @@
 import { SerializedError } from '../../api/utils';
-import { RootState } from '../../store';
 import {
     flyttAktivitet,
     hentAktiviteter,
@@ -19,68 +18,71 @@ import { hentMal, oppdaterMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { hentNivaa4 } from '../tilgang/tilgang-slice';
+import { createSelector } from 'reselect';
+import { RootState } from '../../store';
 
-export const selectFeil =
-    (...types: string[]) =>
-    (state: RootState): SerializedError[] => {
-        return Object.entries(state.data.errors)
-            .filter(([type, _]) => types.includes(type))
-            .map(([_, val]) => val);
-    };
-
-export const selectHovedsideFeil = (state: RootState) => {
-    return selectFeil(
-        hentOppfolging.rejected.type,
-        hentIdentitet.rejected.type,
-        hentAktiviteter.rejected.type,
-        hentArenaAktiviteter.rejected.type,
-        hentLest.rejected.type,
-        hentDialoger.rejected.type,
-        hentNivaa4.rejected.type,
-        flyttAktivitet.rejected.type
-    )(state);
+export const selectFeil = (errors: RootState['data']['errors'], ...types: string[]): SerializedError[] => {
+    return Object.entries(errors)
+        .filter(([type, _]) => types.includes(type))
+        .map(([_, val]) => val);
 };
 
-export const selectLagNyAktivitetFeil = (state: RootState) => {
-    return selectFeil(lagNyAktivitet.rejected.type)(state);
-};
+const selectErrors = (state: RootState) => state.data.errors;
 
-export const selectOppdaterAktivitetStatusFeil = (state: RootState) => {
-    return selectFeil(flyttAktivitet.rejected.type)(state);
-};
+const hovedsideFeil = [
+    hentOppfolging.rejected.type,
+    hentIdentitet.rejected.type,
+    hentAktiviteter.rejected.type,
+    hentArenaAktiviteter.rejected.type,
+    hentLest.rejected.type,
+    hentDialoger.rejected.type,
+    hentNivaa4.rejected.type,
+    flyttAktivitet.rejected.type,
+];
+export const selectHovedsideFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, ...hovedsideFeil);
+});
 
-export const selectOppdaterAktivitetEtikettFeil = (state: RootState) => {
-    return selectFeil(oppdaterAktivitetEtikett.rejected.type)(state);
-};
+export const selectLagNyAktivitetFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, lagNyAktivitet.rejected.type);
+});
 
-export const selectOppdaterStillingFraNavSoknadsstatusFeil = (state: RootState) => {
-    return selectFeil(oppdaterStillingFraNavSoknadsstatus.rejected.type)(state);
-};
+export const selectOppdaterAktivitetStatusFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, flyttAktivitet.rejected.type);
+});
 
-export const selectDeleCVFeil = (state: RootState) => {
-    return selectFeil(oppdaterCVSvar.rejected.type)(state);
-};
+export const selectOppdaterAktivitetEtikettFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, oppdaterAktivitetEtikett.rejected.type);
+});
 
-export const selectSettAktivitetTilAvtaltFeil = (state: RootState) => {
-    return selectFeil(settAktivitetTilAvtalt.rejected.type)(state);
-};
+export const selectOppdaterStillingFraNavSoknadsstatusFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, oppdaterStillingFraNavSoknadsstatus.rejected.type);
+});
 
-export const selectCanPrint = (state: RootState) => {
-    return selectFeil(hentAktiviteter.rejected.type, hentDialoger.rejected.type)(state).length === 0;
-};
+export const selectDeleCVFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, oppdaterCVSvar.rejected.type);
+});
 
-export const selectHentMalListeFeil = (state: RootState) => {
-    return selectFeil(hentMal.rejected.type, hentMalListe.rejected.type)(state);
-};
+export const selectSettAktivitetTilAvtaltFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, settAktivitetTilAvtalt.rejected.type);
+});
 
-export const selectOppdaterMalFeil = (state: RootState) => {
-    return selectFeil(oppdaterMal.rejected.type)(state);
-};
+export const selectCanPrint = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, hentAktiviteter.rejected.type, hentDialoger.rejected.type).length === 0;
+});
 
-export const selectPubliserReferatFeil = (state: RootState) => {
-    return selectFeil(publiserReferat.rejected.type)(state);
-};
+export const selectHentMalListeFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, hentMal.rejected.type, hentMalListe.rejected.type);
+});
 
-export const selectPubliserOgOppdaterReferatFeil = (state: RootState) => {
-    return selectFeil(publiserReferat.rejected.type, oppdaterReferat.rejected.type)(state);
-};
+export const selectOppdaterMalFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, oppdaterMal.rejected.type);
+});
+
+export const selectPubliserReferatFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, publiserReferat.rejected.type);
+});
+
+export const selectPubliserOgOppdaterReferatFeil = createSelector(selectErrors, (errors) => {
+    return selectFeil(errors, publiserReferat.rejected.type, oppdaterReferat.rejected.type);
+});

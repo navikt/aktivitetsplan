@@ -17,6 +17,7 @@ const stripPrependingSlash = (url: string) => {
 };
 export const DIALOG_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbdialog/api';
 export const AKTIVITET_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbaktivitet/api';
+export const AKTIVITET_GRAPHQL_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbaktivitet/graphql';
 export const OPPFOLGING_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarboppfolging/api';
 export const VEILARBLEST_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarblest/api';
 export const PERSON_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbperson/api';
