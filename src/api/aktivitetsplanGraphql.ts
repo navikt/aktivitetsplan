@@ -1,4 +1,4 @@
-import { DEFAULT_CONFIG, fetchToJson, sjekkStatuskode, toJson } from './utils';
+import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
 import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
 import { hentFraLocalStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
@@ -8,7 +8,122 @@ const query: string = `
         perioder(fnr: $fnr) {
             id,
             aktiviteter {
-                id
+                id,
+                funksjonellId,
+                versjon,
+                tittel,
+                beskrivelse,
+                lenke,
+                type,
+                status,
+                fraDato,
+                tilDato,
+                opprettetDato,
+                endretDato,
+                endretAv,
+                historisk,
+                avsluttetKommentar,
+                avtalt,
+                forhaandsorientering {
+                    id,
+                    type,
+                    tekst,
+                    lestDato,
+                }
+                endretAvType,
+                transaksjonsType,
+                malid,
+                oppfolgingsperiodeId,
+
+                #   stillingaktivitet
+                etikett,
+                kontaktperson,
+                arbeidsgiver,
+                arbeidssted,
+                stillingsTittel,
+
+                #    // egenaktivitet
+                hensikt,
+                oppfolging,
+
+                #    //sokeAvtaleAktivitet
+                antallStillingerSokes,
+                antallStillingerIUken,
+                avtaleOppfolging,
+
+                #    //iJobbAktivitet
+                jobbStatus,
+                ansettelsesforhold,
+                arbeidstid,
+
+                #    //behandlingAktivitet
+                behandlingType,
+                behandlingSted,
+                effekt,
+                behandlingOppfolging,
+
+                #    //møte
+                adresse,
+                forberedelser,
+                kanal,
+                referat,
+                erReferatPublisert,
+
+                stillingFraNavData {
+                    cvKanDelesData {
+                        kanDeles,
+                        endretTidspunkt,
+                        endretAv,
+                        endretAvType,
+                        avtaltDato,
+                    }
+                    soknadsfrist,
+                    svarfrist,
+                    arbeidsgiver,
+                    bestillingsId,
+                    stillingsId,
+                    arbeidssted,
+                    kontaktpersonData {
+                        navn,
+                        tittel,
+                        mobil,
+                    }
+                    soknadsstatus,
+                    livslopsStatus,
+                    varselId,
+                    detaljer,
+                }
+
+                eksternAktivitet {
+                    type,
+                    oppgave {
+                        ekstern {
+                            subtekst,
+                            tekst,
+                            url
+                        }
+                        intern {
+                            subtekst,
+                            tekst,
+                            url
+                        }
+                    }
+                    handlinger {
+                        url,
+                        tekst,
+                        subtekst,
+                        lenkeType
+                    }
+                    detaljer {
+                        label,
+                        verdi
+                    }
+                    etiketter {
+                        tekst,
+                        kode,
+                        sentiment
+                    }
+                }
             },
         }
     }
