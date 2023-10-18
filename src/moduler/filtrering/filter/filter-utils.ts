@@ -30,7 +30,7 @@ export function selectDatoErIPeriode(dato: string, state: RootState): boolean {
 
 export function selectDatoErIPeriodeUtenState(
     dato: string,
-    historiskPeriode: HistoriskOppfolgingsperiode | undefined,
+    historiskPeriode: HistoriskOppfolgingsperiode | undefined | null,
     forrigeHistoriskeSluttDato: string | undefined,
 ): boolean {
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
@@ -41,7 +41,7 @@ const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, date
 
 export function datoErIPeriode(
     dato: string,
-    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode,
+    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode | null,
     sistePeriodeSluttDato?: string,
 ) {
     const datoDate = new Date(dato);

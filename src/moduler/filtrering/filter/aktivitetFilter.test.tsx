@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
-import { fireEvent, getByRole, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { setupServer } from 'msw/node';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -27,6 +27,7 @@ import { handlers } from '../../../mocks/handlers';
 import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
 import { hentAktiviteter } from '../../aktivitet/aktivitet-actions';
+import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 
 const identitet = {
     id: 'Z123456',
@@ -66,7 +67,7 @@ vi.mock('../../../felles-komponenter/utils/logging', async () => {
     };
 });
 
-/* Provider both redux-store and "in-memory" router for all sub-components to render correctly */
+/* Provide both redux-store and "in-memory" router for all sub-components to render correctly */
 const WrappedHovedside = ({ store }: { store: ToolkitStore }) => {
     return (
         <Provider store={store}>
@@ -86,23 +87,31 @@ const exampleAktivitet = wrapAktivitet({
 function makeTestAktiviteter<T>(
     store: Store,
     filterValues: T[],
-    valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter
+    valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter,
 ) {
+    const currentOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0]
+        .uuid;
     const testAktiviteter = filterValues.map((filterValue) => {
         id += 1;
         return {
             ...valueSetter(exampleAktivitet, filterValue),
             id,
             tittel: `Aktivitet: ${filterValue}`,
+            oppfolgingsperiodeId: currentOppfolgingsperiode,
         };
     }) as unknown as VeilarbAktivitet[];
     store.dispatch(
         hentAktiviteter.fulfilled(
             {
-                aktiviteter: testAktiviteter,
+                perioder: [
+                    {
+                        id: currentOppfolgingsperiode,
+                        aktiviteter: testAktiviteter,
+                    },
+                ],
             },
-            'asd'
-        )
+            'asd',
+        ),
     );
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
@@ -130,7 +139,7 @@ describe('aktivitets-filter', () => {
         const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
 
         await waitFor(() =>
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
         );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
@@ -167,7 +176,7 @@ describe('aktivitets-filter', () => {
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         for await (const { tittel, type } of aktiviteter) {
             await waitFor(() =>
-                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
             );
 
             fireEvent.click(getByRole('button', { name: 'Filtrer' }));
@@ -206,7 +215,7 @@ describe('aktivitets-filter', () => {
         getByText(`Aktivitet: VENTER`);
         getByText(`Aktivitet: AVSLAG`);
         await waitFor(() =>
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
         );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['AVSLAG'])[0]);
@@ -229,7 +238,7 @@ describe('aktivitets-filter', () => {
         getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
         getByText(`Aktivitet: SOKNAD_SENDT`);
         await waitFor(() =>
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
         );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['INNKALT_TIL_INTERVJU'])[0]);

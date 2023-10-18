@@ -1,7 +1,8 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
-import { selectFeil } from '../feilmelding/feil-selector';
+import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import { hentNivaa4 } from './tilgang-slice';
+import { createSelector } from 'reselect';
 
 function selectTilgangSlice(state: RootState) {
     return state.data.tilgang;
@@ -12,7 +13,8 @@ function selectTilgangData(state: RootState) {
 }
 
 export function selectNivaa4(state: RootState) {
-    return selectTilgangData(state) ? selectTilgangData(state).harbruktnivaa4 : false;
+    const tilgangData = selectTilgangData(state);
+    return tilgangData ? tilgangData.harbruktnivaa4 : false;
 }
 
 export function selectNivaa4LastetOk(state: RootState) {
@@ -23,6 +25,10 @@ export function selectNivaa4Status(state: RootState) {
     return selectTilgangSlice(state).status;
 }
 
-export function selectNivaa4Feilmeldinger(state: RootState) {
-    return selectTilgangSlice(state).status === Status.ERROR ? selectFeil(hentNivaa4.rejected.type)(state) : [];
-}
+export const selectNivaa4Feilmeldinger: (state: RootState) => void = createSelector(
+    selectTilgangSlice,
+    selectErrors,
+    (tilgangSlice, errors) => {
+        return tilgangSlice.status === Status.ERROR ? selectFeil(errors, hentNivaa4.rejected.type) : [];
+    },
+);
