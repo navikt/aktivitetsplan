@@ -147,6 +147,9 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
     return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
         ...DEFAULT_CONFIG,
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(queryBody(fnr)),
     })
         .then(sjekkStatuskode)
