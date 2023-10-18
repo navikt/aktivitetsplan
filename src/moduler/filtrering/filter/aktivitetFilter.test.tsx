@@ -103,12 +103,15 @@ function makeTestAktiviteter<T>(
     store.dispatch(
         hentAktiviteter.fulfilled(
             {
-                perioder: [
-                    {
-                        id: currentOppfolgingsperiode,
-                        aktiviteter: testAktiviteter,
-                    },
-                ],
+                data: {
+                    perioder: [
+                        {
+                            id: currentOppfolgingsperiode,
+                            aktiviteter: testAktiviteter,
+                        },
+                    ],
+                },
+                errors: [],
             },
             'asd',
         ),
