@@ -93,12 +93,14 @@ export const handlers = [
                 new Set(aktiviteterData.aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)),
             );
             return {
-                perioder: perioder.map((periodeId) => ({
-                    id: periodeId,
-                    aktiviteter: aktiviteterData.aktiviteter.filter(
-                        (aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId,
-                    ),
-                })),
+                data: {
+                    perioder: perioder.map((periodeId) => ({
+                        id: periodeId,
+                        aktiviteter: aktiviteterData.aktiviteter.filter(
+                            (aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId,
+                        ),
+                    })),
+                },
             };
         }),
     ),

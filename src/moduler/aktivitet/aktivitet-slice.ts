@@ -55,7 +55,7 @@ const aktivitetSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(hentAktiviteter.fulfilled, (state, action) => {
             state.status = Status.OK;
-            state.data = action.payload;
+            state.data = action.payload.data;
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
             return {

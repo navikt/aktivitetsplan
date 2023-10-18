@@ -139,7 +139,10 @@ interface OppfolgingsPerioder {
     aktiviteter: VeilarbAktivitet[];
 }
 interface AktivitetsplanResponse {
-    perioder: OppfolgingsPerioder[];
+    data: {
+        perioder: OppfolgingsPerioder[];
+    };
+    errors: unknown[];
 }
 
 export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
