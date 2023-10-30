@@ -5,7 +5,7 @@ import { formaterDatoManed } from '../../../../utils/dateUtils';
 import Informasjonsfelt from './Informasjonsfelt';
 
 const formatertDato = (dato: string | undefined, visIkkeSatt?: boolean) => {
-    if (!visIkkeSatt && !dato) {
+    if (visIkkeSatt && !dato) {
         return 'Dato ikke satt';
     }
     return formaterDatoManed(dato);
