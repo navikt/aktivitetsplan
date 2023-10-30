@@ -1,5 +1,6 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
+import AktivitetskortVideo from './Video/AktivitetskortVideo';
 
 export const BrukePlanenPanel = () => {
     return (
@@ -48,6 +49,7 @@ export const BrukePlanenPanel = () => {
                 <BodyShort>
                     Hvis du har vært registrert hos NAV før, kan du se aktivitetsplanen fra denne perioden.
                 </BodyShort>
+                <AktivitetskortVideo />
             </Accordion.Content>
         </Accordion.Item>
     );

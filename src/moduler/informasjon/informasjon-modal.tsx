@@ -16,6 +16,8 @@ import { BrukePlanenPanel } from './brukePlanenPanel';
 import { OkonomiskStotte } from './okonomiskStottePanel';
 import { RettigheterPanel } from './rettigheterPanel';
 import Video from './Video';
+import { DialogPanel } from './dialogPanel';
+import IntroduksjonVideo from './Video/IntroduksjonVideo';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
@@ -53,12 +55,13 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
                     kommunisere med veilederen din om aktivitetene i{' '}
                     <Link href={import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL}>dialogen</Link>.
                 </BodyShort>
+                <IntroduksjonVideo />
                 <Accordion className="mt-4">
                     <BrukePlanenPanel />
+                    <DialogPanel />
                     <OkonomiskStotte />
                     <RettigheterPanel />
                 </Accordion>
-                <Video />
             </ModalContainer>
         </Modal>
     );
