@@ -31,10 +31,12 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
             switch (aktivitet.eksternAktivitet.type) {
                 case EksternAktivitetType.ARENA_TILTAK_TYPE:
                     return 'For å endre aktiviteten må du gå til Arena.';
+
                 case EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE:
                 case EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE:
-                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status';
+                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status.';
             }
+            return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til fagsystemet for å endre aktiviteten.';
         }
         return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
     }
