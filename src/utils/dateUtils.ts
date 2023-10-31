@@ -20,7 +20,7 @@ export const erGyldigISODato = (isoDato: string) => {
     return !!(isoDato && isValid(parseISO(isoDato)));
 };
 
-function formatter(dato: string | Date, format: string) {
+function formatter(dato: string | Date | undefined, format: string) {
     if (dato) {
         const datoVerdi = typeof dato === 'string' ? parseISO(dato) : dato;
         return isValid(datoVerdi) ? formatDate(datoVerdi, format, { locale: nb }) : undefined;
@@ -28,11 +28,11 @@ function formatter(dato: string | Date, format: string) {
     return undefined;
 }
 
-export function formaterDatoManed(dato: string | Date) {
+export function formaterDatoManed(dato: string | Date | undefined) {
     return formatter(dato, 'PPP');
 }
 
-export function formaterDatoKortManed(dato: string | Date) {
+export function formaterDatoKortManed(dato: string | Date | undefined) {
     return formatter(dato, 'PP');
 }
 
