@@ -46,19 +46,13 @@ const kanDelesField = z.nativeEnum(SvarType, {
     required_error: 'Du må svare ja eller nei',
     invalid_type_error: 'Ikke en gyldig dato',
 });
-const getSchema = (
-    { before: disabledBefore, after: disabledAfter }: { before: Date; after: Date },
-    erVeileder: boolean
-) => {
+const getSchema = ({ after: disabledAfter }: { after: Date }, erVeileder: boolean) => {
     if (erVeileder) {
         return z.object({
             kanDeles: kanDelesField,
             avtaltDato: z
                 .date({
                     errorMap: getDateErrorMessage,
-                })
-                .min(disabledBefore, {
-                    message: 'Dato for dialog kan ikke være mer enn syv dager før kortet ble opprettet',
                 })
                 .max(disabledAfter, { message: 'Dato for dialog kan ikke være frem i tid' }),
         });
@@ -73,12 +67,8 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const dispatch = useAppDispatch();
 
     const erVeileder = useErVeileder();
-    const opprettetDato = aktivitet.opprettetDato;
-
-    const syvDagerFoerOpprettet = subDays(startOfDay(parseISO(opprettetDato)), 7);
     const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
     const datobegrensninger = {
-        before: syvDagerFoerOpprettet,
         after: endOfToday(),
     };
 
@@ -113,7 +103,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 aktivitetVersjon: aktivitet.versjon,
                 kanDeles: data.kanDeles === SvarType.JA,
                 avtaltDato: data.avtaltDato,
-            })
+            }),
         );
         return Promise.resolve();
     };
