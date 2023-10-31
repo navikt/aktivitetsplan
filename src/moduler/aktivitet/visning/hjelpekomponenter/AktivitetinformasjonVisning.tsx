@@ -8,7 +8,7 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { AktivitetType, AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import { isSamtaleOrMote } from '../../../../datatypes/internAktivitetTypes';
+import { isSamtaleOrMote, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltFerdigMarkering, {
     SkalIkkeDeltFerdigMarkeringVises,
@@ -16,6 +16,8 @@ import IkkeDeltFerdigMarkering, {
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import Aktivitetsdetaljer from '../detaljer/Aktivitetsdetaljer';
+import EksterneEtiketter from '../../etikett/EksterneEtikett';
+import { aktivitet } from '../../../../proptypes';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (
@@ -48,9 +50,12 @@ const AktivitetinformasjonVisning = (props: Props) => {
 
     return (
         <div className="space-y-8 mb-8">
-            <div className="space-y-8">
+            <div className="space-y-8 space-x-2">
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
+                {valgtAktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE && (
+                    <EksterneEtiketter aktivitet={valgtAktivitet} />
+                )}
                 {deltFerdigMarkeringSkalVises ? <IkkeDeltFerdigMarkering /> : null}
             </div>
             <AvtaltContainer underOppfolging={underOppfolging} aktivitet={valgtAktivitet} />
