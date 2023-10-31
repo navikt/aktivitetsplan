@@ -9,7 +9,14 @@ const NotifikasjonMarkering = ({ visible }: LenkeknappProps) => {
         return null;
     }
 
-    return <div className="mr-2 h-2.5 w-2.5 inline bg-[#0067c5] rounded-full"></div>;
+    return (
+        <div className="w-2.5 m-1">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <title>Ulest aktivitet</title>
+                <circle cx="50" cy="50" r="50" fill="#0067c5" />
+            </svg>
+        </div>
+    );
 };
 
 export default NotifikasjonMarkering;

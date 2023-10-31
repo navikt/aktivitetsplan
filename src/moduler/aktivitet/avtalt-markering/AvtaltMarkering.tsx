@@ -13,7 +13,7 @@ const AvtaltMarkering = (props: Props) => {
     }
 
     return (
-        <Tag className="mr-2" variant="alt3-filled" size="small">
+        <Tag variant="alt3-filled" size="small">
             Avtalt med NAV
         </Tag>
     );
