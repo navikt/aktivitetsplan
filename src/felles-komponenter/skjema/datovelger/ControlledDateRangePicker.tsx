@@ -100,7 +100,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     };
 
     return (
-        <div className="flex flex-1" onClick={preventCloseOnInsideClick}>
+        <div className="flex" onClick={preventCloseOnInsideClick}>
             <DatePicker
                 {...datepickerProps}
                 open={isPopoverOpen}
@@ -108,7 +108,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                 onClose={closeToggle}
                 wrapperClassName="flex flex-1"
             >
-                <div className="flex flex-1 items-start gap-y-8 gap-x-6 flex-wrap">
+                <div className="flex sm:flex-row flex-col gap-4">
                     <DatePicker.Input
                         disabled={from.disabled}
                         className="flex-1"
