@@ -4,7 +4,7 @@ import React from 'react';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 
 interface Props {
-    datoBegrensninger: { after: Date; before: Date };
+    datoBegrensninger: { after: Date };
 }
 
 export const SvarPaaVegneAvBruker = ({ datoBegrensninger }: Props) => {
