@@ -30,7 +30,7 @@ const UxSignalsWidget = () => {
     return (
         <div
             data-uxsignals-embed="panel-838jxh69e"
-            //  data-uxsignals-mode={ER_PROD ? '' : 'demo'}
+            data-uxsignals-mode={ER_PROD ? '' : 'demo'}
             className="uxsignalswidget max-w-[620px] mx-auto pb-8"
         />
     );
