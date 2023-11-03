@@ -1,6 +1,6 @@
 import { DatePicker, useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
-import { MutableRefObject, RefCallback } from 'react';
+import React, { MutableRefObject, RefCallback } from 'react';
 import { UseFormRegisterReturn, UseFormTrigger } from 'react-hook-form/dist/types/form';
 
 import { DateRange } from './common';
@@ -58,36 +58,32 @@ const DateRangePicker = ({
     };
 
     return (
-        <div className="flex flex-1">
+        <div className="flex">
             <DatePicker {...datepickerProps} wrapperClassName="flex flex-1">
-                <div className="flex flex-1 items-start gap-y-8 gap-x-6 flex-wrap">
-                    <DatePicker.Input
-                        className="flex-1"
-                        error={error?.from}
-                        label={'Fra dato'}
-                        {...fromInputProps}
-                        onChange={onChangeHandlers([fromInputProps.onChange as any, fromRegisterProps.onChange])}
-                        onBlur={handlers([fromInputProps.onBlur as any, fromRegisterProps.onBlur, triggerValidation])}
-                        name={fromRegisterProps.name}
-                        ref={(ref) => {
-                            (fromInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
-                            fromRegisterProps.ref(ref);
-                        }}
-                    />
-                    <DatePicker.Input
-                        className="flex-1"
-                        error={error?.to}
-                        label={'Til dato'}
-                        {...toInputProps}
-                        onChange={onChangeHandlers([toInputProps.onChange as any, toRegisterProps.onChange])}
-                        onBlur={handlers([toInputProps.onBlur as any, toRegisterProps.onBlur, triggerValidation])}
-                        name={toRegisterProps.name}
-                        ref={(ref) => {
-                            (toInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
-                            toRegisterProps.ref(ref);
-                        }}
-                    />
-                </div>
+                <DatePicker.Input
+                    error={error?.from}
+                    label={'Fra dato'}
+                    {...fromInputProps}
+                    onChange={onChangeHandlers([fromInputProps.onChange as any, fromRegisterProps.onChange])}
+                    onBlur={handlers([fromInputProps.onBlur as any, fromRegisterProps.onBlur, triggerValidation])}
+                    name={fromRegisterProps.name}
+                    ref={(ref) => {
+                        (fromInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
+                        fromRegisterProps.ref(ref);
+                    }}
+                />
+                <DatePicker.Input
+                    error={error?.to}
+                    label={'Til dato'}
+                    {...toInputProps}
+                    onChange={onChangeHandlers([toInputProps.onChange as any, toRegisterProps.onChange])}
+                    onBlur={handlers([toInputProps.onBlur as any, toRegisterProps.onBlur, triggerValidation])}
+                    name={toRegisterProps.name}
+                    ref={(ref) => {
+                        (toInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
+                        toRegisterProps.ref(ref);
+                    }}
+                />
             </DatePicker>
         </div>
     );
