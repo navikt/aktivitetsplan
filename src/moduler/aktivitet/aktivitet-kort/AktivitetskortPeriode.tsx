@@ -23,8 +23,8 @@ function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
         return <Soknadfrist aktivitet={aktivitet} />;
     }
 
-    const formatertFraDato = fraDato ? formaterDatoKortManed(fraDato) : undefined;
-    const formatertTilDato = tilDato ? formaterDatoKortManed(tilDato) : undefined;
+    const formatertFraDato = formaterDatoKortManed(fraDato);
+    const formatertTilDato = formaterDatoKortManed(tilDato);
 
     function periodeVisning() {
         if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) {

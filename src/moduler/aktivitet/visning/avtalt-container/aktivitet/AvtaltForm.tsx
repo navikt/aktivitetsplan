@@ -59,7 +59,7 @@ const AvtaltForm = (props: Props) => {
         dispatch(settAktivitetTilAvtalt({ aktivitet: avtaltAktivitet, forhaandsorientering }));
 
     const onSubmitHandler = (
-        forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues
+        forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues,
     ): Promise<void> => {
         const forhaandsorienteringType = forhaandsorienteringDialogFormValues.forhaandsorienteringType;
         setSendtAtErAvtaltMedNav();
