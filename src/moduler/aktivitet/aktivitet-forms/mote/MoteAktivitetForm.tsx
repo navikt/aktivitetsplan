@@ -140,15 +140,17 @@ const MoteAktivitetForm = (props: Props) => {
                         error={errors.tittel && errors.tittel.message}
                     />
 
-                    <ControlledDatePicker
-                        field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
-                    />
-                    <TextField
-                        label="Klokkeslett (obligatorisk)"
-                        {...register('klokkeslett')}
-                        type="time"
-                        error={errors.klokkeslett && errors.klokkeslett.message}
-                    />
+                    <div className="flex sm:flex-row flex-col gap-4">
+                        <ControlledDatePicker
+                            field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                        />
+                        <TextField
+                            label="Klokkeslett (obligatorisk)"
+                            {...register('klokkeslett')}
+                            type="time"
+                            error={errors.klokkeslett && errors.klokkeslett.message}
+                        />
+                    </div>
                     <Select
                         label="Varighet (obligatorisk)"
                         {...register('varighet', { valueAsNumber: true })}
