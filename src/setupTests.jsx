@@ -1,7 +1,3 @@
-// import fetch from 'node-fetch';
-
-// globalThis.fetch = fetch;
-
 // Ikkje bra!
 import.meta.env.VITE_API_URL_BASE = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 

@@ -8,7 +8,6 @@ import { hentAktiviteterGraphql } from '../../api/aktivitetsplanGraphql';
 
 export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => {
     return await hentAktiviteterGraphql();
-    // return await Api.hentAktiviteter();
 });
 
 export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: string) => {

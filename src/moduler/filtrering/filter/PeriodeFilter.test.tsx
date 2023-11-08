@@ -17,7 +17,7 @@ import { setupServer } from 'msw/node';
 import { handlers } from '../../../mocks/handlers';
 import { datoErIPeriode } from './filter-utils';
 import { expect } from 'vitest';
-import { erHistorisk, HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
+import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 
 vi.mock('../../../felles-komponenter/utils/logging', async () => {
     const actual: object = await vi.importActual('../../../felles-komponenter/utils/logging');
@@ -160,7 +160,7 @@ describe('PeriodeFilter.tsx', () => {
         describe('datoErIPeriode-filter', () => {
             const gammelOpprettetDato = gammelArenaAktivitet.opprettetDato;
             const currentOpprettetDato = arenaAktivitet.opprettetDato;
-            const gammelPeriodeSlutt = gammelOppfolgingsperiode!.sluttDato;
+            const gammelPeriodeSlutt = gammelOppfolgingsperiode.sluttDato;
             it('nåværende periode - gammel aktivitet skal ikke vises', () => {
                 expect(datoErIPeriode(gammelOpprettetDato, null, gammelPeriodeSlutt)).toBeFalsy();
             });
