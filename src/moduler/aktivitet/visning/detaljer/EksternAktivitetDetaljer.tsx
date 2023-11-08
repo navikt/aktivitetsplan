@@ -16,8 +16,8 @@ const EksternAktivitetDetaljer = ({ aktivitet }: Props) => {
 
     return (
         <>
-            <FraDato aktivitet={aktivitet} />
-            <TilDato aktivitet={aktivitet} />
+            <FraDato aktivitet={aktivitet} visIkkeSatt />
+            <TilDato aktivitet={aktivitet} visIkkeSatt />
             <Detaljer detaljer={aktivitet.eksternAktivitet.detaljer} />
             <Beskrivelse aktivitet={aktivitet} />
         </>

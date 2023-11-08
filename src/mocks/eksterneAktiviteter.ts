@@ -26,6 +26,8 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                       etiketter: [{ kode: 'SOKT_INN' }, { kode: 'AVSLAG' }],
                   },
               }),
+              fraDato: undefined,
+              tilDato: undefined,
           }),
           wrapAktivitet({
               ...enEksternAktivitet({
