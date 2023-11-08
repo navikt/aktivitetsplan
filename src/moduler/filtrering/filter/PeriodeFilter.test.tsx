@@ -1,9 +1,5 @@
 /* Provide both redux-store and "in-memory" router for all sub-components to render correctly */
 import React from 'react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import Hovedside from '../../../hovedside/Hovedside';
-import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { arenaMockAktiviteter } from '../../../mocks/data/arena';
 import { render, screen } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
@@ -18,6 +14,8 @@ import { handlers } from '../../../mocks/handlers';
 import { datoErIPeriode } from './filter-utils';
 import { expect } from 'vitest';
 import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
+import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
+import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 
 vi.mock('../../../felles-komponenter/utils/logging', async () => {
     const actual: object = await vi.importActual('../../../felles-komponenter/utils/logging');
@@ -30,26 +28,10 @@ vi.mock('../../../felles-komponenter/utils/logging', async () => {
     };
 });
 
-const identitet = {
-    id: 'Z123456',
-    erVeileder: true,
-    erBruker: false,
-};
-
-const WrappedHovedside = ({ store }: { store: ToolkitStore }) => {
-    return (
-        <Provider store={store}>
-            <MemoryRouter>
-                <Hovedside />
-            </MemoryRouter>
-        </Provider>
-    );
-};
-
 const gjeldendeOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) => !erHistorisk(it));
-const gammelOppfolgingsperiode: HistoriskOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
+const gammelOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
     erHistorisk(it),
-);
+) as HistoriskOppfolgingsperiode;
 
 const arenaAktivitet = {
     ...arenaMockAktiviteter[0],
@@ -72,11 +54,12 @@ const gammelVeilarbAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Gammel Veilarbaktivitet',
     id: '2',
-    oppfolgingsperiodeId: gammelOppfolgingsperiode?.uuid,
+    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
 };
 
 const initialStore = {
     data: {
+        ...emptyLoadedVeilederState.data,
         aktiviteter: {
             status: Status.OK,
             data: {
@@ -99,10 +82,6 @@ const initialStore = {
         oppfolging: {
             status: Status.OK,
             data: mockOppfolging,
-        },
-        identitet: {
-            status: Status.OK,
-            data: identitet,
         },
     },
 } as unknown as RootState;
