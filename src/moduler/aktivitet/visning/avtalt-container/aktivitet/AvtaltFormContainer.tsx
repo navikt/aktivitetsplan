@@ -3,11 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Status } from '../../../../../createGenericSlice';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import {
-    isEksternAktivitet,
-    VeilarbAktivitet,
-    VeilarbAktivitetType,
-} from '../../../../../datatypes/internAktivitetTypes';
+import { isEksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
 import { selectAktivitetStatus } from '../../../aktivitet-selector';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from '../arena-aktivitet/KanIkkeLeggeTilForhaandsorienteringInfotekst';
