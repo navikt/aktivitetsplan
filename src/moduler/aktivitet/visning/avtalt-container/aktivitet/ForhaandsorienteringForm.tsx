@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { Alert, Checkbox, Detail } from '@navikt/ds-react';
+import { Checkbox, Detail } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';

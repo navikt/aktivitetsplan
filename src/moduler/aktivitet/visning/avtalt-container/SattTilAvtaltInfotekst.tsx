@@ -8,7 +8,7 @@ const getText = (
     kanSendeVarsel: boolean,
     avtaltMedNavMindreEnnSyvDager: boolean,
     harTilDato: boolean,
-    forhaandsorienteringstype: ForhaandsorienteringType
+    forhaandsorienteringstype: ForhaandsorienteringType,
 ): string => {
     if (!kanSendeVarsel || !harTilDato) {
         return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke lagt til. Du skal ha informert bruker om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat.';
@@ -32,6 +32,7 @@ interface Props {
     mindreEnnSyvDagerTil: boolean;
     harTilDato: boolean;
     forhaandsorienteringstype: ForhaandsorienteringType;
+    manglerDatoer: boolean;
 }
 
 //Senere: Husk å slette tekstfil sett-avtalt-bekreftelse
