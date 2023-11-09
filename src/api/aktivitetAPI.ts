@@ -19,7 +19,7 @@ export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbA
 export const settAktivitetTilAvtalt = (
     aktivitetId: string,
     aktivitetVersjon: string,
-    forhaandsorientering: Forhaandsorientering
+    forhaandsorientering: Forhaandsorientering,
 ) =>
     putAsJson(`${AKTIVITET_BASE_URL}/avtaltMedNav?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
@@ -28,7 +28,7 @@ export const settAktivitetTilAvtalt = (
 
 export const markerForhaandsorienteringSomLest = (
     aktivitetId: string,
-    aktivitetVersjon: string
+    aktivitetVersjon: string,
 ): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/avtaltMedNav/lest`, {
         aktivitetId,
@@ -39,7 +39,7 @@ export const oppdaterCvKanDelesSvar = (
     aktivitetId: string,
     aktivitetVersjon: string,
     kanDeles: boolean,
-    avtaltDato?: string
+    avtaltDato?: string,
 ): Promise<VeilarbAktivitet> => {
     return putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/kanDeleCV?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
@@ -55,12 +55,12 @@ export const oppdaterAktivitetEtikett = (aktivitet: VeilarbAktivitet): Promise<V
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet);
 
 export const publiserReferat = (
-    aktivitet: SamtalereferatAktivitet | MoteAktivitet
+    aktivitet: SamtalereferatAktivitet | MoteAktivitet,
 ): Promise<SamtalereferatAktivitet | MoteAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`, aktivitet);
 
 export const oppdaterReferat = (
-    aktivitet: SamtalereferatAktivitet | MoteAktivitet
+    aktivitet: SamtalereferatAktivitet | MoteAktivitet,
 ): Promise<SamtalereferatAktivitet | MoteAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet);
 
@@ -70,7 +70,7 @@ export const hentVersjonerTilAktivitet = (aktivitet: VeilarbAktivitet): Promise<
 export const oppdaterStillingFraNavSoknadsstatus = (
     aktivitetId: string,
     aktivitetVersjon: string,
-    soknadsstatus: string
+    soknadsstatus: string,
 ): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/soknadStatus?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
@@ -81,11 +81,11 @@ export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> => fetchToJson
 
 export const sendForhaandsorienteringArenaAktivitet = (
     arenaaktivitetId: string,
-    forhaandsorientering: Forhaandsorientering
+    forhaandsorientering: Forhaandsorientering,
 ): Promise<ArenaAktivitet> =>
     putAsJson(
         `${AKTIVITET_BASE_URL}/arena/forhaandsorientering?arenaaktivitetId=${arenaaktivitetId}`,
-        forhaandsorientering
+        forhaandsorientering,
     );
 
 export const markerForhaandsorienteringSomLestArenaAktivitet = (aktivitetId: string): Promise<ArenaAktivitet> =>

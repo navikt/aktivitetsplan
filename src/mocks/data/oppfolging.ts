@@ -1,7 +1,8 @@
 import { RestRequest } from 'msw';
 
-import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
+import { Oppfolgingsperiode, OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from '../demo/localStorage';
+import { mockfnr } from '../utils';
 
 const oppfolgingsperioder: Oppfolgingsperiode[] = [
     {
@@ -32,23 +33,21 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
     },
 ];
 
-const oppfolging = {
-    fnr: null,
+const oppfolging: OppfolgingStatus = {
+    fnr: mockfnr,
     aktorId: '1234567988888',
     veilederId: null,
     reservasjonKRR: erKRRBruker(),
     manuell: erManuellBruker(),
     underOppfolging: !erPrivatBruker(),
     underKvp: false,
-    oppfolgingUtgang: null,
     kanStarteOppfolging: false,
-    avslutningStatus: null,
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfolgingsperioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
-};
+} as unknown as OppfolgingStatus;
 
 export const mockOppfolging = oppfolging;
 

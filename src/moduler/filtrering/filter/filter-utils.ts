@@ -28,13 +28,21 @@ export function selectDatoErIPeriode(dato: string, state: RootState): boolean {
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
 }
 
+export function selectDatoErIPeriodeUtenState(
+    dato: string,
+    historiskPeriode: HistoriskOppfolgingsperiode | undefined | null,
+    forrigeHistoriskeSluttDato: string | undefined,
+): boolean {
+    return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
+}
+
 //TODO: Flytte til utils når den er ts
 const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, dateToCompare);
 
 export function datoErIPeriode(
     dato: string,
-    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode,
-    sistePeriodeSluttDato?: string
+    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode | null,
+    sistePeriodeSluttDato?: string,
 ) {
     const datoDate = new Date(dato);
 

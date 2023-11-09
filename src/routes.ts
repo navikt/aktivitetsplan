@@ -1,6 +1,6 @@
 const aktivitetRoute = (aktivitetId: string) => `/aktivitet/vis/${aktivitetId}`;
 const nyAktivitetRoute = () => `/aktivitet/ny`;
-const endreAktivitetRoute = (aktivitetId: string) => `/aktivitet/endre/${aktivitetId}`;
+export const endreAktivitetRoute = (aktivitetId: string) => `/aktivitet/endre/${aktivitetId}`;
 const fullforAktivitetRoute = (aktivitetId: string) => `/aktivitet/fullfor/${aktivitetId}`;
 const avbrytAktivitetRoute = (aktivitetId: string) => `/aktivitet/avbryt/${aktivitetId}`;
 const hovedsideRoute = () => '/';

@@ -5,19 +5,53 @@ import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
-import { aktivitetMatchesFilters, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
+import { aktivitetMatchesFilters, datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
-import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
-import { selectAktivitetStatus, selectAktiviteterData } from './aktivitet-selector';
+import {
+    selectForrigeHistoriskeSluttDato,
+    selectOppfolgingsPerioder,
+    selectOppfolgingStatus,
+} from '../oppfolging-status/oppfolging-selector';
+import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriode } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
+import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
+import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],
-    (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter)
+    (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter),
 );
 
-export const selectAktiviterForAktuellePerioden = (state: RootState): AlleAktiviteter[] =>
-    selectAlleAktiviter(state).filter((a: AlleAktiviteter) => selectDatoErIPeriode(a.opprettetDato, state));
+const selectVistOppfolgingsperiode = createSelector(
+    selectHistoriskPeriode,
+    selectOppfolgingsPerioder,
+    (historiskPeriode, oppfolgingsPerioder) => {
+        const currentOppfolgingsperiode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
+        return historiskPeriode || currentOppfolgingsperiode; // Antar sorterte oppfølgingsperioder
+    },
+);
+export const selectAktiviterForAktuellePerioden = createSelector(
+    selectArenaAktiviteterData,
+    selectVistOppfolgingsperiode,
+    selectAktiviteterByPeriode,
+    selectHistoriskPeriode,
+    selectForrigeHistoriskeSluttDato,
+    (
+        arenaAktiviteterIAllePerioder,
+        valgtPeriode,
+        veilarbAktiviteter,
+        historiskPeriode,
+        forrigeHistoriskeSluttDato,
+    ): AlleAktiviteter[] => {
+        const arenaAktiviteter = arenaAktiviteterIAllePerioder.filter((a: ArenaAktivitet) =>
+            datoErIPeriode(a.opprettetDato, historiskPeriode, forrigeHistoriskeSluttDato),
+        );
+        return [
+            ...(veilarbAktiviteter.find((periode) => periode.id === valgtPeriode?.uuid)?.aktiviteter || []),
+            ...arenaAktiviteter,
+        ];
+    },
+);
 
 export const selectAktivitetListe = (state: RootState) =>
     selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetMatchesFilters(a, state));
@@ -31,7 +65,7 @@ export const selectAktivitetListeSlice = (state: RootState) => {
     const status = aggregerStatus(
         selectOppfolgingStatus(state),
         selectIdentitetStatus(state),
-        selectAktivitetStatus(state)
+        selectAktivitetStatus(state),
     );
     return {
         status,
