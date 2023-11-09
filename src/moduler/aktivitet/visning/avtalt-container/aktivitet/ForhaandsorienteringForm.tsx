@@ -91,7 +91,9 @@ const ForhaandsorienteringForm = (props: Props) => {
         arenaAktivitetRequestStatus === Status.PENDING;
 
     const isGammelArenaAktivitet = isEksternAktivitet(aktivitet)
-        ? [EksternAktivitetType.ARENA_TILTAK_TYPE].includes(aktivitet.eksternAktivitet.type)
+        ? ![EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE, EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE].includes(
+              aktivitet.eksternAktivitet.type,
+          )
         : false;
 
     return (
