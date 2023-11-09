@@ -90,11 +90,7 @@ const ForhaandsorienteringForm = (props: Props) => {
         arenaAktivitetRequestStatus === Status.RELOADING ||
         arenaAktivitetRequestStatus === Status.PENDING;
 
-    const isGammelArenaAktivitet = isEksternAktivitet(aktivitet)
-        ? ![EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE, EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE].includes(
-              aktivitet.eksternAktivitet.type,
-          )
-        : false;
+    const erEksternAktivitet = isEksternAktivitet(aktivitet);
 
     return (
         <form
@@ -107,7 +103,7 @@ const ForhaandsorienteringForm = (props: Props) => {
                 </Checkbox>
                 <Detail>FOR NAV-ANSATT</Detail>
             </div>
-            {isGammelArenaAktivitet || isArena ? (
+            {erEksternAktivitet || isArena ? (
                 <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</p>
             ) : null}
             {showForm ? (
