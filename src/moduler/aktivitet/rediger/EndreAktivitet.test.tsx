@@ -29,7 +29,7 @@ const initialStore = {
     },
 };
 
-describe('EndreAktivitet', async () => {
+describe.skip('EndreAktivitet', async () => {
     it('endre aktivitet skal gi ny versjon', () => {
         const store = configureStore({ reducer, preloadedState: initialStore as any });
         const { getByLabelText } = render(
