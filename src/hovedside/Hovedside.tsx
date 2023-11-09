@@ -15,6 +15,7 @@ import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
+import { ErrorCleanerOnRouteChange } from '../routingConfig';
 
 const Hovedside = () => {
     const navigate = useNavigate();
@@ -49,6 +50,7 @@ const Hovedside = () => {
                 </OppfolgingStatus>
                 <Outlet />
             </div>
+            <ErrorCleanerOnRouteChange />
         </main>
     );
 };
