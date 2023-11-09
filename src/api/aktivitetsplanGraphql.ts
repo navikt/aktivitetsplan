@@ -152,6 +152,7 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Nav-Consumer-Id': 'aktivitetsplan',
         },
         body: JSON.stringify(queryBody(fnr)),
     })
