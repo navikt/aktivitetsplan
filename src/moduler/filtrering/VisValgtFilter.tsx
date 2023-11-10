@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import {
-    aktivitetStatusMap,
     aktivitetTypeMap,
     avtaltMapper,
     stillingOgStillingFraNavEtikettMapper,
@@ -14,7 +13,6 @@ import { selectFilterSlice } from './filter/filter-selector';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
-    toggleAktivitetsStatus,
     toggleAktivitetsType,
     toggleArenaAktivitetsEtikett,
 } from './filter/filter-slice';
@@ -23,7 +21,6 @@ import {
     ArenaEtikettFilterType,
     AvtaltFilterType,
     EtikettFilterType,
-    StatusFilterType,
 } from './filter/FilterVisning';
 import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
@@ -36,7 +33,6 @@ const VisValgtFilter = () => {
         dispatch(toggleAktivitetsEtikett(aktivitetsEtikett));
     const doToggleArenaAktivitetsEtikett = (arenaEtikett: string) =>
         dispatch(toggleArenaAktivitetsEtikett(arenaEtikett));
-    const doToggleAktivitetsStatus = (aktivitetsStatus: string) => dispatch(toggleAktivitetsStatus(aktivitetsStatus));
     const doToggleAktivitetsType = (aktivitetsType: string) => dispatch(toggleAktivitetsType(aktivitetsType));
     const doToggleAktivitetAvtaltMedNav = (aktivitetsStatus: string) =>
         dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus));
@@ -57,11 +53,6 @@ const VisValgtFilter = () => {
                 return {
                     tekst: tiltakOgEksternAktivitetEtikettMapper[filterVerdi as keyof ArenaEtikettFilterType],
                     func: doToggleArenaAktivitetsEtikett,
-                };
-            case 'aktivitetStatus':
-                return {
-                    tekst: aktivitetStatusMap[filterVerdi as keyof StatusFilterType],
-                    func: doToggleAktivitetsStatus,
                 };
             case 'aktivitetAvtaltMedNav':
                 return {
@@ -102,7 +93,7 @@ const VisValgtFilter = () => {
                                     />
                                 );
                             });
-                    }
+                    },
                 )}
             </Chips>
         </div>

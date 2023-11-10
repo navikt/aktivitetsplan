@@ -1,12 +1,11 @@
 import { Button } from '@navikt/ds-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { preventCloseOnInsideClick, useOutsideClick } from '../../felles-komponenter/skjema/datovelger/common';
 import { minstEnErOK, toStatus } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
-import AktivitetStatusFilter from './filter/AktivitetStatusFilter';
 import AktivitetTypeFilter from './filter/AktivitetTypeFilter';
 import ArenaEtikettFilter from './filter/ArenaEtikettFilter';
 import AvtaltMedNavFilter from './filter/AvtaltFilter';
@@ -44,7 +43,6 @@ const Filter = () => {
                     <AvtaltMedNavFilter />
                     <EtikettFilter />
                     <ArenaEtikettFilter />
-                    <AktivitetStatusFilter />
                     <AktivitetTypeFilter />
                 </div>
             ) : null}
