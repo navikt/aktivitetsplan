@@ -13,14 +13,13 @@ export interface OppfolgingStatus {
     manuell: boolean;
     underOppfolging: boolean;
     underKvp: boolean;
-
     kanStarteOppfolging: boolean;
-
+    oppfolginUtgang: string;
     oppfolgingsPerioder: Oppfolgingsperiode[];
     harSkriveTilgang: boolean;
     inaktivIArena: boolean;
     kanReaktiveres: boolean;
-    inaktiveringsdato: Date;
+    inaktiveringsdato: string;
     erSykmeldtMedArbeidsgiver: boolean;
     servicegruppe: string;
     formidlingsgruppe: string;
@@ -37,6 +36,11 @@ export interface Oppfolgingsperiode {
     kvpPerioder?: KvpPeriode[];
 }
 
+export const erHistorisk = (
+    oppfolginsPeriode: Oppfolgingsperiode,
+): oppfolginsPeriode is HistoriskOppfolgingsperiode => {
+    return !!oppfolginsPeriode.sluttDato;
+};
 export type HistoriskOppfolgingsperiode = Omit<Oppfolgingsperiode, 'sluttDato'> & {
     sluttDato: string;
 };

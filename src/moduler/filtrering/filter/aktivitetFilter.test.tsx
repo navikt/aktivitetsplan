@@ -1,13 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
-import { fireEvent, getByRole, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { setupServer } from 'msw/node';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
 import { Store } from 'redux';
 
-import { Status } from '../../../createGenericSlice';
 import {
     AktivitetStatus,
     AlleAktiviteter,
@@ -19,7 +15,6 @@ import {
     VeilarbAktivitet,
     VeilarbAktivitetType,
 } from '../../../datatypes/internAktivitetTypes';
-import Hovedside from '../../../hovedside/Hovedside';
 import { wrapAktivitet } from '../../../mocks/aktivitet';
 import { mockOppfolging } from '../../../mocks/data/oppfolging';
 import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
@@ -27,33 +22,9 @@ import { handlers } from '../../../mocks/handlers';
 import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
 import { hentAktiviteter } from '../../aktivitet/aktivitet-actions';
-
-const identitet = {
-    id: 'Z123456',
-    erVeileder: true,
-    erBruker: false,
-};
-
-const initialStore = {
-    data: {
-        aktiviteter: {
-            status: Status.OK,
-            data: [],
-        },
-        arenaAktiviteter: {
-            status: Status.OK,
-            data: [],
-        },
-        oppfolging: {
-            status: Status.OK,
-            data: mockOppfolging,
-        },
-        identitet: {
-            status: Status.OK,
-            data: identitet,
-        },
-    },
-};
+import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
+import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
+import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 
 vi.mock('../../../felles-komponenter/utils/logging', async () => {
     const actual: any = await vi.importActual('../../../felles-komponenter/utils/logging');
@@ -66,17 +37,6 @@ vi.mock('../../../felles-komponenter/utils/logging', async () => {
     };
 });
 
-/* Provider both redux-store and "in-memory" router for all sub-components to render correctly */
-const WrappedHovedside = ({ store }: { store: ToolkitStore }) => {
-    return (
-        <Provider store={store}>
-            <MemoryRouter>
-                <Hovedside />
-            </MemoryRouter>
-        </Provider>
-    );
-};
-
 let id = 12012;
 const exampleAktivitet = wrapAktivitet({
     ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2017 }),
@@ -86,23 +46,34 @@ const exampleAktivitet = wrapAktivitet({
 function makeTestAktiviteter<T>(
     store: Store,
     filterValues: T[],
-    valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter
+    valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter,
 ) {
+    const currentOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0]
+        .uuid;
     const testAktiviteter = filterValues.map((filterValue) => {
         id += 1;
         return {
             ...valueSetter(exampleAktivitet, filterValue),
             id,
             tittel: `Aktivitet: ${filterValue}`,
+            oppfolgingsperiodeId: currentOppfolgingsperiode,
         };
     }) as unknown as VeilarbAktivitet[];
     store.dispatch(
         hentAktiviteter.fulfilled(
             {
-                aktiviteter: testAktiviteter,
+                data: {
+                    perioder: [
+                        {
+                            id: currentOppfolgingsperiode,
+                            aktiviteter: testAktiviteter,
+                        },
+                    ],
+                },
+                errors: [],
             },
-            'asd'
-        )
+            'asd',
+        ),
     );
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
@@ -120,7 +91,7 @@ describe('aktivitets-filter', () => {
     afterEach(() => server.resetHandlers());
 
     it('should filter avtalt med nav', async () => {
-        const store = configureStore({ reducer, preloadedState: initialStore as any });
+        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
         makeTestAktiviteter(store, [true, false], (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -130,7 +101,7 @@ describe('aktivitets-filter', () => {
         const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
 
         await waitFor(() =>
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
         );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
@@ -151,7 +122,7 @@ describe('aktivitets-filter', () => {
             VeilarbAktivitetType.MOTE_TYPE,
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
-        const store = configureStore({ reducer, preloadedState: initialStore as any });
+        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
         const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -167,7 +138,7 @@ describe('aktivitets-filter', () => {
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         for await (const { tittel, type } of aktiviteter) {
             await waitFor(() =>
-                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
             );
 
             fireEvent.click(getByRole('button', { name: 'Filtrer' }));
@@ -188,7 +159,7 @@ describe('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling fra NAV)', async () => {
-        const store = configureStore({ reducer, preloadedState: initialStore as any });
+        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
         const statuser: StillingFraNavSoknadsstatus[] = [
             StillingFraNavSoknadsstatus.AVSLAG,
             StillingFraNavSoknadsstatus.VENTER,
@@ -206,7 +177,7 @@ describe('aktivitets-filter', () => {
         getByText(`Aktivitet: VENTER`);
         getByText(`Aktivitet: AVSLAG`);
         await waitFor(() =>
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
         );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['AVSLAG'])[0]);
@@ -216,7 +187,7 @@ describe('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling)', async () => {
-        const store = configureStore({ reducer, preloadedState: initialStore as any });
+        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
         const statuser: StillingStatus[] = [StillingStatus.INNKALT_TIL_INTERVJU, StillingStatus.SOKNAD_SENDT];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
@@ -229,7 +200,7 @@ describe('aktivitets-filter', () => {
         getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
         getByText(`Aktivitet: SOKNAD_SENDT`);
         await waitFor(() =>
-            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull()
+            expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
         );
         fireEvent.click(getByText('Filtrer'));
         fireEvent.click(queryAllByText(stillingsEtikettMapper['INNKALT_TIL_INTERVJU'])[0]);

@@ -11,14 +11,9 @@ interface Props {
     aktivitet: AlleAktiviteter;
 }
 
-const SattTilAvtaltVisning = (props: Props) => {
-    const { aktivitet, forhaandsorienteringstype } = props;
-
+const SattTilAvtaltVisning = ({ aktivitet, forhaandsorienteringstype }: Props) => {
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
-
-    if (!forhaandsorienteringstype) {
-        return null;
-    }
+    if (!forhaandsorienteringstype) return null;
 
     return (
         <>
