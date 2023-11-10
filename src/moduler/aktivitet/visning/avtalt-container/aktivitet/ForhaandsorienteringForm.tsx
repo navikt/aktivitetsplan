@@ -90,8 +90,6 @@ const ForhaandsorienteringForm = (props: Props) => {
         arenaAktivitetRequestStatus === Status.RELOADING ||
         arenaAktivitetRequestStatus === Status.PENDING;
 
-    const erEksternAktivitet = isEksternAktivitet(aktivitet);
-
     return (
         <form
             onSubmit={handleSubmit((data) => onSubmit(data))}
@@ -103,9 +101,6 @@ const ForhaandsorienteringForm = (props: Props) => {
                 </Checkbox>
                 <Detail>FOR NAV-ANSATT</Detail>
             </div>
-            {erEksternAktivitet || isArena ? (
-                <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</p>
-            ) : null}
             {showForm ? (
                 <ForhaandsorienteringsMeldingArenaaktivitet lasterData={lasterData} register={register} watch={watch} />
             ) : null}
