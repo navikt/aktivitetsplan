@@ -12,14 +12,12 @@ import { AlleAktivitetTyper, avtaltMapper } from '../../../utils/textMappers';
 import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
-    selectAktivitetStatusFilter,
     selectAktivitetTyperFilter,
     selectArenaAktivitetEtiketterFilter,
 } from './filter-selector';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
-    toggleAktivitetsStatus,
     toggleAktivitetsType,
     toggleArenaAktivitetsEtikett,
 } from './filter-slice';
@@ -35,14 +33,9 @@ export type ArenaEtikettFilterType = Record<ArenaEtikett, boolean>;
 
 export type EtikettFilterType = Record<StillingStatus | StillingFraNavSoknadsstatus, boolean>;
 
-export type FilterKategori = 'avtalt' | 'status' | 'aktivitet' | 'etikett' | 'arenaEtikett';
+export type FilterKategori = 'avtalt' | 'aktivitet' | 'etikett' | 'arenaEtikett';
 export type FilterValueExtractor<AktivitetType, FilterValueType> = (aktvitet: AktivitetType) => FilterValueType[];
-export type Filter =
-    | AvtaltFilterType
-    | StatusFilterType
-    | AktivitetFilterType
-    | EtikettFilterType
-    | ArenaEtikettFilterType;
+export type Filter = AvtaltFilterType | AktivitetFilterType | EtikettFilterType | ArenaEtikettFilterType;
 
 interface FilterVisningTypes {
     filterKategori: FilterKategori;
@@ -58,18 +51,16 @@ const selectorMap: Record<FilterKategori, (store: Store) => Filter> = {
     aktivitet: selectAktivitetTyperFilter,
     arenaEtikett: selectArenaAktivitetEtiketterFilter,
     etikett: selectAktivitetEtiketterFilter,
-    status: selectAktivitetStatusFilter,
 };
 const togglerMap = {
     avtalt: toggleAktivitetAvtaltMedNav,
     aktivitet: toggleAktivitetsType,
     arenaEtikett: toggleArenaAktivitetsEtikett,
     etikett: toggleAktivitetsEtikett,
-    status: toggleAktivitetsStatus,
 };
 
 const useFilterType = (
-    filterKategori: FilterKategori
+    filterKategori: FilterKategori,
 ): { filterState: Filter; toggle: (filterKey: string) => void } => {
     // get selector for filterKategori
     const filterState = useSelector(selectorMap[filterKategori]);

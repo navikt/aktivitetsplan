@@ -1,13 +1,7 @@
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { RootState } from '../../../store';
 import { FilterState } from './filter-slice';
-import {
-    AktivitetFilterType,
-    ArenaEtikettFilterType,
-    AvtaltFilterType,
-    EtikettFilterType,
-    StatusFilterType,
-} from './FilterVisning';
+import { AktivitetFilterType, ArenaEtikettFilterType, AvtaltFilterType, EtikettFilterType } from './FilterVisning';
 
 export function selectFilterSlice(state: RootState): FilterState {
     return state.data.filter;
@@ -27,10 +21,6 @@ export function selectAktivitetEtiketterFilter(state: RootState): EtikettFilterT
 
 export function selectArenaAktivitetEtiketterFilter(state: RootState): ArenaEtikettFilterType {
     return selectFilterSlice(state).arenaAktivitetEtiketter;
-}
-
-export function selectAktivitetStatusFilter(state: RootState): StatusFilterType {
-    return selectFilterSlice(state).aktivitetStatus;
 }
 
 export function selectAktivitetAvtaltMedNavFilter(state: RootState): AvtaltFilterType {
