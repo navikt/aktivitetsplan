@@ -71,7 +71,9 @@ const NyAktivitetForm = () => {
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             navigate(hovedsideRoute());
+            return true;
         }
+        return false;
     }
 
     const onReqBack: MouseEventHandler = (e) => {

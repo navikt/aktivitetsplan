@@ -116,7 +116,7 @@ function EndreAktivitet() {
 
     const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
 
-    const { aktivitetRoute } = useRoutes();
+    const { aktivitetRoute, hovedsideRoute } = useRoutes();
 
     function oppdater(aktivitet: AktivitetFormValues): Promise<void> {
         if (!valgtAktivitet) return Promise.resolve();
@@ -131,8 +131,10 @@ function EndreAktivitet() {
 
     const onReqClose = () => {
         if (!isDirty.current || window.confirm(CONFIRM)) {
-            navigate('/');
+            navigate(hovedsideRoute());
+            return true;
         }
+        return false;
     };
 
     const onReqBack: MouseEventHandler = (e) => {
