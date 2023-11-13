@@ -9,11 +9,7 @@ import { Status } from '../../../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import {
-    EksternAktivitet,
-    EksternAktivitetType,
-    isEksternAktivitet,
-} from '../../../../../datatypes/internAktivitetTypes';
+import { EksternAktivitet, isEksternAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
@@ -90,6 +86,8 @@ const ForhaandsorienteringForm = (props: Props) => {
         arenaAktivitetRequestStatus === Status.RELOADING ||
         arenaAktivitetRequestStatus === Status.PENDING;
 
+    const erEksternAktivitet = isEksternAktivitet(aktivitet);
+
     return (
         <form
             onSubmit={handleSubmit((data) => onSubmit(data))}
@@ -101,6 +99,9 @@ const ForhaandsorienteringForm = (props: Props) => {
                 </Checkbox>
                 <Detail>FOR NAV-ANSATT</Detail>
             </div>
+            {erEksternAktivitet || isArena ? (
+                <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</p>
+            ) : null}
             {showForm ? (
                 <ForhaandsorienteringsMeldingArenaaktivitet lasterData={lasterData} register={register} watch={watch} />
             ) : null}
