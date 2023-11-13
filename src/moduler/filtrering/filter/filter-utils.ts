@@ -11,7 +11,6 @@ import { getStillingStatusFilterValue } from './EtikettFilter';
 import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
-    selectAktivitetStatusFilter,
     selectAktivitetTyperFilter,
     selectArenaAktivitetEtiketterFilter,
     selectHistoriskPeriode,
@@ -102,11 +101,6 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
         if (hasNoOverlap(etiketter, aktiveFilters)) {
             return false;
         }
-    }
-
-    const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
-    if (erAktivtFilter(aktivitetStatusFilter) && !aktivitetStatusFilter[aktivitet.status]) {
-        return false;
     }
 
     const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
