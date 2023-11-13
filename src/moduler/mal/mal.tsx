@@ -39,13 +39,11 @@ const Mal = () => {
     const avhengigheter = [malStatus, malListeStatus];
 
     const onModalRequestClosed = () => {
-        if (isDirty.current) {
-            if (window.confirm(CONFIRM)) {
-                navigate(hovedsideRoute());
-            }
-        } else {
+        if (!isDirty.current || window.confirm(CONFIRM)) {
             navigate(hovedsideRoute());
+            return true;
         }
+        return false;
     };
 
     return (

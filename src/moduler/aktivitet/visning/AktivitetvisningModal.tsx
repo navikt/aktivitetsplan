@@ -70,13 +70,14 @@ const AktivitetvisningModal = (props: Props) => {
             heading={aktivitet?.tittel || ''}
             onRequestClose={() => {
                 if (dirty.isDirty && !window.confirm(DIALOG_TEKST)) {
-                    return;
+                    return false;
                 }
                 if (skalLeses && fho) {
                     window.alert('Det er en viktig beskjed om ansvaret ditt som du må lese.');
-                    return;
+                    return false;
                 }
                 navigate(hovedsideRoute());
+                return true;
             }}
             feilmeldinger={alleFeil}
         >

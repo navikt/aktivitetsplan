@@ -16,7 +16,7 @@ interface Props {
     avhengigheter?: Avhengighet[] | Avhengighet;
     minstEnAvhengighet?: boolean;
     contentClass?: string;
-    onRequestClose?(): void;
+    onRequestClose?(): boolean;
     tilbakeLenke?: { tekst: string; onTilbakeKlikk: MouseEventHandler };
 }
 
@@ -37,15 +37,14 @@ const Modal = (props: Props) => {
 
     const closeFuncOrDefault = () => {
         if (onRequestClose) {
-            onRequestClose();
-            return;
+            return onRequestClose();
         }
-
         navigate(hovedsideRoute());
+        return true;
     };
 
     return (
-        <AkselModal open onClose={closeFuncOrDefault} className="lg:w-120" aria-labelledby="modal-heading">
+        <AkselModal open onBeforeClose={closeFuncOrDefault} className="lg:w-120" aria-labelledby="modal-heading">
             <AkselModal.Header closeButton={true}>
                 <div className="space-y-2">
                     <Heading id="modal-heading" size="large">

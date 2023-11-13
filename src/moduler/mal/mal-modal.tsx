@@ -6,7 +6,7 @@ import { selectHentMalListeFeil } from '../feilmelding/feil-selector';
 
 interface Props {
     children: React.ReactNode;
-    onRequestClosed: () => void;
+    onRequestClosed: () => boolean;
     heading: string;
 }
 
