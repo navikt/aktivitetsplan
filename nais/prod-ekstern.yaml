@@ -43,8 +43,6 @@ spec:
     outbound:
       rules:
         - application: pto-proxy
-        - application: poao-unleash
-          namespace: poao
       external:
         - host: navnob2c.b2clogin.com
         - host: veilarbmalverk.prod-fss-pub.nais.io
