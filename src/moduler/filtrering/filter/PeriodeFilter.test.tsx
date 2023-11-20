@@ -49,7 +49,13 @@ const arenaAktivitetUtenforPeriode = {
     ...arenaMockAktiviteter[0],
     tittel: 'Aktivitet utenfor perioder',
     id: 'ARENATA33',
-    opprettetDato: '2018-01-02T10:46:10.971+01:00', // Utenfor alle periodene
+    opprettetDato: '2018-01-02T10:46:10.971+01:00', // I mellom periodene
+};
+const arenaAktivitetForOppfolging = {
+    ...arenaMockAktiviteter[0],
+    tittel: 'Aktivitet før all oppfolging',
+    id: 'ARENATA44',
+    opprettetDato: '2017-01-01T10:46:10.971+01:00', // Før alle periodene
 };
 const veilarbAktivitet = {
     ...mockTestAktiviteter[0],
@@ -150,6 +156,16 @@ describe('PeriodeFilter.tsx', () => {
             });
             const { getByText } = render(<WrappedHovedside store={store} />);
             getByText(arenaAktivitetUtenforPeriode.tittel);
+        });
+        it('skal ikke vise aktivitet endret før oppfølging i noen av periodene', async () => {
+            const store = configureStore({
+                reducer,
+                preloadedState: initialStore,
+            });
+            const { queryByText } = render(<WrappedHovedside store={store} />);
+            expect(queryByText(arenaAktivitetForOppfolging.tittel)).not.toBeTruthy();
+            await userEvent.selectOptions(screen.getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
+            expect(queryByText(arenaAktivitetForOppfolging.tittel)).not.toBeTruthy();
         });
         describe('datoErIPeriode-filter', () => {
             const gammelOpprettetDato = gammelArenaAktivitet.opprettetDato;
