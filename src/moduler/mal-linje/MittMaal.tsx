@@ -22,7 +22,7 @@ import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { ReactComponent as MaalIkon } from './Aktivitetsplan_maal.svg';
+import MaalIkon from './Aktivitetsplan_maal.svg?react';
 
 interface MalTextProps {
     mal?: string;
