@@ -1,4 +1,5 @@
 import { RootState } from '../../../store';
+import { createSelector } from 'reselect';
 
 const selectVersjonerSlice = (state: RootState) => state.data.versjoner;
 
@@ -6,7 +7,7 @@ const selectVersjonerData = (state: RootState) => selectVersjonerSlice(state).da
 
 export const selectVersjonerStatus = (state: RootState) => selectVersjonerSlice(state).status;
 
-export const selectSorterteVersjoner = (state: RootState) => {
-    const versjoner = [...selectVersjonerData(state)];
+export const selectSorterteVersjoner = createSelector(selectVersjonerData, (readOnlyVersjoner) => {
+    const versjoner = [...readOnlyVersjoner];
     return versjoner.sort((a, b) => b.endretDato.localeCompare(a.endretDato));
-};
+});

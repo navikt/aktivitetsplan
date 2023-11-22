@@ -67,24 +67,28 @@ export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
             return await Api.settAktivitetTilAvtalt(
                 arenaAktivitet.id,
                 arenaAktivitet.versjon.toString(),
-                forhaandsorientering
+                forhaandsorientering,
             );
         }
-    }
+    },
 );
 
 export const markerForhaandsorienteringSomLestArenaAktivitet = createAsyncThunk(
     `${arenaAktivitetSlice.name}/fho/lest`,
     async (arenaAktivitet: ArenaAktivitet) => {
-        if (erArenaId((arenaAktivitet.id))) {
+        if (erArenaId(arenaAktivitet.id)) {
             return await Api.markerForhaandsorienteringSomLestArenaAktivitet(arenaAktivitet.id);
         } else {
-            return await Api.markerForhaandsorienteringSomLest(
+            const oppdatertVeilarbAktivitet = await Api.markerForhaandsorienteringSomLest(
                 arenaAktivitet.id,
-                arenaAktivitet.versjon.toString()
-            )
+                arenaAktivitet.versjon.toString(),
+            );
+            return {
+                ...arenaAktivitet,
+                forhaandsorientering: oppdatertVeilarbAktivitet.forhaandsorientering,
+            };
         }
-    }
+    },
 );
 
 export default arenaAktivitetSlice.reducer;

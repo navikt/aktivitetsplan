@@ -18,6 +18,21 @@ import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-slice';
 import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
+import { createSelector } from 'reselect';
+
+const selectAvhengigheter = createSelector(
+    selectOppfolgingStatus,
+    selectAktivitetStatus,
+    (oppfolginsStatus, aktiviteterStatus) => {
+        return [
+            oppfolginsStatus,
+            // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
+            // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik
+            // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
+            aktiviteterStatus,
+        ];
+    },
+);
 
 const AktivitetvisningContainer = () => {
     const { id } = useParams<{ id: string }>();
@@ -27,7 +42,7 @@ const AktivitetvisningContainer = () => {
 
     const erVeileder = useErVeileder();
     const valgtAktivitet = useSelector((state: RootState) =>
-        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
     );
 
     const aktivitetDataStatus = useSelector((state: RootState) => {
@@ -40,13 +55,7 @@ const AktivitetvisningContainer = () => {
 
     const laster = aktivitetDataStatus !== Status.OK;
 
-    const avhengigheter = useSelector((state: RootState) => [
-        selectOppfolgingStatus(state),
-        // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
-        // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik
-        // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
-        aktivitetDataStatus,
-    ]);
+    const avhengigheter = useSelector(selectAvhengigheter);
 
     const tillatEndring = kanEndreAktivitetDetaljer(valgtAktivitet as VeilarbAktivitet, erVeileder);
     const underOppfolging = useSelector(selectErUnderOppfolging);

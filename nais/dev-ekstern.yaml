@@ -42,8 +42,6 @@ spec:
     outbound:
       rules:
         - application: pto-proxy
-        - application: poao-unleash
-          namespace: poao
       external:
         - host: navtestb2c.b2clogin.com
         - host: veilarbdialog.dev-fss-pub.nais.io

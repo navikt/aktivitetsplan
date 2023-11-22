@@ -65,6 +65,7 @@ export const enStillingFraNavAktivitet = ({
             ...enStillingFraNavData,
             soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
         },
+        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
     };
 };
 export const jaCvKanDeles = {

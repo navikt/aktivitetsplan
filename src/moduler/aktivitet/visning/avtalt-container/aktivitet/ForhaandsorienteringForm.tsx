@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { Alert, Checkbox, Detail } from '@navikt/ds-react';
+import { Checkbox, Detail } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -9,11 +9,7 @@ import { Status } from '../../../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
-import {
-    EksternAktivitet,
-    EksternAktivitetType,
-    isEksternAktivitet,
-} from '../../../../../datatypes/internAktivitetTypes';
+import { EksternAktivitet, isEksternAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
 import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
@@ -90,9 +86,7 @@ const ForhaandsorienteringForm = (props: Props) => {
         arenaAktivitetRequestStatus === Status.RELOADING ||
         arenaAktivitetRequestStatus === Status.PENDING;
 
-    const isGammelArenaAktivitet = isEksternAktivitet(aktivitet)
-        ? [EksternAktivitetType.ARENA_TILTAK_TYPE].includes(aktivitet.eksternAktivitet.type)
-        : false;
+    const erEksternAktivitet = isEksternAktivitet(aktivitet);
 
     return (
         <form
@@ -105,7 +99,7 @@ const ForhaandsorienteringForm = (props: Props) => {
                 </Checkbox>
                 <Detail>FOR NAV-ANSATT</Detail>
             </div>
-            {isGammelArenaAktivitet || isArena ? (
+            {erEksternAktivitet || isArena ? (
                 <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</p>
             ) : null}
             {showForm ? (

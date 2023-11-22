@@ -10,7 +10,7 @@ import {
 } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
-import { ReactComponent as ObsSVG } from './obs.svg';
+import ObsSVG from './obs.svg?react';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     if (aktivitet.status === AktivitetStatus.FULLFOERT) {

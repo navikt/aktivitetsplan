@@ -51,9 +51,17 @@ const Endringstekst = (props: Props) => {
         case FellesTransaksjonsTyper.DETALJER_ENDRET:
             return <>{brukeravhengigTekst} endret detaljer på aktiviteten</>;
         case FellesTransaksjonsTyper.AVTALT:
-            return <>{brukeravhengigTekst} merket aktiviteten som "Avtalt med NAV"</>;
+            if (forrigeAktivitet?.avtalt) {
+                return <>{brukeravhengigTekst} sendte forhåndsorientering </>;
+            } else {
+                return <>{brukeravhengigTekst} merket aktiviteten som "Avtalt med NAV"</>;
+            }
         case FellesTransaksjonsTyper.OPPRETTET:
-            return <>{brukeravhengigTekst} opprettet aktiviteten</>;
+            if (aktivitet.avtalt) {
+                return <>{brukeravhengigTekst} opprettet aktiviteten. Den er automatisk merket som "Avtalt med NAV" </>;
+            } else {
+                return <>{brukeravhengigTekst} opprettet aktiviteten</>;
+            }
         case FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST: {
             const sittEllerDitt = erBruker ? 'ditt' : 'sitt';
             return (
@@ -64,7 +72,7 @@ const Endringstekst = (props: Props) => {
         }
         case FellesTransaksjonsTyper.AVTALT_DATO_ENDRET: {
             const fraDatoString = formaterDatoKortManed(
-                forrigeAktivitet?.tilDato ? forrigeAktivitet.tilDato : 'ingen dato'
+                forrigeAktivitet?.tilDato ? forrigeAktivitet.tilDato : 'ingen dato',
             );
             const tilDatoString = formaterDatoKortManed(aktivitet.tilDato);
             return (

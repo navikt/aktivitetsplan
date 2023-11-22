@@ -1,0 +1,257 @@
+type Query {
+    perioder(fnr: String!): [OppfolgingsPeriode]
+}
+
+type OppfolgingsPeriode {
+    id: String
+    aktiviteter: [AktivitetDTO]
+}
+
+type AktivitetDTO {
+    id: String
+    funksjonellId: String
+    versjon: String
+
+    tittel: String
+    beskrivelse: String
+    lenke: String
+    type: AktivitetTypeDTO
+    status: AktivitetStatus
+    fraDato: String
+    tilDato: String
+    opprettetDato: String
+    endretDato: String
+    endretAv: String
+    historisk: Boolean
+    avsluttetKommentar: String
+    avtalt: Boolean
+    forhaandsorientering: ForhaandsorienteringDTO
+    endretAvType: String
+    transaksjonsType: AktivitetTransaksjonsType
+    malid: String
+    oppfolgingsperiodeId: String
+
+    #   stillingaktivitet
+    etikett: EtikettTypeDTO
+    kontaktperson: String
+    arbeidsgiver: String
+    arbeidssted: String
+    stillingsTittel: String
+
+    #    // egenaktivitet
+    hensikt: String
+    oppfolging: String
+
+    #    //sokeAvtaleAktivitet
+    antallStillingerSokes: Int
+    antallStillingerIUken: Int
+    avtaleOppfolging: String
+
+    #    //iJobbAktivitet
+    jobbStatus: JobbStatusTypeDTO
+    ansettelsesforhold: String
+    arbeidstid: String
+
+    #    //behandlingAktivitet
+    behandlingType: String
+    behandlingSted: String
+    effekt: String
+    behandlingOppfolging: String
+
+    #    //møte
+    adresse: String
+    forberedelser: String
+    kanal: KanalDTO
+    referat: String
+    erReferatPublisert: Boolean
+
+    stillingFraNavData: StillingFraNavData
+
+    eksternAktivitet: EksternAktivitetDTO
+}
+
+type EksternAktivitetDTO {
+    type: AktivitetskortType
+    oppgave: Oppgaver
+    handlinger: [LenkeSeksjon]
+    detaljer: [Attributt]
+    etiketter: [Etikett]
+}
+
+type Oppgaver {
+    ekstern: Oppgave
+    intern: Oppgave
+}
+
+type Oppgave {
+    tekst: String
+    subtekst: String
+    url: String
+}
+
+type LenkeSeksjon {
+    tekst: String
+    subtekst: String
+    url: String
+    lenkeType: LenkeType
+}
+
+enum LenkeType {
+    EKSTERN INTERN FELLES
+}
+
+type Attributt {
+    label: String
+    verdi: String
+}
+
+type Etikett {
+    tekst: String
+    sentiment: Sentiment
+    kode: String
+}
+
+enum Sentiment {
+    POSITIVE
+    NEGATIVE
+    NEUTRAL
+}
+
+enum AktivitetskortType {
+    MIDLERTIDIG_LONNSTILSKUDD
+    VARIG_LONNSTILSKUDD
+    ARENA_TILTAK
+    INDOPPFAG
+    ARBFORB
+    AVKLARAG
+    VASV
+    ARBRRHDAG
+    DIGIOPPARB
+    JOBBK
+    GRUPPEAMO
+    GRUFAGYRKE
+}
+
+
+type StillingFraNavData {
+    cvKanDelesData: CvKanDelesData
+    soknadsfrist: String
+    svarfrist: String
+    arbeidsgiver: String
+    bestillingsId: String
+    stillingsId: String
+    arbeidssted: String
+    kontaktpersonData: KontaktpersonData
+    soknadsstatus: Soknadsstatus
+    livslopsStatus: LivslopsStatus
+    varselId: String
+    detaljer: String
+}
+
+enum LivslopsStatus {
+    PROVER_VARSLING HAR_VARSLET KAN_IKKE_VARSLE HAR_SVART AVBRUTT_AV_SYSTEM AVBRUTT_AV_BRUKER
+}
+
+enum Soknadsstatus {
+    VENTER
+    CV_DELT
+    SKAL_PAA_INTERVJU
+    JOBBTILBUD
+    AVSLAG
+    IKKE_FATT_JOBBEN
+    FATT_JOBBEN
+}
+
+type KontaktpersonData {
+    navn: String
+    tittel: String
+    mobil: String
+}
+
+type CvKanDelesData {
+    kanDeles: Boolean
+    endretTidspunkt: String
+    endretAv: String
+    endretAvType: Innsender
+    avtaltDato: String
+}
+
+enum Innsender {
+    BRUKER
+    ARBEIDSGIVER
+    TILTAKSARRANGOER
+    NAV
+    SYSTEM
+    ARENAIDENT
+}
+
+
+type ForhaandsorienteringDTO {
+    id: String
+    type: Type
+    tekst: String
+    lestDato: String
+}
+
+enum Type {
+    send_forhandsorientering
+    send_paragraf_11_9
+    ikke_send_forhandsorientering
+}
+
+enum AktivitetTypeDTO {
+    EGEN
+    STILLING
+    SOKEAVTALE
+    IJOBB
+    BEHANDLING
+    MOTE
+    SAMTALEREFERAT
+    STILLING_FRA_NAV
+    EKSTERNAKTIVITET
+}
+
+enum KanalDTO {
+    OPPMOTE
+    TELEFON
+    INTERNETT
+}
+
+enum JobbStatusTypeDTO {
+    HELTID
+    DELTID
+}
+
+enum EtikettTypeDTO {
+    SOKNAD_SENDT
+    INNKALT_TIL_INTERVJU
+    AVSLAG
+    JOBBTILBUD
+}
+
+enum AktivitetStatus {
+    PLANLAGT
+    GJENNOMFORES
+    FULLFORT
+    BRUKER_ER_INTERESSERT
+    AVBRUTT
+}
+
+enum AktivitetTransaksjonsType {
+    OPPRETTET
+    STATUS_ENDRET
+    DETALJER_ENDRET
+    AVTALT
+    AVTALT_DATO_ENDRET
+    ETIKETT_ENDRET
+    MOTE_TID_OG_STED_ENDRET
+    REFERAT_OPPRETTET
+    REFERAT_ENDRET
+    REFERAT_PUBLISERT
+    BLE_HISTORISK
+    FORHAANDSORIENTERING_LEST
+    DEL_CV_SVART
+    SOKNADSSTATUS_ENDRET
+    IKKE_FATT_JOBBEN
+    FATT_JOBBEN
+}

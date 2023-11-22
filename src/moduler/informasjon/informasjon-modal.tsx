@@ -2,20 +2,17 @@ import { Accordion, BodyShort, Link } from '@navikt/ds-react';
 import PT from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import * as Api from '../../api/lestAPI';
 import Modal from '../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../felles-komponenter/modal/ModalContainer';
 import * as AppPT from '../../proptypes';
-import { useRoutes } from '../../routes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon } from '../lest/lest-selector';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { BrukePlanenPanel } from './brukePlanenPanel';
 import { OkonomiskStotte } from './okonomiskStottePanel';
 import { RettigheterPanel } from './rettigheterPanel';
-import Video from './Video';
 import { DialogPanel } from './dialogPanel';
 import IntroduksjonVideo from './Video/IntroduksjonVideo';
 
@@ -28,8 +25,6 @@ interface Props {
 }
 
 const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
-    const navigate = useNavigate();
-    const { hovedsideRoute } = useRoutes();
     useEffect(() => {
         if (erBruker && underOppfolging && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)) {
             Api.postLest(INFORMASJON_MODAL_VERSJON);
@@ -37,13 +32,7 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
     }, []);
 
     return (
-        <Modal
-            className="informasjon-visning"
-            onRequestClose={() => {
-                navigate(hovedsideRoute());
-            }}
-            heading="Hva er aktivitetsplanen?"
-        >
+        <Modal className="informasjon-visning" heading="Hva er aktivitetsplanen?">
             <ModalContainer className="max-w-2xl">
                 <BodyShort className="pb-4">
                     I aktivitetsplanen holder du oversikt over det du gjør for å komme i jobb eller annen aktivitet.
