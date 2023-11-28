@@ -138,11 +138,15 @@ interface OppfolgingsPerioder {
     id: string;
     aktiviteter: VeilarbAktivitet[];
 }
+
+interface GraphqlError {
+    message: string;
+}
 interface AktivitetsplanResponse {
     data: {
         perioder: OppfolgingsPerioder[];
     };
-    errors: unknown[];
+    errors: GraphqlError[];
 }
 
 export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
@@ -157,5 +161,13 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         body: JSON.stringify(queryBody(fnr)),
     })
         .then(sjekkStatuskode)
-        .then(toJson);
+        .then(toJson)
+        .then(sjekkGraphqlFeil);
+};
+
+const sjekkGraphqlFeil = (response: AktivitetsplanResponse): Promise<AktivitetsplanResponse> => {
+    if (!response?.data?.perioder && response?.errors.length != 0) {
+        return Promise.reject('Kunne ikke hente aktiviteter');
+    }
+    return Promise.resolve(response);
 };
