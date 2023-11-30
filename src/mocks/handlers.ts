@@ -40,7 +40,7 @@ import {
     oppdateringKunFeiler,
     oppfFeilet,
 } from './demo/localStorage';
-import { failOrGetResponse, jsonResponse } from './utils';
+import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -88,7 +88,7 @@ export const handlers = [
     ),
     rest.post(
         '/veilarbaktivitet/graphql',
-        failOrGetResponse(getAktivitetFeiler, () => {
+        failOrGrahpqlResponse(getAktivitetFeiler, () => {
             const perioder = Array.from(
                 new Set(aktiviteterData.aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)),
             );
