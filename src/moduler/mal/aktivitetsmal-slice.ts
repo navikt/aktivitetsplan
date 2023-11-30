@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Api from '../../api/oppfolgingAPI';
 import { Status } from '../../createGenericSlice';
 import { Mal } from '../../datatypes/oppfolgingTypes';
+import { getFnrIfVeileder } from '../../utils/displayedUserSlice';
+import { RootState } from '../../reducer';
 
 // TODO merge aktivitetsmal og malliste
 
@@ -37,12 +39,14 @@ const malSlice = createSlice({
     },
 });
 
-export const hentMal = createAsyncThunk(`${malSlice.name}/fetchMal`, async () => {
-    return await Api.fetchMal();
+export const hentMal = createAsyncThunk(`${malSlice.name}/fetchMal`, async (_, thunkAPI) => {
+    const fnr = getFnrIfVeileder(thunkAPI.getState() as RootState);
+    return await Api.fetchMal(fnr);
 });
 
-export const oppdaterMal = createAsyncThunk(`${malSlice.name}/oppdaterMal`, async (mal: { mal: string }) => {
-    return await Api.lagreMal(mal);
+export const oppdaterMal = createAsyncThunk(`${malSlice.name}/oppdaterMal`, async (mal: { mal: string }, thunkAPI) => {
+    const fnr = getFnrIfVeileder(thunkAPI.getState() as RootState);
+    return await Api.lagreMal(mal, fnr);
 });
 
 export default malSlice.reducer;

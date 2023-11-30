@@ -1,19 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import reducer from './reducer';
+import reducer, { RootState, stateWithFnr } from './reducer';
 import { EnhancedStore } from '@reduxjs/toolkit/src/configureStore';
 
 let store: EnhancedStore | null = null;
-const createStore = (preloadedState: any = undefined) => {
+const createStore = (preloadedState: any = undefined, fnr: string | undefined) => {
     const newStore = configureStore({
         reducer: reducer,
-        preloadedState,
+        preloadedState: stateWithFnr(preloadedState, fnr),
     });
     store = newStore;
     return newStore;
 };
-
-type Store = ReturnType<typeof createStore>;
 
 const key = 'aktivitetsplan-state';
 export const getPreloadedStateFromSessionStorage = (fnr: string | undefined): RootState | undefined => {
@@ -41,7 +39,6 @@ export const saveReduxStateToSessionStorage = () => {
 };
 export const clearReduxCache = () => sessionStorage.removeItem(key);
 
-export type RootState = ReturnType<Store['getState']>;
-export type Dispatch = Store['dispatch'];
+export type Dispatch = ReturnType<typeof createStore>['dispatch'];
 
 export default createStore;

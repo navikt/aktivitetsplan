@@ -13,6 +13,8 @@ import {
     publiserReferat,
     settAktivitetTilAvtalt,
 } from '../aktivitet-actions';
+import { getFnrIfVeileder } from '../../../utils/displayedUserSlice';
+import { RootState } from '../../../reducer';
 
 interface AktivitetVersjonerState {
     data: VeilarbAktivitet[];
@@ -52,23 +54,24 @@ const aktivitetVersjonerSlice = createSlice({
                 publiserReferat.fulfilled,
                 markerForhaandsorienteringSomLest.fulfilled,
                 settAktivitetTilAvtalt.fulfilled,
-                flyttAktivitet.fulfilled
+                flyttAktivitet.fulfilled,
             ),
             (state, action) => {
                 if (state.status === Status.NOT_STARTED) {
                     return state;
                 }
                 return { ...state, data: [action.payload, ...state.data] };
-            }
+            },
         );
     },
 });
 
 export const hentVersjonerForAktivitet = createAsyncThunk(
     `${aktivitetVersjonerSlice.name}/fetchVersjonerForAktivitet`,
-    async (aktivitet: VeilarbAktivitet) => {
-        return await Api.hentVersjonerTilAktivitet(aktivitet);
-    }
+    async (aktivitet: VeilarbAktivitet, thunkAPI) => {
+        const fnr = getFnrIfVeileder(thunkAPI.getState() as RootState);
+        return await Api.hentVersjonerTilAktivitet(aktivitet, fnr);
+    },
 );
 
 export const { fjernVersjoner } = aktivitetVersjonerSlice.actions;

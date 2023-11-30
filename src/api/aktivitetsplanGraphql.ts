@@ -145,8 +145,7 @@ interface AktivitetsplanResponse {
     errors: unknown[];
 }
 
-export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
-    const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';
+export const hentAktiviteterGraphql = async (fnr: string): Promise<AktivitetsplanResponse> => {
     return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
         ...DEFAULT_CONFIG,
         method: 'POST',

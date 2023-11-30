@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Api from '../../api/dialogAPI';
 import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
+import { getFnrIfVeileder } from '../../utils/displayedUserSlice';
+import { RootState } from '../../reducer';
 
 interface DialogState {
     data: Dialog[];
@@ -33,7 +35,8 @@ const dialogSlice = createSlice({
 });
 
 export const hentDialoger = createAsyncThunk(`${dialogSlice.name}/fetchDialoger`, async (_, thunkAPI) => {
-    return await Api.fetchDialoger();
+    const fnr = getFnrIfVeileder(thunkAPI.getState() as RootState);
+    return await Api.fetchDialoger(fnr);
 });
 
 export default dialogSlice.reducer;

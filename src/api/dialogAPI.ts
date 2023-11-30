@@ -1,16 +1,12 @@
-import { Dialog, Eskaleringsvarsel, NyHenvendelse, SistOppdatert } from '../datatypes/dialogTypes';
+import { Dialog, Eskaleringsvarsel, SistOppdatert } from '../datatypes/dialogTypes';
 import { DIALOG_BASE_URL } from '../environment';
-import { fetchToJson, postAsJson, putAsJson } from './utils';
+import { fetchToJson } from './utils';
 
-export const fetchDialoger = (): Promise<Dialog[]> => fetchToJson(`${DIALOG_BASE_URL}/dialog`);
+export const fetchDialoger = (fnr: string | undefined): Promise<Dialog[]> =>
+    fetchToJson(fnr, `${DIALOG_BASE_URL}/dialog`);
 
-export const fetchSistOppdatert = (): Promise<SistOppdatert> => fetchToJson(`${DIALOG_BASE_URL}/dialog/sistOppdatert`);
+export const fetchSistOppdatert = (fnr: string | undefined): Promise<SistOppdatert> =>
+    fetchToJson(fnr, `${DIALOG_BASE_URL}/dialog/sistOppdatert`);
 
-export const postNyHenvendelse = (henvendelse: NyHenvendelse): Promise<Dialog> =>
-    postAsJson(`${DIALOG_BASE_URL}/dialog`, henvendelse);
-
-export const postDialogLest = (dialogId: string): Promise<Dialog> =>
-    putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
-
-export const fetchEskaleringsvarsel = (): Promise<Eskaleringsvarsel> =>
-    fetchToJson(`${DIALOG_BASE_URL}/eskaleringsvarsel/gjeldende`);
+export const fetchEskaleringsvarsel = (fnr: string | undefined): Promise<Eskaleringsvarsel> =>
+    fetchToJson(fnr, `${DIALOG_BASE_URL}/eskaleringsvarsel/gjeldende`);

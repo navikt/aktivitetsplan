@@ -5,7 +5,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { ER_INTERN_FLATE } from './constant';
 import FeatureToggle from './moduler/feature/FeatureToggle';
-import createStore, { RootState } from './store';
+import createStore from './store';
+import { RootState } from './reducer';
 
 interface Props {
     children: React.ReactNode;
@@ -35,7 +36,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr, preloadedState }: Props) 
     }, []);
 
     const store = useMemo(() => {
-        return createStore(preloadedState);
+        return createStore(preloadedState, fnr);
     }, [fnr]);
 
     return (

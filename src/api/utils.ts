@@ -1,5 +1,4 @@
 import { Status } from '../createGenericSlice';
-import { LocalStorageElement, hentFraSessionStorage } from '../mocks/demo/localStorage';
 
 /* eslint-env browser */
 
@@ -67,22 +66,25 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
     return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
+export function fetchToJson(fnr: string | undefined, url: string, config: RequestInit = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
-
-    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
     let fetchUrl = url;
     if (fnr) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
     }
-
     return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
 type HttpMethod = 'post' | 'put' | 'get' | 'patch';
-function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, config: RequestInit) {
+function methodToJson(
+    fnr: string | undefined,
+    method: HttpMethod,
+    url: string,
+    data: Record<any, any>,
+    config: RequestInit,
+) {
     // prettier-ignore
-    return fetchToJson(url, {
+    return fetchToJson(fnr, url, {
         ...{
             method,
             headers: defaultHeaders,
@@ -92,10 +94,10 @@ function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, c
     });
 }
 
-export function postAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('post', url, data, config);
+export function postAsJson(fnr: string | undefined, url: string, data = {}, config = {}) {
+    return methodToJson(fnr, 'post', url, data, config);
 }
 
-export function putAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('put', url, data, config);
+export function putAsJson(fnr: string | undefined, url: string, data = {}, config = {}) {
+    return methodToJson(fnr, 'put', url, data, config);
 }

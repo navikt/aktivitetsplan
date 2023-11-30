@@ -1,4 +1,5 @@
 import { AuthInfoResponse } from '../datatypes/types';
 import { fetchToJson } from './utils';
 
-export const fetchAuthInfo = (): Promise<AuthInfoResponse> => fetchToJson('/auth/info');
+// Fnr not required for this request
+export const fetchAuthInfo = (): Promise<AuthInfoResponse> => fetchToJson(undefined, '/auth/info');

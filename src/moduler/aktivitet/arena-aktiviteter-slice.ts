@@ -5,6 +5,8 @@ import { Status } from '../../createGenericSlice';
 import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
+import { getFnrIfVeileder } from '../../utils/displayedUserSlice';
+import { RootState } from '../../reducer';
 
 interface ArenaAktivitetState {
     data: ArenaAktivitet[];
@@ -46,28 +48,37 @@ const arenaAktivitetSlice = createSlice({
     },
 });
 
-export const hentArenaAktiviteter = createAsyncThunk(`${arenaAktivitetSlice.name}/fetchArenaAktiviteter`, async () => {
-    return await Api.hentArenaAktiviteter();
-});
+export const hentArenaAktiviteter = createAsyncThunk(
+    `${arenaAktivitetSlice.name}/fetchArenaAktiviteter`,
+    async (_, thunkAPI) => {
+        const fnr = getFnrIfVeileder(thunkAPI.getState() as RootState);
+        return await Api.hentArenaAktiviteter(fnr);
+    },
+);
 
 const validArenaPrefixes = ['TA', 'UA', 'GA', 'ARENATA', 'ARENAUA', 'ARENAGA'];
 const erArenaId = (id: string) => validArenaPrefixes.some((prefix) => id.startsWith(prefix));
 export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
     `${arenaAktivitetSlice.name}/oppdater`,
-    async ({
-        arenaAktivitet,
-        forhaandsorientering,
-    }: {
-        arenaAktivitet: ArenaAktivitet;
-        forhaandsorientering: Forhaandsorientering;
-    }) => {
+    async (
+        {
+            arenaAktivitet,
+            forhaandsorientering,
+        }: {
+            arenaAktivitet: ArenaAktivitet;
+            forhaandsorientering: Forhaandsorientering;
+        },
+        thunkApi,
+    ) => {
+        const fnr = getFnrIfVeileder(thunkApi.getState() as RootState);
         if (erArenaId(arenaAktivitet.id)) {
-            return await Api.sendForhaandsorienteringArenaAktivitet(arenaAktivitet.id, forhaandsorientering);
+            return await Api.sendForhaandsorienteringArenaAktivitet(arenaAktivitet.id, forhaandsorientering, fnr);
         } else {
             return await Api.settAktivitetTilAvtalt(
                 arenaAktivitet.id,
                 arenaAktivitet.versjon.toString(),
                 forhaandsorientering,
+                fnr,
             );
         }
     },
@@ -75,13 +86,15 @@ export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
 
 export const markerForhaandsorienteringSomLestArenaAktivitet = createAsyncThunk(
     `${arenaAktivitetSlice.name}/fho/lest`,
-    async (arenaAktivitet: ArenaAktivitet) => {
+    async (arenaAktivitet: ArenaAktivitet, thunkAPI) => {
+        const fnr = getFnrIfVeileder(thunkAPI.getState() as RootState);
         if (erArenaId(arenaAktivitet.id)) {
-            return await Api.markerForhaandsorienteringSomLestArenaAktivitet(arenaAktivitet.id);
+            return await Api.markerForhaandsorienteringSomLestArenaAktivitet(arenaAktivitet.id, fnr);
         } else {
             const oppdatertVeilarbAktivitet = await Api.markerForhaandsorienteringSomLest(
                 arenaAktivitet.id,
                 arenaAktivitet.versjon.toString(),
+                fnr,
             );
             return {
                 ...arenaAktivitet,
