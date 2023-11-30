@@ -21,7 +21,7 @@ export enum LocalStorageElement {
     TEST_DIALOGER = 'test_dialoger',
     INGEN_MAL = 'ingen_mal',
     ULESTE_DIALOGER = 'uleste_dialoger',
-    FNR = 'fnr',
+    FNR = 'aktivitetsplan_fnr',
 }
 
 export const settLocalStorage = (key: string, value: string | boolean) => {
@@ -30,6 +30,13 @@ export const settLocalStorage = (key: string, value: string | boolean) => {
 
 export const hentFraLocalStorage = (key: string) => {
     return window.localStorage.getItem(key);
+};
+
+export const hentFraSessionStorage = (key: string) => {
+    return window.localStorage.getItem(key);
+};
+export const settSessionStorage = (key: string, value: string | boolean) => {
+    window.sessionStorage.setItem(key, String(value));
 };
 
 const erSatt = (localStorageElement: LocalStorageElement) => hentFraLocalStorage(localStorageElement) === 'true';
