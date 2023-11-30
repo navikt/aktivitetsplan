@@ -21,7 +21,7 @@ export enum LocalStorageElement {
     TEST_DIALOGER = 'test_dialoger',
     INGEN_MAL = 'ingen_mal',
     ULESTE_DIALOGER = 'uleste_dialoger',
-    FNR = 'fnr',
+    FNR = 'aktivitetsplan_fnr',
 }
 
 export const settLocalStorage = (key: string, value: string | boolean) => {
