@@ -14,6 +14,7 @@ import { selectLestInformasjon, selectLestStatus } from '../lest/lest-selector';
 import { hentLest } from '../lest/lest-slice';
 import { selectErUnderOppfolging, selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
+import { useFnr } from '../../Provider';
 
 let erVist = false;
 function InformasjonsHenting() {
@@ -22,11 +23,13 @@ function InformasjonsHenting() {
     const lestInfo = useSelector(selectLestInformasjon, shallowEqual);
     const erBruker = useSelector(selectErBruker, shallowEqual);
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder, shallowEqual);
+    const fnr = useFnr();
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        fetchHarFlereAktorId();
+        // GET med side-effects, gjør oppslag på bruker i veilareboppfølging og oppdaterer en count
+        fetchHarFlereAktorId(fnr);
         if (underOppfolging) {
             dispatch(hentLest()).then((action) => {
                 if (isFulfilled(action)) {
