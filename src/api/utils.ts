@@ -1,5 +1,5 @@
 import { Status } from '../createGenericSlice';
-import { LocalStorageElement, hentFraLocalStorage } from '../mocks/demo/localStorage';
+import { LocalStorageElement, hentFraSessionStorage } from '../mocks/demo/localStorage';
 
 /* eslint-env browser */
 
@@ -70,7 +70,7 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
 export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 
-    const fnr = hentFraLocalStorage(LocalStorageElement.FNR);
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
     let fetchUrl = url;
     if (fnr) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;

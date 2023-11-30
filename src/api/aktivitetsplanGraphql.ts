@@ -1,6 +1,6 @@
 import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
 import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
-import { hentFraLocalStorage, LocalStorageElement } from '../mocks/demo/localStorage';
+import { hentFraLocalStorage, hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 
 const query: string = `
@@ -150,7 +150,7 @@ interface AktivitetsplanResponse {
 }
 
 export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
-    const fnr = hentFraLocalStorage(LocalStorageElement.FNR) || '';
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';
     return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
         ...DEFAULT_CONFIG,
         method: 'POST',
