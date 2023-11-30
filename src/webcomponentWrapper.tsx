@@ -4,17 +4,12 @@ import { Routes } from 'react-router-dom';
 
 import App from './app';
 import lessCss from './index.less?inline';
-import { LocalStorageElement, settSessionStorage } from './mocks/demo/localStorage';
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
 import { createRoot, Root } from 'react-dom/client';
-import {
-    clearReduxCache,
-    getPreloadedStateFromSessionStorage,
-    RootState,
-    saveReduxStateToSessionStorage,
-} from './store';
+import { clearReduxCache, getPreloadedStateFromSessionStorage, saveReduxStateToSessionStorage } from './store';
+import { RootState } from './reducer';
 
 // Clear redux-cache from session storage on page load to make sure new data is fetched
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
@@ -44,7 +39,6 @@ export class DabAktivitetsplan extends HTMLElement {
         const fnr = this.getAttribute('data-fnr') ?? undefined;
         let preloadedState: RootState | undefined = undefined;
         if (fnr) {
-            settSessionStorage(LocalStorageElement.FNR, fnr);
             preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         this.root = createRoot(appRoot);
@@ -62,7 +56,6 @@ export class DabAktivitetsplan extends HTMLElement {
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         if (name === 'data-fnr' && this.setFnr) {
-            settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setFnr(newValue);
         }
     }
