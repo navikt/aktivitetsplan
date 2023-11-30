@@ -32,6 +32,13 @@ export const hentFraLocalStorage = (key: string) => {
     return window.localStorage.getItem(key);
 };
 
+export const hentFraSessionStorage = (key: string) => {
+    return window.localStorage.getItem(key);
+};
+export const settSessionStorage = (key: string, value: string | boolean) => {
+    window.sessionStorage.setItem(key, String(value));
+};
+
 const erSatt = (localStorageElement: LocalStorageElement) => hentFraLocalStorage(localStorageElement) === 'true';
 
 const erSkrudAv = (localStorageElement: LocalStorageElement) => hentFraLocalStorage(localStorageElement) === 'false';

@@ -4,7 +4,7 @@ import { Routes } from 'react-router-dom';
 
 import App from './app';
 import lessCss from './index.less?inline';
-import { LocalStorageElement, settLocalStorage } from './mocks/demo/localStorage';
+import { LocalStorageElement, settLocalStorage, settSessionStorage } from './mocks/demo/localStorage';
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
@@ -20,23 +20,11 @@ import {
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
 
-interface StorageEvent extends Event {
-    key: string;
-    newValue: string;
-    oldValue: string;
-}
-const onStorageChange = (initialFnr: string, setFnr: (fnr: string) => void) => (event: StorageEvent) => {
-    if (event.key === LocalStorageElement.FNR && initialFnr !== event.newValue && event?.newValue?.length === 11) {
-        setFnr(event.newValue);
-    }
-};
-
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     root: Root | undefined;
 
     disconnectedCallback() {
-        window.removeEventListener('storage', onStorageChange);
         saveReduxStateToSessionStorage();
         this.root?.unmount();
     }
@@ -56,8 +44,7 @@ export class DabAktivitetsplan extends HTMLElement {
         const fnr = this.getAttribute('data-fnr') ?? undefined;
         let preloadedState: RootState | undefined = undefined;
         if (fnr) {
-            window.addEventListener('storage', onStorageChange(fnr, this.setFnr));
-            settLocalStorage(LocalStorageElement.FNR, fnr);
+            settSessionStorage(LocalStorageElement.FNR, fnr);
             preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         this.root = createRoot(appRoot);
@@ -75,7 +62,7 @@ export class DabAktivitetsplan extends HTMLElement {
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         if (name === 'data-fnr' && this.setFnr) {
-            settLocalStorage(LocalStorageElement.FNR, newValue);
+            settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setFnr(newValue);
         }
     }
