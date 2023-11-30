@@ -33,7 +33,7 @@ export const hentFraLocalStorage = (key: string) => {
 };
 
 export const hentFraSessionStorage = (key: string) => {
-    return window.localStorage.getItem(key);
+    return window.sessionStorage.getItem(key);
 };
 export const settSessionStorage = (key: string, value: string | boolean) => {
     window.sessionStorage.setItem(key, String(value));
