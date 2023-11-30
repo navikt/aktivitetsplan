@@ -4,7 +4,7 @@ import { Routes } from 'react-router-dom';
 
 import App from './app';
 import lessCss from './index.less?inline';
-import { LocalStorageElement, settLocalStorage, settSessionStorage } from './mocks/demo/localStorage';
+import { LocalStorageElement, settSessionStorage } from './mocks/demo/localStorage';
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
