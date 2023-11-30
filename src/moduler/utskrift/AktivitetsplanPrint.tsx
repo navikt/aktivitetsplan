@@ -116,6 +116,7 @@ const AktivitetsplanPrint = () => {
         if (steps[stepIndex] === STEP_MELDING_FORM) {
             return (
                 <Modal
+                    closeOnBackdropClick
                     onClose={goBack}
                     open
                     header={{ heading: `Aktivitetsplan for ${bruker.fornavn}`, closeButton: true }}
