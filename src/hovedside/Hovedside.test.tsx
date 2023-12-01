@@ -12,13 +12,14 @@ import { handlers } from '../mocks/handlers';
 import { getErrorText } from '../moduler/feilmelding/Feilmelding';
 import { hentArenaAktiviteter } from '../moduler/aktivitet/arena-aktiviteter-slice';
 import { Status } from '../createGenericSlice';
+import { RootState } from '../store';
 
-const initialState = {
+const initialState: Partial<RootState> = {
     data: {
         ...emptyLoadedVeilederState.data,
         aktiviteter: {
             status: Status.NOT_STARTED,
-            data: [],
+            data: { perioder: [] },
         },
         arenaAktiviteter: {
             status: Status.NOT_STARTED,

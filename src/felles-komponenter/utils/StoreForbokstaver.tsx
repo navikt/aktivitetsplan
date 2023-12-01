@@ -4,8 +4,8 @@ import { storeForbokstaver } from '../../utils/utils';
 
 function StoreForbokstaver(props: Props) {
     const { tag, children } = props;
-
-    return React.createElement(tag ? tag : 'span', null, storeForbokstaver(children));
+    const arg = Array.isArray(children) ? children : [children];
+    return React.createElement(tag ? tag : 'span', null, storeForbokstaver(...arg));
 }
 
 interface Props {

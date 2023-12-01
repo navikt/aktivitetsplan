@@ -24,7 +24,7 @@ export interface AktivitetState {
     status: Status;
 }
 
-type PerioderMedAktiviteter = {
+export type PerioderMedAktiviteter = {
     id: string;
     aktiviteter: VeilarbAktivitet[];
 };
