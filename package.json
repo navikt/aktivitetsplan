@@ -10,7 +10,7 @@
     "build:dev-intern": "vite build --mode=dev-intern --base=https://cdn.nav.no/dab/aktivitetsplan-dev-intern/build/",
     "build:prod-ekstern": "vite build --mode=prod-ekstern",
     "build:prod-intern": "vite build --mode=prod-intern --base=https://cdn.nav.no/dab/aktivitetsplan-prod-intern/build/",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/aktivitetsplan/",
     "test": "vitest",
     "coverage": "vitest run --coverage",

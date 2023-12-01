@@ -10,7 +10,7 @@ describe('innholdslaster', () => {
         const { queryByText } = render(
             <Innholdslaster avhengigheter={[{ status: Status.PENDING as Status }]}>
                 <div>yay</div>
-            </Innholdslaster>
+            </Innholdslaster>,
         );
 
         expect(queryByText('yay')).toBeFalsy();
@@ -19,7 +19,7 @@ describe('innholdslaster', () => {
     it('Skal ikke rendre children hvis det har oppstått en feil på noen avhengigheter', () => {
         const innhold = <div>yay</div>;
         const { queryByText } = render(
-            <Innholdslaster avhengigheter={[{ status: Status.ERROR as Status }]}>{innhold}</Innholdslaster>
+            <Innholdslaster avhengigheter={[{ status: Status.ERROR as Status }]}>{innhold}</Innholdslaster>,
         );
 
         expect(queryByText('yay')).toBeFalsy();
@@ -28,16 +28,17 @@ describe('innholdslaster', () => {
     it('Skal rendre children hvis alle avhengigheter har blitt lastet', () => {
         const innhold = <div>yay</div>;
         const { getByText } = render(
-            <Innholdslaster avhengigheter={[{ status: Status.OK as Status }]}>{innhold}</Innholdslaster>
+            <Innholdslaster avhengigheter={[{ status: Status.OK as Status }]}>{innhold}</Innholdslaster>,
         );
         getByText('yay');
     });
 
     it('Skal rendre children som en funksjon, hvis det er en funksjon', () => {
-        const innhold = <div>yay</div>;
-        const renderDiv = () => innhold;
+        const RenderDiv: React.FunctionComponent = () => <div>yay</div>;
         const { getByText } = render(
-            <Innholdslaster avhengigheter={[{ status: Status.OK as Status }]}>{renderDiv}</Innholdslaster>
+            <Innholdslaster avhengigheter={[{ status: Status.OK as Status }]}>
+                <RenderDiv />
+            </Innholdslaster>,
         );
         getByText('yay');
     });
@@ -48,7 +49,7 @@ describe('innholdslaster', () => {
         const { queryByText } = render(
             <Innholdslaster avhengigheter={[{ status: Status.OK as Status }, { status: Status.ERROR as Status }]}>
                 {innhold}
-            </Innholdslaster>
+            </Innholdslaster>,
         );
 
         expect(queryByText('yay')).toBeFalsy();
@@ -66,7 +67,7 @@ describe('innholdslaster', () => {
                 ]}
             >
                 {innhold}
-            </Innholdslaster>
+            </Innholdslaster>,
         );
 
         expect(queryByText('yay')).toBeFalsy();
@@ -76,7 +77,7 @@ describe('innholdslaster', () => {
         const { queryByText } = render(
             <Innholdslaster avhengigheter={[null, undefined, { status: Status.OK as Status }]}>
                 <div>yay</div>
-            </Innholdslaster>
+            </Innholdslaster>,
         );
         expect(queryByText('yay')).toBeDefined();
     });

@@ -1,6 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React from 'react';
+import React, { Children, Component, ReactNode } from 'react';
 
 import { Status } from '../../createGenericSlice';
 
@@ -20,7 +20,7 @@ const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harSt
 export type Avhengighet = Status | { status?: Status } | null | undefined;
 export interface InnholdslasterProps {
     avhengigheter?: Avhengighet[] | Avhengighet;
-    children: React.ReactNode;
+    children: ReactNode;
     spinnerSize?: '3xlarge' | '2xlarge' | 'xlarge' | 'large' | 'medium' | 'small' | 'xsmall';
     className?: string;
     minstEn?: boolean;
@@ -40,7 +40,7 @@ export const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStat
         .map((element) => (element ? element : 'NOT_SETT'));
 };
 
-const Innholdslaster = (props: InnholdslasterProps) => {
+const Innholdslaster: React.FunctionComponent<InnholdslasterProps> = (props: InnholdslasterProps) => {
     const {
         avhengigheter,
         spinnerSize = '2xlarge',
@@ -60,12 +60,12 @@ const Innholdslaster = (props: InnholdslasterProps) => {
 
     if (visChildren) {
         if (typeof children === 'function') {
-            return children(avhengigheter, rest);
+            return (children as (a: Avhengighet | Avhengighet[], rest: object) => ReactNode)(avhengigheter, rest);
         }
         if (Array.isArray(children)) {
-            return children;
+            return children as ReactNode[];
         }
-        return children;
+        return children as ReactNode;
     }
 
     if (noenHarFeil(statuser)) return null;

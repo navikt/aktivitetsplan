@@ -39,7 +39,10 @@ const TimeoutboxNedtelling = (props: Props) => {
             <Button className="mr-4" onClick={() => window.location.reload()}>
                 Last siden på nytt
             </Button>
-            <Button variant="secondary" onClick={() => document.querySelector('#login-knapp-id').click()}>
+            <Button
+                variant="secondary"
+                onClick={() => document.querySelector<HTMLButtonElement>('#login-knapp-id')?.click()}
+            >
                 Logg ut
             </Button>
         </Modal.Body>
