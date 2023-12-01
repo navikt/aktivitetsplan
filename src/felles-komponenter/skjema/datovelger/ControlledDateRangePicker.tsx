@@ -1,7 +1,7 @@
 import { DatePicker as DatePicker, useRangeDatepicker } from '@navikt/ds-react';
 import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
 import React, { useEffect, useMemo } from 'react';
-import { ChangeEventHandler, MutableRefObject, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { coerceToUndefined, handlers, preventCloseOnInsideClick, useOutsideClick } from './common';
@@ -119,7 +119,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormFromValue, fromInputProps.onChange])}
                         ref={(ref) => {
-                            (fromInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
+                            // fromInputProps.setAnchorRef(ref);
                             fromField.ref(ref);
                         }}
                     />
@@ -132,7 +132,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         onBlur={handlers([toField.onBlur, toInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormToValue, toInputProps.onChange])}
                         ref={(ref) => {
-                            (toInputProps.ref as MutableRefObject<HTMLInputElement | null>).current = ref;
+                            // toInputProps.setAnchorRef(ref);
                             toField.ref(ref);
                         }}
                     />
