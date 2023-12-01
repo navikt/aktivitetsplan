@@ -25,7 +25,7 @@ export const selectAktiviteterData: (state: RootState) => VeilarbAktivitet[] = c
     },
 );
 export const selectAktiviteterByPeriode = (state: RootState) => {
-    return selectAktiviteterSlice(state).data.perioder || [];
+    return selectAktiviteterSlice(state).data?.perioder || [];
 };
 
 export function selectAktivitetStatus(state: RootState) {
