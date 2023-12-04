@@ -13,7 +13,7 @@ function MalPrint(props: Props) {
 
     return (
         <section className="my-8">
-            <Heading level="1" size="large">
+            <Heading level="2" size="large">
                 Mitt mål
             </Heading>
             <BodyShort>{mal}</BodyShort>
