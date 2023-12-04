@@ -23,6 +23,7 @@ import ModalHeader from './modalHeader';
 import Print from './print/print';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
+import { useRoutes } from '../../routes';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -49,6 +50,7 @@ const AktivitetsplanPrint = () => {
     const dialoger = useSelector(selectDialoger);
     const mittMal = useSelector(selectGjeldendeMal);
     const erManuell = useSelector(selectErBrukerManuell);
+    const { hovedsideRoute } = useRoutes();
 
     const avhengigheter = [
         useSelector(selectMalStatus),
@@ -107,6 +109,7 @@ const AktivitetsplanPrint = () => {
 
     const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
     const navigate = useNavigate();
+
     const goBack = () => navigate(-1);
     if (fnr && (isLoadingAdresse || isLoadingBruker)) {
         return <Loader />;
@@ -147,7 +150,7 @@ const AktivitetsplanPrint = () => {
                 {prompt}
                 <ModalHeader
                     avhengigheter={avhengigheter}
-                    tilbake={goBack}
+                    tilbakeRoute={hovedsideRoute()}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
                 />
                 <Innholdslaster avhengigheter={avhengigheter}>

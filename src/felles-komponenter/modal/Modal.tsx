@@ -1,4 +1,4 @@
-import { Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
+import { Button, Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
 import React, { MouseEventHandler, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -67,9 +67,11 @@ const Modal = (props: Props) => {
             </AkselModal.Header>
             <AkselModal.Body>
                 <div className="flex flex-col max-w-2xl mx-auto">
-                    <Heading className="" level="2" size="xsmall">
-                        {subHeading}
-                    </Heading>
+                    {subHeading ? (
+                        <Heading className="" level="2" size="xsmall">
+                            {subHeading}
+                        </Heading>
+                    ) : null}
                     {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
                     <Innholdslaster
                         className="flex m-auto my-8"
