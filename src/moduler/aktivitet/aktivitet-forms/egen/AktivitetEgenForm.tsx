@@ -25,7 +25,7 @@ const schema = z
             invalid_type_error: 'Ikke en gyldig dato',
         }),
         tilDato: z.date({
-            required_error: 'Fra dato må fylles ut',
+            required_error: 'Til dato må fylles ut',
             invalid_type_error: 'Ikke en gyldig dato',
         }),
         hensikt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
