@@ -15,7 +15,7 @@ const getTekst = (
     brukerErIReservasjonKRR: boolean,
     harLoggetInnMedNivaa4: boolean,
     mindreEnnSyvDagerTil: boolean,
-    manglerTilDato: boolean
+    manglerTilDato: boolean,
 ): string | undefined => {
     if (brukerErUnderKvp) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren deltar i kvalifiseringsprogrammet.';
@@ -54,14 +54,18 @@ const KanIkkeSendeForhaandsorienteringInfotekst = (props: {
         brukerErIReservasjonKRR,
         harLoggetInnMedNivaa4,
         props.mindreEnnSyvDagerTil,
-        props.manglerTilDato
+        props.manglerTilDato,
     );
 
     if (!tekst) {
         return null;
     }
 
-    return <Alert variant="warning">{tekst}</Alert>;
+    return (
+        <Alert aria-live="polite" variant="warning">
+            {tekst}
+        </Alert>
+    );
 };
 
 export default KanIkkeSendeForhaandsorienteringInfotekst;
