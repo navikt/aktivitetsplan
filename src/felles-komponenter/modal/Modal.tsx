@@ -1,7 +1,6 @@
 import { Heading, Modal as AkselModal } from '@navikt/ds-react';
 import React, { MouseEventHandler, ReactNode } from 'react';
 import { useNavigate, Link as ReactRouterLink } from 'react-router-dom';
-
 import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { useRoutes } from '../../routes';
