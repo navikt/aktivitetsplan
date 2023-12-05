@@ -1,6 +1,6 @@
 import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
 import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
-import { hentFraLocalStorage, LocalStorageElement } from '../mocks/demo/localStorage';
+import { hentFraLocalStorage, hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 
 const query: string = `
@@ -138,15 +138,19 @@ interface OppfolgingsPerioder {
     id: string;
     aktiviteter: VeilarbAktivitet[];
 }
+
+interface GraphqlError {
+    message: string;
+}
 interface AktivitetsplanResponse {
     data: {
         perioder: OppfolgingsPerioder[];
     };
-    errors: unknown[];
+    errors: GraphqlError[];
 }
 
 export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
-    const fnr = hentFraLocalStorage(LocalStorageElement.FNR) || '';
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';
     return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
         ...DEFAULT_CONFIG,
         method: 'POST',
@@ -157,5 +161,13 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         body: JSON.stringify(queryBody(fnr)),
     })
         .then(sjekkStatuskode)
-        .then(toJson);
+        .then(toJson)
+        .then(sjekkGraphqlFeil);
+};
+
+const sjekkGraphqlFeil = (response: AktivitetsplanResponse): Promise<AktivitetsplanResponse> => {
+    if (!response?.data?.perioder && response?.errors.length != 0) {
+        return Promise.reject('Kunne ikke hente aktiviteter');
+    }
+    return Promise.resolve(response);
 };

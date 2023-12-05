@@ -3,7 +3,7 @@ import React from 'react';
 
 import App from './app';
 import lessCss from './index.less?inline';
-import { LocalStorageElement, settLocalStorage } from './mocks/demo/localStorage';
+import { LocalStorageElement, settSessionStorage } from './mocks/demo/localStorage';
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
@@ -46,7 +46,7 @@ export class DabAktivitetsplan extends HTMLElement {
         const fnr = this.getAttribute('data-fnr') ?? undefined;
         let preloadedState: RootState | undefined = undefined;
         if (fnr) {
-            settLocalStorage(LocalStorageElement.FNR, fnr);
+            settSessionStorage(LocalStorageElement.FNR, fnr);
             preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         this.root = createRoot(appRoot);
@@ -64,7 +64,7 @@ export class DabAktivitetsplan extends HTMLElement {
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         if (name === 'data-fnr' && this.setFnr) {
-            settLocalStorage(LocalStorageElement.FNR, newValue);
+            settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setFnr(newValue);
         }
     }

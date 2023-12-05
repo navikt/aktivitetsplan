@@ -37,6 +37,19 @@ export const failOrGetResponse = (failFn: () => boolean, successFn: (req: RestRe
     };
 };
 
+export const failOrGrahpqlResponse = (failFn: () => boolean, successFn: (req: RestRequest) => object | undefined) => {
+    return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
+        if (failFn()) {
+            const failResponse = {
+                data: undefined,
+                errors: [{ message: 'Kunne ikke hente aktiviteter (graphql)' }],
+            };
+            return res(ctx.json(failResponse));
+        }
+        return res(ctx.json(await successFn(req)));
+    };
+};
+
 export const jsonResponse = (response: object | null | boolean | ((req: RestRequest) => object)) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
         if (typeof response === 'function') {

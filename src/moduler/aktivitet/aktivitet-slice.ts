@@ -19,13 +19,15 @@ import {
 
 export interface AktivitetState {
     data: {
-        perioder: {
-            id: string;
-            aktiviteter: VeilarbAktivitet[];
-        }[];
+        perioder: PerioderMedAktiviteter[];
     };
     status: Status;
 }
+
+type PerioderMedAktiviteter = {
+    id: string;
+    aktiviteter: VeilarbAktivitet[];
+};
 
 const initialState: AktivitetState = {
     data: { perioder: [] },
@@ -65,10 +67,22 @@ const aktivitetSlice = createSlice({
         });
         builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
+            const oppfolgingsperiode = action.payload.oppfolgingsperiodeId;
+            const perioderMedFallback = (perioder: PerioderMedAktiviteter[]) => {
+                if (!perioder?.length)
+                    return [
+                        {
+                            id: oppfolgingsperiode,
+                            aktiviteter: [],
+                        },
+                    ];
+                return perioder;
+            };
+
             return {
                 status: Status.OK,
                 data: {
-                    perioder: state.data.perioder.map((periode) => {
+                    perioder: perioderMedFallback(state.data.perioder).map((periode) => {
                         return {
                             ...periode,
                             aktiviteter:

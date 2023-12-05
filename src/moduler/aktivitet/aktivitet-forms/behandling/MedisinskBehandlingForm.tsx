@@ -110,8 +110,8 @@ const MedisinskBehandlingForm = (props: Props) => {
                     />
                     <MaybeAvtaltDateRangePicker
                         aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true, label: 'Fra dato' }}
-                        to={{ name: 'tilDato', required: true, label: 'Til dato' }}
+                        from={{ name: 'fraDato', required: true, label: 'Fra dato (obligatorisk)' }}
+                        to={{ name: 'tilDato', required: true, label: 'Til dato (obligatorisk)' }}
                     />
                     <TextField
                         disabled={avtalt}
