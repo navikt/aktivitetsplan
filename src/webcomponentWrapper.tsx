@@ -14,7 +14,7 @@ import {
     RootState,
     saveReduxStateToSessionStorage,
 } from './store';
-import { createRouterWithWrapper } from './routingConfig';
+import { createRouterWithWrapper } from './routing/routingConfig';
 
 // Clear redux-cache from session storage on page load to make sure new data is fetched
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate

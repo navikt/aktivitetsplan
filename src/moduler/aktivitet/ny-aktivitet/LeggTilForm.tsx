@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Lenkepanel from '../../../felles-komponenter/Lenkepanel';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { useErVeileder } from '../../../Provider';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routing/routes';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 const LeggTilForm = () => {

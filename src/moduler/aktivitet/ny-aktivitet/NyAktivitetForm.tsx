@@ -8,7 +8,7 @@ import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/inter
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routing/routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectLagNyAktivitetFeil } from '../../feilmelding/feil-selector';
 import Feilmelding from '../../feilmelding/Feilmelding';

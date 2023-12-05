@@ -12,7 +12,7 @@ import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routing/routes';
 import { erDroppbar } from '../tavleUtils';
 
 interface Props {
@@ -67,7 +67,7 @@ function DropTargetKolonne({ status, children }: Props) {
                     {
                         'opacity-50': isDragging && !isOverAndCanDrop,
                         'bg-surface-action-subtle-hover ': isOverAndCanDrop,
-                    }
+                    },
                 )}
             >
                 {children}

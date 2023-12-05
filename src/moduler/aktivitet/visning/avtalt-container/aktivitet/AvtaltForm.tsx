@@ -54,6 +54,7 @@ const AvtaltForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const sendMetrikker = useSendAvtaltMetrikker();
     const avhengigheter = useSelector(selectNivaa4Status);
+    console.log(avhengigheter);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) =>
         dispatch(settAktivitetTilAvtalt({ aktivitet: avtaltAktivitet, forhaandsorientering }));

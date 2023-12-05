@@ -13,9 +13,9 @@ import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-s
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import { useRoutes } from '../routes';
+import { useRoutes } from '../routing/routes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
-import { ErrorCleanerOnRouteChange } from '../routingConfig';
+import { ErrorCleanerOnRouteChange } from '../routing/routingConfig';
 import { Heading, Loader } from '@navikt/ds-react';
 
 const Hovedside = () => {

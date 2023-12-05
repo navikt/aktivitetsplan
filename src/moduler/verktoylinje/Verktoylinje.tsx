@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/routes';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import Filter from '../filtrering/Filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';

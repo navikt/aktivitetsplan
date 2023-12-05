@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Api from '../../api/oppfolgingAPI';
 import { Status } from '../../createGenericSlice';
 import { Mal } from '../../datatypes/oppfolgingTypes';
+import { selectMalStatus } from './aktivitetsmal-selector';
 
 // TODO merge aktivitetsmal og malliste
 

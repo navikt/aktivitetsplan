@@ -11,13 +11,11 @@ import { useEventListener } from '../../felles-komponenter/hooks/useEventListner
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
 // import UxSignalsWidget from '../../felles-komponenter/UxSignalsWidget';
-import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
-import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-slice';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-slice';
 import { hentVeilederInfo } from '../../moduler/veileder/veileder-slice';
@@ -60,8 +58,6 @@ const Aktivitetstavle = () => {
                 dispatch(hentNivaa4(fnr));
                 dispatch(hentVeilederInfo());
             }
-            dispatch(hentAktiviteter());
-            dispatch(hentArenaAktiviteter());
         }
     }, [aktivitetNotStarted, erVeileder, dispatch]);
 

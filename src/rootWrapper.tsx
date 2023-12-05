@@ -11,7 +11,7 @@ import { hash } from './felles-komponenter/utils/hash';
 import Provider from './Provider';
 import { sentryCreateBrowserRouter } from './sentry';
 import { createRoot } from 'react-dom/client';
-import { createRouterWithWrapper } from './routingConfig';
+import { createRouterWithWrapper } from './routing/routingConfig';
 
 const createRoutesForUser = createRouterWithWrapper(sentryCreateBrowserRouter);
 

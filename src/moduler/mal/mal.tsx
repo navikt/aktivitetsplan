@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/routes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectMalStatus } from './aktivitetsmal-selector';

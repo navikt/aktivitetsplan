@@ -8,7 +8,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../../../reducer';
 import { Status } from '../../../createGenericSlice';
 import { enMoteAktivitet } from '../../../mocks/fixtures/moteAktivitetFixtures';
-import { endreAktivitetRoute } from '../../../routes';
+import { endreAktivitetRoute } from '../../../routing/routes';
 
 const moteAktivitet = enMoteAktivitet();
 
