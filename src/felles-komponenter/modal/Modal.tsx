@@ -1,6 +1,7 @@
-import { Button, Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
+import { Button, Heading, Modal as AkselModal } from '@navikt/ds-react';
 import React, { MouseEventHandler, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
@@ -33,7 +34,7 @@ const Modal = (props: Props) => {
     } = props;
 
     const navigate = useNavigate();
-    const { hovedsideRoute } = useRoutes();
+    const { hovedsideRoute, nyAktivitetRoute } = useRoutes();
 
     const closeFuncOrDefault = () => {
         if (onRequestClose) {
@@ -58,9 +59,13 @@ const Modal = (props: Props) => {
                     </Heading>
                     {tilbakeLenke ? (
                         <>
-                            <Link className="hover:cursor-pointer" onClick={tilbakeLenke.onTilbakeKlikk} tabIndex={0}>
+                            <ReactRouterLink
+                                className="hover:cursor-pointer text-text-action underline"
+                                to={nyAktivitetRoute()}
+                                tabIndex={0}
+                            >
                                 {tilbakeLenke.tekst}
-                            </Link>
+                            </ReactRouterLink>
                         </>
                     ) : null}
                 </div>

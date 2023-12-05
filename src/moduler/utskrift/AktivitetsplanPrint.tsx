@@ -19,7 +19,7 @@ import {
     selectKvpPeriodeForValgteOppfolging,
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
-import ModalHeader from './modalHeader';
+import PrintVerktoylinje from './printVerktoylinje';
 import Print from './print/print';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
@@ -148,7 +148,7 @@ const AktivitetsplanPrint = () => {
         <section className="flex flex-col justify-center items-center p-8">
             <div className="aktivitetsplanprint flex justify-center items-center">
                 {prompt}
-                <ModalHeader
+                <PrintVerktoylinje
                     avhengigheter={avhengigheter}
                     tilbakeRoute={hovedsideRoute()}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}

@@ -14,7 +14,7 @@ interface Props {
     kanSkriveUt: boolean;
 }
 
-function ModalHeader(props: Props) {
+function PrintVerktoylinje(props: Props) {
     const { avhengigheter, tilbakeRoute, kanSkriveUt } = props;
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
@@ -23,7 +23,11 @@ function ModalHeader(props: Props) {
             </Heading>
             <div className="print:hidden self-start flex flex-row gap-x-10 mb-8 items-center">
                 {tilbakeRoute ? (
-                    <ReactRouterLink className="text-text-action underline hover:no-underline" to={tilbakeRoute}>
+                    <ReactRouterLink
+                        className="text-text-action underline hover:no-underline"
+                        to={tilbakeRoute}
+                        tabIndex={0}
+                    >
                         Tilbake
                     </ReactRouterLink>
                 ) : null}
@@ -47,4 +51,4 @@ function ModalHeader(props: Props) {
     );
 }
 
-export default ModalHeader;
+export default PrintVerktoylinje;
