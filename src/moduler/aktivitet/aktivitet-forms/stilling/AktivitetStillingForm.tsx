@@ -14,8 +14,8 @@ import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.date({ required_error: 'Fra dato må fylles ut' }),
-    tilDato: z.date().optional(),
+    fraDato: z.date({ required_error: 'Fra dato må fylles ut', invalid_type_error: 'Ikke en gyldig dato' }),
+    tilDato: z.date({ invalid_type_error: 'Ikke en gyldig dato' }).optional().nullable(),
     arbeidsgiver: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     kontaktperson: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     arbeidssted: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
