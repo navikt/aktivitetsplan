@@ -4,12 +4,22 @@ import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { useFnr } from './Provider';
+import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
+import { Dispatch } from './store';
 
-function App({ Routes }: { Routes: ReturnType<typeof createBrowserRouter> }) {
+function App({
+    createRoutesForUser,
+}: {
+    createRoutesForUser: (dispatch: Dispatch, fnr?: string) => ReturnType<typeof createBrowserRouter>;
+}) {
+    const fnr = useFnr();
+    const dispatch = useAppDispatch();
+    const routes = createRoutesForUser(dispatch, fnr);
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
-                <RouterProvider router={Routes} />
+                <RouterProvider router={routes} />
                 {/*<Router>*/}
                 {/*    <Routes>*/}
                 {/*        <Route path={`/`}>*/}

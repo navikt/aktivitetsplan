@@ -1,6 +1,6 @@
 import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
 import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
-import { hentFraLocalStorage, hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
+import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 
 const query: string = `

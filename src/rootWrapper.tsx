@@ -11,16 +11,16 @@ import { hash } from './felles-komponenter/utils/hash';
 import Provider from './Provider';
 import { sentryCreateBrowserRouter } from './sentry';
 import { createRoot } from 'react-dom/client';
-import { createRouter } from './routingConfig';
+import { createRouterWithWrapper } from './routingConfig';
 
-const BrowserRoutes = createRouter(sentryCreateBrowserRouter);
+const createRoutesForUser = createRouterWithWrapper(sentryCreateBrowserRouter);
 
 export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
     const rootElement = createRoot(appElement || document.getElementById('root')!);
     Sentry.setUser({ id: hash(props?.fnr) });
     rootElement.render(
         <Provider fnr={props?.fnr}>
-            <App Routes={BrowserRoutes} key={'1'} />
+            <App createRoutesForUser={createRoutesForUser} key={'1'} />
         </Provider>,
     );
 };

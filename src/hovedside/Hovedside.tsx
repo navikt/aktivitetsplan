@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { Await, Outlet, useLoaderData, useNavigate, useNavigation } from 'react-router-dom';
 
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
@@ -16,9 +16,14 @@ import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 import { ErrorCleanerOnRouteChange } from '../routingConfig';
+import { Heading, Loader } from '@navikt/ds-react';
 
 const Hovedside = () => {
     const navigate = useNavigate();
+    const navigation = useNavigation();
+    console.log({ navigation });
+    const loaderData = useLoaderData();
+    console.log({ loaderData });
     const { aktivitetRoute } = useRoutes();
     useEventListener('visAktivitetsplan', (event) => {
         const aktivitetId = event.detail as string | undefined;
@@ -29,29 +34,43 @@ const Hovedside = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentDialoger());
+        // dispatch(hentDialoger());
         dispatch(hentEskaleringsvarsel());
     }, []);
 
     return (
-        <main id="main" className="hovedside">
-            <div className="flex items-center flex-col h-full">
-                <HovedsideFeilmelding />
-                <Nivaa4Feilmelding />
-                <OppfolgingStatus>
-                    <InformasjonsHenting />
-                    <Varslinger />
-                    <div className="container flex flex-col gap-y-6">
-                        <Navigasjonslinje />
-                        <Maal />
-                        <Verktoylinje />
+        <Suspense fallback={<Fallback />}>
+            <Await resolve={loaderData}>
+                <main id="main" className="hovedside">
+                    <div className="flex items-center flex-col h-full">
+                        <HovedsideFeilmelding />
+                        <Nivaa4Feilmelding />
+                        <OppfolgingStatus>
+                            <InformasjonsHenting />
+                            <Varslinger />
+                            <div className="container flex flex-col gap-y-6">
+                                <Navigasjonslinje />
+                                <Maal />
+                                <Verktoylinje />
+                            </div>
+                            <Aktivitetstavle />
+                        </OppfolgingStatus>
+                        <Outlet />
                     </div>
-                    <Aktivitetstavle />
-                </OppfolgingStatus>
-                <Outlet />
-            </div>
-            <ErrorCleanerOnRouteChange />
-        </main>
+                    <ErrorCleanerOnRouteChange />
+                </main>
+            </Await>
+        </Suspense>
+    );
+};
+
+const Fallback = () => {
+    console.log('Fallback');
+    return (
+        <div>
+            <Heading size="large">Laster aktivtietesplanene</Heading>
+            <Loader />
+        </div>
     );
 };
 

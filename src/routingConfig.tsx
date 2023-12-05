@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import {
     createBrowserRouter,
     createHashRouter,
+    defer,
+    json,
+    LoaderFunction,
     Navigate,
     Outlet,
     RouteObject,
@@ -20,7 +23,13 @@ import EndreAktivitet from './moduler/aktivitet/rediger/EndreAktivitet';
 import AktivitetvisningContainer from './moduler/aktivitet/visning/AktivitetvisningContainer';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
 import { fjernDismissableErrors } from './moduler/feilmelding/feil-slice';
-import { Router } from '@sentry/react/types/types';
+import { hentDialoger } from './moduler/dialog/dialog-slice';
+import { Dispatch } from './store';
+import { hentMal } from './moduler/mal/aktivitetsmal-slice';
+import { hentOppfolging } from './moduler/oppfolging-status/oppfolging-slice';
+import { hentAktiviteter } from './moduler/aktivitet/aktivitet-actions';
+import { hentIdentitet } from './moduler/identitet/identitet-slice';
+import { hentArenaAktiviteter } from './moduler/aktivitet/arena-aktiviteter-slice';
 
 const RedirectToAktivitetWithoutFnr = () => {
     const params = useParams();
@@ -36,17 +45,33 @@ export const ErrorCleanerOnRouteChange = () => {
     return <Outlet />;
 };
 
-export const createRouter = (wrapper?: (routes: RouteObject[]) => Router) => {
-    if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
-        return createHashRouter(routingConfig);
-    }
-    return wrapper ? wrapper(routingConfig) : createBrowserRouter(routingConfig);
-};
+// Sentry need to wrap createBrowserRouter to understand routes
+export const createRouterWithWrapper =
+    (wrapper?: typeof createBrowserRouter) =>
+    (dispatch: Dispatch, fnr?: string): ReturnType<typeof createBrowserRouter> => {
+        if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
+            return createHashRouter(routingConfig(dispatch, fnr));
+        }
+        return wrapper ? wrapper(routingConfig(dispatch, fnr)) : createBrowserRouter(routingConfig(dispatch, fnr));
+    };
 
-const routingConfig: RouteObject[] = [
+const initialPageLoader =
+    (dispatch: Dispatch, fnr?: string): LoaderFunction =>
+    async () => {
+        const mal = dispatch(hentMal()).then((it) => it.payload);
+        const oppfolging = dispatch(hentOppfolging()).then((it) => it.payload);
+        const aktiviteter = dispatch(hentAktiviteter()).then((it) => it.payload);
+        const dialoger = dispatch(hentDialoger()).then((it) => it.payload);
+        const identitet = dispatch(hentIdentitet()).then((it) => it.payload);
+        const arenaAktiviteter = dispatch(hentArenaAktiviteter()).then((it) => it.payload);
+        return defer({ data: Promise.all([mal, oppfolging, aktiviteter, dialoger, identitet, arenaAktiviteter]) });
+    };
+
+const routingConfig: (dispatch: Dispatch, fnr?: string) => RouteObject[] = (dispatch, fnr) => [
     {
         path: '/',
         element: <Hovedside />,
+        loader: initialPageLoader(dispatch, fnr),
         children: [
             { path: 'mal', element: <Aktivitetsmal /> },
             { path: 'informasjon', element: <InformasjonModal /> },
@@ -63,7 +88,7 @@ const routingConfig: RouteObject[] = [
             },
         ],
     },
-    { path: 'utskrift', element: <AktivitetsplanPrint /> },
+    { path: 'utskrift', loader: initialPageLoader(dispatch, fnr), element: <AktivitetsplanPrint /> },
     { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
     { path: '*', element: <Navigate replace to={`/`} /> },
 ];

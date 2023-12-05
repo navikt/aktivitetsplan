@@ -14,13 +14,11 @@ import {
     RootState,
     saveReduxStateToSessionStorage,
 } from './store';
-import { createRouter } from './routingConfig';
+import { createRouterWithWrapper } from './routingConfig';
 
 // Clear redux-cache from session storage on page load to make sure new data is fetched
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
-
-const Routes = createRouter();
 
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
@@ -57,7 +55,7 @@ export class DabAktivitetsplan extends HTMLElement {
                 fnr={fnr}
                 setFnrRef={(setFnr) => (this.setFnr = setFnr)}
             >
-                <App Routes={Routes} key={'1'} />
+                <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
             </Provider>,
         );
     }
