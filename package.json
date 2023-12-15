@@ -25,7 +25,7 @@
     "@amplitude/analytics-browser": "^2.2.0",
     "@hookform/resolvers": "^3.2.0",
     "@navikt/aksel-icons": "^5.11.3",
-    "@navikt/dab-spraksjekk": "^1.0.9",
+    "@navikt/dab-spraksjekk": "^1.0.10",
     "@navikt/ds-css": "^5.11.3",
     "@navikt/ds-react": "^5.11.3",
     "@navikt/ds-tailwind": "^5.11.3",
