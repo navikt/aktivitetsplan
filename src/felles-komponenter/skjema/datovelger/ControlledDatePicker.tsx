@@ -70,6 +70,9 @@ const ControlledDatePicker = ({
         <div className="flex">
             <div onClick={preventCloseOnInsideClick}>
                 <DatePicker
+                    onClose={() => {
+                        setIsPopoverOpen(false);
+                    }}
                     onSelect={onChangeDate}
                     selected={isValid(field.value) ? field.value : undefined}
                     disabled={disabledDays}
@@ -83,7 +86,6 @@ const ControlledDatePicker = ({
                         label={label ?? 'Dato' + (required ? ' (obligatorisk)' : '')}
                         name={name}
                         value={displayValue}
-                        onFocus={() => setIsPopoverOpen(true)}
                         onBlur={onBlur}
                         onChange={onChange}
                         ref={field.ref}

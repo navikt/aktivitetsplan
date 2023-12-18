@@ -45,6 +45,26 @@ const schema = z.object({
     forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
 });
 
+const varighet = [
+    { minutter: 15, tekst: '15 minutter' },
+    { minutter: 30, tekst: '30 minutter' },
+    { minutter: 45, tekst: '45 minutter' },
+    { minutter: 60, tekst: '1 time' },
+    { minutter: 90, tekst: '1 time, 30 minutter' },
+    { minutter: 120, tekst: '2 timer' },
+    { minutter: 150, tekst: '2 timer, 30 minutter' },
+    { minutter: 180, tekst: '3 timer' },
+    { minutter: 210, tekst: '3 timer, 30 minutter' },
+    { minutter: 240, tekst: '4 timer' },
+    { minutter: 270, tekst: '4 timer, 30 minutter' },
+    { minutter: 300, tekst: '5 timer' },
+    { minutter: 330, tekst: '5 timer, 30 minutter' },
+    { minutter: 360, tekst: '6 timer' },
+    { minutter: 390, tekst: '6 timer, 30 minutter' },
+    { minutter: 420, tekst: '7 timer' },
+    { minutter: 450, tekst: '7 timer, 30 minutter' },
+];
+
 export type MoteAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
@@ -91,26 +111,6 @@ const MoteAktivitetForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const forberedelserValue = watch('forberedelser'); // for <Textarea /> character-count to work
-
-    const varighet = [
-        { minutter: 15, tekst: '15 minutter' },
-        { minutter: 30, tekst: '30 minutter' },
-        { minutter: 45, tekst: '45 minutter' },
-        { minutter: 60, tekst: '1 time' },
-        { minutter: 90, tekst: '1 time, 30 minutter' },
-        { minutter: 120, tekst: '2 timer' },
-        { minutter: 150, tekst: '2 timer, 30 minutter' },
-        { minutter: 180, tekst: '3 timer' },
-        { minutter: 210, tekst: '3 timer, 30 minutter' },
-        { minutter: 240, tekst: '4 timer' },
-        { minutter: 270, tekst: '4 timer, 30 minutter' },
-        { minutter: 300, tekst: '5 timer' },
-        { minutter: 330, tekst: '5 timer, 30 minutter' },
-        { minutter: 360, tekst: '6 timer' },
-        { minutter: 390, tekst: '6 timer, 30 minutter' },
-        { minutter: 420, tekst: '7 timer' },
-        { minutter: 450, tekst: '7 timer, 30 minutter' },
-    ];
 
     return (
         <form
