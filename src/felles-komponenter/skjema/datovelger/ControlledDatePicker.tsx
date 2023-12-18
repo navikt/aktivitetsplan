@@ -74,14 +74,12 @@ const ControlledDatePicker = ({
                         setIsPopoverOpen(false);
                     }}
                     onSelect={onChangeDate}
-                    onSubmit={() => console.log('Outer submit')}
                     selected={isValid(field.value) ? field.value : undefined}
                     disabled={disabledDays}
                     onOpenToggle={togglePopover}
                     open={isPopoverOpen}
                 >
                     <DatePicker.Input
-                        onSubmit={() => console.log('Inner submit')}
                         disabled={disabled}
                         className="flex-1"
                         error={error?.message}
