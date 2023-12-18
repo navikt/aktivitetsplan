@@ -15,6 +15,8 @@ import { OkonomiskStotte } from './okonomiskStottePanel';
 import { RettigheterPanel } from './rettigheterPanel';
 import { DialogPanel } from './dialogPanel';
 import IntroduksjonVideo from './Video/IntroduksjonVideo';
+import { useNavigate } from 'react-router-dom';
+import { useRoutes } from '../../routes';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
@@ -25,6 +27,9 @@ interface Props {
 }
 
 const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
+    const navigate = useNavigate();
+    const { hovedsideRoute } = useRoutes();
+    const tilHovedside = () => navigate(hovedsideRoute());
     useEffect(() => {
         if (erBruker && underOppfolging && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)) {
             Api.postLest(INFORMASJON_MODAL_VERSJON);
@@ -32,7 +37,7 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
     }, []);
 
     return (
-        <Modal className="informasjon-visning" heading="Hva er aktivitetsplanen?">
+        <Modal onClose={tilHovedside} className="informasjon-visning" heading="Hva er aktivitetsplanen?">
             <ModalContainer className="max-w-2xl">
                 <BodyShort className="pb-4">
                     I aktivitetsplanen holder du oversikt over det du gjør for å komme i jobb eller annen aktivitet.

@@ -131,7 +131,6 @@ function EndreAktivitet() {
 
     const onReqClose = () => {
         if (!isDirty.current || window.confirm(CONFIRM)) {
-            navigate(hovedsideRoute());
             return true;
         }
         return false;
@@ -156,8 +155,11 @@ function EndreAktivitet() {
             ? getAktivitetsFormComponent(valgtAktivitet, { ...formProps, aktivitet: valgtAktivitet })
             : null;
 
+    const tilHovedside = () => navigate(hovedsideRoute());
+
     return (
         <Modal
+            onClose={tilHovedside}
             heading="Endre aktivitet"
             onRequestClose={onReqClose}
             tilbakeLenke={{ tekst: 'Tilbake', onTilbakeKlikk: onReqBack }}
