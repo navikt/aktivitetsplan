@@ -4,7 +4,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { Status } from '../../../createGenericSlice';
-import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
@@ -35,8 +35,11 @@ const FullforAktivitet = () => {
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
 
+    if (!valgtAktivitet || isArenaAktivitet(valgtAktivitet)) return <Navigate to={hovedsideRoute()} />;
+
     const begrunnelse = (
         <BegrunnelseForm
+            headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseTekst}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
@@ -49,18 +52,14 @@ const FullforAktivitet = () => {
 
     const advarsel = (
         <VisAdvarsel
-            headerTekst={headerTekst}
             onSubmit={() => {
                 valgtAktivitet && doAvsluttOppfolging(valgtAktivitet, null);
-                navigate(hovedsideRoute(), { replace: true });
             }}
         />
     );
 
-    if (!valgtAktivitet) return <Navigate to={hovedsideRoute()} />;
-
     return (
-        <Modal heading="Fullfør aktivitet">
+        <Modal onClose={() => navigate(hovedsideRoute(), { replace: true })} heading="Fullfør aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.FULLFOERT}>
                 {valgtAktivitet.avtalt &&
                 valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&

@@ -44,6 +44,7 @@ const NyAktivitetForm = () => {
     const match = useMatch('/aktivitet/ny/:aktivitetType') as RouteMatch;
     const dispatch = useAppDispatch();
     const { aktivitetRoute, hovedsideRoute, nyAktivitetRoute } = useRoutes();
+    const tilHovedside = () => navigate(hovedsideRoute());
 
     const opprettFeil = useSelector(selectLagNyAktivitetFeil);
     const underOppfolging = useSelector(selectErUnderOppfolging);
@@ -93,6 +94,7 @@ const NyAktivitetForm = () => {
             heading={match?.params?.aktivitetType ? aktivitetHeadings[match.params.aktivitetType] : ''}
             tilbakeLenke={{ tekst: 'Til kategoriene', onTilbakeKlikk: onReqBack }}
             onRequestClose={onRequestClose}
+            onClose={tilHovedside}
         >
             <article>
                 <Routes>

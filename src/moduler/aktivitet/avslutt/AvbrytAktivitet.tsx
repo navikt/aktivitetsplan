@@ -40,7 +40,6 @@ const AvbrytAktivitet = () => {
             beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
-                navigate(hovedsideRoute(), { replace: true });
                 lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
         />
@@ -48,7 +47,6 @@ const AvbrytAktivitet = () => {
 
     const advarsel = valgtAktivitet ? (
         <VisAdvarsel
-            headerTekst={headerTekst}
             onSubmit={() => {
                 lagreBegrunnelse(valgtAktivitet, null);
                 navigate(hovedsideRoute());
@@ -60,7 +58,7 @@ const AvbrytAktivitet = () => {
         valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.AVBRUTT, valgtAktivitet.type);
 
     return (
-        <Modal contentLabel="Avbryt aktivitet" heading={valgtAktivitet?.tittel || ''}>
+        <Modal onClose={() => navigate(hovedsideRoute(), { replace: true })} heading={'Avbryt aktivitet'}>
             {valgtAktivitet ? (
                 <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.AVBRUTT}>
                     {maaBegrunnes ? begrunnelse : advarsel}
