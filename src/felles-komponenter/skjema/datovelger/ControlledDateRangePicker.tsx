@@ -23,7 +23,6 @@ interface Props {
 const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     /* Handle popover state self because it's used inside a web component which causes event.target to be showDom-root */
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-    // const openToggle = () => setIsPopoverOpen(true);
     const closeToggle = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closeToggle);
 
