@@ -3,6 +3,7 @@ import { RootState } from '../../store';
 import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import { hentNivaa4 } from './tilgang-slice';
 import { createSelector } from 'reselect';
+import { SerializedError } from '../../api/utils';
 
 function selectTilgangSlice(state: RootState) {
     return state.data.tilgang;
@@ -25,7 +26,7 @@ export function selectNivaa4Status(state: RootState) {
     return selectTilgangSlice(state).status;
 }
 
-export const selectNivaa4Feilmeldinger: (state: RootState) => void = createSelector(
+export const selectNivaa4Feilmeldinger: (state: RootState) => SerializedError[] = createSelector(
     selectTilgangSlice,
     selectErrors,
     (tilgangSlice, errors) => {
