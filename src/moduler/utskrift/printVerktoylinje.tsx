@@ -1,6 +1,7 @@
 import { PrinterSmallIcon } from '@navikt/aksel-icons';
-import { Button, Heading, Link } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import React from 'react';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
@@ -9,22 +10,26 @@ import VisValgtFilter from '../filtrering/VisValgtFilter';
 
 interface Props {
     avhengigheter: InnholdslasterProps['avhengigheter'];
-    tilbake?: () => void;
+    tilbakeRoute?: string;
     kanSkriveUt: boolean;
 }
 
-function ModalHeader(props: Props) {
-    const { avhengigheter, tilbake, kanSkriveUt } = props;
+function PrintVerktoylinje(props: Props) {
+    const { avhengigheter, tilbakeRoute, kanSkriveUt } = props;
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <Heading className="print:hidden" spacing size={'large'}>
                 Skriv ut aktivitetsplanen
             </Heading>
-            <div className="print:hidden self-start flex flex-row gap-x-10 mb-8">
-                {tilbake ? (
-                    <Link className="hover:cursor-pointer" onClick={tilbake} tabIndex={0}>
+            <div className="print:hidden self-start flex flex-row gap-x-10 mb-8 items-center">
+                {tilbakeRoute ? (
+                    <ReactRouterLink
+                        className="text-text-action underline hover:no-underline"
+                        to={tilbakeRoute}
+                        tabIndex={0}
+                    >
                         Tilbake
-                    </Link>
+                    </ReactRouterLink>
                 ) : null}
                 {kanSkriveUt ? (
                     <Button
@@ -46,4 +51,4 @@ function ModalHeader(props: Props) {
     );
 }
 
-export default ModalHeader;
+export default PrintVerktoylinje;

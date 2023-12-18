@@ -1,7 +1,6 @@
-import { Heading, Link, Modal as AkselModal } from '@navikt/ds-react';
+import { Heading, Modal as AkselModal } from '@navikt/ds-react';
 import React, { MouseEventHandler, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, Link as ReactRouterLink } from 'react-router-dom';
 import { SerializedError } from '../../api/utils';
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { useRoutes } from '../../routes';
@@ -33,7 +32,7 @@ const Modal = (props: Props) => {
     } = props;
 
     const navigate = useNavigate();
-    const { hovedsideRoute } = useRoutes();
+    const { hovedsideRoute, nyAktivitetRoute } = useRoutes();
 
     const closeFuncOrDefault = () => {
         if (onRequestClose) {
@@ -58,18 +57,24 @@ const Modal = (props: Props) => {
                     </Heading>
                     {tilbakeLenke ? (
                         <>
-                            <Link className="hover:cursor-pointer" onClick={tilbakeLenke.onTilbakeKlikk} tabIndex={0}>
+                            <ReactRouterLink
+                                className="hover:cursor-pointer text-text-action underline"
+                                to={nyAktivitetRoute()}
+                                tabIndex={0}
+                            >
                                 {tilbakeLenke.tekst}
-                            </Link>
+                            </ReactRouterLink>
                         </>
                     ) : null}
                 </div>
             </AkselModal.Header>
             <AkselModal.Body>
                 <div className="flex flex-col max-w-2xl mx-auto">
-                    <Heading className="" level="2" size="xsmall">
-                        {subHeading}
-                    </Heading>
+                    {subHeading ? (
+                        <Heading className="" level="2" size="xsmall">
+                            {subHeading}
+                        </Heading>
+                    ) : null}
                     {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
                     <Innholdslaster
                         className="flex m-auto my-8"
