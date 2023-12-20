@@ -1,10 +1,5 @@
 import React from 'react';
 const IntroduksjonVideo = () => {
-    // @ts-ignore
-    document.getElementById('introduksjonsvideo').on('click', function () {
-        console.log('spill av');
-    });
-
     return (
         <div className="color-black">
             <iframe

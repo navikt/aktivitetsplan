@@ -23,7 +23,7 @@ import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-select
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import MaalIkon from './Aktivitetsplan_maal.svg?react';
-import { logKlikkEndreMaal } from '../../amplitude/amplitude';
+import { logKlikkKnapp } from '../../amplitude/amplitude';
 
 interface MalTextProps {
     mal?: string;
@@ -59,7 +59,7 @@ function MalContent(props: MalContentProps) {
     const endreMal = () => {
         navigate(malRoute());
         loggMittMalKlikk(erVeileder);
-        void logKlikkEndreMaal();
+        void logKlikkKnapp('Endre mål');
     };
 
     const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);

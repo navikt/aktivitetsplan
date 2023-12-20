@@ -23,51 +23,24 @@ async function logAmplitudeEvent(event: AmplitudeEvent, extraData?: Record<strin
     }
 }
 
-export function logKlikkHjelpeikon(kolonne: string) {
+export function logKlikkKnapp(tekst: string) {
     return logAmplitudeEvent({
         name: 'knapp klikket',
-        data: { text: 'Klikket hjelpeikon i kolonne', knapp: kolonne },
-    });
-}
-
-export function logKlikkLagretMaal() {
-    return logAmplitudeEvent({
-        name: 'knapp klikket',
-        data: { text: 'Klikket lagre mål', knapp: 'lagre mål' },
+        data: { text: tekst },
     });
 }
 
 export function logAccordionAapnet(accordion: string) {
     return logAmplitudeEvent({
         name: 'accordion åpnet',
-        data: { text: 'accordion åpnet', accordion: accordion },
-    });
-}
-export function logKlikkEndreMaal() {
-    return logAmplitudeEvent({
-        name: 'knapp klikket',
-        data: { text: 'Klikket endre mål', knapp: 'endre mål' },
+        data: { text: accordion },
     });
 }
 
 export function logValgtFilter(filterValgt: string) {
     return logAmplitudeEvent({
         name: 'filtervalg',
-        data: { text: 'filter valgt', filterValgt: filterValgt },
-    });
-}
-
-export function logKlikkSkrivUt() {
-    return logAmplitudeEvent({
-        name: 'knapp klikket',
-        data: { text: 'skriv ut knapp klikket', knapp: 'skriv ut' },
-    });
-}
-
-export function logKlikkSendMeldingAktivitetskort() {
-    return logAmplitudeEvent({
-        name: 'knapp klikket',
-        data: { text: 'send melding knapp trykket i aktivitetskort', knapp: 'send melding' },
+        data: { text: filterValgt },
     });
 }
 

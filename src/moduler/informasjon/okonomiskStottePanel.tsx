@@ -1,10 +1,11 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import React from 'react';
+import { logAccordionAapnet } from '../../amplitude/amplitude';
 
 export const OkonomiskStotte = () => {
     return (
         <Accordion.Item>
-            <Accordion.Header>
+            <Accordion.Header onClick={() => logAccordionAapnet('Aktivitetsplanen handler ikke om økonomi')}>
                 <Heading level="2" size="small">
                     Aktivitetsplanen handler ikke om økonomi
                 </Heading>

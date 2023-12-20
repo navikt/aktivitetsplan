@@ -11,7 +11,7 @@ import { selectOppdaterMalFeil } from '../feilmelding/feil-selector';
 import Feilmelding from '../feilmelding/Feilmelding';
 import { oppdaterMal } from './aktivitetsmal-slice';
 import { hentMalListe } from './malliste-slice';
-import { logKlikkLagretMaal } from '../../amplitude/amplitude';
+import { logKlikkKnapp } from '../../amplitude/amplitude';
 
 const schema = z.object({
     mal: z.string().min(1, 'Feltet må fylles ut').max(500, 'Du må korte ned teksten til 500 tegn'),
@@ -83,7 +83,7 @@ const MalForm = (props: Props) => {
                 value={malValue}
             />
             <Feilmelding feilmeldinger={feil} />
-            <Button onClick={() => logKlikkLagretMaal()}>Lagre</Button>
+            <Button onClick={() => logKlikkKnapp('Lagre mål')}>Lagre</Button>
         </form>
     );
 };
