@@ -7,6 +7,7 @@ import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/ut
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
+import { logKlikkSkrivUt } from '../../amplitude/amplitude';
 
 interface Props {
     avhengigheter: InnholdslasterProps['avhengigheter'];
@@ -37,6 +38,7 @@ function PrintVerktoylinje(props: Props) {
                         onClick={() => {
                             window.print();
                             loggEvent(TRYK_PRINT);
+                            logKlikkSkrivUt();
                         }}
                     >
                         Skriv ut

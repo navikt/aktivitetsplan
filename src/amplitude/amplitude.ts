@@ -23,6 +23,54 @@ async function logAmplitudeEvent(event: AmplitudeEvent, extraData?: Record<strin
     }
 }
 
+export function logKlikkHjelpeikon(kolonne: string) {
+    return logAmplitudeEvent({
+        name: 'knapp klikket',
+        data: { text: 'Klikket hjelpeikon i kolonne', knapp: kolonne },
+    });
+}
+
+export function logKlikkLagretMaal() {
+    return logAmplitudeEvent({
+        name: 'knapp klikket',
+        data: { text: 'Klikket lagre mål', knapp: 'lagre mål' },
+    });
+}
+
+export function logAccordionAapnet(accordion: string) {
+    return logAmplitudeEvent({
+        name: 'accordion åpnet',
+        data: { text: 'accordion åpnet', accordion: accordion },
+    });
+}
+export function logKlikkEndreMaal() {
+    return logAmplitudeEvent({
+        name: 'knapp klikket',
+        data: { text: 'Klikket endre mål', knapp: 'endre mål' },
+    });
+}
+
+export function logValgtFilter(filterValgt: string) {
+    return logAmplitudeEvent({
+        name: 'filtervalg',
+        data: { text: 'filter valgt', filterValgt: filterValgt },
+    });
+}
+
+export function logKlikkSkrivUt() {
+    return logAmplitudeEvent({
+        name: 'knapp klikket',
+        data: { text: 'skriv ut knapp klikket', knapp: 'skriv ut' },
+    });
+}
+
+export function logKlikkSendMeldingAktivitetskort() {
+    return logAmplitudeEvent({
+        name: 'knapp klikket',
+        data: { text: 'send melding knapp trykket i aktivitetskort', knapp: 'send melding' },
+    });
+}
+
 export function logToggleSpraksjekkToggle(enabled: boolean) {
     return logAmplitudeEvent({ name: 'toggle', data: { text: 'Slå på klarspråkhjelp', enabled: enabled } });
 }
