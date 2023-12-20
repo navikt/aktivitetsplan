@@ -1,4 +1,4 @@
-import { BodyShort, Heading, Ingress, Label } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
