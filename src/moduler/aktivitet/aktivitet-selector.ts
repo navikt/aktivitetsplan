@@ -1,7 +1,6 @@
 import { SerializedError } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
-import { RootState } from '../../store';
 import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import {
     flyttAktivitet,
@@ -12,6 +11,7 @@ import {
 } from './aktivitet-actions';
 import { AktivitetState } from './aktivitet-slice';
 import { createSelector } from 'reselect';
+import { RootState } from '../../reducer';
 
 export function selectAktiviteterSlice(state: RootState): AktivitetState {
     return state.data.aktiviteter;

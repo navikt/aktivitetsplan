@@ -19,8 +19,9 @@ import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-slice';
 import tilgangReducer from './moduler/tilgang/tilgang-slice';
 import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-slice';
 import veilederReducer from './moduler/veileder/veileder-slice';
+import { displayedUser } from './utils/displayedUserSlice';
 
-const reducer = {
+const reducer = combineReducers({
     data: combineReducers({
         aktiviteter: aktiviteterReducer,
         arenaAktiviteter: arenaAktiviteterReducer,
@@ -41,9 +42,31 @@ const reducer = {
         errors: errorReducer,
     }),
     view: combineReducers({
+        displayedUser: displayedUser,
         visteAktiviteterMedEndringer: aktivitetViewReducer,
         dragAndDrop: dragAndDropSlice,
     }),
+});
+
+export type RootState = ReturnType<typeof reducer>;
+
+export const stateWithFnr = (state: RootState | undefined, fnr: string | undefined): Partial<RootState> | undefined => {
+    if (!fnr) return state;
+    if (state) {
+        return {
+            ...state,
+            view: {
+                ...state.view,
+                displayedUser: { fnr },
+            },
+        };
+    }
+    return {
+        view: {
+            displayedUser: { fnr },
+        } as any, // Allow nested partial records
+        // reducers uses initialState for each sub-reducer
+    };
 };
 
 export default reducer;

@@ -3,6 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as Api from '../../api/oppfolgingAPI';
 import createGenericSlice, { GenericState, Status } from '../../createGenericSlice';
 import { Mal } from '../../datatypes/oppfolgingTypes';
+import { getFnrIfVeileder } from '../../utils/displayedUserSlice';
+import { RootState } from '../../reducer';
 
 const malListeSlice = createGenericSlice({
     name: 'malListe',
@@ -10,8 +12,9 @@ const malListeSlice = createGenericSlice({
     reducers: {},
 });
 
-export const hentMalListe = createAsyncThunk(`${malListeSlice.name}/fetchMalListe`, async () => {
-    return await Api.fetchMalListe();
+export const hentMalListe = createAsyncThunk(`${malListeSlice.name}/fetchMalListe`, async (_, thunkAPI) => {
+    const fnr = getFnrIfVeileder(thunkAPI.getState() as RootState);
+    return await Api.fetchMalListe(fnr);
 });
 
 export default malListeSlice.reducer;

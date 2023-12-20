@@ -2,21 +2,27 @@ import { Mal, Me, OppfolgingStatus } from '../datatypes/oppfolgingTypes';
 import { OPPFOLGING_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson } from './utils';
 
-export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);
+export const fetchIdentitet = (): Promise<Me> => fetchToJson(undefined, `${OPPFOLGING_BASE_URL}/oppfolging/me`);
 
-export const settDigital = (): Promise<OppfolgingStatus> => postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital`);
+export const settDigital = (fnr: string | undefined): Promise<OppfolgingStatus> =>
+    postAsJson(fnr, `${OPPFOLGING_BASE_URL}/oppfolging/settDigital`);
 
-export const fetchOppfolging = (): Promise<OppfolgingStatus> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging`);
+export const fetchOppfolging = (fnr: string | undefined): Promise<OppfolgingStatus> =>
+    fetchToJson(fnr, `${OPPFOLGING_BASE_URL}/oppfolging`);
 
-export const fetchMal = (): Promise<Mal> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/mal`);
+export const fetchMal = (fnr: string | undefined): Promise<Mal> =>
+    fetchToJson(fnr, `${OPPFOLGING_BASE_URL}/oppfolging/mal`);
 
-export const fetchMalListe = (): Promise<Mal[]> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/malListe`);
+export const fetchMalListe = (fnr: string | undefined): Promise<Mal[]> =>
+    fetchToJson(fnr, `${OPPFOLGING_BASE_URL}/oppfolging/malListe`);
 
-export const lagreMal = (mal: any): Promise<Mal> => postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/mal`, mal);
+export const lagreMal = (mal: any, fnr: string | undefined): Promise<Mal> =>
+    postAsJson(fnr, `${OPPFOLGING_BASE_URL}/oppfolging/mal`, mal);
 
-export const fetchHarFlereAktorId = (): Promise<boolean> =>
-    fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/harFlereAktorIderMedOppfolging`);
+export const fetchHarFlereAktorId = (fnr: string | undefined): Promise<boolean> =>
+    fetchToJson(fnr, `${OPPFOLGING_BASE_URL}/oppfolging/harFlereAktorIderMedOppfolging`);
 
+// Bare veileder
 export const doLesAktivitetsplan = (fnr: string) => {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`);
+    return postAsJson(fnr, `${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`);
 };
