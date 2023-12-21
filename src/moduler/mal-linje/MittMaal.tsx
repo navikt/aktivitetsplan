@@ -59,7 +59,7 @@ function MalContent(props: MalContentProps) {
     const endreMal = () => {
         navigate(malRoute());
         loggMittMalKlikk(erVeileder);
-        void logKlikkKnapp('Endre mål');
+        logKlikkKnapp('Endre mål');
     };
 
     const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
