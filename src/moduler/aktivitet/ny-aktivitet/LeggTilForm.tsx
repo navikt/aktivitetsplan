@@ -7,16 +7,20 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import { useErVeileder } from '../../../Provider';
 import { useRoutes } from '../../../routes';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { useNavigate } from 'react-router-dom';
 
 const LeggTilForm = () => {
     const erVeileder = useErVeileder();
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
 
-    const { nyAktivitetRoute } = useRoutes();
+    const { nyAktivitetRoute, hovedsideRoute } = useRoutes();
+    const navigate = useNavigate();
+    const tilbake = () => navigate(hovedsideRoute());
     const nyAktivitetBasePath = nyAktivitetRoute();
 
     return (
         <Modal
+            onClose={tilbake}
             contentClass="ny-aktivitet-visning"
             feilmeldinger={aktivitetFeilmeldinger}
             heading="Legg til en aktivitet"

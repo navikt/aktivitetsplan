@@ -47,6 +47,7 @@ const AktivitetvisningModal = (props: Props) => {
     const dirty = useContext(DirtyContext);
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
+    const tilHovedside = () => navigate(hovedsideRoute());
 
     const selectFeilMeldinger = (a: AlleAktiviteter) =>
         isArenaAktivitet(a) ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
@@ -63,6 +64,7 @@ const AktivitetvisningModal = (props: Props) => {
 
     return (
         <Modal
+            onClose={tilHovedside}
             avhengigheter={avhengigheter}
             subHeading={
                 aktivitet ? `${aktivitetStatusMap[aktivitet.status]} / ${getAktivitetType(aktivitet)}` : undefined

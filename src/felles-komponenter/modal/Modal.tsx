@@ -16,6 +16,7 @@ interface Props {
     minstEnAvhengighet?: boolean;
     contentClass?: string;
     onRequestClose?(): boolean;
+    onClose?: () => void;
     tilbakeLenke?: { tekst: string; onTilbakeKlikk: MouseEventHandler };
 }
 
@@ -29,6 +30,7 @@ const Modal = (props: Props) => {
         minstEnAvhengighet = false,
         feilmeldinger,
         tilbakeLenke,
+        onClose,
     } = props;
 
     const navigate = useNavigate();
@@ -46,6 +48,7 @@ const Modal = (props: Props) => {
         <AkselModal
             closeOnBackdropClick
             open
+            onClose={onClose}
             onBeforeClose={closeFuncOrDefault}
             className="lg:w-120"
             aria-labelledby="modal-heading"
