@@ -9,4 +9,7 @@ export type AmplitudeEvent =
               spraksjekkEnabled: boolean;
           };
       }
-    | { name: 'toggle'; data: { text: string; enabled: boolean } };
+    | { name: 'toggle'; data: { text: string; enabled: boolean } }
+    | { name: 'knapp klikket'; data: { text: string } }
+    | { name: 'accordion åpnet'; data: { text: string } }
+    | { name: 'filtervalg'; data: { text: string } };

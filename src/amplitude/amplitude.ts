@@ -23,6 +23,27 @@ async function logAmplitudeEvent(event: AmplitudeEvent, extraData?: Record<strin
     }
 }
 
+export function logKlikkKnapp(tekst: string) {
+    return logAmplitudeEvent({
+        name: 'knapp klikket',
+        data: { text: tekst },
+    });
+}
+
+export function logAccordionAapnet(accordion: string) {
+    return logAmplitudeEvent({
+        name: 'accordion åpnet',
+        data: { text: accordion },
+    });
+}
+
+export function logValgtFilter(filterValgt: string) {
+    return logAmplitudeEvent({
+        name: 'filtervalg',
+        data: { text: filterValgt },
+    });
+}
+
 export function logToggleSpraksjekkToggle(enabled: boolean) {
     return logAmplitudeEvent({ name: 'toggle', data: { text: 'Slå på klarspråkhjelp', enabled: enabled } });
 }

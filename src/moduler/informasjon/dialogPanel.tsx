@@ -1,11 +1,12 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 import DialogVideo from './Video/DialogVideo';
+import { logAccordionAapnet } from '../../amplitude/amplitude';
 
 export const DialogPanel = () => {
     return (
         <Accordion.Item>
-            <Accordion.Header>
+            <Accordion.Header onClick={() => logAccordionAapnet('Dialog med veilederen din')}>
                 <Heading level="2" size="small">
                     Dialog med veilederen din
                 </Heading>
