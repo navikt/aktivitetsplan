@@ -1,5 +1,5 @@
 import { Accordion } from '@navikt/ds-react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import VersjonerForAktivitet from '../versjoner/VersjonerForAktivitet';
@@ -12,9 +12,18 @@ interface Props {
 const EndringsLogg = (props: Props) => {
     const { aktivitet } = props;
 
+    const [open, setOpen] = useState(false);
+
+    function handleClick() {
+        if (!open) {
+            logAccordionAapnet('Historikk');
+        }
+        setOpen(!open);
+    }
+
     return (
         <Accordion.Item>
-            <Accordion.Header onClick={() => logAccordionAapnet('Historikk')}>
+            <Accordion.Header onClick={handleClick}>
                 <div className="flex gap-4 items-center">Historikk</div>
             </Accordion.Header>
             <Accordion.Content>
