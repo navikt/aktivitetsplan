@@ -1,12 +1,21 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
-import React from 'react';
+import React, { useState } from 'react';
 import AktivitetskortVideo from './Video/AktivitetskortVideo';
 import { logAccordionAapnet } from '../../amplitude/amplitude';
 
 export const BrukePlanenPanel = () => {
+    const [open, setOpen] = useState(false);
+
+    function handleClick() {
+        if (!open) {
+            logAccordionAapnet('Slik bruker du aktivitetsplanen');
+        }
+        setOpen(!open);
+    }
+
     return (
         <Accordion.Item>
-            <Accordion.Header onClick={() => logAccordionAapnet('Slik bruker du aktivitetsplanen')}>
+            <Accordion.Header onClick={handleClick}>
                 <Heading level="2" size="small">
                     Slik bruker du aktivitetsplanen
                 </Heading>

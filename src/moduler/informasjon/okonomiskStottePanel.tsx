@@ -1,11 +1,20 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { logAccordionAapnet } from '../../amplitude/amplitude';
 
 export const OkonomiskStotte = () => {
+    const [open, setOpen] = useState(false);
+
+    function handleClick() {
+        if (!open) {
+            logAccordionAapnet('Aktivitetsplanen handler ikke om økonomi');
+        }
+        setOpen(!open);
+    }
+
     return (
         <Accordion.Item>
-            <Accordion.Header onClick={() => logAccordionAapnet('Aktivitetsplanen handler ikke om økonomi')}>
+            <Accordion.Header onClick={handleClick}>
                 <Heading level="2" size="small">
                     Aktivitetsplanen handler ikke om økonomi
                 </Heading>
