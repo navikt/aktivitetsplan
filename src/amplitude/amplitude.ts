@@ -26,21 +26,21 @@ async function logAmplitudeEvent(event: AmplitudeEvent, extraData?: Record<strin
 export function logKlikkKnapp(tekst: string) {
     return logAmplitudeEvent({
         name: 'knapp klikket',
-        data: { text: tekst },
+        data: { tekst: tekst },
     });
 }
 
 export function logAccordionAapnet(accordion: string) {
     return logAmplitudeEvent({
         name: 'accordion åpnet',
-        data: { text: accordion },
+        data: { tekst: accordion },
     });
 }
 
 export function logValgtFilter(filterValgt: string) {
     return logAmplitudeEvent({
         name: 'filtervalg',
-        data: { text: filterValgt },
+        data: { filternavn: filterValgt },
     });
 }
 

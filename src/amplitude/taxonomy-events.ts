@@ -10,6 +10,6 @@ export type AmplitudeEvent =
           };
       }
     | { name: 'toggle'; data: { text: string; enabled: boolean } }
-    | { name: 'knapp klikket'; data: { text: string } }
-    | { name: 'accordion åpnet'; data: { text: string } }
-    | { name: 'filtervalg'; data: { text: string } };
+    | { name: 'knapp klikket'; data: { tekst: string } }
+    | { name: 'accordion åpnet'; data: { tekst: string } }
+    | { name: 'filtervalg'; data: { filternavn: string } };
