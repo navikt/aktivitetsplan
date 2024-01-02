@@ -10,7 +10,7 @@ interface Etikett {
 }
 
 const getEtikett: Record<StillingStatus, Etikett> = {
-    SOKNAD_SENDT: { text: 'Sendt søknad og venter på svar', variant: 'success' },
+    SOKNAD_SENDT: { text: 'Sendt søknad', variant: 'success' },
     INNKALT_TIL_INTERVJU: { text: 'Skal på intervju', variant: 'info' },
     JOBBTILBUD: { text: 'Fått jobbtilbud 🎉', variant: 'warning' },
     AVSLAG: { text: 'Ikke fått jobben', variant: 'neutral' },

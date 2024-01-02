@@ -25,7 +25,7 @@ export type StillingEtikettFormValues = z.infer<typeof schema>;
 
 const RadioButtons: Record<StillingStatus, string> = {
     INGEN_VALGT: 'Ikke startet',
-    SOKNAD_SENDT: 'Sendt søknad og venter på svar',
+    SOKNAD_SENDT: 'Sendt søknad',
     INNKALT_TIL_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Ikke fått jobben',
