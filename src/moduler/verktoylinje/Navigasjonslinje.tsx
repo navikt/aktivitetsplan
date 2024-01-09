@@ -1,11 +1,11 @@
-import { Heading, Link } from '@navikt/ds-react';
+import { Button, Heading, Link } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
-import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
+import { ARBEIDSRETTET_DIALOG_URL, ER_PROD, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
@@ -13,12 +13,16 @@ import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
+import { arkiver, selectArkivStatus } from './arkivering/arkivering-slice';
+import { Status } from '../../createGenericSlice';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
 
     const dispatch = useAppDispatch();
+
+    const arkiverer = [Status.PENDING, Status.RELOADING].includes(useSelector(selectArkivStatus));
 
     useEffect(() => {
         const doHentDialog = () => dispatch(hentDialoger());
@@ -72,6 +76,11 @@ function Navigasjonslinje() {
                         Skriv ut
                     </ReactRouterLink>
                 )}
+                {!ER_PROD ? (
+                    <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver())}>
+                        Journalfør
+                    </Button>
+                ) : null}
             </div>
             <Heading level="1" size="xlarge">
                 Aktivitetsplan
