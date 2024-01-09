@@ -24,5 +24,4 @@ export const PERSON_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbperson/
 export const MALVERK_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbmalverk/api';
 export const VEILEDER_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbveileder/api';
 
-// TODO fikse denne
-export const ARKIV_BASE_URL = 'https://orkivar.intern.dev.nav.no';
+export const ARKIV_BASE_URL = '/orkivar';
