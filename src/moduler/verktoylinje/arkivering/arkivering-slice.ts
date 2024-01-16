@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import * as Api from '../../../api/arkivAPI';
+import * as Api from '../../../api/aktivitetAPI';
 import createGenericSlice, { Status } from '../../../createGenericSlice';
 import { RootState } from '../../../store';
 

@@ -78,7 +78,7 @@ function Navigasjonslinje() {
                 )}
                 {!ER_PROD ? (
                     <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver())}>
-                        Journalfør
+                        Arkiver
                     </Button>
                 ) : null}
             </div>
