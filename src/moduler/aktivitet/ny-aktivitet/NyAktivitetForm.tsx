@@ -75,7 +75,7 @@ const NyAktivitetForm = () => {
             // Assign to const before navigating to avoid race-condition
             const aktivitet = match.params.aktivitetType;
             navigate(hovedsideRoute());
-            logModalLukket({ isDirty: isItReallyDirty, aktivitet });
+            logModalLukket({ isDirty: isItReallyDirty, aktivitet, modalType: 'ny-aktivitet', navType: 'onReqClose' });
             return true;
         }
         return false;
@@ -88,7 +88,7 @@ const NyAktivitetForm = () => {
             // Assign to const before navigating to avoid race-condition
             const aktivitet = match.params.aktivitetType;
             navigate(nyAktivitetRoute());
-            logModalLukket({ isDirty: isItReallyDirty, aktivitet });
+            logModalLukket({ isDirty: isItReallyDirty, aktivitet, modalType: 'ny-aktivitet', navType: 'onReqBack' });
         }
     };
 

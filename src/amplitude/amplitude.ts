@@ -59,10 +59,20 @@ export function logReferatFullfort(analysis: TextCheckerResult, referatPublisert
     );
 }
 
-export function logModalLukket({ isDirty, aktivitet }: { isDirty: boolean; aktivitet: string }) {
+export function logModalLukket({
+    isDirty,
+    aktivitet,
+    modalType,
+    navType,
+}: {
+    isDirty: boolean;
+    aktivitet: string;
+    modalType: 'ny-aktivitet' | 'endre-aktivitet';
+    navType: 'onReqClose' | 'onReqBack';
+}) {
     return logAmplitudeEvent({
         name: 'modal lukket',
-        data: { isDirty, aktivitet },
+        data: { isDirty, aktivitet, modalType, navType },
     });
 }
 
