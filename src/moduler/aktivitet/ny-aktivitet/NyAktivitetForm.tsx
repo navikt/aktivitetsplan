@@ -22,6 +22,7 @@ import SamtalereferatForm from '../aktivitet-forms/samtalereferat/Samtalereferat
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
 import { AktivitetFormValues } from '../rediger/EndreAktivitet';
+import { logModalLukket } from '../../../amplitude/amplitude';
 
 const aktivitetHeadings = {
     mote: 'Møte med NAV',
@@ -71,7 +72,10 @@ const NyAktivitetForm = () => {
     function onRequestClose() {
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
+            // Assign to const before navigating to avoid race-condition
+            const aktivitet = match.params.aktivitetType;
             navigate(hovedsideRoute());
+            logModalLukket({ isDirty: isItReallyDirty, aktivitet });
             return true;
         }
         return false;
@@ -81,7 +85,10 @@ const NyAktivitetForm = () => {
         e.preventDefault();
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
+            // Assign to const before navigating to avoid race-condition
+            const aktivitet = match.params.aktivitetType;
             navigate(nyAktivitetRoute());
+            logModalLukket({ isDirty: isItReallyDirty, aktivitet });
         }
     };
 

@@ -59,6 +59,13 @@ export function logReferatFullfort(analysis: TextCheckerResult, referatPublisert
     );
 }
 
+export function logModalLukket({ isDirty, aktivitet }: { isDirty: boolean; aktivitet: string }) {
+    return logAmplitudeEvent({
+        name: 'modal lukket',
+        data: { isDirty, aktivitet },
+    });
+}
+
 type Modify<T, U> = Omit<T, keyof U> & U;
 export type TextCheckerAmplitudeAnalysis = Omit<
     Modify<
