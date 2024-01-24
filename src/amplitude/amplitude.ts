@@ -72,7 +72,7 @@ export function logModalLukket({
 }) {
     return logAmplitudeEvent({
         name: 'modal lukket',
-        data: { isDirty, aktivitet, modalType, navType },
+        data: { isDirty, aktivitet: aktivitet.toLocaleLowerCase(), modalType, navType },
     });
 }
 
