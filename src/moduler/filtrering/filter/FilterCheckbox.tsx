@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import { Filter } from './FilterVisning';
+import { logValgtFilter } from '../../../amplitude/amplitude';
 
 interface Props {
     filterTekst: string;
@@ -29,7 +30,7 @@ const FilterCheckbox = (props: Props) => {
     };
 
     return (
-        <Checkbox onChange={onChange} checked={checked}>
+        <Checkbox onChange={onChange} checked={checked} onClick={() => logValgtFilter(filterTekst)}>
             {filterTekst}
         </Checkbox>
     );

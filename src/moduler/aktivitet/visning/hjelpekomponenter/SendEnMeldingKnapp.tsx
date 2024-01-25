@@ -9,6 +9,7 @@ import { useErVeileder } from '../../../../Provider';
 import { useRoutes } from '../../../../routes';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
+import { logKlikkKnapp } from '../../../../amplitude/amplitude';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -31,6 +32,7 @@ const SendEnMeldingKnapp = (props: Props) => {
             navigate(hovedsideRoute(), { replace: true });
             byttTilDialogFlate({ event, aktivitetId: aktivitet?.id, dialogId: dialog?.id });
         }
+        logKlikkKnapp('send melding (i aktivitetskort)');
     };
 
     return (

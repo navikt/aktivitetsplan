@@ -1,7 +1,7 @@
 import { HelpText } from '@navikt/ds-react';
 import React from 'react';
-
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
+import { logKlikkKnapp } from '../../amplitude/amplitude';
 
 const hjelpetekster: Record<AktivitetStatus, { tittel: string; innhold: string }> = {
     BRUKER_ER_INTERESSERT: {
@@ -39,7 +39,13 @@ const AktivitetsplanHjelpetekst = ({ status }: Props) => {
     const { tittel, innhold } = config;
 
     return (
-        <HelpText placement={'bottom-end'} id={status} aria-label={tittel} title={tittel}>
+        <HelpText
+            placement={'bottom-end'}
+            id={status}
+            aria-label={tittel}
+            title={tittel}
+            onClick={() => logKlikkKnapp('Klikket hjelpeikon i kolonne ' + status)}
+        >
             <div className="w-80">{innhold}</div>
         </HelpText>
     );

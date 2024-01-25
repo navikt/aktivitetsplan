@@ -51,6 +51,7 @@ import {
     selecteEndreAktivitetFeilmeldinger,
 } from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
+import { logModalLukket } from '../../../amplitude/amplitude';
 
 export type AktivitetFormValues =
     | StillingAktivitetFormValues
@@ -131,6 +132,15 @@ function EndreAktivitet() {
 
     const onReqClose = () => {
         if (!isDirty.current || window.confirm(CONFIRM)) {
+            const aktivitet = valgtAktivitet?.type;
+            if (aktivitet) {
+                logModalLukket({
+                    isDirty: isDirty.current,
+                    aktivitet: aktivitet,
+                    modalType: 'endre-aktivitet',
+                    navType: 'onReqClose',
+                });
+            }
             return true;
         }
         return false;
@@ -139,6 +149,15 @@ function EndreAktivitet() {
     const onReqBack: MouseEventHandler = (e) => {
         e.preventDefault();
         if (!isDirty.current || window.confirm(CONFIRM)) {
+            const aktivitet = valgtAktivitet?.type;
+            if (aktivitet) {
+                logModalLukket({
+                    isDirty: isDirty.current,
+                    aktivitet: aktivitet,
+                    modalType: 'endre-aktivitet',
+                    navType: 'onReqBack',
+                });
+            }
             navigate(-1);
         }
     };

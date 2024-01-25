@@ -23,6 +23,27 @@ async function logAmplitudeEvent(event: AmplitudeEvent, extraData?: Record<strin
     }
 }
 
+export function logKlikkKnapp(tekst: string) {
+    return logAmplitudeEvent({
+        name: 'knapp klikket',
+        data: { tekst: tekst },
+    });
+}
+
+export function logAccordionAapnet(accordion: string) {
+    return logAmplitudeEvent({
+        name: 'accordion åpnet',
+        data: { tekst: accordion },
+    });
+}
+
+export function logValgtFilter(filterValgt: string) {
+    return logAmplitudeEvent({
+        name: 'filtervalg',
+        data: { filternavn: filterValgt },
+    });
+}
+
 export function logToggleSpraksjekkToggle(enabled: boolean) {
     return logAmplitudeEvent({ name: 'toggle', data: { text: 'Slå på klarspråkhjelp', enabled: enabled } });
 }
@@ -36,6 +57,23 @@ export function logReferatFullfort(analysis: TextCheckerResult, referatPublisert
         },
         { variant: 'D' },
     );
+}
+
+export function logModalLukket({
+    isDirty,
+    aktivitet,
+    modalType,
+    navType,
+}: {
+    isDirty: boolean;
+    aktivitet: string;
+    modalType: 'ny-aktivitet' | 'endre-aktivitet';
+    navType: 'onReqClose' | 'onReqBack';
+}) {
+    return logAmplitudeEvent({
+        name: 'modal lukket',
+        data: { isDirty, aktivitet: aktivitet.toLocaleLowerCase(), modalType, navType },
+    });
 }
 
 type Modify<T, U> = Omit<T, keyof U> & U;

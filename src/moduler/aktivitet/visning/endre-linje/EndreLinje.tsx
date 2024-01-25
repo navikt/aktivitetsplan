@@ -1,5 +1,6 @@
 import { Accordion, Heading } from '@navikt/ds-react';
-import React, { MouseEventHandler, ReactNode } from 'react';
+import React, { MouseEventHandler, ReactNode, useState } from 'react';
+import { logAccordionAapnet } from '../../../../amplitude/amplitude';
 
 interface Props {
     tittel: string;
@@ -13,10 +14,21 @@ interface Props {
 const EndreLinje = (props: Props) => {
     const { tittel, content, subtittel, open, onClick } = props;
 
+    const [openAccordion, setOpenAccordion] = useState(false);
+
+    function handleClick(event: React.MouseEvent) {
+        onClick(event);
+
+        if (!openAccordion) {
+            logAccordionAapnet(tittel);
+        }
+        setOpenAccordion(!openAccordion);
+    }
+
     return (
         <>
             <Accordion.Item open={open}>
-                <Accordion.Header onClick={onClick} className="items-center">
+                <Accordion.Header onClick={handleClick} className="items-center">
                     <div className="flex flex-row gap-4 items-center">
                         <div>
                             <Heading size="small" level="2">

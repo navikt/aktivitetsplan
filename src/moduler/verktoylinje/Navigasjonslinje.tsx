@@ -12,6 +12,7 @@ import { useErVeileder } from '../../Provider';
 import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
+import { logKlikkKnapp } from '../../amplitude/amplitude';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -43,6 +44,11 @@ function Navigasjonslinje() {
 
     const canPrint = useSelector(selectCanPrint);
 
+    function handleClick() {
+        loggEvent(APNE_OM_TJENESTEN);
+        logKlikkKnapp('Hva er aktivitetsplanen?');
+    }
+
     return (
         <div className="flex flex-col gap-y-2">
             <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
@@ -57,7 +63,7 @@ function Navigasjonslinje() {
                 <ReactRouterLink
                     to="informasjon"
                     className="text-text-action underline hover:no-underline"
-                    onClick={() => loggEvent(APNE_OM_TJENESTEN)}
+                    onClick={handleClick}
                 >
                     Hva er aktivitetsplanen?
                 </ReactRouterLink>

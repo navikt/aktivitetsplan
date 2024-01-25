@@ -1,10 +1,20 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
-import React from 'react';
+import React, { useState } from 'react';
+import { logAccordionAapnet } from '../../amplitude/amplitude';
 
 export function RettigheterPanel() {
+    const [open, setOpen] = useState(false);
+
+    function handleClick() {
+        if (!open) {
+            logAccordionAapnet('Rettigheter og personvern');
+        }
+        setOpen(!open);
+    }
+
     return (
         <Accordion.Item>
-            <Accordion.Header>
+            <Accordion.Header onClick={handleClick}>
                 <Heading level="2" size="small">
                     Rettigheter og personvern
                 </Heading>
