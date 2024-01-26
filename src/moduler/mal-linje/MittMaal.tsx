@@ -56,10 +56,10 @@ function MalContent(props: MalContentProps) {
     const erVeileder = useErVeileder();
     const navigate = useNavigate();
     const { malRoute } = useRoutes();
-    const endreMal = () => {
+    const endreMal = (tekst: string) => {
         navigate(malRoute());
         loggMittMalKlikk(erVeileder);
-        logKlikkKnapp('Endre mål');
+        logKlikkKnapp(tekst);
     };
 
     const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
@@ -76,7 +76,7 @@ function MalContent(props: MalContentProps) {
                         <BodyShort>Hva slags jobb ønsker du deg?</BodyShort>
                     </li>
                 </ul>
-                <Button onClick={endreMal} variant="secondary" size="small">
+                <Button onClick={() => endreMal('Sett et mål')} variant="secondary" size="small">
                     Sett et mål
                 </Button>
             </div>
@@ -86,7 +86,7 @@ function MalContent(props: MalContentProps) {
     return (
         <div className="flex flex-col items-start gap-4">
             <MalText disabled={disabled} mal={mal} />
-            <Button onClick={endreMal} variant="secondary" size="small">
+            <Button onClick={() => endreMal('Endre målet')} variant="secondary" size="small">
                 {viserInnevaerendePeriode ? 'Endre målet' : 'Se tidligere mål'}
             </Button>
         </div>
