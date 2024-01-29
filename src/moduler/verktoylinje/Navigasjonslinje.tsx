@@ -76,11 +76,13 @@ function Navigasjonslinje() {
                         Skriv ut
                     </ReactRouterLink>
                 )}
-                {!ER_PROD ? (
-                    <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver())}>
-                        Arkiver
-                    </Button>
-                ) : null}
+                {!ER_PROD
+                    ? erVeileder && (
+                          <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver())}>
+                              Journalfør
+                          </Button>
+                      )
+                    : null}
             </div>
             <Heading level="1" size="xlarge">
                 Aktivitetsplan
