@@ -90,3 +90,5 @@ export const sendForhaandsorienteringArenaAktivitet = (
 
 export const markerForhaandsorienteringSomLestArenaAktivitet = (aktivitetId: string): Promise<ArenaAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/arena/forhaandsorientering/lest?aktivitetId=${aktivitetId}`);
+
+export const arkiver = () => postAsJson(`${AKTIVITET_BASE_URL}/arkivering`, {});
