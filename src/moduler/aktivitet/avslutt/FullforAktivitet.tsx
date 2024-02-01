@@ -54,6 +54,7 @@ const FullforAktivitet = () => {
         <VisAdvarsel
             onSubmit={() => {
                 valgtAktivitet && doAvsluttOppfolging(valgtAktivitet, null);
+                navigate(hovedsideRoute());
             }}
         />
     );
