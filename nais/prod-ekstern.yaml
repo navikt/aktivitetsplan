@@ -43,6 +43,8 @@ spec:
     outbound:
       rules:
         - application: pto-proxy
+        - application: veilarblest
+          namespace: dab
       external:
         - host: navnob2c.b2clogin.com
         - host: veilarbmalverk.prod-fss-pub.nais.io
@@ -50,7 +52,6 @@ spec:
         - host: veilarboppfolging.prod-fss-pub.nais.io
         - host: veilarbdialog.prod-fss-pub.nais.io
         - host: veilarbaktivitet.prod-fss-pub.nais.io
-        - host: veilarblest.prod-fss-pub.nais.io
         - host: veilarbveileder.prod-fss-pub.nais.io
   gcp:
     buckets:
@@ -89,7 +90,16 @@ spec:
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
             { "fromPath": "/veilarbvedtakinfo", "toUrl": "https://veilarbvedtakinfo.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarblest", "toUrl": "https://veilarblest.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarblest", "namespace": "pto", "cluster": "prod-fss" } },
+            {
+              "fromPath": "/veilarblest",
+              "toUrl": "http://veilarblest.dab.svc.cluster.local",
+              "preserveFromPath": true,
+              "toApp": {
+                "name": "veilarblest",
+                "namespace": "dab",
+                "cluster": "prod-gcp"
+              }
+            },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
