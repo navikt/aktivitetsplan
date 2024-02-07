@@ -15,11 +15,12 @@ import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
 import { arkiver, selectArkivStatus } from './arkivering/arkivering-slice';
 import { Status } from '../../createGenericSlice';
+import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
-
+    const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode)
     const dispatch = useAppDispatch();
 
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(useSelector(selectArkivStatus));
@@ -77,8 +78,8 @@ function Navigasjonslinje() {
                     </ReactRouterLink>
                 )}
                 {!ER_PROD
-                    ? erVeileder && (
-                          <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver())}>
+                    ? (erVeileder && vistOppfolgingsperiode) && (
+                          <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver(vistOppfolgingsperiode.uuid))}>
                               Journalfør
                           </Button>
                       )

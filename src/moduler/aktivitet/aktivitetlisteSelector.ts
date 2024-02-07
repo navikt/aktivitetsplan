@@ -22,7 +22,7 @@ export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = crea
     (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter),
 );
 
-const selectVistOppfolgingsperiode = createSelector(
+export const selectVistOppfolgingsperiode = createSelector(
     selectHistoriskPeriode,
     selectOppfolgingsPerioder,
     (historiskPeriode, oppfolgingsPerioder) => {
