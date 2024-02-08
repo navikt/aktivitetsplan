@@ -16,8 +16,8 @@ const arkivSlice = createGenericSlice({
     reducers: {},
 });
 
-export const arkiver = createAsyncThunk(`${arkivSlice.name}/arkiver`, async () => {
-    return await Api.arkiver();
+export const arkiver = createAsyncThunk(`${arkivSlice.name}/arkiver`, async (oppfolgingsperiodeId: string) => {
+    return await Api.arkiver(oppfolgingsperiodeId);
 });
 
 export function selectArkivStatus(state: RootState) {
