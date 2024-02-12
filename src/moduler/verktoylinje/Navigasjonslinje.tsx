@@ -1,6 +1,6 @@
 import { Button, Heading, Link } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
-import { arkiver, selectArkivStatus } from './arkivering/arkivering-slice';
+import { hentPdfTilForhaandsvisning, selectArkivStatus } from './arkivering/arkivering-slice';
 import { Status } from '../../createGenericSlice';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 
@@ -79,7 +79,7 @@ function Navigasjonslinje() {
                 )}
                 {!ER_PROD
                     ? (erVeileder && vistOppfolgingsperiode) && (
-                          <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver(vistOppfolgingsperiode.uuid))}>
+                          <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode.uuid))}>
                               Journalfør
                           </Button>
                       )

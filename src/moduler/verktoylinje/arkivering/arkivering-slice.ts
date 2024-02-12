@@ -20,6 +20,10 @@ export const arkiver = createAsyncThunk(`${arkivSlice.name}/arkiver`, async (opp
     return await Api.arkiver(oppfolgingsperiodeId);
 });
 
+export const hentPdfTilForhaandsvisning = createAsyncThunk(`${arkivSlice.name}/forhaandsvisning`, async (oppfolgingsperiodeId: string) => {
+    return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId)
+});
+
 export function selectArkivStatus(state: RootState) {
     return state.data.arkiv.status;
 }
