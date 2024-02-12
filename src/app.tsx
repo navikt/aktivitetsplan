@@ -17,6 +17,7 @@ import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
+import { JournalforingPage } from './moduler/journalforing/JournalforingPage';
 
 const Router = ({ children }: { children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
@@ -42,6 +43,7 @@ function App({ Routes }: { Routes: any }) {
                     <Routes>
                         <Route path={`/`}>
                             <Route path="utskrift" element={<AktivitetsplanPrint />} />
+                            <Route path="journalforing" element={<JournalforingPage />} />
                             <Route path="" element={<Hovedside />}>
                                 <Route path={'mal'} element={<Aktivitetsmal />} />
                                 <Route path={'informasjon'} element={<InformasjonModal />} />
