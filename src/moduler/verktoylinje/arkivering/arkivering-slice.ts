@@ -6,6 +6,12 @@ import { RootState } from '../../../store';
 
 interface ArkivState {
     status: Status;
+    data:
+        | {
+              uuid: string;
+              pdf: string;
+          }
+        | undefined;
 }
 
 const arkivSlice = createGenericSlice({
@@ -20,12 +26,19 @@ export const arkiver = createAsyncThunk(`${arkivSlice.name}/arkiver`, async (opp
     return await Api.arkiver(oppfolgingsperiodeId);
 });
 
-export const hentPdfTilForhaandsvisning = createAsyncThunk(`${arkivSlice.name}/forhaandsvisning`, async (oppfolgingsperiodeId: string) => {
-    return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId)
-});
+export const hentPdfTilForhaandsvisning = createAsyncThunk(
+    `${arkivSlice.name}/forhaandsvisning`,
+    async (oppfolgingsperiodeId: string) => {
+        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId);
+    },
+);
 
 export function selectArkivStatus(state: RootState) {
     return state.data.arkiv.status;
+}
+
+export function selectPdf(state: RootState) {
+    return state.data.arkiv?.data?.pdf;
 }
 
 export const arkivReducer = arkivSlice.reducer;
