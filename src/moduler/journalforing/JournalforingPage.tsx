@@ -6,16 +6,22 @@ import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
-import { Document } from 'react-pdf';
-import { PDFViewer } from '@react-pdf/renderer';
+import { Document, pdfjs } from 'react-pdf';
 
-const createBlobUrl = (pdf: string) => {
-    const blob = new Blob([pdf], { type: 'application/pdf' });
-    console.log('blob' + blob);
-    const url = URL.createObjectURL(blob);
-    console.log('url' + url);
-    console.log('pdf' + pdf);
-    return url;
+const src = new URL('pdfjs-dist/build/pdf.worker.js', import.meta.url)
+pdfjs.GlobalWorkerOptions.workerSrc = src.toString()
+
+const createBlob = (pdf: string) => {
+    const base64WithoutPrefix = pdf.substr('data:application/pdf;base64,'.length);
+    const bytes = atob(base64WithoutPrefix);
+    let length = bytes.length;
+    const out = new Uint8Array(length);
+
+    while (length--) {
+        out[length] = bytes.charCodeAt(length);
+    }
+
+    return new Blob([out], { type: 'application/pdf' });
 };
 
 export const JournalforingPage = () => {
@@ -44,9 +50,11 @@ export const JournalforingPage = () => {
                             Forhåndsvisning
                         </Button>
                     </div>
-                    <div className="border">
-                        <Document file={createBlobUrl(pdf)} />
-                    </div>
+                    {pdf &&
+                        <div className="border">
+                            <Document file={window.URL.createObjectURL(createBlob(pdf))} />
+                        </div>
+                    }
                 </Innholdslaster>
             </div>
         </section>
