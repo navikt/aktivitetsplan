@@ -18,6 +18,7 @@ import AktivitetsplanPrint from './moduler/utskrift/AktivitetsplanPrint';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 import { JournalforingPage } from './moduler/journalforing/JournalforingPage';
+import { BasePage } from './BasePage';
 
 const Router = ({ children }: { children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
@@ -41,7 +42,7 @@ function App({ Routes }: { Routes: any }) {
             <div className="aktivitetsplan-wrapper w-full">
                 <Router>
                     <Routes>
-                        <Route path={`/`}>
+                        <Route path={`/`} element={<BasePage />}>
                             <Route path="utskrift" element={<AktivitetsplanPrint />} />
                             <Route path="journalforing" element={<JournalforingPage />} />
                             <Route path="" element={<Hovedside />}>
