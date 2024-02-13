@@ -40,11 +40,11 @@ export const JournalforingPage = () => {
         setNumPages(nextNumPages);
     };
 
-    const containerWidth = 600;
-    const maxWidth = 600;
+    const containerWidth = 800;
+    const maxWidth = 800;
 
     return (
-        <section className="grow flex flex-col justify-center items-center p-8">
+        <section className="grow flex flex-col justify-center items-center p-8 bg-gray-700 h-full sticky">
             <div className="w-full flex flex-col justify-center items-center">
                 <Innholdslaster avhengigheter={[]}>
                     <div className="px-12 print:border-none space-x-4">
@@ -64,7 +64,7 @@ export const JournalforingPage = () => {
                         </Button>
                     </div>
                     {pdf && (
-                        <div className="mt-4 border h-80 w-full">
+                        <div className="mt-4 border h-80">
                             <Document onLoadSuccess={onDocumentLoadSuccess} file={createBlob(pdf)}>
                                 {Array.from(new Array(numPages), (el, index) => (
                                     <Page
