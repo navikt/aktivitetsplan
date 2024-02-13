@@ -8,8 +8,6 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { Document, Page, pdfjs } from 'react-pdf';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
 
 // @ts-ignore
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
@@ -44,10 +42,10 @@ export const JournalforingPage = () => {
     const maxWidth = 800;
 
     return (
-        <section className="grow flex flex-col justify-center items-center p-8 bg-gray-700 h-full sticky">
-            <div className="w-full flex flex-col justify-center items-center">
+        <section className="grow flex flex-col justify-center items-center p-8  h-full sticky">
+            <div className="w-full flex flex-col justify-center items-center bg-gray-400">
                 <Innholdslaster avhengigheter={[]}>
-                    <div className="px-12 print:border-none space-x-4">
+                    <div className="px-12 print:border-none space-x-4 bg-white flex pb-4 self-stretch">
                         <Button
                             disabled={arkiverer}
                             variant="secondary"
@@ -64,8 +62,12 @@ export const JournalforingPage = () => {
                         </Button>
                     </div>
                     {pdf && (
-                        <div className="mt-4 border h-80">
-                            <Document onLoadSuccess={onDocumentLoadSuccess} file={createBlob(pdf)}>
+                        <div className="mt-4 max-h-full">
+                            <Document
+                                className="space-y-4 overflow"
+                                onLoadSuccess={onDocumentLoadSuccess}
+                                file={createBlob(pdf)}
+                            >
                                 {Array.from(new Array(numPages), (el, index) => (
                                     <Page
                                         key={`page_${index + 1}`}
