@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { Document, pdfjs } from 'react-pdf';
+// @ts-ignore
+import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
 
-const src = new URL('/pdf.worker.mjs', import.meta.url);
-pdfjs.GlobalWorkerOptions.workerSrc = src.toString();
+pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
 const createBlob = (pdf: string) => {
     const blob = new Blob([atob(pdf)], { type: 'application/pdf' });
