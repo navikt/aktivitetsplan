@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "Aktivitetsplan",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "dev:gh-pages": "VITE_USE_HASH_ROUTER=true vite",
