@@ -8,7 +8,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { Document, pdfjs } from 'react-pdf';
 
-const src = new URL('/pdf.worker.js', import.meta.url);
+const src = new URL('/pdf.worker.mjs', import.meta.url);
 pdfjs.GlobalWorkerOptions.workerSrc = src.toString();
 
 const createBlob = (pdf: string) => {

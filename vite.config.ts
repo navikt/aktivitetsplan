@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
     console.log('DistPath', pdfjsDistPath);
     const pdfWorkerPath = path.join(pdfjsDistPath, 'build', 'pdf.worker.mjs');
     console.log('workerPath', pdfWorkerPath);
-    fs.copyFileSync(pdfWorkerPath, './public/pdf.worker.js');
+    fs.copyFileSync(pdfWorkerPath, './public/pdf.worker.mjs');
 
     return {
         build: {
