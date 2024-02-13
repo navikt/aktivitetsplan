@@ -17,19 +17,16 @@ import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
 const createBlob = (pdf: string) => {
-    const blob = new Blob([atob(pdf)], { type: 'application/pdf' });
-    return window.URL.createObjectURL(blob);
+    const bytes = atob(pdf);
+    let length = bytes.length;
+    const out = new Uint8Array(length);
 
-    // const base64WithoutPrefix = pdf.substr('data:application/pdf;base64,'.length);
-    // const bytes = atob(base64WithoutPrefix);
-    // let length = bytes.length;
-    // const out = new Uint8Array(length);
-    //
-    // while (length--) {
-    //     out[length] = bytes.charCodeAt(length);
-    // }
-    //
-    // return new Blob([out], { type: 'application/pdf' });
+    while (length--) {
+        out[length] = bytes.charCodeAt(length);
+    }
+
+    const blob = new Blob([out], { type: 'application/pdf' });
+    return window.URL.createObjectURL(blob);
 };
 
 export const JournalforingPage = () => {
