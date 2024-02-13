@@ -8,20 +8,23 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { Document, pdfjs } from 'react-pdf';
 
-const src = new URL('pdfjs-dist/build/pdf.worker.js', import.meta.url)
-pdfjs.GlobalWorkerOptions.workerSrc = src.toString()
+const src = new URL('pdfjs-dist/build/pdf.worker.js', import.meta.url);
+pdfjs.GlobalWorkerOptions.workerSrc = src.toString();
 
 const createBlob = (pdf: string) => {
-    const base64WithoutPrefix = pdf.substr('data:application/pdf;base64,'.length);
-    const bytes = atob(base64WithoutPrefix);
-    let length = bytes.length;
-    const out = new Uint8Array(length);
+    const blob = new Blob([atob(pdf)], { type: 'application/pdf' });
+    return window.URL.createObjectURL(blob);
 
-    while (length--) {
-        out[length] = bytes.charCodeAt(length);
-    }
-
-    return new Blob([out], { type: 'application/pdf' });
+    // const base64WithoutPrefix = pdf.substr('data:application/pdf;base64,'.length);
+    // const bytes = atob(base64WithoutPrefix);
+    // let length = bytes.length;
+    // const out = new Uint8Array(length);
+    //
+    // while (length--) {
+    //     out[length] = bytes.charCodeAt(length);
+    // }
+    //
+    // return new Blob([out], { type: 'application/pdf' });
 };
 
 export const JournalforingPage = () => {
@@ -50,11 +53,11 @@ export const JournalforingPage = () => {
                             Forhåndsvisning
                         </Button>
                     </div>
-                    {pdf &&
+                    {pdf && (
                         <div className="border">
-                            <Document file={window.URL.createObjectURL(createBlob(pdf))} />
+                            <Document file={pdf} />
                         </div>
-                    }
+                    )}
                 </Innholdslaster>
             </div>
         </section>
