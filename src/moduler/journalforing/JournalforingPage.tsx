@@ -8,6 +8,8 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { Document, Page, pdfjs } from 'react-pdf';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 
 // @ts-ignore
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
