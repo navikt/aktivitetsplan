@@ -11,7 +11,7 @@ interface ArkivState {
         | {
               uuid: string;
               pdf: string;
-              dataHentet: string;
+              forhaandsvisningOpprettet: string;
           }
         | undefined;
 }
@@ -25,9 +25,15 @@ const arkivSlice = createGenericSlice({
 });
 
 export const arkiver = createAsyncThunk(
-    `${arkivSlice.name}/arkiver`,
-    async ({ oppfolgingsperiodeId, dataHentet }: { oppfolgingsperiodeId: string; dataHentet: string }) => {
-        return await Api.arkiver(oppfolgingsperiodeId, dataHentet);
+    `${arkivSlice.name}/arkiv`,
+    async ({
+        oppfolgingsperiodeId,
+        forhaandsvisningOpprettet,
+    }: {
+        oppfolgingsperiodeId: string;
+        forhaandsvisningOpprettet: string;
+    }) => {
+        return await Api.arkiver(oppfolgingsperiodeId, forhaandsvisningOpprettet);
     },
 );
 
@@ -46,8 +52,8 @@ export function selectPdf(state: RootState) {
     return state.data.arkiv?.data?.pdf;
 }
 
-export function selectDataHentetForForhaandsvisning(state: RootState) {
-    return state.data.arkiv?.data?.dataHentet;
+export function selectForhaandsvisningOpprettet(state: RootState) {
+    return state.data.arkiv?.data?.forhaandsvisningOpprettet;
 }
 
 export const arkivReducer = arkivSlice.reducer;

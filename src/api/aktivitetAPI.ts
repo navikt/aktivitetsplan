@@ -91,9 +91,9 @@ export const sendForhaandsorienteringArenaAktivitet = (
 export const markerForhaandsorienteringSomLestArenaAktivitet = (aktivitetId: string): Promise<ArenaAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/arena/forhaandsorientering/lest?aktivitetId=${aktivitetId}`);
 
-export const arkiver = (oppfolgingsperiodeId: string, dataHentet: string) =>
+export const arkiver = (oppfolgingsperiodeId: string, forhaandsvisningOpprettet: string) =>
     postAsJson(`${AKTIVITET_BASE_URL}/arkivering/journalfor?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
-        dataHentet,
+        forhaandsvisningOpprettet,
     });
 export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string) =>
     fetchToJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}`);
