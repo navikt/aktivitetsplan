@@ -5,6 +5,7 @@ import {
     arkiver,
     selectArkivStatus,
     selectPdf,
+    selectDataHentetForForhaandsvisning,
 } from '../verktoylinje/arkivering/arkivering-slice';
 import { Button } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
@@ -37,6 +38,7 @@ export const JournalforingPage = () => {
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(useSelector(selectArkivStatus));
     const pdf = useSelector(selectPdf);
+    const dataHentet = useSelector(selectDataHentetForForhaandsvisning);
 
     const [numPages, setNumPages] = useState(0);
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
@@ -54,7 +56,7 @@ export const JournalforingPage = () => {
                         <Button
                             disabled={arkiverer}
                             variant="secondary"
-                            onClick={() => dispatch(arkiver(vistOppfolgingsperiode!!.uuid))}
+                            onClick={() => dispatch(arkiver(vistOppfolgingsperiode!!.uuid, dataHentet!!))}
                         >
                             Journalfør
                         </Button>
