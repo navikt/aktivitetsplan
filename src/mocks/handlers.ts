@@ -156,7 +156,8 @@ export const handlers = [
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
-    rest.post('/veilarbaktivitet/api/arkivering/forhaandsvisning', jsonResponse(pdfForhaandsvisning)),
+    rest.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', jsonResponse(pdfForhaandsvisning)),
+    rest.post('/veilarbaktivitet/api/arkivering/journalfor', jsonResponse(pdfForhaandsvisning)),
 
     // veilarblest
     rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),

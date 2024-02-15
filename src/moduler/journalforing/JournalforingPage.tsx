@@ -1,6 +1,11 @@
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import React, { useState } from 'react';
-import { hentPdfTilForhaandsvisning, selectArkivStatus, selectPdf } from '../verktoylinje/arkivering/arkivering-slice';
+import {
+    hentPdfTilForhaandsvisning,
+    arkiver,
+    selectArkivStatus,
+    selectPdf,
+} from '../verktoylinje/arkivering/arkivering-slice';
 import { Button } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
@@ -49,7 +54,7 @@ export const JournalforingPage = () => {
                         <Button
                             disabled={arkiverer}
                             variant="secondary"
-                            onClick={() => dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode!!.uuid))}
+                            onClick={() => dispatch(arkiver(vistOppfolgingsperiode!!.uuid))}
                         >
                             Journalfør
                         </Button>
