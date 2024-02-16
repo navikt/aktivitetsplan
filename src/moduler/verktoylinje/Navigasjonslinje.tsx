@@ -1,6 +1,6 @@
-import { Button, Heading, Link } from '@navikt/ds-react';
+import { Heading, Link } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
@@ -13,17 +13,13 @@ import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
-import { arkiver, selectArkivStatus } from './arkivering/arkivering-slice';
-import { Status } from '../../createGenericSlice';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
-    const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode)
+    const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
-
-    const arkiverer = [Status.PENDING, Status.RELOADING].includes(useSelector(selectArkivStatus));
 
     useEffect(() => {
         const doHentDialog = () => dispatch(hentDialoger());
@@ -78,10 +74,11 @@ function Navigasjonslinje() {
                     </ReactRouterLink>
                 )}
                 {!ER_PROD
-                    ? (erVeileder && vistOppfolgingsperiode) && (
-                          <Button disabled={arkiverer} variant="secondary" onClick={() => dispatch(arkiver(vistOppfolgingsperiode.uuid))}>
-                              Journalfør
-                          </Button>
+                    ? erVeileder &&
+                      vistOppfolgingsperiode && (
+                          <ReactRouterLink to="journalforing" className="text-text-action underline hover:no-underline">
+                              Journalføring
+                          </ReactRouterLink>
                       )
                     : null}
             </div>

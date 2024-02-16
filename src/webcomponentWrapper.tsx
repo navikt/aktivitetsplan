@@ -8,6 +8,8 @@ import { LocalStorageElement, settSessionStorage } from './mocks/demo/localStora
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
 import tailwindCss from './tailwind.css?inline';
+import pdfCssAnnotationCss from 'react-pdf/dist/Page/AnnotationLayer.css?inline';
+import pdfCssTextCss from 'react-pdf/dist/Page/TextLayer.css?inline';
 import { createRoot, Root } from 'react-dom/client';
 import {
     clearReduxCache,
@@ -38,7 +40,7 @@ export class DabAktivitetsplan extends HTMLElement {
 
         // Load styles under this shadowDom-node, not root element
         const styleElem = document.createElement('style');
-        styleElem.innerHTML = dsStyles + tailwindCss + lessCss + modulesCss;
+        styleElem.innerHTML = dsStyles + tailwindCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;

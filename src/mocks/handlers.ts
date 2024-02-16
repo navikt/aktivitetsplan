@@ -31,6 +31,7 @@ import { getPerson, getPostadresse } from './data/person';
 import getNivaa4 from './data/tilgang';
 import { veilederMe } from './data/Veileder';
 import { veilederTilgang } from './data/veilederTilgang';
+import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
 import {
     aktivitetFeilet,
     arenaFeilet,
@@ -155,6 +156,8 @@ export const handlers = [
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
+    rest.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', jsonResponse(pdfForhaandsvisning)),
+    rest.post('/veilarbaktivitet/api/arkivering/journalfor', jsonResponse(pdfForhaandsvisning)),
 
     // veilarblest
     rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),

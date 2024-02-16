@@ -37,16 +37,14 @@ const Hovedside = () => {
             <div className="flex items-center flex-col h-full">
                 <HovedsideFeilmelding />
                 <Nivaa4Feilmelding />
-                <OppfolgingStatus>
-                    <InformasjonsHenting />
-                    <Varslinger />
-                    <div className="container flex flex-col gap-y-6">
-                        <Navigasjonslinje />
-                        <Maal />
-                        <Verktoylinje />
-                    </div>
-                    <Aktivitetstavle />
-                </OppfolgingStatus>
+                <InformasjonsHenting />
+                <Varslinger />
+                <div className="container flex flex-col gap-y-6">
+                    <Navigasjonslinje />
+                    <Maal />
+                    <Verktoylinje />
+                </div>
+                <Aktivitetstavle />
                 <Outlet />
             </div>
         </main>
