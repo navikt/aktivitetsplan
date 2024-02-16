@@ -12,26 +12,7 @@ import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
-import { Document, Page, pdfjs } from 'react-pdf';
-import type { PDFDocumentProxy } from 'pdfjs-dist';
-
-// @ts-ignore
-import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
-
-pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
-
-const createBlob = (pdf: string) => {
-    const bytes = atob(pdf);
-    let length = bytes.length;
-    const out = new Uint8Array(length);
-
-    while (length--) {
-        out[length] = bytes.charCodeAt(length);
-    }
-
-    const blob = new Blob([out], { type: 'application/pdf' });
-    return window.URL.createObjectURL(blob);
-};
+import { PdfViewer } from './PdfViewer';
 
 export const JournalforingPage = () => {
     const dispatch = useAppDispatch();
@@ -40,19 +21,11 @@ export const JournalforingPage = () => {
     const pdf = useSelector(selectPdf);
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
 
-    const [numPages, setNumPages] = useState(0);
-    const onDocumentLoadSuccess = ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
-        setNumPages(nextNumPages);
-    };
-
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
             dispatch(arkiver({ oppfolgingsperiodeId: vistOppfolgingsperiode!!.uuid, forhaandsvisningOpprettet }));
         }
     };
-
-    const containerWidth = 800;
-    const maxWidth = 800;
 
     return (
         <section className="grow flex flex-col justify-center items-center p-8  h-full sticky">
@@ -74,23 +47,7 @@ export const JournalforingPage = () => {
                             Forhåndsvisning
                         </Button>
                     </div>
-                    {pdf && (
-                        <div className="mt-4 max-h-full">
-                            <Document
-                                className="space-y-4 overflow"
-                                onLoadSuccess={onDocumentLoadSuccess}
-                                file={createBlob(pdf)}
-                            >
-                                {Array.from(new Array(numPages), (el, index) => (
-                                    <Page
-                                        key={`page_${index + 1}`}
-                                        pageNumber={index + 1}
-                                        width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
-                                    />
-                                ))}
-                            </Document>
-                        </div>
-                    )}
+                    {pdf && <PdfViewer pdf={pdf} />}
                 </Innholdslaster>
             </div>
         </section>
