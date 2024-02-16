@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, HashRouter, Navigate, Route, useLocation, useParams } from 'react-router-dom';
 
-import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE } from './constant';
+import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE, ER_PROD } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
 import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
 import Hovedside from './hovedside/Hovedside';
@@ -19,6 +19,7 @@ import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 import { JournalforingPage } from './moduler/journalforing/JournalforingPage';
 import { BasePage } from './BasePage';
+import { useErVeileder } from './Provider';
 
 const Router = ({ children }: { children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
@@ -37,6 +38,8 @@ const ErrorCleanerOnRouteChange = () => {
 };
 
 function App({ Routes }: { Routes: any }) {
+    const erVeileder = useErVeileder();
+
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
@@ -44,7 +47,7 @@ function App({ Routes }: { Routes: any }) {
                     <Routes>
                         <Route path={`/`} element={<BasePage />}>
                             <Route path="utskrift" element={<AktivitetsplanPrint />} />
-                            <Route path="journalforing" element={<JournalforingPage />} />
+                            {!ER_PROD && erVeileder && <Route path="journalforing" element={<JournalforingPage />} />}
                             <Route path="" element={<Hovedside />}>
                                 <Route path={'mal'} element={<Aktivitetsmal />} />
                                 <Route path={'informasjon'} element={<InformasjonModal />} />
