@@ -34,8 +34,8 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
     const maxWidth = 800;
 
     return (
-        <div className="mt-4 max-h-full">
-            <Document className="space-y-4 overflow" onLoadSuccess={onDocumentLoadSuccess} file={createBlob(pdf)}>
+        <div className="mt-4 container pt-4 pb-4">
+            <Document className="space-y-4" onLoadSuccess={onDocumentLoadSuccess} file={createBlob(pdf)}>
                 {Array.from(new Array(numPages), (el, index) => (
                     <Page
                         key={`page_${index + 1}`}
