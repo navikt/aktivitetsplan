@@ -1,5 +1,5 @@
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { hentPdfTilForhaandsvisning, selectArkivStatus, selectPdf } from '../verktoylinje/arkivering/arkivering-slice';
 import { useSelector } from 'react-redux';
 import { PdfViewer } from './PdfViewer';
@@ -20,19 +20,23 @@ export const JournalforingPage = () => {
         dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode!!.uuid));
     }, []);
 
-    return arkiverer ? (
-        <Loader />
-    ) : (
-        <section className="flex flex-row py-8">
-            <Sidebar />
+    return (
+        <div className="flex flex-col grow ">
+            {arkiverer ? (
+                <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
+            ) : (
+                <section className="flex flex-row py-8">
+                    <Sidebar />
 
-            {pdf && (
-                <Innholdslaster avhengigheter={[arkivStatus]}>
-                    <div className="w-full h-full grow bg-gray-300 overflow-y-scroll max-h-100vh pb-4">
-                        {<PdfViewer pdf={pdf} />}
-                    </div>
-                </Innholdslaster>
+                    {pdf && (
+                        <Innholdslaster avhengigheter={[arkivStatus]}>
+                            <div className="h-full grow bg-gray-300 overflow-y-scroll max-h-100vh pb-4">
+                                {<PdfViewer pdf={pdf} />}
+                            </div>
+                        </Innholdslaster>
+                    )}
+                </section>
             )}
-        </section>
+        </div>
     );
 };

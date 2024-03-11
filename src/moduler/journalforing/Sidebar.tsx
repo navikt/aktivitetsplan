@@ -28,7 +28,7 @@ const Sidebar: FunctionComponent = () => {
     };
 
     return (
-        <div className="items-start container space-y-4">
+        <div className="items-start container space-y-4 max-w-96">
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
                 <ReactRouterLink

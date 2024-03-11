@@ -4,6 +4,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 // @ts-ignore
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
 import React, { useState } from 'react';
+import { Loader } from '@navikt/ds-react';
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 

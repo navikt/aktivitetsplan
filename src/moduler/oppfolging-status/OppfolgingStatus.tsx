@@ -59,7 +59,7 @@ const OppfolgingStatus = ({ children }: Props) => {
 
     return (
         <Innholdslaster className="mt-8" avhengigheter={avhengigheter}>
-            <div className="w-full">
+            <div className="w-full flex">
                 <VidereSendBrukereEllerRenderChildren {...props}>{children}</VidereSendBrukereEllerRenderChildren>
             </div>
         </Innholdslaster>
