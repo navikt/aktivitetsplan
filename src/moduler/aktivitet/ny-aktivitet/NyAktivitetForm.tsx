@@ -70,6 +70,7 @@ const NyAktivitetForm = () => {
     };
 
     function onRequestClose() {
+        console.log('onrequestclose kjørt');
         const isItReallyDirty = dirtyRef.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             // Assign to const before navigating to avoid race-condition

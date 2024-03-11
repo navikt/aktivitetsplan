@@ -1,4 +1,6 @@
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
+import { a as ResponseResolver } from 'msw/lib/core/HttpResponse-_514VQ9z';
+import { HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 
 export const mockfnr = '12345678910';
 
@@ -58,3 +60,9 @@ export const jsonResponse = (response: object | null | boolean | ((req: RestRequ
         return res(ctx.json(response));
     };
 };
+
+export const jsonResponse2 = (): ResponseResolver<
+    HttpRequestResolverExtras<Params>,
+    RequestBodyType,
+    ResponseBodyType
+> => {};
