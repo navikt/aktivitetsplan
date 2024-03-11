@@ -25,7 +25,7 @@ export const JournalforingPage = () => {
             {arkiverer ? (
                 <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
             ) : (
-                <section className="flex flex-row py-8">
+                <section className="flex flex-row">
                     <Sidebar />
 
                     {pdf && (

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BodyShort, Button, Heading, Label, Select } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import {
     arkiver,
@@ -13,7 +13,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
-import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
+import { formaterDatoKortManed, formaterDatoManed } from '../../utils/dateUtils';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ const Sidebar: FunctionComponent = () => {
     };
 
     return (
-        <div className="items-start container space-y-4 max-w-96">
+        <div className="items-start container space-y-4 max-w-96 py-8">
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
                 <ReactRouterLink
@@ -51,7 +51,7 @@ const Sidebar: FunctionComponent = () => {
                                 value={periode.uuid}
                                 selected={vistOppfolgingsperiode!!.uuid === periode.uuid}
                             >
-                                {periode.startDato} - {periode.sluttDato}
+                                {formaterDatoKortManed(periode.startDato)} - {formaterDatoKortManed(periode.sluttDato)}
                             </option>
                         ))}
                 </Select>
