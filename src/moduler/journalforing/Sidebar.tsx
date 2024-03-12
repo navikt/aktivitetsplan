@@ -23,7 +23,6 @@ const Sidebar: FunctionComponent = () => {
     const arkivStatus = useSelector(selectArkivStatus);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const { hovedsideRoute } = useRoutes();
-    const [valgtOppfolgingsperiode, setValgtOppfolgingsperiode] = useState(vistOppfolgingsperiode);
 
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
@@ -36,7 +35,7 @@ const Sidebar: FunctionComponent = () => {
     };
 
     return (
-        <div className="items-start container space-y-4 max-w-96 py-8 px-8">
+        <div className="items-start space-y-4 max-w-96 py-8 px-8">
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
                 <ReactRouterLink
