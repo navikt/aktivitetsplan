@@ -11,34 +11,24 @@ import { Loader } from '@navikt/ds-react';
 
 export const JournalforingPage = () => {
     const arkivStatus = useSelector(selectArkivStatus);
-    const [lasterSide, setLasterSide] = useState(true);
     const pdf = useSelector(selectPdf);
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode!!.uuid)).then(() => {
-            setLasterSide(false);
-        });
+        dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode!!.uuid));
     }, []);
 
     return (
         <div className="flex flex-col grow ">
-            {lasterSide ? (
-                <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
-            ) : (
-                <section className="flex md:flex-row flex-col">
-                    <Sidebar />
-
-                    {pdf && (
-                        <Innholdslaster avhengigheter={[arkivStatus]}>
-                            <div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
-                                {<PdfViewer pdf={pdf} />}
-                            </div>
-                        </Innholdslaster>
-                    )}
-                </section>
-            )}
+            <section className="flex md:flex-row flex-col">
+                <Sidebar />
+                <Innholdslaster avhengigheter={[arkivStatus]}>
+                    <div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
+                        {<PdfViewer pdf={pdf} />}
+                    </div>
+                </Innholdslaster>
+            </section>
         </div>
     );
 };

@@ -12,7 +12,7 @@ import { selectArkivStatus } from '../verktoylinje/arkivering/arkivering-slice';
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
 interface PdfProps {
-    pdf: string;
+    pdf: string | undefined;
 }
 
 const createBlob = (pdf: string) => {
@@ -41,7 +41,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
 
     return (
         <div className="mt-4 container pt-4 pb-4">
-            {arkiverer ? (
+            {!pdf || arkiverer ? (
                 <div className="min-h-[calc(100vh-180px)] flex justify-center">
                     <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
                 </div>
