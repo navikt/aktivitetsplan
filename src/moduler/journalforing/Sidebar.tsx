@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { BodyShort, Button, Heading, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import {
@@ -23,6 +23,7 @@ const Sidebar: FunctionComponent = () => {
     const arkivStatus = useSelector(selectArkivStatus);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const { hovedsideRoute } = useRoutes();
+    const [valgtOppfolgingsperiode, setValgtOppfolgingsperiode] = useState(vistOppfolgingsperiode);
 
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
@@ -30,8 +31,12 @@ const Sidebar: FunctionComponent = () => {
         }
     };
 
+    const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(hentPdfTilForhaandsvisning(e.target.value));
+    };
+
     return (
-        <div className="items-start container space-y-4 max-w-96 py-8">
+        <div className="items-start container space-y-4 max-w-96 py-8 px-8">
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
                 <ReactRouterLink
@@ -42,7 +47,7 @@ const Sidebar: FunctionComponent = () => {
                     Til aktivitetsplanen
                 </ReactRouterLink>
                 <BodyShort>Aktiviteter og dialogtråder tilknyttet KVP blir ikke inkludert i journalføringen.</BodyShort>
-                <Select label="Oppfølgingsperiode">
+                <Select label="Oppfølgingsperiode" onChange={onEndretOppfolgingsperiode}>
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.startDato) - Date.parse(a.startDato))
                         .map((periode, index) => (
@@ -61,13 +66,6 @@ const Sidebar: FunctionComponent = () => {
                     onClick={() => sendTilArkiv()}
                 >
                     Journalfør
-                </Button>
-                <Button
-                    disabled={arkiverer}
-                    variant="primary"
-                    onClick={() => dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode!!.uuid))}
-                >
-                    Forhåndsvisning
                 </Button>
             </div>
         </div>
