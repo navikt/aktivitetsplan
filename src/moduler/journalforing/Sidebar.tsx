@@ -46,7 +46,11 @@ const Sidebar: FunctionComponent = () => {
                     Til aktivitetsplanen
                 </ReactRouterLink>
                 <BodyShort>Aktiviteter og dialogtråder tilknyttet KVP blir ikke inkludert i journalføringen.</BodyShort>
-                <Select label="Oppfølgingsperiode" onChange={onEndretOppfolgingsperiode}>
+                <Select
+                    label="Oppfølgingsperiode"
+                    onChange={onEndretOppfolgingsperiode}
+                    disabled={arkiverer || !forhaandsvisningOpprettet}
+                >
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.startDato) - Date.parse(a.startDato))
                         .map((periode, index) => (

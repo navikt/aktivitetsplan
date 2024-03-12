@@ -5,6 +5,9 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
 import React, { useState } from 'react';
 import { Loader } from '@navikt/ds-react';
+import { Status } from '../../createGenericSlice';
+import { useSelector } from 'react-redux';
+import { selectArkivStatus } from '../verktoylinje/arkivering/arkivering-slice';
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
@@ -26,6 +29,8 @@ const createBlob = (pdf: string) => {
 };
 
 export const PdfViewer = ({ pdf }: PdfProps) => {
+    const arkivStatus = useSelector(selectArkivStatus);
+    const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const [numPages, setNumPages] = useState(0);
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
         setNumPages(nextNumPages);
@@ -36,15 +41,19 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
 
     return (
         <div className="mt-4 container pt-4 pb-4">
-            <Document className="space-y-4" onLoadSuccess={onDocumentLoadSuccess} file={createBlob(pdf)}>
-                {Array.from(new Array(numPages), (el, index) => (
-                    <Page
-                        key={`page_${index + 1}`}
-                        pageNumber={index + 1}
-                        width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
-                    />
-                ))}
-            </Document>
+            {arkiverer ? (
+                <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
+            ) : (
+                <Document className="space-y-4" onLoadSuccess={onDocumentLoadSuccess} file={createBlob(pdf)}>
+                    {Array.from(new Array(numPages), (el, index) => (
+                        <Page
+                            key={`page_${index + 1}`}
+                            pageNumber={index + 1}
+                            width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
+                        />
+                    ))}
+                </Document>
+            )}
         </div>
     );
 };
