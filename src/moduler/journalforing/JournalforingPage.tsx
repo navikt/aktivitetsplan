@@ -27,7 +27,7 @@ export const JournalforingPage = () => {
             {lasterSide ? (
                 <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
             ) : (
-                <section className="flex flex-row">
+                <section className="flex md:flex-row flex-col">
                     <Sidebar />
 
                     {pdf && (
