@@ -32,7 +32,7 @@ export const JournalforingPage = () => {
 
                     {pdf && (
                         <Innholdslaster avhengigheter={[arkivStatus]}>
-                            <div className="h-full grow bg-bg-subtle overflow-y-scroll max-h-100vh pb-4">
+                            <div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
                                 {<PdfViewer pdf={pdf} />}
                             </div>
                         </Innholdslaster>
