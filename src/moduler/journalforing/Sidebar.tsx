@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { BodyShort, Button, Heading, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import {
@@ -13,7 +13,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
-import { formaterDatoKortManed, formaterDatoManed } from '../../utils/dateUtils';
+import { formaterDatoKortManed } from '../../utils/dateUtils';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ const Sidebar: FunctionComponent = () => {
     };
 
     return (
-        <div className="items-start space-y-4 max-w-96 py-8 px-8">
+        <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white sticky top-0 h-screen">
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
                 <ReactRouterLink
