@@ -5,6 +5,8 @@ on:
     secrets:
       READER_TOKEN:
         required: true
+      NAIS_WORKLOAD_IDENTITY_PROVIDER:
+        required: true
     inputs:
       kommando:
         required: true
