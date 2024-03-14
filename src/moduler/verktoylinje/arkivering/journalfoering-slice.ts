@@ -9,7 +9,11 @@ const journalfoeringSlice = createGenericSlice({
     initialState: {
         status: Status.NOT_STARTED as Status,
     },
-    reducers: {},
+    reducers: {
+        resettStatus: (state) => {
+            state.status = Status.NOT_STARTED;
+        },
+    },
 });
 
 export const journalfoer = createAsyncThunk(
@@ -30,3 +34,4 @@ export function selectJournalfoeringstatus(state: RootState) {
 }
 
 export const journalfoeringReducer = journalfoeringSlice.reducer;
+export const { resettStatus } = journalfoeringSlice.actions;

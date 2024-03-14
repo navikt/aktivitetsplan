@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed } from '../../utils/dateUtils';
-import { journalfoer } from '../verktoylinje/arkivering/journalfoering-slice';
+import { journalfoer, resetState, resettStatus } from '../verktoylinje/arkivering/journalfoering-slice';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -31,6 +31,7 @@ const Sidebar: FunctionComponent = () => {
     };
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(resettStatus());
         dispatch(hentPdfTilForhaandsvisning(e.target.value));
     };
 
