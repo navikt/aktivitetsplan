@@ -6,6 +6,7 @@ import {
     selectForhaandsvisningStatus,
     selectForhaandsvisningOpprettet,
     selectSistJournalfort,
+    hentSistJournalfort,
 } from '../verktoylinje/arkivering/forhaandsvisning-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routes';
@@ -34,6 +35,7 @@ const Sidebar: FunctionComponent = () => {
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(resettStatus());
+        dispatch(hentSistJournalfort(e.target.value));
         dispatch(hentPdfTilForhaandsvisning(e.target.value));
     };
 

@@ -159,7 +159,7 @@ export const handlers = [
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
     rest.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', delayed(1000, jsonResponse(pdfForhaandsvisning))),
     rest.post('/veilarbaktivitet/api/arkivering/journalfor', delayed(1000, jsonResponse(pdfForhaandsvisning))),
-    rest.get('/veilarbaktivitet/api/arkivering/sistJournalfort', jsonResponse(sistJournalfort)),
+    rest.get('/veilarbaktivitet/api/arkivering/sistJournalfort/:oppfolgingsperiodeId', jsonResponse(sistJournalfort)),
 
     // veilarblest
     rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),
