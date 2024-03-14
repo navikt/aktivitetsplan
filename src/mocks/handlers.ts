@@ -22,6 +22,7 @@ import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
 import { innstillingsHistorikk } from './data/innstillings-historikk';
 import { lest } from './data/lest';
+import { sistJournalfort } from './data/sistJournalfort';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { hentMalverkMedType } from './data/malverk';
 import { me } from './data/me';
@@ -158,6 +159,7 @@ export const handlers = [
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
     rest.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', delayed(1000, jsonResponse(pdfForhaandsvisning))),
     rest.post('/veilarbaktivitet/api/arkivering/journalfor', delayed(1000, jsonResponse(pdfForhaandsvisning))),
+    rest.get('/veilarbaktivitet/api/arkivering/sistJournalfort', jsonResponse(sistJournalfort)),
 
     // veilarblest
     rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),

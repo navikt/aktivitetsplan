@@ -1,8 +1,10 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import * as Api from '../../../api/aktivitetAPI';
 import createGenericSlice, { Status } from '../../../createGenericSlice';
 import { RootState } from '../../../store';
+import { hentSistJournalfoert } from '../../../api/aktivitetAPI';
+import { response } from 'msw';
 
 interface ForhaandsvisningState {
     status: Status;
@@ -11,6 +13,7 @@ interface ForhaandsvisningState {
               uuid: string;
               pdf: string;
               forhaandsvisningOpprettet: string;
+              sistJournalfoert: string;
           }
         | undefined;
 }
@@ -20,7 +23,15 @@ const forhaandsvisningSlice = createGenericSlice({
     initialState: {
         status: Status.NOT_STARTED,
     } as ForhaandsvisningState,
-    reducers: {},
+    reducers: {
+        hentSistJournalfoert: (state, oppfolgingsperiodeId: PayloadAction<string>) => {
+            Api.hentSistJournalfoert(oppfolgingsperiodeId.payload).then((response) => {
+                response.status == 200 && state.data
+                    ? (state.data.sistJournalfoert = response.body.sistJournalfoert)
+                    : undefined;
+            });
+        },
+    },
 });
 
 export const hentPdfTilForhaandsvisning = createAsyncThunk(
@@ -40,6 +51,10 @@ export function selectPdf(state: RootState) {
 
 export function selectForhaandsvisningOpprettet(state: RootState) {
     return state.data.arkivForhaandsvisning?.data?.forhaandsvisningOpprettet;
+}
+
+export function selectSistJournalfort(state: RootState) {
+    return state.data.arkivForhaandsvisning?.data?.sistJournalfoert;
 }
 
 export const forhaandsvisningReducer = forhaandsvisningSlice.reducer;

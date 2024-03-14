@@ -97,3 +97,6 @@ export const journalfoerAktivitetsplanOgDialog = (oppfolgingsperiodeId: string, 
     });
 export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string) =>
     fetchToJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}`);
+
+export const hentSistJournalfoert = (oppfolgingsperiodeId: string) =>
+    fetchToJson(`${AKTIVITET_BASE_URL}/arkivering/sistJournalfort/${oppfolgingsperiodeId}`);

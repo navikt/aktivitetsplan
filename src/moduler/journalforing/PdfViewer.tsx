@@ -45,7 +45,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
         <div className="mt-4 container pt-4 pb-4">
             {journalførtStatus === Status.OK && arkivStatus == Status.OK && (
                 <Alert variant="success" role="alert">
-                    Aktivitetsplanen er journalført.
+                    Aktivitetsplanen ble journalført.
                 </Alert>
             )}
             {!pdf || arkiverer ? (

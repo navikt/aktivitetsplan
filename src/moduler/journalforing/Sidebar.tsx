@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { BodyShort, Button, Heading, Select } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, Label, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import {
     hentPdfTilForhaandsvisning,
     selectForhaandsvisningStatus,
     selectForhaandsvisningOpprettet,
+    selectSistJournalfort,
 } from '../verktoylinje/arkivering/forhaandsvisning-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routes';
@@ -13,13 +14,14 @@ import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed } from '../../utils/dateUtils';
-import { journalfoer, resetState, resettStatus } from '../verktoylinje/arkivering/journalfoering-slice';
+import { journalfoer, resettStatus } from '../verktoylinje/arkivering/journalfoering-slice';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const oppfolgingsperioder = useSelector(selectOppfolgingsPerioder);
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
+    const sistJournalfort = useSelector(selectSistJournalfort);
     const arkivStatus = useSelector(selectForhaandsvisningStatus);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const { hovedsideRoute } = useRoutes();
@@ -64,6 +66,10 @@ const Sidebar: FunctionComponent = () => {
                             </option>
                         ))}
                 </Select>
+                <BodyShort>
+                    <Label>Sist journalført</Label>
+                    {sistJournalfort ? sistJournalfort : 'Aldri'}
+                </BodyShort>
                 <Button
                     disabled={arkiverer || !forhaandsvisningOpprettet}
                     variant="primary"
