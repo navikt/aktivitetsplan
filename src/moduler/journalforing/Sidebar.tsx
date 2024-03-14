@@ -8,7 +8,7 @@ import {
     selectForhaandsvisningOpprettet,
 } from '../verktoylinje/arkivering/arkivering-slice';
 import { Status } from '../../createGenericSlice';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/useRoutes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';

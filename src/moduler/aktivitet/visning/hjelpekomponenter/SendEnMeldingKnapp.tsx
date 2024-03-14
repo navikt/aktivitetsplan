@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { useErVeileder } from '../../../../Provider';
-import { useRoutes } from '../../../../routes';
+import { useRoutes } from '../../../../routing/useRoutes';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
 import { logKlikkKnapp } from '../../../../amplitude/amplitude';

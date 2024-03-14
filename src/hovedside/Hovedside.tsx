@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { Await, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
@@ -13,12 +13,15 @@ import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-s
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
-import { useRoutes } from '../routes';
+import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
+import { Heading, Loader } from '@navikt/ds-react';
 
 const Hovedside = () => {
     const navigate = useNavigate();
+    const data = useLoaderData();
     const { aktivitetRoute } = useRoutes();
+
     useEventListener('visAktivitetsplan', (event) => {
         const aktivitetId = event.detail as string | undefined;
         if (!aktivitetId) return;
@@ -26,28 +29,41 @@ const Hovedside = () => {
     });
 
     const dispatch = useAppDispatch();
-
     useEffect(() => {
-        dispatch(hentDialoger());
+        // dispatch(hentDialoger());
         dispatch(hentEskaleringsvarsel());
     }, []);
 
     return (
-        <main id="main" className="hovedside">
-            <div className="flex items-center flex-col h-full">
-                <HovedsideFeilmelding />
-                <Nivaa4Feilmelding />
-                <InformasjonsHenting />
-                <Varslinger />
-                <div className="container flex flex-col gap-y-6">
-                    <Navigasjonslinje />
-                    <Maal />
-                    <Verktoylinje />
-                </div>
-                <Aktivitetstavle />
-                <Outlet />
-            </div>
-        </main>
+        <Suspense fallback={<Fallback />}>
+            <Await resolve={data}>
+                <main id="main" className="hovedside">
+                    <div className="flex items-center flex-col h-full">
+                        <HovedsideFeilmelding />
+                        <Nivaa4Feilmelding />
+                        <InformasjonsHenting />
+                        <Varslinger />
+                        <div className="container flex flex-col gap-y-6">
+                            <Navigasjonslinje />
+                            <Maal />
+                            <Verktoylinje />
+                        </div>
+                        <Aktivitetstavle />
+                        <Outlet />
+                    </div>
+                </main>
+            </Await>
+        </Suspense>
+    );
+};
+
+const Fallback = () => {
+    console.log('Fallback');
+    return (
+        <div>
+            <Heading size="large">Laster aktivtietesplanene</Heading>
+            <Loader />
+        </div>
     );
 };
 

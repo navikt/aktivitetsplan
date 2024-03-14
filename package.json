@@ -121,9 +121,6 @@
     "type": "git",
     "url": "git://github.com/navikt/aktivitetsplan.git"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
       "style": "module",

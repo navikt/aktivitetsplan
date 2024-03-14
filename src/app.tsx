@@ -1,5 +1,14 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, HashRouter, Navigate, Route, useLocation, useParams } from 'react-router-dom';
+import {
+    BrowserRouter,
+    createBrowserRouter,
+    HashRouter,
+    Navigate,
+    Route,
+    RouterProvider,
+    useLocation,
+    useParams,
+} from 'react-router-dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID, ER_INTERN_FLATE, ER_PROD } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
@@ -19,7 +28,8 @@ import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
 import { JournalforingPage } from './moduler/journalforing/JournalforingPage';
 import { BasePage } from './BasePage';
-import { useErVeileder } from './Provider';
+import { useErVeileder, useFnr } from './Provider';
+import { Dispatch } from './store';
 
 const Router = ({ children }: { children: React.ReactNode }) => {
     if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
@@ -37,36 +47,18 @@ const ErrorCleanerOnRouteChange = () => {
     return null;
 };
 
-function App({ Routes }: { Routes: any }) {
-    const erVeileder = useErVeileder();
-
+function App({
+    createRoutesForUser,
+}: {
+    createRoutesForUser: (dispatch: Dispatch, fnr?: string) => ReturnType<typeof createBrowserRouter>;
+}) {
+    const fnr = useFnr();
+    const dispatch = useAppDispatch();
+    const routes = createRoutesForUser(dispatch, fnr);
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
-                <Router>
-                    <Routes>
-                        <Route path={`/`} element={<BasePage />}>
-                            <Route path="utskrift" element={<AktivitetsplanPrint />} />
-                            {!ER_PROD && erVeileder && <Route path="journalforing" element={<JournalforingPage />} />}
-                            <Route path="" element={<Hovedside />}>
-                                <Route path={'mal'} element={<Aktivitetsmal />} />
-                                <Route path={'informasjon'} element={<InformasjonModal />} />
-                                <Route path={'aktivitet'}>
-                                    <Route path={`ny`} element={<LeggTilForm />} />
-                                    <Route path={`ny/*`} element={<NyAktivitetForm />} />
-                                    <Route path={`vis/:id`} element={<AktivitetvisningContainer />} />
-                                    <Route path={`endre/:id`} element={<EndreAktivitet />} />
-                                    <Route path={`avbryt/:id`} element={<AvbrytAktivitet />} />
-                                    <Route path={`fullfor/:id`} element={<FullforAktivitet />} />
-                                </Route>
-                            </Route>
-                        </Route>
-                        {/* Brukes for å ikke brekke lenker fra dialoger til aktiviteter inn fnr er helt ute av urler */}
-                        <Route path="/:fnr/aktivitet/vis/:id" element={<RedirectToAktivitetWithoutFnr />} />
-                        <Route path="*" element={<Navigate replace to={`/`} />} />
-                    </Routes>
-                    <ErrorCleanerOnRouteChange />
-                </Router>
+                <RouterProvider router={routes} />
                 <HiddenIf hidden={ER_INTERN_FLATE}>
                     <Timeoutbox />
                 </HiddenIf>
@@ -75,10 +67,5 @@ function App({ Routes }: { Routes: any }) {
         </div>
     );
 }
-
-const RedirectToAktivitetWithoutFnr = () => {
-    const params = useParams();
-    return <Navigate replace to={`/aktivitet/vis/` + params.id} />;
-};
 
 export default App;
