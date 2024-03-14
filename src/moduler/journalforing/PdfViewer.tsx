@@ -7,8 +7,7 @@ import React, { useState } from 'react';
 import { Alert, Loader } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
-import { selectForhaandsvisningStatus } from '../verktoylinje/arkivering/forhaandsvisning-slice';
-import { selectJournalfoeringstatus } from '../verktoylinje/arkivering/journalfoering-slice';
+import { selectForhaandsvisningStatus, selectJournalføringstatus } from '../verktoylinje/arkivering/arkiv-slice';
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
@@ -31,7 +30,7 @@ const createBlob = (pdf: string) => {
 
 export const PdfViewer = ({ pdf }: PdfProps) => {
     const arkivStatus = useSelector(selectForhaandsvisningStatus);
-    const journalførtStatus = useSelector(selectJournalfoeringstatus);
+    const journalførtStatus = useSelector(selectJournalføringstatus);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const [numPages, setNumPages] = useState(0);
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }: PDFDocumentProxy): void => {

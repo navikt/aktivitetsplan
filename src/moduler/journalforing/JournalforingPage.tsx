@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-    hentPdfTilForhaandsvisning,
-    hentSistJournalfort,
-    selectPdf,
-} from '../verktoylinje/arkivering/forhaandsvisning-slice';
+import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
 import { PdfViewer } from './PdfViewer';
 import Sidebar from './Sidebar';
@@ -16,7 +12,6 @@ export const JournalforingPage = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(hentSistJournalfort(vistOppfolgingsperiode!!.uuid));
         dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode!!.uuid));
     }, []);
 

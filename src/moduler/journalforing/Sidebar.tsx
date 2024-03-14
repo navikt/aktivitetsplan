@@ -6,8 +6,8 @@ import {
     selectForhaandsvisningStatus,
     selectForhaandsvisningOpprettet,
     selectSistJournalfort,
-    hentSistJournalfort,
-} from '../verktoylinje/arkivering/forhaandsvisning-slice';
+    journalfør,
+} from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
@@ -15,7 +15,6 @@ import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed } from '../../utils/dateUtils';
-import { journalfoer, resettStatus } from '../verktoylinje/arkivering/journalfoering-slice';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -29,13 +28,11 @@ const Sidebar: FunctionComponent = () => {
 
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
-            dispatch(journalfoer({ oppfolgingsperiodeId: vistOppfolgingsperiode!!.uuid, forhaandsvisningOpprettet }));
+            dispatch(journalfør({ oppfolgingsperiodeId: vistOppfolgingsperiode!!.uuid, forhaandsvisningOpprettet }));
         }
     };
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(resettStatus());
-        dispatch(hentSistJournalfort(e.target.value));
         dispatch(hentPdfTilForhaandsvisning(e.target.value));
     };
 
@@ -68,10 +65,8 @@ const Sidebar: FunctionComponent = () => {
                             </option>
                         ))}
                 </Select>
-                <BodyShort>
-                    <Label>Sist journalført</Label>
-                    {sistJournalfort ? sistJournalfort : 'Aldri'}
-                </BodyShort>
+                <Label>Sist journalført</Label>
+                <BodyShort>{sistJournalfort ? sistJournalfort : 'Aldri'}</BodyShort>
                 <Button
                     disabled={arkiverer || !forhaandsvisningOpprettet}
                     variant="primary"

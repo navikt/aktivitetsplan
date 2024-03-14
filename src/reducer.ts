@@ -19,8 +19,7 @@ import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-slice';
 import tilgangReducer from './moduler/tilgang/tilgang-slice';
 import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-slice';
 import veilederReducer from './moduler/veileder/veileder-slice';
-import { forhaandsvisningReducer } from './moduler/verktoylinje/arkivering/forhaandsvisning-slice';
-import { journalfoeringReducer } from './moduler/verktoylinje/arkivering/journalfoering-slice';
+import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';
 
 const reducer = {
     data: combineReducers({
@@ -35,8 +34,7 @@ const reducer = {
         tilgang: tilgangReducer,
         versjoner: versjonReducer,
         malverk: malverkReducer,
-        arkivForhaandsvisning: forhaandsvisningReducer,
-        arkivJournalfoering: journalfoeringReducer,
+        arkiv: arkivReducer,
         lest: lestReducer,
         auth: authReducer,
         veileder: veilederReducer,
