@@ -44,6 +44,6 @@ jobs:
           team: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          no-cache-paths: ${{ inputs.bucket }}/build/asset-manifest.json
+          no_cache_paths: ${{ inputs.bucket }}/build/asset-manifest.json
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
