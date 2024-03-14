@@ -91,7 +91,7 @@ export const sendForhaandsorienteringArenaAktivitet = (
 export const markerForhaandsorienteringSomLestArenaAktivitet = (aktivitetId: string): Promise<ArenaAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/arena/forhaandsorientering/lest?aktivitetId=${aktivitetId}`);
 
-export const arkiver = (oppfolgingsperiodeId: string, forhaandsvisningOpprettet: string) =>
+export const journalfoerAktivitetsplanOgDialog = (oppfolgingsperiodeId: string, forhaandsvisningOpprettet: string) =>
     postAsJson(`${AKTIVITET_BASE_URL}/arkivering/journalfor?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
         forhaandsvisningOpprettet,
     });

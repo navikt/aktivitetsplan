@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { hentPdfTilForhaandsvisning, selectArkivStatus, selectPdf } from '../verktoylinje/arkivering/arkivering-slice';
+import {
+    hentPdfTilForhaandsvisning,
+    selectForhaandsvisningStatus,
+    selectPdf,
+} from '../verktoylinje/arkivering/forhaandsvisning-slice';
 import { useSelector } from 'react-redux';
 import { PdfViewer } from './PdfViewer';
 import Sidebar from './Sidebar';
@@ -7,14 +11,12 @@ import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelecto
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 
 export const JournalforingPage = () => {
-    const arkivStatus = useSelector(selectArkivStatus);
     const pdf = useSelector(selectPdf);
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(hentPdfTilForhaandsvisning(vistOppfolgingsperiode!!.uuid));
-        console.log('arkivstatus: ', arkivStatus);
     }, []);
 
     return (

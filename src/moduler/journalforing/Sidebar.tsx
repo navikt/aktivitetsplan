@@ -2,11 +2,10 @@ import React, { FunctionComponent } from 'react';
 import { BodyShort, Button, Heading, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import {
-    arkiver,
     hentPdfTilForhaandsvisning,
-    selectArkivStatus,
+    selectForhaandsvisningStatus,
     selectForhaandsvisningOpprettet,
-} from '../verktoylinje/arkivering/arkivering-slice';
+} from '../verktoylinje/arkivering/forhaandsvisning-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
@@ -14,19 +13,20 @@ import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed } from '../../utils/dateUtils';
+import { journalfoer } from '../verktoylinje/arkivering/journalfoering-slice';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const oppfolgingsperioder = useSelector(selectOppfolgingsPerioder);
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
-    const arkivStatus = useSelector(selectArkivStatus);
+    const arkivStatus = useSelector(selectForhaandsvisningStatus);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const { hovedsideRoute } = useRoutes();
 
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
-            dispatch(arkiver({ oppfolgingsperiodeId: vistOppfolgingsperiode!!.uuid, forhaandsvisningOpprettet }));
+            dispatch(journalfoer({ oppfolgingsperiodeId: vistOppfolgingsperiode!!.uuid, forhaandsvisningOpprettet }));
         }
     };
 
