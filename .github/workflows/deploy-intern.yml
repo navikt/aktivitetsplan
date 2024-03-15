@@ -5,6 +5,8 @@ on:
     secrets:
       READER_TOKEN:
         required: true
+      NAIS_WORKLOAD_IDENTITY_PROVIDER:
+        required: true
     inputs:
       kommando:
         required: true
@@ -12,10 +14,13 @@ on:
       bucket:
         required: true
         type: string
+      NAIS_MANAGEMENT_PROJECT_ID:
+        required: true
+        type: string
 
 jobs:
   deploy:
-    name: Deploy application to dev
+    name: Deploy application to CDN
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
@@ -44,6 +49,6 @@ jobs:
           team: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           no_cache_paths: ${{ inputs.bucket }}/build/asset-manifest.json
+          project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
