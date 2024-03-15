@@ -14,7 +14,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
-import { formaterDatoKortManed } from '../../utils/dateUtils';
+import { formaterDatoKortManed, formaterDatoManed, formaterTid } from '../../utils/dateUtils';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -65,8 +65,14 @@ const Sidebar: FunctionComponent = () => {
                             </option>
                         ))}
                 </Select>
-                <Label>Sist journalført</Label>
-                <BodyShort>{sistJournalfort ? sistJournalfort : 'Aldri'}</BodyShort>
+                <div>
+                    <Label>Sist journalført</Label>
+                    <BodyShort>
+                        {sistJournalfort
+                            ? formaterDatoKortManed(sistJournalfort) + ' kl. ' + formaterTid(sistJournalfort)
+                            : 'Aldri'}
+                    </BodyShort>
+                </div>
                 <Button
                     disabled={arkiverer || !forhaandsvisningOpprettet}
                     variant="primary"
