@@ -41,9 +41,9 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
     const maxWidth = 800;
 
     return (
-        <div className="mt-4 container pt-4 pb-4">
+        <div className="mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
             {journalførtStatus === Status.OK && arkivStatus == Status.OK && (
-                <Alert variant="success" role="alert">
+                <Alert variant="success" role="alert" className="absolute z-10 mt-10">
                     Aktivitetsplanen ble journalført.
                 </Alert>
             )}
@@ -53,7 +53,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
                 </div>
             ) : (
                 <Document
-                    className="space-y-4 min-h-[calc(100vh-180px)]"
+                    className="space-y-4 min-h-[calc(100vh-180px)] z-0"
                     onLoadSuccess={onDocumentLoadSuccess}
                     file={createBlob(pdf)}
                     loading=""
