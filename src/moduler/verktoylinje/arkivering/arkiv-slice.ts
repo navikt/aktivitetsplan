@@ -1,8 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import * as Api from '../../../api/aktivitetAPI';
 import { Status } from '../../../createGenericSlice';
 import { RootState } from '../../../store';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { Root } from 'react-dom/client';
 
 interface ArkivState {
     forhaandsvisningStatus: Status;
@@ -15,6 +17,7 @@ interface ArkivState {
               sistJournalført: string | undefined;
           }
         | undefined;
+    oppfølgingsperiodeIdForArkivering: string | undefined;
 }
 
 const arkivSlice = createSlice({
@@ -22,7 +25,11 @@ const arkivSlice = createSlice({
     initialState: {
         forhaandsvisningStatus: Status.NOT_STARTED,
     } as ArkivState,
-    reducers: {},
+    reducers: {
+        settOppfølgingsperiodeIdForArkivering: (state, action: PayloadAction<string>) => {
+            state.oppfølgingsperiodeIdForArkivering = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(hentPdfTilForhaandsvisning.pending, (state) => {
             state.forhaandsvisningStatus =
@@ -50,14 +57,23 @@ const arkivSlice = createSlice({
 
 export const journalfør = createAsyncThunk(
     `${arkivSlice.name}/journalfoering`,
-    async ({
-        oppfolgingsperiodeId,
-        forhaandsvisningOpprettet,
-    }: {
-        oppfolgingsperiodeId: string;
-        forhaandsvisningOpprettet: string;
-    }) => {
-        return await Api.journalfoerAktivitetsplanOgDialog(oppfolgingsperiodeId, forhaandsvisningOpprettet);
+    async (
+        {
+            forhaandsvisningOpprettet,
+        }: {
+            forhaandsvisningOpprettet: string;
+        },
+        thunkAPI,
+    ) => {
+        const state = thunkAPI.getState() as RootState;
+        const oppfølgingsperiodeIdForArkivering = state.data.arkiv?.oppfølgingsperiodeIdForArkivering;
+
+        if (oppfølgingsperiodeIdForArkivering) {
+            return await Api.journalfoerAktivitetsplanOgDialog(
+                oppfølgingsperiodeIdForArkivering,
+                forhaandsvisningOpprettet,
+            );
+        }
     },
 );
 
@@ -67,8 +83,13 @@ export function selectJournalføringstatus(state: RootState) {
 
 export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
-    async (oppfolgingsperiodeId: string) => {
-        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId);
+    async (_, thunkAPI) => {
+        const state = thunkAPI.getState() as RootState;
+        const oppfølgingsperiodeIdForArkivering = state.data.arkiv?.oppfølgingsperiodeIdForArkivering;
+
+        if (oppfølgingsperiodeIdForArkivering) {
+            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering);
+        }
     },
 );
 
@@ -89,3 +110,5 @@ export function selectSistJournalfort(state: RootState) {
 }
 
 export const arkivReducer = arkivSlice.reducer;
+
+export const { settOppfølgingsperiodeIdForArkivering } = arkivSlice.actions;

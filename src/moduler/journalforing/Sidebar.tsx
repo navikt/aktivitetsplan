@@ -7,6 +7,7 @@ import {
     selectForhaandsvisningOpprettet,
     selectSistJournalfort,
     journalfør,
+    settOppfølgingsperiodeIdForArkivering,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routes';
@@ -28,16 +29,17 @@ const Sidebar: FunctionComponent = () => {
 
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
-            dispatch(journalfør({ oppfolgingsperiodeId: vistOppfolgingsperiode!!.uuid, forhaandsvisningOpprettet }));
+            dispatch(journalfør({ forhaandsvisningOpprettet }));
         }
     };
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(hentPdfTilForhaandsvisning(e.target.value));
+        dispatch(settOppfølgingsperiodeIdForArkivering(e.target.value));
+        dispatch(hentPdfTilForhaandsvisning());
     };
 
     return (
-        <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white sticky top-0 h-screen">
+        <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 h-screen">
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
                 <ReactRouterLink
