@@ -18,6 +18,7 @@ import Aktivitetstavle from './tavle/Aktivitetstavle';
 import { Heading, Loader } from '@navikt/ds-react';
 
 const Hovedside = () => {
+    console.log('Hovedside');
     const navigate = useNavigate();
     const data = useLoaderData();
     const { aktivitetRoute } = useRoutes();

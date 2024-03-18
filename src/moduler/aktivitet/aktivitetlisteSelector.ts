@@ -16,6 +16,7 @@ import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriod
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
 import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { Status } from '../../createGenericSlice';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],

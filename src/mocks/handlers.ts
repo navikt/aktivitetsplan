@@ -42,6 +42,7 @@ import {
     oppfFeilet,
 } from './demo/localStorage';
 import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
+import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -90,19 +91,7 @@ export const handlers = [
     rest.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(getAktivitetFeiler, () => {
-            const perioder = Array.from(
-                new Set(aktiviteterData.aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)),
-            );
-            return {
-                data: {
-                    perioder: perioder.map((periodeId) => ({
-                        id: periodeId,
-                        aktiviteter: aktiviteterData.aktiviteter.filter(
-                            (aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId,
-                        ),
-                    })),
-                },
-            };
+            return aktivitestplanResponse(); // Default aktiviteter
         }),
     ),
     rest.get(
@@ -177,3 +166,17 @@ export const handlers = [
     // veilarbmalverk
     rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverkMedType)),
 ];
+
+export const aktivitestplanResponse = (
+    { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter },
+) => {
+    const perioder = Array.from(new Set(aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)));
+    return {
+        data: {
+            perioder: perioder.map((periodeId) => ({
+                id: periodeId,
+                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId),
+            })),
+        },
+    };
+};

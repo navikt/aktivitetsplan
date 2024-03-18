@@ -48,7 +48,7 @@ export const createRouterWithWrapper =
         return wrapper ? wrapper(routingConfig(dispatch, fnr)) : createBrowserRouter(routingConfig(dispatch, fnr));
     };
 
-const routingConfig: (dispatch: Dispatch, fnr?: string) => RouteObject[] = (dispatch, fnr) => [
+export const routingConfig: (dispatch: Dispatch, fnr?: string) => RouteObject[] = (dispatch, fnr) => [
     {
         path: '/',
         element: <Hovedside />,

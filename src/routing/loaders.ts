@@ -27,6 +27,7 @@ export const initialPageLoader =
         const arenaAktiviteter = dispatch(hentArenaAktiviteter()).then((it) => it.payload);
         const niva4 = fnr ? dispatch(hentNivaa4(fnr)).then((it) => it.payload) : Promise.resolve();
         const eskaleringsvarsel = dispatch(hentEskaleringsvarsel());
+        console.log('Loading data');
         return defer({
             data: Promise.all([
                 mal,
