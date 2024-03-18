@@ -20,8 +20,8 @@ jobs:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
     secrets:
-      READER_TOKEN: ${{ secrets.READER_TOKEN }}
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
 
   dev-intern:
     name: Deploy application to dev intern
