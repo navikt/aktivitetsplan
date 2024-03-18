@@ -1,3 +1,4 @@
+import { captureConsoleIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
 import { Breadcrumb, Event } from '@sentry/types';
 import React from 'react';
@@ -89,7 +90,7 @@ Sentry.init({
                 // /(\.dev)?nav.no\/veilarblest/,
             ],
         }),
-        new CaptureConsoleIntegration({
+        captureConsoleIntegration({
             // array of methods that should be captured
             // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
             levels: ['warn', 'error'],

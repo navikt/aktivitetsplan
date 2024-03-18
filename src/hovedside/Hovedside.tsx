@@ -14,7 +14,6 @@ import Aktivitetstavle from './tavle/Aktivitetstavle';
 import { Heading, Loader } from '@navikt/ds-react';
 
 const Hovedside = () => {
-    console.log('Hovedside');
     const navigate = useNavigate();
     const data = useLoaderData();
     const { aktivitetRoute } = useRoutes();
@@ -49,10 +48,9 @@ const Hovedside = () => {
 };
 
 const Fallback = () => {
-    console.log('Fallback');
     return (
         <div>
-            <Heading size="large">Laster aktivtietesplanene</Heading>
+            <Heading size="large">Laster aktivtietesplanen</Heading>
             <Loader />
         </div>
     );
