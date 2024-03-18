@@ -10,11 +10,11 @@ on:
         required: true
         type: string
     secrets:
-      GCS_SA_KEY:
-        required: true
       SENTRY_AUTH_TOKEN:
         required: false
       READER_TOKEN:
+        required: true
+      GCS_SA_KEY:
         required: true
 
 jobs:
@@ -22,12 +22,12 @@ jobs:
     name: Deploy to GCP-bucket
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           registry-url: "https://npm.pkg.github.com"
           cache: 'npm'
       - name: Install dependencies
@@ -39,11 +39,17 @@ jobs:
       - name: Build application
         run: ${{ inputs.kommando }}
       - name: Gcloud auth
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCS_SA_KEY }}'
       - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud@v0
+        uses: google-github-actions/setup-gcloud@v2
+      - name: Upload files to GCS
+        uses: 'google-github-actions/upload-cloud-storage@v2'
+        with:
+          path: 'build'
+          destination: ${{ inputs.BUCKET }}
+
       - name: Upload files to GCS
         run: gsutil -m rsync -r build "$BUCKET"
         env:
