@@ -9,15 +9,12 @@ on:
       bucket:
         required: true
         type: string
-      NAIS_MANAGEMENT_PROJECT_ID:
-        required: true
-        type: string
     secrets:
       SENTRY_AUTH_TOKEN:
         required: false
       READER_TOKEN:
         required: true
-      NAIS_WORKLOAD_IDENTITY_PROVIDER:
+      GCS_SA_KEY:
         required: true
 
 jobs:
@@ -44,8 +41,7 @@ jobs:
       - name: Gcloud auth
         uses: google-github-actions/auth@v2
         with:
-          project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
-          workload_identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          credentials_json: '${{ secrets.GCS_SA_KEY }}'
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
       - name: Upload files to GCS

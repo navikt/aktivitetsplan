@@ -19,10 +19,9 @@ jobs:
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev
-      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
 
   dev-intern:
     name: Deploy application to dev intern
