@@ -9,12 +9,15 @@ on:
       bucket:
         required: true
         type: string
-    secrets:
-      GCS_SA_KEY:
+      NAIS_MANAGEMENT_PROJECT_ID:
         required: true
+        type: string
+    secrets:
       SENTRY_AUTH_TOKEN:
         required: false
       READER_TOKEN:
+        required: true
+      NAIS_WORKLOAD_IDENTITY_PROVIDER:
         required: true
 
 jobs:
@@ -22,12 +25,12 @@ jobs:
     name: Deploy to GCP-bucket
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           registry-url: "https://npm.pkg.github.com"
           cache: 'npm'
       - name: Install dependencies
@@ -39,9 +42,10 @@ jobs:
       - name: Build application
         run: ${{ inputs.kommando }}
       - name: Gcloud auth
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GCS_SA_KEY }}'
+          project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
+          workload_identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v0
       - name: Upload files to GCS
