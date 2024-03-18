@@ -19,7 +19,6 @@ const promise = new Promise((resolve) => {
 
 const Hovedside = () => {
     const navigate = useNavigate();
-    const { hovedsideData } = useLoaderData();
     const { aktivitetRoute } = useRoutes();
 
     useEventListener('visAktivitetsplan', (event) => {
@@ -29,23 +28,30 @@ const Hovedside = () => {
     });
 
     return (
+        <main id="main" className="hovedside">
+            <div className="flex items-center flex-col h-full">
+                <HovedsideFeilmelding />
+                <Nivaa4Feilmelding />
+                <InformasjonsHenting />
+                <Varslinger />
+                <div className="container flex flex-col gap-y-6">
+                    <Navigasjonslinje />
+                    <Maal />
+                    <Verktoylinje />
+                </div>
+                <Aktivitetstavle />
+                <Outlet />
+            </div>
+        </main>
+    );
+};
+
+export const PageLoader = () => {
+    const { hovedsideData } = useLoaderData();
+    return (
         <Suspense fallback={<Fallback />}>
             <Await resolve={hovedsideData}>
-                <main id="main" className="hovedside">
-                    <div className="flex items-center flex-col h-full">
-                        <HovedsideFeilmelding />
-                        <Nivaa4Feilmelding />
-                        <InformasjonsHenting />
-                        <Varslinger />
-                        <div className="container flex flex-col gap-y-6">
-                            <Navigasjonslinje />
-                            <Maal />
-                            <Verktoylinje />
-                        </div>
-                        <Aktivitetstavle />
-                        <Outlet />
-                    </div>
-                </main>
+                <Outlet />
             </Await>
         </Suspense>
     );

@@ -11,7 +11,7 @@ import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import React, { useEffect } from 'react';
 import { fjernDismissableErrors } from '../moduler/feilmelding/feil-slice';
 import { Dispatch } from '../store';
-import Hovedside from '../hovedside/Hovedside';
+import Hovedside, { PageLoader } from '../hovedside/Hovedside';
 import { initialPageLoader, malLoader } from './loaders';
 import LeggTilForm from '../moduler/aktivitet/ny-aktivitet/LeggTilForm';
 import NyAktivitetForm from '../moduler/aktivitet/ny-aktivitet/NyAktivitetForm';
@@ -51,26 +51,32 @@ export const createRouterWithWrapper =
 export const routingConfig: (dispatch: Dispatch, fnr?: string) => RouteObject[] = (dispatch, fnr) => [
     {
         path: '/',
-        element: <Hovedside />,
+        element: <PageLoader />, // Dont reload essential data on every page navigation
         loader: initialPageLoader(dispatch, fnr),
         children: [
-            { path: 'mal', loader: malLoader(dispatch, fnr), element: <Mal /> },
-            { path: 'informasjon', element: <InformasjonModal /> },
             {
-                path: 'aktivitet',
+                path: '/',
+                element: <Hovedside />,
                 children: [
-                    { path: 'ny', element: <LeggTilForm /> },
-                    { path: 'ny/*', element: <NyAktivitetForm /> },
-                    { path: 'vis/:id', element: <AktivitetvisningContainer /> },
-                    { path: 'endre/:id', element: <EndreAktivitet /> },
-                    { path: 'avbryt/:id', element: <AvbrytAktivitet /> },
-                    { path: 'fullfor/:id', element: <FullforAktivitet /> },
+                    { path: 'mal', loader: malLoader(dispatch, fnr), element: <Mal /> },
+                    { path: 'informasjon', element: <InformasjonModal /> },
+                    {
+                        path: 'aktivitet',
+                        children: [
+                            { path: 'ny', element: <LeggTilForm /> },
+                            { path: 'ny/*', element: <NyAktivitetForm /> },
+                            { path: 'vis/:id', element: <AktivitetvisningContainer /> },
+                            { path: 'endre/:id', element: <EndreAktivitet /> },
+                            { path: 'avbryt/:id', element: <AvbrytAktivitet /> },
+                            { path: 'fullfor/:id', element: <FullforAktivitet /> },
+                        ],
+                    },
                 ],
             },
+            { path: 'utskrift', loader: initialPageLoader(dispatch, fnr), element: <AktivitetsplanPrint /> },
+            { path: 'journalforing', loader: initialPageLoader(dispatch, fnr), element: <JournalforingPage /> },
+            { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
+            { path: '*', element: <Navigate replace to={`/`} /> },
         ],
     },
-    { path: 'utskrift', loader: initialPageLoader(dispatch, fnr), element: <AktivitetsplanPrint /> },
-    { path: 'journalforing', loader: initialPageLoader(dispatch, fnr), element: <JournalforingPage /> },
-    { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
-    { path: '*', element: <Navigate replace to={`/`} /> },
 ];
