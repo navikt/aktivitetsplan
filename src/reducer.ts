@@ -19,7 +19,7 @@ import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-slice';
 import tilgangReducer from './moduler/tilgang/tilgang-slice';
 import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-slice';
 import veilederReducer from './moduler/veileder/veileder-slice';
-import { arkivReducer } from './moduler/verktoylinje/arkivering/arkivering-slice';
+import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';
 
 const reducer = {
     data: combineReducers({
