@@ -11,11 +11,15 @@ import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
-import { Heading, Loader } from '@navikt/ds-react';
+import { Loader } from '@navikt/ds-react';
+
+const promise = new Promise((resolve) => {
+    setTimeout(resolve, 10000);
+});
 
 const Hovedside = () => {
     const navigate = useNavigate();
-    const data = useLoaderData();
+    const { hovedsideData } = useLoaderData();
     const { aktivitetRoute } = useRoutes();
 
     useEventListener('visAktivitetsplan', (event) => {
@@ -26,7 +30,7 @@ const Hovedside = () => {
 
     return (
         <Suspense fallback={<Fallback />}>
-            <Await resolve={data}>
+            <Await resolve={hovedsideData}>
                 <main id="main" className="hovedside">
                     <div className="flex items-center flex-col h-full">
                         <HovedsideFeilmelding />
@@ -49,9 +53,8 @@ const Hovedside = () => {
 
 const Fallback = () => {
     return (
-        <div>
-            <Heading size="large">Laster aktivtietesplanen</Heading>
-            <Loader />
+        <div className="flex flex-col items-center justify-center min-h-svh">
+            <Loader size="2xlarge" />
         </div>
     );
 };
