@@ -9,6 +9,7 @@ import { hentArenaAktiviteter } from '../moduler/aktivitet/arena-aktiviteter-sli
 import { hentNivaa4 } from '../moduler/tilgang/tilgang-slice';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
+import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-slice';
 
 const dispatchAndDefer = (dispatch: Dispatch, actions: AsyncThunkAction<any, any, any>[]) => {
     const promisedData = Promise.all(actions.map((it) => dispatch(it)));
@@ -25,8 +26,18 @@ export const initialPageLoader =
         const identitet = dispatch(hentIdentitet()).then((it) => it.payload);
         const arenaAktiviteter = dispatch(hentArenaAktiviteter()).then((it) => it.payload);
         const niva4 = fnr ? dispatch(hentNivaa4(fnr)).then((it) => it.payload) : Promise.resolve();
+        const eskaleringsvarsel = dispatch(hentEskaleringsvarsel());
         return defer({
-            data: Promise.all([mal, oppfolging, aktiviteter, dialoger, identitet, arenaAktiviteter, niva4]),
+            data: Promise.all([
+                mal,
+                oppfolging,
+                aktiviteter,
+                dialoger,
+                identitet,
+                arenaAktiviteter,
+                niva4,
+                eskaleringsvarsel,
+            ]),
         });
     };
 

@@ -28,12 +28,6 @@ const Hovedside = () => {
         navigate(aktivitetRoute(aktivitetId));
     });
 
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        // dispatch(hentDialoger());
-        dispatch(hentEskaleringsvarsel());
-    }, []);
-
     return (
         <Suspense fallback={<Fallback />}>
             <Await resolve={data}>
