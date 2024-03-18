@@ -32,10 +32,10 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
+      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
   prod-ekstern:
     name: Deploy application to prod ekstern
@@ -56,7 +56,7 @@ jobs:
     with:
       kommando: npm run build:prod-intern
       bucket: aktivitetsplan-prod-intern
+      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
