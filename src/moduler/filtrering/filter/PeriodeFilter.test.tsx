@@ -106,7 +106,7 @@ const server = setupServer(
     rest.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(
-            () => true,
+            () => false,
             () => aktivitestplanResponse({ aktiviteter: [veilarbAktivitet, gammelVeilarbAktivitet] }),
         ),
     ),

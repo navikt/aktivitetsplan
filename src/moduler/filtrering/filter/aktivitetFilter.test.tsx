@@ -21,7 +21,6 @@ import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNa
 import { aktivitestplanResponse, handlers } from '../../../mocks/handlers';
 import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
-import { hentAktiviteter } from '../../aktivitet/aktivitet-actions';
 import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
@@ -61,22 +60,6 @@ function makeTestAktiviteter<T>(
             oppfolgingsperiodeId: currentOppfolgingsperiode,
         };
     }) as unknown as VeilarbAktivitet[];
-    store.dispatch(
-        hentAktiviteter.fulfilled(
-            {
-                data: {
-                    perioder: [
-                        {
-                            id: currentOppfolgingsperiode,
-                            aktiviteter: testAktiviteter,
-                        },
-                    ],
-                },
-                errors: [],
-            },
-            'asd',
-        ),
-    );
     filterTestData = testAktiviteter;
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
@@ -86,8 +69,11 @@ const server = setupServer(
     rest.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(
-            () => true,
-            () => aktivitestplanResponse({ aktiviteter: filterTestData }),
+            () => false,
+            () => {
+                console.log('graphql mock');
+                return aktivitestplanResponse({ aktiviteter: filterTestData });
+            },
         ),
     ),
     ...handlers,

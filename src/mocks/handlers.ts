@@ -170,6 +170,7 @@ export const handlers = [
 export const aktivitestplanResponse = (
     { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter },
 ) => {
+    console.log('Graphql default mock');
     const perioder = Array.from(new Set(aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)));
     return {
         data: {
