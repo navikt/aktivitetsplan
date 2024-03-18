@@ -19,7 +19,7 @@ export const JournalforingPage = () => {
 
     useEffect(() => {
         dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
-        dispatch(hentPdfTilForhaandsvisning);
+        dispatch(hentPdfTilForhaandsvisning());
     }, []);
 
     return (
