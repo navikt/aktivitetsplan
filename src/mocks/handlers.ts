@@ -41,8 +41,9 @@ import {
     oppdateringKunFeiler,
     oppfFeilet,
 } from './demo/localStorage';
-import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
+import { failOrGetResponse, delayed, failOrGrahpqlResponse, jsonResponse } from './utils';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
+import { journalføring } from './data/journalføring';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -145,8 +146,8 @@ export const handlers = [
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
-    rest.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', jsonResponse(pdfForhaandsvisning)),
-    rest.post('/veilarbaktivitet/api/arkivering/journalfor', jsonResponse(pdfForhaandsvisning)),
+    rest.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', delayed(1000, jsonResponse(pdfForhaandsvisning))),
+    rest.post('/veilarbaktivitet/api/arkivering/journalfor', delayed(1000, jsonResponse(journalføring))),
 
     // veilarblest
     rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),

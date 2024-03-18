@@ -8,7 +8,7 @@ export const rndId = (): string => {
 
 export const delayed = (ms: any, handler: any) => {
     return async (req: any, res: any, ctx: any) => {
-        await ctx.delay(ms)({});
+        await new Promise((f) => setTimeout(f, ms));
         return handler(req, res, ctx);
     };
 };
