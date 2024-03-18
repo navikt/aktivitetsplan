@@ -49,6 +49,12 @@ jobs:
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
       - name: Upload files to GCS
+        uses: 'google-github-actions/upload-cloud-storage@v2'
+        with:
+          path: 'build'
+          destination: ${{ inputs.BUCKET }}
+
+      - name: Upload files to GCS
         run: gsutil -m rsync -r build "$BUCKET"
         env:
           BUCKET: gs://${{ inputs.bucket }}
