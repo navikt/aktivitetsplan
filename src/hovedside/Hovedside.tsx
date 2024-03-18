@@ -1,15 +1,11 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { Await, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 
-import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
-import { hentDialoger } from '../moduler/dialog/dialog-slice';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import Maal from '../moduler/mal-linje/MittMaal';
-import OppfolgingStatus from '../moduler/oppfolging-status/OppfolgingStatus';
-import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-slice';
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';

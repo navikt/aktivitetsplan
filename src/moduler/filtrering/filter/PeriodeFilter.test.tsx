@@ -1,7 +1,7 @@
 /* Provide both redux-store and "in-memory" router for all sub-components to render correctly */
 import React from 'react';
 import { arenaMockAktiviteter } from '../../../mocks/data/arena';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../../../reducer';
 import { mockTestAktiviteter } from '../../../mocks/aktivitet';

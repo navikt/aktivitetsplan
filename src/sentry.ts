@@ -1,9 +1,7 @@
-import { CaptureConsole as CaptureConsoleIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
 import { Breadcrumb, Event } from '@sentry/types';
 import React from 'react';
 import {
-    Routes,
     createRoutesFromChildren,
     matchRoutes,
     useLocation,
