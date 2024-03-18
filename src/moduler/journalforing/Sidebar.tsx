@@ -3,10 +3,10 @@ import { BodyShort, Button, Heading, Label, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import {
     hentPdfTilForhaandsvisning,
-    selectForhaandsvisningStatus,
-    selectForhaandsvisningOpprettet,
-    selectSistJournalfort,
     journalfør,
+    selectForhaandsvisningOpprettet,
+    selectForhaandsvisningStatus,
+    selectSistJournalfort,
     settOppfølgingsperiodeIdForArkivering,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
@@ -15,7 +15,7 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
-import { formaterDatoKortManed, formaterDatoManed, formaterTid } from '../../utils/dateUtils';
+import { formaterDatoKortManed, formaterTid } from '../../utils/dateUtils';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -57,11 +57,11 @@ const Sidebar: FunctionComponent = () => {
                 >
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.startDato) - Date.parse(a.startDato))
-                        .map((periode, index) => (
+                        .map((periode) => (
                             <option
-                                key={`oppfolgingsperiodeoption-${index}`}
+                                key={`oppfolgingsperiodeoption-${periode.uuid}`}
                                 value={periode.uuid}
-                                selected={vistOppfolgingsperiode!!.uuid === periode.uuid}
+                                selected={vistOppfolgingsperiode?.uuid === periode.uuid}
                             >
                                 {formaterDatoKortManed(periode.startDato)} - {formaterDatoKortManed(periode.sluttDato)}
                             </option>

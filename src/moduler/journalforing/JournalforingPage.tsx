@@ -15,11 +15,11 @@ export const JournalforingPage = () => {
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
 
-    if (!vistOppfolgingsperiode) return;
-
     useEffect(() => {
-        dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
-        dispatch(hentPdfTilForhaandsvisning());
+        if (vistOppfolgingsperiode) {
+            dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
+            dispatch(hentPdfTilForhaandsvisning());
+        }
     }, []);
 
     return (
