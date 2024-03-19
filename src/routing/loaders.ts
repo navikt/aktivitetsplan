@@ -11,13 +11,13 @@ const dispatchAndDefer = (dispatch: Dispatch, actions: AsyncThunkAction<any, any
 };
 
 export const initialPageLoader =
-    (dispatch: Dispatch, fnr?: string): LoaderFunction =>
+    (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
     async () => {
         return defer({
-            data: dispatch(initialPageLoadThunk(fnr)),
+            data: dispatch(initialPageLoadThunk(isVeileder)),
         });
     };
 
-export const malLoader = (dispatch: Dispatch, fnr?: string) => {
+export const malLoader = (dispatch: Dispatch, isVeileder: boolean) => {
     return async () => dispatchAndDefer(dispatch, [hentMal(), hentMalListe()]);
 };

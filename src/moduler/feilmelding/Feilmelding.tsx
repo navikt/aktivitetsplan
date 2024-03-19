@@ -7,7 +7,6 @@ import { flyttAktivitet, hentAktivitet, hentAktiviteter, publiserReferat } from 
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { oppdaterMal } from '../mal/aktivitetsmal-slice';
-import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
 export const getErrorText = (feilmeldinger: SerializedError[]) => {
     const antallFeil = feilmeldinger.length;
@@ -29,8 +28,6 @@ export const getErrorText = (feilmeldinger: SerializedError[]) => {
         case hentAktivitet.rejected.type:
         case hentArenaAktiviteter.rejected.type:
             return 'Noe gikk galt, og du får dessverre ikke sett alle aktiviteter. Prøv igjen senere.';
-        case hentNivaa4.rejected.type:
-            return 'Noe gikk galt, og du får dessverre ikke sende forhåndsorientering. Prøv igjen senere.';
         case hentDialoger.rejected.type:
             return 'Noe gikk galt, og du får dessverre ikke sett dialogmeldinger. Prøv igjen senere.';
         case flyttAktivitet.rejected.type:

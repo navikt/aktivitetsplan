@@ -6,17 +6,17 @@ import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
 import Timeoutbox from './felles-komponenter/timeoutbox/Timeoutbox';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { HiddenIf } from './utils/utils';
-import { useFnr } from './Provider';
+import { useErVeileder } from './Provider';
 import { Dispatch } from './store';
 
 function App({
     createRoutesForUser,
 }: {
-    createRoutesForUser: (dispatch: Dispatch, fnr?: string) => ReturnType<typeof createBrowserRouter>;
+    createRoutesForUser: (dispatch: Dispatch, isVeileder: boolean) => ReturnType<typeof createBrowserRouter>;
 }) {
-    const fnr = useFnr();
+    const erVeileder = useErVeileder();
     const dispatch = useAppDispatch();
-    const routes = createRoutesForUser(dispatch, fnr);
+    const routes = createRoutesForUser(dispatch, erVeileder);
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">

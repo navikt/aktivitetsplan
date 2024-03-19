@@ -2,35 +2,17 @@ import React, { useContext } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../../routing/useRoutes';
 import { aktivitetStatusMap, getAktivitetType } from '../../../utils/textMappers';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { selectErBruker } from '../../identitet/identitet-selector';
-import { selectNivaa4Feilmeldinger } from '../../tilgang/tilgang-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { skalMarkereForhaandsorienteringSomLest } from './avtalt-container/utilsForhaandsorientering';
-
-const header = (valgtAktivitet?: AlleAktiviteter) => {
-    if (!valgtAktivitet) {
-        return null;
-    }
-
-    const aktivitetErLaast =
-        valgtAktivitet.status === AktivitetStatus.FULLFOERT || valgtAktivitet.status === AktivitetStatus.AVBRUTT;
-
-    return (
-        <ModalHeader
-            headerTekst={`${aktivitetStatusMap[valgtAktivitet.status]} / ${getAktivitetType(valgtAktivitet)}`}
-            aktivitetErLaast={aktivitetErLaast}
-        />
-    );
-};
 
 const DIALOG_TEKST = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
@@ -54,9 +36,8 @@ const AktivitetvisningModal = (props: Props) => {
     const aktivitetFeilSelector = aktivitet === undefined ? emptySelector : selectFeilMeldinger(aktivitet);
 
     const aktivitetFeil = useSelector(aktivitetFeilSelector, shallowEqual);
-    const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
-    const alleFeil = [...aktivitetFeil, ...dialogFeil, ...nivaa4Feil];
+    const alleFeil = [...aktivitetFeil, ...dialogFeil];
     const erBruker = useSelector(selectErBruker);
 
     const fho = aktivitet?.forhaandsorientering;

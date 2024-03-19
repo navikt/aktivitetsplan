@@ -13,10 +13,6 @@ import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 import { Loader } from '@navikt/ds-react';
 
-const promise = new Promise((resolve) => {
-    setTimeout(resolve, 10000);
-});
-
 const Hovedside = () => {
     const navigate = useNavigate();
     const { aktivitetRoute } = useRoutes();

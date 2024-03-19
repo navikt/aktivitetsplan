@@ -8,11 +8,9 @@ import { z } from 'zod';
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';
-import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../../../context/dirty-context';
 import { selectSettAktivitetTilAvtaltFeil } from '../../../../feilmelding/feil-selector';
 import Feilmelding from '../../../../feilmelding/Feilmelding';
-import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { useKanSendeVarsel, useSendAvtaltMetrikker } from '../avtaltHooks';
 import { AVTALT_TEKST, AVTALT_TEKST_119, getForhaandsorienteringText } from '../utilsForhaandsorientering';
@@ -53,7 +51,6 @@ const AvtaltForm = (props: Props) => {
 
     const dispatch = useAppDispatch();
     const sendMetrikker = useSendAvtaltMetrikker();
-    const avhengigheter = useSelector(selectNivaa4Status);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: VeilarbAktivitet, forhaandsorientering: Forhaandsorientering) =>
         dispatch(settAktivitetTilAvtalt({ aktivitet: avtaltAktivitet, forhaandsorientering }));
@@ -127,29 +124,27 @@ const AvtaltForm = (props: Props) => {
                 </HelpText>
                 <Detail className="text-right flex-grow">FOR NAV-ANSATT</Detail>
             </div>
-            <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
-                {showForm && (
-                    <div className="space-y-4 mb-2">
-                        <KanIkkeSendeForhaandsorienteringInfotekst
-                            mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
-                            manglerTilDato={!aktivitet.tilDato}
+            {showForm && (
+                <div className="space-y-4 mb-2">
+                    <KanIkkeSendeForhaandsorienteringInfotekst
+                        mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
+                        manglerTilDato={!aktivitet.tilDato}
+                    />
+                    {kanSendeForhaandsvarsel ? (
+                        <ForhaandsorienteringsMelding
+                            register={register}
+                            forhaandsorienteringType={forhaandsorienteringType}
+                            avtaltText119={avtaltText119}
+                            oppdaterer={isSubmitting}
+                            errors={errors}
                         />
-                        {kanSendeForhaandsvarsel ? (
-                            <ForhaandsorienteringsMelding
-                                register={register}
-                                forhaandsorienteringType={forhaandsorienteringType}
-                                avtaltText119={avtaltText119}
-                                oppdaterer={isSubmitting}
-                                errors={errors}
-                            />
-                        ) : null}
-                        <Feilmelding feilmeldinger={feil} />
-                        <Button loading={isSubmitting} disabled={lasterData}>
-                            Bekreft
-                        </Button>
-                    </div>
-                )}
-            </Innholdslaster>
+                    ) : null}
+                    <Feilmelding feilmeldinger={feil} />
+                    <Button loading={isSubmitting} disabled={lasterData}>
+                        Bekreft
+                    </Button>
+                </div>
+            )}
         </form>
     );
 };

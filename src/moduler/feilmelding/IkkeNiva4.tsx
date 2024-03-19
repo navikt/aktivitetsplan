@@ -3,7 +3,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectErBrukerManuell, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
-import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector';
 
 const Mere = () => (
     <HelpText placement={'bottom'}>
@@ -13,12 +12,10 @@ const Mere = () => (
 );
 
 const Nivaa4Feilmelding = () => {
-    const niva4 = useSelector(selectNivaa4);
-    const lastetOk = useSelector(selectNivaa4LastetOk);
     const erreservertKRR = useSelector(selectReservasjonKRR);
     const erManuell = useSelector(selectErBrukerManuell);
 
-    if (niva4 || !lastetOk || erManuell || erreservertKRR) {
+    if (erManuell || erreservertKRR) {
         return null;
     }
 

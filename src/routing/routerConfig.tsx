@@ -41,24 +41,26 @@ export const ErrorCleanerOnRouteChange = () => {
 // Sentry need to wrap createBrowserRouter to understand routes
 export const createRouterWithWrapper =
     (wrapper?: typeof createBrowserRouter) =>
-    (dispatch: Dispatch, fnr?: string): ReturnType<typeof createBrowserRouter> => {
+    (dispatch: Dispatch, isVeileder: boolean): ReturnType<typeof createBrowserRouter> => {
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
-            return createHashRouter(routingConfig(dispatch, fnr));
+            return createHashRouter(routingConfig(dispatch, isVeileder));
         }
-        return wrapper ? wrapper(routingConfig(dispatch, fnr)) : createBrowserRouter(routingConfig(dispatch, fnr));
+        return wrapper
+            ? wrapper(routingConfig(dispatch, isVeileder))
+            : createBrowserRouter(routingConfig(dispatch, isVeileder));
     };
 
-export const routingConfig: (dispatch: Dispatch, fnr?: string) => RouteObject[] = (dispatch, fnr) => [
+export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteObject[] = (dispatch, isVeileder) => [
     {
         path: '/',
         element: <PageLoader />, // Dont reload essential data on every page navigation
-        loader: initialPageLoader(dispatch, fnr),
+        loader: initialPageLoader(dispatch, isVeileder),
         children: [
             {
                 path: '/',
                 element: <Hovedside />,
                 children: [
-                    { path: 'mal', loader: malLoader(dispatch, fnr), element: <Mal /> },
+                    { path: 'mal', loader: malLoader(dispatch, isVeileder), element: <Mal /> },
                     { path: 'informasjon', element: <InformasjonModal /> },
                     {
                         path: 'aktivitet',
@@ -73,8 +75,8 @@ export const routingConfig: (dispatch: Dispatch, fnr?: string) => RouteObject[] 
                     },
                 ],
             },
-            { path: 'utskrift', loader: initialPageLoader(dispatch, fnr), element: <AktivitetsplanPrint /> },
-            { path: 'journalforing', loader: initialPageLoader(dispatch, fnr), element: <JournalforingPage /> },
+            { path: 'utskrift', loader: initialPageLoader(dispatch, isVeileder), element: <AktivitetsplanPrint /> },
+            { path: 'journalforing', loader: initialPageLoader(dispatch, isVeileder), element: <JournalforingPage /> },
             { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
             { path: '*', element: <Navigate replace to={`/`} /> },
         ],
