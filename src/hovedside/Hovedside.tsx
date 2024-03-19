@@ -3,7 +3,6 @@ import { Await, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
-import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import Maal from '../moduler/mal-linje/MittMaal';
 import Varslinger from '../moduler/varslinger/Varslinger';
@@ -27,7 +26,6 @@ const Hovedside = () => {
         <main id="main" className="hovedside">
             <div className="flex items-center flex-col h-full">
                 <HovedsideFeilmelding />
-                <Nivaa4Feilmelding />
                 <InformasjonsHenting />
                 <Varslinger />
                 <div className="container flex flex-col gap-y-6">
