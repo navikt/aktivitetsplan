@@ -7,6 +7,7 @@ import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../
 import { hentAktiviteterGraphql } from '../../api/aktivitetsplanGraphql';
 
 export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => {
+    console.log('Henter aktiviteter');
     return await hentAktiviteterGraphql();
 });
 

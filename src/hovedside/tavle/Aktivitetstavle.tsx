@@ -39,7 +39,6 @@ function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
 }
 
 const Aktivitetstavle = () => {
-    const dispatch = useAppDispatch();
     const fnr = useFnr();
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
@@ -57,13 +56,9 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder && fnr) {
                 doLesAktivitetsplan(fnr);
-                dispatch(hentNivaa4(fnr));
-                dispatch(hentVeilederInfo());
             }
-            dispatch(hentAktiviteter());
-            dispatch(hentArenaAktiviteter());
         }
-    }, [aktivitetNotStarted, erVeileder, dispatch]);
+    }, [aktivitetNotStarted, erVeileder, fnr]);
 
     const dragging = !!draggingAktivitet;
     const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, underOppfolging);
