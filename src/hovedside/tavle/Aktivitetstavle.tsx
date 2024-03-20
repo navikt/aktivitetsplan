@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
@@ -24,6 +24,9 @@ import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreA
 import Tavle from './Tavle';
 import { Tavleadvarsel } from './Tavleadvarsel';
 import { erDroppbar } from './tavleUtils';
+import { Await, useRouteLoaderData } from 'react-router-dom';
+import { InitialPageLoadResult } from '../../routing/loaders';
+import { Loader } from '@navikt/ds-react';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
     useEffect(() => {
@@ -80,19 +83,43 @@ const Aktivitetstavle = () => {
         }
     }, [sistVisteAktivitetId, skalScrolle, appIsVisible]);
 
-    return (
-        <div className="flex m-auto mt-8">
-            <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
-            <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
+    const { oppfolging } = useRouteLoaderData('root') as InitialPageLoadResult;
 
-            <Tavle dragging={dragging}>
+    return (
+        <Suspense fallback={<TableFallback />}>
+            <Await resolve={oppfolging}>
+                <div className="flex w-full m-auto mt-8">
+                    <Tavleadvarsel
+                        hidden={skjulAdvarsel}
+                        draggingAktivitet={draggingAktivitet}
+                        erVeileder={erVeileder}
+                    />
+                    <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
+                    <Tavle dragging={dragging}>
+                        <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
+                        <Kolonne status={AktivitetStatus.PLANLAGT} />
+                        <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
+                        <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
+                        <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
+                    </Tavle>
+                    {/*<UxSignalsWidget />*/}
+                </div>
+            </Await>
+        </Suspense>
+    );
+};
+
+const TableFallback = () => {
+    return (
+        <div className="flex m-auto w-full mt-8 flex-col">
+            <Tavle dragging={false}>
                 <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
                 <Kolonne status={AktivitetStatus.PLANLAGT} />
                 <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
-            {/*<UxSignalsWidget />*/}
+            <Loader size="large" className="self-center" />
         </div>
     );
 };
