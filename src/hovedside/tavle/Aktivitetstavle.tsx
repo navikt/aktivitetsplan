@@ -93,7 +93,7 @@ const Aktivitetstavle = () => {
     }, [sistVisteAktivitetId, skalScrolle, appIsVisible]);
 
     return (
-        <Innholdslaster className="flex m-auto mt-8" minstEn avhengigheter={avhengigheter}>
+        <Innholdslaster className="flex m-auto mt-8 w-full" minstEn avhengigheter={avhengigheter}>
             <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
             <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
 
