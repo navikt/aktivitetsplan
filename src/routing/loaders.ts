@@ -13,10 +13,30 @@ const dispatchAndDefer = (dispatch: Dispatch, actions: AsyncThunkAction<any, any
 export const initialPageLoader =
     (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
     async () => {
+        const value = dispatch(initialPageLoadThunk(isVeileder));
         return defer({
-            data: dispatch(initialPageLoadThunk(isVeileder)),
+            // data: value,
+            oppfolging: value.then((it) => it.payload['oppfolging']),
+            identitet: value.then((it) => it.payload['identitet']),
+            veileder: value.then((it) => it.payload['veileder']),
+            mal: value.then((it) => it.payload['mal']),
+            eskaleringsvarsel: value.then((it) => it.payload['eskaleringsvarsel']),
+            dialoger: value.then((it) => it.payload['dialoger']),
+            aktiviteter: value.then((it) => it.payload['aktiviteter']),
+            arenaAktiviteter: value.then((it) => it.payload['arenaAktiviteter']),
         });
     };
+
+export interface InitialPageLoadResult {
+    oppfolging: Promise<any>;
+    identitet: Promise<any>;
+    veileder: Promise<any>;
+    mal: Promise<any>;
+    eskaleringsvarsel: Promise<any>;
+    dialoger: Promise<any>;
+    aktiviteter: Promise<any>;
+    arenaAktiviteter: Promise<any>;
+}
 
 export const malLoader = (dispatch: Dispatch, isVeileder: boolean) => {
     return async () => dispatchAndDefer(dispatch, [hentMal(), hentMalListe()]);

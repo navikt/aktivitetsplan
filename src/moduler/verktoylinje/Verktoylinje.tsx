@@ -16,31 +16,26 @@ import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-s
 const Verktoylinje = () => {
     const underOppfolging: boolean = useSelector(selectErUnderOppfolging);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode);
-    const harSkriveTilgang = useSelector(selectHarSkriveTilgang);
-    const aktivitetLaster = useSelector(selectHarTilgangTilAktiviteter);
-
+    const aktiviteterErLastet = useSelector(selectHarTilgangTilAktiviteter);
     const navigate = useNavigate();
     const { nyAktivitetRoute } = useRoutes();
-
-    const hideLeggTil = viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang;
 
     return (
         <div className="flex flex-col gap-y-6">
             <div className="flex gap-y-4 sm:flex-row flex-col-reverse ">
                 <div className="flex gap-4 items-start flex-col sm:flex-row w-full">
-                    {!hideLeggTil ? (
-                        <Button
-                            className="self-stretch sm:self-auto"
-                            icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
-                            disabled={!aktivitetLaster}
-                            onClick={() => {
-                                loggEvent(APNE_NY_AKTIVITET);
-                                navigate(nyAktivitetRoute());
-                            }}
-                        >
-                            Legg til aktivitet
-                        </Button>
-                    ) : null}
+                    <Button
+                        loading={!aktiviteterErLastet}
+                        className="self-stretch sm:self-auto"
+                        icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
+                        disabled={viserHistoriskPeriode}
+                        onClick={() => {
+                            loggEvent(APNE_NY_AKTIVITET);
+                            navigate(nyAktivitetRoute());
+                        }}
+                    >
+                        Legg til aktivitet
+                    </Button>
                     <Filter />
                 </div>
                 <PeriodeFilter skjulInneverende={!underOppfolging} />

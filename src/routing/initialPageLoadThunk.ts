@@ -23,32 +23,33 @@ import { selectAktivitetStatus } from '../moduler/aktivitet/aktivitet-selector';
 export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (isVeileder: boolean, thunkApi) => {
     const { dispatch, getState } = thunkApi;
     const state = getState() as RootState;
-    return fetchIfNotStarted([
-        { fetchAction: hentOppfolging, statusSelector: selectOppfolgingStatus },
-        { fetchAction: hentIdentitet, statusSelector: selectIdentitetStatus },
-        { fetchAction: hentVeilederInfo, statusSelector: selectVeilederStatus, veilederOnly: true },
-        { fetchAction: hentMal, statusSelector: selectMalStatus },
-        { fetchAction: hentEskaleringsvarsel, statusSelector: selectEskaleringsvarselStatus },
-        { fetchAction: hentDialoger, statusSelector: selectDialogStatus },
-        { fetchAction: hentAktiviteter, statusSelector: selectAktivitetStatus },
-        { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus },
+    return fetchIfNotStartedAll([
+        { fetchAction: hentOppfolging, statusSelector: selectOppfolgingStatus, key: 'oppfolging' },
+        { fetchAction: hentIdentitet, statusSelector: selectIdentitetStatus, key: 'identitet' },
+        { fetchAction: hentVeilederInfo, statusSelector: selectVeilederStatus, veilederOnly: true, key: 'veileder' },
+        { fetchAction: hentMal, statusSelector: selectMalStatus, key: 'mal' },
+        { fetchAction: hentEskaleringsvarsel, statusSelector: selectEskaleringsvarselStatus, key: 'eskaleringsvarsel' },
+        { fetchAction: hentDialoger, statusSelector: selectDialogStatus, key: 'dialoger' },
+        { fetchAction: hentAktiviteter, statusSelector: selectAktivitetStatus, key: 'aktiviteter' },
+        { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus, key: 'arenaAktiviteter' },
     ])(state, dispatch, isVeileder);
 });
 
-const fetchIfNotStarted =
-    (
-        stateLoaders: {
-            fetchAction: AsyncThunk<any, any, any>;
-            statusSelector: (state: RootState) => Status;
-            veilederOnly?: boolean | undefined;
-        }[],
-    ) =>
+interface CacheableSliceLoader {
+    fetchAction: AsyncThunk<any, any, any>;
+    statusSelector: (state: RootState) => Status;
+    key: string;
+    veilederOnly?: boolean | undefined;
+}
+
+const fetchIfNotStartedAll =
+    (stateLoaders: CacheableSliceLoader[]) =>
     (state: RootState, dispatch: Dispatch<AsyncThunkAction<any, any, any>>, isVeileder: boolean) => {
-        return Promise.all(
-            stateLoaders.map(({ statusSelector, fetchAction, veilederOnly }) => {
-                const status = statusSelector(state);
-                const thunk = fetchAction();
-                if (status === Status.NOT_STARTED && (!veilederOnly || isVeileder)) dispatch(thunk);
-            }),
-        );
+        return stateLoaders.reduce((acc, { statusSelector, fetchAction, veilederOnly, key }) => {
+            const status = statusSelector(state);
+            if (status === Status.NOT_STARTED && (!veilederOnly || isVeileder)) {
+                return { ...acc, [key]: dispatch(fetchAction()) };
+            }
+            return { ...acc, [key]: Promise.resolve() };
+        }, {});
     };

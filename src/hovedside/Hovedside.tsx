@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { Await, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
@@ -41,19 +41,19 @@ const Hovedside = () => {
 };
 
 export const PageLoader = () => {
-    const { hovedsideData } = useLoaderData();
+    // const { data } = useLoaderData();
     return (
-        <Suspense fallback={<Fallback />}>
-            <Await resolve={hovedsideData}>
-                <Outlet />
-            </Await>
-        </Suspense>
+        // <Suspense fallback={<Fallback />}>
+        //     <Await resolve={data}>
+        <Outlet />
+        // </Await>
+        // </Suspense>
     );
 };
 
 const Fallback = () => {
     return (
-        <div className="flex flex-col items-center justify-center min-h-svh">
+        <div className="flex flex-col items-center justify-center">
             <Loader size="2xlarge" />
         </div>
     );

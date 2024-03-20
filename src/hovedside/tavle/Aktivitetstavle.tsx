@@ -45,8 +45,6 @@ const Aktivitetstavle = () => {
     const aktivitetNotStarted =
         statusAktiviteter === Status.NOT_STARTED && statusArenaAktiviteter === Status.NOT_STARTED;
 
-    const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
-
     useEffect(() => {
         if (aktivitetNotStarted) {
             if (erVeileder && fnr) {
@@ -83,7 +81,7 @@ const Aktivitetstavle = () => {
     }, [sistVisteAktivitetId, skalScrolle, appIsVisible]);
 
     return (
-        <Innholdslaster className="flex m-auto mt-8" minstEn avhengigheter={avhengigheter}>
+        <div className="flex m-auto mt-8">
             <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
             <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
 
@@ -95,7 +93,7 @@ const Aktivitetstavle = () => {
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
             {/*<UxSignalsWidget />*/}
-        </Innholdslaster>
+        </div>
     );
 };
 

@@ -55,9 +55,10 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteOb
         path: '/',
         element: <PageLoader />, // Dont reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
+        id: 'root',
         children: [
             {
-                path: '/',
+                path: '',
                 element: <Hovedside />,
                 children: [
                     { path: 'mal', loader: malLoader(dispatch, isVeileder), element: <Mal /> },
@@ -75,10 +76,11 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteOb
                     },
                 ],
             },
-            { path: 'utskrift', loader: initialPageLoader(dispatch, isVeileder), element: <AktivitetsplanPrint /> },
-            { path: 'journalforing', loader: initialPageLoader(dispatch, isVeileder), element: <JournalforingPage /> },
+            { path: 'utskrift', element: <AktivitetsplanPrint /> },
+            { path: 'journalforing', element: <JournalforingPage /> },
             { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
             { path: '*', element: <Navigate replace to={`/`} /> },
         ],
     },
+    { path: '*', element: <Navigate replace to={`/aktivitetsplan`} /> },
 ];

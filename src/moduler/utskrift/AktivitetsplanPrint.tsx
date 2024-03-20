@@ -148,26 +148,20 @@ const AktivitetsplanPrint = () => {
         <section className="flex flex-col justify-center items-center p-8">
             <div className="aktivitetsplanprint flex justify-center items-center">
                 {prompt}
-                <PrintVerktoylinje
-                    avhengigheter={avhengigheter}
-                    tilbakeRoute={hovedsideRoute()}
-                    kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                />
-                <Innholdslaster avhengigheter={avhengigheter}>
-                    <div className="border px-12 print:border-none">
-                        <Print
-                            dialoger={dialoger}
-                            bruker={bruker}
-                            adresse={adresse}
-                            printMelding={printMelding}
-                            aktiviteter={aktiviteter}
-                            mittMal={mittMal}
-                            erVeileder={erVeileder}
-                            utskriftPlanType={utskriftform}
-                            kvpPerioder={kvpPerioder}
-                        />
-                    </div>
-                </Innholdslaster>
+                <PrintVerktoylinje tilbakeRoute={hovedsideRoute()} kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT} />
+                <div className="border px-12 print:border-none">
+                    <Print
+                        dialoger={dialoger}
+                        bruker={bruker}
+                        adresse={adresse}
+                        printMelding={printMelding}
+                        aktiviteter={aktiviteter}
+                        mittMal={mittMal}
+                        erVeileder={erVeileder}
+                        utskriftPlanType={utskriftform}
+                        kvpPerioder={kvpPerioder}
+                    />
+                </div>
             </div>
         </section>
     );

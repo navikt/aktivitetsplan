@@ -71,7 +71,6 @@ const server = setupServer(
         failOrGrahpqlResponse(
             () => false,
             () => {
-                console.log('graphql mock');
                 return aktivitestplanResponse({ aktiviteter: filterTestData });
             },
         ),

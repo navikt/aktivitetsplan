@@ -10,15 +10,14 @@ import VisValgtFilter from '../filtrering/VisValgtFilter';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
 
 interface Props {
-    avhengigheter: InnholdslasterProps['avhengigheter'];
     tilbakeRoute?: string;
     kanSkriveUt: boolean;
 }
 
 function PrintVerktoylinje(props: Props) {
-    const { avhengigheter, tilbakeRoute, kanSkriveUt } = props;
+    const { tilbakeRoute, kanSkriveUt } = props;
     return (
-        <Innholdslaster avhengigheter={avhengigheter}>
+        <>
             <Heading className="print:hidden" spacing size={'large'}>
                 Skriv ut aktivitetsplanen
             </Heading>
@@ -49,7 +48,7 @@ function PrintVerktoylinje(props: Props) {
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
             </div>
-        </Innholdslaster>
+        </>
     );
 }
 

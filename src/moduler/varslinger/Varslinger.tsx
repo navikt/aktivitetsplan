@@ -13,15 +13,11 @@ import {
 import VeilederVarsel from './VeilederVarsel';
 
 const Varslinger = () => {
-    const ident = useSelector(selectIdentitetStatus, shallowEqual);
     const erBruker = useSelector(selectErBruker);
-
-    const eskaleringsvarselStatus = useSelector(selectEskaleringsvarselStatus, shallowEqual);
     const eskaleringsvarsel = useSelector(selectEskaleringsvarselData, shallowEqual);
     const erEskalert = useSelector(selectErEskalert);
-    const oppfolgingstatus = useSelector(selectOppfolgingStatus, shallowEqual);
 
-    const child = erBruker ? (
+    return erBruker ? (
         <BrukerVarslinger tilhorendeDialogId={eskaleringsvarsel?.tilhorendeDialogId} erEskalert={erEskalert} />
     ) : (
         <VeilederVarsel
@@ -30,8 +26,6 @@ const Varslinger = () => {
             erEskalert={erEskalert}
         />
     );
-
-    return <Innholdslaster avhengigheter={[oppfolgingstatus, ident, eskaleringsvarselStatus]}>{child}</Innholdslaster>;
 };
 
 export default Varslinger;
