@@ -1,0 +1,103 @@
+{
+  "_Radio-VOSI1NDc.js": {
+    "file": "assets/Radio-VOSI1NDc.js",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_app-!~{006}~.js": {
+    "file": "assets/app-aK2W0DJR.css",
+    "src": "_app-!~{006}~.js"
+  },
+  "_app-UFoL_ngB.js": {
+    "assets": [
+      "assets/logo-11aZUo8k.png",
+      "assets/pdf.worker.min-ykChciii.js"
+    ],
+    "css": [
+      "assets/app-aK2W0DJR.css"
+    ],
+    "file": "assets/app-UFoL_ngB.js",
+    "imports": [
+      "index.html",
+      "_transaksjonstyperTypes-ucMukET5.js",
+      "_Radio-VOSI1NDc.js"
+    ]
+  },
+  "_index-!~{009}~.js": {
+    "file": "assets/index-DAz-jswQ.css",
+    "src": "_index-!~{009}~.js"
+  },
+  "_transaksjonstyperTypes-ucMukET5.js": {
+    "file": "assets/transaksjonstyperTypes-ucMukET5.js",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "index.html": {
+    "dynamicImports": [
+      "src/webcomponentWrapper.tsx",
+      "src/rootWrapper.tsx",
+      "src/mocks/index.ts",
+      "src/mocks/demo/DemoBanner.tsx"
+    ],
+    "file": "assets/index-pPRcGYyw.js",
+    "isEntry": true,
+    "src": "index.html"
+  },
+  "node_modules/pdfjs-dist/build/pdf.worker.min.js": {
+    "file": "assets/pdf.worker.min-ykChciii.js",
+    "src": "node_modules/pdfjs-dist/build/pdf.worker.min.js"
+  },
+  "src/mocks/demo/DemoBanner.tsx": {
+    "css": [
+      "assets/DemoBanner-D5IJLili.css",
+      "assets/index-DAz-jswQ.css"
+    ],
+    "file": "assets/DemoBanner-XQkUFoVD.js",
+    "imports": [
+      "index.html",
+      "_Radio-VOSI1NDc.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/mocks/demo/DemoBanner.tsx"
+  },
+  "src/mocks/index.ts": {
+    "file": "assets/index-GmBIzaa9.js",
+    "imports": [
+      "index.html",
+      "_transaksjonstyperTypes-ucMukET5.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/mocks/index.ts"
+  },
+  "src/moduler/utskrift/ikoner/logo.png": {
+    "file": "assets/logo-11aZUo8k.png",
+    "src": "src/moduler/utskrift/ikoner/logo.png"
+  },
+  "src/rootWrapper.tsx": {
+    "css": [
+      "assets/index-DAz-jswQ.css"
+    ],
+    "file": "assets/rootWrapper-8yyBHI0Z.js",
+    "imports": [
+      "index.html",
+      "_app-UFoL_ngB.js",
+      "_transaksjonstyperTypes-ucMukET5.js",
+      "_Radio-VOSI1NDc.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/rootWrapper.tsx"
+  },
+  "src/webcomponentWrapper.tsx": {
+    "file": "assets/webcomponentWrapper-drJNzlxL.js",
+    "imports": [
+      "index.html",
+      "_app-UFoL_ngB.js",
+      "_transaksjonstyperTypes-ucMukET5.js",
+      "_Radio-VOSI1NDc.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/webcomponentWrapper.tsx"
+  }
+}
