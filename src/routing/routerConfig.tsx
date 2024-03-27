@@ -23,6 +23,7 @@ import InformasjonModal from '../moduler/informasjon/informasjon-modal';
 import AktivitetsplanPrint from '../moduler/utskrift/AktivitetsplanPrint';
 import Mal from '../moduler/mal/mal';
 import { JournalforingPage } from '../moduler/journalforing/JournalforingPage';
+import { BasePage } from '../BasePage';
 
 const RedirectToAktivitetWithoutFnr = () => {
     const params = useParams();
@@ -53,7 +54,7 @@ export const createRouterWithWrapper =
 export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteObject[] = (dispatch, isVeileder) => [
     {
         path: '/',
-        element: <PageLoader />, // Dont reload essential data on every page navigation
+        element: <BasePage />, // Dont reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
         id: 'root',
         children: [

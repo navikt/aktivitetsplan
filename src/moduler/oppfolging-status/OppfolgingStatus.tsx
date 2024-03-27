@@ -24,10 +24,6 @@ interface Props {
 }
 
 const OppfolgingStatus = ({ children }: Props) => {
-    const dispatch = useAppDispatch();
-
-    const avhengigheter = [useSelector(selectOppfolgingStatus), useSelector(selectIdentitetStatus)];
-
     const erVeileder = useErVeileder();
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
@@ -48,21 +44,10 @@ const OppfolgingStatus = ({ children }: Props) => {
         ident,
     };
 
-    useEffect(() => {
-        if (avhengigheter[0] === Status.NOT_STARTED) {
-            dispatch(hentOppfolging());
-        }
-        if (avhengigheter[1] === Status.NOT_STARTED) {
-            dispatch(hentIdentitet());
-        }
-    }, []);
-
     return (
-        <Innholdslaster className="mt-8" avhengigheter={avhengigheter}>
-            <div className="w-full">
-                <VidereSendBrukereEllerRenderChildren {...props}>{children}</VidereSendBrukereEllerRenderChildren>
-            </div>
-        </Innholdslaster>
+        <div className="w-full">
+            <VidereSendBrukereEllerRenderChildren {...props}>{children}</VidereSendBrukereEllerRenderChildren>
+        </div>
     );
 };
 

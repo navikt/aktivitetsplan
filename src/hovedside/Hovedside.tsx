@@ -40,17 +40,6 @@ const Hovedside = () => {
     );
 };
 
-export const PageLoader = () => {
-    // const { data } = useLoaderData();
-    return (
-        // <Suspense fallback={<Fallback />}>
-        //     <Await resolve={data}>
-        <Outlet />
-        // </Await>
-        // </Suspense>
-    );
-};
-
 const Fallback = () => {
     return (
         <div className="flex flex-col items-center justify-center">
