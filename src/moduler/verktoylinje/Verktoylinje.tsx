@@ -6,17 +6,18 @@ import { useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
 import { useRoutes } from '../../routing/useRoutes';
-import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
+import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
 import Filter from '../filtrering/Filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import PeriodeFilter from '../filtrering/filter/PeriodeFilter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import { Status } from '../../createGenericSlice';
 
 const Verktoylinje = () => {
     const underOppfolging: boolean = useSelector(selectErUnderOppfolging);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode);
-    const aktiviteterErLastet = useSelector(selectHarTilgangTilAktiviteter);
+    const aktivitetStatus = useSelector(selectAktivitetStatus);
     const navigate = useNavigate();
     const { nyAktivitetRoute } = useRoutes();
 
@@ -25,10 +26,10 @@ const Verktoylinje = () => {
             <div className="flex gap-y-4 sm:flex-row flex-col-reverse ">
                 <div className="flex gap-4 items-start flex-col sm:flex-row w-full">
                     <Button
-                        loading={!aktiviteterErLastet}
+                        loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
                         className="self-stretch sm:self-auto"
                         icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
-                        disabled={viserHistoriskPeriode}
+                        disabled={viserHistoriskPeriode || aktivitetStatus === Status.ERROR}
                         onClick={() => {
                             loggEvent(APNE_NY_AKTIVITET);
                             navigate(nyAktivitetRoute());
