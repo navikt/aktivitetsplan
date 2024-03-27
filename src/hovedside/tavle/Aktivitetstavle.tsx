@@ -86,7 +86,7 @@ const Aktivitetstavle = () => {
     const { oppfolging } = useRouteLoaderData('root') as InitialPageLoadResult;
 
     return (
-        <Suspense fallback={<TableFallback />}>
+        <Suspense fallback={<TavleFallback />}>
             <Await resolve={oppfolging}>
                 <div className="flex w-full m-auto mt-8">
                     <Tavleadvarsel
@@ -109,7 +109,7 @@ const Aktivitetstavle = () => {
     );
 };
 
-const TableFallback = () => {
+const TavleFallback = () => {
     return (
         <div className="flex m-auto w-full mt-8 flex-col">
             <Tavle dragging={false}>
@@ -119,7 +119,7 @@ const TableFallback = () => {
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
-            <Loader size="large" className="self-center" />
+            <Loader size="large" className="self-center mb-32" />
         </div>
     );
 };
