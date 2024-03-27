@@ -51,7 +51,7 @@ function MittMaal() {
         ) && harSkriveTilgang;
 
     const noeHarFeilet = avhengigheter === 'ERROR';
-    const { mal: malPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
+    const { mal: malPromise, oppfolging: oppfolgingPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
     // if (noeHarFeilet) return <Alert variant={'error'}>Kunne ikke hente mål</Alert>;
     return (
         <>
@@ -71,7 +71,7 @@ function MittMaal() {
                             </Heading>
                         </div>
                         <Suspense fallback={<MalFallback />}>
-                            <Await resolve={malPromise}>
+                            <Await resolve={Promise.all([oppfolgingPromise, malPromise])}>
                                 <MalContent disabled={disabled} mal={mal} />
                             </Await>
                         </Suspense>
