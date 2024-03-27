@@ -50,6 +50,6 @@ const fetchIfNotStartedAll =
             if (status === Status.NOT_STARTED && (!veilederOnly || isVeileder)) {
                 return { ...acc, [key]: dispatch(fetchAction()) };
             }
-            return { ...acc, [key]: Promise.resolve() };
+            return { ...acc, [key]: Promise.resolve(null) };
         }, {});
     };

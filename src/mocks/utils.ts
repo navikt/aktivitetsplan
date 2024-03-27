@@ -33,7 +33,7 @@ export const failOrGetResponse = (failFn: () => boolean, successFn: (req: RestRe
         if (failFn()) {
             return res(...internalServerError(ctx));
         }
-        return res(ctx.delay(2000), ctx.json(await successFn(req)));
+        return res(ctx.json(await successFn(req)));
     };
 };
 
@@ -46,7 +46,7 @@ export const failOrGrahpqlResponse = (failFn: () => boolean, successFn: (req: Re
             };
             return res(ctx.json(failResponse));
         }
-        return res(ctx.delay(1000), ctx.json(await successFn(req)));
+        return res(ctx.json(await successFn(req)));
     };
 };
 
