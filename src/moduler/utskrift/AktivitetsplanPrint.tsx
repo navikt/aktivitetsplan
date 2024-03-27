@@ -23,7 +23,7 @@ import PrintVerktoylinje from './printVerktoylinje';
 import Print from './print/print';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/useRoutes';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';

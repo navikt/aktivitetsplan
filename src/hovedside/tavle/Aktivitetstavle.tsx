@@ -6,21 +6,16 @@ import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
 import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
-import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
 // import UxSignalsWidget from '../../felles-komponenter/UxSignalsWidget';
-import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
-import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-slice';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { hentNivaa4 } from '../../moduler/tilgang/tilgang-slice';
-import { hentVeilederInfo } from '../../moduler/veileder/veileder-slice';
 import { useErVeileder, useFnr } from '../../Provider';
 import { RootState } from '../../store';
 import useIsVisible from '../../utils/useIsVisible';
@@ -39,7 +34,6 @@ function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
 }
 
 const Aktivitetstavle = () => {
-    const dispatch = useAppDispatch();
     const fnr = useFnr();
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
@@ -57,13 +51,9 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder && fnr) {
                 doLesAktivitetsplan(fnr);
-                dispatch(hentNivaa4(fnr));
-                dispatch(hentVeilederInfo());
             }
-            dispatch(hentAktiviteter());
-            dispatch(hentArenaAktiviteter());
         }
-    }, [aktivitetNotStarted, erVeileder, dispatch]);
+    }, [aktivitetNotStarted, erVeileder, fnr]);
 
     const dragging = !!draggingAktivitet;
     const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, underOppfolging);

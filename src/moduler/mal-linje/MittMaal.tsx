@@ -14,7 +14,7 @@ import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import { useErVeileder } from '../../Provider';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/useRoutes';
 import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
 import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';

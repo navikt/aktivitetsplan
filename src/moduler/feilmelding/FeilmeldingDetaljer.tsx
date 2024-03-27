@@ -7,7 +7,6 @@ import { hentDialoger } from '../dialog/dialog-slice';
 import { hentIdentitet } from '../identitet/identitet-slice';
 import { hentLest } from '../lest/lest-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
-import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
 interface PropTypes {
     feil: SerializedError & { type: string };
@@ -20,7 +19,6 @@ const feilmeldingMap: Record<string, any> = {
     [hentArenaAktiviteter.rejected.type]: 'Kunne ikke hente arena-aktivteter',
     [hentLest.rejected.type]: 'Kunne ikke hente lest-status',
     [hentDialoger.rejected.type]: 'Kunne ikke hente dialoger',
-    [hentNivaa4.rejected.type]: 'Kunne ikke hente sist innlogget med nivå4 status',
 };
 
 export default function FeilmeldingDetalj(props: PropTypes) {

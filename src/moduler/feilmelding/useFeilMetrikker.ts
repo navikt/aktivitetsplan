@@ -7,7 +7,6 @@ import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { hentIdentitet } from '../identitet/identitet-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
-import { hentNivaa4 } from '../tilgang/tilgang-slice';
 
 export function useFeilMetrikker(feilmeldinger: SerializedError[]) {
     const sendtFeiltype = useRef(new Set());
@@ -65,7 +64,6 @@ function klassifiserFeil(feil: SerializedError): ErrorSeverity {
             return 'critical';
         case hentArenaAktiviteter.rejected.type:
         case hentDialoger.rejected.type:
-        case hentNivaa4.rejected.type:
             return 'degraded';
         default:
             return 'unknown';

@@ -16,7 +16,7 @@ import { RettigheterPanel } from './rettigheterPanel';
 import { DialogPanel } from './dialogPanel';
 import IntroduksjonVideo from './Video/IntroduksjonVideo';
 import { useNavigate } from 'react-router-dom';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/useRoutes';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 

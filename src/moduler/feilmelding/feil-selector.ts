@@ -17,7 +17,6 @@ import { hentLest } from '../lest/lest-slice';
 import { hentMal, oppdaterMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
-import { hentNivaa4 } from '../tilgang/tilgang-slice';
 import { createSelector } from 'reselect';
 import { RootState } from '../../store';
 
@@ -36,7 +35,6 @@ const hovedsideFeil = [
     hentArenaAktiviteter.rejected.type,
     hentLest.rejected.type,
     hentDialoger.rejected.type,
-    hentNivaa4.rejected.type,
     flyttAktivitet.rejected.type,
 ];
 export const selectHovedsideFeil = createSelector(selectErrors, (errors) => {

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Modal from '../../felles-komponenter/modal/Modal';
 import { selectHentMalListeFeil } from '../feilmelding/feil-selector';
 import { useNavigate } from 'react-router-dom';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/useRoutes';
 
 interface Props {
     children: React.ReactNode;

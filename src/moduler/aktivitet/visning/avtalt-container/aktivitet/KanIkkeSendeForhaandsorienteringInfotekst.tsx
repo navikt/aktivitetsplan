@@ -7,24 +7,19 @@ import {
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../../oppfolging-status/oppfolging-selector';
-import { selectNivaa4 } from '../../../../tilgang/tilgang-selector';
 
 const getTekst = (
     brukerErManuell: boolean,
     brukerErUnderKvp: boolean,
     brukerErIReservasjonKRR: boolean,
-    harLoggetInnMedNivaa4: boolean,
     mindreEnnSyvDagerTil: boolean,
-    manglerTilDato: boolean
+    manglerTilDato: boolean,
 ): string | undefined => {
     if (brukerErUnderKvp) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren deltar i kvalifiseringsprogrammet.';
     }
     if (brukerErIReservasjonKRR) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren har reservert seg i kontakt- og reservasjonsregisteret. Du skal ha orientert brukeren om mulig konsekvens for ytelse, og dokumentert dette.';
-    }
-    if (!harLoggetInnMedNivaa4) {
-        return 'Du kan ikke legge til forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID). Du skal ha orientert brukeren om mulig konsekvens for ytelse, og dokumentert dette.';
     }
     if (brukerErManuell) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren har manuell oppfølging. Du skal ha orientert brukeren om mulig konsekvens for ytelse, og dokumentert dette.';
@@ -46,15 +41,13 @@ const KanIkkeSendeForhaandsorienteringInfotekst = (props: {
     const brukerErManuell = useSelector(selectErBrukerManuell);
     const brukerErUnderKvp = useSelector(selectErUnderKvp);
     const brukerErIReservasjonKRR = useSelector(selectReservasjonKRR);
-    const harLoggetInnMedNivaa4 = useSelector(selectNivaa4);
 
     const tekst = getTekst(
         brukerErManuell,
         brukerErUnderKvp,
         brukerErIReservasjonKRR,
-        harLoggetInnMedNivaa4,
         props.mindreEnnSyvDagerTil,
-        props.manglerTilDato
+        props.manglerTilDato,
     );
 
     if (!tekst) {
