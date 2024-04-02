@@ -53,7 +53,7 @@ export const createRouterWithWrapper =
 
 export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteObject[] = (dispatch, isVeileder) => [
     {
-        path: '/',
+        path: isVeileder ? '/aktivitetsplan' : '/',
         element: <BasePage />, // Dont reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
         id: 'root',
@@ -80,8 +80,8 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteOb
             { path: 'utskrift', element: <AktivitetsplanPrint /> },
             { path: 'journalforing', element: <JournalforingPage /> },
             { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
-            { path: '*', element: <Navigate replace to={`/`} /> },
+            { path: '*', element: <Navigate replace to={isVeileder ? '/aktivitetsplan' : `/`} /> },
         ],
     },
-    { path: '*', element: <Navigate replace to={`/aktivitetsplan`} /> },
+    { path: '*', element: <Navigate replace to={isVeileder ? '/aktivitetsplan' : '/'} /> },
 ];
