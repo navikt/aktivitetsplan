@@ -25,9 +25,16 @@ import Mal from '../moduler/mal/mal';
 import { JournalforingPage } from '../moduler/journalforing/JournalforingPage';
 import { BasePage } from '../BasePage';
 
+const baseName = 'aktivitetsplan';
+
 const RedirectToAktivitetWithoutFnr = () => {
     const params = useParams();
     return <Navigate replace to={`/aktivitet/vis/` + params.id} />;
+};
+
+const RedirectToAktivitetWithBasename = () => {
+    const params = useParams();
+    return <Navigate replace to={`/${baseName}/aktivitet/vis/` + params.id} />;
 };
 
 export const ErrorCleanerOnRouteChange = () => {
@@ -53,7 +60,7 @@ export const createRouterWithWrapper =
 
 export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteObject[] = (dispatch, isVeileder) => [
     {
-        path: isVeileder ? '/aktivitetsplan' : '/',
+        path: isVeileder ? `/${baseName}` : '/',
         element: <BasePage />, // Dont reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
         id: 'root',
@@ -81,8 +88,9 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteOb
             { path: 'journalforing', element: <JournalforingPage /> },
             { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
             { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
-            { path: '*', element: <Navigate replace to={isVeileder ? '/aktivitetsplan' : '/'} /> },
+            { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },
         ],
     },
-    { path: '*', element: <Navigate replace to={isVeileder ? '/aktivitetsplan' : '/'} /> },
+    { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithBasename /> },
+    { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },
 ];
