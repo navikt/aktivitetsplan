@@ -24,10 +24,14 @@ import AktivitetsplanPrint from '../moduler/utskrift/AktivitetsplanPrint';
 import Mal from '../moduler/mal/mal';
 import { JournalforingPage } from '../moduler/journalforing/JournalforingPage';
 import { BasePage } from '../BasePage';
+import { useErVeileder } from '../Provider';
+
+const baseName = 'aktivitetsplan';
 
 const RedirectToAktivitetWithoutFnr = () => {
     const params = useParams();
-    return <Navigate replace to={`/aktivitet/vis/` + params.id} />;
+    const erVeileder = useErVeileder();
+    return <Navigate replace to={`${erVeileder ? '/' + baseName : ''}/aktivitet/vis/` + params.id} />;
 };
 
 export const ErrorCleanerOnRouteChange = () => {
@@ -53,7 +57,7 @@ export const createRouterWithWrapper =
 
 export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteObject[] = (dispatch, isVeileder) => [
     {
-        path: '/',
+        path: isVeileder ? `/${baseName}` : '/',
         element: <BasePage />, // Dont reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
         id: 'root',
@@ -80,8 +84,10 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteOb
             { path: 'utskrift', element: <AktivitetsplanPrint /> },
             { path: 'journalforing', element: <JournalforingPage /> },
             { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
-            { path: '*', element: <Navigate replace to={`/`} /> },
+            { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
+            { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },
         ],
     },
-    { path: '*', element: <Navigate replace to={`/aktivitetsplan`} /> },
+    { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
+    { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },
 ];
