@@ -1,6 +1,6 @@
 import './mitt-maal.less';
 
-import { Button, Heading, Skeleton } from '@navikt/ds-react';
+import { Alert, Button, Heading, Skeleton } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { Suspense, useEffect } from 'react';
