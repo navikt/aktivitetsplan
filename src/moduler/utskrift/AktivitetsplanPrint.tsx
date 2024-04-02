@@ -23,7 +23,7 @@ import PrintVerktoylinje from './printVerktoylinje';
 import Print from './print/print';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
-import { useRoutes } from '../../routes';
+import { useRoutes } from '../../routing/useRoutes';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -148,26 +148,20 @@ const AktivitetsplanPrint = () => {
         <section className="flex flex-col justify-center items-center p-8">
             <div className="aktivitetsplanprint flex justify-center items-center">
                 {prompt}
-                <PrintVerktoylinje
-                    avhengigheter={avhengigheter}
-                    tilbakeRoute={hovedsideRoute()}
-                    kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                />
-                <Innholdslaster avhengigheter={avhengigheter}>
-                    <div className="border px-12 print:border-none">
-                        <Print
-                            dialoger={dialoger}
-                            bruker={bruker}
-                            adresse={adresse}
-                            printMelding={printMelding}
-                            aktiviteter={aktiviteter}
-                            mittMal={mittMal}
-                            erVeileder={erVeileder}
-                            utskriftPlanType={utskriftform}
-                            kvpPerioder={kvpPerioder}
-                        />
-                    </div>
-                </Innholdslaster>
+                <PrintVerktoylinje tilbakeRoute={hovedsideRoute()} kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT} />
+                <div className="border px-12 print:border-none">
+                    <Print
+                        dialoger={dialoger}
+                        bruker={bruker}
+                        adresse={adresse}
+                        printMelding={printMelding}
+                        aktiviteter={aktiviteter}
+                        mittMal={mittMal}
+                        erVeileder={erVeileder}
+                        utskriftPlanType={utskriftform}
+                        kvpPerioder={kvpPerioder}
+                    />
+                </div>
             </div>
         </section>
     );

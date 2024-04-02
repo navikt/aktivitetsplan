@@ -1,5 +1,5 @@
 import { addDays, differenceInDays, parseISO, startOfDay } from 'date-fns';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { ARBEIDSSOKERREGISTRERING_URL } from '../../constant';
@@ -10,6 +10,8 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import AdvarselMedDialogLenke from './AdvarselMedDialogLenke';
 import AdvarselMedLenkeVarsling from './AdvarselMedLenkeVarsling';
+import { Await, useRouteLoaderData } from 'react-router-dom';
+import { InitialPageLoadResult } from '../../routing/loaders';
 
 const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string => {
     if (!antallDagerIgjen) {
@@ -49,29 +51,35 @@ const BrukerVarslinger = (props: Props) => {
     const dato28dagerEtterIserv = addDays(parseISO(inaktiveringsdato), 28);
     const antallDagerIgjen = differenceInDays(dato28dagerEtterIserv, dagensDato);
 
+    const { oppfolging } = useRouteLoaderData('root') as InitialPageLoadResult;
+
     return (
-        <div className="container">
-            <AdvarselMedDialogLenke
-                lenkeTekst="Les hva du må gjøre."
-                tekst="Du har fått en viktig melding fra NAV."
-                dialogId={tilhorendeDialogId}
-                hidden={!erEskalert}
-            />
-            <AdvarselMedLenkeVarsling
-                hidden={!kanReaktiveres}
-                tekst={infotekstTilInaktivertBrukere(antallDagerIgjen)}
-                lenkeTekst="Gå til registrering"
-                href={ARBEIDSSOKERREGISTRERING_URL}
-            />
-            <AdvarselMedLenkeVarsling
-                hidden={underOppfolging}
-                tekst={
-                    'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.'
-                }
-                lenkeTekst="Register deg hos NAV"
-                href={ARBEIDSSOKERREGISTRERING_URL}
-            />
-        </div>
+        <Suspense fallback={null}>
+            <Await resolve={oppfolging}>
+                <div className="container">
+                    <AdvarselMedDialogLenke
+                        lenkeTekst="Les hva du må gjøre."
+                        tekst="Du har fått en viktig melding fra NAV."
+                        dialogId={tilhorendeDialogId}
+                        hidden={!erEskalert}
+                    />
+                    <AdvarselMedLenkeVarsling
+                        hidden={!kanReaktiveres}
+                        tekst={infotekstTilInaktivertBrukere(antallDagerIgjen)}
+                        lenkeTekst="Gå til registrering"
+                        href={ARBEIDSSOKERREGISTRERING_URL}
+                    />
+                    <AdvarselMedLenkeVarsling
+                        hidden={underOppfolging}
+                        tekst={
+                            'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.'
+                        }
+                        lenkeTekst="Register deg hos NAV"
+                        href={ARBEIDSSOKERREGISTRERING_URL}
+                    />
+                </div>
+            </Await>
+        </Suspense>
     );
 };
 

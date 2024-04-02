@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
@@ -6,21 +6,15 @@ import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
 import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
-import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
 // import UxSignalsWidget from '../../felles-komponenter/UxSignalsWidget';
-import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
-import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-slice';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { hentNivaa4 } from '../../moduler/tilgang/tilgang-slice';
-import { hentVeilederInfo } from '../../moduler/veileder/veileder-slice';
 import { useErVeileder, useFnr } from '../../Provider';
 import { RootState } from '../../store';
 import useIsVisible from '../../utils/useIsVisible';
@@ -29,6 +23,9 @@ import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreA
 import Tavle from './Tavle';
 import { Tavleadvarsel } from './Tavleadvarsel';
 import { erDroppbar } from './tavleUtils';
+import { Await, useRouteLoaderData } from 'react-router-dom';
+import { InitialPageLoadResult } from '../../routing/loaders';
+import { Loader } from '@navikt/ds-react';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
     useEffect(() => {
@@ -39,7 +36,6 @@ function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
 }
 
 const Aktivitetstavle = () => {
-    const dispatch = useAppDispatch();
     const fnr = useFnr();
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
@@ -51,19 +47,13 @@ const Aktivitetstavle = () => {
     const aktivitetNotStarted =
         statusAktiviteter === Status.NOT_STARTED && statusArenaAktiviteter === Status.NOT_STARTED;
 
-    const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
-
     useEffect(() => {
         if (aktivitetNotStarted) {
             if (erVeileder && fnr) {
                 doLesAktivitetsplan(fnr);
-                dispatch(hentNivaa4(fnr));
-                dispatch(hentVeilederInfo());
             }
-            dispatch(hentAktiviteter());
-            dispatch(hentArenaAktiviteter());
         }
-    }, [aktivitetNotStarted, erVeileder, dispatch]);
+    }, [aktivitetNotStarted, erVeileder, fnr]);
 
     const dragging = !!draggingAktivitet;
     const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, underOppfolging);
@@ -92,20 +82,44 @@ const Aktivitetstavle = () => {
         }
     }, [sistVisteAktivitetId, skalScrolle, appIsVisible]);
 
-    return (
-        <Innholdslaster className="flex m-auto mt-8" minstEn avhengigheter={avhengigheter}>
-            <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
-            <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
+    const { oppfolging } = useRouteLoaderData('root') as InitialPageLoadResult;
 
-            <Tavle dragging={dragging}>
+    return (
+        <Suspense fallback={<TavleFallback />}>
+            <Await resolve={oppfolging}>
+                <div className="flex w-full m-auto mt-8">
+                    <Tavleadvarsel
+                        hidden={skjulAdvarsel}
+                        draggingAktivitet={draggingAktivitet}
+                        erVeileder={erVeileder}
+                    />
+                    <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
+                    <Tavle dragging={dragging}>
+                        <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
+                        <Kolonne status={AktivitetStatus.PLANLAGT} />
+                        <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
+                        <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
+                        <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
+                    </Tavle>
+                    {/*<UxSignalsWidget />*/}
+                </div>
+            </Await>
+        </Suspense>
+    );
+};
+
+const TavleFallback = () => {
+    return (
+        <div className="flex m-auto w-full mt-8 flex-col">
+            <Tavle dragging={false}>
                 <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
                 <Kolonne status={AktivitetStatus.PLANLAGT} />
                 <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
                 <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
             </Tavle>
-            {/*<UxSignalsWidget />*/}
-        </Innholdslaster>
+            <Loader size="large" className="self-center mb-32" />
+        </div>
     );
 };
 

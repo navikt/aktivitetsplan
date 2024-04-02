@@ -10,11 +10,11 @@ const veilederIdentitet = {
 export const emptyLoadedVeilederState = {
     data: {
         aktiviteter: {
-            status: Status.OK,
+            status: Status.NOT_STARTED,
             data: [],
         },
         arenaAktiviteter: {
-            status: Status.OK,
+            status: Status.NOT_STARTED,
             data: [],
         },
         oppfolging: {

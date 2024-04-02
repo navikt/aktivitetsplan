@@ -1,8 +1,14 @@
-import { CaptureConsole as CaptureConsoleIntegration } from '@sentry/integrations';
+import { captureConsoleIntegration } from '@sentry/integrations';
 import * as Sentry from '@sentry/react';
 import { Breadcrumb, Event } from '@sentry/types';
 import React from 'react';
-import { Routes, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
+import {
+    createRoutesFromChildren,
+    matchRoutes,
+    useLocation,
+    useNavigationType,
+    createBrowserRouter,
+} from 'react-router-dom';
 
 enum Env {
     Local = 'local',
@@ -84,7 +90,7 @@ Sentry.init({
                 // /(\.dev)?nav.no\/veilarblest/,
             ],
         }),
-        new CaptureConsoleIntegration({
+        captureConsoleIntegration({
             // array of methods that should be captured
             // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
             levels: ['warn', 'error'],
@@ -107,4 +113,4 @@ Sentry.init({
     release: import.meta.env.VITE_SENTRY_RELEASE,
 });
 
-export const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
+export const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);

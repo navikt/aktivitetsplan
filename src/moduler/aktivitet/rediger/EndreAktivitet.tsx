@@ -29,7 +29,7 @@ import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/h
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routing/useRoutes';
 import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import Feilmelding from '../../feilmelding/Feilmelding';

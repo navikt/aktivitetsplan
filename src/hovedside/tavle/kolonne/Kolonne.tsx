@@ -14,7 +14,6 @@ interface Props {
 
 const Kolonne = ({ status }: Props) => {
     const aktiviteter = useSelector(selectAktivitetListe, shallowEqual);
-
     const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
     const aktivitetsListe = sorterteAktiviter.map((aktivitet) => (
         <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
