@@ -43,7 +43,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
     return (
         <div className="mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
             {journalførtStatus === Status.OK && arkivStatus == Status.OK && (
-                <Alert variant="success" role="alert" className="absolute z-10 mt-10">
+                <Alert variant="success" role="alert" className="fixed z-10 mt-10">
                     Aktivitetsplanen ble journalført.
                 </Alert>
             )}
