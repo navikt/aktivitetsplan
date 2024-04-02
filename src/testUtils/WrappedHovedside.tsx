@@ -5,7 +5,7 @@ import React from 'react';
 import { Location } from '@remix-run/router/history';
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { routingConfig } from '../routing/routerConfig';
-import { useErVeileder, useFnr } from '../Provider';
+import { useErVeileder } from '../Provider';
 
 /* Rendrer hele appen men med in-memory router og mulighet for å sette initial redux-state slik at
  * mesteparten av mock-data er på plass ved første render */

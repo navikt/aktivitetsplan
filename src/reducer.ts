@@ -16,7 +16,6 @@ import malReducer from './moduler/mal/aktivitetsmal-slice';
 import malListeReducer from './moduler/mal/malliste-slice';
 import malverkReducer from './moduler/malverk/malverk-slice';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-slice';
-import tilgangReducer from './moduler/tilgang/tilgang-slice';
 import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-slice';
 import veilederReducer from './moduler/veileder/veileder-slice';
 import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';

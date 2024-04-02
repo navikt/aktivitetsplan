@@ -1,15 +1,8 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
-import { selectErBruker, selectIdentitetStatus } from '../identitet/identitet-selector';
-import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
+import { selectErBruker } from '../identitet/identitet-selector';
 import BrukerVarslinger from './BrukerVarslinger';
-import {
-    selectErEskalert,
-    selectEskaleringsvarselData,
-    selectEskaleringsvarselStatus,
-} from './eskaleringsvarsel-selector';
+import { selectErEskalert, selectEskaleringsvarselData } from './eskaleringsvarsel-selector';
 import VeilederVarsel from './VeilederVarsel';
 
 const Varslinger = () => {

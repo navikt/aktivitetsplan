@@ -7,7 +7,6 @@ import { Status } from '../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
 // import UxSignalsWidget from '../../felles-komponenter/UxSignalsWidget';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';

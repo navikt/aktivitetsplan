@@ -11,7 +11,7 @@ import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import React, { useEffect } from 'react';
 import { fjernDismissableErrors } from '../moduler/feilmelding/feil-slice';
 import { Dispatch } from '../store';
-import Hovedside, { PageLoader } from '../hovedside/Hovedside';
+import Hovedside from '../hovedside/Hovedside';
 import { initialPageLoader, malLoader } from './loaders';
 import LeggTilForm from '../moduler/aktivitet/ny-aktivitet/LeggTilForm';
 import NyAktivitetForm from '../moduler/aktivitet/ny-aktivitet/NyAktivitetForm';

@@ -1,23 +1,16 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
-
-import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useErVeileder } from '../../Provider';
-import { selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
-import { hentIdentitet } from '../identitet/identitet-slice';
+import { selectIdentitetId } from '../identitet/identitet-selector';
 import {
     selectAktorId,
     selectErBrukerManuell,
     selectErUnderOppfolging,
-    selectOppfolgingStatus,
     selectOppfolgingsPerioder,
     selectReservasjonKRR,
     selectServicegruppe,
 } from './oppfolging-selector';
-import { hentOppfolging } from './oppfolging-slice';
 import VidereSendBrukereEllerRenderChildren from './VidereSendBrukereEllerRenderChildren';
-import { Status } from '../../createGenericSlice';
 
 interface Props {
     children: ReactNode;

@@ -2,8 +2,6 @@ import { PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-
-import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
