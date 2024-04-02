@@ -42,7 +42,7 @@ interface CacheableSliceLoader {
     fetchAction: AsyncThunk<any, any, any>;
     statusSelector: (state: RootState) => Status;
     key: string;
-    veilederOnly?: boolean | undefined;
+    veilederOnly?: boolean;
 }
 
 const fetchIfNotStartedAll =
