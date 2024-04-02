@@ -23,6 +23,7 @@ import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSoke
 import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
 import { AktivitetFormValues } from '../rediger/EndreAktivitet';
 import { logModalLukket } from '../../../amplitude/amplitude';
+import { useErVeileder } from '../../../Provider';
 
 const aktivitetHeadings = {
     mote: 'Møte med NAV',
@@ -42,7 +43,8 @@ interface RouteMatch {
 
 const NyAktivitetForm = () => {
     const navigate = useNavigate();
-    const match = useMatch('/aktivitet/ny/:aktivitetType') as RouteMatch;
+    const erVeileder = useErVeileder();
+    const match = useMatch(`${erVeileder ? '/aktivitetsplan' : ''}/aktivitet/ny/:aktivitetType`) as RouteMatch;
     const dispatch = useAppDispatch();
     const { aktivitetRoute, hovedsideRoute, nyAktivitetRoute } = useRoutes();
     const tilHovedside = () => navigate(hovedsideRoute());
