@@ -24,17 +24,14 @@ import AktivitetsplanPrint from '../moduler/utskrift/AktivitetsplanPrint';
 import Mal from '../moduler/mal/mal';
 import { JournalforingPage } from '../moduler/journalforing/JournalforingPage';
 import { BasePage } from '../BasePage';
+import { useErVeileder } from '../Provider';
 
 const baseName = 'aktivitetsplan';
 
 const RedirectToAktivitetWithoutFnr = () => {
     const params = useParams();
-    return <Navigate replace to={`/aktivitet/vis/` + params.id} />;
-};
-
-const RedirectToAktivitetWithBasename = () => {
-    const params = useParams();
-    return <Navigate replace to={`/${baseName}/aktivitet/vis/` + params.id} />;
+    const erVeileder = useErVeileder();
+    return <Navigate replace to={`${erVeileder ? '/' + baseName : ''}/aktivitet/vis/` + params.id} />;
 };
 
 export const ErrorCleanerOnRouteChange = () => {
@@ -91,6 +88,6 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteOb
             { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },
         ],
     },
-    { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithBasename /> },
+    { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
     { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },
 ];
