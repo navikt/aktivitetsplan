@@ -24,6 +24,7 @@ export const initialPageLoader =
             dialoger: value.then((it) => it.payload['dialoger']),
             aktiviteter: value.then((it) => it.payload['aktiviteter']),
             arenaAktiviteter: value.then((it) => it.payload['arenaAktiviteter']),
+            lest: value.then((it) => it.payload['lest']),
         });
     };
 
@@ -36,6 +37,7 @@ export interface InitialPageLoadResult {
     dialoger: Promise<any>;
     aktiviteter: Promise<any>;
     arenaAktiviteter: Promise<any>;
+    lest: Promise<any>;
 }
 
 export const malLoader = (dispatch: Dispatch, isVeileder: boolean) => {

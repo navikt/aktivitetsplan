@@ -18,6 +18,8 @@ import { selectMalStatus } from '../moduler/mal/aktivitetsmal-selector';
 import { selectDialogStatus } from '../moduler/dialog/dialog-selector';
 import { selectArenaAktivitetStatus } from '../moduler/aktivitet/arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../moduler/aktivitet/aktivitet-selector';
+import { hentLest } from '../moduler/lest/lest-slice';
+import { selectLestStatus } from '../moduler/lest/lest-selector';
 
 // Re-triggered when switching tabs in veilarbpersonflate, dont need to re-fetch data if recently fetched
 export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (isVeileder: boolean, thunkApi) => {
@@ -32,6 +34,7 @@ export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (i
         { fetchAction: hentDialoger, statusSelector: selectDialogStatus, key: 'dialoger' },
         { fetchAction: hentAktiviteter, statusSelector: selectAktivitetStatus, key: 'aktiviteter' },
         { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus, key: 'arenaAktiviteter' },
+        { fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' },
     ])(state, dispatch, isVeileder);
 });
 

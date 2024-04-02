@@ -12,29 +12,37 @@ import { useRoutes } from '../../routing/useRoutes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon, selectLestStatus } from '../lest/lest-selector';
 import { hentLest } from '../lest/lest-slice';
-import { selectErUnderOppfolging, selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErUnderOppfolging,
+    selectOppfolgingsPerioder,
+    selectOppfolgingStatus,
+} from '../oppfolging-status/oppfolging-selector';
 import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
 
 let erVist = false;
 function InformasjonsHenting() {
-    const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+    // const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+    // const oppfolgingStatus = useSelector(selectOppfolgingStatus);
     const lestStatus = useSelector(selectLestStatus, shallowEqual);
     const lestInfo = useSelector(selectLestInformasjon, shallowEqual);
     const erBruker = useSelector(selectErBruker, shallowEqual);
-    const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder, shallowEqual);
+    // const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder, shallowEqual);
 
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
     useEffect(() => {
         fetchHarFlereAktorId();
-        if (underOppfolging) {
-            dispatch(hentLest()).then((action) => {
-                if (isFulfilled(action)) {
-                    loggTidBruktGaaInnPaaAktivitetsplanen(action.payload as Lest[], oppfolgingsPerioder);
-                }
-            });
-        }
     }, []);
+
+    // useEffect(() => {
+    //     if (underOppfolging) {
+    //         dispatch(hentLest()).then((action) => {
+    //             if (isFulfilled(action)) {
+    //                 loggTidBruktGaaInnPaaAktivitetsplanen(action.payload as Lest[], oppfolgingsPerioder);
+    //             }
+    //         });
+    //     }
+    // }, [oppfolgingStatus]);
 
     const { informasjonRoute, hovedsideRoute } = useRoutes();
     const { pathname } = useLocation();
