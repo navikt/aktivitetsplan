@@ -74,8 +74,7 @@ function Navigasjonslinje() {
                     </ReactRouterLink>
                 )}
                 {!ER_PROD
-                    ? erVeileder &&
-                      vistOppfolgingsperiode && (
+                    ? erVeileder && (
                           <ReactRouterLink to="journalforing" className="text-text-action underline hover:no-underline">
                               Journalføring
                           </ReactRouterLink>
