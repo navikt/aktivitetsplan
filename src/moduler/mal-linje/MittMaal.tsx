@@ -3,31 +3,23 @@ import './mitt-maal.less';
 import { Alert, Button, Heading, Skeleton } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Await, useRouteLoaderData } from 'react-router-dom';
 
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
-import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
-import { hentMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import MaalIkon from './Aktivitetsplan_maal.svg?react';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import MalContent from './MalContent';
 
 function MittMaal() {
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(hentMal());
-    }, []);
-
     const avhengigheter = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
