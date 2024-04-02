@@ -1,29 +1,23 @@
 import './mitt-maal.less';
 
-import { Alert, BodyShort, Button, Heading, Skeleton } from '@navikt/ds-react';
+import { Button, Heading, Skeleton } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
-import React, { ReactElement, Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Await, useNavigate, useRouteLoaderData } from 'react-router-dom';
+import { Await, useRouteLoaderData } from 'react-router-dom';
 
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
-import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
-import { useErVeileder } from '../../Provider';
-import { useRoutes } from '../../routing/useRoutes';
-import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
-import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import MaalIkon from './Aktivitetsplan_maal.svg?react';
-import { logKlikkKnapp } from '../../amplitude/amplitude';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import MalContent from './MalContent';
 
