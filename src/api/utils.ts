@@ -68,15 +68,30 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
 }
 
 export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
-    const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
-
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+
+    const configMedCredentials = {
+        ...DEFAULT_CONFIG,
+        ...config,
+        body: extendBodyWithFnr(config.body)
+     };
+
     let fetchUrl = url;
-    if (fnr) {
+    if (fnr && config.method == 'get') {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
     }
 
     return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
+}
+
+function extendBodyWithFnr(payload?: BodyInit | null, fnr?: string) {
+    if (!fnr) return payload
+    if (!payload) return undefined
+    if (typeof payload == 'object')
+    return {
+        ...payload,
+        fnr,
+    }
 }
 
 type HttpMethod = 'post' | 'put' | 'get' | 'patch';
