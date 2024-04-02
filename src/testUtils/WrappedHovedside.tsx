@@ -1,20 +1,30 @@
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import Hovedside from '../hovedside/Hovedside';
+import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-dom';
 import React from 'react';
 import { Location } from '@remix-run/router/history';
+import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
+import { routingConfig } from '../routing/routerConfig';
+import { useErVeileder } from '../Provider';
 
 /* Rendrer hele appen men med in-memory router og mulighet for å sette initial redux-state slik at
  * mesteparten av mock-data er på plass ved første render */
 export const WrappedHovedside = ({ store }: { store: ToolkitStore }) => {
     return (
         <Provider store={store}>
-            <MemoryRouter>
-                <Hovedside />
-            </MemoryRouter>
+            <MemoryRouteProvider />
         </Provider>
     );
+};
+
+const MemoryRouteProvider = () => {
+    const dispatch = useAppDispatch();
+    const erVeileder = useErVeileder();
+    const router = createMemoryRouter(routingConfig(dispatch, erVeileder), {
+        initialEntries: ['/'],
+        initialIndex: 0,
+    });
+    return <RouterProvider router={router} />;
 };
 
 type Entry = string | Partial<Location>;

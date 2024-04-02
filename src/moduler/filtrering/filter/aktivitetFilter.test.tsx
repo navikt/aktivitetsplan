@@ -15,16 +15,17 @@ import {
     VeilarbAktivitet,
     VeilarbAktivitetType,
 } from '../../../datatypes/internAktivitetTypes';
-import { wrapAktivitet } from '../../../mocks/aktivitet';
+import { aktiviteterData, wrapAktivitet } from '../../../mocks/aktivitet';
 import { mockOppfolging } from '../../../mocks/data/oppfolging';
 import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
-import { handlers } from '../../../mocks/handlers';
+import { aktivitestplanResponse, handlers } from '../../../mocks/handlers';
 import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
-import { hentAktiviteter } from '../../aktivitet/aktivitet-actions';
 import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { rest } from 'msw';
+import { failOrGrahpqlResponse } from '../../../mocks/utils';
 
 vi.mock('../../../felles-komponenter/utils/logging', async () => {
     const actual: any = await vi.importActual('../../../felles-komponenter/utils/logging');
@@ -59,26 +60,23 @@ function makeTestAktiviteter<T>(
             oppfolgingsperiodeId: currentOppfolgingsperiode,
         };
     }) as unknown as VeilarbAktivitet[];
-    store.dispatch(
-        hentAktiviteter.fulfilled(
-            {
-                data: {
-                    perioder: [
-                        {
-                            id: currentOppfolgingsperiode,
-                            aktiviteter: testAktiviteter,
-                        },
-                    ],
-                },
-                errors: [],
-            },
-            'asd',
-        ),
-    );
+    filterTestData = testAktiviteter;
     return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
 }
 
-const server = setupServer(...handlers);
+let filterTestData = aktiviteterData.aktiviteter;
+const server = setupServer(
+    rest.post(
+        '/veilarbaktivitet/graphql',
+        failOrGrahpqlResponse(
+            () => false,
+            () => {
+                return aktivitestplanResponse({ aktiviteter: filterTestData });
+            },
+        ),
+    ),
+    ...handlers,
+);
 
 describe('aktivitets-filter', () => {
     // Start server before all tests
@@ -137,14 +135,10 @@ describe('aktivitets-filter', () => {
         }[];
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         for await (const { tittel, type } of aktiviteter) {
-            await waitFor(() =>
-                expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
-            );
-
+            await waitFor(() => getByRole('button', { name: 'Filtrer' }));
             fireEvent.click(getByRole('button', { name: 'Filtrer' }));
-
             fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
-            getByText(tittel);
+            await waitFor(() => getByText(tittel));
             // Sjekk at ingen andre aktiviteter vises
             aktivitetTyper
                 .filter((andreTyper) => andreTyper != type)
@@ -174,7 +168,7 @@ describe('aktivitets-filter', () => {
             };
         });
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
-        getByText(`Aktivitet: VENTER`);
+        await waitFor(() => getByText(`Aktivitet: VENTER`));
         getByText(`Aktivitet: AVSLAG`);
         await waitFor(() =>
             expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
@@ -197,7 +191,7 @@ describe('aktivitets-filter', () => {
             } as AlleAktiviteter;
         });
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
-        getByText(`Aktivitet: INNKALT_TIL_INTERVJU`);
+        await waitFor(() => getByText(`Aktivitet: INNKALT_TIL_INTERVJU`));
         getByText(`Aktivitet: SOKNAD_SENDT`);
         await waitFor(() =>
             expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),

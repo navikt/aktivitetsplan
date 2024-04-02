@@ -1,97 +1,25 @@
 import './mitt-maal.less';
 
-import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Button, Heading, Skeleton } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Await, useRouteLoaderData } from 'react-router-dom';
 
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
-import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
-import { useErVeileder } from '../../Provider';
-import { useRoutes } from '../../routes';
-import CustomBodyLong from '../aktivitet/visning/hjelpekomponenter/CustomBodyLong';
-import { selectViserHistoriskPeriode, selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import MaalIkon from './Aktivitetsplan_maal.svg?react';
-import { logKlikkKnapp } from '../../amplitude/amplitude';
-
-interface MalTextProps {
-    mal?: string;
-    disabled: boolean;
-}
-
-function MalText(props: MalTextProps) {
-    if (props.disabled) {
-        return <>Trykk her for å se dine tidligere mål</>;
-    }
-    if (!props.mal) {
-        return (
-            <>
-                Du har ikke skrevet hva målet ditt er. Beskriv målet ditt, gjerne både kortsiktige og langsiktige mål og
-                hva slags arbeidsoppgaver du ønsker deg.
-            </>
-        );
-    }
-
-    return <CustomBodyLong formatLinebreaks>{props.mal}</CustomBodyLong>;
-}
-
-interface MalContentProps {
-    mal?: string;
-    disabled: boolean;
-}
-
-function MalContent(props: MalContentProps) {
-    const { disabled, mal } = props;
-    const erVeileder = useErVeileder();
-    const navigate = useNavigate();
-    const { malRoute } = useRoutes();
-    const endreMal = (tekst: string) => {
-        navigate(malRoute());
-        loggMittMalKlikk(erVeileder);
-        logKlikkKnapp(tekst);
-    };
-
-    const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
-
-    if (!mal && !disabled) {
-        return (
-            <div>
-                <BodyShort>Skriv litt om hva som er målet ditt slik at vi kan hjelpe deg bedre.</BodyShort>
-                <ul className="list-disc ml-6 mb-4">
-                    <li>
-                        <BodyShort>Hva er målet på kort og på lang sikt?</BodyShort>
-                    </li>
-                    <li>
-                        <BodyShort>Hva slags jobb ønsker du deg?</BodyShort>
-                    </li>
-                </ul>
-                <Button onClick={() => endreMal('Sett et mål')} variant="secondary" size="small">
-                    Sett et mål
-                </Button>
-            </div>
-        );
-    }
-
-    return (
-        <div className="flex flex-col items-start gap-4">
-            <MalText disabled={disabled} mal={mal} />
-            <Button onClick={() => endreMal('Endre målet')} variant="secondary" size="small">
-                {viserInnevaerendePeriode ? 'Endre målet' : 'Se tidligere mål'}
-            </Button>
-        </div>
-    );
-}
+import { InitialPageLoadResult } from '../../routing/loaders';
+import MalContent from './MalContent';
 
 function MittMaal() {
     const dispatch = useAppDispatch();
@@ -117,33 +45,47 @@ function MittMaal() {
         ) && harSkriveTilgang;
 
     const noeHarFeilet = avhengigheter === 'ERROR';
+    const { mal: malPromise, oppfolging: oppfolgingPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
+    if (noeHarFeilet) return <Alert variant={'error'}>Kunne ikke hente mål</Alert>;
     return (
         <>
-            <Innholdslaster avhengigheter={avhengigheter}>
-                <div
-                    className={classNames('border-border-default flex rounded-md p-4', {
-                        'border-2 border-dashed ': !mal && !disabled,
-                        border: mal || disabled,
-                    })}
-                >
-                    <div className="flex sm:flex-row items-center gap-6">
-                        <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />
-                        <div>
-                            <div className="flex mb-2 items-center">
-                                <NotifikasjonMarkering visible={nyEndring} />
-                                <Heading level="2" size="medium" className={'flex'}>
-                                    Mitt mål
-                                </Heading>
-                            </div>
-                            <MalContent disabled={disabled} mal={mal} />
+            <div
+                className={classNames('border-border-default flex rounded-md p-4', {
+                    'border-2 border-dashed ': !mal && !disabled,
+                    border: mal || disabled,
+                })}
+            >
+                <div className="flex sm:flex-row items-center gap-6">
+                    <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />
+                    <div>
+                        <div className="flex mb-2 items-center">
+                            <NotifikasjonMarkering visible={nyEndring} />
+                            <Heading level="2" size="medium" className={'flex'}>
+                                Mitt mål
+                            </Heading>
                         </div>
+                        <Suspense fallback={<MalFallback />}>
+                            <Await resolve={Promise.all([oppfolgingPromise, malPromise])}>
+                                <MalContent disabled={disabled} mal={mal} />
+                            </Await>
+                        </Suspense>
                     </div>
                 </div>
-            </Innholdslaster>
-            {noeHarFeilet ? <Alert variant={'error'}>Kunne ikke hente mål</Alert> : null}
+            </div>
         </>
     );
 }
+
+const MalFallback = () => {
+    return (
+        <div className="flex flex-col items-start gap-4">
+            <Skeleton variant="text" width="100%" />
+            <Button size="small" variant="secondary" disabled={true}>
+                Endre målet
+            </Button>
+        </div>
+    );
+};
 
 function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boolean {
     if (!maal?.mal) {

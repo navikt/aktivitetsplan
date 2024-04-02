@@ -13,12 +13,10 @@ import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
-import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
-    const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -74,8 +72,7 @@ function Navigasjonslinje() {
                     </ReactRouterLink>
                 )}
                 {!ER_PROD
-                    ? erVeileder &&
-                      vistOppfolgingsperiode && (
+                    ? erVeileder && (
                           <ReactRouterLink to="journalforing" className="text-text-action underline hover:no-underline">
                               Journalføring
                           </ReactRouterLink>

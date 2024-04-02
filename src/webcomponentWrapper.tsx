@@ -1,6 +1,5 @@
 import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import React from 'react';
-import { Routes } from 'react-router-dom';
 
 import App from './app';
 import lessCss from './index.less?inline';
@@ -17,6 +16,7 @@ import {
     RootState,
     saveReduxStateToSessionStorage,
 } from './store';
+import { createRouterWithWrapper } from './routing/routerConfig';
 
 // Clear redux-cache from session storage on page load to make sure new data is fetched
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
@@ -57,7 +57,7 @@ export class DabAktivitetsplan extends HTMLElement {
                 fnr={fnr}
                 setFnrRef={(setFnr) => (this.setFnr = setFnr)}
             >
-                <App Routes={Routes} key={'1'} />
+                <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
             </Provider>,
         );
     }

@@ -53,7 +53,7 @@ const Tavle = (props: Props) => {
     const kolonner = children.map((child, index) => (
         <section
             key={child.key || index}
-            className={'min-w-[300px] lg:max-w-[300px]'}
+            className={'min-w-[300px] w-full lg:max-w-[300px]'}
             data-testid={`aktivitetstavle.${child.props.status}`}
         >
             {child}

@@ -8,7 +8,7 @@ import { AktivitetStatus, isArenaAktivitet } from '../../../datatypes/aktivitetT
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import { useRoutes } from '../../../routes';
+import { useRoutes } from '../../../routing/useRoutes';
 import { RootState } from '../../../store';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';

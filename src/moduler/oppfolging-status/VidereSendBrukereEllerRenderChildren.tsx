@@ -5,6 +5,9 @@ import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponent
 import { useErVeileder } from '../../Provider';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigitalOppfolging';
 import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
+import { useSelector } from 'react-redux';
+import { selectOppfolgingStatus } from './oppfolging-selector';
+import { Status } from '../../createGenericSlice';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
@@ -22,6 +25,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const { servicegruppe, underOppfolging, ident, aktorId, children, manuell, oppfolgingsPerioder, reservasjonKRR } =
         props;
 
+    const oppfolgingsStatus = useSelector(selectOppfolgingStatus);
     const erVeileder = useErVeileder();
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
 
@@ -33,7 +37,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         }
     }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);
 
-    if (!underOppfolging && oppfolgingsPerioder.length === 0) {
+    if (oppfolgingsStatus === Status.OK && !underOppfolging && oppfolgingsPerioder.length === 0) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
 
