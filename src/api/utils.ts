@@ -71,25 +71,24 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
 export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders, method: 'get' }) {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
 
-    const addFnrToBody = url.includes(AKTIVITET_BASE_URL) && config.method != 'get';
 
     const configMedCredentials = {
         ...DEFAULT_CONFIG,
         ...config,
-        body: addFnrToBody ? extendBodyWithFnr(config.body, fnr) : config.body,
     };
 
     let fetchUrl = url;
-    if (fnr && !addFnrToBody) {
+    if (fnr && config.method == 'get') {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
     }
 
     return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-function extendBodyWithFnr(payload?: BodyInit | null, fnr?: string | null) {
+function extendBodyWithFnr(payload?: Record<any, any> | null, fnr?: string | null) {
     if (!fnr) return payload;
     if (!payload) return undefined;
+    console.log(typeof payload)
     if (typeof payload == 'object')
         return {
             ...payload,
@@ -100,12 +99,17 @@ function extendBodyWithFnr(payload?: BodyInit | null, fnr?: string | null) {
 type HttpMethod = 'post' | 'put' | 'get' | 'patch';
 
 function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, config: RequestInit) {
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+
+    const addFnrToBody = url.includes(AKTIVITET_BASE_URL) && method != 'get';
+
+    const possiblyBodyWithFnr =  addFnrToBody ? extendBodyWithFnr(data, fnr) : data
     // prettier-ignore
     return fetchToJson(url, {
         ...{
             method,
             headers: defaultHeaders,
-            body: JSON.stringify(data)
+            body: JSON.stringify(possiblyBodyWithFnr)
         },
         ...config
     });
