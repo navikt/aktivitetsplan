@@ -13,7 +13,6 @@ import {
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
-    ikkeLoggetInnNivaa4,
     ingenMal,
     ingenOppfPerioder,
     maalFeilet,
@@ -71,11 +70,6 @@ const DemoDashboard = () => {
             label: 'KRR',
             id: LocalStorageElement.KRR_BRUKER,
             checked: erKRRBruker(),
-        },
-        {
-            label: 'Ikke innlogget med nivå 4',
-            id: LocalStorageElement.INNLOGGET_NIVAA4,
-            checked: ikkeLoggetInnNivaa4(),
         },
         {
             label: 'Ingen oppfølgingsperioder',

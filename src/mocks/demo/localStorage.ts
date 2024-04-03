@@ -1,12 +1,9 @@
-import { RestRequest } from 'msw';
-
 export enum LocalStorageElement {
     PRIVAT_BRUKER = 'privatbruker',
     MANUELL_BRUKER = 'manuellbruker',
     KRR_BRUKER = 'krrbruker',
     GAMMEL_ESKALERT_BRUKER = 'eskalertbruker_gammel',
     ESKALERT_BRUKER = 'eskalertbruker',
-    INNLOGGET_NIVAA4 = 'innlogget_nivaa4',
     OPPF_FEILET = 'oppffeilet',
     DIALOG_FEILET = 'dialogfeilet',
     AKTIVITET_FEILET = 'aktivitetfeilet',
@@ -57,8 +54,6 @@ export const erEskalertBrukerGammel = () => erSatt(LocalStorageElement.GAMMEL_ES
 
 export const erEskalertBruker = () => erSatt(LocalStorageElement.ESKALERT_BRUKER);
 
-export const ikkeLoggetInnNivaa4 = () => erSatt(LocalStorageElement.INNLOGGET_NIVAA4);
-
 export const ingenOppfPerioder = () => erSatt(LocalStorageElement.INGEN_OPPF_PERIODER);
 
 export const visAutomatiskeAktiviteter = () => erSatt(LocalStorageElement.AUTOMATISKE_AKTIVITETER);
@@ -75,8 +70,9 @@ export const oppfFeilet = () => erSatt(LocalStorageElement.OPPF_FEILET);
 
 export const dialogFeilet = () => erSatt(LocalStorageElement.DIALOG_FEILET);
 
-export const aktivitetFeilet = (request: RestRequest) => {
+export const aktivitetFeilet = () => {
     if (erSatt(LocalStorageElement.AKTIVITET_FEILET)) return true;
+    return false;
 };
 
 export const arenaFeilet = () => erSatt(LocalStorageElement.ARENA_FEILET);

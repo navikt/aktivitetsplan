@@ -1,5 +1,5 @@
 import { addDays, subDays } from 'date-fns';
-import { RestRequest } from 'msw';
+import { DefaultBodyType, PathParams, StrictRequest } from 'msw';
 
 import {
     AktivitetStatus,
@@ -492,30 +492,28 @@ export function wrapAktivitet<T extends AlleAktiviteter>(a: T): T {
     } as unknown as T;
 }
 
-export const getAktivitet = (req: RestRequest) => {
-    const aktivitetId = req.params.aktivitetId;
-
+export const getAktivitet = (_: StrictRequest<DefaultBodyType>, params: PathParams) => {
+    const aktivitetId = params.aktivitetId;
     return aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
 };
 
-export const getAktivitetVersjoner = (req: RestRequest) => {
-    const aktivitetId = req.params.aktivitetId;
-
+export const getAktivitetVersjoner = (_: StrictRequest<DefaultBodyType>, params: PathParams) => {
+    const aktivitetId = params.aktivitetId;
     return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
 };
 
-export const opprettAktivitet = async (req: RestRequest) => {
+export const opprettAktivitet = async (req: StrictRequest<object>) => {
     const body = await req.json();
 
     const nyAktivitet = wrapAktivitet({
         id: rndId(),
-        opprettetDato: new Date(),
+        opprettetDato: new Date().toISOString(),
         endretAvType: bruker,
         endretDato: new Date().toISOString(),
         endretAv: bruker,
         versjon: '1',
         erLestAvBruker: eksternBruker,
-        transaksjonsType: 'OPPRETTET',
+        transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         ...body,
     });
@@ -556,8 +554,8 @@ function lagNyVersion(aktivitet: VeilarbAktivitet): VeilarbAktivitet {
     };
 }
 
-export const oppdaterAktivitet = async (req: RestRequest) => {
-    const aktivitetId = req.params.aktivitetId;
+export const oppdaterAktivitet = async (req: StrictRequest<object>, params: PathParams) => {
+    const aktivitetId = params.aktivitetId;
     const body = await req.json();
 
     const nyeAktivitetAttributter = {
@@ -567,8 +565,8 @@ export const oppdaterAktivitet = async (req: RestRequest) => {
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterAktivitetStatus = async (req: RestRequest) => {
-    const aktivitetId = req.params.aktivitetId;
+export const oppdaterAktivitetStatus = async (req: StrictRequest<object>, params: PathParams) => {
+    const aktivitetId = params.aktivitetId;
     const body = await req.json();
 
     const nyeAktivitetAttributter = {
@@ -578,8 +576,8 @@ export const oppdaterAktivitetStatus = async (req: RestRequest) => {
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterEtikett = async (req: RestRequest) => {
-    const aktivitetId = req.params.aktivitetId;
+export const oppdaterEtikett = async (req: StrictRequest<StillingAktivitet>, params: PathParams) => {
+    const aktivitetId = params.aktivitetId;
     const body: StillingAktivitet = await req.json();
 
     const nyeAktivitetAttributter: StillingAktivitet = {
@@ -589,8 +587,8 @@ export const oppdaterEtikett = async (req: RestRequest) => {
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterAvtaltMedNav = async (req: RestRequest) => {
-    const aktivitetId = req.url.searchParams.get('aktivitetId');
+export const oppdaterAvtaltMedNav = async (req: StrictRequest<DefaultBodyType>) => {
+    const aktivitetId = new URL(req.url).searchParams.get('aktivitetId');
     const body: any = await req.json();
 
     const nyeAktivitetAttributter: Partial<VeilarbAktivitet> = {
@@ -602,8 +600,8 @@ export const oppdaterAvtaltMedNav = async (req: RestRequest) => {
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterCVKanDelesSvar = async (req: RestRequest) => {
-    const aktivitetId = req.url.searchParams.get('aktivitetId');
+export const oppdaterCVKanDelesSvar = async (req: StrictRequest<CvKanDelesData>) => {
+    const aktivitetId = new URL(req.url).searchParams.get('aktivitetId');
     const cvKanDelesData: CvKanDelesData = await req.json();
 
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as StillingFraNavAktivitet;
@@ -626,24 +624,24 @@ export const oppdaterCVKanDelesSvar = async (req: RestRequest) => {
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterStillingFraNavSoknadsstatus = async (req: RestRequest) => {
-    const aktivitetId = req.url.searchParams.get('aktivitetId');
+export const oppdaterStillingFraNavSoknadsstatus = async (req: StrictRequest<StillingFraNavAktivitet>) => {
+    const aktivitetId = new URL(req.url).searchParams.get('aktivitetId');
     const body = await req.json();
 
     const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         stillingFraNavData: {
             ...(gammelAktivitet as StillingFraNavAktivitet).stillingFraNavData,
-            soknadsstatus: body.soknadsstatus,
+            soknadsstatus: body.stillingFraNavData.soknadsstatus,
         },
         transaksjonsType: StillingFraNavTransaksjonsType.SOKNADSSTATUS_ENDRET,
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterLestFho = async (req: RestRequest) => {
+export const oppdaterLestFho = async (req: StrictRequest<VeilarbAktivitet>) => {
     const body = await req.json();
-    const { aktivitetId } = body;
+    const { id } = body;
 
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as VeilarbAktivitet;
     const nyeAktivitetAttributter: VeilarbAktivitet = {
@@ -654,11 +652,11 @@ export const oppdaterLestFho = async (req: RestRequest) => {
         },
         transaksjonsType: FellesTransaksjonsTyper.FORHAANDSORIENTERING_LEST,
     };
-    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(id, nyeAktivitetAttributter);
 };
 
-export const publiserReferat = (req: RestRequest) => {
-    const aktivitetId = req.params.aktivitetId;
+export const publiserReferat = (req: StrictRequest<DefaultBodyType>, params: PathParams) => {
+    const aktivitetId = params.aktivitetId;
 
     const nyeAktivitetAttributter = {
         erReferatPublisert: true,
@@ -667,9 +665,9 @@ export const publiserReferat = (req: RestRequest) => {
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const endreReferat = async (req: RestRequest) => {
-    const aktivitetId = req.params.aktivitetId;
-    const body: MoteAktivitet = await req.json();
+export const endreReferat = async (req: StrictRequest<MoteAktivitet>, params: PathParams) => {
+    const aktivitetId = params.aktivitetId;
+    const body = await req.json();
 
     const nyeAktivitetAttributter: MoteAktivitet = {
         ...body,

@@ -1,4 +1,4 @@
-import { RestRequest } from 'msw';
+import { StrictRequest } from 'msw';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
 import { erEksternBruker, ingenMal } from '../demo/localStorage';
@@ -29,7 +29,7 @@ export function sisteMal() {
     return maler[maler.length - 1];
 }
 
-export async function opprettMal(req: RestRequest) {
+export async function opprettMal(req: StrictRequest<{ mal: string | undefined }>) {
     const body = await req.json();
 
     const nyMal = {

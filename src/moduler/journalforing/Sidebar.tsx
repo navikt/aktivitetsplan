@@ -53,6 +53,7 @@ const Sidebar: FunctionComponent = () => {
                 <Select
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
+                    value={vistOppfolgingsperiode?.uuid}
                     disabled={arkiverer || !forhaandsvisningOpprettet}
                 >
                     {[...oppfolgingsperioder]
@@ -61,7 +62,7 @@ const Sidebar: FunctionComponent = () => {
                             <option
                                 key={`oppfolgingsperiodeoption-${periode.uuid}`}
                                 value={periode.uuid}
-                                selected={vistOppfolgingsperiode?.uuid === periode.uuid}
+                                // selected={vistOppfolgingsperiode?.uuid === periode.uuid}
                             >
                                 {formaterDatoKortManed(periode.startDato)} - {formaterDatoKortManed(periode.sluttDato)}
                             </option>
