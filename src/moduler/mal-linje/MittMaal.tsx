@@ -71,7 +71,7 @@ function MittMaal() {
 const MalFallback = () => {
     return (
         <div className="flex flex-col items-start gap-4">
-            <Skeleton variant="text" width="100%" />
+            <Skeleton variant="text" className="-mb-1" width="100%" />
             <Button size="small" variant="secondary" disabled={true}>
                 Endre målet
             </Button>
