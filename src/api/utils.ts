@@ -80,7 +80,7 @@ export function fetchToJson(url: string, config: RequestInit = { headers: defaul
     };
 
     let fetchUrl = url;
-    if (fnr && config.method == 'get') {
+    if (fnr && !addFnrToBody) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
     }
 
