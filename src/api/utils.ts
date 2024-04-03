@@ -68,7 +68,7 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
     return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
+export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders, method: 'get' }) {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
 
     const addFnrToBody = url.includes(AKTIVITET_BASE_URL) && config.method != 'get';
