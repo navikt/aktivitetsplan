@@ -76,7 +76,7 @@ export function fetchToJson(url: string, config: RequestInit = { headers: defaul
     const configMedCredentials = {
         ...DEFAULT_CONFIG,
         ...config,
-        body: addFnrToBody ? extendBodyWithFnr(config.body) : config.body,
+        body: addFnrToBody ? extendBodyWithFnr(config.body, fnr) : config.body,
     };
 
     let fetchUrl = url;
@@ -87,7 +87,7 @@ export function fetchToJson(url: string, config: RequestInit = { headers: defaul
     return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-function extendBodyWithFnr(payload?: BodyInit | null, fnr?: string) {
+function extendBodyWithFnr(payload?: BodyInit | null, fnr?: string | null) {
     if (!fnr) return payload;
     if (!payload) return undefined;
     if (typeof payload == 'object')
