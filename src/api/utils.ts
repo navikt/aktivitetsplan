@@ -71,7 +71,7 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
 export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
 
-    const addFnrToBody = url.includes(AKTIVITET_BASE_URL);
+    const addFnrToBody = url.includes(AKTIVITET_BASE_URL) && config.method != 'get';
 
     const configMedCredentials = {
         ...DEFAULT_CONFIG,
