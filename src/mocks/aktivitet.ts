@@ -38,6 +38,7 @@ import { enLestForhaandsorientering, enUlestForhaandsorientering } from './forha
 import { etSamtalereferat } from './samtalereferatFixtures';
 import { enSokeAktivitet } from './sokeAktivitetFixtures';
 import { rndId } from './utils';
+import { OppdaterStillingFraNavSoknadsstatusPayload } from '../api/aktivitetAPI';
 
 const eksternBruker = erEksternBruker();
 const bruker: BrukerType = eksternBruker ? 'BRUKER' : 'NAV';
@@ -624,15 +625,18 @@ export const oppdaterCVKanDelesSvar = async (req: StrictRequest<CvKanDelesData>)
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterStillingFraNavSoknadsstatus = async (req: StrictRequest<StillingFraNavAktivitet>) => {
+export const oppdaterStillingFraNavSoknadsstatus = async (
+    req: StrictRequest<OppdaterStillingFraNavSoknadsstatusPayload>,
+) => {
     const aktivitetId = new URL(req.url).searchParams.get('aktivitetId');
     const body = await req.json();
 
-    const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
-    const nyeAktivitetAttributter = {
+    const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId) as StillingFraNavAktivitet;
+    const nyeAktivitetAttributter: StillingFraNavAktivitet = {
+        ...gammelAktivitet,
         stillingFraNavData: {
-            ...(gammelAktivitet as StillingFraNavAktivitet).stillingFraNavData,
-            soknadsstatus: body.stillingFraNavData.soknadsstatus,
+            ...gammelAktivitet.stillingFraNavData,
+            soknadsstatus: body.soknadsstatus,
         },
         transaksjonsType: StillingFraNavTransaksjonsType.SOKNADSSTATUS_ENDRET,
     };
