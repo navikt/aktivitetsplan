@@ -41,10 +41,10 @@ export const getDialogLenke = ({
 }) => {
     if (erVeileder) {
         if (dialogId) {
-            return `/${dialogId}`;
+            return `/dialog/${dialogId}`;
         }
         if (aktivitetId) {
-            return `/ny?aktivitetId=${aktivitetId}`;
+            return `/dialog/ny?aktivitetId=${aktivitetId}`;
         }
         return `/`;
     } else {
