@@ -3,7 +3,7 @@ import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
-import { useFnr } from '../Provider';
+import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 
 export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
@@ -79,7 +79,7 @@ export const oppdaterStillingFraNavSoknadsstatus = (
     });
 
 export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> =>
-    postAsJson(`${AKTIVITET_BASE_URL}/arena/tiltak`, useFnr());
+    postAsJson(`${AKTIVITET_BASE_URL}/arena/tiltak`, { fnr: hentFraSessionStorage(LocalStorageElement.FNR) });
 
 export const sendForhaandsorienteringArenaAktivitet = (
     arenaaktivitetId: string,
