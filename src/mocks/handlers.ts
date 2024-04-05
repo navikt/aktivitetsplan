@@ -95,7 +95,7 @@ export const handlers = [
             return aktivitestplanResponse(); // Default aktiviteter
         }),
     ),
-    rest.get(
+    rest.post(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(
             () => arenaFeilet() && !oppdateringKunFeiler(),
