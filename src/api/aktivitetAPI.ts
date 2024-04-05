@@ -3,6 +3,7 @@ import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
+import { useFnr } from '../Provider';
 
 export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
@@ -77,7 +78,8 @@ export const oppdaterStillingFraNavSoknadsstatus = (
         soknadsstatus,
     });
 
-export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> => fetchToJson(`${AKTIVITET_BASE_URL}/arena/tiltak`);
+export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> =>
+    postAsJson(`${AKTIVITET_BASE_URL}/arena/tiltak`, useFnr());
 
 export const sendForhaandsorienteringArenaAktivitet = (
     arenaaktivitetId: string,
