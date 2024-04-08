@@ -1,5 +1,6 @@
 import { Status } from '../createGenericSlice';
 import { LocalStorageElement, hentFraSessionStorage } from '../mocks/demo/localStorage';
+import { AKTIVITET_BASE_URL } from '../environment';
 
 /* eslint-env browser */
 
@@ -67,12 +68,17 @@ export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders
     return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
-export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders }) {
-    const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
-
+export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders, method: 'get' }) {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+
+    const configMedCredentials = {
+        ...DEFAULT_CONFIG,
+        ...config,
+    };
+
     let fetchUrl = url;
-    if (fnr) {
+
+    if (fnr && !url.includes(AKTIVITET_BASE_URL)) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
     }
 
@@ -80,15 +86,16 @@ export function fetchToJson(url: string, config: RequestInit = { headers: defaul
 }
 
 type HttpMethod = 'post' | 'put' | 'get' | 'patch';
+
 function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, config: RequestInit) {
     // prettier-ignore
     return fetchToJson(url, {
         ...{
             method,
             headers: defaultHeaders,
-            body: JSON.stringify(data),
+            body: JSON.stringify(data)
         },
-        ...config,
+        ...config
     });
 }
 

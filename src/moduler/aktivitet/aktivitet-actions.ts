@@ -103,9 +103,12 @@ export const oppdaterStillingFraNavSoknadsstatus = createAsyncThunk(
     },
 );
 
-export const lagNyAktivitet = createAsyncThunk('aktivitet/opprett', async (aktivitet: VeilarbAktivitet) => {
-    return await Api.lagNyAktivitet(aktivitet);
-});
+export const lagNyAktivitet = createAsyncThunk(
+    'aktivitet/opprett',
+    async (payload: { aktivitet: VeilarbAktivitet; oppfolgingsPeriodeId: string }) => {
+        return await Api.lagNyAktivitet(payload.aktivitet, payload.oppfolgingsPeriodeId);
+    },
+);
 
 export const oppdaterReferat = createAsyncThunk(
     'referat/oppdater',

@@ -12,7 +12,7 @@ import { useRoutes } from '../../../routing/useRoutes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectLagNyAktivitetFeil } from '../../feilmelding/feil-selector';
 import Feilmelding from '../../feilmelding/Feilmelding';
-import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectNyesteOppfolgingsperiode } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
@@ -51,25 +51,10 @@ const NyAktivitetForm = () => {
 
     const opprettFeil = useSelector(selectLagNyAktivitetFeil);
     const underOppfolging = useSelector(selectErUnderOppfolging);
+    const currentOpenOppfolgingsPeriode = useSelector(selectNyesteOppfolgingsperiode);
 
     const dirtyRef = useRef(false);
     useConfirmOnBeforeUnload(dirtyRef);
-
-    const onSubmitFactory = (aktivitetsType: VeilarbAktivitetType) => {
-        return (aktivitet: AktivitetFormValues) => {
-            const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
-            const nyAktivitet: VeilarbAktivitet = {
-                status: AktivitetStatus.PLANLAGT,
-                type: aktivitetsType,
-                ...filteredAktivitet,
-            } as VeilarbAktivitet;
-            return dispatch(lagNyAktivitet(nyAktivitet)).then((action) => {
-                if (isFulfilled(action)) {
-                    navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id));
-                }
-            });
-        };
-    };
 
     function onRequestClose() {
         const isItReallyDirty = dirtyRef.current;
@@ -94,9 +79,27 @@ const NyAktivitetForm = () => {
         }
     };
 
-    if (!underOppfolging) {
+    if (!underOppfolging || !currentOpenOppfolgingsPeriode) {
         return null;
     }
+
+    const onSubmitFactory = (aktivitetsType: VeilarbAktivitetType) => {
+        return (aktivitet: AktivitetFormValues) => {
+            const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
+            const nyAktivitet: VeilarbAktivitet = {
+                status: AktivitetStatus.PLANLAGT,
+                type: aktivitetsType,
+                ...filteredAktivitet,
+            } as VeilarbAktivitet;
+            return dispatch(
+                lagNyAktivitet({ aktivitet: nyAktivitet, oppfolgingsPeriodeId: currentOpenOppfolgingsPeriode.uuid }),
+            ).then((action) => {
+                if (isFulfilled(action)) {
+                    navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id));
+                }
+            });
+        };
+    };
 
     return (
         <Modal

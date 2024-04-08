@@ -11,8 +11,8 @@ export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
 export const hentAktiviteter = (): Promise<{ aktiviteter: VeilarbAktivitet[] }> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
 
-export const lagNyAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
-    postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/ny`, aktivitet);
+export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId: string): Promise<VeilarbAktivitet> =>
+    postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${oppfolgingsperiodeId}/ny`, aktivitet);
 
 export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
@@ -81,12 +81,17 @@ export const oppdaterStillingFraNavSoknadsstatus = (
 export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> =>
     postAsJson(`${AKTIVITET_BASE_URL}/arena/tiltak`, { fnr: hentFraSessionStorage(LocalStorageElement.FNR) });
 
-export const sendForhaandsorienteringArenaAktivitet = (
-    arenaaktivitetId: string,
-    forhaandsorientering: Forhaandsorientering,
-): Promise<ArenaAktivitet> =>
+export const sendForhaandsorienteringArenaAktivitet = ({
+    arenaaktivitetId,
+    oppfolgingsPeriodeId,
+    forhaandsorientering,
+}: {
+    arenaaktivitetId: string;
+    oppfolgingsPeriodeId: string;
+    forhaandsorientering: Forhaandsorientering;
+}): Promise<ArenaAktivitet> =>
     putAsJson(
-        `${AKTIVITET_BASE_URL}/arena/forhaandsorientering?arenaaktivitetId=${arenaaktivitetId}`,
+        `${AKTIVITET_BASE_URL}/arena/${oppfolgingsPeriodeId}/forhaandsorientering?arenaaktivitetId=${arenaaktivitetId}`,
         forhaandsorientering,
     );
 

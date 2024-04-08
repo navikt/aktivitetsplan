@@ -10,21 +10,22 @@ import { selectErBruker } from '../../../identitet/identitet-selector';
 import ForhaandsorienteringsVisningsLinje from './ForhaandsorienteringsVisningsLinje';
 import FormContainer from './FormContainer';
 import SattTilAvtaltVisning from './SattTilAvtaltVisning';
+import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 
 interface Props {
-    underOppfolging: boolean;
     aktivitet: AlleAktiviteter;
     className?: string;
 }
 
 const AvtaltContainer = (props: Props) => {
-    const { underOppfolging, aktivitet } = props;
+    const { aktivitet } = props;
+    const underOppfolging = useSelector(selectErUnderOppfolging);
     const { type, status, avtalt } = aktivitet;
     const historisk = 'historisk' in aktivitet ? aktivitet.historisk : false;
 
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState<ForhaandsorienteringType>(
-        ForhaandsorienteringType.IKKE_SEND
+        ForhaandsorienteringType.IKKE_SEND,
     );
 
     const erVeileder = useErVeileder();
