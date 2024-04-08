@@ -37,11 +37,10 @@ const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) =
 
 interface Props {
     valgtAktivitet: AlleAktiviteter;
-    underOppfolging: boolean;
 }
 
 const AktivitetinformasjonVisning = (props: Props) => {
-    const { valgtAktivitet, underOppfolging } = props;
+    const { valgtAktivitet } = props;
     const { type, avtalt } = valgtAktivitet;
 
     const deltFerdigMarkeringSkalVises = isSamtaleOrMote(valgtAktivitet)
@@ -58,7 +57,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 )}
                 {deltFerdigMarkeringSkalVises ? <IkkeDeltFerdigMarkering /> : null}
             </div>
-            <AvtaltContainer underOppfolging={underOppfolging} aktivitet={valgtAktivitet} />
+            <AvtaltContainer aktivitet={valgtAktivitet} />
             <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
         </div>
     );

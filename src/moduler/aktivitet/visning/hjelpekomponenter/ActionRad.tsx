@@ -9,12 +9,13 @@ import EksternAktivitetHandlingerKnapper from './EksternAktivitetHandlingerKnapp
 import EndreAktivitetKnapp from './EndreAktivitetKnapp';
 import LesMerOmStillingenKnapp from './LesMerOmStillingenKnapp';
 import SendEnMeldingKnapp from './SendEnMeldingKnapp';
+import { useSelector } from 'react-redux';
+import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 
 interface Props {
     aktivitet: AlleAktiviteter;
     tillatEndring: boolean;
     laster: boolean;
-    underOppfolging: boolean;
 }
 
 const getActions = ({
@@ -23,7 +24,7 @@ const getActions = ({
     laster,
     underOppfolging,
     erVeileder,
-}: Props & { erVeileder: boolean }) => {
+}: Props & { erVeileder: boolean; underOppfolging: boolean }) => {
     switch (aktivitet.type) {
         case VeilarbAktivitetType.MOTE_TYPE:
         case VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE:
@@ -90,7 +91,8 @@ const getActions = ({
 
 const ActionRad = (props: Props) => {
     const erVeileder = useErVeileder();
-    const actions = getActions({ ...props, erVeileder });
+    const underOppfolging = useSelector(selectErUnderOppfolging);
+    const actions = getActions({ ...props, erVeileder, underOppfolging });
 
     return <div className="my-4 gap-4 flex flex-wrap">{actions}</div>;
 };

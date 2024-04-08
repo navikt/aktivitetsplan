@@ -18,6 +18,7 @@ import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-slice';
 import ForhaandsorienteringsMeldingArenaaktivitet from '../arena-aktivitet/ForhaandsorienteringsMeldingArenaaktivitet';
 import { AVTALT_TEKST, AVTALT_TEKST_119 } from '../utilsForhaandsorientering';
+import { selectNyesteOppfolgingsperiode } from '../../../../oppfolging-status/oppfolging-selector';
 
 interface Props {
     aktivitet: EksternAktivitet | ArenaAktivitet;
@@ -42,6 +43,7 @@ const ForhaandsorienteringForm = (props: Props) => {
 
     const [showForm, setShowForm] = useState(false);
 
+    const currentOpenOppfolgingsperiode = useSelector(selectNyesteOppfolgingsperiode);
     const dialogStatus = useSelector(selectDialogStatus);
     const arenaAktivitetRequestStatus = useSelector(selectArenaAktivitetStatus);
     const dispatch = useAppDispatch();
@@ -71,7 +73,15 @@ const ForhaandsorienteringForm = (props: Props) => {
 
         setForhandsorienteringType(formValues.forhaandsorienteringType);
         const settTilAvtalt = isArena
-            ? dispatch(sendForhaandsorienteringArenaAktivitet({ arenaAktivitet: aktivitet, forhaandsorientering }))
+            ? currentOpenOppfolgingsperiode
+                ? dispatch(
+                      sendForhaandsorienteringArenaAktivitet({
+                          arenaAktivitet: aktivitet,
+                          forhaandsorientering,
+                          oppfolgingsPeriodeId: currentOpenOppfolgingsperiode.uuid,
+                      }),
+                  ) // Skal ikke kunne vise denne formen hvis man ikke er under oppfølging så dette skal ikke skje
+                : new Promise((resolve) => resolve(undefined))
             : dispatch(settAktivitetTilAvtalt({ aktivitet, forhaandsorientering }));
         return settTilAvtalt.then(() => {
             setSendtAtErAvtaltMedNav();
