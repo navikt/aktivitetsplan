@@ -25,17 +25,29 @@ import { selectLestStatus } from '../moduler/lest/lest-selector';
 export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (isVeileder: boolean, thunkApi) => {
     const { dispatch, getState } = thunkApi;
     const state = getState() as RootState;
-    return fetchIfNotStartedAll([
-        { fetchAction: hentOppfolging, statusSelector: selectOppfolgingStatus, key: 'oppfolging' },
-        { fetchAction: hentIdentitet, statusSelector: selectIdentitetStatus, key: 'identitet' },
-        { fetchAction: hentVeilederInfo, statusSelector: selectVeilederStatus, veilederOnly: true, key: 'veileder' },
-        { fetchAction: hentMal, statusSelector: selectMalStatus, key: 'mal' },
-        { fetchAction: hentEskaleringsvarsel, statusSelector: selectEskaleringsvarselStatus, key: 'eskaleringsvarsel' },
-        { fetchAction: hentDialoger, statusSelector: selectDialogStatus, key: 'dialoger' },
-        { fetchAction: hentAktiviteter, statusSelector: selectAktivitetStatus, key: 'aktiviteter' },
-        { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus, key: 'arenaAktiviteter' },
-        { fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' },
-    ])(state, dispatch, isVeileder);
+    dispatch(hentDialoger);
+    return {
+        ...fetchIfNotStartedAll([
+            { fetchAction: hentOppfolging, statusSelector: selectOppfolgingStatus, key: 'oppfolging' },
+            { fetchAction: hentIdentitet, statusSelector: selectIdentitetStatus, key: 'identitet' },
+            {
+                fetchAction: hentVeilederInfo,
+                statusSelector: selectVeilederStatus,
+                veilederOnly: true,
+                key: 'veileder',
+            },
+            { fetchAction: hentMal, statusSelector: selectMalStatus, key: 'mal' },
+            {
+                fetchAction: hentEskaleringsvarsel,
+                statusSelector: selectEskaleringsvarselStatus,
+                key: 'eskaleringsvarsel',
+            },
+            { fetchAction: hentAktiviteter, statusSelector: selectAktivitetStatus, key: 'aktiviteter' },
+            { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus, key: 'arenaAktiviteter' },
+            { fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' },
+        ])(state, dispatch, isVeileder),
+        dialoger: dispatch(hentDialoger), // Alltid hent dialoger ved page-load
+    };
 });
 
 interface CacheableSliceLoader {
