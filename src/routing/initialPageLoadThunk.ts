@@ -25,7 +25,6 @@ import { selectLestStatus } from '../moduler/lest/lest-selector';
 export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (isVeileder: boolean, thunkApi) => {
     const { dispatch, getState } = thunkApi;
     const state = getState() as RootState;
-    dispatch(hentDialoger);
     return {
         ...fetchIfNotStartedAll([
             { fetchAction: hentOppfolging, statusSelector: selectOppfolgingStatus, key: 'oppfolging' },
@@ -46,7 +45,7 @@ export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (i
             { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus, key: 'arenaAktiviteter' },
             { fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' },
         ])(state, dispatch, isVeileder),
-        dialoger: dispatch(hentDialoger), // Alltid hent dialoger ved page-load
+        dialoger: dispatch(hentDialoger()), // Alltid hent dialoger ved page-load
     };
 });
 
