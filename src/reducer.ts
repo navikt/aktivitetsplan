@@ -19,7 +19,6 @@ import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-slice';
 import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-slice';
 import veilederReducer from './moduler/veileder/veileder-slice';
 import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';
-import { aktivEnhetReducer } from './moduler/aktivEnhet/aktivenhet-slice';
 
 const reducer = {
     data: combineReducers({
@@ -40,7 +39,6 @@ const reducer = {
         eskaleringsvarsel: eskaleringsvarselReducer,
         feature: featureReducer,
         errors: errorReducer,
-        aktivEnhet: aktivEnhetReducer,
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
