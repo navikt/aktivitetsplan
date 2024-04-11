@@ -15,14 +15,18 @@ export const JournalforingPage = () => {
     const pdf = useSelector(selectPdf);
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
-    const aktivEnhet = useAktivEnhet();
+    const journalførendeEnhet = useAktivEnhet();
 
-    console.log('AktivEnhet', aktivEnhet);
+    if (!journalførendeEnhet) {
+        throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
+    }
+
+    console.log('AktivEnhet', journalførendeEnhet);
 
     useEffect(() => {
         if (vistOppfolgingsperiode) {
             dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
-            dispatch(hentPdfTilForhaandsvisning());
+            dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet }));
         }
     }, []);
 
