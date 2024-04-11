@@ -56,8 +56,8 @@ export class DabAktivitetsplan extends HTMLElement {
                 preloadedState={preloadedState}
                 key={fnr}
                 fnr={fnr}
-                aktivEnhet={aktivEnhet}
                 setFnrRef={(setFnr) => (this.setFnr = setFnr)}
+                aktivEnhet={aktivEnhet}
             >
                 <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
             </Provider>,
@@ -70,6 +70,7 @@ export class DabAktivitetsplan extends HTMLElement {
             this.setFnr(newValue);
         }
     }
+
     static get observedAttributes() {
         return ['data-fnr'];
     }

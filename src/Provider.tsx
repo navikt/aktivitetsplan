@@ -29,25 +29,14 @@ export const useAktivEnhet = () => useContext(AktivEnhetContext);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const noOp = (_: string | undefined) => {};
-const Provider = ({
-    children,
-    setFnrRef,
-    fnr: propFnr,
-    setAktivEnhetRef,
-    aktivEnhet: propAktivEnhet,
-    preloadedState,
-}: Props) => {
+const Provider = ({ children, setFnrRef, fnr: propFnr, aktivEnhet: propAktivEnhet, preloadedState }: Props) => {
     const [fnr, setFnr] = useState(propFnr);
     const [aktivEnhet, setAktivEnhet] = useState(propAktivEnhet);
     useEffect(() => {
         if (setFnrRef) setFnrRef(setFnr);
-        if (setAktivEnhetRef) setAktivEnhetRef(setAktivEnhet);
         return () => {
             if (setFnrRef) {
                 setFnrRef(noOp);
-            }
-            if (setAktivEnhetRef) {
-                setAktivEnhetRef(noOp);
             }
         };
     }, []);
@@ -59,11 +48,13 @@ const Provider = ({
     return (
         <FnrContext.Provider value={fnr}>
             <ErVeilederContext.Provider value={ER_INTERN_FLATE}>
-                <ReduxProvider store={store}>
-                    <DndProvider backend={HTML5Backend}>
-                        <FeatureToggle>{children}</FeatureToggle>
-                    </DndProvider>
-                </ReduxProvider>
+                <AktivEnhetContext.Provider value={aktivEnhet}>
+                    <ReduxProvider store={store}>
+                        <DndProvider backend={HTML5Backend}>
+                            <FeatureToggle>{children}</FeatureToggle>
+                        </DndProvider>
+                    </ReduxProvider>
+                </AktivEnhetContext.Provider>
             </ErVeilederContext.Provider>
         </FnrContext.Provider>
     );
