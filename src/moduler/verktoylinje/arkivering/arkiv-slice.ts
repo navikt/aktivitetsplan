@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import * as Api from '../../../api/aktivitetAPI';
 import { Status } from '../../../createGenericSlice';
 import { RootState } from '../../../store';
+import { useAktivEnhet } from '../../../Provider';
 
 interface ArkivState {
     forhaandsvisningStatus: Status;
@@ -58,8 +59,10 @@ export const journalfør = createAsyncThunk(
     async (
         {
             forhaandsvisningOpprettet,
+            journalførendeEnhet,
         }: {
             forhaandsvisningOpprettet: string;
+            journalførendeEnhet: string;
         },
         thunkAPI,
     ) => {
@@ -70,6 +73,7 @@ export const journalfør = createAsyncThunk(
             return await Api.journalfoerAktivitetsplanOgDialog(
                 oppfølgingsperiodeIdForArkivering,
                 forhaandsvisningOpprettet,
+                journalførendeEnhet,
             );
         }
     },
@@ -81,12 +85,12 @@ export function selectJournalføringstatus(state: RootState) {
 
 export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
-    async (_, thunkAPI) => {
+    async ({ journalførendeEnhet }: { journalførendeEnhet: string }, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
         const oppfølgingsperiodeIdForArkivering = state.data.arkiv?.oppfølgingsperiodeIdForArkivering;
 
         if (oppfølgingsperiodeIdForArkivering) {
-            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering);
+            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering, journalførendeEnhet);
         }
     },
 );
