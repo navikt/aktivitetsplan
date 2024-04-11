@@ -9,11 +9,15 @@ import { PdfViewer } from './PdfViewer';
 import Sidebar from './Sidebar';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
+import { useAktivEnhet } from '../../Provider';
 
 export const JournalforingPage = () => {
     const pdf = useSelector(selectPdf);
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
+    const aktivEnhet = useAktivEnhet();
+
+    console.log('AktivEnhet', aktivEnhet);
 
     useEffect(() => {
         if (vistOppfolgingsperiode) {
