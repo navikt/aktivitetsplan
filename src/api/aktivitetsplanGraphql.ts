@@ -2,6 +2,7 @@ import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
 import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
 import { hentFraLocalStorage, hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
+import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 
 const query: string = `
     query($fnr: String!) {
@@ -139,15 +140,7 @@ interface OppfolgingsPerioder {
     aktiviteter: VeilarbAktivitet[];
 }
 
-interface GraphqlError {
-    message: string;
-}
-interface AktivitetsplanResponse {
-    data: {
-        perioder: OppfolgingsPerioder[];
-    };
-    errors: GraphqlError[];
-}
+type AktivitetsplanResponse = GraphqlResponse<{ perioder: OppfolgingsPerioder[] }>;
 
 export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';
@@ -163,11 +156,4 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         .then(sjekkStatuskode)
         .then(toJson)
         .then(sjekkGraphqlFeil);
-};
-
-const sjekkGraphqlFeil = (response: AktivitetsplanResponse): Promise<AktivitetsplanResponse> => {
-    if (!response?.data?.perioder && response?.errors.length != 0) {
-        return Promise.reject('Kunne ikke hente aktiviteter');
-    }
-    return Promise.resolve(response);
 };

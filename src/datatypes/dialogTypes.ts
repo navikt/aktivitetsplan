@@ -6,10 +6,6 @@ export interface Dialog {
     aktivitetId?: string;
     lest?: boolean;
     sisteDato: string;
-    sisteTekst?: string;
-    erLestAvBruker?: boolean;
-    venterPaSvar?: boolean;
-    ferdigBehandlet?: boolean;
     opprettetDato: string;
     henvendelser?: Henvendelse[];
     egenskaper?: string[];

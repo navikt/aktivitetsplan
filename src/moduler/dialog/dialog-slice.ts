@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Api from '../../api/dialogAPI';
 import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
+import { hentDialogerGraphql } from '../../api/dialogGraphql';
 
 interface DialogState {
     data: Dialog[];
@@ -22,7 +23,7 @@ const dialogSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(hentDialoger.fulfilled, (state, action) => {
-            state.data = action.payload;
+            state.data = action.payload.data.dialoger;
             state.status = Status.OK;
             state.sistOppdatert = new Date().toISOString();
         });
@@ -33,7 +34,7 @@ const dialogSlice = createSlice({
 });
 
 export const hentDialoger = createAsyncThunk(`${dialogSlice.name}/fetchDialoger`, async (_, thunkAPI) => {
-    return await Api.fetchDialoger();
+    return await hentDialogerGraphql();
 });
 
 export default dialogSlice.reducer;
