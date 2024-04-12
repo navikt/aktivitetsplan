@@ -44,6 +44,7 @@ export class DabAktivitetsplan extends HTMLElement {
         shadowRoot.appendChild(styleElem);
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
+        const aktivEnhet = this.getAttribute('data-aktivEnhet') ?? undefined;
         let preloadedState: RootState | undefined = undefined;
         if (fnr) {
             settSessionStorage(LocalStorageElement.FNR, fnr);
@@ -56,6 +57,7 @@ export class DabAktivitetsplan extends HTMLElement {
                 key={fnr}
                 fnr={fnr}
                 setFnrRef={(setFnr) => (this.setFnr = setFnr)}
+                aktivEnhet={aktivEnhet}
             >
                 <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
             </Provider>,
@@ -68,7 +70,8 @@ export class DabAktivitetsplan extends HTMLElement {
             this.setFnr(newValue);
         }
     }
+
     static get observedAttributes() {
-        return ['data-fnr'];
+        return ['data-fnr', 'data-aktivEnhet'];
     }
 }
