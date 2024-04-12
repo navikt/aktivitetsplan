@@ -72,6 +72,6 @@ export class DabAktivitetsplan extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['data-fnr'];
+        return ['data-fnr', 'data-aktivEnhet'];
     }
 }
