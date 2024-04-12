@@ -21,8 +21,6 @@ export const JournalforingPage = () => {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
     }
 
-    console.log('AktivEnhet', journalførendeEnhet);
-
     useEffect(() => {
         if (vistOppfolgingsperiode) {
             dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));

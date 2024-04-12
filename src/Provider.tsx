@@ -11,7 +11,6 @@ interface Props {
     children: React.ReactNode;
     setFnrRef?: (setFnr: Dispatch<string>) => void;
     fnr?: string;
-    setAktivEnhetRef?: (setAktivEnhet: Dispatch<string>) => void;
     aktivEnhet?: string | undefined;
     preloadedState?: RootState;
 }
