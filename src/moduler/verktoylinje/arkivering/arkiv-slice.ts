@@ -58,8 +58,10 @@ export const journalfør = createAsyncThunk(
     async (
         {
             forhaandsvisningOpprettet,
+            journalførendeEnhet,
         }: {
             forhaandsvisningOpprettet: string;
+            journalførendeEnhet: string;
         },
         thunkAPI,
     ) => {
@@ -70,6 +72,7 @@ export const journalfør = createAsyncThunk(
             return await Api.journalfoerAktivitetsplanOgDialog(
                 oppfølgingsperiodeIdForArkivering,
                 forhaandsvisningOpprettet,
+                journalførendeEnhet,
             );
         }
     },
@@ -81,12 +84,12 @@ export function selectJournalføringstatus(state: RootState) {
 
 export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
-    async (_, thunkAPI) => {
+    async ({ journalførendeEnhet }: { journalførendeEnhet: string }, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
         const oppfølgingsperiodeIdForArkivering = state.data.arkiv?.oppfølgingsperiodeIdForArkivering;
 
         if (oppfølgingsperiodeIdForArkivering) {
-            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering);
+            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering, journalførendeEnhet);
         }
     },
 );
