@@ -15,7 +15,7 @@ import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selecto
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { useErVeileder, useFnr } from '../../Provider';
+import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
 import { RootState } from '../../store';
 import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
@@ -36,7 +36,7 @@ function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
 }
 
 const Aktivitetstavle = () => {
-    const fnr = useFnr();
+    const { fnr } = useFnrOgEnhetContext();
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);

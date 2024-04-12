@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import * as Api from '../../../api/aktivitetAPI';
 import { Status } from '../../../createGenericSlice';
 import { RootState } from '../../../store';
-import { useAktivEnhet } from '../../../Provider';
 
 interface ArkivState {
     forhaandsvisningStatus: Status;

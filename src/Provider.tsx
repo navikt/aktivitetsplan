@@ -19,12 +19,12 @@ export const ErVeilederContext = React.createContext(false);
 export const useErVeileder = (): boolean => {
     return useContext(ErVeilederContext);
 };
-export const FnrContext = React.createContext<undefined | string>(undefined);
-export const useFnr = () => useContext(FnrContext);
 
-export const AktivEnhetContext = React.createContext<undefined | string>(undefined);
-
-export const useAktivEnhet = () => useContext(AktivEnhetContext);
+export const FnrOgEnhetContext = React.createContext<{
+    fnr: string | undefined;
+    aktivEnhet: string | undefined;
+}>({ fnr: undefined, aktivEnhet: undefined });
+export const useFnrOgEnhetContext = () => useContext(FnrOgEnhetContext);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const noOp = (_: string | undefined) => {};
@@ -45,17 +45,15 @@ const Provider = ({ children, setFnrRef, fnr: propFnr, aktivEnhet: propAktivEnhe
     }, [fnr]);
 
     return (
-        <FnrContext.Provider value={fnr}>
+        <FnrOgEnhetContext.Provider value={{ fnr, aktivEnhet }}>
             <ErVeilederContext.Provider value={ER_INTERN_FLATE}>
-                <AktivEnhetContext.Provider value={aktivEnhet}>
-                    <ReduxProvider store={store}>
-                        <DndProvider backend={HTML5Backend}>
-                            <FeatureToggle>{children}</FeatureToggle>
-                        </DndProvider>
-                    </ReduxProvider>
-                </AktivEnhetContext.Provider>
+                <ReduxProvider store={store}>
+                    <DndProvider backend={HTML5Backend}>
+                        <FeatureToggle>{children}</FeatureToggle>
+                    </DndProvider>
+                </ReduxProvider>
             </ErVeilederContext.Provider>
-        </FnrContext.Provider>
+        </FnrOgEnhetContext.Provider>
     );
 };
 
