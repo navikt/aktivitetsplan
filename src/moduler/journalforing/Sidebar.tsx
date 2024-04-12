@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed, formaterTid } from '../../utils/dateUtils';
+import { useFnrOgEnhetContext } from '../../Provider';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -26,16 +27,21 @@ const Sidebar: FunctionComponent = () => {
     const arkivStatus = useSelector(selectForhaandsvisningStatus);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const { hovedsideRoute } = useRoutes();
+    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+
+    if (!journalførendeEnhet) {
+        throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
+    }
 
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
-            dispatch(journalfør({ forhaandsvisningOpprettet }));
+            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet }));
         }
     };
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(settOppfølgingsperiodeIdForArkivering(e.target.value));
-        dispatch(hentPdfTilForhaandsvisning());
+        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet }));
     };
 
     return (
