@@ -41,7 +41,7 @@ const Sidebar: FunctionComponent = () => {
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(settOppfølgingsperiodeIdForArkivering(e.target.value));
-        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet }));
+        dispatch(hentPdfTilForhaandsvisning());
     };
 
     return (

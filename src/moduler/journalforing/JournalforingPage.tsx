@@ -9,22 +9,16 @@ import { PdfViewer } from './PdfViewer';
 import Sidebar from './Sidebar';
 import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
-import { useFnrOgEnhetContext } from '../../Provider';
 
 export const JournalforingPage = () => {
     const pdf = useSelector(selectPdf);
     const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
     const dispatch = useAppDispatch();
-    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
-
-    if (!journalførendeEnhet) {
-        throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
-    }
 
     useEffect(() => {
         if (vistOppfolgingsperiode) {
             dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
-            dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet }));
+            dispatch(hentPdfTilForhaandsvisning());
         }
     }, []);
 

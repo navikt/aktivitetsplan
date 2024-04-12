@@ -84,12 +84,12 @@ export function selectJournalføringstatus(state: RootState) {
 
 export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
-    async ({ journalførendeEnhet }: { journalførendeEnhet: string }, thunkAPI) => {
+    async (_, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
         const oppfølgingsperiodeIdForArkivering = state.data.arkiv?.oppfølgingsperiodeIdForArkivering;
 
         if (oppfølgingsperiodeIdForArkivering) {
-            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering, journalførendeEnhet);
+            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering);
         }
     },
 );
