@@ -18,6 +18,7 @@ interface Props {
     onRequestClose?(): boolean;
     onClose?: () => void;
     tilbakeLenke?: { tekst: string; onTilbakeKlikk: MouseEventHandler };
+    lukkPåKlikkUtenfor: boolean | undefined;
 }
 
 const Modal = (props: Props) => {
@@ -31,6 +32,7 @@ const Modal = (props: Props) => {
         feilmeldinger,
         tilbakeLenke,
         onClose,
+        lukkPåKlikkUtenfor,
     } = props;
 
     const navigate = useNavigate();
@@ -46,7 +48,7 @@ const Modal = (props: Props) => {
 
     return (
         <AkselModal
-            closeOnBackdropClick
+            closeOnBackdropClick={lukkPåKlikkUtenfor !== undefined ? lukkPåKlikkUtenfor : true}
             open
             onClose={onClose}
             onBeforeClose={closeFuncOrDefault}
