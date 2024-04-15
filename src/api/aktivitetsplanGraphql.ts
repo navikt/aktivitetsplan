@@ -155,5 +155,5 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
     })
         .then(sjekkStatuskode)
         .then(toJson)
-        .then(sjekkGraphqlFeil);
+        .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
 };
