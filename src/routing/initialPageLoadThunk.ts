@@ -15,7 +15,6 @@ import { selectVeilederStatus } from '../moduler/veileder/veileder-selector';
 import { selectEskaleringsvarselStatus } from '../moduler/varslinger/eskaleringsvarsel-selector';
 import { Dispatch } from 'react';
 import { selectMalStatus } from '../moduler/mal/aktivitetsmal-selector';
-import { selectDialogStatus } from '../moduler/dialog/dialog-selector';
 import { selectArenaAktivitetStatus } from '../moduler/aktivitet/arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../moduler/aktivitet/aktivitet-selector';
 import { hentLest } from '../moduler/lest/lest-slice';
