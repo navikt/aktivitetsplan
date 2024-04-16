@@ -25,6 +25,8 @@ export const JournalforingPage = () => {
         if (vistOppfolgingsperiode) {
             dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
             dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet }));
+        } else {
+            console.log('Oppfølgingsperiode ikke satt, fiks!');
         }
     }, []);
 
