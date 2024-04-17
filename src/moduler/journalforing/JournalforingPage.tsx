@@ -28,7 +28,7 @@ export const JournalforingPage = () => {
         } else {
             console.log('Oppfølgingsperiode ikke satt, fiks!');
         }
-    }, []);
+    }, [vistOppfolgingsperiode]);
 
     return (
         <div className="flex flex-col grow">
