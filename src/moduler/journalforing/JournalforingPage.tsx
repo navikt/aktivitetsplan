@@ -1,32 +1,24 @@
 import React, { useEffect } from 'react';
-import {
-    hentPdfTilForhaandsvisning,
-    selectPdf,
-    settOppfølgingsperiodeIdForArkivering,
-} from '../verktoylinje/arkivering/arkiv-slice';
+import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { PdfViewer } from './PdfViewer';
-import Sidebar from './Sidebar';
-import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useFnrOgEnhetContext } from '../../Provider';
+import { LoaderFunctionArgs, Params, useParams } from 'react-router-dom';
+import { Dispatch } from '../../store';
+import Sidebar from './Sidebar';
+import { PdfViewer } from './PdfViewer';
+import { hentMal } from '../mal/aktivitetsmal-slice';
+import { hentMalListe } from '../mal/malliste-slice';
 
 export const JournalforingPage = () => {
     const pdf = useSelector(selectPdf);
-    const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
+    const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
     const dispatch = useAppDispatch();
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
 
     if (!journalførendeEnhet) {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
     }
-
-    useEffect(() => {
-        if (vistOppfolgingsperiode) {
-            dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
-            dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet }));
-        }
-    }, [vistOppfolgingsperiode]);
 
     return (
         <div className="flex flex-col grow">
@@ -39,3 +31,19 @@ export const JournalforingPage = () => {
         </div>
     );
 };
+
+export const arkivLoader =
+    (dispatch: Dispatch, aktivEnhet: string) =>
+    ({
+        params: { oppfolgingsperiodeId },
+    }: LoaderFunctionArgs<{
+        oppfolgingsperiodeId: string;
+    }>) => {
+        if (!oppfolgingsperiodeId) return 'Dett var dumt';
+        return dispatch(
+            hentPdfTilForhaandsvisning({
+                journalførendeEnhet: aktivEnhet,
+                oppfølgingsperiodeId: oppfolgingsperiodeId,
+            }),
+        );
+    };

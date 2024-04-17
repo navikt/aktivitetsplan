@@ -15,7 +15,6 @@ interface ArkivState {
               sistJournalført: string | undefined;
           }
         | undefined;
-    oppfølgingsperiodeIdForArkivering: string | undefined;
 }
 
 const arkivSlice = createSlice({
@@ -23,11 +22,7 @@ const arkivSlice = createSlice({
     initialState: {
         forhaandsvisningStatus: Status.NOT_STARTED,
     } as ArkivState,
-    reducers: {
-        settOppfølgingsperiodeIdForArkivering: (state, action: PayloadAction<string>) => {
-            state.oppfølgingsperiodeIdForArkivering = action.payload;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(hentPdfTilForhaandsvisning.pending, (state) => {
             state.forhaandsvisningStatus =
@@ -55,26 +50,20 @@ const arkivSlice = createSlice({
 
 export const journalfør = createAsyncThunk(
     `${arkivSlice.name}/journalfoering`,
-    async (
-        {
+    async ({
+        forhaandsvisningOpprettet,
+        journalførendeEnhet,
+        oppfølgingsperiodeId,
+    }: {
+        forhaandsvisningOpprettet: string;
+        journalførendeEnhet: string;
+        oppfølgingsperiodeId: string;
+    }) => {
+        return await Api.journalfoerAktivitetsplanOgDialog(
+            oppfølgingsperiodeId,
             forhaandsvisningOpprettet,
             journalførendeEnhet,
-        }: {
-            forhaandsvisningOpprettet: string;
-            journalførendeEnhet: string;
-        },
-        thunkAPI,
-    ) => {
-        const state = thunkAPI.getState() as RootState;
-        const oppfølgingsperiodeIdForArkivering = state.data.arkiv?.oppfølgingsperiodeIdForArkivering;
-
-        if (oppfølgingsperiodeIdForArkivering) {
-            return await Api.journalfoerAktivitetsplanOgDialog(
-                oppfølgingsperiodeIdForArkivering,
-                forhaandsvisningOpprettet,
-                journalførendeEnhet,
-            );
-        }
+        );
     },
 );
 
@@ -84,13 +73,14 @@ export function selectJournalføringstatus(state: RootState) {
 
 export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
-    async ({ journalførendeEnhet }: { journalførendeEnhet: string }, thunkAPI) => {
-        const state = thunkAPI.getState() as RootState;
-        const oppfølgingsperiodeIdForArkivering = state.data.arkiv?.oppfølgingsperiodeIdForArkivering;
-
-        if (oppfølgingsperiodeIdForArkivering) {
-            return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeIdForArkivering, journalførendeEnhet);
-        }
+    async ({
+        journalførendeEnhet,
+        oppfølgingsperiodeId,
+    }: {
+        journalførendeEnhet: string;
+        oppfølgingsperiodeId: string;
+    }) => {
+        return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeId, journalførendeEnhet);
     },
 );
 
@@ -111,5 +101,3 @@ export function selectSistJournalfort(state: RootState) {
 }
 
 export const arkivReducer = arkivSlice.reducer;
-
-export const { settOppfølgingsperiodeIdForArkivering } = arkivSlice.actions;
