@@ -1,6 +1,7 @@
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
 export const mockfnr = '12345678910';
+export const mockAktivEnhet = '0909';
 
 export const rndId = (): string => {
     return `${Math.floor(Math.random() * 100000000)}`;

@@ -26,7 +26,7 @@ export const JournalforingPage = () => {
             dispatch(settOppfølgingsperiodeIdForArkivering(vistOppfolgingsperiode.uuid));
             dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet }));
         }
-    }, []);
+    }, [vistOppfolgingsperiode]);
 
     return (
         <div className="flex flex-col grow">
