@@ -53,14 +53,14 @@ export const journalfør = createAsyncThunk(
     async ({
         forhaandsvisningOpprettet,
         journalførendeEnhet,
-        oppfølgingsperiodeId,
+        oppfolgingsperiodeId,
     }: {
         forhaandsvisningOpprettet: string;
         journalførendeEnhet: string;
-        oppfølgingsperiodeId: string;
+        oppfolgingsperiodeId: string;
     }) => {
         return await Api.journalfoerAktivitetsplanOgDialog(
-            oppfølgingsperiodeId,
+            oppfolgingsperiodeId,
             forhaandsvisningOpprettet,
             journalførendeEnhet,
         );
@@ -75,12 +75,12 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
     async ({
         journalførendeEnhet,
-        oppfølgingsperiodeId,
+        oppfolgingsperiodeId,
     }: {
         journalførendeEnhet: string;
-        oppfølgingsperiodeId: string;
+        oppfolgingsperiodeId: string;
     }) => {
-        return await Api.genererPdfTilForhaandsvisning(oppfølgingsperiodeId, journalførendeEnhet);
+        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, journalførendeEnhet);
     },
 );
 

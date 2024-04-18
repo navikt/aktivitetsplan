@@ -15,7 +15,7 @@ function App({
     createRoutesForUser: (
         dispatch: Dispatch,
         isVeileder: boolean,
-        aktivEnhet: string,
+        aktivEnhet: string | undefined,
     ) => ReturnType<typeof createBrowserRouter>;
 }) {
     const erVeileder = useErVeileder();
