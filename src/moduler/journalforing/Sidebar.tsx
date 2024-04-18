@@ -40,8 +40,8 @@ const Sidebar: FunctionComponent = () => {
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const valgtOppfølgingsperiode = e.target.value;
-        navigate(`journalforing/${valgtOppfølgingsperiode}`, { replace: true });
-        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId }));
+        navigate(`/aktivitetsplan/journalforing/${valgtOppfølgingsperiode}`, { replace: true });
+        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId: valgtOppfølgingsperiode }));
     };
 
     return (
