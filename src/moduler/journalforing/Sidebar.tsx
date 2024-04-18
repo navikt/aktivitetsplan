@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { BodyShort, Button, Heading, Label, Select } from '@navikt/ds-react';
-import { Link as ReactRouterLink, useParams } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
     hentPdfTilForhaandsvisning,
     journalfør,
@@ -25,6 +25,7 @@ const Sidebar: FunctionComponent = () => {
     const arkivStatus = useSelector(selectForhaandsvisningStatus);
     const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
     const { hovedsideRoute } = useRoutes();
+    const navigate = useNavigate();
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
 
     if (!journalførendeEnhet || !oppfolgingsperiodeId) {
@@ -38,7 +39,8 @@ const Sidebar: FunctionComponent = () => {
     };
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        // Sett i URL
+        const valgtOppfølgingsperiode = e.target.value;
+        navigate(`journalforing/${valgtOppfølgingsperiode}`, { replace: true });
         dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId }));
     };
 
