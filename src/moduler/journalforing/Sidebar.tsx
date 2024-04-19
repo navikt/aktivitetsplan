@@ -1,42 +1,53 @@
 import React, { FunctionComponent } from 'react';
 import { BodyShort, Button, Heading, Label, Select } from '@navikt/ds-react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
     hentPdfTilForhaandsvisning,
     journalfør,
     selectForhaandsvisningOpprettet,
     selectForhaandsvisningStatus,
+    selectJournalføringstatus,
     selectSistJournalfort,
-    settOppfølgingsperiodeIdForArkivering,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routing/useRoutes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
-import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed, formaterTid } from '../../utils/dateUtils';
+import { useFnrOgEnhetContext } from '../../Provider';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
-    const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
+    const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
     const oppfolgingsperioder = useSelector(selectOppfolgingsPerioder);
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
     const sistJournalfort = useSelector(selectSistJournalfort);
-    const arkivStatus = useSelector(selectForhaandsvisningStatus);
-    const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
+    const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
+    const journalføringsStatus = useSelector(selectJournalføringstatus);
+    const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
+    const journalfører = [Status.PENDING, Status.RELOADING].includes(journalføringsStatus);
     const { hovedsideRoute } = useRoutes();
+    const navigate = useNavigate();
+    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+
+    if (!journalførendeEnhet || !oppfolgingsperiodeId) {
+        throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
+    }
 
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
-            dispatch(journalfør({ forhaandsvisningOpprettet }));
+            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
         }
     };
 
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(settOppfølgingsperiodeIdForArkivering(e.target.value));
-        dispatch(hentPdfTilForhaandsvisning());
+        const valgtOppfølgingsperiode = e.target.value;
+        navigate(`/aktivitetsplan/journalforing/${valgtOppfølgingsperiode}`, { replace: true });
+        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId: valgtOppfølgingsperiode }));
     };
+
+    const disabled = henterForhaandsvisning || !forhaandsvisningOpprettet || journalfører;
 
     return (
         <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 h-screen">
@@ -53,8 +64,8 @@ const Sidebar: FunctionComponent = () => {
                 <Select
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
-                    value={vistOppfolgingsperiode?.uuid}
-                    disabled={arkiverer || !forhaandsvisningOpprettet}
+                    disabled={disabled}
+                    defaultValue={oppfolgingsperiodeId}
                 >
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.startDato) - Date.parse(a.startDato))
@@ -62,7 +73,7 @@ const Sidebar: FunctionComponent = () => {
                             <option
                                 key={`oppfolgingsperiodeoption-${periode.uuid}`}
                                 value={periode.uuid}
-                                // selected={vistOppfolgingsperiode?.uuid === periode.uuid}
+                                selected={oppfolgingsperiodeId === periode.uuid}
                             >
                                 {formaterDatoKortManed(periode.startDato)} - {formaterDatoKortManed(periode.sluttDato)}
                             </option>
@@ -76,11 +87,7 @@ const Sidebar: FunctionComponent = () => {
                             : 'Aldri'}
                     </BodyShort>
                 </div>
-                <Button
-                    disabled={arkiverer || !forhaandsvisningOpprettet}
-                    variant="primary"
-                    onClick={() => sendTilArkiv()}
-                >
+                <Button disabled={disabled} variant="primary" onClick={() => sendTilArkiv()}>
                     Journalfør
                 </Button>
             </div>

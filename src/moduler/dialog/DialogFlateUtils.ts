@@ -36,17 +36,17 @@ export const getDialogLenke = ({
 }: {
     erVeileder: boolean;
     fnr?: string;
-    aktivitetId?: string;
+    aktivitetId: string;
     dialogId?: string;
 }) => {
     if (erVeileder) {
         if (dialogId) {
-            return `/${dialogId}`;
+            return `/dialog/${dialogId}`;
         }
         if (aktivitetId) {
-            return `/ny?aktivitetId=${aktivitetId}`;
+            return `/dialog/ny?aktivitetId=${aktivitetId}`;
         }
-        return `/`;
+        return `/dialog`;
     } else {
         if (dialogId) {
             return `${ARBEIDSRETTET_DIALOG_URL}/${dialogId}`;

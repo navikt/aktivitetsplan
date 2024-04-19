@@ -1,4 +1,4 @@
-import { delay, http } from 'msw';
+import { http } from 'msw';
 
 import {
     aktiviteterData,
@@ -35,6 +35,8 @@ import {
     aktivitetFeilet,
     arenaFeilet,
     dialogFeilet,
+    forhaandsvisningFeiler,
+    journalforingFeiler,
     maalFeilet,
     oppdateringKunFeiler,
     oppfFeilet,
@@ -87,7 +89,7 @@ export const handlers = [
             return aktivitestplanResponse(); // Default aktiviteter
         }),
     ),
-    http.get(
+    http.post(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(
             () => arenaFeilet() && !oppdateringKunFeiler(),
@@ -138,14 +140,14 @@ export const handlers = [
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
     http.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
-    http.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', async () => {
-        await delay(1000);
-        return new Response(JSON.stringify(pdfForhaandsvisning));
-    }),
-    http.post('/veilarbaktivitet/api/arkivering/journalfor', async () => {
-        await delay(1000);
-        return new Response(JSON.stringify(journalføring));
-    }),
+    http.get(
+        '/veilarbaktivitet/api/arkivering/forhaandsvisning',
+        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 500),
+    ),
+    http.post(
+        '/veilarbaktivitet/api/arkivering/journalfor',
+        failOrGetResponse(journalforingFeiler, () => journalføring, 2000),
+    ),
 
     // veilarblest
     http.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),

@@ -54,11 +54,8 @@ const AktivitetvisningContainer = () => {
     });
 
     const laster = aktivitetDataStatus !== Status.OK;
-
     const avhengigheter = useSelector(selectAvhengigheter);
-
     const tillatEndring = kanEndreAktivitetDetaljer(valgtAktivitet as VeilarbAktivitet, erVeileder);
-    const underOppfolging = useSelector(selectErUnderOppfolging);
 
     useEffect(() => {
         if (valgtAktivitet) {
@@ -82,12 +79,7 @@ const AktivitetvisningContainer = () => {
         <DirtyProvider>
             <AktivitetvisningModal aktivitet={valgtAktivitet} avhengigheter={avhengigheter}>
                 {valgtAktivitet ? (
-                    <Aktivitetvisning
-                        aktivitet={valgtAktivitet}
-                        tillatEndring={tillatEndring}
-                        underOppfolging={underOppfolging}
-                        laster={laster}
-                    />
+                    <Aktivitetvisning aktivitet={valgtAktivitet} tillatEndring={tillatEndring} laster={laster} />
                 ) : (
                     <Navigate replace to={'/'} />
                 )}

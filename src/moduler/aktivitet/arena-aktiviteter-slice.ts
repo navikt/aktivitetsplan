@@ -57,12 +57,18 @@ export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
     async ({
         arenaAktivitet,
         forhaandsorientering,
+        oppfolgingsPeriodeId,
     }: {
         arenaAktivitet: ArenaAktivitet;
         forhaandsorientering: Forhaandsorientering;
+        oppfolgingsPeriodeId: string;
     }) => {
         if (erArenaId(arenaAktivitet.id)) {
-            return await Api.sendForhaandsorienteringArenaAktivitet(arenaAktivitet.id, forhaandsorientering);
+            return await Api.sendForhaandsorienteringArenaAktivitet({
+                arenaaktivitetId: arenaAktivitet.id,
+                forhaandsorientering,
+                oppfolgingsPeriodeId,
+            });
         } else {
             return await Api.settAktivitetTilAvtalt(
                 arenaAktivitet.id,

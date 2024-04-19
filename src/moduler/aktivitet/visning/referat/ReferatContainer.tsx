@@ -30,8 +30,9 @@ const ReferatContainer = (props: Props) => {
 
     const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
 
+    const erFullførtEllerAvbrutt = [AktivitetStatus.AVBRUTT, AktivitetStatus.FULLFOERT].includes(aktivitet.status);
     const kanHaReferat =
-        (aktivitetType === MOTE_TYPE && isAfter(new Date(), parseISO(aktivitet.fraDato))) ||
+        (aktivitetType === MOTE_TYPE && (isAfter(new Date(), parseISO(aktivitet.fraDato)) || erFullførtEllerAvbrutt)) ||
         aktivitetType === SAMTALEREFERAT_TYPE;
 
     const erAktivAktivitet =

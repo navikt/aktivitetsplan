@@ -11,6 +11,7 @@ interface Props {
     children: React.ReactNode;
     setFnrRef?: (setFnr: Dispatch<string>) => void;
     fnr?: string;
+    aktivEnhet?: string | undefined;
     preloadedState?: RootState;
 }
 
@@ -18,13 +19,18 @@ export const ErVeilederContext = React.createContext(false);
 export const useErVeileder = (): boolean => {
     return useContext(ErVeilederContext);
 };
-export const FnrContext = React.createContext<undefined | string>(undefined);
-export const useFnr = () => useContext(FnrContext);
+
+export const FnrOgEnhetContext = React.createContext<{
+    fnr: string | undefined;
+    aktivEnhet: string | undefined;
+}>({ fnr: undefined, aktivEnhet: undefined });
+export const useFnrOgEnhetContext = () => useContext(FnrOgEnhetContext);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const noOp = (_: string | undefined) => {};
-const Provider = ({ children, setFnrRef, fnr: propFnr, preloadedState }: Props) => {
+const Provider = ({ children, setFnrRef, fnr: propFnr, aktivEnhet: propAktivEnhet, preloadedState }: Props) => {
     const [fnr, setFnr] = useState(propFnr);
+    const [aktivEnhet, setAktivEnhet] = useState(propAktivEnhet);
     useEffect(() => {
         if (setFnrRef) setFnrRef(setFnr);
         return () => {
@@ -39,7 +45,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr, preloadedState }: Props) 
     }, [fnr]);
 
     return (
-        <FnrContext.Provider value={fnr}>
+        <FnrOgEnhetContext.Provider value={{ fnr, aktivEnhet }}>
             <ErVeilederContext.Provider value={ER_INTERN_FLATE}>
                 <ReduxProvider store={store}>
                     <DndProvider backend={HTML5Backend}>
@@ -47,7 +53,7 @@ const Provider = ({ children, setFnrRef, fnr: propFnr, preloadedState }: Props) 
                     </DndProvider>
                 </ReduxProvider>
             </ErVeilederContext.Provider>
-        </FnrContext.Provider>
+        </FnrOgEnhetContext.Provider>
     );
 };
 

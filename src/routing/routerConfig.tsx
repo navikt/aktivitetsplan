@@ -22,7 +22,7 @@ import FullforAktivitet from '../moduler/aktivitet/avslutt/FullforAktivitet';
 import InformasjonModal from '../moduler/informasjon/informasjon-modal';
 import AktivitetsplanPrint from '../moduler/utskrift/AktivitetsplanPrint';
 import Mal from '../moduler/mal/mal';
-import { JournalforingPage } from '../moduler/journalforing/JournalforingPage';
+import { arkivLoader, JournalforingPage } from '../moduler/journalforing/JournalforingPage';
 import { BasePage } from '../BasePage';
 import { useErVeileder } from '../Provider';
 
@@ -46,16 +46,20 @@ export const ErrorCleanerOnRouteChange = () => {
 // Sentry need to wrap createBrowserRouter to understand routes
 export const createRouterWithWrapper =
     (wrapper?: typeof createBrowserRouter) =>
-    (dispatch: Dispatch, isVeileder: boolean): ReturnType<typeof createBrowserRouter> => {
+    (dispatch: Dispatch, isVeileder: boolean, aktivEnhet: string): ReturnType<typeof createBrowserRouter> => {
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
-            return createHashRouter(routingConfig(dispatch, isVeileder));
+            return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
         }
         return wrapper
-            ? wrapper(routingConfig(dispatch, isVeileder))
-            : createBrowserRouter(routingConfig(dispatch, isVeileder));
+            ? wrapper(routingConfig(dispatch, isVeileder, aktivEnhet))
+            : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
     };
 
-export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteObject[] = (dispatch, isVeileder) => [
+export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet: string) => RouteObject[] = (
+    dispatch,
+    isVeileder,
+    aktivEnhet,
+) => [
     {
         path: isVeileder ? `/${baseName}` : '/',
         element: <BasePage />, // Dont reload essential data on every page navigation
@@ -82,7 +86,11 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean) => RouteOb
                 ],
             },
             { path: 'utskrift', element: <AktivitetsplanPrint /> },
-            { path: 'journalforing', element: <JournalforingPage /> },
+            {
+                path: 'journalforing/:oppfolgingsperiodeId',
+                loader: arkivLoader(dispatch, aktivEnhet),
+                element: <JournalforingPage />,
+            },
             { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
             { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
             { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },

@@ -15,14 +15,11 @@ interface Props {
     aktivitet: AlleAktiviteter;
     tillatEndring: boolean;
     laster: boolean;
-    underOppfolging: boolean;
 }
 
 const Aktivitetvisning = (props: Props) => {
-    const { aktivitet, tillatEndring, laster, underOppfolging } = props;
-
+    const { aktivitet, tillatEndring, laster } = props;
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
-
     const visBegrunnelse = !erArenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     return (
@@ -31,24 +28,16 @@ const Aktivitetvisning = (props: Props) => {
             {visBegrunnelse && aktivitet.avsluttetKommentar ? (
                 <BegrunnelseBoks begrunnelse={aktivitet.avsluttetKommentar} />
             ) : null}
-            <AktivitetinformasjonVisning valgtAktivitet={aktivitet} underOppfolging={underOppfolging} />
-
+            <AktivitetinformasjonVisning valgtAktivitet={aktivitet} />
             {/* TODO strategy pattern w/ slots? */}
             {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
                 <DeleCvContainer aktivitet={aktivitet} />
             ) : null}
-            <ActionRad
-                aktivitet={aktivitet}
-                tillatEndring={tillatEndring}
-                laster={laster}
-                underOppfolging={underOppfolging}
-            />
-
+            <ActionRad aktivitet={aktivitet} tillatEndring={tillatEndring} laster={laster} />
             {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
             aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
                 <ReferatContainer aktivitet={aktivitet} />
             ) : null}
-
             <AktivitetvisningAccordion aktivitet={aktivitet} />
         </div>
     );

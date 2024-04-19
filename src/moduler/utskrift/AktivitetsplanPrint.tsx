@@ -8,9 +8,9 @@ import { Bruker, Postadresse } from '../../datatypes/types';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODAL_OPEN } from '../../felles-komponenter/utils/logging';
-import { useErVeileder, useFnr } from '../../Provider';
+import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
-import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
+import { selectDialoger, selectDialogStatus } from '../dialog/dialog-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
@@ -68,7 +68,7 @@ const AktivitetsplanPrint = () => {
         loggEvent(PRINT_MODAL_OPEN);
     }, []);
 
-    const fnr = useFnr();
+    const { fnr } = useFnrOgEnhetContext();
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
     const [bruker, setBruker] = useState<Bruker>({});
 

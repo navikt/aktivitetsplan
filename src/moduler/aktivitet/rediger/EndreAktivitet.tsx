@@ -178,6 +178,7 @@ function EndreAktivitet() {
 
     return (
         <Modal
+            lukkPåKlikkUtenfor={false}
             onClose={tilHovedside}
             heading="Endre aktivitet"
             onRequestClose={onReqClose}
