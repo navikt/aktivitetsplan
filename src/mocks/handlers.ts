@@ -36,6 +36,8 @@ import {
     aktivitetFeilet,
     arenaFeilet,
     dialogFeilet,
+    forhaandsvisningFeiler,
+    journalforingFeiler,
     maalFeilet,
     nivaa4Feilet,
     oppdateringKunFeiler,
@@ -146,8 +148,14 @@ export const handlers = [
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
-    rest.get('/veilarbaktivitet/api/arkivering/forhaandsvisning', delayed(1000, jsonResponse(pdfForhaandsvisning))),
-    rest.post('/veilarbaktivitet/api/arkivering/journalfor', delayed(1000, jsonResponse(journalføring))),
+    rest.get(
+        '/veilarbaktivitet/api/arkivering/forhaandsvisning',
+        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 1000),
+    ),
+    rest.post(
+        '/veilarbaktivitet/api/arkivering/journalfor',
+        failOrGetResponse(journalforingFeiler, () => journalføring, 1000),
+    ),
 
     // veilarblest
     rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),

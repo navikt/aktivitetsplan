@@ -29,10 +29,17 @@ export const internalServerError = (ctx: RestContext) => {
     ];
 };
 
-export const failOrGetResponse = (failFn: () => boolean, successFn: (req: RestRequest) => object | undefined) => {
+export const failOrGetResponse = (
+    failFn: () => boolean,
+    successFn: (req: RestRequest) => object | undefined,
+    delay?: number | undefined,
+) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
         if (failFn()) {
             return res(...internalServerError(ctx));
+        }
+        if (delay) {
+            ctx.delay(delay);
         }
         return res(ctx.json(await successFn(req)));
     };
