@@ -93,5 +93,5 @@ export const ulesteDialoger = () => erSatt(LocalStorageElement.ULESTE_DIALOGER);
 
 export const ingenMal = () => erSatt(LocalStorageElement.INGEN_MAL);
 
-export const forhaandsvisningFeiler = () => erSatt(LocalStorageElement.NIVAA4_FEILET);
-export const journalforingFeiler = () => erSatt(LocalStorageElement.NIVAA4_FEILET);
+export const forhaandsvisningFeiler = () => erSatt(LocalStorageElement.FORHAANDSVISNING_FEILER);
+export const journalforingFeiler = () => erSatt(LocalStorageElement.JOURNALFORING_FEILER);

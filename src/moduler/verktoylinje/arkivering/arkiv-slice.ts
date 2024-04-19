@@ -36,6 +36,10 @@ const arkivSlice = createSlice({
         builder.addCase(hentPdfTilForhaandsvisning.rejected, (state) => {
             state.forhaandsvisningStatus = Status.ERROR;
         });
+        builder.addCase(journalfør.pending, (state) => {
+            state.journalføringStatus =
+                state.journalføringStatus === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
+        });
         builder.addCase(journalfør.rejected, (state) => {
             state.journalføringStatus = Status.ERROR;
         });

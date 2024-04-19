@@ -39,7 +39,7 @@ export const failOrGetResponse = (
             return res(...internalServerError(ctx));
         }
         if (delay) {
-            ctx.delay(delay);
+            return res(ctx.delay(delay), ctx.json(await successFn(req)));
         }
         return res(ctx.json(await successFn(req)));
     };

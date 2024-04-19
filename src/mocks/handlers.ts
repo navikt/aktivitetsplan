@@ -150,11 +150,11 @@ export const handlers = [
     rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
     rest.get(
         '/veilarbaktivitet/api/arkivering/forhaandsvisning',
-        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 1000),
+        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 500),
     ),
     rest.post(
         '/veilarbaktivitet/api/arkivering/journalfor',
-        failOrGetResponse(journalforingFeiler, () => journalføring, 1000),
+        failOrGetResponse(journalforingFeiler, () => journalføring, 2000),
     ),
 
     // veilarblest

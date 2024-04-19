@@ -6,6 +6,7 @@ import {
     journalfør,
     selectForhaandsvisningOpprettet,
     selectForhaandsvisningStatus,
+    selectJournalføringstatus,
     selectSistJournalfort,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
@@ -22,8 +23,11 @@ const Sidebar: FunctionComponent = () => {
     const oppfolgingsperioder = useSelector(selectOppfolgingsPerioder);
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
     const sistJournalfort = useSelector(selectSistJournalfort);
-    const arkivStatus = useSelector(selectForhaandsvisningStatus);
-    const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
+    const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
+    const journalføringsStatus = useSelector(selectJournalføringstatus);
+    const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
+    const journalfører = [Status.PENDING, Status.RELOADING].includes(journalføringsStatus);
+    console.log({ journalføringsStatus });
     const { hovedsideRoute } = useRoutes();
     const navigate = useNavigate();
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
@@ -44,6 +48,8 @@ const Sidebar: FunctionComponent = () => {
         dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId: valgtOppfølgingsperiode }));
     };
 
+    const disabled = henterForhaandsvisning || !forhaandsvisningOpprettet || journalfører;
+
     return (
         <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 h-screen">
             <Heading size="large">Journalføring</Heading>
@@ -59,7 +65,7 @@ const Sidebar: FunctionComponent = () => {
                 <Select
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
-                    disabled={arkiverer || !forhaandsvisningOpprettet}
+                    disabled={disabled}
                     defaultValue={oppfolgingsperiodeId}
                 >
                     {[...oppfolgingsperioder]
@@ -82,11 +88,7 @@ const Sidebar: FunctionComponent = () => {
                             : 'Aldri'}
                     </BodyShort>
                 </div>
-                <Button
-                    disabled={arkiverer || !forhaandsvisningOpprettet}
-                    variant="primary"
-                    onClick={() => sendTilArkiv()}
-                >
+                <Button disabled={disabled} variant="primary" onClick={() => sendTilArkiv()}>
                     Journalfør
                 </Button>
             </div>
