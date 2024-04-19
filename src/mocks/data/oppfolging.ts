@@ -1,4 +1,4 @@
-import { DefaultBodyType, HttpResponseResolver, StrictRequest } from 'msw';
+import { DefaultBodyType, StrictRequest } from 'msw';
 
 import { Oppfolgingsperiode, OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from '../demo/localStorage';
