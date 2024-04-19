@@ -28,7 +28,9 @@ export const arkivLoader =
     }: LoaderFunctionArgs<{
         oppfolgingsperiodeId: string;
     }>) => {
-        if (!oppfolgingsperiodeId) return 'Dett var dumt';
+        if (!oppfolgingsperiodeId) {
+            throw Error('path param is not set, this should never happen');
+        }
         return dispatch(
             hentPdfTilForhaandsvisning({
                 journalførendeEnhet: aktivEnhet,
