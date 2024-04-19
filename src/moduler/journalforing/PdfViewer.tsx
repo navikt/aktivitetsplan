@@ -3,7 +3,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 // @ts-ignore
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Alert, Loader } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
@@ -29,25 +29,34 @@ const createBlob = (pdf: string) => {
 };
 
 export const PdfViewer = ({ pdf }: PdfProps) => {
-    const arkivStatus = useSelector(selectForhaandsvisningStatus);
+    const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
     const journalførtStatus = useSelector(selectJournalføringstatus);
-    const arkiverer = [Status.PENDING, Status.RELOADING].includes(arkivStatus);
+    const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const [numPages, setNumPages] = useState(0);
-    const onDocumentLoadSuccess = ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
-        setNumPages(nextNumPages);
-    };
+
+    const onDocumentLoadSuccess = useCallback(
+        ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
+            setNumPages(nextNumPages);
+        },
+        [pdf],
+    );
+
+    const blob = useMemo(() => {
+        if (!pdf) return undefined;
+        return createBlob(pdf);
+    }, [pdf]);
 
     const containerWidth = 800;
     const maxWidth = 800;
 
     return (
         <div className="mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
-            {journalførtStatus === Status.OK && arkivStatus == Status.OK && (
+            {journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK && (
                 <Alert variant="success" role="alert" className="fixed z-10 mt-10">
                     Aktivitetsplanen ble journalført.
                 </Alert>
             )}
-            {!pdf || arkiverer ? (
+            {!blob || henterForhaandsvisning ? (
                 <div className="min-h-[calc(100vh-180px)] flex justify-center">
                     <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
                 </div>
@@ -55,7 +64,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
                 <Document
                     className="space-y-4 min-h-[calc(100vh-180px)] z-0"
                     onLoadSuccess={onDocumentLoadSuccess}
-                    file={createBlob(pdf)}
+                    file={blob}
                     loading=""
                 >
                     {Array.from(new Array(numPages), (el, index) => (
