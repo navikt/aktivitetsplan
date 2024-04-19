@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { LoaderFunctionArgs, Params, useParams } from 'react-router-dom';
+import { defer, LoaderFunctionArgs, Params, useParams } from 'react-router-dom';
 import { Dispatch } from '../../store';
 import Sidebar from './Sidebar';
 import { PdfViewer } from './PdfViewer';
@@ -31,10 +31,13 @@ export const arkivLoader =
         if (!oppfolgingsperiodeId) {
             throw Error('path param is not set, this should never happen');
         }
-        return dispatch(
+        const forhaandsvisning = dispatch(
             hentPdfTilForhaandsvisning({
                 journalførendeEnhet: aktivEnhet,
                 oppfolgingsperiodeId,
             }),
         );
+        return defer({
+            forhaandsvisning,
+        });
     };
