@@ -22,7 +22,6 @@ const DemoDashboard = () => {
         const checkbox = e.currentTarget;
         settLocalStorage(checkbox.id, checkbox.checked);
         setRender(render + 1);
-        // window.location.reload();
     };
 
     const endreBrukerType = (value: 'eksternbruker' | 'veilederbruker') => {

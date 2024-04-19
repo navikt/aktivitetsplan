@@ -43,7 +43,7 @@ import {
     oppdateringKunFeiler,
     oppfFeilet,
 } from './demo/localStorage';
-import { failOrGetResponse, delayed, failOrGrahpqlResponse, jsonResponse } from './utils';
+import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
 
