@@ -2,33 +2,7 @@ import { Checkbox, CheckboxGroup, Heading, Radio, RadioGroup } from '@navikt/ds-
 import React, { useState } from 'react';
 
 import Hurtigfilter from './Hurtigfilter';
-import {
-    LocalStorageElement,
-    aktivitetFeilet,
-    arenaFeilet,
-    dialogFeilet,
-    erEksternBruker,
-    erEskalertBruker,
-    erEskalertBrukerGammel,
-    erKRRBruker,
-    erManuellBruker,
-    erPrivatBruker,
-    ikkeLoggetInnNivaa4,
-    ingenMal,
-    ingenOppfPerioder,
-    maalFeilet,
-    nivaa4Feilet,
-    oppdateringKunFeiler,
-    oppfFeilet,
-    settLocalStorage,
-    ulesteDialoger,
-    visArenaAktiviteter,
-    visAutomatiskeAktiviteter,
-    visEksterneAktiviteter,
-    visTestAktiviteter,
-    forhaandsvisningFeiler,
-    journalforingFeiler,
-} from './localStorage';
+import { LocalStorageElement, erEksternBruker, ingenMal, settLocalStorage } from './localStorage';
 import { aktivitetTilstand, brukertype, features, feiltilstander, radios } from './demoToggles';
 
 interface Checkable {
