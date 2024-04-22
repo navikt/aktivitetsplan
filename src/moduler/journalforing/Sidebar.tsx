@@ -73,7 +73,7 @@ const Sidebar: FunctionComponent = () => {
                             <option
                                 key={`oppfolgingsperiodeoption-${periode.uuid}`}
                                 value={periode.uuid}
-                                selected={oppfolgingsperiodeId === periode.uuid}
+                                // selected={oppfolgingsperiodeId === periode.uuid}
                             >
                                 {formaterDatoKortManed(periode.startDato)} - {formaterDatoKortManed(periode.sluttDato)}
                             </option>
