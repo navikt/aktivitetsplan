@@ -39,12 +39,14 @@ const arenaAktivitet = {
     ...arenaMockAktiviteter[0],
     tittel: 'Arenaaktivitet',
     id: 'ARENATA11',
+    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode?.uuid,
 };
 const gammelArenaAktivitet = {
     ...arenaMockAktiviteter[0],
     tittel: 'Gammel Arenaaktivitet',
     id: 'ARENATA22',
     opprettetDato: '2017-02-30T10:46:10.971+01:00', // I gammel oppfølgingsperiode
+    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
 };
 // Start nyeste periode '2018-01-31T10:46:10.971+01:00',
 const arenaAktivitetUtenforPeriode = {

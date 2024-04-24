@@ -24,7 +24,7 @@ export const arenaMockAktiviteter = [
         antallDagerPerUke: 5.0,
         statusSistEndret: '2017-07-02T00:00:00+02:00',
         etikett: null,
-        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+        oppfolgingsperiodeId: null,
         moeteplanListe: null,
     },
     {
