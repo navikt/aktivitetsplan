@@ -48,7 +48,9 @@ export const selectAktiviterForAktuellePerioden = createSelector(
         );
         return [
             ...(veilarbAktiviteter.find((periode) => periode.id === valgtPeriode?.uuid)?.aktiviteter || []),
-            ...arenaAktiviteter,
+            ...arenaAktiviteterIAllePerioder.filter(
+                (aktivitet) => aktivitet.oppfolgingsperiodeId === valgtPeriode?.uuid,
+            ),
         ];
     },
 );
