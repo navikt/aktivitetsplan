@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useState } from 'react';
+import { TextField, Textarea, Dropdown } from '@navikt/ds-react';
+import React, { MutableRefObject, useEffect, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -66,16 +66,19 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
         return {
             skjemaVersjon: 'ny',
             ...basevalues,
-            antallStillingerIUken: aktivitet?.antallStillingerIUken ?? undefined,
+            antallStillingerIUken: 0,
         };
     } else {
         return {
             skjemaVersjon: 'gammel',
             ...basevalues,
-            antallStillingerSokes: aktivitet?.antallStillingerSokes ?? undefined,
+            antallStillingerSokes: 0,
         };
     }
 };
+
+const beskrivelseTekst = (antallStillinger: number) =>
+    `NAV forventer at du søker omtrent ${antallStillinger} stillinger i uken.\nDet er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.`;
 
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
@@ -102,7 +105,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         watch,
         setValue,
         reset,
-        formState: { errors: formStateErrors, isDirty, isSubmitting },
+        formState: { errors: formStateErrors, isDirty, isSubmitting, touchedFields },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -116,16 +119,28 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
               skjemaVersjon: 'gammel' as const,
           };
 
+    const antallStillinger = watch('antallStillingerIUken');
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const avtaleOppfolging = watch('avtaleOppfolging'); // for <Textarea /> character-count to work
 
+    useEffect(() => {
+        if (!touchedFields.beskrivelse) {
+            const nyBeskrivelse = antallStillinger > 0 ? beskrivelseTekst(antallStillinger) : '';
+            setValue('beskrivelse', nyBeskrivelse);
+        }
+    }, [antallStillinger]);
+
     const onMalChange = (newInitalValues: any) => {
+        console.log('NewInitial', newInitalValues);
         if (!newInitalValues) {
             setDefaultDateValues(undefined);
             reset();
         } else {
+            console.log('ObjectEntries', newInitalValues);
             Object.entries(newInitalValues).forEach(([name, value]: [any, any]) => {
                 if (['fraDato', 'tilDato'].includes(name)) setValue(name, new Date(value));
+                else if (name === 'beskrivelse') setValue(name, '');
+                else if (name === 'antallStillingerIUken') setValue('antallStillingerIUken', 0);
                 else setValue(name, value);
             });
             setDefaultDateValues({
