@@ -138,7 +138,6 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
     useEffect(() => {
         if (!touchedFields.beskrivelse && mal == Mal.SØKEAVTALE) {
             const nyBeskrivelse = antallStillinger > 0 ? beskrivelseTekst(antallStillinger) : '';
-            // Object.entries(defaultValues).forEach();
             setValue('beskrivelse', nyBeskrivelse);
         }
     }, [antallStillinger]);
