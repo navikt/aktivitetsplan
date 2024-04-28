@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { TextField, Textarea, Dropdown } from '@navikt/ds-react';
+import { TextField, Textarea, Select } from '@navikt/ds-react';
 import React, { MutableRefObject, useEffect, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -7,8 +7,6 @@ import { z } from 'zod';
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/common';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { useErVeileder } from '../../../../Provider';
-import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
@@ -17,6 +15,11 @@ const numberErrorMessage = {
     required_error: 'Antall stillinger må fylles ut',
     invalid_type_error: 'Antall stillinger må fylles ut',
 };
+
+enum Mal {
+    'SØKEAVTALE' = 'SOKEAVTALE',
+    'EGEN' = 'EGEN',
+}
 
 const commonFields = {
     tittel: z.string(),
@@ -43,7 +46,7 @@ const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
     NySokeAvtaleFormValues,
 ]);
 
-export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
+export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues> & { mal: Mal };
 
 interface Props {
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
@@ -56,6 +59,7 @@ interface Props {
 const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const basevalues = {
+        mal: Mal.EGEN,
         tittel: aktivitet?.tittel || 'Avtale om å søke jobber',
         fraDato: aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined,
         tilDato: aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined,
@@ -82,9 +86,6 @@ const beskrivelseTekst = (antallStillinger: number) =>
 
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
-
-    const erVeileder = useErVeileder();
-
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
 
     const defaultValues = getDefaultValues(aktivitet);
@@ -119,13 +120,25 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
               skjemaVersjon: 'gammel' as const,
           };
 
+    const mal = watch('mal');
     const antallStillinger = watch('antallStillingerIUken');
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const avtaleOppfolging = watch('avtaleOppfolging'); // for <Textarea /> character-count to work
 
     useEffect(() => {
-        if (!touchedFields.beskrivelse) {
+        if (mal === Mal.EGEN) {
+            setDefaultDateValues(undefined);
+            setValue('mal', Mal.EGEN);
+            reset();
+        } else if (mal === Mal.SØKEAVTALE) {
+            setDefaultDateValues({ from: new Date(), to: new Date() });
+        }
+    }, [mal]);
+
+    useEffect(() => {
+        if (!touchedFields.beskrivelse && mal == Mal.SØKEAVTALE) {
             const nyBeskrivelse = antallStillinger > 0 ? beskrivelseTekst(antallStillinger) : '';
+            // Object.entries(defaultValues).forEach();
             setValue('beskrivelse', nyBeskrivelse);
         }
     }, [antallStillinger]);
@@ -155,7 +168,10 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE} />
-                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="SOKEAVTALE" />
+                    <Select label="Ferdig utfylt aktivitet" {...register('mal')}>
+                        <option value={Mal.EGEN}>Ingen ferdig utfylt aktivitet valgt</option>
+                        <option value={Mal.SØKEAVTALE}>Avtale om å søke jobber</option>
+                    </Select>
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker
                             aktivitet={aktivitet}
