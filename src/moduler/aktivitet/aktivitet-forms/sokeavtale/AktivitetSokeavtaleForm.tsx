@@ -131,7 +131,14 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
             setValue('mal', Mal.EGEN);
             reset();
         } else if (mal === Mal.SØKEAVTALE) {
-            setDefaultDateValues({ from: new Date(), to: new Date() });
+            if (aktivitet) {
+                setDefaultDateValues({
+                    from: aktivitet.fraDato ? new Date(aktivitet.fraDato) : undefined,
+                    to: aktivitet.tilDato ? new Date(aktivitet.tilDato) : undefined,
+                });
+            } else {
+                setDefaultDateValues({ from: new Date(), to: new Date() });
+            }
         }
     }, [mal]);
 
