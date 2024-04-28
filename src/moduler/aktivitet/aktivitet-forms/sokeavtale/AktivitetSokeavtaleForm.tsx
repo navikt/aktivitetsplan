@@ -126,12 +126,13 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
     const avtaleOppfolging = watch('avtaleOppfolging'); // for <Textarea /> character-count to work
 
     useEffect(() => {
-        if (mal === Mal.EGEN) {
-            setDefaultDateValues(undefined);
-            setValue('mal', Mal.EGEN);
+        if (mal === Mal.EGEN && !aktivitet) {
             reset();
+            setDefaultDateValues(undefined);
         } else if (mal === Mal.SØKEAVTALE && !aktivitet) {
             if (!aktivitet) {
+                reset();
+                setValue('mal', Mal.SØKEAVTALE);
                 setDefaultDateValues({ from: new Date(), to: new Date() });
             }
         }
@@ -143,26 +144,6 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
             setValue('beskrivelse', nyBeskrivelse);
         }
     }, [antallStillinger]);
-
-    const onMalChange = (newInitalValues: any) => {
-        console.log('NewInitial', newInitalValues);
-        if (!newInitalValues) {
-            setDefaultDateValues(undefined);
-            reset();
-        } else {
-            console.log('ObjectEntries', newInitalValues);
-            Object.entries(newInitalValues).forEach(([name, value]: [any, any]) => {
-                if (['fraDato', 'tilDato'].includes(name)) setValue(name, new Date(value));
-                else if (name === 'beskrivelse') setValue(name, '');
-                else if (name === 'antallStillingerIUken') setValue('antallStillingerIUken', 0);
-                else setValue(name, value);
-            });
-            setDefaultDateValues({
-                from: new Date(newInitalValues['fraDato']),
-                to: new Date(newInitalValues['tilDato']),
-            });
-        }
-    };
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
