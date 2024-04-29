@@ -39,7 +39,7 @@ const malverkSlice = createSlice({
 });
 
 export const hentMalverk = createAsyncThunk(`${malverkSlice.name}/fetchMalverk`, async () => {
-    return await Api.hentMalverkMed();
+    return await Api.hentMalverk();
 });
 
 export const { settValgtMalverk, slettValgtMalverk } = malverkSlice.actions;
