@@ -4,7 +4,7 @@ import React from 'react';
 
 import { initAmplitude } from './amplitude/amplitude';
 import { ER_INTERN_FLATE, USE_MOCK } from './constant';
-import { mockfnr } from './mocks/utils';
+import { mockAktivEnhet, mockfnr } from './mocks/utils';
 import { createRoot } from 'react-dom/client';
 
 setDefaultOptions({ locale: nn });
@@ -33,6 +33,7 @@ const renderApp = () => {
 if (USE_MOCK) {
     const webComponentTag = document.createElement('dab-aktivitetsplan');
     webComponentTag.setAttribute('data-fnr', mockfnr);
+    webComponentTag.setAttribute('data-aktivEnhet', mockAktivEnhet);
     document.getElementById('mainapp')?.appendChild(webComponentTag);
     Promise.all([import('./mocks'), import('./mocks/demo/DemoBanner')]).then(
         ([{ default: startWorker }, { default: DemoBanner }]) => {

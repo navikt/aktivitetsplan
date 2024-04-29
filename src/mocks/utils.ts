@@ -1,6 +1,7 @@
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
 export const mockfnr = '12345678910';
+export const mockAktivEnhet = '0909';
 
 export const rndId = (): string => {
     return `${Math.floor(Math.random() * 100000000)}`;
@@ -28,10 +29,17 @@ export const internalServerError = (ctx: RestContext) => {
     ];
 };
 
-export const failOrGetResponse = (failFn: () => boolean, successFn: (req: RestRequest) => object | undefined) => {
+export const failOrGetResponse = (
+    failFn: () => boolean,
+    successFn: (req: RestRequest) => object | undefined,
+    delay?: number | undefined,
+) => {
     return async (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
         if (failFn()) {
             return res(...internalServerError(ctx));
+        }
+        if (delay) {
+            return res(ctx.delay(delay), ctx.json(await successFn(req)));
         }
         return res(ctx.json(await successFn(req)));
     };

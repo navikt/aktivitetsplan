@@ -13,6 +13,8 @@ export enum LocalStorageElement {
     ARENA_FEILET = 'arenafeilet',
     MAAL_FEILET = 'maalfeilet',
     NIVAA4_FEILET = 'nivaa4feilet',
+    JOURNALFORING_FEILER = 'JOURNALFORING_FEILER',
+    FORHAANDSVISNING_FEILER = 'FORHAANDSVISNING_FEILER',
     OPPDATERING_KUN_FEILER = 'oppdonlyfeiler',
     EKSTERN_BRUKER = 'eksternbruker',
     INGEN_OPPF_PERIODER = 'ingen_oppf_perioder',
@@ -90,3 +92,6 @@ export const oppdateringKunFeiler = () => erSatt(LocalStorageElement.OPPDATERING
 export const ulesteDialoger = () => erSatt(LocalStorageElement.ULESTE_DIALOGER);
 
 export const ingenMal = () => erSatt(LocalStorageElement.INGEN_MAL);
+
+export const forhaandsvisningFeiler = () => erSatt(LocalStorageElement.FORHAANDSVISNING_FEILER);
+export const journalforingFeiler = () => erSatt(LocalStorageElement.JOURNALFORING_FEILER);
