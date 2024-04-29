@@ -5,7 +5,7 @@ import { act, render } from '@testing-library/react';
 import { emptyLoadedVeilederState } from '../testUtils/defaultInitialStore';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
-import { failOrGrahpqlResponse } from '../mocks/utils';
+import { failOrGrahpqlResponse, mockfnr } from '../mocks/utils';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../reducer';
 import { handlers } from '../mocks/handlers';
@@ -44,17 +44,6 @@ const server = setupServer(
     ],
 );
 
-vi.mock('../felles-komponenter/utils/logging', async () => {
-    const actual: object = await vi.importActual('../felles-komponenter/utils/logging');
-    return {
-        ...actual,
-        default: vi.fn(),
-        loggTidBruktGaaInnPaaAktivitetsplanen: vi.fn(),
-        logTimeToAktivitestavlePaint: vi.fn(),
-        loggingAntallBrukere: vi.fn(),
-    };
-});
-
 describe('Hovedside.tsx', () => {
     beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
@@ -67,7 +56,7 @@ describe('Hovedside.tsx', () => {
     it('should show error if graphql endpoint fails with 200 statuscode and errors in payload', async () => {
         const store = configureStore({ reducer: reducer, preloadedState: initialState });
         const { getByText } = await act(() => {
-            return render(<WrappedHovedside store={store} />);
+            return render(<WrappedHovedside fnr={mockfnr} store={store} />);
         });
         const feilmeldingTekst = getErrorText([{ type: hentArenaAktiviteter.rejected.type }]);
         getByText(feilmeldingTekst);

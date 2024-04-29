@@ -5,15 +5,27 @@ import React from 'react';
 import { Location } from '@remix-run/router/history';
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { routingConfig } from '../routing/routerConfig';
-import { useErVeileder } from '../Provider';
+import { ErVeilederContext, FnrOgEnhetContext, useErVeileder } from '../Provider';
 
 /* Rendrer hele appen men med in-memory router og mulighet for å sette initial redux-state slik at
  * mesteparten av mock-data er på plass ved første render */
-export const WrappedHovedside = ({ store }: { store: ToolkitStore }) => {
+export const WrappedHovedside = ({
+    store,
+    fnr,
+    enhetId,
+}: {
+    store: ToolkitStore;
+    fnr: string | undefined;
+    enhetId?: string | undefined;
+}) => {
     return (
-        <Provider store={store}>
-            <MemoryRouteProvider />
-        </Provider>
+        <FnrOgEnhetContext.Provider value={{ fnr, aktivEnhet: enhetId }}>
+            <ErVeilederContext.Provider value={!!fnr}>
+                <Provider store={store}>
+                    <MemoryRouteProvider />
+                </Provider>
+            </ErVeilederContext.Provider>
+        </FnrOgEnhetContext.Provider>
     );
 };
 

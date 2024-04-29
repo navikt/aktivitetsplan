@@ -27,17 +27,6 @@ import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore
 import { rest } from 'msw';
 import { failOrGrahpqlResponse } from '../../../mocks/utils';
 
-vi.mock('../../../felles-komponenter/utils/logging', async () => {
-    const actual: any = await vi.importActual('../../../felles-komponenter/utils/logging');
-    return {
-        ...actual,
-        default: vi.fn(),
-        loggTidBruktGaaInnPaaAktivitetsplanen: vi.fn(),
-        logTimeToAktivitestavlePaint: vi.fn(),
-        loggingAntallBrukere: vi.fn(),
-    };
-});
-
 let id = 12012;
 const exampleAktivitet = wrapAktivitet({
     ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2017 }),
