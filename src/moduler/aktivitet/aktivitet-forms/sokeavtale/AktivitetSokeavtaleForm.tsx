@@ -1,22 +1,26 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useState } from 'react';
+import { TextField, Textarea, Select } from '@navikt/ds-react';
+import React, { MutableRefObject, useEffect, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/common';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { useErVeileder } from '../../../../Provider';
-import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
+import { addMonths } from 'date-fns';
 
 const numberErrorMessage = {
     required_error: 'Antall stillinger må fylles ut',
     invalid_type_error: 'Antall stillinger må fylles ut',
 };
+
+enum Mal {
+    'SØKEAVTALE' = 'SOKEAVTALE',
+    'EGEN' = 'EGEN',
+}
 
 const commonFields = {
     tittel: z.string(),
@@ -35,7 +39,10 @@ type GammelSokeavtaleAktivitetFormValues = z.infer<typeof GammelSokeAvtaleFormVa
 const NySokeAvtaleFormValues = z.object({
     ...commonFields,
     skjemaVersjon: z.literal('ny' as const),
-    antallStillingerIUken: z.number(numberErrorMessage).lt(100, 'Antall søknader må ikke være høyere enn 99'),
+    antallStillingerIUken: z
+        .number(numberErrorMessage)
+        .lt(100, 'Antall søknader må ikke være høyere enn 99')
+        .min(1, 'Antall søknader må være minst 1'),
 });
 type NySokeavtaleAktivitetFormValues = z.infer<typeof NySokeAvtaleFormValues>;
 const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
@@ -43,7 +50,7 @@ const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
     NySokeAvtaleFormValues,
 ]);
 
-export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
+export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues> & { mal: Mal };
 
 interface Props {
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
@@ -56,6 +63,7 @@ interface Props {
 const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const basevalues = {
+        mal: Mal.EGEN,
         tittel: aktivitet?.tittel || 'Avtale om å søke jobber',
         fraDato: aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined,
         tilDato: aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined,
@@ -77,11 +85,11 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
     }
 };
 
+const beskrivelseTekst =
+    'Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.';
+
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
-
-    const erVeileder = useErVeileder();
-
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
 
     const defaultValues = getDefaultValues(aktivitet);
@@ -116,31 +124,33 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
               skjemaVersjon: 'gammel' as const,
           };
 
+    const mal = watch('mal');
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const avtaleOppfolging = watch('avtaleOppfolging'); // for <Textarea /> character-count to work
 
-    const onMalChange = (newInitalValues: any) => {
-        if (!newInitalValues) {
-            setDefaultDateValues(undefined);
+    useEffect(() => {
+        if (mal === Mal.EGEN && !aktivitet) {
             reset();
-        } else {
-            Object.entries(newInitalValues).forEach(([name, value]: [any, any]) => {
-                if (['fraDato', 'tilDato'].includes(name)) setValue(name, new Date(value));
-                else setValue(name, value);
-            });
-            setDefaultDateValues({
-                from: new Date(newInitalValues['fraDato']),
-                to: new Date(newInitalValues['tilDato']),
-            });
+            setDefaultDateValues(undefined);
+        } else if (mal === Mal.SØKEAVTALE && !aktivitet) {
+            if (!aktivitet) {
+                reset();
+                setValue('mal', Mal.SØKEAVTALE);
+                setValue('beskrivelse', beskrivelseTekst);
+                setDefaultDateValues({ from: new Date(), to: addMonths(new Date(), 3) });
+            }
         }
-    };
+    }, [mal]);
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE} />
-                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="SOKEAVTALE" />
+                    <Select label="Ferdig utfylt aktivitet" {...register('mal')}>
+                        <option value={Mal.EGEN}>Ingen ferdig utfylt aktivitet valgt</option>
+                        <option value={Mal.SØKEAVTALE}>Avtale om å søke jobber</option>
+                    </Select>
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker
                             aktivitet={aktivitet}
