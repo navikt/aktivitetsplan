@@ -1,7 +1,4 @@
-import { ResponseComposition, RestContext, RestRequest } from 'msw';
-
-import { erEksternBruker, ulesteDialoger } from '../demo/localStorage';
-import { rndId } from '../utils';
+import { ulesteDialoger } from '../demo/localStorage';
 
 const dialoger = [
     {
@@ -192,62 +189,5 @@ const dialoger = [
         egenskaper: [],
     },
 ];
-
-export const opprettDialog = async (req: RestRequest) => {
-    const body = await req.json();
-
-    const dialogId = body.dialogId === undefined ? rndId() : `${body.dialogId}`;
-    const nyHenvendelse = {
-        id: rndId(),
-        dialogId: dialogId,
-        avsender: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
-        avsenderId: 'Z123456',
-        overskrift: body.overskrift,
-        tekst: body.tekst,
-        lest: !ulesteDialoger(),
-        sendt: new Date(),
-    } as any;
-
-    const eksisterendeDialoger = dialoger.filter((dialog) => body.dialogId !== undefined && dialog.id === dialogId);
-
-    if (eksisterendeDialoger.length === 1) {
-        const oldDialog = eksisterendeDialoger[0];
-        oldDialog.sisteTekst = body.tekst;
-        oldDialog.sisteDato = nyHenvendelse.sendt;
-        oldDialog.henvendelser.push(nyHenvendelse);
-        return oldDialog;
-    } else {
-        const nyDialog = {
-            id: nyHenvendelse.dialogId,
-            ferdigBehandlet: !body.ikkeFerdigbehandlet,
-            venterPaSvar: !!body.venterPaSvar,
-            aktivitetId: body.aktivitetId === undefined ? null : body.aktivitetId,
-            overskrift: body.overskrift,
-            sisteTekst: body.tekst,
-            sisteDato: new Date(),
-            opprettetDato: new Date(),
-            historisk: false,
-            lest: !ulesteDialoger(),
-            lestAvBrukerTidspunkt: null,
-            erLestAvBruker: false,
-            henvendelser: [nyHenvendelse],
-            egenskaper: body.egenskaper === undefined ? [] : body.egenskaper,
-        } as any;
-        dialoger.push(nyDialog);
-        return nyDialog;
-    }
-};
-
-export function setVenterPaaSvar(req: RestRequest, _res: ResponseComposition, _ctx: RestContext) {
-    const dialog = dialoger.filter((d) => d.id === req.params.id)[0];
-    dialog.venterPaSvar = req.params.bool === 'true';
-    return dialog;
-}
-
-export function setFerdigBehandlet(req: RestRequest, _res: ResponseComposition, _ctx: RestContext) {
-    const dialog = dialoger.filter((d) => d.id === req.params.id)[0];
-    dialog.ferdigBehandlet = req.params.bool === 'true';
-    return dialog;
-}
 
 export default dialoger;

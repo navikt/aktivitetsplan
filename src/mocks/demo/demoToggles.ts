@@ -8,12 +8,10 @@ import {
     erManuellBruker,
     erPrivatBruker,
     forhaandsvisningFeiler,
-    ikkeLoggetInnNivaa4,
     ingenOppfPerioder,
     journalforingFeiler,
     LocalStorageElement,
     maalFeilet,
-    nivaa4Feilet,
     oppdateringKunFeiler,
     oppfFeilet,
     ulesteDialoger,
@@ -55,11 +53,6 @@ export const features = [
         label: 'KRR',
         id: LocalStorageElement.KRR_BRUKER,
         checked: erKRRBruker,
-    },
-    {
-        label: 'Ikke innlogget med nivå 4',
-        id: LocalStorageElement.INNLOGGET_NIVAA4,
-        checked: ikkeLoggetInnNivaa4,
     },
     {
         label: 'Ingen oppfølgingsperioder',
@@ -134,11 +127,6 @@ export const feiltilstander = [
         label: 'Kun oppdatering feiler',
         id: LocalStorageElement.OPPDATERING_KUN_FEILER,
         checked: oppdateringKunFeiler,
-    },
-    {
-        label: 'Nivå 4 feiler',
-        id: LocalStorageElement.NIVAA4_FEILET,
-        checked: nivaa4Feilet,
     },
     {
         label: 'Forhåndsvisning feiler',

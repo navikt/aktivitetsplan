@@ -16,7 +16,7 @@ import { expect } from 'vitest';
 import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
-import { rest } from 'msw';
+import { http } from 'msw';
 import { failOrGrahpqlResponse } from '../../../mocks/utils';
 
 vi.mock('../../../felles-komponenter/utils/logging', async () => {
@@ -103,14 +103,14 @@ const initialStore = {
 
 // Overstyr lesing av aktiviteter i denne testen
 const server = setupServer(
-    rest.post(
+    http.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(
             () => false,
             () => aktivitestplanResponse({ aktiviteter: [veilarbAktivitet, gammelVeilarbAktivitet] }),
         ),
     ),
-    rest.get(
+    http.get(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGrahpqlResponse(
             () => false,

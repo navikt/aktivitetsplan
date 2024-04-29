@@ -3,13 +3,11 @@ import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
+import { StillingFraNavSoknadsstatus } from '../datatypes/aktivitetTypes';
 import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 
 export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
-
-export const hentAktiviteter = (): Promise<{ aktiviteter: VeilarbAktivitet[] }> =>
-    fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
 
 export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId: string): Promise<VeilarbAktivitet> =>
     postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${oppfolgingsperiodeId}/ny`, aktivitet);
@@ -68,15 +66,19 @@ export const oppdaterReferat = (
 export const hentVersjonerTilAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet[]> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
 
+export interface OppdaterStillingFraNavSoknadsstatusPayload {
+    aktivitetVersjon: string;
+    soknadsstatus: StillingFraNavSoknadsstatus;
+}
 export const oppdaterStillingFraNavSoknadsstatus = (
     aktivitetId: string,
     aktivitetVersjon: string,
-    soknadsstatus: string,
+    soknadsstatus: StillingFraNavSoknadsstatus,
 ): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/soknadStatus?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
         soknadsstatus,
-    });
+    } as OppdaterStillingFraNavSoknadsstatusPayload);
 
 export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> =>
     postAsJson(`${AKTIVITET_BASE_URL}/arena/tiltak`, { fnr: hentFraSessionStorage(LocalStorageElement.FNR) });

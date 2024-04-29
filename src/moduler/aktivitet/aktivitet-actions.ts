@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/aktivitetAPI';
-import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
+import { AktivitetStatus, StillingFraNavSoknadsstatus } from '../../datatypes/aktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { hentAktiviteterGraphql } from '../../api/aktivitetsplanGraphql';
@@ -97,7 +97,7 @@ export const oppdaterStillingFraNavSoknadsstatus = createAsyncThunk(
     }: {
         aktivitetId: string;
         aktivitetVersjon: string;
-        soknadsstatus: string;
+        soknadsstatus: StillingFraNavSoknadsstatus;
     }) => {
         return await Api.oppdaterStillingFraNavSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus);
     },
