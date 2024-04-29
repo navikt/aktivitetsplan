@@ -34,21 +34,12 @@ export const selectAktiviterForAktuellePerioden = createSelector(
     selectArenaAktiviteterData,
     selectVistOppfolgingsperiode,
     selectAktiviteterByPeriode,
-    selectHistoriskPeriode,
-    selectForrigeHistoriskeSluttDato,
-    (
-        arenaAktiviteterIAllePerioder,
-        valgtPeriode,
-        veilarbAktiviteter,
-        historiskPeriode,
-        forrigeHistoriskeSluttDato,
-    ): AlleAktiviteter[] => {
-        const arenaAktiviteter = arenaAktiviteterIAllePerioder.filter((a: ArenaAktivitet) =>
-            datoErIPeriode(a.opprettetDato, historiskPeriode, forrigeHistoriskeSluttDato),
-        );
+    (arenaAktiviteterIAllePerioder, valgtPeriode, veilarbAktiviteter): AlleAktiviteter[] => {
         return [
             ...(veilarbAktiviteter.find((periode) => periode.id === valgtPeriode?.uuid)?.aktiviteter || []),
-            ...arenaAktiviteter,
+            ...arenaAktiviteterIAllePerioder.filter(
+                (aktivitet) => aktivitet.oppfolgingsperiodeId === valgtPeriode?.uuid,
+            ),
         ];
     },
 );

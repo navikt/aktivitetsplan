@@ -17,13 +17,13 @@ import {
 } from './aktivitet';
 import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './data/arena';
 import { auth } from './data/auth';
-import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaaSvar } from './data/dialog';
+import dialoger, { opprettDialog } from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
 import { innstillingsHistorikk } from './data/innstillings-historikk';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
-import { hentMalverkMedType } from './data/malverk';
+import { hentMalverk } from './data/malverk';
 import { me } from './data/me';
 import { oppfoelgingsstatus } from './data/oppfoelgingsstatus';
 import getOppfolging, { avslutningStatus, settDigital } from './data/oppfolging';
@@ -75,15 +75,13 @@ export const handlers = [
     rest.post('/veilarboppfolging/api/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
     // veilarbdialog
-    rest.get(
-        '/veilarbdialog/api/dialog',
-        failOrGetResponse(dialogFeilet, () => dialog),
-    ),
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
     rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
-    rest.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', jsonResponse(setVenterPaaSvar)),
-    rest.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', jsonResponse(setFerdigBehandlet)),
     rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),
+    rest.post(
+        '/veilarbdialog/graphql',
+        failOrGrahpqlResponse(dialogFeilet, () => ({ data: { dialoger } })),
+    ),
 
     // veilarbaktivitet
     rest.post('/veilarbaktivitet/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
@@ -173,7 +171,7 @@ export const handlers = [
     rest.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([])),
 
     // veilarbmalverk
-    rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverkMedType)),
+    rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
 ];
 
 export const aktivitestplanResponse = (

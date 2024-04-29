@@ -39,6 +39,7 @@ export interface ArenaAktivitet {
     opprettetDato: string;
     avtalt: boolean;
     etikett?: ArenaEtikett;
+    oppfolgingsperiodeId: string | null;
 
     forhaandsorientering?: Forhaandsorientering;
 
