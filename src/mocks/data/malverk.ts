@@ -38,7 +38,7 @@ const egenMalverk = [
     },
 ];
 
-export const hentMalverkMedType = async (req: RestRequest) => {
+export const hentMalverk = async (req: RestRequest) => {
     const body = await req.json();
     const { type } = body;
 
