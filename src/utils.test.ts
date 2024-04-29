@@ -4,7 +4,6 @@ import {
     formaterDatoKortManed,
     formaterDatoKortManedTid,
     formaterTid,
-    plussPaaMaaneder,
 } from './utils/dateUtils';
 import { autobind, erInternlenke, fn, guid, storeForbokstaver } from './utils/utils';
 import { describe } from 'vitest';
