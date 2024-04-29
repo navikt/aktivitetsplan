@@ -86,7 +86,7 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
 };
 
 const beskrivelseTekst =
-    'Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.';
+    'Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.\nHer kan du finne ledige stillinger: https://arbeidsplassen.nav.no/stillinger';
 
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
