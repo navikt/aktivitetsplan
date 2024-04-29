@@ -7,6 +7,7 @@ import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 const query = `
     query($fnr: String!, $bareMedAktiviteter: Boolean) {
         dialoger(fnr: $fnr, bareMedAktiviteter: $bareMedAktiviteter) {
+            id,
             aktivitetId,
             oppfolgingsperiode,
             opprettetDato,

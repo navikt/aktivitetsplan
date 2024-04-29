@@ -17,7 +17,7 @@ import {
 } from './aktivitet';
 import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './data/arena';
 import { auth } from './data/auth';
-import dialog, { opprettDialog } from './data/dialog';
+import dialoger, { opprettDialog } from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
 import { innstillingsHistorikk } from './data/innstillings-historikk';
@@ -84,7 +84,7 @@ export const handlers = [
     rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),
     rest.post(
         '/veilarbdialog/graphql',
-        failOrGrahpqlResponse(dialogFeilet, () => ({ data: { dialoger: dialog } })),
+        failOrGrahpqlResponse(dialogFeilet, () => ({ data: { dialoger } })),
     ),
 
     // veilarbaktivitet
