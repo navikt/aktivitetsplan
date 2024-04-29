@@ -21,7 +21,7 @@ const eventName = 'uppdate';
 
 export function windowEvent(update: UpdateTypes) {
     window.dispatchEvent(
-        new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'aktivitetsplan' } })
+        new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'aktivitetsplan' } }),
     );
 }
 
@@ -40,7 +40,7 @@ export function UpdateEventHandler() {
             case UpdateTypes.Aktivitet:
                 return dispatch(hentAktiviteter());
             case UpdateTypes.Dialog:
-                return dispatch(hentDialoger());
+                return dispatch(hentDialoger(true));
             case UpdateTypes.Oppfolging:
                 return dispatch(hentOppfolging());
         }

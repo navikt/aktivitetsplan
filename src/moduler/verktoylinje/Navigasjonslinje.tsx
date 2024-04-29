@@ -22,7 +22,7 @@ function Navigasjonslinje() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const doHentDialog = () => dispatch(hentDialoger());
+        const doHentDialog = () => dispatch(hentDialoger(true));
 
         if (!erVeileder) {
             let interval: NodeJS.Timeout;

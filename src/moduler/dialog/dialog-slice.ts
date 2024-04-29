@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import * as Api from '../../api/dialogAPI';
 import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { hentDialogerGraphql } from '../../api/dialogGraphql';

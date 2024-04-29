@@ -32,7 +32,7 @@ const queryBody = (fnr: string) => ({
     query,
     variables: {
         fnr,
-        bareMedAktiviteter: true,
+        bareMedAktiviteter: false,
     },
 });
 

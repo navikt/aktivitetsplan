@@ -4,6 +4,7 @@ import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunk } from './initialPageLoadThunk';
+import { hentDialoger } from '../moduler/dialog/dialog-slice';
 
 const dispatchAndDefer = (dispatch: Dispatch, actions: AsyncThunkAction<any, any, any>[]) => {
     const promisedData = Promise.all(actions.map((it) => dispatch(it)));
