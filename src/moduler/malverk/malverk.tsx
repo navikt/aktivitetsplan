@@ -22,7 +22,7 @@ function lagMalverkOption(mal: any) {
 type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {
         endre: boolean;
-        type: 'SOKEAVTALE' | 'EGEN';
+        type: 'EGEN';
         onChange: (payload: Record<string, string>) => void;
     };
 
