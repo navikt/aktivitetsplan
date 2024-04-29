@@ -33,7 +33,7 @@ export async function opprettMal(req: RestRequest) {
     const body = await req.json();
 
     const nyMal = {
-        mal: body.mal,
+        mal: body.maalInnhold.maal,
         endretAv: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
         dato: new Date().toISOString(),
     } as Mal;

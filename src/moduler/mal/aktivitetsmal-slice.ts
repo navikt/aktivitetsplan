@@ -45,7 +45,7 @@ export const hentMal = createAsyncThunk(`${malSlice.name}/fetchMal`, async () =>
 
 export const oppdaterMal = createAsyncThunk(`${malSlice.name}/oppdaterMal`, async (mal: { mal: string }) => {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
-    return await Api.lagreMal(mal, fnr ?? undefined);
+    return await Api.lagreMal(mal.mal, fnr ?? undefined);
 });
 
 export default malSlice.reducer;

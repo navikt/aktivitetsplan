@@ -55,24 +55,14 @@ export const handlers = [
     rest.get('/auth/info', jsonResponse(auth)),
 
     // veilarboppfolging
-    rest.get('/veilarboppfolging/api/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
-    rest.get('/veilarboppfolging/api/oppfolging', failOrGetResponse(getOppfFeiler, getOppfolging)),
-    rest.get('/veilarboppfolging/api/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
-    rest.get('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(getMaalFeiler, sisteMal)),
-    rest.get('/veilarboppfolging/api/oppfolging/malListe', failOrGetResponse(getMaalFeiler, malListe)),
-    rest.get('/veilarboppfolging/api/oppfolging/veilederTilgang', jsonResponse(veilederTilgang)),
-    rest.get('/veilarboppfolging/api/oppfolging/avslutningStatus', jsonResponse(avslutningStatus)),
-    rest.get(
-        '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
-        failOrGetResponse(getOppfFeiler, () => innstillingsHistorikk),
-    ),
-    rest.get(
-        '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',
-        failOrGetResponse(oppfFeilet, () => oppfoelgingsstatus),
-    ),
-    rest.post('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(maalFeilet, opprettMal)),
+    rest.get('/veilarboppfolging/api/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
+    rest.post('/veilarboppfolging/api/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
+    rest.post('/veilarboppfolging/api/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
+    rest.post('/veilarboppfolging/api/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
+    rest.post('/veilarboppfolging/api/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
+    rest.post('/veilarboppfolging/api/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
     rest.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
-    rest.post('/veilarboppfolging/api/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
+    rest.post('/veilarboppfolging/api/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
     // veilarbdialog
     rest.get(

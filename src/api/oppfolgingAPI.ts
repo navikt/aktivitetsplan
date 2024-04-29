@@ -21,8 +21,8 @@ export const fetchMalListe = (fnr: string | undefined): Promise<Mal[]> =>
 interface LagreMal {
     maal: string;
 }
-export const lagreMal = (mal: LagreMal, fnr: string | undefined): Promise<Mal> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/api/v3/maal`, { maalInnhold: { maal: mal.maal }, fnr });
+export const lagreMal = (mal: string, fnr: string | undefined): Promise<Mal> =>
+    postAsJson(`${OPPFOLGING_BASE_URL}/api/v3/maal`, { maalInnhold: { maal: mal }, fnr });
 
 export const fetchHarFlereAktorId = (fnr: string | undefined): Promise<boolean> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/api/v3/oppfolging/harFlereAktorIderMedOppfolging`, fnr ? { fnr } : undefined);
