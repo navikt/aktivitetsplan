@@ -3,7 +3,7 @@ import { OPPFOLGING_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson } from './utils';
 
 // OK, denne trenger ikke fnr
-export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/api/v3/oppfolging/me`);
+export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/me`);
 
 // Ikke synlid for veileder
 export const settDigital = (fnr: string | undefined): Promise<OppfolgingStatus> =>
