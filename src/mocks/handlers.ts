@@ -75,10 +75,6 @@ export const handlers = [
     rest.post('/veilarboppfolging/api/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
     // veilarbdialog
-    rest.get(
-        '/veilarbdialog/api/dialog',
-        failOrGetResponse(dialogFeilet, () => dialog),
-    ),
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
     rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
     rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),
