@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BodyShort, Button, Heading, Label, Select } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
     hentPdfTilForhaandsvisning,
@@ -60,7 +60,10 @@ const Sidebar: FunctionComponent = () => {
                 >
                     Til aktivitetsplanen
                 </ReactRouterLink>
-                <BodyShort>Aktiviteter og dialogtråder tilknyttet KVP blir ikke inkludert i journalføringen.</BodyShort>
+                <List as="ul" title="Dette er ikke inkludert i journalføringen:" size="small">
+                    <List.Item>Aktiviteter og dialog tilknyttet KVP</List.Item>
+                    <List.Item>Samtalereferat som ikke er delt med bruker</List.Item>
+                </List>
                 <Select
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
