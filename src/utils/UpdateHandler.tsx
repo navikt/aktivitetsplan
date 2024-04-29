@@ -40,7 +40,7 @@ export function UpdateEventHandler() {
             case UpdateTypes.Aktivitet:
                 return dispatch(hentAktiviteter());
             case UpdateTypes.Dialog:
-                return dispatch(hentDialoger(true));
+                return dispatch(hentDialoger());
             case UpdateTypes.Oppfolging:
                 return dispatch(hentOppfolging());
         }
