@@ -81,8 +81,8 @@ const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<S
     }
 };
 
-const beskrivelseTekst = (antallStillinger: number) =>
-    `NAV forventer at du søker omtrent ${antallStillinger} stillinger i uken.\nDet er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.`;
+const beskrivelseTekst =
+    'Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.';
 
 const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
@@ -121,7 +121,6 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
           };
 
     const mal = watch('mal');
-    const antallStillinger = watch('antallStillingerIUken');
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const avtaleOppfolging = watch('avtaleOppfolging'); // for <Textarea /> character-count to work
 
@@ -133,17 +132,11 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
             if (!aktivitet) {
                 reset();
                 setValue('mal', Mal.SØKEAVTALE);
+                setValue('beskrivelse', beskrivelseTekst);
                 setDefaultDateValues({ from: new Date(), to: new Date() });
             }
         }
     }, [mal]);
-
-    useEffect(() => {
-        if (!touchedFields.beskrivelse && mal == Mal.SØKEAVTALE) {
-            const nyBeskrivelse = antallStillinger > 0 ? beskrivelseTekst(antallStillinger) : '';
-            setValue('beskrivelse', nyBeskrivelse);
-        }
-    }, [antallStillinger]);
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
