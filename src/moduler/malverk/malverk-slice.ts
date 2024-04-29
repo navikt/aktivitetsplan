@@ -38,8 +38,8 @@ const malverkSlice = createSlice({
     },
 });
 
-export const hentMalverkMedType = createAsyncThunk(`${malverkSlice.name}/fetchMalverkMedType`, async (type: string) => {
-    return await Api.hentMalverkMedType(type);
+export const hentMalverkMedType = createAsyncThunk(`${malverkSlice.name}/fetchMalverkMedType`, async () => {
+    return await Api.hentMalverkMedType();
 });
 
 export const { settValgtMalverk, slettValgtMalverk } = malverkSlice.actions;

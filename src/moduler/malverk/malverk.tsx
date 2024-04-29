@@ -22,15 +22,14 @@ function lagMalverkOption(mal: any) {
 type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {
         endre: boolean;
-        type: 'EGEN';
         onChange: (payload: Record<string, string>) => void;
     };
 
 class Malverk extends Component<Props> {
     componentDidMount() {
-        const { doHentMalverMedType, endre, type } = this.props;
+        const { doHentMalverMedType, endre } = this.props;
         if (!endre) {
-            doHentMalverMedType(type);
+            doHentMalverMedType();
         }
     }
 
@@ -92,8 +91,8 @@ class Malverk extends Component<Props> {
 };
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-    doHentMalverMedType: (type: string) => {
-        dispatch(hentMalverkMedType(type));
+    doHentMalverMedType: () => {
+        dispatch(hentMalverkMedType());
     },
     doSettValgtMalverk: (valgtMalverk: any) => {
         dispatch(settValgtMalverk(valgtMalverk));
