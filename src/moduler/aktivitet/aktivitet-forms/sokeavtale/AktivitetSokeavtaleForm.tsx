@@ -10,6 +10,7 @@ import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/da
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
+import { addMonths } from 'date-fns';
 
 const numberErrorMessage = {
     required_error: 'Antall stillinger må fylles ut',
@@ -38,7 +39,10 @@ type GammelSokeavtaleAktivitetFormValues = z.infer<typeof GammelSokeAvtaleFormVa
 const NySokeAvtaleFormValues = z.object({
     ...commonFields,
     skjemaVersjon: z.literal('ny' as const),
-    antallStillingerIUken: z.number(numberErrorMessage).lt(100, 'Antall søknader må ikke være høyere enn 99'),
+    antallStillingerIUken: z
+        .number(numberErrorMessage)
+        .lt(100, 'Antall søknader må ikke være høyere enn 99')
+        .min(1, 'Antall søknader må være minst 1'),
 });
 type NySokeavtaleAktivitetFormValues = z.infer<typeof NySokeAvtaleFormValues>;
 const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
@@ -133,7 +137,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                 reset();
                 setValue('mal', Mal.SØKEAVTALE);
                 setValue('beskrivelse', beskrivelseTekst);
-                setDefaultDateValues({ from: new Date(), to: new Date() });
+                setDefaultDateValues({ from: new Date(), to: addMonths(new Date(), 3) });
             }
         }
     }, [mal]);
