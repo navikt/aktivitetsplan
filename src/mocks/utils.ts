@@ -1,4 +1,4 @@
-import { DefaultBodyType, HttpResponseResolver, PathParams, StrictRequest, delay as _delay, http } from 'msw';
+import { DefaultBodyType, HttpResponseResolver, PathParams, StrictRequest, delay as _delay } from 'msw';
 
 export const mockfnr = '12345678910';
 export const mockAktivEnhet = '0909';
@@ -27,11 +27,11 @@ export const failOrGetResponse = <T extends DefaultBodyType = DefaultBodyType>(
 ): HttpResponseResolver<PathParams, T, T> => {
     return (async ({ request, params }): Promise<Response> => {
         if (failFn()) {
-            return internalServerError as Response;
+            return internalServerError;
         }
         if (delay) await _delay(delay);
         const result = successFn(request, params);
-        return new Response(JSON.stringify(result)) as Response;
+        return new Response(JSON.stringify(result));
     }) as HttpResponseResolver<PathParams, T, T>;
 };
 

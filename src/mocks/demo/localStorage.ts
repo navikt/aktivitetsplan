@@ -81,8 +81,6 @@ export const arenaFeilet = () => erSatt(LocalStorageElement.ARENA_FEILET);
 
 export const maalFeilet = () => erSatt(LocalStorageElement.MAAL_FEILET);
 
-export const nivaa4Feilet = () => erSatt(LocalStorageElement.NIVAA4_FEILET);
-
 export const oppdateringKunFeiler = () => erSatt(LocalStorageElement.OPPDATERING_KUN_FEILER);
 
 export const ulesteDialoger = () => erSatt(LocalStorageElement.ULESTE_DIALOGER);

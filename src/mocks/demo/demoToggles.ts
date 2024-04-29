@@ -12,7 +12,6 @@ import {
     journalforingFeiler,
     LocalStorageElement,
     maalFeilet,
-    nivaa4Feilet,
     oppdateringKunFeiler,
     oppfFeilet,
     ulesteDialoger,
