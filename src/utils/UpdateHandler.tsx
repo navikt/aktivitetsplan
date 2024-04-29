@@ -21,7 +21,7 @@ const eventName = 'uppdate';
 
 export function windowEvent(update: UpdateTypes) {
     window.dispatchEvent(
-        new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'aktivitetsplan' } })
+        new CustomEvent<UpdateEventType>(eventName, { detail: { uppdate: update, avsender: 'aktivitetsplan' } }),
     );
 }
 

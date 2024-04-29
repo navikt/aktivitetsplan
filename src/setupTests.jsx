@@ -25,3 +25,14 @@ process.on('unhandledRejection', (reason) => {
     console.log(`FAILED TO HANDLE PROMISE REJECTION`);
     throw reason;
 });
+
+vi.mock('./felles-komponenter/utils/logging', async () => {
+    const actual = await vi.importActual('./felles-komponenter/utils/logging');
+    return {
+        ...actual,
+        default: vi.fn(),
+        loggTidBruktGaaInnPaaAktivitetsplanen: vi.fn(),
+        logTimeToAktivitestavlePaint: vi.fn(),
+        loggingAntallBrukere: vi.fn(),
+    };
+});

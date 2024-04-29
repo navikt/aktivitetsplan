@@ -9,7 +9,7 @@ import visibleIfHOC from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
 import { RootState } from '../../store';
 import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
-import { hentMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-slice';
+import { hentMalverk, settValgtMalverk, slettValgtMalverk } from './malverk-slice';
 
 function lagMalverkOption(mal: any) {
     return (
@@ -22,15 +22,14 @@ function lagMalverkOption(mal: any) {
 type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {
         endre: boolean;
-        type: 'SOKEAVTALE' | 'EGEN';
         onChange: (payload: Record<string, string>) => void;
     };
 
 class Malverk extends Component<Props> {
     componentDidMount() {
-        const { doHentMalverMedType, endre, type } = this.props;
+        const { doHentMalverk, endre } = this.props;
         if (!endre) {
-            doHentMalverMedType(type);
+            doHentMalverk();
         }
     }
 
@@ -77,12 +76,11 @@ class Malverk extends Component<Props> {
     avhengigheter: AppPT.avhengigheter.isRequired,
     malverk: PT.arrayOf(AppPT.malverktype),
     doHentMalverkMedTittel: PT.func.isRequired,
-    doHentMalverMedType: PT.func.isRequired,
+    doHentMalverk: PT.func.isRequired,
     doSettValgtMalverk: PT.func.isRequired,
     doSlettValgtMalverk: PT.func.isRequired,
     onChange: PT.func,
     endre: PT.bool,
-    type: PT.string.isRequired,
 };
 
 (Malverk as any).defaultProps = {
@@ -92,8 +90,8 @@ class Malverk extends Component<Props> {
 };
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-    doHentMalverMedType: (type: string) => {
-        dispatch(hentMalverkMedType(type));
+    doHentMalverk: () => {
+        dispatch(hentMalverk());
     },
     doSettValgtMalverk: (valgtMalverk: any) => {
         dispatch(settValgtMalverk(valgtMalverk));

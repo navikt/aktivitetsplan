@@ -1,4 +1,4 @@
-import { ResponseComposition, RestContext, RestRequest } from 'msw';
+import { RestRequest } from 'msw';
 
 import { erEksternBruker, ulesteDialoger } from '../demo/localStorage';
 import { rndId } from '../utils';
@@ -237,17 +237,5 @@ export const opprettDialog = async (req: RestRequest) => {
         return nyDialog;
     }
 };
-
-export function setVenterPaaSvar(req: RestRequest, _res: ResponseComposition, _ctx: RestContext) {
-    const dialog = dialoger.filter((d) => d.id === req.params.id)[0];
-    dialog.venterPaSvar = req.params.bool === 'true';
-    return dialog;
-}
-
-export function setFerdigBehandlet(req: RestRequest, _res: ResponseComposition, _ctx: RestContext) {
-    const dialog = dialoger.filter((d) => d.id === req.params.id)[0];
-    dialog.ferdigBehandlet = req.params.bool === 'true';
-    return dialog;
-}
 
 export default dialoger;
