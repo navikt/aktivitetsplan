@@ -55,14 +55,14 @@ export const handlers = [
     rest.get('/auth/info', jsonResponse(auth)),
 
     // veilarboppfolging
-    rest.get('/veilarboppfolging/api/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
-    rest.post('/veilarboppfolging/api/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
-    rest.post('/veilarboppfolging/api/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
-    rest.post('/veilarboppfolging/api/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
-    rest.post('/veilarboppfolging/api/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
-    rest.post('/veilarboppfolging/api/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
+    rest.get('/veilarboppfolging/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
+    rest.post('/veilarboppfolging/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
+    rest.post('/veilarboppfolging/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
+    rest.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
+    rest.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
+    rest.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
     rest.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
-    rest.post('/veilarboppfolging/api/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
+    rest.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
     // veilarbdialog
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
