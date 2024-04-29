@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Api from '../../api/oppfolgingAPI';
 import { Status } from '../../createGenericSlice';
 import { Mal } from '../../datatypes/oppfolgingTypes';
+import { hentFraSessionStorage, LocalStorageElement } from '../../mocks/demo/localStorage';
 
 // TODO merge aktivitetsmal og malliste
 
@@ -38,11 +39,13 @@ const malSlice = createSlice({
 });
 
 export const hentMal = createAsyncThunk(`${malSlice.name}/fetchMal`, async () => {
-    return await Api.fetchMal();
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+    return await Api.fetchMal(fnr ?? undefined);
 });
 
 export const oppdaterMal = createAsyncThunk(`${malSlice.name}/oppdaterMal`, async (mal: { mal: string }) => {
-    return await Api.lagreMal(mal);
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+    return await Api.lagreMal(mal, fnr ?? undefined);
 });
 
 export default malSlice.reducer;
