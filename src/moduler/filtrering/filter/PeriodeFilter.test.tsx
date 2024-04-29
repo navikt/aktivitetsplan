@@ -17,18 +17,7 @@ import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/opp
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { rest } from 'msw';
-import { failOrGrahpqlResponse } from '../../../mocks/utils';
-
-vi.mock('../../../felles-komponenter/utils/logging', async () => {
-    const actual: object = await vi.importActual('../../../felles-komponenter/utils/logging');
-    return {
-        ...actual,
-        default: vi.fn(),
-        loggTidBruktGaaInnPaaAktivitetsplanen: vi.fn(),
-        logTimeToAktivitestavlePaint: vi.fn(),
-        loggingAntallBrukere: vi.fn(),
-    };
-});
+import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
 
 const gjeldendeOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) => !erHistorisk(it));
 const gammelOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
@@ -135,7 +124,7 @@ describe('PeriodeFilter.tsx', () => {
                 reducer,
                 preloadedState: initialStore,
             });
-            const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
+            const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Veilarbaktivitet'));
             expect(queryByText('Gammel Veilarbaktivitet')).not.toBeTruthy();
         });
@@ -144,7 +133,7 @@ describe('PeriodeFilter.tsx', () => {
                 reducer,
                 preloadedState: initialStore,
             });
-            const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside store={store} />);
+            const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
             getByText('Gammel Veilarbaktivitet');
@@ -155,7 +144,7 @@ describe('PeriodeFilter.tsx', () => {
     describe('Arenaaktivitet filtrering', () => {
         it('skal vise arena-ativitet i nåværende periode (første i listen)', async () => {
             const store = configureStore({ reducer, preloadedState: initialStore });
-            const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
+            const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Arenaaktivitet'));
             expect(queryByText('Gammel Arenaaktivitet')).not.toBeTruthy();
         });
@@ -164,7 +153,7 @@ describe('PeriodeFilter.tsx', () => {
                 reducer,
                 preloadedState: initialStore,
             });
-            const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside store={store} />);
+            const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
             getByText('Gammel Arenaaktivitet');
@@ -175,7 +164,7 @@ describe('PeriodeFilter.tsx', () => {
                 reducer,
                 preloadedState: initialStore,
             });
-            const { getByText } = render(<WrappedHovedside store={store} />);
+            const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             waitFor(() => getByText(arenaAktivitetUtenforPeriode.tittel));
         });
         it('skal ikke vise aktivitet endret før oppfølging i noen av periodene', async () => {
@@ -183,7 +172,7 @@ describe('PeriodeFilter.tsx', () => {
                 reducer,
                 preloadedState: initialStore,
             });
-            const { queryByText, getByLabelText, getByText } = render(<WrappedHovedside store={store} />);
+            const { queryByText, getByLabelText, getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             expect(queryByText(arenaAktivitetForOppfolging.tittel)).not.toBeTruthy();
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
