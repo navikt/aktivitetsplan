@@ -106,7 +106,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         watch,
         setValue,
         reset,
-        formState: { errors: formStateErrors, isDirty, isSubmitting, touchedFields },
+        formState: { errors: formStateErrors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
