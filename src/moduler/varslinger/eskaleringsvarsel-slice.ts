@@ -1,19 +1,18 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import * as Api from '../../api/dialogAPI';
-import createGenericSlice from '../../createGenericSlice';
 import { Eskaleringsvarsel } from '../../datatypes/dialogTypes';
 
-const eskaleringsvarselSlice = createGenericSlice<Eskaleringsvarsel>({
+const forhaandsVarselOmStansSlice = createSlice({
     name: 'eskaleringsvarsel',
-    reducers: {},
+    initialState: {
+        data: undefined as undefined | Eskaleringsvarsel,
+    },
+    reducers: {
+        setForhaandsVarselOmStans(state, action: PayloadAction<Eskaleringsvarsel>) {
+            state.data = action.payload;
+        },
+    },
 });
 
-export const hentEskaleringsvarsel = createAsyncThunk(
-    `${eskaleringsvarselSlice.name}/fetchEskaleringsvarsel`,
-    async () => {
-        return await Api.fetchEskaleringsvarsel();
-    }
-);
-
-export default eskaleringsvarselSlice.reducer;
+export const setForhaandsVarselOmStans = forhaandsVarselOmStansSlice.actions.setForhaandsVarselOmStans;
+export default forhaandsVarselOmStansSlice.reducer;
