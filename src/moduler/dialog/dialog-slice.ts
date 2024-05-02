@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { hentDialogerGraphql } from '../../api/dialogGraphql';
+import { setForhaandsVarselOmStans } from '../varslinger/eskaleringsvarsel-slice';
 
 interface DialogState {
     data: Dialog[];
@@ -33,7 +34,11 @@ const dialogSlice = createSlice({
 });
 
 export const hentDialoger = createAsyncThunk(`${dialogSlice.name}/fetchDialoger`, async (_, thunkAPI) => {
-    return await hentDialogerGraphql();
+    const dialogerOgVarsel = await hentDialogerGraphql();
+    if (dialogerOgVarsel?.data?.stansVarsel) {
+        thunkAPI.dispatch(setForhaandsVarselOmStans(dialogerOgVarsel.data.stansVarsel));
+    }
+    return dialogerOgVarsel;
 });
 
 export default dialogSlice.reducer;

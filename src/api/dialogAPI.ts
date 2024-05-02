@@ -1,10 +1,9 @@
-import { Dialog, Eskaleringsvarsel, SistOppdatert } from '../datatypes/dialogTypes';
+import { SistOppdatert } from '../datatypes/dialogTypes';
 import { DIALOG_BASE_URL } from '../environment';
-import { fetchToJson } from './utils';
+import { postAsJson } from './utils';
+import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 
-export const fetchDialoger = (): Promise<Dialog[]> => fetchToJson(`${DIALOG_BASE_URL}/dialog`);
-
-export const fetchSistOppdatert = (): Promise<SistOppdatert> => fetchToJson(`${DIALOG_BASE_URL}/dialog/sistOppdatert`);
-
-export const fetchEskaleringsvarsel = (): Promise<Eskaleringsvarsel> =>
-    fetchToJson(`${DIALOG_BASE_URL}/eskaleringsvarsel/gjeldende`);
+export const fetchSistOppdatert = (): Promise<SistOppdatert> => {
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+    return postAsJson(`${DIALOG_BASE_URL}/dialog/sistOppdatert`, { fnr });
+};

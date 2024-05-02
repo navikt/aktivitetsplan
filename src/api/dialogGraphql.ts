@@ -1,7 +1,7 @@
 import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { DIALOG_GRAPHQL_BASE_URL } from '../environment';
 import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
-import { Dialog } from '../datatypes/dialogTypes';
+import { Dialog, Eskaleringsvarsel } from '../datatypes/dialogTypes';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 
 const query = `
@@ -24,10 +24,17 @@ const query = `
                 tekst
             }
         }
+        stansVarsel(fnr: $fnr) {
+            id,
+            tilhorendeDialogId,
+            opprettetAv,
+            opprettetDato,
+            opprettetBegrunnelse
+        }
     }
 `;
 
-type DialogResponse = GraphqlResponse<{ dialoger: Dialog[] }>;
+type DialogResponse = GraphqlResponse<{ dialoger: Dialog[]; stansVarsel?: Eskaleringsvarsel }>;
 
 const queryBody = (fnr: string) => ({
     query,
