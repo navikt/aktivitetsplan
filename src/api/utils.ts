@@ -1,6 +1,6 @@
 import { Status } from '../createGenericSlice';
 import { LocalStorageElement, hentFraSessionStorage } from '../mocks/demo/localStorage';
-import { AKTIVITET_BASE_URL, DIALOG_BASE_URL } from '../environment';
+import { AKTIVITET_BASE_URL, OPPFOLGING_BASE_URL, DIALOG_BASE_URL } from '../environment';
 
 /* eslint-env browser */
 
@@ -78,7 +78,12 @@ export function fetchToJson(url: string, config: RequestInit = { headers: defaul
 
     let fetchUrl = url;
 
-    if (fnr && !url.includes(AKTIVITET_BASE_URL) && !url.includes(DIALOG_BASE_URL)) {
+    if (
+        fnr &&
+        !url.includes(AKTIVITET_BASE_URL) &&
+        !url.includes(DIALOG_BASE_URL) &&
+        !url.includes(OPPFOLGING_BASE_URL)
+    ) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
     }
 
@@ -93,7 +98,7 @@ function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, c
         ...{
             method,
             headers: defaultHeaders,
-            body: JSON.stringify(data)
+            body: Object.keys(data).length === 0 ? undefined : JSON.stringify(data)
         },
         ...config
     });

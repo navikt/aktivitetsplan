@@ -20,17 +20,14 @@ import { auth } from './data/auth';
 import dialoger, { opprettDialog } from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
-import { innstillingsHistorikk } from './data/innstillings-historikk';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { hentMalverk } from './data/malverk';
 import { me } from './data/me';
-import { oppfoelgingsstatus } from './data/oppfoelgingsstatus';
-import getOppfolging, { avslutningStatus, settDigital } from './data/oppfolging';
+import getOppfolging, { settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
 import getNivaa4 from './data/tilgang';
 import { veilederMe } from './data/Veileder';
-import { veilederTilgang } from './data/veilederTilgang';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
 import {
     aktivitetFeilet,
@@ -55,24 +52,14 @@ export const handlers = [
     rest.get('/auth/info', jsonResponse(auth)),
 
     // veilarboppfolging
-    rest.get('/veilarboppfolging/api/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
-    rest.get('/veilarboppfolging/api/oppfolging', failOrGetResponse(getOppfFeiler, getOppfolging)),
-    rest.get('/veilarboppfolging/api/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
-    rest.get('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(getMaalFeiler, sisteMal)),
-    rest.get('/veilarboppfolging/api/oppfolging/malListe', failOrGetResponse(getMaalFeiler, malListe)),
-    rest.get('/veilarboppfolging/api/oppfolging/veilederTilgang', jsonResponse(veilederTilgang)),
-    rest.get('/veilarboppfolging/api/oppfolging/avslutningStatus', jsonResponse(avslutningStatus)),
-    rest.get(
-        '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
-        failOrGetResponse(getOppfFeiler, () => innstillingsHistorikk),
-    ),
-    rest.get(
-        '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',
-        failOrGetResponse(oppfFeilet, () => oppfoelgingsstatus),
-    ),
-    rest.post('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(maalFeilet, opprettMal)),
+    rest.get('/veilarboppfolging/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
+    rest.post('/veilarboppfolging/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
+    rest.post('/veilarboppfolging/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
+    rest.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
+    rest.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
+    rest.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
     rest.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
-    rest.post('/veilarboppfolging/api/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
+    rest.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
     // veilarbdialog
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),

@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as Api from '../../api/oppfolgingAPI';
 import createGenericSlice, { Status } from '../../createGenericSlice';
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
+import { hentFraSessionStorage, LocalStorageElement } from '../../mocks/demo/localStorage';
 
 const oppfolgingSlice = createGenericSlice({
     name: 'oppfolging',
@@ -13,11 +14,13 @@ const oppfolgingSlice = createGenericSlice({
 });
 
 export const hentOppfolging = createAsyncThunk(`${oppfolgingSlice.name}/fetchOppfolging`, async () => {
-    return await Api.fetchOppfolging();
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+    return await Api.fetchOppfolging(fnr ?? undefined);
 });
 
 export const settDigital = createAsyncThunk(`${oppfolgingSlice.name}/settDigital`, async () => {
-    return await Api.settDigital();
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
+    return await Api.settDigital(fnr ?? undefined);
 });
 
 export default oppfolgingSlice.reducer;

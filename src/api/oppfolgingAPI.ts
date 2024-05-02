@@ -2,20 +2,27 @@ import { Mal, Me, OppfolgingStatus } from '../datatypes/oppfolgingTypes';
 import { OPPFOLGING_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson } from './utils';
 
-export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);
+// OK, denne trenger ikke fnr
+export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/me`);
 
-export const settDigital = (): Promise<OppfolgingStatus> => postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital`);
+// Ikke synlid for veileder
+export const settDigital = (fnr: string | undefined): Promise<OppfolgingStatus> =>
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/settDigital`, fnr ? { fnr } : undefined);
 
-export const fetchOppfolging = (): Promise<OppfolgingStatus> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging`);
+export const fetchOppfolging = (fnr: string | undefined): Promise<OppfolgingStatus> =>
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/hent-status`, fnr ? { fnr } : undefined);
 
-export const fetchMal = (): Promise<Mal> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/mal`);
+export const fetchMal = (fnr: string | undefined): Promise<Mal> =>
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/hent-maal`, fnr ? { fnr } : undefined);
 
-export const fetchMalListe = (): Promise<Mal[]> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/malListe`);
+export const fetchMalListe = (fnr: string | undefined): Promise<Mal[]> =>
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal/hent-alle`, fnr ? { fnr } : undefined);
 
-export const lagreMal = (mal: any): Promise<Mal> => postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/mal`, mal);
+export const lagreMal = (mal: string, fnr: string | undefined): Promise<Mal> =>
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal`, { maalInnhold: { maal: mal }, fnr });
 
-export const fetchHarFlereAktorId = (): Promise<boolean> =>
-    fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/harFlereAktorIderMedOppfolging`);
+export const fetchHarFlereAktorId = (fnr: string | undefined): Promise<boolean> =>
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/harFlereAktorIderMedOppfolging`, fnr ? { fnr } : undefined);
 
 export const doLesAktivitetsplan = (fnr: string) => {
     return postAsJson(`${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`);

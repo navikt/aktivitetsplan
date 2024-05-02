@@ -8,6 +8,7 @@ import { useRoutes } from '../../routing/useRoutes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon, selectLestStatus } from '../lest/lest-selector';
 import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
+import { useFnrOgEnhetContext } from '../../Provider';
 
 let erVist = false;
 function InformasjonsHenting() {
@@ -15,8 +16,9 @@ function InformasjonsHenting() {
     const lestInfo = useSelector(selectLestInformasjon, shallowEqual);
     const erBruker = useSelector(selectErBruker, shallowEqual);
 
+    const { fnr } = useFnrOgEnhetContext();
     useEffect(() => {
-        fetchHarFlereAktorId();
+        fetchHarFlereAktorId(fnr);
     }, []);
 
     const { informasjonRoute, hovedsideRoute } = useRoutes();
