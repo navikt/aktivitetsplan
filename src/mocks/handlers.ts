@@ -80,7 +80,12 @@ export const handlers = [
     rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),
     rest.post(
         '/veilarbdialog/graphql',
-        failOrGrahpqlResponse(dialogFeilet, () => ({ data: { dialoger } })),
+        failOrGrahpqlResponse(dialogFeilet, () => ({
+            data: {
+                dialoger,
+                stansVarsel: eskaleringsvarsel,
+            },
+        })),
     ),
 
     // veilarbaktivitet

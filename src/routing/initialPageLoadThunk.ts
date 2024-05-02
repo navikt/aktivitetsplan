@@ -2,7 +2,6 @@ import { AsyncThunk, AsyncThunkAction, createAsyncThunk } from '@reduxjs/toolkit
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 import { hentIdentitet } from '../moduler/identitet/identitet-slice';
 import { hentVeilederInfo } from '../moduler/veileder/veileder-slice';
-import { hentEskaleringsvarsel } from '../moduler/varslinger/eskaleringsvarsel-slice';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { hentDialoger } from '../moduler/dialog/dialog-slice';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
@@ -12,7 +11,6 @@ import { RootState } from '../store';
 import { Status } from '../createGenericSlice';
 import { selectIdentitetStatus } from '../moduler/identitet/identitet-selector';
 import { selectVeilederStatus } from '../moduler/veileder/veileder-selector';
-import { selectEskaleringsvarselStatus } from '../moduler/varslinger/eskaleringsvarsel-selector';
 import { Dispatch } from 'react';
 import { selectMalStatus } from '../moduler/mal/aktivitetsmal-selector';
 import { selectArenaAktivitetStatus } from '../moduler/aktivitet/arena-aktivitet-selector';
@@ -35,11 +33,6 @@ export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (i
                 key: 'veileder',
             },
             { fetchAction: hentMal, statusSelector: selectMalStatus, key: 'mal' },
-            {
-                fetchAction: hentEskaleringsvarsel,
-                statusSelector: selectEskaleringsvarselStatus,
-                key: 'eskaleringsvarsel',
-            },
             { fetchAction: hentAktiviteter, statusSelector: selectAktivitetStatus, key: 'aktiviteter' },
             { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus, key: 'arenaAktiviteter' },
             { fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' },
