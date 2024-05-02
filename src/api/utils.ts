@@ -98,7 +98,7 @@ function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, c
         ...{
             method,
             headers: defaultHeaders,
-            body: JSON.stringify(data)
+            body: Object.keys(data).length === 0 ? undefined : JSON.stringify(data)
         },
         ...config
     });
