@@ -20,17 +20,14 @@ import { auth } from './data/auth';
 import dialoger, { opprettDialog } from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
-import { innstillingsHistorikk } from './data/innstillings-historikk';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { hentMalverk } from './data/malverk';
 import { me } from './data/me';
-import { oppfoelgingsstatus } from './data/oppfoelgingsstatus';
-import getOppfolging, { avslutningStatus, settDigital } from './data/oppfolging';
+import getOppfolging, { settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
 import getNivaa4 from './data/tilgang';
 import { veilederMe } from './data/Veileder';
-import { veilederTilgang } from './data/veilederTilgang';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
 import {
     aktivitetFeilet,
