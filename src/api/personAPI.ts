@@ -1,6 +1,6 @@
-import { HarLoggetInnRespons, RegoppslagDto } from '../datatypes/types';
+import { RegoppslagDto } from '../datatypes/types';
 import { PERSON_BASE_URL } from '../environment';
-import { fetchToJson, fetchToJsonPlain, postAsJson } from './utils';
+import { postAsJson } from './utils';
 
 export const hentPerson = (fnr: string) => {
     return postAsJson(`${PERSON_BASE_URL}/v3/hent-person`, { fnr, behandlingsnummer: 'B579' });

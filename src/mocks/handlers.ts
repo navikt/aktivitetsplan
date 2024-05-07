@@ -26,7 +26,6 @@ import { hentMalverk } from './data/malverk';
 import { me } from './data/me';
 import getOppfolging, { settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
-import getNivaa4 from './data/tilgang';
 import { veilederMe } from './data/Veileder';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
 import {
@@ -36,7 +35,6 @@ import {
     forhaandsvisningFeiler,
     journalforingFeiler,
     maalFeilet,
-    nivaa4Feilet,
     oppdateringKunFeiler,
     oppfFeilet,
 } from './demo/localStorage';
