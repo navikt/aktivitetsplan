@@ -153,9 +153,8 @@ export const handlers = [
     rest.put('/veilarblest/api/informasjon/les', jsonResponse(lest)),
 
     // veilarbperson
-    rest.get('/veilarbperson/api/v2/person', jsonResponse(getPerson)),
-    rest.get('/veilarbperson/api/v2/person/postadresse', jsonResponse(getPostadresse)),
-    rest.get('/veilarbperson/api/person/:fnr/harNivaa4', failOrGetResponse(nivaa4Feilet, getNivaa4)),
+    rest.post('/veilarbperson/api/v3/hent-person', jsonResponse(getPerson)),
+    rest.post('/veilarbperson/api/v3/person/hent-postadresse', jsonResponse(getPostadresse)),
 
     // veilarbveileder
     rest.get('/veilarbveileder/api/veileder/me', jsonResponse(veilederMe)),
