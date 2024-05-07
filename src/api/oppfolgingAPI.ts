@@ -25,5 +25,5 @@ export const fetchHarFlereAktorId = (fnr: string | undefined): Promise<boolean> 
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/harFlereAktorIderMedOppfolging`, fnr ? { fnr } : undefined);
 
 export const doLesAktivitetsplan = (fnr: string) => {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`);
+    return postAsJson(`${OPPFOLGING_BASE_URL}/v3/veileder/lest-aktivitetsplan`, { fnr });
 };
