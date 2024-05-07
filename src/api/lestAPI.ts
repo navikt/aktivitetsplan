@@ -1,6 +1,6 @@
 import { Lest } from '../datatypes/lestTypes';
 import { VEILARBLEST_BASE_URL } from '../environment';
-import { fetchToJson, postAsJson, putAsJson } from './utils';
+import { postAsJson, putAsJson } from './utils';
 import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 
 export const fetchSisteLest = (): Promise<Lest[]> => {
