@@ -149,7 +149,7 @@ export const handlers = [
     ),
 
     // veilarblest
-    rest.get('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),
+    rest.post('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),
     rest.put('/veilarblest/api/informasjon/les', jsonResponse(lest)),
 
     // veilarbperson

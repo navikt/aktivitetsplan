@@ -1,6 +1,12 @@
 import { Status } from '../createGenericSlice';
 import { LocalStorageElement, hentFraSessionStorage } from '../mocks/demo/localStorage';
-import { AKTIVITET_BASE_URL, OPPFOLGING_BASE_URL, DIALOG_BASE_URL, VEILEDER_BASE_URL } from '../environment';
+import {
+    AKTIVITET_BASE_URL,
+    OPPFOLGING_BASE_URL,
+    DIALOG_BASE_URL,
+    VEILEDER_BASE_URL,
+    VEILARBLEST_BASE_URL,
+} from '../environment';
 
 /* eslint-env browser */
 
@@ -83,6 +89,7 @@ export function fetchToJson(url: string, config: RequestInit = { headers: defaul
         !url.includes(AKTIVITET_BASE_URL) &&
         !url.includes(DIALOG_BASE_URL) &&
         !url.includes(VEILEDER_BASE_URL) &&
+        !url.includes(VEILARBLEST_BASE_URL) &&
         !url.includes(OPPFOLGING_BASE_URL)
     ) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fnr}`;
