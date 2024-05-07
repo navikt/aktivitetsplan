@@ -27,7 +27,6 @@ const Sidebar: FunctionComponent = () => {
     const journalføringsStatus = useSelector(selectJournalføringstatus);
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const journalfører = [Status.PENDING, Status.RELOADING].includes(journalføringsStatus);
-    console.log({ journalføringsStatus });
     const { hovedsideRoute } = useRoutes();
     const navigate = useNavigate();
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
