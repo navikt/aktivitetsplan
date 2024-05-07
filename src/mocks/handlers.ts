@@ -59,6 +59,7 @@ export const handlers = [
     rest.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
     rest.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
     rest.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
+    rest.post('/veilarboppfolging/api/v3/veileder/lest-aktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
     rest.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
     // veilarbdialog
