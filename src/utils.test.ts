@@ -116,7 +116,7 @@ describe('app utils', () => {
             expect(formaterDatoKortManedTid(undefined)).toBeUndefined();
             const zuluDate = new Date('2014-02-13T14:23:21.123Z');
             expect(formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual(
-                `13. feb. 2014 kl ${zuluDate.getHours()}:${zuluDate.getMinutes()}`,
+                `13. feb. 2014 kl ${zuluDate.getHours()}.${zuluDate.getMinutes()}`,
             ); // NB zulu-time != paris-time
         });
     });
@@ -126,7 +126,7 @@ describe('app utils', () => {
             expect(formaterTid(null)).toBeUndefined();
             expect(formaterTid(undefined)).toBeUndefined();
             const zuluDate = new Date('2014-02-13T14:23:21.123Z');
-            expect(formaterTid('2014-02-13T14:23:21.123Z')).toEqual(`${zuluDate.getHours()}:${zuluDate.getMinutes()}`); // NB zulu-time != paris-time
+            expect(formaterTid('2014-02-13T14:23:21.123Z')).toEqual(`${zuluDate.getHours()}.${zuluDate.getMinutes()}`); // NB zulu-time != paris-time
         });
     });
 
