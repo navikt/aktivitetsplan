@@ -82,7 +82,7 @@ const MoteAktivitetForm = (props: Props) => {
 
     const defaultValues: Partial<MoteAktivitetFormValues> = {
         tittel: aktivitet?.tittel,
-        klokkeslett: moteTid?.klokkeslett,
+        klokkeslett: moteTid?.klokkeslett?.replace('.', ':'),
         // Keep field as string since input natively returns string
         varighet: moteTid?.varighet,
         kanal: aktivitet?.kanal,

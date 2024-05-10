@@ -134,7 +134,7 @@ interface Klokkeslett {
     minute: number;
 }
 const validKlokkeslett = (val: string): boolean => {
-    const hourMinute = val.split(':');
+    const hourMinute = val.replace('.', ':').split(':');
     if (hourMinute.length != 2) return false;
     const [hour, minute] = hourMinute;
     const hourInt = parseInt(hour);
@@ -143,7 +143,10 @@ const validKlokkeslett = (val: string): boolean => {
 };
 const toHourAndMinutes = (klokkeslett: string | number): Klokkeslett => {
     if (typeof klokkeslett !== 'number') {
-        const [hour, minute] = klokkeslett.split(':').map((it) => parseInt(it));
+        const [hour, minute] = klokkeslett
+            .replace('.', ':')
+            .split(':')
+            .map((it) => parseInt(it));
         return {
             hour,
             minute,
@@ -195,7 +198,7 @@ const prefixMed0 = (val: string) => (val.length === 1 ? '0' + val : val);
 export function formatterKlokkeslett(klokkeslett?: string): string | undefined {
     if (!klokkeslett || !validKlokkeslett(klokkeslett)) return undefined;
     const { hour, minute } = toHourAndMinutes(klokkeslett);
-    return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
+    return `${prefixMed0(hour.toString())}.${prefixMed0(minute.toString())}`;
 }
 
 function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {
