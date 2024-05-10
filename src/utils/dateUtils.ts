@@ -37,11 +37,11 @@ export function formaterDatoKortManed(dato: string | Date | undefined | null) {
 }
 
 export function formaterDatoKortManedTid(dato: string | Date) {
-    return formatter(dato, "PP 'kl' HH:mm");
+    return formatter(dato, "PP 'kl' HH.mm");
 }
 
 export function formaterTid(dato: string | Date) {
-    return formatter(dato, 'HH:mm');
+    return formatter(dato, 'HH.mm');
 }
 
 export function formaterDatoTidSiden(dato: string) {

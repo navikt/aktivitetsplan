@@ -114,7 +114,7 @@ export function beregnKlokkeslettVarighet(aktivitet: MoteAktivitet): MoteTid | u
         const fra = new Date(fraDato);
         const til = new Date(tilDato);
         const varighet = differenceInMinutes(til, fra);
-        const klokkeslett = format(fra, 'HH:mm');
+        const klokkeslett = format(fra, 'HH.mm');
         return {
             dato: startOfDay(fra),
             klokkeslett,
@@ -208,7 +208,7 @@ function samtalreferatManglerPublisering(type: AktivitetType, erReferatPublisert
 
 export function manglerPubliseringAvSamtaleReferat(
     aktivitet: AlleAktiviteter,
-    status: AktivitetStatus
+    status: AktivitetStatus,
 ): aktivitet is MoteAktivitet | SamtalereferatAktivitet {
     const { type, erReferatPublisert } = aktivitet;
     return (
@@ -244,7 +244,7 @@ export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, a
 
 export function sorterAktiviteter(
     aktiviteter: (AlleAktiviteter & { nesteStatus?: string })[],
-    status: AktivitetStatus
+    status: AktivitetStatus,
 ): AlleAktiviteter[] {
     return aktiviteter
         .filter((a) => {
@@ -273,5 +273,5 @@ export const splitIEldreOgNyereAktiviteter = (aktiviteter: AlleAktiviteter[]): G
             endretNyereEnnEnManedSiden(aktivitet)
                 ? { ...forrige, nyereAktiviteter: [...forrige.nyereAktiviteter, aktivitet] }
                 : { ...forrige, eldreAktiviteter: [...forrige.eldreAktiviteter, aktivitet] },
-        { nyereAktiviteter: [], eldreAktiviteter: [] }
+        { nyereAktiviteter: [], eldreAktiviteter: [] },
     );
