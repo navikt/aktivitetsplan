@@ -26,6 +26,7 @@ import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { rest } from 'msw';
 import { failOrGrahpqlResponse } from '../../../mocks/utils';
+import { expect } from 'vitest';
 
 let id = 12012;
 const exampleAktivitet = wrapAktivitet({
@@ -33,6 +34,7 @@ const exampleAktivitet = wrapAktivitet({
     arbeidsgiver: 'Arbeidsgiver',
     status: AktivitetStatus.GJENNOMFOERT,
 });
+
 function makeTestAktiviteter<T>(
     store: Store,
     filterValues: T[],
@@ -76,6 +78,10 @@ describe('aktivitets-filter', () => {
 
     // Reset handlers after each test `important for test isolation`
     afterEach(() => server.resetHandlers());
+
+    it('verifiser deploy-alarm', async () => {
+        expect(2).toBe(4);
+    });
 
     it('should filter avtalt med nav', async () => {
         const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
