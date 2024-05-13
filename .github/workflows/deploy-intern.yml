@@ -7,6 +7,8 @@ on:
         required: true
       NAIS_WORKLOAD_IDENTITY_PROVIDER:
         required: true
+      SLACK_WEBHOOK:
+        required: false
     inputs:
       kommando:
         required: true
@@ -52,3 +54,13 @@ jobs:
           no_cache_paths: ${{ inputs.bucket }}/build/asset-manifest.json
           project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+      - name: Slack Notification (deploy failure)
+        if: failure() && inputs.bucket == 'aktivitetsplan-prod-intern'
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: deploy til bucket for interne brukere feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Commit-message til feilende deploy: ${{ github.event.head_commit.message }}'

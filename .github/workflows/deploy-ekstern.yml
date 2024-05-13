@@ -16,6 +16,8 @@ on:
         required: true
       GCS_SA_KEY:
         required: true
+      SLACK_WEBHOOK:
+        required: false
 
 jobs:
   deploy:
@@ -66,3 +68,14 @@ jobs:
           environment: prod
           sourcemaps: './build'
           url_prefix: '~'
+
+      - name: Slack Notification (deploy failure)
+        if: failure() && inputs.bucket == 'aktivitetsplan-prod'
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: deploy til bucket for eksterne brukere feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Commit-message til feilende deploy: ${{ github.event.head_commit.message }}'
