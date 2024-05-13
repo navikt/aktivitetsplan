@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BodyLong, BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
     hentPdfTilForhaandsvisning,
@@ -51,15 +51,15 @@ const Sidebar: FunctionComponent = () => {
 
     return (
         <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 h-screen">
+            <ReactRouterLink
+                className="text-text-action underline hover:no-underline"
+                to={hovedsideRoute()}
+                tabIndex={0}
+            >
+                Til aktivitetsplanen
+            </ReactRouterLink>
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
-                <ReactRouterLink
-                    className="text-text-action underline hover:no-underline"
-                    to={hovedsideRoute()}
-                    tabIndex={0}
-                >
-                    Til aktivitetsplanen
-                </ReactRouterLink>
                 <List as="ul" title="Dette er ikke inkludert i journalføringen:" size="small">
                     <List.Item>Aktiviteter og dialog tilknyttet KVP</List.Item>
                     <List.Item>Samtalereferat som ikke er delt med bruker</List.Item>
@@ -78,7 +78,11 @@ const Sidebar: FunctionComponent = () => {
                                 value={periode.uuid}
                                 // selected={oppfolgingsperiodeId === periode.uuid}
                             >
-                                {formaterDatoKortManed(periode.startDato)} - {formaterDatoKortManed(periode.sluttDato)}
+                                {periode.sluttDato == undefined
+                                    ? 'Nåværende periode'
+                                    : formaterDatoKortManed(periode.startDato) +
+                                      ' - ' +
+                                      formaterDatoKortManed(periode.sluttDato)}
                             </option>
                         ))}
                 </Select>
