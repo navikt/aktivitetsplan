@@ -48,6 +48,7 @@ jobs:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
   prod-intern:
     name: Deploy application to prod intern
@@ -60,3 +61,4 @@ jobs:
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
