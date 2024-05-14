@@ -8,7 +8,6 @@ export const JournalErrorBoundry = ({ children }: { children: ReactElement }) =>
     const arkivStatus = useSelector(selectForhaandsvisningStatus);
     const journalførtStatus = useSelector(selectJournalføringstatus);
     const [visErrorAlert, setVisErrorAlert] = useState(true);
-    if (arkivStatus !== Status.ERROR && journalførtStatus !== Status.ERROR) return children;
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -19,6 +18,8 @@ export const JournalErrorBoundry = ({ children }: { children: ReactElement }) =>
             clearTimeout(timeoutId);
         };
     }, [journalførtStatus, arkivStatus]);
+
+    if (arkivStatus !== Status.ERROR && journalførtStatus !== Status.ERROR) return children;
 
     return (
         <div className="flex grow flex-col pt-10 items-center">
