@@ -3,7 +3,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 // @ts-ignore
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.js?url';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Alert, Loader } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
@@ -33,6 +33,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
     const journalførtStatus = useSelector(selectJournalføringstatus);
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const [numPages, setNumPages] = useState(0);
+    const [visAlert, setVisAlert] = useState(true);
 
     const onDocumentLoadSuccess = useCallback(
         ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
@@ -46,12 +47,22 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
         return createBlob(pdf);
     }, [pdf]);
 
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setVisAlert(false);
+        }, 5000);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [journalførtStatus, forhaandsvisningStatus]);
+
     const containerWidth = 800;
     const maxWidth = 800;
 
     return (
         <div className="mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
-            {journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK && (
+            {visAlert && journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK && (
                 <Alert variant="success" role="alert" className="fixed z-10 mt-10">
                     Aktivitetsplanen ble journalført.
                 </Alert>
