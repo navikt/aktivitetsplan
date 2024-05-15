@@ -94,7 +94,7 @@ const Sidebar: FunctionComponent = () => {
                             : 'Aldri'}
                     </BodyShort>
                 </div>
-                <Button disabled={disabled} variant="primary" onClick={() => sendTilArkiv()}>
+                <Button loading={journalfører} variant="primary" onClick={() => sendTilArkiv()}>
                     Journalfør
                 </Button>
             </div>
