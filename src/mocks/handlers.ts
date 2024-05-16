@@ -107,7 +107,10 @@ export const handlers = [
     ),
     rest.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet)),
     rest.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet)),
-    rest.post('/veilarbaktivitet/api/aktivitet/ny', failOrGetResponse(aktivitetFeilet, opprettAktivitet)),
+    rest.post(
+        '/veilarbaktivitet/api/aktivitet/:oppfolgingsperiode/ny',
+        failOrGetResponse(aktivitetFeilet, opprettAktivitet),
+    ),
     rest.get(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner',
         failOrGetResponse(getAktivitetFeiler, getAktivitetVersjoner),
