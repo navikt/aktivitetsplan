@@ -107,6 +107,7 @@ const NyAktivitetForm = () => {
             tilbakeLenke={{ tekst: 'Til kategoriene', onTilbakeKlikk: onReqBack }}
             onRequestClose={onRequestClose}
             onClose={tilHovedside}
+            lukkPåKlikkUtenfor={false}
         >
             <article>
                 <Routes>
