@@ -12,7 +12,7 @@ import React, { useEffect } from 'react';
 import { fjernDismissableErrors } from '../moduler/feilmelding/feil-slice';
 import { Dispatch } from '../store';
 import Hovedside from '../hovedside/Hovedside';
-import { initialPageLoader, malLoader } from './loaders';
+import { aktivitetsVisningLoader, initialPageLoader, malLoader } from './loaders';
 import LeggTilForm from '../moduler/aktivitet/ny-aktivitet/LeggTilForm';
 import NyAktivitetForm from '../moduler/aktivitet/ny-aktivitet/NyAktivitetForm';
 import AktivitetvisningContainer from '../moduler/aktivitet/visning/AktivitetvisningContainer';
@@ -77,7 +77,11 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
                         children: [
                             { path: 'ny', element: <LeggTilForm /> },
                             { path: 'ny/*', element: <NyAktivitetForm /> },
-                            { path: 'vis/:id', element: <AktivitetvisningContainer /> },
+                            {
+                                path: 'vis/:id',
+                                element: <AktivitetvisningContainer />,
+                                loader: aktivitetsVisningLoader(dispatch),
+                            },
                             { path: 'endre/:id', element: <EndreAktivitet /> },
                             { path: 'avbryt/:id', element: <AvbrytAktivitet /> },
                             { path: 'fullfor/:id', element: <FullforAktivitet /> },

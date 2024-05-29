@@ -7,7 +7,7 @@ import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../Provider';
-import { RootState } from '../../../store';
+import { Dispatch, RootState } from '../../../store';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { hentAktivitet } from '../aktivitet-actions';
@@ -19,6 +19,7 @@ import { hentArenaAktiviteter } from '../arena-aktiviteter-slice';
 import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from 'reselect';
+import { hentAktivitetMedHistorikkGraphql } from '../../../api/aktivitetsplanGraphql';
 
 const selectAvhengigheter = createSelector(
     selectOppfolgingStatus,

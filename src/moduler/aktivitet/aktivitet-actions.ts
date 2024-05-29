@@ -4,7 +4,7 @@ import * as Api from '../../api/aktivitetAPI';
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
-import { hentAktiviteterGraphql } from '../../api/aktivitetsplanGraphql';
+import { hentAktiviteterGraphql, hentAktivitetMedHistorikkGraphql } from '../../api/aktivitetsplanGraphql';
 
 export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => {
     return await hentAktiviteterGraphql();
@@ -12,6 +12,13 @@ export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => 
 
 export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: string) => {
     return await Api.hentAktivitet(aktivitetId);
+});
+
+export const hentAktivitetMedHistorikk = createAsyncThunk('aktivitetMedHistorikk/hent', async (aktivitetId: string) => {
+    console.log('hentAktivitetMedHistorikk start');
+    const response = await hentAktivitetMedHistorikkGraphql(aktivitetId);
+    console.log('hentAktivitetMedHistorikk ok', response);
+    return response;
 });
 
 export const oppdaterAktivitetEtikett = createAsyncThunk(

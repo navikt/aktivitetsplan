@@ -4,6 +4,8 @@ import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunk } from './initialPageLoadThunk';
+import { hentAktivitetMedHistorikkGraphql } from '../api/aktivitetsplanGraphql';
+import { hentAktivitetMedHistorikk } from '../moduler/aktivitet/aktivitet-actions';
 
 const dispatchAndDefer = (dispatch: Dispatch, actions: AsyncThunkAction<any, any, any>[]) => {
     const promisedData = Promise.all(actions.map((it) => dispatch(it)));
@@ -43,3 +45,10 @@ export interface InitialPageLoadResult {
 export const malLoader = (dispatch: Dispatch, isVeileder: boolean) => {
     return async () => dispatchAndDefer(dispatch, [hentMal(), hentMalListe()]);
 };
+
+export const aktivitetsVisningLoader =
+    (dispatch: Dispatch): LoaderFunction =>
+    ({ params }) => {
+        if (!params.id) return null;
+        return dispatchAndDefer(dispatch, [hentAktivitetMedHistorikk(params.id)]);
+    };

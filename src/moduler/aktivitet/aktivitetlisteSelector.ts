@@ -5,21 +5,17 @@ import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
-import { aktivitetMatchesFilters, datoErIPeriode } from '../filtrering/filter/filter-utils';
+import { aktivitetMatchesFilters } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
-import {
-    selectForrigeHistoriskeSluttDato,
-    selectOppfolgingsPerioder,
-    selectOppfolgingStatus,
-} from '../oppfolging-status/oppfolging-selector';
-import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriode } from './aktivitet-selector';
+import { selectOppfolgingsPerioder, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
+import { selectAktivitetStatus } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
-import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectAktiviteterByPeriode, selectAktiviteterData } from './aktivitet-slice';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],
-    (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter),
+    (aktiviteter, arenaAktiviteter) => (aktiviteter as AlleAktiviteter[]).concat(arenaAktiviteter),
 );
 
 export const selectVistOppfolgingsperiode = createSelector(

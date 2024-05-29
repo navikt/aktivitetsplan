@@ -1,14 +1,14 @@
 import { ReadMore } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
-import { fjernVersjoner, hentVersjonerForAktivitet } from '../../aktivitet-versjoner/aktivitet-versjoner-slice';
 import VersjonInnslag from './VersjonInnslag';
+import { selectAktivitetHistorikk } from '../../aktivitet-selector';
+import { useParams } from 'react-router-dom';
 
 const MAX_SIZE = 10;
 
@@ -17,20 +17,12 @@ interface Props {
 }
 
 const VersjonerForAktivitet = (props: Props) => {
-    const { aktivitet } = props;
-
-    const dispatch = useAppDispatch();
-
     const versjoner = useSelector(selectSorterteVersjoner);
+    const aktivitetId = useParams<{ id: string }>().id;
+    const historikk = useSelector((state) => selectAktivitetHistorikk(state, aktivitetId));
     const avhengighet = useSelector(selectVersjonerStatus);
 
-    useEffect(() => {
-        dispatch(fjernVersjoner());
-        dispatch(hentVersjonerForAktivitet(aktivitet));
-        return () => {
-            dispatch(fjernVersjoner());
-        };
-    }, []);
+    console.log({ historikk });
 
     const versjonerInnslag = versjoner
         .slice(0, MAX_SIZE)

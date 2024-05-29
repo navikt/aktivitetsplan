@@ -3,6 +3,8 @@ import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
 import { hentFraLocalStorage, hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
+import { subDays } from 'date-fns';
+import { Historikk } from '../datatypes/Historikk';
 
 const query: string = `
     query($fnr: String!) {
@@ -129,12 +131,38 @@ const query: string = `
         }
     }
 `;
+
+const aktivitetMedHistorikkQuery = `
+    query($aktivitetId: String!) {
+        aktivitet(aktivitetId: $aktivitetId) {
+            oppfolgingsperiodeId,
+            versjon,
+            historikk {
+                endretAvType,
+                endretAv,
+                tidspunkt,
+                beskrivelseForVeileder,
+                beskrivelseForBruker,
+            }
+        }
+
+    }
+`;
+
 const queryBody = (fnr: string) => ({
     query,
     variables: {
         fnr,
     },
 });
+
+const aktivitetMedHistorikkQueryBody = (aktivitetId: string) => ({
+    query: aktivitetMedHistorikkQuery,
+    variables: {
+        aktivitetId,
+    },
+});
+
 interface OppfolgingsPerioder {
     id: string;
     aktiviteter: VeilarbAktivitet[];
@@ -156,4 +184,20 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         .then(sjekkStatuskode)
         .then(toJson)
         .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
+};
+
+export const hentAktivitetMedHistorikkGraphql = (aktivitetId: string) => {
+    return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
+        ...DEFAULT_CONFIG,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Nav-Consumer-Id': 'aktivitetsplan',
+        },
+        body: JSON.stringify(aktivitetMedHistorikkQueryBody(aktivitetId)),
+    })
+        .then(sjekkStatuskode)
+        .then(toJson)
+        .then(sjekkGraphqlFeil<{ aktivitet: { historikk: Historikk; id: string; oppfolgingsperiodeId: string } }>)
+        .then((it) => ({ ...it, data: { aktivitet: { ...it.data.aktivitet, id: aktivitetId } } }));
 };

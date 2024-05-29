@@ -41,6 +41,7 @@ import {
 import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
+import { subDays, subMinutes } from 'date-fns';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -82,8 +83,16 @@ export const handlers = [
     ),
     rest.post(
         '/veilarbaktivitet/graphql',
-        failOrGrahpqlResponse(getAktivitetFeiler, () => {
-            return aktivitestplanResponse(); // Default aktiviteter
+        failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
+            const body = (await req.json()) as { query: string; variables: Record<string, any> };
+            if (body.query.includes('historikk')) {
+                const aktivitetId = body.variables.aktivitetId;
+                const oppfolgingsperiodeId = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId)!!
+                    .oppfolgingsperiodeId;
+                return aktivitetHistorikkResponse({ id: aktivitetId, oppfolgingsperiodeId });
+            } else {
+                return aktivitestplanResponse(); // Default aktiviteter
+            }
         }),
     ),
     rest.post(
@@ -177,6 +186,43 @@ export const aktivitestplanResponse = (
                 id: periodeId,
                 aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId),
             })),
+        },
+    };
+};
+
+const aktivitetHistorikkResponse = ({ id, oppfolgingsperiodeId }: { id: string; oppfolgingsperiodeId: string }) => {
+    const now = new Date();
+    return {
+        data: {
+            aktivitet: {
+                id,
+                oppfolgingsperiodeId,
+                historikk: {
+                    endringer: [
+                        {
+                            endretAvType: 'BRUKER',
+                            endretAv: 'Iherdig Ketchup',
+                            tidspunkt: now,
+                            beskrivelseForVeileder: 'endret detaljer på aktiviteten',
+                            beskrivelseForBruker: 'endret detaljer på aktiviteten',
+                        },
+                        {
+                            endretAvType: 'NAV',
+                            endretAv: 'Iherdig Ketchup',
+                            tidspunkt: subMinutes(new Date(), 30),
+                            beskrivelseForVeileder: 'merket aktiviteten "Avtalt med NAV"',
+                            beskrivelseForBruker: 'merket aktiviteten "Avtalt med NAV"',
+                        },
+                        {
+                            endretAvType: 'BRUKER',
+                            endretAv: 'Iherdig Ketchup',
+                            tidspunkt: subDays(new Date(), 2),
+                            beskrivelseForVeileder: 'flyttet aktiviteten fra Planlegger til Forslag',
+                            beskrivelseForBruker: 'flyttet aktiviteten fra Planlegger til Forslag',
+                        },
+                    ],
+                },
+            },
         },
     };
 };

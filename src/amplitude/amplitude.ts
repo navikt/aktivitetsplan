@@ -16,6 +16,7 @@ export function initAmplitude() {
 }
 
 async function logAmplitudeEvent(event: AmplitudeEvent, extraData?: Record<string, unknown>): Promise<void> {
+    return;
     try {
         track(event.name, { ...('data' in event ? event.data : {}), ...extraData, app: 'aktivitetsplan' });
     } catch (e) {
