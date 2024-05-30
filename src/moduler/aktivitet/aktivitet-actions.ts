@@ -7,6 +7,11 @@ import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../
 import { hentAktiviteterGraphql, hentAktivitetMedHistorikkGraphql } from '../../api/aktivitetsplanGraphql';
 import { Historikk } from '../../datatypes/Historikk';
 
+const utenHistorikk = <Aktivitet extends VeilarbAktivitet>(aktivitet: Aktivitet) => {
+    const { historikk, ...aktivitetUtenHistorikk } = aktivitet as Aktivitet & { historikk: Historikk };
+    return aktivitetUtenHistorikk as unknown as Aktivitet;
+};
+
 export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => {
     return await hentAktiviteterGraphql();
 });
@@ -15,19 +20,15 @@ export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitet
     return await hentAktivitetMedHistorikkGraphql(aktivitetId);
 });
 
-export const hentAktivitetMedHistorikk = createAsyncThunk('aktivitetMedHistorikk/hent', async (aktivitetId: string) => {
-    return await hentAktivitetMedHistorikkGraphql(aktivitetId);
-});
-
 export const oppdaterAktivitetEtikett = createAsyncThunk(
     'aktivitet-etikett/oppdater',
     async (aktivitet: VeilarbAktivitet) => {
-        return await Api.oppdaterAktivitetEtikett(aktivitet);
+        return await Api.oppdaterAktivitetEtikett(utenHistorikk(aktivitet));
     },
 );
 
 export const oppdaterAktivitet = createAsyncThunk('aktivitet/oppdater', async (aktivitet: VeilarbAktivitet) => {
-    return await Api.oppdaterAktivitet(aktivitet);
+    return await Api.oppdaterAktivitet(utenHistorikk(aktivitet));
 });
 
 export const settAktivitetTilAvtalt = createAsyncThunk(
@@ -53,8 +54,7 @@ export const markerForhaandsorienteringSomLest = createAsyncThunk(
 export const flyttAktivitet = createAsyncThunk(
     'aktivitet/flytt',
     async ({ aktivitet, status }: { aktivitet: VeilarbAktivitet; status: AktivitetStatus }) => {
-        const { historikk, ...aktivitetUtenHistorikk } = aktivitet as VeilarbAktivitet & { historikk: Historikk };
-        return await Api.oppdaterAktivitetStatus({ ...aktivitetUtenHistorikk, status });
+        return await Api.oppdaterAktivitetStatus({ ...utenHistorikk(aktivitet), status });
     },
 );
 
@@ -119,13 +119,13 @@ export const lagNyAktivitet = createAsyncThunk(
 export const oppdaterReferat = createAsyncThunk(
     'referat/oppdater',
     async (aktivitet: SamtalereferatAktivitet | MoteAktivitet) => {
-        return await Api.oppdaterReferat(aktivitet);
+        return await Api.oppdaterReferat(utenHistorikk(aktivitet));
     },
 );
 
 export const publiserReferat = createAsyncThunk(
     'referat/publiser',
     async (aktivitet: SamtalereferatAktivitet | MoteAktivitet) => {
-        return await Api.publiserReferat({ ...aktivitet, erReferatPublisert: true });
+        return await Api.publiserReferat({ ...utenHistorikk(aktivitet), erReferatPublisert: true });
     },
 );
