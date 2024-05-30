@@ -1,32 +1,24 @@
 import { Dispatch } from '../store';
-import { defer, LoaderFunction } from 'react-router-dom';
+import { defer, LoaderFunction, useRouteLoaderData } from 'react-router-dom';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
-import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
-import { initialPageLoadThunk } from './initialPageLoadThunk';
-import { hentAktivitetMedHistorikkGraphql } from '../api/aktivitetsplanGraphql';
-import { hentAktivitetMedHistorikk } from '../moduler/aktivitet/aktivitet-actions';
-
-const dispatchAndDefer = (dispatch: Dispatch, actions: AsyncThunkAction<any, any, any>[]) => {
-    const promisedData = Promise.all(actions.map((it) => dispatch(it)));
-    return defer({ data: promisedData });
-};
+import { initialPageLoadThunks } from './initialPageLoadThunk';
+import { hentAktivitet } from '../moduler/aktivitet/aktivitet-actions';
+import { erArenaId, hentArenaAktiviteter } from '../moduler/aktivitet/arena-aktiviteter-slice';
 
 export const initialPageLoader =
     (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
     async () => {
-        const value = dispatch(initialPageLoadThunk(isVeileder));
+        const thunks = initialPageLoadThunks;
         return defer({
-            // data: value,
-            oppfolging: value.then((it) => it.payload['oppfolging']),
-            identitet: value.then((it) => it.payload['identitet']),
-            veileder: value.then((it) => it.payload['veileder']),
-            mal: value.then((it) => it.payload['mal']),
-            eskaleringsvarsel: value.then((it) => it.payload['eskaleringsvarsel']),
-            dialoger: value.then((it) => it.payload['dialoger']),
-            aktiviteter: value.then((it) => it.payload['aktiviteter']),
-            arenaAktiviteter: value.then((it) => it.payload['arenaAktiviteter']),
-            lest: value.then((it) => it.payload['lest']),
+            oppfolging: dispatch(thunks.oppfolging(isVeileder)),
+            identitet: dispatch(thunks.identitet(isVeileder)),
+            veileder: dispatch(thunks.veileder(isVeileder)),
+            mal: dispatch(thunks.mal(isVeileder)),
+            dialoger: dispatch(thunks.dialoger()),
+            aktiviteter: dispatch(thunks.aktiviteter(isVeileder)),
+            arenaAktiviteter: dispatch(thunks.arenaAktiviteter(isVeileder)),
+            lest: dispatch(thunks.lest(isVeileder)),
         });
     };
 
@@ -42,13 +34,22 @@ export interface InitialPageLoadResult {
     lest: Promise<any>;
 }
 
-export const malLoader = (dispatch: Dispatch, isVeileder: boolean) => {
-    return async () => dispatchAndDefer(dispatch, [hentMal(), hentMalListe()]);
+export const malLoader = (dispatch: Dispatch) => {
+    return () =>
+        defer({
+            data: Promise.all([dispatch(hentMal()), dispatch(hentMalListe())]),
+        });
 };
 
 export const aktivitetsVisningLoader =
     (dispatch: Dispatch): LoaderFunction =>
     ({ params }) => {
-        if (!params.id) return null;
-        return dispatchAndDefer(dispatch, [hentAktivitetMedHistorikk(params.id)]);
+        if (!params.id) return {};
+        const arenaId = erArenaId(params.id);
+        return defer({
+            aktivitet: arenaId ? dispatch(hentArenaAktiviteter()) : dispatch(hentAktivitet(params.id)),
+        });
     };
+
+export const useAktivitetsVisningLoaderData = () =>
+    useRouteLoaderData('aktivitetsVisning') as { aktivitet: Promise<any> };

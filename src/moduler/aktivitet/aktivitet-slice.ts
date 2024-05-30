@@ -1,6 +1,5 @@
 import { createEntityAdapter, createSlice, EntityState, isAnyOf } from '@reduxjs/toolkit';
 
-import { produce } from 'immer';
 import { Status } from '../../createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
@@ -8,7 +7,6 @@ import {
     flyttAktivitet,
     hentAktivitet,
     hentAktiviteter,
-    hentAktivitetMedHistorikk,
     lagNyAktivitet,
     markerForhaandsorienteringSomLest,
     oppdaterAktivitetEtikett,
@@ -21,24 +19,18 @@ import {
 import { RootState } from '../../store';
 import { createSelector } from 'reselect';
 
-export type AktivitetState = {
-    // data: {
-    //     perioder: EntityState<{ id: string; aktiviteter: EntityState<VeilarbAktivitet> }>;
-    // };
-    status: Status;
-    // ids: string[];
-    // entities: EntityState<{ id: string; aktiviteter: EntityState<VeilarbAktivitet> }>;
-} & EntityState<{ id: string; aktiviteter: EntityState<VeilarbAktivitet> }>;
-
 type PerioderMedAktiviteter = {
     id: string;
     aktiviteter: VeilarbAktivitet[];
 };
 
-const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
+export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
     selectId: (model) => model.id,
 });
-const oppfolgingsdperiodeAdapter = createEntityAdapter<{ id: string; aktiviteter: EntityState<VeilarbAktivitet> }>({
+export const oppfolgingsdperiodeAdapter = createEntityAdapter<{
+    id: string;
+    aktiviteter: EntityState<VeilarbAktivitet>;
+}>({
     selectId: (model) => model.id,
 });
 const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
@@ -66,7 +58,8 @@ export const selectAktiviteterData: (state: RootState) => VeilarbAktivitet[] = c
 export const selectAktiviteterByPeriode: (state: RootState) => PerioderMedAktiviteter[] = createSelector(
     selectAktiviteterSlice,
     (aktiviteter) => {
-        return selectAllOppfolgingsperioder(aktiviteter).map((periode) => ({
+        const oppfolgingsperioder = selectAllOppfolgingsperioder(aktiviteter);
+        return (oppfolgingsperioder || []).map((periode) => ({
             id: periode.id,
             aktiviteter: selectAlleAktiviter(periode.aktiviteter),
         }));
@@ -74,24 +67,17 @@ export const selectAktiviteterByPeriode: (state: RootState) => PerioderMedAktivi
 );
 
 const initialState = oppfolgingsdperiodeAdapter.getInitialState({
-    data: { perioder: [] },
     status: Status.NOT_STARTED,
 });
 
+export type AktivitetState = typeof initialState;
+
 function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbAktivitet): AktivitetState {
-    return {
-        ...state,
-        data: {
-            perioder: state.data.perioder.map((periode) => {
-                return {
-                    ...periode,
-                    aktiviteter: periode.aktiviteter.map((a) => {
-                        return a.id === aktivitet.id ? aktivitet : a;
-                    }),
-                };
-            }),
-        },
-    };
+    const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
+    return oppfolgingsdperiodeAdapter.upsertOne(state, {
+        id: oppfolgingsperiode.id,
+        aktiviteter: aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet),
+    });
 }
 
 const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: string) => {
@@ -115,45 +101,26 @@ const aktivitetSlice = createSlice({
                 const periodeState = getOrCreatePeriode(state, periode.id);
                 return {
                     id: periode.id,
-                    aktiviteter: aktivitetAdapter.setAll(periodeState.aktiviteter, periode.aktiviteter),
+                    aktiviteter: aktivitetAdapter.upsertMany(periodeState.aktiviteter, periode.aktiviteter),
                 };
             });
             oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
-            const aktivitet = action.payload;
-            const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
-            aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet);
-            oppfolgingsdperiodeAdapter.upsertOne(state, oppfolgingsperiode);
-        });
-        builder.addCase(hentAktivitetMedHistorikk.fulfilled, (state, action) => {
             const aktivitet = action.payload.data.aktivitet;
-            const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
-            oppfolgingsperiode.aktiviteter = aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet);
-            console.log({ oppfolgingsperiode });
-            // ok
-            const perioder = oppfolgingsdperiodeAdapter.upsertOne(state, oppfolgingsperiode);
-            console.log(perioder.entities[oppfolgingsperiode.id]);
+            nyStateMedOppdatertAktivitet(state, aktivitet);
         });
         builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            const periode = getOrCreatePeriode(state, action.payload.oppfolgingsperiodeId);
-            aktivitetAdapter.upsertOne(periode.aktiviteter, action.payload);
-            oppfolgingsdperiodeAdapter.upsertOne(state, periode);
+            nyStateMedOppdatertAktivitet(state, action.payload);
         });
         builder.addCase(markerForhaandsorienteringSomLest.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            const aktivitet = action.payload;
-            const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
-            aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet);
-            oppfolgingsdperiodeAdapter.upsertOne(state, oppfolgingsperiode);
+            nyStateMedOppdatertAktivitet(state, action.payload);
         });
         builder.addCase(settAktivitetTilAvtalt.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            const aktivitet = action.payload.data.aktivitet;
-            const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
-            aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet);
-            oppfolgingsdperiodeAdapter.upsertOne(state, oppfolgingsperiode);
+            nyStateMedOppdatertAktivitet(state, action.payload);
         });
         builder.addMatcher(
             isAnyOf(
@@ -172,12 +139,9 @@ const aktivitetSlice = createSlice({
                 return nyStateMedOppdatertAktivitet(state, action.payload);
             },
         );
-        builder.addMatcher(
-            isAnyOf(hentAktiviteter.rejected, hentAktivitet.rejected, hentAktivitetMedHistorikk.rejected),
-            (state) => {
-                state.status = Status.ERROR;
-            },
-        );
+        builder.addMatcher(isAnyOf(hentAktiviteter.rejected, hentAktivitet.rejected), (state) => {
+            state.status = Status.ERROR;
+        });
     },
 });
 

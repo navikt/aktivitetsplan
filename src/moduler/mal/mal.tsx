@@ -27,14 +27,8 @@ const Mal = () => {
 
     const isDirty = useRef(false);
 
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
-
-    useEffect(() => {
-        dispatch(hentMal());
-        dispatch(hentMalListe());
-    }, []);
 
     const avhengigheter = [malStatus, malListeStatus];
 

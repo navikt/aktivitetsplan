@@ -6,127 +6,131 @@ import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 import { subDays } from 'date-fns';
 import { Historikk } from '../datatypes/Historikk';
 
+const allAktivitetFields = `
+    id,
+    funksjonellId,
+    versjon,
+    tittel,
+    beskrivelse,
+    lenke,
+    type,
+    status,
+    fraDato,
+    tilDato,
+    opprettetDato,
+    endretDato,
+    endretAv,
+    historisk,
+    avsluttetKommentar,
+    avtalt,
+    forhaandsorientering {
+        id,
+        type,
+        tekst,
+        lestDato,
+    }
+    endretAvType,
+    transaksjonsType,
+    malid,
+    oppfolgingsperiodeId,
+
+    #   stillingaktivitet
+    etikett,
+    kontaktperson,
+    arbeidsgiver,
+    arbeidssted,
+    stillingsTittel,
+
+    #    // egenaktivitet
+    hensikt,
+    oppfolging,
+
+    #    //sokeAvtaleAktivitet
+    antallStillingerSokes,
+    antallStillingerIUken,
+    avtaleOppfolging,
+
+    #    //iJobbAktivitet
+    jobbStatus,
+    ansettelsesforhold,
+    arbeidstid,
+
+    #    //behandlingAktivitet
+    behandlingType,
+    behandlingSted,
+    effekt,
+    behandlingOppfolging,
+
+    #    //møte
+    adresse,
+    forberedelser,
+    kanal,
+    referat,
+    erReferatPublisert,
+
+    stillingFraNavData {
+        cvKanDelesData {
+            kanDeles,
+            endretTidspunkt,
+            endretAv,
+            endretAvType,
+            avtaltDato,
+        }
+        soknadsfrist,
+        svarfrist,
+        arbeidsgiver,
+        bestillingsId,
+        stillingsId,
+        arbeidssted,
+        kontaktpersonData {
+            navn,
+            tittel,
+            mobil,
+        }
+        soknadsstatus,
+        livslopsStatus,
+        varselId,
+        detaljer,
+    }
+
+    eksternAktivitet {
+        type,
+        oppgave {
+            ekstern {
+                subtekst,
+                tekst,
+                url
+            }
+            intern {
+                subtekst,
+                tekst,
+                url
+            }
+        }
+        handlinger {
+            url,
+            tekst,
+            subtekst,
+            lenkeType
+        }
+        detaljer {
+            label,
+            verdi
+        }
+        etiketter {
+            tekst,
+            kode,
+            sentiment
+        }
+    }
+`;
+
 const query: string = `
     query($fnr: String!) {
         perioder(fnr: $fnr) {
             id,
             aktiviteter {
-                id,
-                funksjonellId,
-                versjon,
-                tittel,
-                beskrivelse,
-                lenke,
-                type,
-                status,
-                fraDato,
-                tilDato,
-                opprettetDato,
-                endretDato,
-                endretAv,
-                historisk,
-                avsluttetKommentar,
-                avtalt,
-                forhaandsorientering {
-                    id,
-                    type,
-                    tekst,
-                    lestDato,
-                }
-                endretAvType,
-                transaksjonsType,
-                malid,
-                oppfolgingsperiodeId,
-
-                #   stillingaktivitet
-                etikett,
-                kontaktperson,
-                arbeidsgiver,
-                arbeidssted,
-                stillingsTittel,
-
-                #    // egenaktivitet
-                hensikt,
-                oppfolging,
-
-                #    //sokeAvtaleAktivitet
-                antallStillingerSokes,
-                antallStillingerIUken,
-                avtaleOppfolging,
-
-                #    //iJobbAktivitet
-                jobbStatus,
-                ansettelsesforhold,
-                arbeidstid,
-
-                #    //behandlingAktivitet
-                behandlingType,
-                behandlingSted,
-                effekt,
-                behandlingOppfolging,
-
-                #    //møte
-                adresse,
-                forberedelser,
-                kanal,
-                referat,
-                erReferatPublisert,
-
-                stillingFraNavData {
-                    cvKanDelesData {
-                        kanDeles,
-                        endretTidspunkt,
-                        endretAv,
-                        endretAvType,
-                        avtaltDato,
-                    }
-                    soknadsfrist,
-                    svarfrist,
-                    arbeidsgiver,
-                    bestillingsId,
-                    stillingsId,
-                    arbeidssted,
-                    kontaktpersonData {
-                        navn,
-                        tittel,
-                        mobil,
-                    }
-                    soknadsstatus,
-                    livslopsStatus,
-                    varselId,
-                    detaljer,
-                }
-
-                eksternAktivitet {
-                    type,
-                    oppgave {
-                        ekstern {
-                            subtekst,
-                            tekst,
-                            url
-                        }
-                        intern {
-                            subtekst,
-                            tekst,
-                            url
-                        }
-                    }
-                    handlinger {
-                        url,
-                        tekst,
-                        subtekst,
-                        lenkeType
-                    }
-                    detaljer {
-                        label,
-                        verdi
-                    }
-                    etiketter {
-                        tekst,
-                        kode,
-                        sentiment
-                    }
-                }
+                ${allAktivitetFields}
             },
         }
     }
@@ -137,6 +141,7 @@ const aktivitetMedHistorikkQuery = `
         aktivitet(aktivitetId: $aktivitetId) {
             oppfolgingsperiodeId,
             versjon,
+            ${allAktivitetFields}
             historikk {
                 endretAvType,
                 endretAv,
@@ -198,6 +203,10 @@ export const hentAktivitetMedHistorikkGraphql = (aktivitetId: string) => {
     })
         .then(sjekkStatuskode)
         .then(toJson)
-        .then(sjekkGraphqlFeil<{ aktivitet: { historikk: Historikk; id: string; oppfolgingsperiodeId: string } }>)
+        .then(
+            sjekkGraphqlFeil<{
+                aktivitet: VeilarbAktivitet & { historikk: Historikk; id: string; oppfolgingsperiodeId: string };
+            }>,
+        )
         .then((it) => ({ ...it, data: { aktivitet: { ...it.data.aktivitet, id: aktivitetId } } }));
 };

@@ -87,9 +87,11 @@ export const handlers = [
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
             if (body.query.includes('historikk')) {
                 const aktivitetId = body.variables.aktivitetId;
-                const oppfolgingsperiodeId = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId)!!
-                    .oppfolgingsperiodeId;
-                return aktivitetHistorikkResponse({ id: aktivitetId, oppfolgingsperiodeId });
+                const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
+                await new Promise((resolve) => {
+                    setTimeout(resolve, 2000);
+                });
+                return aktivitetHistorikkResponse(aktivitet);
             } else {
                 return aktivitestplanResponse(); // Default aktiviteter
             }
@@ -190,13 +192,12 @@ export const aktivitestplanResponse = (
     };
 };
 
-const aktivitetHistorikkResponse = ({ id, oppfolgingsperiodeId }: { id: string; oppfolgingsperiodeId: string }) => {
+const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
     const now = new Date();
     return {
         data: {
             aktivitet: {
-                id,
-                oppfolgingsperiodeId,
+                ...aktivitet,
                 historikk: {
                     endringer: [
                         {

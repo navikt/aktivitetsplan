@@ -51,7 +51,7 @@ export const hentArenaAktiviteter = createAsyncThunk(`${arenaAktivitetSlice.name
 });
 
 const validArenaPrefixes = ['TA', 'UA', 'GA', 'ARENATA', 'ARENAUA', 'ARENAGA'];
-const erArenaId = (id: string) => validArenaPrefixes.some((prefix) => id.startsWith(prefix));
+export const erArenaId = (id: string) => validArenaPrefixes.some((prefix) => id.startsWith(prefix));
 export const sendForhaandsorienteringArenaAktivitet = createAsyncThunk(
     `${arenaAktivitetSlice.name}/oppdater`,
     async ({

@@ -18,8 +18,9 @@ import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { rest } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
+import { aktivitetAdapter, oppfolgingsdperiodeAdapter } from '../../aktivitet/aktivitet-slice';
 
-const gjeldendeOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) => !erHistorisk(it));
+const gjeldendeOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) => !erHistorisk(it))!!;
 const gammelOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
     erHistorisk(it),
 ) as HistoriskOppfolgingsperiode;
@@ -54,7 +55,7 @@ const veilarbAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Veilarbaktivitet',
     id: '1',
-    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode?.uuid,
+    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode.uuid,
 };
 const gammelVeilarbAktivitet = {
     ...mockTestAktiviteter[0],
@@ -63,24 +64,26 @@ const gammelVeilarbAktivitet = {
     oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
 };
 
+const getAktiviteterState = () => {
+    const state = oppfolgingsdperiodeAdapter.getInitialState({
+        status: Status.OK,
+    });
+    return oppfolgingsdperiodeAdapter.setAll(state, [
+        {
+            id: veilarbAktivitet.oppfolgingsperiodeId,
+            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), veilarbAktivitet),
+        },
+        {
+            id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
+            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
+        },
+    ]);
+};
+
 const initialStore = {
     data: {
         ...emptyLoadedVeilederState.data,
-        aktiviteter: {
-            status: Status.OK,
-            data: {
-                perioder: [
-                    {
-                        id: veilarbAktivitet.oppfolgingsperiodeId,
-                        aktiviteter: [veilarbAktivitet],
-                    },
-                    {
-                        id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
-                        aktiviteter: [gammelVeilarbAktivitet],
-                    },
-                ],
-            },
-        },
+        aktiviteter: getAktiviteterState(),
         arenaAktiviteter: {
             status: Status.OK,
             data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],

@@ -11,14 +11,11 @@ export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => 
 });
 
 export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: string) => {
-    return await Api.hentAktivitet(aktivitetId);
+    return await hentAktivitetMedHistorikkGraphql(aktivitetId);
 });
 
 export const hentAktivitetMedHistorikk = createAsyncThunk('aktivitetMedHistorikk/hent', async (aktivitetId: string) => {
-    console.log('hentAktivitetMedHistorikk start');
-    const response = await hentAktivitetMedHistorikkGraphql(aktivitetId);
-    console.log('hentAktivitetMedHistorikk ok', response);
-    return response;
+    return await hentAktivitetMedHistorikkGraphql(aktivitetId);
 });
 
 export const oppdaterAktivitetEtikett = createAsyncThunk(

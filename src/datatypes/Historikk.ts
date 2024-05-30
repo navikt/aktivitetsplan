@@ -1,4 +1,4 @@
-interface Endring {
+export interface Endring {
     endretAvType: string;
     endretAv: string;
     tidspunkt: string;

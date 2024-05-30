@@ -70,7 +70,7 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
                 path: '',
                 element: <Hovedside />,
                 children: [
-                    { path: 'mal', loader: malLoader(dispatch, isVeileder), element: <Mal /> },
+                    { path: 'mal', loader: malLoader(dispatch), element: <Mal /> },
                     { path: 'informasjon', element: <InformasjonModal /> },
                     {
                         path: 'aktivitet',
@@ -78,6 +78,7 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
                             { path: 'ny', element: <LeggTilForm /> },
                             { path: 'ny/*', element: <NyAktivitetForm /> },
                             {
+                                id: 'aktivitetsVisning',
                                 path: 'vis/:id',
                                 element: <AktivitetvisningContainer />,
                                 loader: aktivitetsVisningLoader(dispatch),
