@@ -142,11 +142,13 @@ const aktivitetMedHistorikkQuery = `
             versjon,
             ${allAktivitetFields}
             historikk {
-                endretAvType,
-                endretAv,
-                tidspunkt,
-                beskrivelseForVeileder,
-                beskrivelseForBruker,
+                endringer {
+                    endretAvType,
+                    endretAv,
+                    tidspunkt,
+                    beskrivelseForVeileder,
+                    beskrivelseForBruker,
+                }
             }
         }
 
