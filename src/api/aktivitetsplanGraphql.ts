@@ -1,9 +1,8 @@
 import { DEFAULT_CONFIG, sjekkStatuskode, toJson } from './utils';
 import { AKTIVITET_GRAPHQL_BASE_URL } from '../environment';
-import { hentFraLocalStorage, hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
+import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
-import { subDays } from 'date-fns';
 import { Historikk } from '../datatypes/Historikk';
 
 const allAktivitetFields = `

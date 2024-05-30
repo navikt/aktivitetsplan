@@ -14,11 +14,11 @@ const VersjonerForAktivitet = () => {
     const historikk = useSelector((state) => selectAktivitetHistorikk(state, aktivitetId)) || { endringer: [] };
     const versjonerInnslag = historikk.endringer
         .slice(0, MAX_SIZE)
-        .map((endring, index) => <EndringsLinje key={index} endring={endring} />);
+        .map((endring) => <EndringsLinje key={endring.tidspunkt} endring={endring} />);
     const versjonerInnslagUnderAccordion = (
         <ReadMore header="Vis mer">
-            {historikk.endringer.slice(MAX_SIZE).map((endring, index) => (
-                <EndringsLinje key={index} endring={endring} />
+            {historikk.endringer.slice(MAX_SIZE).map((endring) => (
+                <EndringsLinje key={endring.tidspunkt} endring={endring} />
             ))}
         </ReadMore>
     );

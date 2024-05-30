@@ -12,7 +12,6 @@ import {
 import { createSelector } from 'reselect';
 import { Historikk } from '../../datatypes/Historikk';
 import { selectAktivitet, selectAktiviteterSlice } from './aktivitet-slice';
-import { oppfolgingsPeriode } from '../../proptypes';
 
 export function selectAktivitetStatus(state: RootState) {
     return selectAktiviteterSlice(state).status;

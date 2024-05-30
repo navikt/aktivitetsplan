@@ -15,9 +15,7 @@ export const EndringsLinje = ({ endring }: { endring: Endring }) => {
     );
     return (
         <div className="pb-4">
-            <>
-                {brukeravhengigTekst} {erBruker ? endring.beskrivelseForBruker : endring.beskrivelseForVeileder}
-            </>
+            {brukeravhengigTekst} {erBruker ? endring.beskrivelseForBruker : endring.beskrivelseForVeileder}
             <BodyShort>{formaterDatoEllerTidSiden(endring.tidspunkt)}</BodyShort>
         </div>
     );
