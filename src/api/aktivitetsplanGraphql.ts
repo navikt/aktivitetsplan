@@ -138,8 +138,6 @@ const query: string = `
 const aktivitetMedHistorikkQuery = `
     query($aktivitetId: String!) {
         aktivitet(aktivitetId: $aktivitetId) {
-            oppfolgingsperiodeId,
-            versjon,
             ${allAktivitetFields}
             historikk {
                 endringer {
