@@ -19,11 +19,11 @@ const Timeoutbox = () => {
     }, []);
 
     const expirationTimestamp = useSelector(selectExpirationTime);
-    const expirationTimestampMinusFiveMinutes = subMinutes(parseISO(expirationTimestamp), 5);
 
     useEffect(() => {
         let timer: ReturnType<typeof setTimeout> | undefined;
         if (expirationTimestamp) {
+            const expirationTimestampMinusFiveMinutes = subMinutes(parseISO(expirationTimestamp), 5);
             const expirationInMillis = differenceInMilliseconds(expirationTimestampMinusFiveMinutes, new Date());
             timer = setTimeout(() => {
                 setOpen(true);
