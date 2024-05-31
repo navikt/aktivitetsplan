@@ -1,18 +1,17 @@
 import { DatePicker } from '@navikt/ds-react';
-import { getLocaleFromString, isValidDate, parseDate } from '@navikt/ds-react/esm/date/utils';
 import { format, isValid } from 'date-fns';
 import React, { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { preventCloseOnInsideClick, useOutsideClick } from './common';
 import { FieldSettings } from './ControlledDateRangePicker';
+import { isValidDate } from '../../../utils/dateUtils';
+import { parseDate } from '../../../utils/dateParser';
 
 interface Props {
     field: FieldSettings;
     disabledDays?: any[];
 }
-
-const nb = getLocaleFromString('nb');
 
 const ControlledDatePicker = ({
     field: { disabled, name, defaultValue, required = false, label },
@@ -35,7 +34,7 @@ const ControlledDatePicker = ({
     const [displayValue, setDisplayValue] = useState<string>(defaultValue ? format(defaultValue, 'dd.M.y') : '');
 
     const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const day = parseDate(event.target.value, new Date(), nb, 'date', true);
+        const day = parseDate(event.target.value, new Date(), 'date', true);
         if (isValidDate(day)) {
             setValue(name, day);
         } else {

@@ -48,8 +48,9 @@ const BrukerVarslinger = (props: Props) => {
     const kanReaktiveres = useSelector(selectKanReaktiveres);
 
     const dagensDato = startOfDay(new Date());
-    const dato28dagerEtterIserv = addDays(parseISO(inaktiveringsdato), 28);
-    const antallDagerIgjen = differenceInDays(dato28dagerEtterIserv, dagensDato);
+    const antallDagerIgjen = inaktiveringsdato
+        ? differenceInDays(addDays(parseISO(inaktiveringsdato), 28), dagensDato)
+        : undefined;
 
     const { oppfolging } = useRouteLoaderData('root') as InitialPageLoadResult;
 

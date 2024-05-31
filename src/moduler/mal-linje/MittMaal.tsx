@@ -80,7 +80,7 @@ const MalFallback = () => {
 };
 
 function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boolean {
-    if (!maal?.mal) {
+    if (!maal?.mal || !maal.dato) {
         return false;
     }
 
