@@ -76,9 +76,10 @@ export const msSince = (date: string) => differenceInMilliseconds(new Date(), pa
 
 const oneIfPresent = (x: string | undefined) => (x ? 1 : 0);
 export function datoComparator(a: string, b: string) {
-    const dateA = parseISO(a);
-    const dateB = parseISO(b);
-    return isValid(dateA) && isValid(dateB) ? dateA.getTime() - dateB.getTime() : oneIfPresent(a) - oneIfPresent(b);
+    if (a == null || b == null) {
+        return oneIfPresent(a) - oneIfPresent(b);
+    }
+    return parseISO(a).getTime() - parseISO(b).getTime();
 }
 
 export function dagerTil(dato: string) {
