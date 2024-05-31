@@ -7,7 +7,6 @@ import { preventCloseOnInsideClick, useOutsideClick } from './common';
 import { FieldSettings } from './ControlledDateRangePicker';
 import { isValidDate } from '../../../utils/dateUtils';
 import { parseDate } from '../../../utils/dateParser';
-import nb from 'date-fns/locale/nb';
 
 interface Props {
     field: FieldSettings;
