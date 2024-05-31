@@ -84,3 +84,7 @@ export function datoComparator(a: string, b: string) {
 export function dagerTil(dato: string) {
     return differenceInDays(startOfDay(parseISO(dato)), startOfDay(new Date()));
 }
+
+export const isValidDate = (day?: Date): boolean => {
+    return !!(day && !Number.isNaN(day.getTime()) && day.getFullYear() > 999);
+};
