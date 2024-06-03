@@ -55,12 +55,14 @@ function erMerEnntoDagerSiden(dato: string) {
     return isValid(datoVerdi) ? isBefore(datoVerdi, toDagerSiden) : false;
 }
 
-export function erMerEnnSyvDagerTil(dato: string) {
+export function erMerEnnSyvDagerTil(dato: string): boolean {
     const datoVerdi = parseISO(dato);
     return isValid(datoVerdi) ? isAfter(datoVerdi, startOfDay(addDays(new Date(), 7))) : false;
 }
 
-export function formaterDatoEllerTidSiden(dato: string) {
+export function formaterDatoEllerTidSiden(dato: string | undefined) {
+    if (!dato) return undefined;
+
     const datoVerdi = parseISO(dato);
 
     if (isValid(datoVerdi)) {
@@ -75,6 +77,7 @@ export function formaterDatoEllerTidSiden(dato: string) {
 export const msSince = (date: string) => differenceInMilliseconds(new Date(), parseISO(date));
 
 const oneIfPresent = (x: string | undefined) => (x ? 1 : 0);
+
 export function datoComparator(a: string, b: string) {
     if (a == null || b == null) {
         return oneIfPresent(a) - oneIfPresent(b);

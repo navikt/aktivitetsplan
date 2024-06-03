@@ -12,7 +12,7 @@ interface Props {
 }
 
 const SattTilAvtaltVisning = ({ aktivitet, forhaandsorienteringstype }: Props) => {
-    const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
+    const mindreEnnSyvDagerTil = aktivitet.tilDato ? !erMerEnnSyvDagerTil(aktivitet.tilDato) : false;
     if (!forhaandsorienteringstype) return null;
 
     return (
