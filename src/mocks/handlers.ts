@@ -202,9 +202,9 @@ const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
                     endringer: [
                         {
                             endretAvType: 'BRUKER',
-                            endretAv: 'Iherdig Ketchup',
+                            endretAv: '2121212121212',
                             tidspunkt: now,
-                            beskrivelseForVeileder: 'Iherdig Ketchup endret detaljer på aktiviteten',
+                            beskrivelseForVeileder: 'Bruker endret detaljer på aktiviteten',
                             beskrivelseForBruker: 'Du endret detaljer på aktiviteten',
                         },
                         {
@@ -216,9 +216,9 @@ const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
                         },
                         {
                             endretAvType: 'BRUKER',
-                            endretAv: 'Iherdig Ketchup',
+                            endretAv: '2121212121212',
                             tidspunkt: subDays(new Date(), 2),
-                            beskrivelseForVeileder: 'Iherdig Ketchup flyttet aktiviteten fra Planlegger til Forslag',
+                            beskrivelseForVeileder: 'Bruker flyttet aktiviteten fra Planlegger til Forslag',
                             beskrivelseForBruker: 'Du flyttet aktiviteten fra Planlegger til Forslag',
                         },
                     ],
