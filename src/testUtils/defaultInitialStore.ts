@@ -1,5 +1,6 @@
 import { Status } from '../createGenericSlice';
 import { mockOppfolging } from '../mocks/data/oppfolging';
+import { oppfolgingsdperiodeAdapter } from '../moduler/aktivitet/aktivitet-slice';
 
 const veilederIdentitet = {
     id: 'Z123456',
@@ -9,10 +10,9 @@ const veilederIdentitet = {
 
 export const emptyLoadedVeilederState = {
     data: {
-        aktiviteter: {
+        aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({
             status: Status.NOT_STARTED,
-            data: [],
-        },
+        }),
         arenaAktiviteter: {
             status: Status.NOT_STARTED,
             data: [],

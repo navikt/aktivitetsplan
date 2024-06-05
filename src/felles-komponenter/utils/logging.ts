@@ -4,6 +4,7 @@ import { Lest } from '../../datatypes/lestTypes';
 import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { AKTIVITET_BASE_URL } from '../../environment';
 import { hash } from './hash';
+import { Env, getEnv } from '../../sentry';
 
 interface FrontendEvent {
     name: string;
@@ -12,6 +13,7 @@ interface FrontendEvent {
 }
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
+    if (getEnv() == Env.Local) return;
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
     const url = `${AKTIVITET_BASE_URL}/logger/event`;
     const config = {
@@ -129,7 +131,7 @@ export function loggForhandsorientering(
     erManuellKrrKvpBruker: boolean,
     mindreEnSyvDagerIgen: boolean,
     forhandsorienteringType: string,
-    aktivitettype: AktivitetType
+    aktivitettype: AktivitetType,
 ) {
     if (erManuellKrrKvpBruker) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {

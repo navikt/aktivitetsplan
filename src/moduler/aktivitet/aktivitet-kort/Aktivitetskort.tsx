@@ -4,7 +4,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 import { Status } from '../../../createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
+import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { useRoutes } from '../../../routing/useRoutes';

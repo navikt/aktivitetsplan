@@ -1,59 +1,53 @@
-import { ReadMore } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
+import { ReadMore, Skeleton } from '@navikt/ds-react';
+import React, { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 
-import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
-import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
-import { fjernVersjoner, hentVersjonerForAktivitet } from '../../aktivitet-versjoner/aktivitet-versjoner-slice';
-import VersjonInnslag from './VersjonInnslag';
+import { EndringsLinje } from './EndringsLinje';
+import { selectAktivitetHistorikk } from '../../aktivitet-selector';
+import { Await, useParams } from 'react-router-dom';
+import { useAktivitetsVisningLoaderData } from '../../../../routing/loaders';
 
 const MAX_SIZE = 10;
 
-interface Props {
-    aktivitet: VeilarbAktivitet;
-}
-
-const VersjonerForAktivitet = (props: Props) => {
-    const { aktivitet } = props;
-
-    const dispatch = useAppDispatch();
-
-    const versjoner = useSelector(selectSorterteVersjoner);
-    const avhengighet = useSelector(selectVersjonerStatus);
-
-    useEffect(() => {
-        dispatch(fjernVersjoner());
-        dispatch(hentVersjonerForAktivitet(aktivitet));
-        return () => {
-            dispatch(fjernVersjoner());
-        };
-    }, []);
-
-    const versjonerInnslag = versjoner
+const VersjonerForAktivitet = () => {
+    const aktivitetId = useParams<{ id: string }>().id!!;
+    const historikk = useSelector((state) => selectAktivitetHistorikk(state, aktivitetId)) || { endringer: [] };
+    const versjonerInnslag = historikk.endringer
         .slice(0, MAX_SIZE)
-        .map((versjon, index) => (
-            <VersjonInnslag key={versjon.endretDato} aktivitet={versjon} forrigeAktivitet={versjoner[index + 1]} />
-        ));
-
+        .map((endring) => <EndringsLinje key={endring.tidspunkt} endring={endring} />);
     const versjonerInnslagUnderAccordion = (
         <ReadMore header="Vis mer">
-            {versjoner.slice(MAX_SIZE).map((versjon, index) => (
-                <VersjonInnslag key={versjon.endretDato} aktivitet={versjon} forrigeAktivitet={versjoner[index + 1]} />
+            {historikk.endringer.slice(MAX_SIZE).map((endring) => (
+                <EndringsLinje key={endring.tidspunkt} endring={endring} />
             ))}
         </ReadMore>
     );
-
     return (
-        <Innholdslaster className="flex m-auto my-4" avhengigheter={avhengighet} spinnerSize="xlarge">
-            <section>
-                {versjonerInnslag}
-                <VisibleIfDiv visible={versjoner.length > MAX_SIZE}>{versjonerInnslagUnderAccordion}</VisibleIfDiv>
-            </section>
-        </Innholdslaster>
+        <section>
+            {versjonerInnslag}
+            {(historikk?.endringer?.length || 0) > MAX_SIZE ? versjonerInnslagUnderAccordion : null}
+        </section>
     );
 };
 
-export default VersjonerForAktivitet;
+const VersjonerForAktivitetWrapper = () => {
+    const { aktivitet: aktivitetPromise } = useAktivitetsVisningLoaderData();
+    return (
+        <Suspense fallback={<EndringsloggFallback />}>
+            <Await resolve={aktivitetPromise}>
+                <VersjonerForAktivitet />
+            </Await>
+        </Suspense>
+    );
+};
+
+const EndringsloggFallback = () => {
+    return (
+        <div>
+            <Skeleton variant="text" width={250} />
+            <Skeleton variant="text" width={150} />
+        </div>
+    );
+};
+
+export default VersjonerForAktivitetWrapper;

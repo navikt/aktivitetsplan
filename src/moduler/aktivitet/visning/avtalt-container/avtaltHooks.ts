@@ -8,7 +8,7 @@ import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBruk
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, msSince } from '../../../../utils/dateUtils';
 import { selectErUnderKvp, selectOppfolgingsPerioder } from '../../../oppfolging-status/oppfolging-selector';
-import { selectAktiviteterData } from '../../aktivitet-selector';
+import { selectAktiviteterData } from '../../aktivitet-slice';
 
 export const useKanSendeVarsel = () => {
     const erKvp = useSelector(selectErUnderKvp);
@@ -24,14 +24,14 @@ export const useSendAvtaltMetrikker = () => {
             .filter((a) => !a.historisk).length !== 0;
 
     const aktivOppfolgingsPeriode = useSelector<any, Oppfolgingsperiode[]>(selectOppfolgingsPerioder).filter(
-        (periode) => !periode.sluttDato
+        (periode) => !periode.sluttDato,
     )[0];
     const kanSendeVarsel = useKanSendeVarsel();
 
     return (
         forhaandsorienteringsType: ForhaandsorienteringType,
         aktivitetType: AktivitetType,
-        mindreEnnSyvDagerTil: boolean
+        mindreEnnSyvDagerTil: boolean,
     ) => {
         loggForhandsorientering(!kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringsType, aktivitetType);
 

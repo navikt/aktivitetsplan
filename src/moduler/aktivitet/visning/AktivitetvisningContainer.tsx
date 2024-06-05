@@ -5,17 +5,14 @@ import { Navigate, useParams } from 'react-router-dom';
 import { Status } from '../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
-import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../Provider';
 import { RootState } from '../../../store';
 import { DirtyProvider } from '../../context/dirty-context';
-import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
-import { hentAktivitet } from '../aktivitet-actions';
+import { selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { kanEndreAktivitetDetaljer, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
-import { hentArenaAktiviteter } from '../arena-aktiviteter-slice';
 import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from 'reselect';
@@ -38,8 +35,6 @@ const AktivitetvisningContainer = () => {
     const { id } = useParams<{ id: string }>();
     const aktivitetId = id;
 
-    const dispatch = useAppDispatch();
-
     const erVeileder = useErVeileder();
     const valgtAktivitet = useSelector((state: RootState) =>
         aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
@@ -58,14 +53,6 @@ const AktivitetvisningContainer = () => {
     const tillatEndring = kanEndreAktivitetDetaljer(valgtAktivitet as VeilarbAktivitet, erVeileder);
 
     useEffect(() => {
-        if (valgtAktivitet) {
-            if (isArenaAktivitet(valgtAktivitet)) {
-                dispatch(hentArenaAktiviteter());
-            } else {
-                dispatch(hentAktivitet(valgtAktivitet.id));
-            }
-        }
-
         return () => {
             const aktivitetskort =
                 valgtAktivitet && document.querySelector(`#${prefixAktivtetskortId(valgtAktivitet)}`);
