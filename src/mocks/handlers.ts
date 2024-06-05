@@ -209,7 +209,7 @@ const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
                         },
                         {
                             endretAvType: 'NAV',
-                            endretAv: 'Iherdig Ketchup',
+                            endretAv: 'R121212',
                             tidspunkt: subMinutes(new Date(), 30),
                             beskrivelseForVeileder: 'R121212 merket aktiviteten "Avtalt med NAV"',
                             beskrivelseForBruker: 'NAV merket aktiviteten "Avtalt med NAV"',
