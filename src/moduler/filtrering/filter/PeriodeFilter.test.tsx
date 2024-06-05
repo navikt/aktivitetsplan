@@ -20,7 +20,9 @@ import { rest } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
 import { aktivitetAdapter, oppfolgingsdperiodeAdapter } from '../../aktivitet/aktivitet-slice';
 
+// NOSONAR
 const gjeldendeOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) => !erHistorisk(it))!!;
+
 const gammelOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
     erHistorisk(it),
 ) as HistoriskOppfolgingsperiode;
