@@ -7,16 +7,12 @@ import { useErVeileder } from '../../../../Provider';
 
 const isUpperCase = (s: string) => s.toUpperCase() === s;
 
-export const EndringsLinje = ({ endring }: { endring: Endring }) => {
-    const erBruker = !useErVeileder();
-
-    const beskrivelse = erBruker ? endring.beskrivelseForBruker : endring.beskrivelseForVeileder;
-
-    const splittet = beskrivelse.split(' ').reduce(
+const splittPåEndretAvNavnOgEndringsbeskrivelse = (beskrivelse: string) =>
+    beskrivelse.split(' ').reduce(
         (result, current) => {
             const starterMedUppercase = isUpperCase(current.charAt(0));
-            const erPåStartenAvSetningen = result[1].length === 0;
-            if (starterMedUppercase && erPåStartenAvSetningen) {
+            const ferdigMedNavn = result[1].length > 0;
+            if (starterMedUppercase && !ferdigMedNavn) {
                 return [`${result[0]} ${current}`, result[1]];
             } else {
                 return [result[0], `${result[1]} ${current}`];
@@ -25,9 +21,15 @@ export const EndringsLinje = ({ endring }: { endring: Endring }) => {
         ['', ''],
     );
 
+export const EndringsLinje = ({ endring }: { endring: Endring }) => {
+    const erBruker = !useErVeileder();
+
+    const beskrivelse = erBruker ? endring.beskrivelseForBruker : endring.beskrivelseForVeileder;
+    const [endretAvNavn, endringsbeskrivelse] = splittPåEndretAvNavnOgEndringsbeskrivelse(beskrivelse);
+
     return (
         <div className="pb-4">
-            <b>{splittet[0]}</b> {splittet[1]}
+            <b>{endretAvNavn}</b> {endringsbeskrivelse}
             <BodyShort>{formaterDatoEllerTidSiden(endring.tidspunkt)}</BodyShort>
         </div>
     );
