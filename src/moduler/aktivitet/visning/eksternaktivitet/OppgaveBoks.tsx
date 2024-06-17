@@ -15,7 +15,7 @@ const customAlertStripe = (oppgave: Oppgave) => (
         </Heading>
         {oppgave.subtekst}
 
-        <Button variant={'primary'} as="a" href={oppgave.url} target="_blank" className="flex w-fit mt-4">
+        <Button variant={'primary'} as="a" href={oppgave.url} className="flex w-fit mt-4">
             {oppgave.knapptekst}
         </Button>
     </Alert>
