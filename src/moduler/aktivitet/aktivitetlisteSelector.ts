@@ -10,25 +10,29 @@ import { selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingsPerioder, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriode } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
+import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],
     (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter),
 );
 
-export const selectVistOppfolgingsperiode = createSelector(selectOppfolgingsPerioder, (oppfolgingsPerioder) => {
-    const sortertePerioder = [...oppfolgingsPerioder].sort((a, b) => a.startDato.localeCompare(b.startDato));
-    return sortertePerioder[0];
+export const selectVistOppfolgingsperiode = createSelector(
+    selectHistoriskPeriode,
+    selectOppfolgingsPerioder,
+    (valgtHistoriskPeriode, oppfolgingsPerioder) => {
+        if (valgtHistoriskPeriode) return valgtHistoriskPeriode;
 
-    // const currentOppfolgingsperiode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
-    //
-    // if (currentOppfolgingsperiode) {
-    //     return currentOppfolgingsperiode;
-    // } else {
-    //     const sortertePerioder = [...oppfolgingsPerioder].sort((a, b) => a.startDato.localeCompare(b.startDato));
-    //     return sortertePerioder[0];
-    // }
-});
+        const inneværendePeriode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
+
+        if (inneværendePeriode) {
+            return inneværendePeriode;
+        } else {
+            const sortertePerioder = [...oppfolgingsPerioder].sort((a, b) => a.startDato.localeCompare(b.startDato));
+            return sortertePerioder[0];
+        }
+    },
+);
 export const selectAktiviterForAktuellePerioden = createSelector(
     selectArenaAktiviteterData,
     selectVistOppfolgingsperiode,
