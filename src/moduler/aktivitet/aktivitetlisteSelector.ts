@@ -5,16 +5,11 @@ import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
-import { aktivitetMatchesFilters, datoErIPeriode } from '../filtrering/filter/filter-utils';
+import { aktivitetMatchesFilters } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
-import {
-    selectForrigeHistoriskeSluttDato,
-    selectOppfolgingsPerioder,
-    selectOppfolgingStatus,
-} from '../oppfolging-status/oppfolging-selector';
+import { selectOppfolgingsPerioder, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriode } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
-import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
@@ -25,9 +20,19 @@ export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = crea
 export const selectVistOppfolgingsperiode = createSelector(
     selectHistoriskPeriode,
     selectOppfolgingsPerioder,
-    (historiskPeriode, oppfolgingsPerioder) => {
-        const currentOppfolgingsperiode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
-        return historiskPeriode || currentOppfolgingsperiode; // Antar sorterte oppfølgingsperioder
+    (valgtHistoriskPeriode, oppfolgingsPerioder) => {
+        if (valgtHistoriskPeriode) return valgtHistoriskPeriode;
+
+        const inneværendePeriode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
+
+        if (inneværendePeriode) {
+            return inneværendePeriode;
+        } else {
+            const sorterteHistoriskePerioder = [...oppfolgingsPerioder].sort((a, b) =>
+                a.startDato.localeCompare(b.startDato),
+            );
+            return sorterteHistoriskePerioder[0];
+        }
     },
 );
 export const selectAktiviterForAktuellePerioden = createSelector(
