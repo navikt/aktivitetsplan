@@ -28,8 +28,10 @@ export const selectVistOppfolgingsperiode = createSelector(
         if (inneværendePeriode) {
             return inneværendePeriode;
         } else {
-            const sortertePerioder = [...oppfolgingsPerioder].sort((a, b) => a.startDato.localeCompare(b.startDato));
-            return sortertePerioder[0];
+            const sorterteHistoriskePerioder = [...oppfolgingsPerioder].sort((a, b) =>
+                a.startDato.localeCompare(b.startDato),
+            );
+            return sorterteHistoriskePerioder[0];
         }
     },
 );
