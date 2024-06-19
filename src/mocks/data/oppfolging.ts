@@ -23,14 +23,14 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
             },
         ],
     },
-    {
-        uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
-        aktorId: '1234567988888',
-        veileder: null,
-        startDato: '2018-01-31T10:46:10.971+01:00',
-        sluttDato: null,
-        begrunnelse: null,
-    },
+    // {
+    //     uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+    //     aktorId: '1234567988888',
+    //     veileder: null,
+    //     startDato: '2018-01-31T10:46:10.971+01:00',
+    //     sluttDato: null,
+    //     begrunnelse: null,
+    // },
 ];
 
 const oppfolging: OppfolgingStatus = {
@@ -38,8 +38,8 @@ const oppfolging: OppfolgingStatus = {
     aktorId: '1234567988888',
     veilederId: null,
     reservasjonKRR: erKRRBruker(),
-    manuell: erManuellBruker(),
-    underOppfolging: !erPrivatBruker(),
+    manuell: false,
+    underOppfolging: false,
     underKvp: false,
     kanStarteOppfolging: false,
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfolgingsperioder,
