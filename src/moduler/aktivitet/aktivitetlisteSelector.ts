@@ -5,31 +5,30 @@ import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
-import { aktivitetMatchesFilters, datoErIPeriode } from '../filtrering/filter/filter-utils';
+import { aktivitetMatchesFilters } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
-import {
-    selectForrigeHistoriskeSluttDato,
-    selectOppfolgingsPerioder,
-    selectOppfolgingStatus,
-} from '../oppfolging-status/oppfolging-selector';
+import { selectOppfolgingsPerioder, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriode } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
-import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
-import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],
     (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter),
 );
 
-export const selectVistOppfolgingsperiode = createSelector(
-    selectHistoriskPeriode,
-    selectOppfolgingsPerioder,
-    (historiskPeriode, oppfolgingsPerioder) => {
-        const currentOppfolgingsperiode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
-        return historiskPeriode || currentOppfolgingsperiode; // Antar sorterte oppfølgingsperioder
-    },
-);
+export const selectVistOppfolgingsperiode = createSelector(selectOppfolgingsPerioder, (oppfolgingsPerioder) => {
+    const sortertePerioder = [...oppfolgingsPerioder].sort((a, b) => a.startDato.localeCompare(b.startDato));
+    return sortertePerioder[0];
+
+    // const currentOppfolgingsperiode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
+    //
+    // if (currentOppfolgingsperiode) {
+    //     return currentOppfolgingsperiode;
+    // } else {
+    //     const sortertePerioder = [...oppfolgingsPerioder].sort((a, b) => a.startDato.localeCompare(b.startDato));
+    //     return sortertePerioder[0];
+    // }
+});
 export const selectAktiviterForAktuellePerioden = createSelector(
     selectArenaAktiviteterData,
     selectVistOppfolgingsperiode,
