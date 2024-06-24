@@ -1,11 +1,12 @@
 import React from 'react';
 import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { defer, LoaderFunctionArgs } from 'react-router-dom';
+import { defer, LoaderFunctionArgs, useNavigate } from 'react-router-dom';
 import { Dispatch } from '../../store';
 import Sidebar from './Sidebar';
 import { PdfViewer } from './PdfViewer';
 import { JournalErrorBoundry } from './JournalErrorBoundry';
+import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 
 export const JournalforingPage = () => {
     const pdf = useSelector(selectPdf);
@@ -33,6 +34,16 @@ export const arkivLoader =
         if (!oppfolgingsperiodeId) {
             throw Error('path param is not set, this should never happen');
         }
+        const oppfolgingsperioderTilBrukerIContext = useSelector(selectOppfolgingsPerioder);
+        const oppfølgingsperiodeTilhørerBrukerIContext = oppfolgingsperioderTilBrukerIContext
+            .map((periode) => periode.uuid)
+            .includes(oppfolgingsperiodeId);
+
+        if (!oppfølgingsperiodeTilhørerBrukerIContext) {
+            const navigate = useNavigate();
+            navigate('/aktivitetsplan');
+        }
+
         const forhaandsvisning = dispatch(
             hentPdfTilForhaandsvisning({
                 journalførendeEnhet: aktivEnhet,
