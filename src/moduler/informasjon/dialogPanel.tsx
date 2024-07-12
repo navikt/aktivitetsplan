@@ -21,9 +21,14 @@ export const DialogPanel = () => {
                 </Heading>
             </Accordion.Header>
             <Accordion.Content>
-                <BodyShort>
+                <BodyShort className="pb-4">
                     I dialogen kan du og veilederen din skrive til hverandre om arbeid og oppfølging. Dere kan blant
                     annet sende meldinger om aktivitetene dine i aktivitetsplanen.
+                </BodyShort>
+                <BodyShort>
+                    Vær oppmerksom på at hverken du eller veilederen din kan endre meldinger etter at de er sendt. Hvis
+                    det er noe du ønsker å rette på, kan du sende en ny melding der du forteller om hva som ikke stemte
+                    i den forrige meldingen.
                 </BodyShort>
                 <DialogVideo />
             </Accordion.Content>

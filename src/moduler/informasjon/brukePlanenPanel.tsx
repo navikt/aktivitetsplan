@@ -33,10 +33,15 @@ export const BrukePlanenPanel = () => {
                 <Heading level="3" size="xsmall" className="pt-4">
                     Avtalt med NAV
                 </Heading>
-                <BodyShort>
+                <BodyShort className="pb-4">
                     Når du har avtalt å gjennomføre en aktivitet med veilederen din, vil veilederen merke den «Avtalt
                     med NAV». Du må gjennomføre slike aktiviteter. Hvis du ikke følger opp avtalte aktiviteter, kan du
                     risikere å miste pengestøtte fra NAV.
+                </BodyShort>
+                <BodyShort>
+                    Når en aktivitet er markert med "avtalt med NAV" kan teksten ikke lenger endres på. Noen datoer kan
+                    likevel endres på, men ingen annen tekst. Det er laget slik for at ingen skal kunne endre på
+                    detaljer som kan være viktige for din sak i NAV.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
                     Flytte på en aktivitet
@@ -45,6 +50,14 @@ export const BrukePlanenPanel = () => {
                     Aktivitetsplanen har fem kolonner med statusene forslag, planlegger, gjennomfører, fullført og
                     avbrutt. Statusen på aktiviteten viser til hvor langt du har kommet i gjennomføringen. Du kan
                     oppdatere statusen inne i aktiviteten, for eksempel fra «gjennomfører» til «fullført».
+                </BodyShort>
+                <Heading level="3" size="xsmall" className="pt-4">
+                    Fullførte eller avbrutte aktiviteter
+                </Heading>
+                <BodyShort>
+                    Når en aktivitet flyttes til "fullført" eller "avbrutt", blir aktiviteten låst slik at hverken du
+                    eller veilederen din kan endre innholdet i etterkant. Pass på å gjøre viktige endringer før
+                    aktiviteten låses.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
                     Blå prikk
