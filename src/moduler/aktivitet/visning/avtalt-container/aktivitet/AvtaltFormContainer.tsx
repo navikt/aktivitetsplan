@@ -13,7 +13,9 @@ import { Alert } from '@navikt/ds-react';
 
 interface Props {
     aktivitet: VeilarbAktivitet;
+
     setSendtAtErAvtaltMedNav(): void;
+
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
@@ -29,7 +31,7 @@ const AvtaltFormContainer = (props: Props) => {
     const { aktivitet } = props;
     const nettverksStatus = useSelector(selectAktivitetStatus);
 
-    const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
+    const mindreEnnSyvDagerTil: boolean = aktivitet.tilDato ? !erMerEnnSyvDagerTil(aktivitet.tilDato) : false;
     const erEksternAktivitet = isEksternAktivitet(aktivitet);
     const manglerDatoer = !aktivitet.fraDato && !aktivitet.tilDato;
 

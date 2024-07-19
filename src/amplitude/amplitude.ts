@@ -93,6 +93,7 @@ export type TextCheckerAmplitudeAnalysis = Omit<
                 names: number;
                 phonenumbers: number;
             };
+            personvernbrudd: number;
         }
     >,
     'tools'
@@ -108,6 +109,7 @@ function mapSpraksjekkAnalysis(analysis: TextCheckerResult): TextCheckerAmplitud
         nrkOrd: analysis.nrkOrd.length,
         avloeserord: analysis.avloeserord.avloeserordMatches.length + analysis.avloeserord.datatermerMatches.length,
         comma: analysis.comma,
+        personvernbrudd: analysis.personvernbrudd.length,
         personalData: {
             emails: analysis.personalData.emails.length,
             names: analysis.personalData.names.length,

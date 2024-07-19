@@ -24,7 +24,7 @@ const EksternAktivitetHandlingerKnapper = ({ aktivitet }: Props) => {
                 if (handling.lenkeType === 'INTERN' && !erVeileder) return null;
 
                 return (
-                    <LinkPanel key={index} href={handling.url} target="_blank">
+                    <LinkPanel key={index} href={handling.url}>
                         <Heading size="small">{handling.tekst}</Heading>
                         <BodyShort>{handling.subtekst}</BodyShort>
                     </LinkPanel>

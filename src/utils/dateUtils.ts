@@ -55,12 +55,14 @@ function erMerEnntoDagerSiden(dato: string) {
     return isValid(datoVerdi) ? isBefore(datoVerdi, toDagerSiden) : false;
 }
 
-export function erMerEnnSyvDagerTil(dato: string) {
+export function erMerEnnSyvDagerTil(dato: string): boolean {
     const datoVerdi = parseISO(dato);
     return isValid(datoVerdi) ? isAfter(datoVerdi, startOfDay(addDays(new Date(), 7))) : false;
 }
 
-export function formaterDatoEllerTidSiden(dato: string) {
+export function formaterDatoEllerTidSiden(dato: string | undefined) {
+    if (!dato) return undefined;
+
     const datoVerdi = parseISO(dato);
 
     if (isValid(datoVerdi)) {
@@ -75,12 +77,18 @@ export function formaterDatoEllerTidSiden(dato: string) {
 export const msSince = (date: string) => differenceInMilliseconds(new Date(), parseISO(date));
 
 const oneIfPresent = (x: string | undefined) => (x ? 1 : 0);
+
 export function datoComparator(a: string, b: string) {
-    const dateA = parseISO(a);
-    const dateB = parseISO(b);
-    return isValid(dateA) && isValid(dateB) ? dateA.getTime() - dateB.getTime() : oneIfPresent(a) - oneIfPresent(b);
+    if (a == null || b == null) {
+        return oneIfPresent(a) - oneIfPresent(b);
+    }
+    return parseISO(a).getTime() - parseISO(b).getTime();
 }
 
 export function dagerTil(dato: string) {
     return differenceInDays(startOfDay(parseISO(dato)), startOfDay(new Date()));
 }
+
+export const isValidDate = (day?: Date): boolean => {
+    return !!(day && !Number.isNaN(day.getTime()) && day.getFullYear() > 999);
+};
