@@ -45,6 +45,8 @@ spec:
         - application: pto-proxy
         - application: veilarblest
           namespace: dab
+        - application: veilarbaktivitet
+          namespace: dab
       external:
         - host: navnob2c.b2clogin.com
         - host: veilarbmalverk.prod-fss-pub.nais.io
