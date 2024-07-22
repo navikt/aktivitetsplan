@@ -30,6 +30,10 @@ spec:
   tokenx:
     enabled:
       true
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   ingresses:
     - https://aktivitetsplan.nav.no
   resources:
