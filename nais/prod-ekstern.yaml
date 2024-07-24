@@ -108,6 +108,6 @@ spec:
             },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
+            { "fromPath": "/veilarbaktivitet", "toUrl": "http://veilarbaktivitet.dab", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "dab", "cluster": "prod-gcp" } }
           ]
         }
