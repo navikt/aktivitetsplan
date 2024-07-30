@@ -15,7 +15,7 @@ const LagreAktivitetKnapp = (props: Props) => {
 
     return (
         <>
-            <Button className="mt-4" loading={loading} disabled={disabled || !underOppfolging}>
+            <Button className="mt-4" loading={loading} disabled={disabled || !underOppfolging || loading}>
                 Lagre
             </Button>
         </>
