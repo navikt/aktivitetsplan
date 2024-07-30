@@ -128,6 +128,15 @@
 }
 
 @media print {
+    @page {
+        margin: 0;
+    }
+
+    body {
+        margin-bottom: 5mm;
+        margin-top: 5mm;
+    }
+
     .ReactModal__Body--open {
         position: relative;
     }
@@ -144,10 +153,10 @@
     .veilarbpersonflatefs[aria-hidden='true'] {
         display: none;
     }
-
-    .decorator-header, .decorator-footer {
-        display: none;
-    }
+    //
+    //.decorator-header, .decorator-footer {
+    //    display: none;
+    //}
 
     decorator-header, decorator-footer {
         display: none;
