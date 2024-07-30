@@ -45,7 +45,7 @@ const PrintMeldingForm = (props: Props) => {
 
     return (
         <form onSubmit={handleSubmit((data) => submit(data))} className="space-y-8">
-            <div className="space-y-8">
+            <div className="space-y-4 p-4">
                 <Textarea
                     label="Rediger teksten under så den passer til brukeren."
                     maxLength={2000}
@@ -53,8 +53,8 @@ const PrintMeldingForm = (props: Props) => {
                     value={begrunnelseValue}
                     error={errors.beskrivelse && errors.beskrivelse.message}
                 />
+                <Button>Velg</Button>
             </div>
-            <Button>Velg</Button>
         </form>
     );
 };
