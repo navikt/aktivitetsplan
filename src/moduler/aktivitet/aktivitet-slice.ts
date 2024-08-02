@@ -24,13 +24,15 @@ type PerioderMedAktiviteter = {
     aktiviteter: VeilarbAktivitet[];
 };
 
+interface PeriodeEntityState {
+    id: string;
+    aktiviteter: EntityState<VeilarbAktivitet>;
+}
+
 export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
     selectId: (model) => model.id,
 });
-export const oppfolgingsdperiodeAdapter = createEntityAdapter<{
-    id: string;
-    aktiviteter: EntityState<VeilarbAktivitet>;
-}>({
+export const oppfolgingsdperiodeAdapter = createEntityAdapter<PeriodeEntityState>({
     selectId: (model) => model.id,
 });
 const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
@@ -80,7 +82,7 @@ function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbA
     });
 }
 
-const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: string) => {
+const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: string): PeriodeEntityState => {
     return (
         selectOppfolgingsperiodeById(state, oppfolgingsperiodeId) || {
             // Hvis ingen oppfølgingsperiode funnet, opprett en ny
