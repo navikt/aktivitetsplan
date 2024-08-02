@@ -21,9 +21,19 @@ export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = crea
 export const selectVistOppfolgingsperiode = createSelector(
     selectHistoriskPeriode,
     selectOppfolgingsPerioder,
-    (historiskPeriode, oppfolgingsPerioder) => {
-        const currentOppfolgingsperiode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
-        return historiskPeriode || currentOppfolgingsperiode; // Antar sorterte oppfølgingsperioder
+    (valgtHistoriskPeriode, oppfolgingsPerioder) => {
+        if (valgtHistoriskPeriode) return valgtHistoriskPeriode;
+
+        const inneværendePeriode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
+
+        if (inneværendePeriode) {
+            return inneværendePeriode;
+        } else {
+            const sorterteHistoriskePerioder = [...oppfolgingsPerioder].sort((a, b) =>
+                a.startDato.localeCompare(b.startDato),
+            );
+            return sorterteHistoriskePerioder[0];
+        }
     },
 );
 export const selectAktiviterForAktuellePerioden = createSelector(

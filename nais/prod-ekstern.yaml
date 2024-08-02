@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.04.14_11.14-66f2c0b9e68b
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.05.07_13.29-a2e3b56408a1
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -30,6 +30,10 @@ spec:
   tokenx:
     enabled:
       true
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   ingresses:
     - https://aktivitetsplan.nav.no
   resources:
@@ -44,6 +48,8 @@ spec:
       rules:
         - application: pto-proxy
         - application: veilarblest
+          namespace: dab
+        - application: veilarbaktivitet
           namespace: dab
       external:
         - host: navnob2c.b2clogin.com
@@ -102,6 +108,6 @@ spec:
             },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
             { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbaktivitet", "toUrl": "https://veilarbaktivitet.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "pto", "cluster": "prod-fss" } }
+            { "fromPath": "/veilarbaktivitet", "toUrl": "http://veilarbaktivitet.dab", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "dab", "cluster": "prod-gcp" } }
           ]
         }
