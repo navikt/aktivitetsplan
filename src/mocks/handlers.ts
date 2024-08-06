@@ -41,6 +41,7 @@ import {
 import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
+import { subDays, subMinutes } from 'date-fns';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -82,8 +83,18 @@ export const handlers = [
     ),
     rest.post(
         '/veilarbaktivitet/graphql',
-        failOrGrahpqlResponse(getAktivitetFeiler, () => {
-            return aktivitestplanResponse(); // Default aktiviteter
+        failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
+            const body = (await req.json()) as { query: string; variables: Record<string, any> };
+            if (body.query.includes('historikk')) {
+                const aktivitetId = body.variables.aktivitetId;
+                const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
+                await new Promise((resolve) => {
+                    setTimeout(resolve, 2000);
+                });
+                return aktivitetHistorikkResponse(aktivitet);
+            } else {
+                return aktivitestplanResponse(); // Default aktiviteter
+            }
         }),
     ),
     rest.post(
@@ -177,6 +188,42 @@ export const aktivitestplanResponse = (
                 id: periodeId,
                 aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId),
             })),
+        },
+    };
+};
+
+const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
+    const now = new Date();
+    return {
+        data: {
+            aktivitet: {
+                ...aktivitet,
+                historikk: {
+                    endringer: [
+                        {
+                            endretAvType: 'BRUKER',
+                            endretAv: '2121212121212',
+                            tidspunkt: now,
+                            beskrivelseForVeileder: 'Bruker endret detaljer på aktiviteten',
+                            beskrivelseForBruker: 'Du endret detaljer på aktiviteten',
+                        },
+                        {
+                            endretAvType: 'NAV',
+                            endretAv: 'R121212',
+                            tidspunkt: subMinutes(new Date(), 30),
+                            beskrivelseForVeileder: 'R121212 merket aktiviteten "Avtalt med NAV"',
+                            beskrivelseForBruker: 'NAV merket aktiviteten "Avtalt med NAV"',
+                        },
+                        {
+                            endretAvType: 'BRUKER',
+                            endretAv: '2121212121212',
+                            tidspunkt: subDays(new Date(), 2),
+                            beskrivelseForVeileder: 'Bruker flyttet aktiviteten fra Planlegger til Forslag',
+                            beskrivelseForBruker: 'Du flyttet aktiviteten fra Planlegger til Forslag',
+                        },
+                    ],
+                },
+            },
         },
     };
 };

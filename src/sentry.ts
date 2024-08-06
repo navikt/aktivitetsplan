@@ -10,7 +10,7 @@ import {
     createBrowserRouter,
 } from 'react-router-dom';
 
-enum Env {
+export enum Env {
     Local = 'local',
     Dev = 'dev',
     Prod = 'prod',

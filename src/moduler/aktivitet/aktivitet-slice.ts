@@ -1,4 +1,4 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, EntityState, isAnyOf } from '@reduxjs/toolkit';
 
 import { Status } from '../../createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
@@ -16,39 +16,81 @@ import {
     publiserReferat,
     settAktivitetTilAvtalt,
 } from './aktivitet-actions';
-
-export interface AktivitetState {
-    data: {
-        perioder: PerioderMedAktiviteter[];
-    };
-    status: Status;
-}
+import { RootState } from '../../store';
+import { createSelector } from 'reselect';
 
 type PerioderMedAktiviteter = {
     id: string;
     aktiviteter: VeilarbAktivitet[];
 };
 
-const initialState: AktivitetState = {
-    data: { perioder: [] },
-    status: Status.NOT_STARTED,
+interface PeriodeEntityState {
+    id: string;
+    aktiviteter: EntityState<VeilarbAktivitet>;
+}
+
+export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
+    selectId: (model) => model.id,
+});
+export const oppfolgingsdperiodeAdapter = createEntityAdapter<PeriodeEntityState>({
+    selectId: (model) => model.id,
+});
+const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
+    oppfolgingsdperiodeAdapter.getSelectors();
+const { selectById: selectAktivitetById, selectAll: selectAlleAktiviter } = aktivitetAdapter.getSelectors();
+
+export const selectAktiviteterSlice = (state: RootState): AktivitetState => state.data.aktiviteter;
+export const selectAktivitet = (state: RootState, aktivitetId: string): VeilarbAktivitet | undefined => {
+    const perioder = selectAllOppfolgingsperioder(selectAktiviteterSlice(state));
+    return perioder
+        .map((periode) => selectAktivitetById(periode.aktiviteter, aktivitetId))
+        .find((aktivitet) => !!aktivitet);
 };
+export const selectAktiviteterData: (state: RootState) => VeilarbAktivitet[] = createSelector(
+    selectAktiviteterSlice,
+    (aktiviteter) => {
+        // TODO: Find out why this returns [undefined] in one of the tests
+        return (
+            selectAllOppfolgingsperioder(aktiviteter)
+                .flatMap((periode) => selectAlleAktiviter(periode.aktiviteter))
+                .filter((it) => it) || []
+        );
+    },
+);
+export const selectAktiviteterByPeriode: (state: RootState) => PerioderMedAktiviteter[] = createSelector(
+    selectAktiviteterSlice,
+    (aktiviteter) => {
+        const oppfolgingsperioder = selectAllOppfolgingsperioder(aktiviteter);
+        return (oppfolgingsperioder || []).map((periode) => ({
+            id: periode.id,
+            aktiviteter: selectAlleAktiviter(periode.aktiviteter),
+        }));
+    },
+);
+
+const initialState = oppfolgingsdperiodeAdapter.getInitialState({
+    status: Status.NOT_STARTED,
+});
+
+export type AktivitetState = typeof initialState;
 
 function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbAktivitet): AktivitetState {
-    return {
-        ...state,
-        data: {
-            perioder: state.data.perioder.map((periode) => {
-                return {
-                    ...periode,
-                    aktiviteter: periode.aktiviteter.map((a) => {
-                        return a.id === aktivitet.id ? aktivitet : a;
-                    }),
-                };
-            }),
-        },
-    };
+    const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
+    return oppfolgingsdperiodeAdapter.upsertOne(state, {
+        id: oppfolgingsperiode.id,
+        aktiviteter: aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet),
+    });
 }
+
+const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: string): PeriodeEntityState => {
+    return (
+        selectOppfolgingsperiodeById(state, oppfolgingsperiodeId) || {
+            // Hvis ingen oppfølgingsperiode funnet, opprett en ny
+            id: oppfolgingsperiodeId,
+            aktiviteter: aktivitetAdapter.getInitialState(),
+        }
+    );
+};
 
 const aktivitetSlice = createSlice({
     name: 'aktivitet',
@@ -57,50 +99,30 @@ const aktivitetSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(hentAktiviteter.fulfilled, (state, action) => {
             state.status = Status.OK;
-            state.data = action.payload.data;
+            const oppfolgingsperioder = action.payload.data.perioder.map((periode) => {
+                const periodeState = getOrCreatePeriode(state, periode.id);
+                return {
+                    id: periode.id,
+                    aktiviteter: aktivitetAdapter.upsertMany(periodeState.aktiviteter, periode.aktiviteter),
+                };
+            });
+            oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
-            return {
-                ...nyStateMedOppdatertAktivitet(state, action.payload),
-                status: Status.OK,
-            };
+            const aktivitet = action.payload.data.aktivitet;
+            nyStateMedOppdatertAktivitet(state, aktivitet);
         });
         builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            const oppfolgingsperiode = action.payload.oppfolgingsperiodeId;
-            const perioderMedFallback = (perioder: PerioderMedAktiviteter[]) => {
-                if (!perioder?.length)
-                    return [
-                        {
-                            id: oppfolgingsperiode,
-                            aktiviteter: [],
-                        },
-                    ];
-                return perioder;
-            };
-
-            return {
-                status: Status.OK,
-                data: {
-                    perioder: perioderMedFallback(state.data.perioder).map((periode) => {
-                        return {
-                            ...periode,
-                            aktiviteter:
-                                periode.id === action.payload.oppfolgingsperiodeId
-                                    ? [...periode.aktiviteter, action.payload]
-                                    : periode.aktiviteter,
-                        };
-                    }),
-                },
-            };
+            nyStateMedOppdatertAktivitet(state, action.payload);
         });
         builder.addCase(markerForhaandsorienteringSomLest.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet(state, action.payload);
+            nyStateMedOppdatertAktivitet(state, action.payload);
         });
         builder.addCase(settAktivitetTilAvtalt.fulfilled, (state, action) => {
             windowEvent(UpdateTypes.Aktivitet);
-            return nyStateMedOppdatertAktivitet(state, action.payload);
+            nyStateMedOppdatertAktivitet(state, action.payload);
         });
         builder.addMatcher(
             isAnyOf(

@@ -1,6 +1,5 @@
 import { SerializedError } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
-import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { RootState } from '../../store';
 import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import {
@@ -10,30 +9,12 @@ import {
     oppdaterAktivitetEtikett,
     oppdaterStillingFraNavSoknadsstatus,
 } from './aktivitet-actions';
-import { AktivitetState } from './aktivitet-slice';
 import { createSelector } from 'reselect';
-
-export function selectAktiviteterSlice(state: RootState): AktivitetState {
-    return state.data.aktiviteter;
-}
-
-export const selectAktiviteterData: (state: RootState) => VeilarbAktivitet[] = createSelector(
-    selectAktiviteterSlice,
-    (aktiviteter) => {
-        // TODO: Find out why this returns [undefined] in one of the tests
-        return aktiviteter.data.perioder.flatMap((periode) => periode.aktiviteter).filter((it) => it) || [];
-    },
-);
-export const selectAktiviteterByPeriode = (state: RootState) => {
-    return selectAktiviteterSlice(state).data?.perioder || [];
-};
+import { Historikk } from '../../datatypes/Historikk';
+import { selectAktivitet, selectAktiviteterSlice } from './aktivitet-slice';
 
 export function selectAktivitetStatus(state: RootState) {
     return selectAktiviteterSlice(state).status;
-}
-
-export function selectHarTilgangTilAktiviteter(state: RootState) {
-    return selectAktivitetStatus(state) === Status.OK;
 }
 
 export function selectLasterAktivitetData(state: RootState) {
@@ -56,5 +37,13 @@ export const selecteEndreAktivitetFeilmeldinger: (state: RootState) => Serialize
         const oppdaterStillingFraNavError = selectFeil(errors, oppdaterStillingFraNavSoknadsstatus.rejected.type);
         const flyttAktivitetError = selectFeil(errors, flyttAktivitet.rejected.type);
         return [...oppdaterError, ...oppdaterEtikettError, ...oppdaterStillingFraNavError, ...flyttAktivitetError];
+    },
+);
+
+export const selectAktivitetHistorikk = createSelector(
+    [selectAktivitet, (_, aktivitetId: string | undefined) => aktivitetId],
+    (aktivitet, aktivitetId) => {
+        if (!aktivitetId) return undefined;
+        return (aktivitet as { historikk?: Historikk }).historikk;
     },
 );

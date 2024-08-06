@@ -18,44 +18,59 @@ import { selectAktivitetStatus } from '../moduler/aktivitet/aktivitet-selector';
 import { hentLest } from '../moduler/lest/lest-slice';
 import { selectLestStatus } from '../moduler/lest/lest-selector';
 
+const createFetchIfNotStartedThunk = (sliceLoader: CacheableSliceLoader) => {
+    return createAsyncThunk('initialPageLoad/' + sliceLoader.key, async (isVeileder: boolean, thunkApi) => {
+        const { getState, dispatch } = thunkApi;
+        return fetchIfNotStarted(sliceLoader)(getState() as RootState, dispatch, isVeileder);
+    });
+};
+
 // Re-triggered when switching tabs in veilarbpersonflate, dont need to re-fetch data if recently fetched
-export const initialPageLoadThunk = createAsyncThunk('initialPageLoad', async (isVeileder: boolean, thunkApi) => {
-    const { dispatch, getState } = thunkApi;
-    const state = getState() as RootState;
-    return {
-        ...fetchIfNotStartedAll([
-            { fetchAction: hentOppfolging, statusSelector: selectOppfolgingStatus, key: 'oppfolging' },
-            { fetchAction: hentIdentitet, statusSelector: selectIdentitetStatus, key: 'identitet' },
-            {
-                fetchAction: hentVeilederInfo,
-                statusSelector: selectVeilederStatus,
-                veilederOnly: true,
-                key: 'veileder',
-            },
-            { fetchAction: hentMal, statusSelector: selectMalStatus, key: 'mal' },
-            { fetchAction: hentAktiviteter, statusSelector: selectAktivitetStatus, key: 'aktiviteter' },
-            { fetchAction: hentArenaAktiviteter, statusSelector: selectArenaAktivitetStatus, key: 'arenaAktiviteter' },
-            { fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' },
-        ])(state, dispatch, isVeileder),
-        dialoger: dispatch(hentDialoger()), // Alltid hent dialoger ved page-load
-    };
-});
+export const initialPageLoadThunks = {
+    oppfolging: createFetchIfNotStartedThunk({
+        fetchAction: hentOppfolging,
+        statusSelector: selectOppfolgingStatus,
+        key: 'oppfolging',
+    }),
+    identitet: createFetchIfNotStartedThunk({
+        fetchAction: hentIdentitet,
+        statusSelector: selectIdentitetStatus,
+        key: 'identitet',
+    }),
+    veileder: createFetchIfNotStartedThunk({
+        fetchAction: hentVeilederInfo,
+        statusSelector: selectVeilederStatus,
+        veilederOnly: true,
+        key: 'veileder',
+    }),
+    mal: createFetchIfNotStartedThunk({ fetchAction: hentMal, statusSelector: selectMalStatus, key: 'mal' }),
+    aktiviteter: createFetchIfNotStartedThunk({
+        fetchAction: hentAktiviteter,
+        statusSelector: selectAktivitetStatus,
+        key: 'aktiviteter',
+    }),
+    arenaAktiviteter: createFetchIfNotStartedThunk({
+        fetchAction: hentArenaAktiviteter,
+        statusSelector: selectArenaAktivitetStatus,
+        key: 'arenaAktiviteter',
+    }),
+    lest: createFetchIfNotStartedThunk({ fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' }),
+    dialoger: hentDialoger,
+} as const;
 
 interface CacheableSliceLoader {
-    fetchAction: AsyncThunk<any, any, any>;
+    fetchAction: AsyncThunk<any, void, any>;
     statusSelector: (state: RootState) => Status;
     key: string;
     veilederOnly?: boolean;
 }
 
-const fetchIfNotStartedAll =
-    (stateLoaders: CacheableSliceLoader[]) =>
+export const fetchIfNotStarted =
+    ({ statusSelector, fetchAction, veilederOnly }: CacheableSliceLoader) =>
     (state: RootState, dispatch: Dispatch<AsyncThunkAction<any, any, any>>, isVeileder: boolean) => {
-        return stateLoaders.reduce((acc, { statusSelector, fetchAction, veilederOnly, key }) => {
-            const status = statusSelector(state);
-            if (status === Status.NOT_STARTED && (!veilederOnly || isVeileder)) {
-                return { ...acc, [key]: dispatch(fetchAction()) };
-            }
-            return { ...acc, [key]: Promise.resolve(null) };
-        }, {});
+        const status = statusSelector(state);
+        if (status === Status.NOT_STARTED && (!veilederOnly || isVeileder)) {
+            return dispatch(fetchAction());
+        }
+        return Promise.resolve(null);
     };

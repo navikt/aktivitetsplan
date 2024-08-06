@@ -12,14 +12,12 @@ import { handlers } from '../mocks/handlers';
 import { getErrorText } from '../moduler/feilmelding/Feilmelding';
 import { hentArenaAktiviteter } from '../moduler/aktivitet/arena-aktiviteter-slice';
 import { Status } from '../createGenericSlice';
+import { oppfolgingsdperiodeAdapter } from '../moduler/aktivitet/aktivitet-slice';
 
 const initialState = {
     data: {
         ...emptyLoadedVeilederState.data,
-        aktiviteter: {
-            status: Status.NOT_STARTED,
-            data: [],
-        },
+        aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({ status: Status.NOT_STARTED }),
         arenaAktiviteter: {
             status: Status.NOT_STARTED,
             data: [],

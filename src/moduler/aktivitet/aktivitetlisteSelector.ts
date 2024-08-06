@@ -8,13 +8,14 @@ import { RootState } from '../../store';
 import { aktivitetMatchesFilters } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingsPerioder, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
-import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterByPeriode } from './aktivitet-selector';
+import { selectAktivitetStatus } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectAktiviteterByPeriode, selectAktiviteterData } from './aktivitet-slice';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],
-    (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter),
+    (aktiviteter, arenaAktiviteter) => (aktiviteter as AlleAktiviteter[]).concat(arenaAktiviteter),
 );
 
 export const selectVistOppfolgingsperiode = createSelector(

@@ -1,21 +1,18 @@
 import { ReadMore } from '@navikt/ds-react';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../routing/useRoutes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectMalStatus } from './aktivitetsmal-selector';
-import { hentMal } from './aktivitetsmal-slice';
 import MalContainer from './mal-container';
 import MalHistorikk from './mal-historikk';
 import { MalModal } from './mal-modal';
 import { selectMalListe, selectMalListeStatus } from './malliste-selector';
-import { hentMalListe } from './malliste-slice';
 
 const Mal = () => {
     const malStatus = useSelector(selectMalStatus, shallowEqual);
@@ -27,14 +24,8 @@ const Mal = () => {
 
     const isDirty = useRef(false);
 
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
-
-    useEffect(() => {
-        dispatch(hentMal());
-        dispatch(hentMalListe());
-    }, []);
 
     const avhengigheter = [malStatus, malListeStatus];
 
