@@ -1,0 +1,2 @@
+import{c as a,j as e}from"./index-BeyxKuIw.js";/* empty css              */import{b as n,h as m,P as i,A as s,a as c}from"./routerConfig-C6GkQ1oK.js";import"./Radio-CDRMxSdE.js";import"./subDays-C3WNc7zq.js";import"./internAktivitetTypes-DxmhvqMk.js";const d=c(),l=(r,t)=>{const o=a(r||document.getElementById("root"));n({id:m(t==null?void 0:t.fnr)}),o.render(e.jsx(i,{fnr:t==null?void 0:t.fnr,children:e.jsx(s,{createRoutesForUser:d},"1")}))};export{l as renderAsReactRoot};
+//# sourceMappingURL=rootWrapper-DKuqjVVl.js.map
