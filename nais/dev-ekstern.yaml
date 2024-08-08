@@ -50,6 +50,8 @@ spec:
           namespace: dab
         - application: veilarbaktivitet
           namespace: dab
+        - application: veilarbdialog
+          namespace: dab
       external:
         - host: navtestb2c.b2clogin.com
         - host: veilarbdialog.dev-fss-pub.nais.io
