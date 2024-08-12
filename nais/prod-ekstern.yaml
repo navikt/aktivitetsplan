@@ -58,7 +58,6 @@ spec:
         - host: veilarbmalverk.prod-fss-pub.nais.io
         - host: veilarbperson.prod-fss-pub.nais.io
         - host: veilarboppfolging.prod-fss-pub.nais.io
-        - host: veilarbdialog.prod-fss-pub.nais.io
         - host: veilarbaktivitet.prod-fss-pub.nais.io
         - host: veilarbveileder.prod-fss-pub.nais.io
   gcp:
@@ -66,7 +65,6 @@ spec:
       - name: aktivitetsplan-prod
   envFrom:
     - configmap: pto-config
-    - configmap: loginservice-idporten
   env:
     - name: JSON_CONFIG
       # CSP for dekoratoren er hentet fra https://www.nav.no/dekoratoren/api/csp
@@ -109,7 +107,7 @@ spec:
               }
             },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
-            { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarbdialog", "toUrl": "http://veilarbdialog.dab", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "dab", "cluster": "prod-gcp" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "http://veilarbaktivitet.dab", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "dab", "cluster": "prod-gcp" } }
           ]
         }

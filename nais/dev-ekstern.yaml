@@ -54,7 +54,6 @@ spec:
           namespace: dab
       external:
         - host: navtestb2c.b2clogin.com
-        - host: veilarbdialog.dev-fss-pub.nais.io
         - host: veilarbmalverk.dev-fss-pub.nais.io
         - host: veilarbperson.dev-fss-pub.nais.io
         - host: veilarboppfolging.dev-fss-pub.nais.io
@@ -64,7 +63,6 @@ spec:
       - name: aktivitetsplan-dev
   envFrom:
     - configmap: pto-config
-    - configmap: loginservice-idporten
   env:
     - name: JSON_CONFIG
       # CSP for dekoratoren er hentet fra https://www.nav.no/dekoratoren/api/csp
@@ -108,7 +106,7 @@ spec:
                       }
             },
             { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "dev-fss" } },
-            { "fromPath": "/veilarbdialog", "toUrl": "https://veilarbdialog.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "pto", "cluster": "dev-fss" } },
+            { "fromPath": "/veilarbdialog", "toUrl": "http://veilarbdialog.dab", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "dab", "cluster": "dev-gcp" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "http://veilarbaktivitet.dab", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "dab", "cluster": "dev-gcp" } }
           ]
         }
