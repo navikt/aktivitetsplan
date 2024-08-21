@@ -23,7 +23,7 @@ const Gruppe = (props: Props) => {
 
     return (
         <section className="mt-12">
-            <Heading level="1" size="large" className="mb-2">
+            <Heading level="2" size="large" className="mb-2">
                 {tittel}
             </Heading>
             <div className="space-y-4">
