@@ -8,6 +8,7 @@ export function initAmplitude() {
     const apiKey = import.meta.env.VITE_AMPLITUDE_KEY ?? 'default';
 
     amplitude.init(apiKey, undefined, {
+        defaultTracking: true,
         serverUrl: import.meta.env.VITE_AMPLITUDE_API_URL,
         ingestionMetadata: {
             sourceName: window.location.toString(),
