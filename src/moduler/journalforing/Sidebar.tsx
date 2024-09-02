@@ -49,6 +49,18 @@ const Sidebar: FunctionComponent = () => {
 
     const disabled = henterForhaandsvisning || !forhaandsvisningOpprettet || journalfører;
 
+    const sistJournalførtTekst = (): string => {
+        if (forhaandsvisningStatus == Status.ERROR) {
+            return 'Kunne ikke hente sist journalført';
+        } else if (forhaandsvisningStatus == Status.OK) {
+            return sistJournalfort
+                ? formaterDatoKortManed(sistJournalfort) + ' kl. ' + formaterTid(sistJournalfort)
+                : 'Aldri';
+        } else {
+            return '';
+        }
+    };
+
     return (
         <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 h-screen">
             <ReactRouterLink
@@ -88,11 +100,7 @@ const Sidebar: FunctionComponent = () => {
                 </Select>
                 <div>
                     <Label>Sist journalført</Label>
-                    <BodyShort>
-                        {sistJournalfort
-                            ? formaterDatoKortManed(sistJournalfort) + ' kl. ' + formaterTid(sistJournalfort)
-                            : 'Aldri'}
-                    </BodyShort>
+                    <BodyShort>{sistJournalførtTekst()}</BodyShort>
                 </div>
                 <Button loading={journalfører} variant="primary" onClick={() => sendTilArkiv()}>
                     Journalfør
