@@ -40,12 +40,12 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     INDOPPFAG: 'Oppfølging',
     ARBFORB: 'Arbeidsforberedende trening',
     AVKLARAG: 'Avklaring',
-    VASV: 'Tilrettelagt arbeid',
+    VASV: 'Varig tilrettelagt arbeid i skjermet virksomhet',
     ARBRRHDAG: 'Arbeidsrettet rehabilitering',
     DIGIOPPARB: 'Digitalt oppfølgingstiltak',
     JOBBK: 'Jobbklubb',
     GRUPPEAMO: 'Arbeidsmarkedsopplæring (Gruppe)',
-    GRUFAGYRKE: 'Fag- og yrkesopplæring (Gruppe)'
+    GRUFAGYRKE: 'Fag- og yrkesopplæring (Gruppe)',
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
