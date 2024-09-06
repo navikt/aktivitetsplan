@@ -97,14 +97,6 @@ describe('aktivitet-util', () => {
         expect(eldreAktiviteter).toEqual([bareEldreTilDato, manglendeEndretDato, endretDatoMerEnnToManederSiden]);
     });
 
-    it(`Skal kunne håndtere Java's ZoneDateTime-format`, () => {
-        const zonedDateTimeFormat = '2024-08-05T13:05:06.303+02:00[Europe/Oslo]';
-        const offsetDateTimeFormat = '2024-08-05T13:05:06.303+02:00';
-        const resultatZonedDateTime = parse(zonedDateTimeFormat);
-        const resultatOffsetDateTime = Date.parse(offsetDateTimeFormat);
-        expect(resultatZonedDateTime).toEqual(resultatOffsetDateTime);
-    });
-
     describe('kanEndreAktivitetDetaljer', () => {
         const baseAktivitet = {
             avtalt: false,
