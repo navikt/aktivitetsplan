@@ -6,6 +6,7 @@ export enum FellesTransaksjonsTyper {
     AVTALT_DATO_ENDRET = 'AVTALT_DATO_ENDRET',
     BLE_HISTORISK = 'BLE_HISTORISK',
     FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
+    KASSERT = 'KASSERT',
 }
 
 export enum StillingTransaksjonsType {

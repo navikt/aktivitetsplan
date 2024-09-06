@@ -1,4 +1,4 @@
-import { subMonths } from 'date-fns';
+import { parse, parseISO, subMonths } from 'date-fns';
 
 import { ArenaAktivitet, ArenaAktivitetType } from '../../datatypes/arenaAktivitetTypes';
 import {
@@ -18,6 +18,8 @@ import {
 } from './aktivitet-util';
 import { kanEndreAktivitetDetaljer } from './aktivitetlisteSelector';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { formaterDatoEllerTidSiden } from '../../utils/dateUtils';
+import { expect } from 'vitest';
 
 /* eslint-env mocha */
 
@@ -93,6 +95,14 @@ describe('aktivitet-util', () => {
 
         expect(nyereAktiviteter).toEqual([manglerAlleDatoer, bareNyereTilDato, endretDatoMindreEnnToManederSiden]);
         expect(eldreAktiviteter).toEqual([bareEldreTilDato, manglendeEndretDato, endretDatoMerEnnToManederSiden]);
+    });
+
+    it(`Skal kunne håndtere Java's ZoneDateTime-format`, () => {
+        const zonedDateTimeFormat = '2024-08-05T13:05:06.303+02:00[Europe/Oslo]';
+        const offsetDateTimeFormat = '2024-08-05T13:05:06.303+02:00';
+        const resultatZonedDateTime = parse(zonedDateTimeFormat);
+        const resultatOffsetDateTime = Date.parse(offsetDateTimeFormat);
+        expect(resultatZonedDateTime).toEqual(resultatOffsetDateTime);
     });
 
     describe('kanEndreAktivitetDetaljer', () => {
