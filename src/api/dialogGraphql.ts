@@ -9,6 +9,7 @@ const query = `
         dialoger(fnr: $fnr, bareMedAktiviteter: $bareMedAktiviteter) {
             id,
             aktivitetId,
+            overskrift,
             oppfolgingsperiode,
             opprettetDato,
             egenskaper,
