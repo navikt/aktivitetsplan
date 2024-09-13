@@ -52,11 +52,12 @@ spec:
           namespace: dab
         - application: veilarbdialog
           namespace: dab
+        - application: veilarboppfolging
+          namespace: poao
       external:
         - host: navtestb2c.b2clogin.com
         - host: veilarbmalverk.dev-fss-pub.nais.io
         - host: veilarbperson.dev-fss-pub.nais.io
-        - host: veilarboppfolging.dev-fss-pub.nais.io
         - host: veilarbveileder.dev-fss-pub.nais.io
   gcp:
     buckets:
@@ -105,7 +106,7 @@ spec:
                         "cluster": "dev-gcp"
                       }
             },
-            { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "dev-fss" } },
+            { "fromPath": "/veilarboppfolging", "toUrl": "http://veilarboppfolging.poao", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "poao", "cluster": "dev-gcp" } },
             { "fromPath": "/veilarbdialog", "toUrl": "http://veilarbdialog.dab", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "dab", "cluster": "dev-gcp" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "http://veilarbaktivitet.dab", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "dab", "cluster": "dev-gcp" } }
           ]
