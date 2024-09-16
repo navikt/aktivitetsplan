@@ -53,11 +53,12 @@ spec:
           namespace: dab
         - application: veilarbdialog
           namespace: dab
+        - application: veilarboppfolging
+          namespace: poao
       external:
         - host: navnob2c.b2clogin.com
         - host: veilarbmalverk.prod-fss-pub.nais.io
         - host: veilarbperson.prod-fss-pub.nais.io
-        - host: veilarboppfolging.prod-fss-pub.nais.io
         - host: veilarbaktivitet.prod-fss-pub.nais.io
         - host: veilarbveileder.prod-fss-pub.nais.io
   gcp:
@@ -106,7 +107,7 @@ spec:
                 "cluster": "prod-gcp"
               }
             },
-            { "fromPath": "/veilarboppfolging", "toUrl": "https://veilarboppfolging.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "pto", "cluster": "prod-fss" } },
+            { "fromPath": "/veilarboppfolging", "toUrl": "http://veilarboppfolging.poao", "preserveFromPath": true, "toApp": {"name": "veilarboppfolging", "namespace": "poao", "cluster": "prod-gcp" } },
             { "fromPath": "/veilarbdialog", "toUrl": "http://veilarbdialog.dab", "preserveFromPath": true, "toApp": {"name": "veilarbdialog", "namespace": "dab", "cluster": "prod-gcp" } },
             { "fromPath": "/veilarbaktivitet", "toUrl": "http://veilarbaktivitet.dab", "preserveFromPath": true, "toApp": {"name": "veilarbaktivitet", "namespace": "dab", "cluster": "prod-gcp" } }
           ]
