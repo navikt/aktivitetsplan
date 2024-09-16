@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../constant';
-import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
@@ -18,6 +18,7 @@ import IkkeDeltFerdigMarkering, {
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
 import styles from './Aktivitetskort.module.less';
 import UlestAvtaltMarkering from './UlestAvtaltMarkering';
+import { Tag } from '@navikt/ds-react';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -37,6 +38,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const isStillingFraNav = aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;
     const svartMarkeringSkalVises = isStillingFraNav ? SkalDelCvIkkeSvartVises(aktivitet) : false;
     const stillingFraNavSoknadsstatus = isStillingFraNav ? aktivitet.stillingFraNavData.soknadsstatus : undefined;
+    const isKassert = isVeilarbAktivitet(aktivitet) && aktivitet.transaksjonsType === 'KASSERT';
 
     const isEksternAktivitet = aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
     const eksterneEtiketter = isEksternAktivitet ? aktivitet.eksternAktivitet.etiketter : undefined;
@@ -50,6 +52,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
             svartMarkeringSkalVises ||
             !!stillingFraNavSoknadsstatus ||
             !!eksterneEtiketter
+
         )
     ) {
         return null;
@@ -70,6 +73,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                     {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
                         <EksterneEtiketter aktivitet={aktivitet} />
                     ) : null}
+                    {isKassert && <Tag size={'small'} variant={"neutral"}>Kassert</Tag> }
                 </div>
             </div>
 
