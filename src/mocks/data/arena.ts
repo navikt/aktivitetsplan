@@ -177,7 +177,7 @@ export const arenaMockAktiviteter = [
         tittel: 'Jobbklubb',
         beskrivelse: 'Karriereveiledning (Jobbklubb) i Oslo for Akershus',
         fraDato: '2011-03-13T23:00:00.000+00:00',
-        tilDato: '2011-03-28T22:00:00.000+00:00',
+        tilDato: null, //'2011-03-28T22:00:00.000+00:00',
         opprettetDato: '2011-04-07T22:00:00.000+00:00',
         avtalt: true,
         forhaandsorientering: null,

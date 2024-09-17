@@ -15,8 +15,8 @@ interface Props {
 
 const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
     const { aktivitet, setSendtAtErAvtaltMedNav, setForhandsorienteringType } = props;
-
-    const merEnnSyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
+    /* Hvis tilDato ikke finnes burde man ikke kunne legge til FHO */
+    const kanLeggeTilFHO = aktivitet?.tilDato ? erMerEnnSyvDagerTil(aktivitet.tilDato) : false;
     const kanSendeVarsel = useKanSendeVarsel();
 
     if (!kanSendeVarsel) {
@@ -26,7 +26,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
     return (
         <>
             <div className="my-4">
-                {!merEnnSyvDagerTil ? (
+                {!kanLeggeTilFHO ? (
                     <KanIkkeLeggeTilForhaandsorienteringInfotekst />
                 ) : (
                     <ForhaandsorienteringForm
