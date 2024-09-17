@@ -73,7 +73,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                     {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
                         <EksterneEtiketter aktivitet={aktivitet} />
                     ) : null}
-                    {isKassert && <Tag size={'small'} variant={"neutral-filled"}>Kassert</Tag> }
+                    {isKassert && <Tag size={'small'} variant={"neutral-filled"}>Slettet</Tag> }
                 </div>
             </div>
 
