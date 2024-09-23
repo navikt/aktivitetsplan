@@ -26,6 +26,14 @@ export function RettigheterPanel() {
                     hjelp fra NAV.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
+                    Er du under 18 år?
+                </Heading>
+                <BodyShort>
+                    Når du er under 18 år så har dine foreldre eller foresatte rett til innsyn i din sak.
+                    Det betyr at foreldrene dine kan se alt du skriver i nav sine tjenester.
+                    Derfor bør du ikke skrive noe her som du ikke vil at foreldrene dine skal lese.
+                </BodyShort>
+                <Heading level="3" size="xsmall" className="pt-4">
                     Manuell oppfølging
                 </Heading>
                 <BodyShort>
