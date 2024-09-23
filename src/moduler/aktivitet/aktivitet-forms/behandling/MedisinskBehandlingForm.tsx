@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TextField, Textarea } from '@navikt/ds-react';
+import { TextField, Textarea, GuidePanel } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -94,6 +94,9 @@ const MedisinskBehandlingForm = (props: Props) => {
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE} />
+                    <GuidePanel>
+                        Husk at dine foreldre eller foresatte kan lese det du skriver her.
+                    </GuidePanel>
                     <TextField
                         disabled={avtalt}
                         label="Type behandling (obligatorisk)"

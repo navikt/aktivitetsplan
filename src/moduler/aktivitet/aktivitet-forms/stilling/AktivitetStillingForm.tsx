@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TextField, Textarea } from '@navikt/ds-react';
+import { TextField, Textarea, GuidePanel } from '@navikt/ds-react';
 import { startOfDay } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -67,8 +67,12 @@ const StillingAktivitetForm = (props: Props) => {
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
+
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.STILLING_AKTIVITET_TYPE} />
+                    <GuidePanel>
+                        Husk at dine foreldre eller foresatte kan lese det du skriver her.
+                    </GuidePanel>
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"

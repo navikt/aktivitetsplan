@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { TextField, Textarea } from '@navikt/ds-react';
+import { TextField, Textarea, GuidePanel } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -100,10 +100,14 @@ const EgenAktivitetForm = (props: Props) => {
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
+
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE} />
 
+                    <GuidePanel>
+                        Husk at dine foreldre eller foresatte kan lese det du skriver her.
+                    </GuidePanel>
                     <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="EGEN" />
 
                     <TextField

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Radio, RadioGroup, TextField, Textarea } from '@navikt/ds-react';
+import { Radio, RadioGroup, TextField, Textarea, GuidePanel } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -80,6 +80,9 @@ const IJobbAktivitetForm = (props: Props) => {
             <FormProvider {...methods}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE} />
+                    <GuidePanel>
+                        Husk at dine foreldre eller foresatte kan lese det du skriver her.
+                    </GuidePanel>
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"
