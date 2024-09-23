@@ -30,8 +30,10 @@ export function RettigheterPanel() {
                 </Heading>
                 <BodyShort>
                     Når du er under 18 år så har dine foreldre eller foresatte rett til innsyn i din sak.
-                    Det betyr at foreldrene dine kan se alt du skriver i nav sine tjenester.
+                    Det betyr at foreldrene dine kan be om å få se alt du skriver i NAV sine tjenester.
                     Derfor bør du ikke skrive noe her som du ikke vil at foreldrene dine skal lese.
+                    Når du blir 18 år vil de ikke kunne lese nye meldinger du sender,
+                    men de kan fortsatt lese de gamle meldingene du sendte før du fylte 18 år.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
                     Manuell oppfølging
