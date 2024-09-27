@@ -1,19 +1,12 @@
 import { GuidePanel } from '@navikt/ds-react';
-
-
+import { useEffect, useState } from 'react';
 
 export const Under18Info = () => {
-   // const {fnr} = useFnrOgEnhetContext()
-    //console.log("fnr", fnr)
+    const [foresatteHarInnsynsRett, setForesatteHarInnsynsRett] = useState<boolean | undefined>(undefined);
+    useEffect(() => {
+        //todo gjør api kall for å hente informasjon om bruker er under 18
+    }, []);
+   if (!foresatteHarInnsynsRett) return null;
 
-   // if (!fnr || is18OrOlder(fnr)) return null;
-
-        return (
-            <GuidePanel poster={true}>
-                Husk at dine foresatte kan lese det du skriver her.
-            </GuidePanel>
-        );
-    }
-
-
-
+    return <GuidePanel poster={true}>Husk at dine foresatte kan lese det du skriver her.</GuidePanel>;
+};

@@ -111,3 +111,4 @@ export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, jour
     fetchToJson(
         `${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}&journalforendeEnhet=${journalførendeEnhet}`,
     );
+
