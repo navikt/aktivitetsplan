@@ -6,7 +6,7 @@ export const Under18Info = () => {
     useEffect(() => {
         //todo gjør api kall for å hente informasjon om bruker er under 18
     }, []);
-   if (!foresatteHarInnsynsRett) return null;
+    if (!foresatteHarInnsynsRett) return null;
 
     return <GuidePanel poster={true}>Husk at dine foresatte kan lese det du skriver her.</GuidePanel>;
 };

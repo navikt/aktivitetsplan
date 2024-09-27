@@ -17,6 +17,8 @@ export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId
 export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 
+export const hentInnsynsrett = () => {};
+
 export const settAktivitetTilAvtalt = (
     aktivitetId: string,
     aktivitetVersjon: string,
@@ -111,4 +113,3 @@ export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, jour
     fetchToJson(
         `${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}&journalforendeEnhet=${journalførendeEnhet}`,
     );
-

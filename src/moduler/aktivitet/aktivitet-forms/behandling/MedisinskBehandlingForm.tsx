@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TextField, Textarea} from '@navikt/ds-react';
+import { TextField, Textarea } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
-import { Under18Info } from '../../under18-info/Under18Info';
+import { Under18Info } from '../../innsynsrett/Under18Info';
 
 const schema = z
     .object({

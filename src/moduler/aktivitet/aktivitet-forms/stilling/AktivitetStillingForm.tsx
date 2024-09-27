@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TextField, Textarea} from '@navikt/ds-react';
+import { TextField, Textarea } from '@navikt/ds-react';
 import { startOfDay } from 'date-fns';
 import React, { MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -11,7 +11,7 @@ import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
-import { Under18Info } from '../../under18-info/Under18Info';
+import { Under18Info } from '../../innsynsrett/Under18Info';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -68,7 +68,6 @@ const StillingAktivitetForm = (props: Props) => {
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
-
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.STILLING_AKTIVITET_TYPE} />
                     <Under18Info></Under18Info>

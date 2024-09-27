@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Radio, RadioGroup, TextField, Textarea} from '@navikt/ds-react';
+import { Radio, RadioGroup, TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -10,7 +10,7 @@ import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/da
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
-import { Under18Info } from '../../under18-info/Under18Info';
+import { Under18Info } from '../../innsynsrett/Under18Info';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
