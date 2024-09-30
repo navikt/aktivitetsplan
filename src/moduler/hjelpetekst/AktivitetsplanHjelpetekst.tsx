@@ -11,8 +11,7 @@ const hjelpetekster: Record<AktivitetStatus, { tittel: string; innhold: string }
     },
     PLANLAGT: {
         tittel: 'Informasjon om statusen Planlegger',
-        innhold:
-            'Her kan du legge til en aktivitet du tror du kommer til å gjøre. Dra aktiviteten til "Planlegger" når du bestemmer deg for å gjøre aktiviteten.',
+        innhold: 'Her kan du legge aktiviteter som du har bestemt deg for å gjøre, men ikke har begynt på enda.',
     },
     GJENNOMFORES: {
         tittel: 'Informasjon om statusen Gjennomfører',
