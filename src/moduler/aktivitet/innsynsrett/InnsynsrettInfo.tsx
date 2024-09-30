@@ -7,5 +7,5 @@ export const InnsynsrettInfo = () => {
 
     if (!innsynsrett || !innsynsrett.foresatteHarInnsynsrett) return null;
 
-    return <GuidePanel poster={true}>Husk at dine foresatte kan lese det du skriver her.</GuidePanel>;
+    return <GuidePanel className="guidepanel-innsynsrett" poster={true}>Husk at dine foresatte kan lese det du skriver her.</GuidePanel>;
 };
