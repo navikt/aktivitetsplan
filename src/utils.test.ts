@@ -5,7 +5,7 @@ import {
     formaterDatoKortManedTid,
     formaterTid,
 } from './utils/dateUtils';
-import { autobind, erInternlenke, fn, guid, is18OrOlder, storeForbokstaver } from './utils/utils';
+import { autobind, erInternlenke, fn, guid, storeForbokstaver } from './utils/utils';
 import { describe } from 'vitest';
 
 describe('app utils', () => {
@@ -151,28 +151,6 @@ describe('app utils', () => {
             expect(datoComparator(undefined, '2014-02-16T23:00:00.000Z')).toBeLessThan(0);
         });
     });
-
-    describe('is18OrOlder', () => {
-        it('should return false for a person younger than 18', () => {
-            const personNumber = '30070852345'; // Born on 30th July 2008
-            expect(is18OrOlder(personNumber)).toBe(false);
-        });
-
-        it('should return true for a person exactly 18 years old', () => {
-            const today = new Date();
-            const year = today.getFullYear() - 18;
-            const month = (today.getMonth() + 1).toString().padStart(2, '0');
-            const day = today.getDate().toString().padStart(2, '0');
-            const personNumber = `${day}${month}${year.toString().slice(2)}72345`;
-            expect(is18OrOlder(personNumber)).toBe(true);
-        });
-
-        it('should return true for a person older than 18', () => {
-            const personNumber = '30079042345'; // Born on 30th July 1990
-            expect(is18OrOlder(personNumber)).toBe(true);
-        });
-    });
-
     describe('storeForbokstaver', () => {
         it('Formatterer ord med stor forbokstav', () => {
             expect(storeForbokstaver('KARI')).toEqual('Kari');
