@@ -19,6 +19,7 @@ export const initialPageLoader =
             aktiviteter: dispatch(thunks.aktiviteter(isVeileder)),
             arenaAktiviteter: dispatch(thunks.arenaAktiviteter(isVeileder)),
             lest: dispatch(thunks.lest(isVeileder)),
+            innsynsrett: dispatch(thunks.innsynsrett()),
         });
     };
 

@@ -17,6 +17,7 @@ import { selectArenaAktivitetStatus } from '../moduler/aktivitet/arena-aktivitet
 import { selectAktivitetStatus } from '../moduler/aktivitet/aktivitet-selector';
 import { hentLest } from '../moduler/lest/lest-slice';
 import { selectLestStatus } from '../moduler/lest/lest-selector';
+import { hentInnsynsrett } from '../moduler/aktivitet/innsynsrett/innsynsrett-slice';
 
 const createFetchIfNotStartedThunk = (sliceLoader: CacheableSliceLoader) => {
     return createAsyncThunk('initialPageLoad/' + sliceLoader.key, async (isVeileder: boolean, thunkApi) => {
@@ -56,6 +57,7 @@ export const initialPageLoadThunks = {
     }),
     lest: createFetchIfNotStartedThunk({ fetchAction: hentLest, statusSelector: selectLestStatus, key: 'lest' }),
     dialoger: hentDialoger,
+    innsynsrett: hentInnsynsrett,
 } as const;
 
 interface CacheableSliceLoader {
