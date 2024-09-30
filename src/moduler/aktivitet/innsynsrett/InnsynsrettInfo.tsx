@@ -2,7 +2,7 @@ import { GuidePanel } from '@navikt/ds-react';
 import { useSelector } from 'react-redux';
 import { selectInnsynsrett } from './innsynsrett-selector';
 
-export const Under18Info = () => {
+export const InnsynsrettInfo = () => {
     const innsynsrett = useSelector(selectInnsynsrett);
 
     if (!innsynsrett || !innsynsrett.foresatteHarInnsynsrett) return null;

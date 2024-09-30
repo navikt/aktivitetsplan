@@ -13,7 +13,7 @@ import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
-import { Under18Info } from '../../innsynsrett/Under18Info';
+import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
 
 const schema = z
     .object({
@@ -105,7 +105,7 @@ const EgenAktivitetForm = (props: Props) => {
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE} />
 
-                    <Under18Info></Under18Info>
+                    <InnsynsrettInfo/>
                     <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="EGEN" />
 
                     <TextField

@@ -10,7 +10,7 @@ import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/da
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
-import { Under18Info } from '../../innsynsrett/Under18Info';
+import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -81,7 +81,7 @@ const IJobbAktivitetForm = (props: Props) => {
             <FormProvider {...methods}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE} />
-                    <Under18Info></Under18Info>
+                    <InnsynsrettInfo/>
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"
