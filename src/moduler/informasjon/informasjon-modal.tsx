@@ -17,7 +17,7 @@ import { DialogPanel } from './dialogPanel';
 import IntroduksjonVideo from './Video/IntroduksjonVideo';
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '../../routing/useRoutes';
-import { Under18Panel } from './under18Panel';
+import { InnsynsrettPanel } from './innsynsrettPanel';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
@@ -52,7 +52,7 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
                 </BodyShort>
                 <IntroduksjonVideo />
                 <Accordion className="mt-4">
-                    <Under18Panel />
+                    <InnsynsrettPanel />
                     <BrukePlanenPanel />
                     <DialogPanel />
                     <OkonomiskStotte />

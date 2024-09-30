@@ -2,7 +2,7 @@ import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { logAccordionAapnet } from '../../amplitude/amplitude';
 
-export const Under18Panel = () => {
+export const InnsynsrettPanel = () => {
     const [open, setOpen] = useState(false);
 
     function handleClick() {
