@@ -1,6 +1,6 @@
 import { ResponseComposition, RestContext, RestRequest } from 'msw';
 
-export const mockfnr = '30070552345';
+export const mockfnr = '12345678910';
 export const mockAktivEnhet = '0909';
 
 export const rndId = (): string => {
