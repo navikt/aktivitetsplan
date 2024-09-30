@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { selectInnsynsrett } from './innsynsrett-selector';
 
 export const Under18Info = () => {
-    const foreldreHarInnsynsrett = useSelector(selectInnsynsrett);
+    const innsynsrett = useSelector(selectInnsynsrett);
 
-    if (!foreldreHarInnsynsrett) return null;
+    if (!innsynsrett || !innsynsrett.foresatteHarInnsynsrett) return null;
 
     return <GuidePanel poster={true}>Husk at dine foresatte kan lese det du skriver her.</GuidePanel>;
 };
