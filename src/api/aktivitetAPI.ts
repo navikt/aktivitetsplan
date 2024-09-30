@@ -17,6 +17,10 @@ export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId
 export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 
+export const hentInnsynsrett = (): Promise<{ foresatteHarInnsynsrett: boolean }> => {
+    return fetchToJson(`${AKTIVITET_BASE_URL}/ekstern/innsynsrett`);
+};
+
 export const settAktivitetTilAvtalt = (
     aktivitetId: string,
     aktivitetVersjon: string,

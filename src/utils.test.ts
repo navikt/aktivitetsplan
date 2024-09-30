@@ -151,7 +151,6 @@ describe('app utils', () => {
             expect(datoComparator(undefined, '2014-02-16T23:00:00.000Z')).toBeLessThan(0);
         });
     });
-
     describe('storeForbokstaver', () => {
         it('Formatterer ord med stor forbokstav', () => {
             expect(storeForbokstaver('KARI')).toEqual('Kari');

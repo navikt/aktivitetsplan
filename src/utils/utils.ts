@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 
+
+
 export function fn(value: any) {
     return typeof value === 'function' ? value : () => value;
 }

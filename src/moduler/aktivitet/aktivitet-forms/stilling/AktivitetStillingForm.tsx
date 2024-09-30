@@ -11,6 +11,7 @@ import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
+import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -69,6 +70,7 @@ const StillingAktivitetForm = (props: Props) => {
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.STILLING_AKTIVITET_TYPE} />
+                    <InnsynsrettInfo/>
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"
