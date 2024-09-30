@@ -4,6 +4,7 @@ import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../dat
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
+import { promises } from 'node:dns';
 
 export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
@@ -17,7 +18,9 @@ export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId
 export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 
-export const hentInnsynsrett = () => {};
+export const hentInnsynsrett = () :Promise<{foresatteHarInnsynsrett :boolean}> => {
+  return fetchToJson(`${AKTIVITET_BASE_URL}/innsynsrett`) ;
+};
 
 export const settAktivitetTilAvtalt = (
     aktivitetId: string,
