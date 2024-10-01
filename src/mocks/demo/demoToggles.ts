@@ -7,6 +7,7 @@ import {
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
+    erUnder18,
     forhaandsvisningFeiler,
     ikkeLoggetInnNivaa4,
     ingenOppfPerioder,
@@ -80,6 +81,11 @@ export const features = [
         label: 'Uleste dialoger',
         id: LocalStorageElement.ULESTE_DIALOGER,
         checked: ulesteDialoger,
+    },
+    {
+        label: 'Under 18 år',
+        id: LocalStorageElement.UNDER18,
+        checked: erUnder18,
     },
 ];
 export const aktivitetTilstand = [
