@@ -18,6 +18,7 @@ import IntroduksjonVideo from './Video/IntroduksjonVideo';
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '../../routing/useRoutes';
 import { InnsynsrettPanel } from './innsynsrettPanel';
+import { innsynsrettInfoSkalVises } from '../aktivitet/innsynsrett/innsynsrett-slice';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
@@ -52,7 +53,7 @@ const InformasjonModal = ({ erBruker, underOppfolging, lestInfo }: Props) => {
                 </BodyShort>
                 <IntroduksjonVideo />
                 <Accordion className="mt-4">
-                    <InnsynsrettPanel />
+                    {innsynsrettInfoSkalVises && <InnsynsrettPanel />}
                     <BrukePlanenPanel />
                     <DialogPanel />
                     <OkonomiskStotte />

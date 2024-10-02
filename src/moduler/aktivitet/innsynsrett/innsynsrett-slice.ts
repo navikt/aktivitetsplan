@@ -16,4 +16,6 @@ export const hentInnsynsrett = createAsyncThunk(`${innsynsrettSlice.name}/fetchI
     return await Api.hentInnsynsrett();
 });
 
+export const innsynsrettInfoSkalVises = false;
+
 export const innsynsrettReducer = innsynsrettSlice.reducer;
