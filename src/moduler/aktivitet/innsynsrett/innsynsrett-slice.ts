@@ -1,6 +1,7 @@
 import createGenericSlice, { Status } from '../../../createGenericSlice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as Api from '../../../api/aktivitetAPI';
+import { ER_PROD } from '../../../constant';
 
 interface Innsynsrett {
     foresatteHarInnsynsrett: boolean | undefined;
@@ -16,6 +17,6 @@ export const hentInnsynsrett = createAsyncThunk(`${innsynsrettSlice.name}/fetchI
     return await Api.hentInnsynsrett();
 });
 
-export const innsynsrettInfoSkalVises = false;
+export const innsynsrettInfoSkalVises = !ER_PROD;
 
 export const innsynsrettReducer = innsynsrettSlice.reducer;
