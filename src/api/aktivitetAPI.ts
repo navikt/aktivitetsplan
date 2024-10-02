@@ -18,7 +18,7 @@ export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbA
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 
 export const hentInnsynsrett = (): Promise<{ foresatteHarInnsynsrett: boolean }> => {
-    return postAsJson(`${AKTIVITET_BASE_URL}/innsynsrett`, { fnr: LocalStorageElement.FNR });
+    return postAsJson(`${AKTIVITET_BASE_URL}/innsynsrett`, { fnr: hentFraSessionStorage(LocalStorageElement.FNR) });
 };
 
 export const settAktivitetTilAvtalt = (
