@@ -160,7 +160,7 @@ export const handlers = [
         '/veilarbaktivitet/api/arkivering/journalfor',
         failOrGetResponse(journalforingFeiler, () => journalføring, 2000),
     ),
-    rest.get('/veilarbaktivitet/api/ekstern/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
+    rest.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
     // veilarblest
     rest.post('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),
     rest.put('/veilarblest/api/informasjon/les', jsonResponse(lest)),

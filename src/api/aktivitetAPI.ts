@@ -18,7 +18,7 @@ export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbA
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 
 export const hentInnsynsrett = (): Promise<{ foresatteHarInnsynsrett: boolean }> => {
-    return fetchToJson(`${AKTIVITET_BASE_URL}/ekstern/innsynsrett`);
+    return postAsJson(`${AKTIVITET_BASE_URL}/innsynsrett`, { fnr: LocalStorageElement.FNR });
 };
 
 export const settAktivitetTilAvtalt = (

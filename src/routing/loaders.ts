@@ -19,7 +19,7 @@ export const initialPageLoader =
             aktiviteter: dispatch(thunks.aktiviteter(isVeileder)),
             arenaAktiviteter: dispatch(thunks.arenaAktiviteter(isVeileder)),
             lest: dispatch(thunks.lest(isVeileder)),
-            innsynsrett: !isVeileder ? dispatch(thunks.innsynsrett()) : undefined, // backend støtter foreløpig ikke at vi gjør dette kallet for veiledere
+            innsynsrett: dispatch(thunks.innsynsrett()),
         });
     };
 
