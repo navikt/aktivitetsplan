@@ -1,4 +1,4 @@
-import { Modal } from '@navikt/ds-react';
+import { Heading, Modal } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 // CSS is imported twice when in demo mode to support switching between web-components and normal render
@@ -20,7 +20,19 @@ const DemoBanner = () => {
     return (
         <div>
             <DemoIkon onClick={() => setOpen(true)} />
-            <Modal open={open} onClose={() => setOpen(false)}>
+            <Modal
+                closeOnBackdropClick={true}
+                open={open}
+                onClose={() => {
+                    setOpen(false);
+                    window.location.reload();
+                }}
+            >
+                <Modal.Header closeButton={true}>
+                    <Heading level="1" size="large">
+                        Demoinnstillinger
+                    </Heading>
+                </Modal.Header>
                 <DemoDashboard />
             </Modal>
         </div>
