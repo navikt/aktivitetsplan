@@ -11,7 +11,7 @@ export const InnsynsrettInfo = () => {
 
     return (
         <GuidePanel className="guidepanel-innsynsrett" poster={true}>
-            Husk at dine foresatte kan lese det du skriver her.
+            Husk at dine foresatte kan be om å få lese det du skriver her.
         </GuidePanel>
     );
 };
