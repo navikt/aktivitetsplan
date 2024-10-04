@@ -3,11 +3,10 @@ import PT from 'prop-types';
 import React, { Component, EventHandler } from 'react';
 import { connect } from 'react-redux';
 
-import { AppDispatch } from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import visibleIfHOC from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
-import { RootState } from '../../store';
+import { Dispatch, RootState } from '../../store';
 import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
 import { hentMalverk, settValgtMalverk, slettValgtMalverk } from './malverk-slice';
 
@@ -89,7 +88,7 @@ class Malverk extends Component<Props> {
     onChange: () => null,
 };
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     doHentMalverk: () => {
         dispatch(hentMalverk());
     },
