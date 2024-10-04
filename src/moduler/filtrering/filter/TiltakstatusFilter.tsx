@@ -29,7 +29,7 @@ const hentMuligeIkkeDefaultEtiketter = (aktiviteter: EksternAktivitet[]) => {
         .flatMap((it) => it.eksternAktivitet.etiketter)
         .filter((it) => !!it)
         .reduce((allEtikettMappings, nextEtikett) => {
-            if (!nextEtikett || !nextEtikett.tekst) return allEtikettMappings;
+            if (!nextEtikett?.tekst) return allEtikettMappings;
             return {
                 [nextEtikett.kode]: nextEtikett.tekst,
                 ...allEtikettMappings,

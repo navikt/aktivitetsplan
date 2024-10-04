@@ -27,8 +27,6 @@ import { RootState } from '../../../store';
 
 export type AvtaltFilterType = Record<keyof typeof avtaltMapper, boolean>;
 
-export type StatusFilterType = Record<AktivitetStatus, boolean>;
-
 export type AktivitetFilterType = Record<AlleAktivitetTyper, boolean>;
 
 export type ArenaEtikettFilterType = Record<ArenaEtikett, boolean>;
