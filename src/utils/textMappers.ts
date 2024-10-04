@@ -96,7 +96,7 @@ export const stillingOgStillingFraNavEtikettMapper: Record<StillingStatus | Stil
 };
 
 export const tiltakEtikettMapper: Record<ArenaEtikett, string> = {
-    [ArenaEtikett.AKTUELL]: 'Søkt inn på tiltaket',
+    [ArenaEtikett.AKTUELL]: 'Søkt inn på tiltaket (Arena)',
     [ArenaEtikett.AVSLAG]: 'Fått avslag',
     [ArenaEtikett.IKKAKTUELL]: 'Ikke aktuell for tiltaket',
     [ArenaEtikett.IKKEM]: 'Ikke møtt på tiltaket',
@@ -107,7 +107,7 @@ export const tiltakEtikettMapper: Record<ArenaEtikett, string> = {
     [ArenaEtikett.VENTELISTE]: 'På venteliste',
 };
 export const eksternAktivitetFilterTextMappings = {
-    SOKT_INN: 'Søkt inn på tiltaket',
+    SOKT_INN: 'Søkt inn på tiltaket (ekstern)',
     AVSLAG: 'Fått avslag',
     IKKE_AKTUELL: 'Ikke aktuell for tiltaket',
     IKKE_MOETT: 'Ikke møtt på tiltaket',

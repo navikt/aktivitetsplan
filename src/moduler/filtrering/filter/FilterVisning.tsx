@@ -33,7 +33,7 @@ export type ArenaEtikettFilterType = Record<ArenaEtikett, boolean>;
 
 export type EtikettFilterType = Record<StillingStatus | StillingFraNavSoknadsstatus, boolean>;
 
-export type FilterKategori = 'avtalt' | 'aktivitet' | 'etikett' | 'arenaEtikett';
+export type FilterKategori = 'avtalt' | 'aktivitet' | 'etikett' | 'tiltakstatus';
 export type FilterValueExtractor<AktivitetType, FilterValueType> = (aktvitet: AktivitetType) => FilterValueType[];
 export type Filter = AvtaltFilterType | AktivitetFilterType | EtikettFilterType | ArenaEtikettFilterType;
 

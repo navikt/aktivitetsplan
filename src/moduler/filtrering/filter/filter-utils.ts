@@ -6,7 +6,7 @@ import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes'
 import { RootState } from '../../../store';
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
 import { getType } from './AktivitetTypeFilter';
-import { getArenaFilterableFields, getEksternFilterableFields } from './ArenaEtikettFilter';
+import { getArenaFilterableFields, getEksternFilterableFields } from './TiltakstatusFilter';
 import { getStillingStatusFilterValue } from './EtikettFilter';
 import {
     selectAktivitetAvtaltMedNavFilter,
