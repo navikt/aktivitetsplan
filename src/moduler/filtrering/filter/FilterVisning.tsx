@@ -22,10 +22,10 @@ import {
     toggleArenaAktivitetsEtikett,
 } from './filter-slice';
 import FilterCheckbox from './FilterCheckbox';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { RootState } from '../../../store';
 
 export type AvtaltFilterType = Record<keyof typeof avtaltMapper, boolean>;
-
-export type StatusFilterType = Record<AktivitetStatus, boolean>;
 
 export type AktivitetFilterType = Record<AlleAktivitetTyper, boolean>;
 
@@ -33,7 +33,7 @@ export type ArenaEtikettFilterType = Record<ArenaEtikett, boolean>;
 
 export type EtikettFilterType = Record<StillingStatus | StillingFraNavSoknadsstatus, boolean>;
 
-export type FilterKategori = 'avtalt' | 'aktivitet' | 'etikett' | 'arenaEtikett';
+export type FilterKategori = 'avtalt' | 'aktivitet' | 'etikett' | 'tiltakstatus';
 export type FilterValueExtractor<AktivitetType, FilterValueType> = (aktvitet: AktivitetType) => FilterValueType[];
 export type Filter = AvtaltFilterType | AktivitetFilterType | EtikettFilterType | ArenaEtikettFilterType;
 
@@ -46,16 +46,16 @@ interface FilterVisningTypes {
     filters: string[];
 }
 
-const selectorMap: Record<FilterKategori, (store: Store) => Filter> = {
+const selectorMap: Record<FilterKategori, (store: RootState) => Filter> = {
     avtalt: selectAktivitetAvtaltMedNavFilter,
     aktivitet: selectAktivitetTyperFilter,
-    arenaEtikett: selectArenaAktivitetEtiketterFilter,
+    tiltakstatus: selectArenaAktivitetEtiketterFilter,
     etikett: selectAktivitetEtiketterFilter,
 };
-const togglerMap = {
+const togglerMap: Record<FilterKategori, ActionCreatorWithPayload<any>> = {
     avtalt: toggleAktivitetAvtaltMedNav,
     aktivitet: toggleAktivitetsType,
-    arenaEtikett: toggleArenaAktivitetsEtikett,
+    tiltakstatus: toggleArenaAktivitetsEtikett,
     etikett: toggleAktivitetsEtikett,
 };
 
