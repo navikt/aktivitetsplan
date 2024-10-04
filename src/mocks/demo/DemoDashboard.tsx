@@ -27,7 +27,7 @@ const DemoDashboard = () => {
     const endreBrukerType = (value: 'eksternbruker' | 'veilederbruker') => {
         const erVeileder = value === brukertype.veileder;
         settLocalStorage(LocalStorageElement.EKSTERN_BRUKER, !erVeileder);
-        window.location.reload();
+        setRender(render + 1);
     };
 
     const getBrukerType = () => {
@@ -38,9 +38,6 @@ const DemoDashboard = () => {
 
     return (
         <div className="flex flex-col justify-center items-center p-4 gap-4">
-            <Heading level="1" size="large">
-                Demo innstillinger
-            </Heading>
             <section className="flex flex-wrap gap-4">
                 <RadioGroup
                     legend="Brukertype"
