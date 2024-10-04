@@ -7,7 +7,7 @@ import { minstEnErOK, toStatus } from '../../felles-komponenter/utils/Innholdsla
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import AktivitetTypeFilter from './filter/AktivitetTypeFilter';
-import ArenaEtikettFilter from './filter/ArenaEtikettFilter';
+import TiltakstatusFilter from './filter/TiltakstatusFilter';
 import AvtaltMedNavFilter from './filter/AvtaltFilter';
 import EtikettFilter from './filter/EtikettFilter';
 
@@ -42,7 +42,7 @@ const Filter = () => {
                 <div className="scroll-auto max-h-screen-h-1/2 rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto flex flex-col gap-y-4">
                     <AvtaltMedNavFilter />
                     <EtikettFilter />
-                    <ArenaEtikettFilter />
+                    <TiltakstatusFilter />
                     <AktivitetTypeFilter />
                 </div>
             ) : null}

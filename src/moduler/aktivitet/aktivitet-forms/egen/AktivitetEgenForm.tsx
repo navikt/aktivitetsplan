@@ -105,8 +105,8 @@ const EgenAktivitetForm = (props: Props) => {
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE} />
 
-                    <InnsynsrettInfo/>
-                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} type="EGEN" />
+                    <InnsynsrettInfo />
+                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} />
 
                     <TextField
                         disabled={avtalt}
