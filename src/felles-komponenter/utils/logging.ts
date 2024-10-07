@@ -13,7 +13,8 @@ interface FrontendEvent {
 }
 
 export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
-    if (getEnv() == Env.Local) return;
+    // Remove prod and dev check when metrics functional in the backend again
+    if ([Env.Prod.toString(), Env.Dev.toString(), Env.Local.toString()].includes(getEnv())) return;
     const event: FrontendEvent = { name: eventNavn, fields: feltObjekt, tags: tagObjekt };
     const url = `${AKTIVITET_BASE_URL}/logger/event`;
     const config = {
@@ -25,7 +26,7 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         method: 'post',
         body: JSON.stringify(event),
     };
-    return fetch(url, config);
+    return fetch(url, config);*/
 }
 
 const FORHANDSORIENTERING_LOGGEVENT = 'aktivitetsplan.forhandsorientering';
