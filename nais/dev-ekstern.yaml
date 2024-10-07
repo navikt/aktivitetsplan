@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.05.07_13.29-a2e3b56408a1
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.10.04_13.21-c31f6e652a0c
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -69,7 +69,8 @@ spec:
       value: >
         {
           "gcs": {
-            "bucketName": "aktivitetsplan-dev"
+            "bucketName": "nais-cdn-nav-dab-42cc",
+            "bucketContextPath": "dab/aktivitetsplan-dev-ekstern/build/"
           },
           "auth": {
             "loginProvider": "ID_PORTEN"
