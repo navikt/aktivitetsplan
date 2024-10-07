@@ -69,7 +69,8 @@ spec:
       value: >
         {
           "gcs": {
-            "bucketName": "aktivitetsplan-dev"
+            "bucketName": "nais-cdn-nav-dab-42cc",
+            "bucketContextPath": "dab/aktivitetsplan-dev-ekstern/build/",
           },
           "auth": {
             "loginProvider": "ID_PORTEN"
