@@ -26,7 +26,7 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         method: 'post',
         body: JSON.stringify(event),
     };
-    return fetch(url, config);*/
+    return fetch(url, config);
 }
 
 const FORHANDSORIENTERING_LOGGEVENT = 'aktivitetsplan.forhandsorientering';
