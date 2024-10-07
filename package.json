@@ -33,7 +33,7 @@
     "@navikt/ds-tokens": "^6.9.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/integrations": "^7.114.0",
-    "@sentry/react": "^7.119.0",
+    "@sentry/react": "^7.119.1",
     "@sentry/tracing": "^7.114.0",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "classnames": "^2.5.1",
