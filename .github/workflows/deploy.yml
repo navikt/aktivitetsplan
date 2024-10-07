@@ -45,6 +45,7 @@ jobs:
     with:
       kommando: npm run build:prod-ekstern
       bucket: aktivitetsplan-prod-ekstern
+      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
