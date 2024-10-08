@@ -2,9 +2,8 @@ import { AktivitetStatus, AktivitetType } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { Lest } from '../../datatypes/lestTypes';
 import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
-import { AKTIVITET_BASE_URL } from '../../environment';
+import { AKTIVITET_BASE_URL, Env, getEnv } from '../../environment';
 import { hash } from './hash';
-import { Env, getEnv } from '../../sentry';
 
 interface FrontendEvent {
     name: string;
