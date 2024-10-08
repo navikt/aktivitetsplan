@@ -101,6 +101,10 @@ Sentry.init({
     tracesSampleRate: 0.2,
     beforeSend: fjernPersonopplysninger,
     release: import.meta.env.VITE_SENTRY_RELEASE,
+    tracePropagationTargets: [
+        'localhost',
+        /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)/,
+    ],
 });
 
 export const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);
