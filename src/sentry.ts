@@ -70,7 +70,7 @@ Sentry.init({
         }),
         Sentry.httpClientIntegration({
             failedRequestTargets: [
-                /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)/,
+                /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)\/*/,
             ],
         }),
         captureConsoleIntegration({
