@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+//import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-selector';
 import Malvisning from './mal-visning';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const MalContainer = (props: Props) => {
-    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
+    //const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const erVeileder = useErVeileder();
@@ -22,7 +22,7 @@ const MalContainer = (props: Props) => {
 
     const mal = malData && malData.mal;
 
-    const [edit, setEdit] = useState(!viserHistoriskPeriode && !mal && underOppfolging && harSkriveTilgang);
+    const [edit, setEdit] = useState(underOppfolging && harSkriveTilgang);
 
     if (edit) {
         return (
@@ -33,12 +33,14 @@ const MalContainer = (props: Props) => {
                     setEdit(false);
                     props.dirtyRef.current = false;
                     loggMittMalLagre(erVeileder);
+                    console.log('Mitt mål lagret');
                 }}
             />
         );
     }
 
     return <Malvisning onClick={() => setEdit(true)} />;
+
 };
 
 export default MalContainer;
