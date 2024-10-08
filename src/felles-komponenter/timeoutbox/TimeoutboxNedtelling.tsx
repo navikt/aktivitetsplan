@@ -1,10 +1,17 @@
 import { BodyLong, BodyShort, Button, Modal } from '@navikt/ds-react';
 import { differenceInSeconds, parseISO, secondsToMinutes } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Env, getEnv } from '../../environment';
 
 interface Props {
     expirationTimestamp: string;
 }
+
+const logoutLenke =
+    getEnv() === Env.Dev
+        ? 'https://login.ekstern.dev.nav.no/oauth2/logout'
+        : 'https://login.ekstern.nav.no/oauth2/logout';
 
 const TimeoutboxNedtelling = (props: Props) => {
     const { expirationTimestamp } = props;
@@ -39,9 +46,9 @@ const TimeoutboxNedtelling = (props: Props) => {
             <Button className="mr-4" onClick={() => window.location.reload()}>
                 Last siden på nytt
             </Button>
-            <Button variant="secondary" onClick={() => document.querySelector('#login-knapp-id').click()}>
-                Logg ut
-            </Button>
+            <Link to={logoutLenke}>
+                <Button variant="secondary">Logg ut</Button>
+            </Link>
         </Modal.Body>
     );
 };
