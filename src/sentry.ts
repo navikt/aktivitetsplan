@@ -10,19 +10,6 @@ import {
     createBrowserRouter,
 } from 'react-router-dom';
 
-export enum Env {
-    Local = 'local',
-    Dev = 'dev',
-    Prod = 'prod',
-}
-
-export const getEnv = (): string => {
-    const { hostname } = window.location;
-    if (hostname.includes('dev.nav.no')) return Env.Dev;
-    if (hostname.includes('nav.no')) return Env.Prod;
-    return Env.Local;
-};
-
 const fnrRegexRegel = {
     regex: /[0-9]{11}/g,
     erstatning: '&lt;fnr&gt;',
