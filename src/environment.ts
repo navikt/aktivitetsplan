@@ -24,3 +24,16 @@ export const VEILARBLEST_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarble
 export const PERSON_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbperson/api';
 export const MALVERK_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbmalverk/api';
 export const VEILEDER_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbveileder/api';
+
+export enum Env {
+    Local = 'local',
+    Dev = 'dev',
+    Prod = 'prod',
+}
+
+export const getEnv = (): string => {
+    const { hostname } = window.location;
+    if (hostname.includes('dev.nav.no')) return Env.Dev;
+    if (hostname.includes('nav.no')) return Env.Prod;
+    return Env.Local;
+};
