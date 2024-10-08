@@ -73,22 +73,12 @@ const fjernPersonopplysninger = (event: Event): Event => {
 Sentry.init({
     dsn: 'https://1ab82c2af7614a74b134e36b3bd2e0b4@sentry.gc.nav.no/163',
     integrations: [
-        new Sentry.BrowserTracing({
-            routingInstrumentation: Sentry.reactRouterV6Instrumentation(
-                React.useEffect,
-                useLocation,
-                useNavigationType,
-                createRoutesFromChildren,
-                matchRoutes,
-            ),
-            tracePropagationTargets: [
-                'aktivitetsplan.nav.no',
-                'aktivitetsplan.ekstern.dev.nav.no',
-                // /(\.dev)?nav.no\/veilarbdialog/,
-                // /(\.dev)?nav.no\/veilarboppfolging/,
-                // /(\.dev)?nav.no\/veilarbaktivitet/,
-                // /(\.dev)?nav.no\/veilarblest/,
-            ],
+        Sentry.reactRouterV6BrowserTracingIntegration({
+            useEffect: React.useEffect,
+            useLocation,
+            useNavigationType,
+            createRoutesFromChildren,
+            matchRoutes,
         }),
         captureConsoleIntegration({
             // array of methods that should be captured
