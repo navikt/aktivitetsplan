@@ -1,7 +1,6 @@
-import { BodyLong, BodyShort, Button, Modal } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Link, Modal } from '@navikt/ds-react';
 import { differenceInSeconds, parseISO, secondsToMinutes } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Env, getEnv } from '../../environment';
 
 interface Props {
@@ -46,7 +45,7 @@ const TimeoutboxNedtelling = (props: Props) => {
             <Button className="mr-4" onClick={() => window.location.reload()}>
                 Last siden på nytt
             </Button>
-            <Link to={logoutLenke}>
+            <Link href={logoutLenke}>
                 <Button variant="secondary">Logg ut</Button>
             </Link>
         </Modal.Body>
