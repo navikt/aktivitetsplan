@@ -80,7 +80,11 @@ Sentry.init({
             createRoutesFromChildren,
             matchRoutes,
         }),
-        Sentry.httpClientIntegration(),
+        Sentry.httpClientIntegration({
+            failedRequestTargets: [
+                /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)/,
+            ],
+        }),
         captureConsoleIntegration({
             // array of methods that should be captured
             // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
