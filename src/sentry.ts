@@ -68,6 +68,11 @@ Sentry.init({
             createRoutesFromChildren,
             matchRoutes,
         }),
+        Sentry.httpClientIntegration({
+            failedRequestTargets: [
+                /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)/,
+            ],
+        }),
         captureConsoleIntegration({
             // array of methods that should be captured
             // defaults to ['log', 'info', 'warn', 'error', 'debug', 'assert']
@@ -82,6 +87,7 @@ Sentry.init({
         /^Uventet feil fra dekoratøren: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node. \[object Object]$/,
         /^Uventet feil fra dekoratøren: NotFoundError: The object can not be found here. \[object Object]$/,
         /^The object can not be found here.$/,
+        /Amplitude/,
     ],
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
@@ -89,6 +95,10 @@ Sentry.init({
     tracesSampleRate: 0.2,
     beforeSend: fjernPersonopplysninger,
     release: import.meta.env.VITE_SENTRY_RELEASE,
+    tracePropagationTargets: [
+        'localhost',
+        /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)/,
+    ],
 });
 
 export const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);
