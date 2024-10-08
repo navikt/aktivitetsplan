@@ -1,6 +1,13 @@
-import { captureConsoleIntegration } from '@sentry/integrations';
-import * as Sentry from '@sentry/react';
-import { Breadcrumb, Event } from '@sentry/types';
+import {
+    captureConsoleIntegration,
+    reactRouterV6BrowserTracingIntegration,
+    ErrorEvent,
+    init,
+    httpClientIntegration,
+    wrapCreateBrowserRouter,
+    EventHint,
+    Breadcrumb,
+} from '@sentry/react';
 import React from 'react';
 import {
     createRoutesFromChildren,
@@ -33,7 +40,7 @@ const tagsFilter = (tags: Event['tags']): Event['tags'] => {
     };
 };
 
-const fjernPersonopplysninger = (event: Event): Event => {
+const fjernPersonopplysninger = (event: ErrorEvent, hint: EventHint): ErrorEvent => {
     const url = event.request?.url ? maskerPersonopplysninger(event.request.url) : '';
     return {
         ...event,
@@ -58,17 +65,17 @@ const fjernPersonopplysninger = (event: Event): Event => {
     };
 };
 
-Sentry.init({
+init({
     dsn: 'https://1ab82c2af7614a74b134e36b3bd2e0b4@sentry.gc.nav.no/163',
     integrations: [
-        Sentry.reactRouterV6BrowserTracingIntegration({
+        reactRouterV6BrowserTracingIntegration({
             useEffect: React.useEffect,
             useLocation,
             useNavigationType,
             createRoutesFromChildren,
             matchRoutes,
         }),
-        Sentry.httpClientIntegration({
+        httpClientIntegration({
             failedRequestTargets: [
                 /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)\/*/,
             ],
@@ -101,4 +108,4 @@ Sentry.init({
     ],
 });
 
-export const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouter(createBrowserRouter);
+export const sentryCreateBrowserRouter = wrapCreateBrowserRouter(createBrowserRouter);
