@@ -9,6 +9,7 @@ import {
     useNavigationType,
     createBrowserRouter,
 } from 'react-router-dom';
+import { Env, getEnv } from './environment';
 
 const fnrRegexRegel = {
     regex: /[0-9]{11}/g,
