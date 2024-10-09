@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 import Modal from '../../felles-komponenter/modal/Modal';
 import { selectHentMalListeFeil } from '../feilmelding/feil-selector';
+// import { useNavigate } from 'react-router-dom';
+// import { useRoutes } from '../../routing/useRoutes';
 
 interface Props {
     children: React.ReactNode;
@@ -15,7 +17,7 @@ export function MalModal(props: Props) {
     const feil = useSelector(selectHentMalListeFeil);
 
     return (
-        <Modal feilmeldinger={feil} heading={heading}>
+        <Modal lukkPåKlikkUtenfor={true} onRequestClose={props.onRequestClosed} feilmeldinger={feil} heading={heading}>
             {children}
         </Modal>
     );

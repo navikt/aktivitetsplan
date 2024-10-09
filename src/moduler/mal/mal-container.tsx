@@ -8,6 +8,7 @@ import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-s
 import { selectGjeldendeMal } from './aktivitetsmal-selector';
 //import Malvisning from './mal-visning';
 import MalForm from './MalForm';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 interface Props {
     dirtyRef: MutableRefObject<boolean>;
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const MalContainer = (props: Props) => {
-    //const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
+    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const erVeileder = useErVeileder();
@@ -23,7 +24,7 @@ const MalContainer = (props: Props) => {
 
     const mal = malData && malData.mal;
 
-    const [edit, setEdit] = useState(underOppfolging && harSkriveTilgang);
+    const [edit, setEdit] = useState( !viserHistoriskPeriode && underOppfolging && harSkriveTilgang);
 
     if (edit) {
         return (

@@ -30,10 +30,13 @@ const Mal = () => {
     const avhengigheter = [malStatus, malListeStatus];
 
     const onModalRequestClosed = () => {
+        console.log('onModalRequestClosed');
         if (!isDirty.current || window.confirm(CONFIRM)) {
+            console.log("onModalRequestClosed er true")
             navigate(hovedsideRoute());
             return true;
         }
+        console.log("onModalRequestClosed er false")
         return false;
     };
 
