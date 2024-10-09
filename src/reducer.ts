@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 
-import authReducer from './felles-komponenter/timeoutbox/auth-slice';
 import dragAndDropSlice from './moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-slice';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-slice';
@@ -35,7 +34,6 @@ const reducer = {
         malverk: malverkReducer,
         arkiv: arkivReducer,
         lest: lestReducer,
-        auth: authReducer,
         veileder: veilederReducer,
         eskaleringsvarsel: eskaleringsvarselReducer,
         feature: featureReducer,
