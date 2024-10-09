@@ -7,11 +7,10 @@ import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload
 import { useRoutes } from '../../routing/useRoutes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { selectMalStatus } from './aktivitetsmal-selector';
 import MalContainer from './mal-container';
 import MalHistorikk from './mal-historikk';
 import { MalModal } from './mal-modal';
-import { selectMalListe, selectMalListeStatus } from './malliste-selector';
+import { selectMalListe } from './malliste-selector';
 
 const Mal = () => {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
@@ -26,13 +25,10 @@ const Mal = () => {
 
 
     const onModalRequestClosed = () => {
-        console.log('onModalRequestClosed');
         if (!isDirty.current || window.confirm(CONFIRM)) {
-            console.log("onModalRequestClosed er true")
             navigate(hovedsideRoute());
             return true;
         }
-        console.log("onModalRequestClosed er false")
         return false;
     };
 
@@ -53,12 +49,10 @@ const Mal = () => {
                         <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
                     </ul>
                 </ReadMore>
-                {/*<Innholdslaster className="flex m-auto" avhengigheter={avhengigheter} alleOK>*/}
                     <section>
                         <MalContainer onLagre={onModalRequestClosed} dirtyRef={isDirty} />
                         <MalHistorikk />
                     </section>
-                {/*</Innholdslaster>*/}
             </div>
         </MalModal>
     );

@@ -3,10 +3,8 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
-//import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-selector';
-//import Malvisning from './mal-visning';
 import MalForm from './MalForm';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import Malvisning from './mal-visning';
@@ -39,14 +37,13 @@ const MalContainer = (props: Props) => {
                     setEdit(false);
                     props.dirtyRef.current = false;
                     loggMittMalLagre(erVeileder);
-                    console.log('Mitt mål lagret');
                     props.onLagre();
                 }}
             />
         );
     }
 
-   return <Malvisning onClick={() => setEdit(true)} />;
+   return <Malvisning/>;
 
 };
 
