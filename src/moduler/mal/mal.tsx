@@ -4,7 +4,6 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
-import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../routing/useRoutes';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
@@ -15,8 +14,6 @@ import { MalModal } from './mal-modal';
 import { selectMalListe, selectMalListeStatus } from './malliste-selector';
 
 const Mal = () => {
-    const malStatus = useSelector(selectMalStatus, shallowEqual);
-    const malListeStatus = useSelector(selectMalListeStatus, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
@@ -27,7 +24,6 @@ const Mal = () => {
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
 
-    const avhengigheter = [malStatus, malListeStatus];
 
     const onModalRequestClosed = () => {
         console.log('onModalRequestClosed');
@@ -57,12 +53,12 @@ const Mal = () => {
                         <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
                     </ul>
                 </ReadMore>
-                <Innholdslaster className="flex m-auto" avhengigheter={avhengigheter} alleOK>
+                {/*<Innholdslaster className="flex m-auto" avhengigheter={avhengigheter} alleOK>*/}
                     <section>
                         <MalContainer onLagre={onModalRequestClosed} dirtyRef={isDirty} />
                         <MalHistorikk />
                     </section>
-                </Innholdslaster>
+                {/*</Innholdslaster>*/}
             </div>
         </MalModal>
     );

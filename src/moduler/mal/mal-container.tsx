@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useState } from 'react';
+import React, { MutableRefObject, useEffect, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
@@ -9,6 +9,7 @@ import { selectGjeldendeMal } from './aktivitetsmal-selector';
 //import Malvisning from './mal-visning';
 import MalForm from './MalForm';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import Malvisning from './mal-visning';
 
 interface Props {
     dirtyRef: MutableRefObject<boolean>;
@@ -25,6 +26,9 @@ const MalContainer = (props: Props) => {
     const mal = malData && malData.mal;
 
     const [edit, setEdit] = useState( !viserHistoriskPeriode && underOppfolging && harSkriveTilgang);
+    useEffect(() => {
+        setEdit(!viserHistoriskPeriode && underOppfolging && harSkriveTilgang);
+    }, [viserHistoriskPeriode, underOppfolging, harSkriveTilgang]);
 
     if (edit) {
         return (
@@ -42,7 +46,7 @@ const MalContainer = (props: Props) => {
         );
     }
 
-  // return <Malvisning onClick={() => setEdit(true)} />;
+   return <Malvisning onClick={() => setEdit(true)} />;
 
 };
 
