@@ -6,11 +6,12 @@ import { useErVeileder } from '../../Provider';
 //import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-selector';
-import Malvisning from './mal-visning';
+//import Malvisning from './mal-visning';
 import MalForm from './MalForm';
 
 interface Props {
     dirtyRef: MutableRefObject<boolean>;
+    onLagre: () => void;
 }
 
 const MalContainer = (props: Props) => {
@@ -34,12 +35,13 @@ const MalContainer = (props: Props) => {
                     props.dirtyRef.current = false;
                     loggMittMalLagre(erVeileder);
                     console.log('Mitt mål lagret');
+                    props.onLagre();
                 }}
             />
         );
     }
 
-    return <Malvisning onClick={() => setEdit(true)} />;
+  // return <Malvisning onClick={() => setEdit(true)} />;
 
 };
 

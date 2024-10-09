@@ -56,7 +56,7 @@ const Mal = () => {
                 </ReadMore>
                 <Innholdslaster className="flex m-auto" avhengigheter={avhengigheter} alleOK>
                     <section>
-                        <MalContainer dirtyRef={isDirty} />
+                        <MalContainer onLagre={onModalRequestClosed} dirtyRef={isDirty} />
                         <MalHistorikk />
                     </section>
                 </Innholdslaster>
