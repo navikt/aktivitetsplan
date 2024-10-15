@@ -1,5 +1,5 @@
 import { PlusIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
+import { Button, Dropdown, Link } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,8 @@ const Verktoylinje = () => {
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const navigate = useNavigate();
     const { nyAktivitetRoute } = useRoutes();
+    const nyAktivitetBasePath = nyAktivitetRoute();
+
 
     return (
         <div className="flex flex-col gap-y-6">
@@ -37,6 +39,42 @@ const Verktoylinje = () => {
                     >
                         Legg til aktivitet
                     </Button>
+                    <div className="min-h-32">
+                        <Dropdown>
+                            <Button
+                                as={Dropdown.Toggle}
+                                loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
+                                className="self-stretch sm:self-auto"
+                                icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
+                                disabled={viserHistoriskPeriode || aktivitetStatus === Status.ERROR}>
+                                Legg til aktivitet
+                            </Button>
+                            <Dropdown.Menu>
+                                <Dropdown.Menu.GroupedList>
+                                    <Dropdown.Menu.GroupedList.Heading>
+                                        Velg type aktivitet
+                                    </Dropdown.Menu.GroupedList.Heading>
+                                    <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/stilling`}>
+                                        En jobb jeg vil søke på
+                                    </Dropdown.Menu.GroupedList.Item>
+                                    <Dropdown.Menu.GroupedList.Item as="a" href={`${nyAktivitetBasePath}/ijobb`}>
+                                        En jobb jeg har nå
+                                    </Dropdown.Menu.GroupedList.Item>
+                                </Dropdown.Menu.GroupedList>
+                                <Dropdown.Menu.List>
+                                    <Dropdown.Menu.List.Item as={Link} href={`${nyAktivitetBasePath}/egen`}>
+                                        Jobbrettet egenaktivitet
+                                    </Dropdown.Menu.List.Item>
+                                    <Dropdown.Menu.List.Item
+                                        as={Link}
+                                        href="https://nav.no"
+                                    >
+                                        Medisinsk behandling
+                                    </Dropdown.Menu.List.Item>
+                                </Dropdown.Menu.List>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                     <Filter />
                 </div>
                 <PeriodeFilter skjulInneverende={!underOppfolging} />
