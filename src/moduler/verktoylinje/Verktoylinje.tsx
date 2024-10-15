@@ -1,5 +1,5 @@
 import { PlusIcon } from '@navikt/aksel-icons';
-import { Button, Dropdown, Link } from '@navikt/ds-react';
+import { BodyShort, Button, Dropdown, Heading, Link } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,8 @@ import PeriodeFilter from '../filtrering/filter/PeriodeFilter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { Status } from '../../createGenericSlice';
+import { useErVeileder } from '../../Provider';
+import Lenkepanel from '../../felles-komponenter/Lenkepanel';
 
 const Verktoylinje = () => {
     const underOppfolging: boolean = useSelector(selectErUnderOppfolging);
@@ -21,7 +23,7 @@ const Verktoylinje = () => {
     const navigate = useNavigate();
     const { nyAktivitetRoute } = useRoutes();
     const nyAktivitetBasePath = nyAktivitetRoute();
-
+    const erVeileder = useErVeileder();
 
     return (
         <div className="flex flex-col gap-y-6">
@@ -50,6 +52,25 @@ const Verktoylinje = () => {
                                 Legg til aktivitet
                             </Button>
                             <Dropdown.Menu>
+                                {erVeileder ? (
+                                    <div className="">
+                                        <Heading level="2" size="medium">
+                                            For NAV-ansatt
+                                        </Heading>
+                                        <Dropdown.Menu.GroupedList>
+                                        <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/sokeavtale`}>Avtale om å søke jobber</Dropdown.Menu.GroupedList.Item>
+                                        <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/mote`}>Møte med NAV</Dropdown.Menu.GroupedList.Item>
+                                        <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/samtalereferat`}>Samtalereferat</Dropdown.Menu.GroupedList.Item>
+                                        </Dropdown.Menu.GroupedList>
+                                    </div>
+                                ) : null}
+
+
+                                {erVeileder ? (
+                                    <Heading level="1" size="medium" className="mb-4">
+                                        For bruker og NAV-ansatt
+                                    </Heading>
+                                ) : null}
                                 <Dropdown.Menu.GroupedList>
                                     <Dropdown.Menu.GroupedList.Heading>
                                         Velg type aktivitet
