@@ -24,7 +24,7 @@ const LeggTilForm = () => {
             contentClass="ny-aktivitet-visning"
             feilmeldinger={aktivitetFeilmeldinger}
             heading="Legg til en aktivitet"
-        >
+            lukkPåKlikkUtenfor={true}>
             <div className="mb-4">
                 {!erVeileder ? (
                     <BodyShort className="mt-6">
