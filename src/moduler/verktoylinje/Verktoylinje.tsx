@@ -1,8 +1,8 @@
 import { PlusIcon } from '@navikt/aksel-icons';
-import { Button, Dropdown, Link } from '@navikt/ds-react';
+import { Button, Dropdown} from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import loggEvent, { APNE_NY_AKTIVITET } from '../../felles-komponenter/utils/logging';
 import { useRoutes } from '../../routing/useRoutes';
@@ -22,6 +22,7 @@ const Verktoylinje = () => {
     const navigate = useNavigate();
     const { nyAktivitetRoute } = useRoutes();
     const nyAktivitetBasePath = nyAktivitetRoute();
+
     const erVeileder = useErVeileder();
 
     return (
@@ -57,9 +58,9 @@ const Verktoylinje = () => {
                                             For NAV-ansatt
                                         </Dropdown.Menu.GroupedList.Heading>
                                         <Dropdown.Menu.GroupedList>
-                                        <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/sokeavtale`}>Avtale om å søke jobber</Dropdown.Menu.GroupedList.Item>
-                                        <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/mote`}>Møte med NAV</Dropdown.Menu.GroupedList.Item>
-                                        <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/samtalereferat`}>Samtalereferat</Dropdown.Menu.GroupedList.Item>
+                                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/sokeavtale`}>Avtale om å søke jobber</Dropdown.Menu.GroupedList.Item>
+                                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/mote`}>Møte med NAV</Dropdown.Menu.GroupedList.Item>
+                                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/samtalereferat`}>Samtalereferat</Dropdown.Menu.GroupedList.Item>
                                         </Dropdown.Menu.GroupedList>
                                         <Dropdown.Menu.Divider />
                                     </div>
@@ -73,21 +74,19 @@ const Verktoylinje = () => {
                                 ) :<Dropdown.Menu.GroupedList.Heading>
                                     Velg type aktivitet
                                 </Dropdown.Menu.GroupedList.Heading> }
-                                    <Dropdown.Menu.GroupedList.Item as={Link} href={`${nyAktivitetBasePath}/stilling`}>
+                                    <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/stilling`}>
                                         En jobb jeg vil søke på
                                     </Dropdown.Menu.GroupedList.Item>
-                                    <Dropdown.Menu.GroupedList.Item as="a" href={`${nyAktivitetBasePath}/ijobb`}>
+
+                                    <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/ijobb`}>
                                         En jobb jeg har nå
                                     </Dropdown.Menu.GroupedList.Item>
                                 </Dropdown.Menu.GroupedList>
                                 <Dropdown.Menu.List>
-                                    <Dropdown.Menu.List.Item as={Link} href={`${nyAktivitetBasePath}/egen`}>
+                                    <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/egen`}>
                                         Jobbrettet egenaktivitet
                                     </Dropdown.Menu.List.Item>
-                                    <Dropdown.Menu.List.Item
-                                        as={Link}
-                                        href="https://nav.no"
-                                    >
+                                    <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/behandling`}>
                                         Medisinsk behandling
                                     </Dropdown.Menu.List.Item>
                                 </Dropdown.Menu.List>
