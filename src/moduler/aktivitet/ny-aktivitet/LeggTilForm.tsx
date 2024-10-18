@@ -1,61 +1,77 @@
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { PlusIcon } from '@navikt/aksel-icons';
+import { Button, Dropdown} from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-import Lenkepanel from '../../../felles-komponenter/Lenkepanel';
-import Modal from '../../../felles-komponenter/modal/Modal';
+import { Link } from 'react-router-dom';
+import { Status } from '../../../createGenericSlice';
 import { useErVeileder } from '../../../Provider';
+import { selectAktivitetStatus } from '../aktivitet-selector';
+import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import { useRoutes } from '../../../routing/useRoutes';
-import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
-import { useNavigate } from 'react-router-dom';
+
+
 
 const LeggTilForm = () => {
-    const erVeileder = useErVeileder();
-    const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
-
-    const { nyAktivitetRoute, hovedsideRoute } = useRoutes();
-    const navigate = useNavigate();
-    const tilbake = () => navigate(hovedsideRoute());
+    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode);
+    const aktivitetStatus = useSelector(selectAktivitetStatus);
+    const { nyAktivitetRoute } = useRoutes();
     const nyAktivitetBasePath = nyAktivitetRoute();
 
+
+    const erVeileder = useErVeileder();
+
     return (
-        <Modal
-            onClose={tilbake}
-            contentClass="ny-aktivitet-visning"
-            feilmeldinger={aktivitetFeilmeldinger}
-            heading="Legg til en aktivitet"
-        >
-            <div className="mb-4">
-                {!erVeileder ? (
-                    <BodyShort className="mt-6">
-                        Her kan du legge til ulike aktiviteter du gjør for å nå målet ditt.
-                    </BodyShort>
-                ) : null}
-            </div>
-            {erVeileder ? (
-                <div className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-[24px] px-8 py-4">
-                    <Heading level="2" size="medium">
-                        For NAV-ansatt
-                    </Heading>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/sokeavtale`}>Avtale om å søke jobber</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/mote`}>Møte med NAV</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/samtalereferat`}>Samtalereferat</Lenkepanel>
-                </div>
-            ) : null}
-            <div className="mt-8">
-                {erVeileder ? (
-                    <Heading level="2" size="medium" className="mb-4">
-                        For bruker og NAV-ansatt
-                    </Heading>
-                ) : null}
-                <div className="space-y-3 flex flex-col">
-                    <Lenkepanel href={`${nyAktivitetBasePath}/stilling`}>En jobb jeg vil søke på</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/ijobb`}>Jobb jeg har nå</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/egen`}>Jobbrettet egenaktivitet</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/behandling`}>Medisinsk behandling</Lenkepanel>
-                </div>
-            </div>
-        </Modal>
+        <div className="self-stretch sm:self-auto">
+            <Dropdown>
+                <Button
+                    as={Dropdown.Toggle}
+                    loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
+                    className="relative w-full"
+                    icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
+                    disabled={viserHistoriskPeriode || aktivitetStatus === Status.ERROR}>
+                    Legg til aktivitet
+                </Button>
+                <Dropdown.Menu>
+                    <Dropdown.Menu.GroupedList>
+                    {erVeileder ? (
+                        <div>
+                            <Dropdown.Menu.GroupedList.Heading>
+                                For NAV-ansatt
+                            </Dropdown.Menu.GroupedList.Heading>
+                                <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/sokeavtale`}>
+                                    Avtale om å søke jobber
+                                </Dropdown.Menu.List.Item>
+                                <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/mote`}>
+                                    Møte med NAV
+                                </Dropdown.Menu.List.Item>
+                                <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/samtalereferat`}>
+                                    Samtalereferat
+                                </Dropdown.Menu.List.Item>
+                            <Dropdown.Menu.Divider />
+                            <Dropdown.Menu.GroupedList.Heading>
+                                For bruker og NAV-ansatt
+                            </Dropdown.Menu.GroupedList.Heading>
+                        </div>
+                    ) :
+                            <Dropdown.Menu.GroupedList.Heading>
+                            Velg type aktivitet
+                        </Dropdown.Menu.GroupedList.Heading>}
+                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/stilling`}>
+                            En jobb jeg vil søke på
+                        </Dropdown.Menu.List.Item>
+                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/ijobb`}>
+                            En jobb jeg har nå
+                        </Dropdown.Menu.List.Item>
+                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/egen`}>
+                            Jobbrettet egenaktivitet
+                        </Dropdown.Menu.List.Item>
+                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/behandling`}>
+                            Medisinsk behandling
+                        </Dropdown.Menu.List.Item>
+                    </Dropdown.Menu.GroupedList>
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
     );
 };
 
