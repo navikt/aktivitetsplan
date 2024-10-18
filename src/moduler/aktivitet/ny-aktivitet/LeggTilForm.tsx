@@ -32,8 +32,9 @@ const LeggTilForm = () => {
                     Legg til aktivitet
                 </Button>
                 <Dropdown.Menu>
+                    <Dropdown.Menu.GroupedList>
                     {erVeileder ? (
-                        <div className="">
+                        <div>
                             <Dropdown.Menu.GroupedList.Heading>
                                 For NAV-ansatt
                             </Dropdown.Menu.GroupedList.Heading>
@@ -51,8 +52,6 @@ const LeggTilForm = () => {
                             <Dropdown.Menu.Divider />
                         </div>
                     ) : null}
-
-                    <Dropdown.Menu.GroupedList>
                         {erVeileder ? (
                             <Dropdown.Menu.GroupedList.Heading>
                                 For bruker og NAV-ansatt
@@ -67,7 +66,7 @@ const LeggTilForm = () => {
                         <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/ijobb`}>
                             En jobb jeg har nå
                         </Dropdown.Menu.GroupedList.Item>
-                    </Dropdown.Menu.GroupedList>
+
                     <Dropdown.Menu.List>
                         <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/egen`}>
                             Jobbrettet egenaktivitet
@@ -76,6 +75,7 @@ const LeggTilForm = () => {
                             Medisinsk behandling
                         </Dropdown.Menu.List.Item>
                     </Dropdown.Menu.List>
+                    </Dropdown.Menu.GroupedList>
                 </Dropdown.Menu>
             </Dropdown>
         </div>
