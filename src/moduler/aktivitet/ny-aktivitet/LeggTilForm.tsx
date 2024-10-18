@@ -21,12 +21,12 @@ const LeggTilForm = () => {
     const erVeileder = useErVeileder();
 
     return (
-        <div>
+        <div className="self-stretch sm:self-auto">
             <Dropdown>
                 <Button
                     as={Dropdown.Toggle}
                     loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
-                    className="self-stretch sm:self-auto"
+                    className="relative w-full"
                     icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
                     disabled={viserHistoriskPeriode || aktivitetStatus === Status.ERROR}>
                     Legg til aktivitet
