@@ -21,7 +21,7 @@ const LeggTilForm = () => {
     const erVeileder = useErVeileder();
 
     return (
-        <div className="min-h-32">
+        <div>
             <Dropdown>
                 <Button
                     as={Dropdown.Toggle}
