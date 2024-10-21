@@ -38,15 +38,15 @@ const LeggTilForm = () => {
                             <Dropdown.Menu.GroupedList.Heading>
                                 For NAV-ansatt
                             </Dropdown.Menu.GroupedList.Heading>
-                                <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/sokeavtale`}>
+                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/sokeavtale`}>
                                     Avtale om å søke jobber
-                                </Dropdown.Menu.List.Item>
-                                <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/mote`}>
+                                </Dropdown.Menu.GroupedList.Item>
+                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/mote`}>
                                     Møte med NAV
-                                </Dropdown.Menu.List.Item>
-                                <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/samtalereferat`}>
+                                </Dropdown.Menu.GroupedList.Item>
+                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/samtalereferat`}>
                                     Samtalereferat
-                                </Dropdown.Menu.List.Item>
+                                </Dropdown.Menu.GroupedList.Item>
                             <Dropdown.Menu.Divider />
                             <Dropdown.Menu.GroupedList.Heading>
                                 For bruker og NAV-ansatt
@@ -56,18 +56,18 @@ const LeggTilForm = () => {
                             <Dropdown.Menu.GroupedList.Heading>
                             Velg type aktivitet
                         </Dropdown.Menu.GroupedList.Heading>}
-                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/stilling`}>
+                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/stilling`}>
                             En jobb jeg vil søke på
-                        </Dropdown.Menu.List.Item>
-                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/ijobb`}>
+                        </Dropdown.Menu.GroupedList.Item>
+                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/ijobb`}>
                             En jobb jeg har nå
-                        </Dropdown.Menu.List.Item>
-                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/egen`}>
+                        </Dropdown.Menu.GroupedList.Item>
+                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/egen`}>
                             Jobbrettet egenaktivitet
-                        </Dropdown.Menu.List.Item>
-                        <Dropdown.Menu.List.Item as={Link} to={`${nyAktivitetBasePath}/behandling`}>
+                        </Dropdown.Menu.GroupedList.Item>
+                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/behandling`}>
                             Medisinsk behandling
-                        </Dropdown.Menu.List.Item>
+                        </Dropdown.Menu.GroupedList.Item>
                     </Dropdown.Menu.GroupedList>
                 </Dropdown.Menu>
             </Dropdown>
