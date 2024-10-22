@@ -45,6 +45,7 @@ const LeggTilForm = () => {
     const nyAktivitetBasePath = nyAktivitetRoute();
 
 
+
     const erVeileder = useErVeileder();
     const menuItemsGroup = erVeileder ? veilederItems(nyAktivitetBasePath) : brukerItems(nyAktivitetBasePath);
     return (
@@ -69,7 +70,7 @@ const LeggTilForm = () => {
                               {subItem.tittle}
                           </Dropdown.Menu.GroupedList.Item>
                         ))}
-                        {erVeileder && index === 0 && <Dropdown.Menu.Divider />}
+                        {index != menuItemsGroup.length - 1  ? <Dropdown.Menu.Divider />: null}
                     </Dropdown.Menu.GroupedList>
                   ))}
               </Dropdown.Menu>
