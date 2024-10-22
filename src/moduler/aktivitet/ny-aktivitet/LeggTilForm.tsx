@@ -9,7 +9,34 @@ import { selectAktivitetStatus } from '../aktivitet-selector';
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import { useRoutes } from '../../../routing/useRoutes';
 
+const veilederItems = (nyAktivitetBasePath: string) =>([{
+    grouppeTittel : "For NAV-ansatt",
+    grouppedItems: [
+        { tittle: "Avtale om å søke jobber" , link : `${nyAktivitetBasePath}/sokeavtale`},
+        { tittle: "Møte med NAV" , link : `${nyAktivitetBasePath}/mote`},
+        { tittle: "Samtalereferat" , link: `${nyAktivitetBasePath}/samtalereferat`},
+        ]
+},
+    {
+        grouppeTittel : "For bruker og NAV-ansatt",
+        grouppedItems: [
+            { tittle: " En jobb jeg vil søke på" , link : `${nyAktivitetBasePath}/stilling`},
+            { tittle: " En jobb jeg har nå" , link : `${nyAktivitetBasePath}/ijobb`},
+            { tittle: "Jobbrettet egenaktivitet " , link: `${nyAktivitetBasePath}/egen`},
+            { tittle: " Medisinsk behandling" , link: `${nyAktivitetBasePath}/behandling`},
+        ]
+    }
+])
 
+const brukerItems = (nyAktivitetBasePath: string) =>([{
+        grouppeTittel : "For bruker og NAV-ansatt",
+        grouppedItems: [
+            { tittle: " En jobb jeg vil søke på" , link : `${nyAktivitetBasePath}/stilling`},
+            { tittle: " En jobb jeg har nå" , link : `${nyAktivitetBasePath}/ijobb`},
+            { tittle: "Jobbrettet egenaktivitet " , link: `${nyAktivitetBasePath}/egen`},
+            { tittle: " Medisinsk behandling" , link: `${nyAktivitetBasePath}/behandling`},
+        ]
+    }])
 
 const LeggTilForm = () => {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode);
@@ -19,6 +46,7 @@ const LeggTilForm = () => {
 
 
     const erVeileder = useErVeileder();
+    const menuItemsGroup = erVeileder ? veilederItems(nyAktivitetBasePath) : brukerItems(nyAktivitetBasePath);
 
     return (
         <div className="self-stretch sm:self-auto">
@@ -32,43 +60,19 @@ const LeggTilForm = () => {
                     Legg til aktivitet
                 </Button>
                 <Dropdown.Menu>
-                    <Dropdown.Menu.GroupedList>
-                    {erVeileder ? (
-                        <div>
-                            <Dropdown.Menu.GroupedList.Heading>
-                                For NAV-ansatt
-                            </Dropdown.Menu.GroupedList.Heading>
-                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/sokeavtale`}>
-                                    Avtale om å søke jobber
-                                </Dropdown.Menu.GroupedList.Item>
-                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/mote`}>
-                                    Møte med NAV
-                                </Dropdown.Menu.GroupedList.Item>
-                                <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/samtalereferat`}>
-                                    Samtalereferat
-                                </Dropdown.Menu.GroupedList.Item>
-                            <Dropdown.Menu.Divider />
-                            <Dropdown.Menu.GroupedList.Heading>
-                                For bruker og NAV-ansatt
-                            </Dropdown.Menu.GroupedList.Heading>
-                        </div>
-                    ) :
-                            <Dropdown.Menu.GroupedList.Heading>
-                            Velg type aktivitet
-                        </Dropdown.Menu.GroupedList.Heading>}
-                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/stilling`}>
-                            En jobb jeg vil søke på
-                        </Dropdown.Menu.GroupedList.Item>
-                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/ijobb`}>
-                            En jobb jeg har nå
-                        </Dropdown.Menu.GroupedList.Item>
-                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/egen`}>
-                            Jobbrettet egenaktivitet
-                        </Dropdown.Menu.GroupedList.Item>
-                        <Dropdown.Menu.GroupedList.Item as={Link} to={`${nyAktivitetBasePath}/behandling`}>
-                            Medisinsk behandling
-                        </Dropdown.Menu.GroupedList.Item>
-                    </Dropdown.Menu.GroupedList>
+                            {menuItemsGroup.map((item) => (
+                              <Dropdown.Menu.GroupedList>
+                                <Dropdown.Menu.GroupedList.Heading>
+                                    {item.grouppeTittel}
+                                </Dropdown.Menu.GroupedList.Heading>
+                                {item.grouppedItems.map((item) =>
+                                  <Dropdown.Menu.GroupedList.Item as={Link} to={item.link}>
+                                      {item.tittle}
+                                  </Dropdown.Menu.GroupedList.Item>)
+                                }
+
+                              </Dropdown.Menu.GroupedList>))
+                            }
                 </Dropdown.Menu>
             </Dropdown>
         </div>
