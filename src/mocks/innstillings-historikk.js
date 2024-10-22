@@ -2,7 +2,7 @@ export const innstillingsHistorikk = [
     {
         type: 'KVP_STARTET',
         dato: '2018-05-03T10:44:28.113+02:00',
-        begrunnelse: 'Sjørøvere skal kun tilhøre vårt NAV kontor',
+        begrunnelse: 'Sjørøvere skal kun tilhøre vårt Nav kontor',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z123456',
         dialogId: null,

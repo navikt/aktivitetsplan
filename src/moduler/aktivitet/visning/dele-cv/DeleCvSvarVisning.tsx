@@ -17,10 +17,10 @@ export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
         svarTekst = cvKanDeles ? JaSvarTekst : NeiSvarTekst;
         endretTekst = `Du svarte ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}`;
     } else {
-        svarTekst = `NAV var i kontakt med deg ${formaterDatoManed(cvKanDelesData.avtaltDato)}. Du sa ${
+        svarTekst = `Nav var i kontakt med deg ${formaterDatoManed(cvKanDelesData.avtaltDato)}. Du sa ${
             cvKanDeles ? 'ja' : 'nei'
         } til at CV-en din deles med arbeidsgiver.`;
-        endretTekst = `NAV svarte på vegne av deg ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}.`;
+        endretTekst = `Nav svarte på vegne av deg ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}.`;
     }
 
     return (

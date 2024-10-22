@@ -3,7 +3,7 @@ export const oppfoelgingsstatus = {
     formidlingsgruppe: 'SERV',
     servicegruppe: 'BATT',
     oppfolgingsenhet: {
-        navn: 'NAV TEST',
+        navn: 'Nav TEST',
         enhetId: '9999',
     },
     inaktiveringsdato: '2018-03-13T12:00:00+01:00',

@@ -25,7 +25,7 @@ const aktivitetingress: Record<AktivitetType, string | ReactElement | undefined>
         'Her kan du eller veilederen din legge inn aktiviteter som hjelper deg når du skal komme i arbeid. ' +
         'Eksempler kan være å registrere deg hos bemannings- og rekrutteringsbyråer, jobbe godt med CV-en, ' +
         'eller lage oversikt over personer som kan være nyttig å kontakte når du er på jakt etter jobb.',
-    GRUPPEAKTIVITET: 'Her ser du informasjon om en gruppeaktivitet NAV har meldt deg på',
+    GRUPPEAKTIVITET: 'Her ser du informasjon om en gruppeaktivitet Nav har meldt deg på',
     IJOBB: 'Her kan du informere om der du jobber nå, for eksempel en deltidsjobb eller en midlertidig stilling. Hvis du sender inn meldekort, så må du også huske å føre opp de timene du har jobbet på meldekortet.',
     MOTE: 'NAV ønsker et møte med deg. Du må gi beskjed så raskt som mulig hvis tidspunktet ikke passer.',
     SAMTALEREFERAT: 'Her finner du referat fra en samtale du har hatt med NAV.',

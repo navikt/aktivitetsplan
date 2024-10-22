@@ -11,7 +11,7 @@ const getText = (
     forhaandsorienteringstype: ForhaandsorienteringType,
 ): string => {
     if (!kanSendeVarsel || !harTilDato) {
-        return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke lagt til. Du skal ha informert bruker om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat.';
+        return 'Aktiviteten er merket "Avtalt med Nav". Forhåndsorientering er ikke lagt til. Du skal ha informert bruker om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat.';
     }
     if (avtaltMedNavMindreEnnSyvDager) {
         return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke lagt til fordi sluttdatoen er færre enn 7 dager frem i tid. Du skal ha informert bruker om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat.';

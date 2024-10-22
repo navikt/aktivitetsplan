@@ -9,7 +9,7 @@ const egenMalverk = [
         tilDato: '2018-05-02T14:20:36.716Z',
         lenke: 'https://tjenester.nav.no/sbl/nav_security_check?goto=/sbl/arbeid/endreCv',
         beskrivelse:
-            'Som arbeidssøker er det viktig at du er synlig for flest mulige arbeidsgivere. Det blir du ved å registrere CV-en din på nav.no, NAV samarbeider med bemannings- og rekrutteringsbransjen. Det er også nødvendig for NAV å ha CV-din for å kunne følge deg opp på en god måte.',
+            'Som arbeidssøker er det viktig at du er synlig for flest mulige arbeidsgivere. Det blir du ved å registrere CV-en din på nav.no, Nav samarbeider med bemannings- og rekrutteringsbransjen. Det er også nødvendig for Nav å ha CV-din for å kunne følge deg opp på en god måte.',
         status: 'BRUKER_ER_INTERESSERT',
     },
     {
@@ -21,7 +21,7 @@ const egenMalverk = [
         tilDato: '2018-05-02T14:20:36.718Z',
         lenke: 'https://tjenester.nav.no/sbl/nav_security_check?goto=/sbl/arbeid/endrePreferanser',
         beskrivelse:
-            'Jobbønskene dine gir match når arbeidsgivere og veiledere i NAV leter etter kandidater i CV-basen vår. Du får også et automatisk abonnement på ledige stillinger',
+            'Jobbønskene dine gir match når arbeidsgivere og veiledere i Nav leter etter kandidater i CV-basen vår. Du får også et automatisk abonnement på ledige stillinger',
         status: 'BRUKER_ER_INTERESSERT',
     },
     {
