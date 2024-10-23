@@ -9,17 +9,17 @@ import { selectAktivitetStatus } from '../aktivitet-selector';
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import { useRoutes } from '../../../routing/useRoutes';
 
-const veilederItems = (nyAktivitetBasePath: string) =>([{
-    grouppeTittel : "For NAV-ansatt",
-    grouppedItems: [
+const veilederAktivitetsValg = (nyAktivitetBasePath: string) =>([{
+    groupTittel : "For NAV-ansatt",
+    groupedItems: [
         { tittle: "Avtale om å søke jobber" , link : `${nyAktivitetBasePath}/sokeavtale`},
         { tittle: "Møte med NAV" , link : `${nyAktivitetBasePath}/mote`},
         { tittle: "Samtalereferat" , link: `${nyAktivitetBasePath}/samtalereferat`},
         ]
 },
     {
-        grouppeTittel : "For bruker og NAV-ansatt",
-        grouppedItems: [
+        groupTittel : "For bruker og NAV-ansatt",
+        groupedItems: [
             { tittle: " En jobb jeg vil søke på" , link : `${nyAktivitetBasePath}/stilling`},
             { tittle: " En jobb jeg har nå" , link : `${nyAktivitetBasePath}/ijobb`},
             { tittle: "Jobbrettet egenaktivitet " , link: `${nyAktivitetBasePath}/egen`},
@@ -28,9 +28,9 @@ const veilederItems = (nyAktivitetBasePath: string) =>([{
     }
 ])
 
-const brukerItems = (nyAktivitetBasePath: string) =>([{
-        grouppeTittel : "Velg type aktivitet",
-        grouppedItems: [
+const brukerAktivitetsValg = (nyAktivitetBasePath: string) =>([{
+        groupTittel : "Velg type aktivitet",
+        groupedItems: [
             { tittle: " En jobb jeg vil søke på" , link : `${nyAktivitetBasePath}/stilling`},
             { tittle: " En jobb jeg har nå" , link : `${nyAktivitetBasePath}/ijobb`},
             { tittle: "Jobbrettet egenaktivitet " , link: `${nyAktivitetBasePath}/egen`},
@@ -38,7 +38,7 @@ const brukerItems = (nyAktivitetBasePath: string) =>([{
         ]
     }])
 
-const LeggTilForm = () => {
+const LeggTilNyAktivitetsKort = () => {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode);
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const { nyAktivitetRoute } = useRoutes();
@@ -47,7 +47,7 @@ const LeggTilForm = () => {
 
 
     const erVeileder = useErVeileder();
-    const menuItemsGroup = erVeileder ? veilederItems(nyAktivitetBasePath) : brukerItems(nyAktivitetBasePath);
+    const menuItemsGroup = erVeileder ? veilederAktivitetsValg(nyAktivitetBasePath) : brukerAktivitetsValg(nyAktivitetBasePath);
     return (
       <div className="self-stretch sm:self-auto">
           <Dropdown>
@@ -63,9 +63,9 @@ const LeggTilForm = () => {
                   {menuItemsGroup.map((item, index) => (
                     <Dropdown.Menu.GroupedList key={index}>
                         <Dropdown.Menu.GroupedList.Heading>
-                            {item.grouppeTittel}
+                            {item.groupTittel}
                         </Dropdown.Menu.GroupedList.Heading>
-                        {item.grouppedItems.map((subItem, subIndex) => (
+                        {item.groupedItems.map((subItem, subIndex) => (
                           <Dropdown.Menu.GroupedList.Item as={Link} to={subItem.link} key={subIndex}>
                               {subItem.tittle}
                           </Dropdown.Menu.GroupedList.Item>
@@ -79,4 +79,4 @@ const LeggTilForm = () => {
     );
 };
 
-export default LeggTilForm;
+export default LeggTilNyAktivitetsKort;

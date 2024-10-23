@@ -5,7 +5,7 @@ import Filter from '../filtrering/Filter';
 import PeriodeFilter from '../filtrering/filter/PeriodeFilter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
-import LeggTilForm from '../aktivitet/ny-aktivitet/LeggTilForm';
+import LeggTilNyAktivitetsKort from '../aktivitet/ny-aktivitet/leggTilNyAktivitetsKort';
 
 const Verktoylinje = () => {
     const underOppfolging: boolean = useSelector(selectErUnderOppfolging);
@@ -14,7 +14,7 @@ const Verktoylinje = () => {
         <div className="flex flex-col gap-y-6">
             <div className="flex gap-y-4 sm:flex-row flex-col-reverse ">
                 <div className="flex gap-4 items-start flex-col sm:flex-row w-full">
-                    <LeggTilForm />
+                    <LeggTilNyAktivitetsKort />
                     <Filter />
                 </div>
                 <PeriodeFilter skjulInneverende={!underOppfolging} />
