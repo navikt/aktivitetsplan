@@ -3,7 +3,7 @@ import React from 'react';
 
 import HiddenIfHOC from './hidden-if.tsx';
 
-const Komp = ({ hidden }: { hidden: boolean }) => (
+const Komp = ({ hidden }: { hidden: boolean | (() => boolean) }) => (
     <HiddenIfHOC hidden={hidden}>
         <div>test</div>
     </HiddenIfHOC>
