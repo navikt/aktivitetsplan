@@ -68,8 +68,8 @@ export const kanalMap: Record<Kanal, string> = {
 };
 
 export const avtaltMapper = {
-    AVTALT_MED_NAV: 'Avtalt med NAV',
-    IKKE_AVTALT_MED_NAV: 'Ikke avtalt med NAV',
+    AVTALT_MED_NAV: 'Avtalt med Nav',
+    IKKE_AVTALT_MED_NAV: 'Ikke avtalt med Nav',
 };
 
 export const stillingsEtikettMapper: Record<StillingStatus, string> = {

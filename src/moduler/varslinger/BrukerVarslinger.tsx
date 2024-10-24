@@ -16,7 +16,7 @@ import { InitialPageLoadResult } from '../../routing/loaders';
 const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string => {
     if (!antallDagerIgjen) {
         // oppfolging.inaktivert-mer-enn-28-dager.reaktiveres_nb.txt
-        return 'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere plan". Hvis du fortsatt skal motta ytelser og få oppfølging fra NAV må du være registrert.';
+        return 'Du er ikke lenger registrert hos Nav og din tidligere aktivitetsplan er lagt under "Tidligere plan". Hvis du fortsatt skal motta ytelser og få oppfølging fra Nav må du være registrert.';
     }
 
     const mellom10og28 = antallDagerIgjen <= 28 && antallDagerIgjen >= 10;
@@ -24,15 +24,15 @@ const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string => {
 
     if (mellom10og28) {
         // oppfolging.inaktivert-28-til-10-dager.reaktiveres_nb.txt
-        return 'Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.';
+        return 'Du er ikke lenger registrert hos Nav. Hvis du fortsatt skal motta ytelser, få oppfølging fra Nav og bruke aktivitetsplanen må du være registrert.';
     }
     if (mindreEnn10) {
         // oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres_nb.txt
-        return `Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert. Om ${antallDagerIgjen} dager vil denne aktivitetsplanen bli avsluttet.`;
+        return `Du er ikke lenger registrert hos Nav. Hvis du fortsatt skal motta ytelser, få oppfølging fra Nav og bruke aktivitetsplanen må du være registrert. Om ${antallDagerIgjen} dager vil denne aktivitetsplanen bli avsluttet.`;
     }
 
     // oppfolging.inaktivert-mer-enn-28-dager.reaktiveres_nb.txt
-    return 'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere plan". Hvis du fortsatt skal motta ytelser og få oppfølging fra NAV må du være registrert.';
+    return 'Du er ikke lenger registrert hos Nav og din tidligere aktivitetsplan er lagt under "Tidligere plan". Hvis du fortsatt skal motta ytelser og få oppfølging fra Nav må du være registrert.';
 };
 
 interface Props {
@@ -60,7 +60,7 @@ const BrukerVarslinger = (props: Props) => {
                 <div className="container">
                     <AdvarselMedDialogLenke
                         lenkeTekst="Les hva du må gjøre."
-                        tekst="Du har fått en viktig melding fra NAV."
+                        tekst="Du har fått en viktig melding fra Nav."
                         dialogId={tilhorendeDialogId}
                         hidden={!erEskalert}
                     />
@@ -73,9 +73,9 @@ const BrukerVarslinger = (props: Props) => {
                     <AdvarselMedLenkeVarsling
                         hidden={underOppfolging}
                         tekst={
-                            'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.'
+                            'Du er ikke lenger registrert hos Nav og din tidligere aktivitetsplan er lagt under "Tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra Nav og bruke aktivitetsplanen må du være registrert.'
                         }
-                        lenkeTekst="Register deg hos NAV"
+                        lenkeTekst="Register deg hos Nav"
                         href={ARBEIDSSOKERREGISTRERING_URL}
                     />
                 </div>

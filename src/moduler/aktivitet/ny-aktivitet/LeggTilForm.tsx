@@ -35,17 +35,17 @@ const LeggTilForm = () => {
             {erVeileder ? (
                 <div className="space-y-3 flex flex-col bg-surface-alt-3-subtle -mx-[24px] px-8 py-4">
                     <Heading level="2" size="medium">
-                        For NAV-ansatt
+                        For Nav-ansatt
                     </Heading>
                     <Lenkepanel href={`${nyAktivitetBasePath}/sokeavtale`}>Avtale om å søke jobber</Lenkepanel>
-                    <Lenkepanel href={`${nyAktivitetBasePath}/mote`}>Møte med NAV</Lenkepanel>
+                    <Lenkepanel href={`${nyAktivitetBasePath}/mote`}>Møte med Nav</Lenkepanel>
                     <Lenkepanel href={`${nyAktivitetBasePath}/samtalereferat`}>Samtalereferat</Lenkepanel>
                 </div>
             ) : null}
             <div className="mt-8">
                 {erVeileder ? (
                     <Heading level="2" size="medium" className="mb-4">
-                        For bruker og NAV-ansatt
+                        For bruker og Nav-ansatt
                     </Heading>
                 ) : null}
                 <div className="space-y-3 flex flex-col">
