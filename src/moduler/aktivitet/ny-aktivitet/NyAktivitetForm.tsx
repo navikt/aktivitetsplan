@@ -26,7 +26,7 @@ import { logModalLukket } from '../../../amplitude/amplitude';
 import { useErVeileder } from '../../../Provider';
 
 const aktivitetHeadings = {
-    mote: 'Møte med NAV',
+    mote: 'Møte med Nav',
     samtalereferat: 'Samtalereferat',
     stilling: 'En jobb jeg vil søke på',
     sokeavtale: 'Avtale om å søke jobber',

@@ -91,13 +91,13 @@ describe('aktivitets-filter', () => {
             expect(getByRole('button', { name: 'Filtrer' }).attributes.getNamedItem('disabled')).toBeNull(),
         );
         fireEvent.click(getByText('Filtrer'));
-        fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
-        getByRole('checkbox', { name: 'Ikke avtalt med NAV', checked: true });
+        fireEvent.click(getByLabelText('Ikke avtalt med Nav'));
+        getByRole('checkbox', { name: 'Ikke avtalt med Nav', checked: true });
 
         getByText('Aktivitet: false');
         expect(queryByText('Aktivitet: true')).toBeFalsy();
-        fireEvent.click(getByLabelText('Avtalt med NAV'));
-        fireEvent.click(getByLabelText('Ikke avtalt med NAV'));
+        fireEvent.click(getByLabelText('Avtalt med Nav'));
+        fireEvent.click(getByLabelText('Ikke avtalt med Nav'));
         getByText('Aktivitet: true');
         expect(queryByText('Aktivitet: false')).toBeFalsy();
         expect(queryByText('Assisterende skipskokk')).toBeNull();
@@ -141,7 +141,7 @@ describe('aktivitets-filter', () => {
         }
     });
 
-    it('Should filter based on etiketter (stilling fra NAV)', async () => {
+    it('Should filter based on etiketter (stilling fra Nav)', async () => {
         const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
         const statuser: StillingFraNavSoknadsstatus[] = [
             StillingFraNavSoknadsstatus.AVSLAG,

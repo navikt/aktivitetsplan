@@ -212,8 +212,8 @@ const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
                             endretAvType: 'NAV',
                             endretAv: 'R121212',
                             tidspunkt: subMinutes(new Date(), 30),
-                            beskrivelseForVeileder: 'R121212 merket aktiviteten "Avtalt med NAV"',
-                            beskrivelseForBruker: 'NAV merket aktiviteten "Avtalt med NAV"',
+                            beskrivelseForVeileder: 'R121212 merket aktiviteten "Avtalt med Nav"',
+                            beskrivelseForBruker: 'Nav merket aktiviteten "Avtalt med Nav"',
                         },
                         {
                             endretAvType: 'BRUKER',

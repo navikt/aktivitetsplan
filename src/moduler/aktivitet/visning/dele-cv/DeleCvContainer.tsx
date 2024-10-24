@@ -12,7 +12,7 @@ interface PropTypes {
 }
 
 export const Ingress = ({ className }: { className?: string }) => (
-    <BodyShort className={className}>Du bestemmer selv om NAV kan dele CV-en din for denne stillingen.</BodyShort>
+    <BodyShort className={className}>Du bestemmer selv om Nav kan dele CV-en din for denne stillingen.</BodyShort>
 );
 
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {

@@ -189,7 +189,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
                     )}
                     <Textarea
                         disabled={avtalt}
-                        label="Oppfølging fra NAV (valgfri)"
+                        label="Oppfølging fra Nav (valgfri)"
                         maxLength={255}
                         {...register('avtaleOppfolging')}
                         error={errorWrapper.errors.avtaleOppfolging && errorWrapper.errors.avtaleOppfolging.message}

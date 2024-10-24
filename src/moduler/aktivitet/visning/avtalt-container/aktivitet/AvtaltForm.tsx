@@ -110,16 +110,16 @@ const AvtaltForm = (props: Props) => {
             className="bg-surface-alt-3-subtle py-2 px-4 my-4 border border-border-alt-3 rounded-md"
         >
             <div className="flex items-center">
-                <Checkbox onChange={() => setShowForm(!showForm)}>Avtalt med NAV</Checkbox>
+                <Checkbox onChange={() => setShowForm(!showForm)}>Avtalt med Nav</Checkbox>
                 <HelpText
-                    aria-label="Informasjon om avtalt med NAV"
-                    title="Informasjon om avtalt med NAV"
+                    aria-label="Informasjon om avtalt med Nav"
+                    title="Informasjon om avtalt med Nav"
                     id="hjelp"
                     className="ml-2 justify-self-start"
                 >
                     <div className="max-w-[300px]">
                         Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
-                        &quot;Avtalt med NAV&quot;
+                        &quot;Avtalt med Nav&quot;
                     </div>
                 </HelpText>
                 <Detail className="text-right flex-grow">FOR NAV-ANSATT</Detail>

@@ -21,17 +21,17 @@ export function RettigheterPanel() {
             </Accordion.Header>
             <Accordion.Content>
                 <BodyShort>
-                    Du har rett til å få en aktivitetsplan når du har registrert deg hos NAV. Informasjonen i
+                    Du har rett til å få en aktivitetsplan når du har registrert deg hos Nav. Informasjonen i
                     aktivitetsplanen og annen informasjon du gir til veilederen din brukes til å vurdere ditt behov for
-                    hjelp fra NAV.
+                    hjelp fra Nav.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
                     Manuell oppfølging
                 </Heading>
                 <BodyShort>
-                    NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og reservasjonsregisteret
+                    Nav henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og reservasjonsregisteret
                     for å se om du har reservert deg mot digital kommunikasjon med det offentlige. Hvis du har reservert
-                    deg, eller ikke er i stand til å bruke aktivitetsplanen, vil NAV følge deg opp manuelt. Det betyr at
+                    deg, eller ikke er i stand til å bruke aktivitetsplanen, vil Nav følge deg opp manuelt. Det betyr at
                     en veileder følger deg opp, uten at du selv bruker den digitale aktivitetsplanen. Du får
                     aktivitetsplanen skrevet ut på papir.
                 </BodyShort>
@@ -49,7 +49,7 @@ export function RettigheterPanel() {
                 <BodyShort>
                     Les mer om{' '}
                     <Link href="https://www.nav.no/no/NAV+og+samfunn/Om+NAV/personvern-i-arbeids-og-velferdsetaten">
-                        hvordan NAV behandler personopplysninger
+                        hvordan Nav behandler personopplysninger
                     </Link>
                     .
                 </BodyShort>

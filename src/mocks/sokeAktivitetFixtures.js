@@ -11,7 +11,7 @@ export function enSokeAktivitet({ tittel }) {
         versjon: `${versjon}`,
         tittel,
         beskrivelse:
-            'NAV forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb. Legg til hver stilling du søker i aktiviteten «En jobb jeg vil søke på».',
+            'Nav forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb. Legg til hver stilling du søker i aktiviteten «En jobb jeg vil søke på».',
         lenke: null,
         type: 'SOKEAVTALE',
         status: 'GJENNOMFORES',

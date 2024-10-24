@@ -16,7 +16,7 @@ import { kanOppdatereStatus } from './valideringUtils';
 
 const label = (status: AktivitetStatus) => {
     if (status === AktivitetStatus.FULLFOERT) {
-        return 'Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe NAV bør kjenne til.';
+        return 'Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe Nav bør kjenne til.';
     }
     return 'Skriv en kort begrunnelse om hvorfor du avbryter aktiviteten.';
 };

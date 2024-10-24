@@ -32,7 +32,7 @@ const SokeDetaljer = ({ aktivitet }: Props) => {
             />
             <HiddenIfInformasjonsfelt
                 key="avtaleOppfolging"
-                tittel="Oppfølging fra NAV"
+                tittel="Oppfølging fra Nav"
                 beskrivelse
                 formattertTekst
                 hidden={!aktivitet.avtaleOppfolging}

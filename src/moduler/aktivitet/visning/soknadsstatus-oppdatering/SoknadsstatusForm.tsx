@@ -22,7 +22,7 @@ const RadioButtons: Record<
     Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend>,
     string
 > = {
-    VENTER: 'Venter på å bli kontaktet av NAV eller arbeidsgiver',
+    VENTER: 'Venter på å bli kontaktet av Nav eller arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Ikke fått jobben',

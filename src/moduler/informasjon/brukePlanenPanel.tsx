@@ -31,17 +31,17 @@ export const BrukePlanenPanel = () => {
                     aktivitet eller jobb. Du og veilederen din ser den samme planen.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
-                    Avtalt med NAV
+                    Avtalt med Nav
                 </Heading>
                 <BodyShort className="pb-4">
                     Når du har avtalt å gjennomføre en aktivitet med veilederen din, vil veilederen merke den «Avtalt
-                    med NAV». Du må gjennomføre slike aktiviteter. Hvis du ikke følger opp avtalte aktiviteter, kan du
-                    risikere å miste pengestøtte fra NAV.
+                    med Nav». Du må gjennomføre slike aktiviteter. Hvis du ikke følger opp avtalte aktiviteter, kan du
+                    risikere å miste pengestøtte fra Nav.
                 </BodyShort>
                 <BodyShort>
-                    Når en aktivitet er markert med "avtalt med NAV" kan teksten ikke lenger endres på. Noen datoer kan
+                    Når en aktivitet er markert med "avtalt med Nav" kan teksten ikke lenger endres på. Noen datoer kan
                     likevel endres på, men ingen annen tekst. Det er laget slik for at ingen skal kunne endre på
-                    detaljer som kan være viktige for din sak i NAV.
+                    detaljer som kan være viktige for din sak i Nav.
                 </BodyShort>
                 <Heading level="3" size="xsmall" className="pt-4">
                     Flytte på en aktivitet
@@ -70,7 +70,7 @@ export const BrukePlanenPanel = () => {
                     Tidligere planer
                 </Heading>
                 <BodyShort>
-                    Hvis du har vært registrert hos NAV før, kan du se aktivitetsplanen fra denne perioden.
+                    Hvis du har vært registrert hos Nav før, kan du se aktivitetsplanen fra denne perioden.
                 </BodyShort>
                 <AktivitetskortVideo />
             </Accordion.Content>

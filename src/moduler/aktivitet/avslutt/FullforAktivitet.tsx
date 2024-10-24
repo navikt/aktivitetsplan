@@ -18,7 +18,7 @@ import VisAdvarsel from './vis-advarsel';
 
 const headerTekst = 'Fullført aktivitet';
 const beskrivelseTekst =
-    'Skriv en kort kommentar om hvordan det har gått, eller noe NAV bør kjenne til. ' +
+    'Skriv en kort kommentar om hvordan det har gått, eller noe Nav bør kjenne til. ' +
     'Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.';
 
 const FullforAktivitet = () => {

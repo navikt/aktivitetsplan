@@ -61,7 +61,7 @@ function Print(props: Props) {
 
     return (
         <div id="printarea" className="printmodal-body w-[670px]" hidden={hidden}>
-            <img className="my-8" src={navLogoPng} alt="Logo NAV" />
+            <img className="my-8" src={navLogoPng} alt="Logo Nav" />
             <div className="flex justify-between mb-8">
                 <div className="">
                     <HiddenIfDiv hidden={!erVeileder}>
