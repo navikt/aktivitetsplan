@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import hiddenIfHOC from './hidden-if';
+import hiddenIfHOC from './hidden-if.js';
 
 describe('hidden-if', () => {
     it('Skal rendre hvis hidden er undefined', () => {
