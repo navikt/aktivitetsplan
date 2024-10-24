@@ -8,7 +8,10 @@ interface Props {
 }
 
 export default function HiddenIfHOC({ hidden, children }: Props) {
-    if (fn(hidden)) return null;
+    const isHidden = fn(hidden)();
+    if (fn(hidden)()) {
+        return null;
+    }
     return children;
 }
 
