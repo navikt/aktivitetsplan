@@ -152,7 +152,7 @@ describe('aktivitet-util', () => {
                 } as EksternAktivitet;
                 expect(kanEndreAktivitetDetaljer(aktivitet, false)).toBeFalsy();
             });
-            it('Stilling fra NAV', () => {
+            it('Stilling fra Nav', () => {
                 const aktivitet = {
                     ...baseAktivitet,
                     type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE,

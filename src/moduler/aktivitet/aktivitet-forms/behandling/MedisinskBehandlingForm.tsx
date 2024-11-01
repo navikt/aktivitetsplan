@@ -124,7 +124,7 @@ const MedisinskBehandlingForm = (props: Props) => {
                     />
                     <TextField
                         disabled={avtalt}
-                        label="Oppfølging fra NAV (valgfri)"
+                        label="Oppfølging fra Nav (valgfri)"
                         id={'behandlingoppfolging'}
                         {...register('behandlingOppfolging')}
                         error={errors.behandlingOppfolging && errors.behandlingOppfolging.message}

@@ -27,7 +27,7 @@ function mountWithIntl(node: any): RenderResult {
 
 const fillForm = () => {
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)'), {
-        target: { value: 'Møte med NAV' },
+        target: { value: 'Møte med Nav' },
     });
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)'), {
         target: { value: '21.09.2023' },
@@ -44,7 +44,7 @@ const fillForm = () => {
         { target: { value: 'Kontor' } },
     );
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)'), {
-        target: { value: 'Møte med NAV' },
+        target: { value: 'Møte med Nav' },
     });
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)'));
 };
@@ -138,14 +138,14 @@ describe('MoteAktivitetForm', () => {
         const expectedResult = {
             adresse: 'Kontor',
             avtalt: false,
-            beskrivelse: 'Møte med NAV',
+            beskrivelse: 'Møte med Nav',
             // dato: new Date('2023-09-20T22:00:00.000Z'),
             forberedelser: '',
             //  fraDato: '2023-09-21T06:00:00.000Z',
             kanal: 'TELEFON',
             status: 'PLANLAGT',
             // tilDato: '2023-09-21T06:30:00.000Z',
-            tittel: 'Møte med NAV',
+            tittel: 'Møte med Nav',
             varighet: 30,
         };
 
@@ -185,14 +185,14 @@ describe('MoteAktivitetForm', () => {
             expect.objectContaining({
                 adresse: 'Kontor',
                 avtalt: false,
-                beskrivelse: 'Møte med NAV',
+                beskrivelse: 'Møte med Nav',
                 // dato: new Date('2023-09-20T22:00:00.000Z'),
                 forberedelser: '',
                 // fraDato: '2023-09-21T06:00:00.000Z',
                 kanal: 'TELEFON',
                 status: 'PLANLAGT',
                 //  tilDato: '2023-09-21T08:30:00.000Z',
-                tittel: 'Møte med NAV',
+                tittel: 'Møte med Nav',
                 varighet: 150,
             }),
         );

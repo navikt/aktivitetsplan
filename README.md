@@ -1,6 +1,6 @@
 # Aktivitetsplan
 
-Aktivitetsplan er et verktøy for veiledere og brukere av NAV som skal synliggjøre hvilke aktiviteter og tiltak som skal
+Aktivitetsplan er et verktøy for veiledere og brukere av Nav som skal synliggjøre hvilke aktiviteter og tiltak som skal
 gjennomføres for at en bruker skal oppnå sine mål. Her kan brukere opprette aktiviteter som å delta på kurs, søke
 på en bestemt jobb eller motta behandling.
 

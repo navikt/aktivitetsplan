@@ -17,10 +17,10 @@ export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
         svarTekst = cvKanDeles ? JaSvarTekst : NeiSvarTekst;
         endretTekst = `Du svarte ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}`;
     } else {
-        svarTekst = `NAV var i kontakt med deg ${formaterDatoManed(cvKanDelesData.avtaltDato)}. Du sa ${
+        svarTekst = `Nav var i kontakt med deg ${formaterDatoManed(cvKanDelesData.avtaltDato)}. Du sa ${
             cvKanDeles ? 'ja' : 'nei'
         } til at CV-en din deles med arbeidsgiver.`;
-        endretTekst = `NAV svarte på vegne av deg ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}.`;
+        endretTekst = `Nav svarte på vegne av deg ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}.`;
     }
 
     return (
@@ -32,7 +32,7 @@ export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
             <BodyShort className="mt-4">{endretTekst}</BodyShort>
             {cvKanDeles ? (
                 <BodyShort className="mt-4">
-                    Arbeidsgiveren eller NAV vil kontakte deg hvis du er aktuell for stillingen
+                    Arbeidsgiveren eller Nav vil kontakte deg hvis du er aktuell for stillingen
                 </BodyShort>
             ) : null}
         </div>

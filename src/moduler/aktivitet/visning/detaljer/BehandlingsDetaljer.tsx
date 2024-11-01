@@ -23,7 +23,7 @@ const BehandlingsDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt key="effekt" tittel="Mål for behandlingen" innhold={aktivitet.effekt} fullbredde />
             <Informasjonsfelt
                 key="behandlingOppfolging"
-                tittel="Oppfølging fra NAV"
+                tittel="Oppfølging fra Nav"
                 innhold={aktivitet.behandlingOppfolging}
                 fullbredde
             />

@@ -110,7 +110,7 @@ const ForhaandsorienteringForm = (props: Props) => {
                 <Detail>FOR NAV-ANSATT</Detail>
             </div>
             {erEksternAktivitet || isArena ? (
-                <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med NAV&quot;</p>
+                <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med Nav&quot;</p>
             ) : null}
             {showForm ? (
                 <ForhaandsorienteringsMeldingArenaaktivitet lasterData={lasterData} register={register} watch={watch} />

@@ -20,7 +20,7 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
     if (!reservertIKRR) {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-                Du har ikke digital oppfølging fra NAV. Du har derfor ikke en digital aktivitetsplan.
+                Du har ikke digital oppfølging fra Nav. Du har derfor ikke en digital aktivitetsplan.
             </Alert>
         );
     } else {

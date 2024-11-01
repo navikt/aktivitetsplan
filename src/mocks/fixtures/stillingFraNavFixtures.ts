@@ -18,12 +18,12 @@ export const oddFellow = {
 };
 export const navAnsatt1 = {
     navn: 'Harry Potter',
-    tittel: 'NAV-ansatt',
+    tittel: 'Nav-ansatt',
     mobil: '+47 99009900',
 };
 export const navAnsatt2 = {
     navn: 'Sykfest Strutle',
-    tittel: 'NAV-ansatt',
+    tittel: 'Nav-ansatt',
     mobil: null,
 };
 

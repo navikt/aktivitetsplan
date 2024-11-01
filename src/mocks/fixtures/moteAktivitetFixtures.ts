@@ -24,7 +24,7 @@ export const enMoteAktivitet = (): MoteAktivitet => {
         transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         etikett: undefined,
         kanal: Kanal.TELEFON,
-        adresse: 'Ditt nærmeste NAV kontor',
+        adresse: 'Ditt nærmeste Nav kontor',
         erReferatPublisert: false,
         klokkeslett: '12:22',
         lenke: 'www.nav.no',
