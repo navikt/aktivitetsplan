@@ -13,7 +13,7 @@ export const fetchOppfolging = (fnr: string | undefined): Promise<OppfolgingStat
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/hent-status`, fnr ? { fnr } : undefined);
 
 export const fetchMal = (fnr: string | undefined): Promise<Mal> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/v3/git phent-maal`, fnr ? { fnr } : undefined);
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/hent-maal`, fnr ? { fnr } : undefined);
 
 export const fetchMalListe = (fnr: string | undefined): Promise<Mal[]> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal/hent-alle`, fnr ? { fnr } : undefined);
