@@ -58,6 +58,12 @@ spec:
         - host: navtestb2c.b2clogin.com
         - host: veilarbmalverk.dev-fss-pub.nais.io
         - host: veilarbveileder.dev-fss-pub.nais.io
+        - ipv4: 34.32.235.130 # VM uten gpu
+          ports:
+            - port: 8007
+        - ipv4: 34.34.85.30 # VM gpu
+          ports:
+            - port: 8007
   gcp:
     buckets:
       - name: aktivitetsplan-dev
