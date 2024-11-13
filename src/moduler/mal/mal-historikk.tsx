@@ -10,9 +10,9 @@ import { selectMalListe } from './malliste-selector';
 
 const identitetMap = (erVeileder: boolean, endretAv: string) => {
     if (erVeileder) {
-        return endretAv === 'BRUKER' ? 'bruker' : 'NAV';
+        return endretAv === 'BRUKER' ? 'bruker' : 'Nav';
     }
-    return endretAv === 'BRUKER' ? 'deg' : 'NAV';
+    return endretAv === 'BRUKER' ? 'deg' : 'Nav';
 };
 
 function malListeVisning(gjeldendeMal: Mal, erVeileder: boolean) {

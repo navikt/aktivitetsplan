@@ -28,12 +28,12 @@ export const OkonomiskStotte = () => {
                 <ul className="list-disc mt-4 pl-8">
                     <li>
                         <BodyShort>
-                            kontakte NAV i tjenesten{' '}
+                            kontakte Nav i tjenesten{' '}
                             <Link href="https://www.nav.no/person/kontakt-oss/skriv-til-oss">«Skriv til oss»</Link>
                         </BodyShort>
                     </li>
                     <li>
-                        <BodyShort>ringe NAV på 55 55 33 33</BodyShort>{' '}
+                        <BodyShort>ringe Nav på 55 55 33 33</BodyShort>{' '}
                     </li>
                 </ul>
             </Accordion.Content>

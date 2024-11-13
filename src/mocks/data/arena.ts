@@ -90,7 +90,7 @@ export const arenaMockAktiviteter = [
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         moeteplanListe: null,
         forhaandsorientering: {
-            tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+            tekst: 'Det er viktig at du gjennomfører denne aktiviteten med Nav. Gjør du ikke det, kan det medføre at stønaden du mottar fra Nav bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
             type: 'SEND_FORHAANDSORIENTERING',
         },
     },
@@ -117,12 +117,12 @@ export const arenaMockAktiviteter = [
             {
                 startDato: '2018-02-22T13:00:00+01:00',
                 sluttDato: '2018-02-22T14:00:00+01:00',
-                sted: 'NAV Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo',
+                sted: 'Nav Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo',
             },
             {
                 startDato: '2018-02-22T13:00:00+01:00',
                 sluttDato: '2018-02-22T00:00:00+01:00',
-                sted: 'NAV Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo',
+                sted: 'Nav Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo',
             },
         ],
     },
