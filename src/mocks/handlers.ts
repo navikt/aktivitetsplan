@@ -86,14 +86,14 @@ export const handlers = [
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
-            if (body.query.includes('historikk')) {
+            const queryForEnAktivitet = body.query.includes('historikk'); // TODO: SE på aktivitetId-param
+            if (queryForEnAktivitet) {
                 const aktivitetId = body.variables.aktivitetId;
                 const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
                 await new Promise((resolve) => {
                     setTimeout(resolve, 2000);
                 });
-               const eier = body.query.includes('eier') ? eierAvAktivitet : null
-                return aktivitetHistorikkResponse(aktivitet);
+                return aktivitetResponse(aktivitet);
             } else {
                 return aktivitestplanResponse(); // Default aktiviteter
             }
@@ -194,12 +194,14 @@ export const aktivitestplanResponse = (
     };
 };
 
-const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet, eier : {} | undefined) => {
+const aktivitetResponse = (aktivitet: VeilarbAktivitet, eier: {} | undefined) => {
     const now = new Date();
     return {
         data: {
+            eier: {
+                fnr: '13837597573',
+            },
             aktivitet: {
-                ...eier,
                 ...aktivitet,
                 historikk: {
                     endringer: [
