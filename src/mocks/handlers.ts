@@ -92,6 +92,7 @@ export const handlers = [
                 await new Promise((resolve) => {
                     setTimeout(resolve, 2000);
                 });
+               const eier = body.query.includes('eier') ? eierAvAktivitet : null
                 return aktivitetHistorikkResponse(aktivitet);
             } else {
                 return aktivitestplanResponse(); // Default aktiviteter
@@ -193,11 +194,12 @@ export const aktivitestplanResponse = (
     };
 };
 
-const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
+const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet, eier : {} | undefined) => {
     const now = new Date();
     return {
         data: {
             aktivitet: {
+                ...eier,
                 ...aktivitet,
                 historikk: {
                     endringer: [
