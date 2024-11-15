@@ -194,7 +194,7 @@ export const aktivitestplanResponse = (
     };
 };
 
-const aktivitetResponse = (aktivitet: VeilarbAktivitet, eier: {} | undefined) => {
+const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
     const now = new Date();
     return {
         data: {

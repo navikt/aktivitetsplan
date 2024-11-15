@@ -110,6 +110,8 @@ const aktivitetSlice = createSlice({
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
             const aktivitet = action.payload.data.aktivitet;
+            const eier = action.payload.data.eier;
+            //TODO - implementer eier
             nyStateMedOppdatertAktivitet(state, aktivitet);
         });
         builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {

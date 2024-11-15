@@ -208,7 +208,14 @@ export const hentAktivitetGraphql = (aktivitetId: string) => {
         .then(
             sjekkGraphqlFeil<{
                 aktivitet: VeilarbAktivitet & { historikk: Historikk; id: string; oppfolgingsperiodeId: string };
+                eier: { fnr: string};
             }>,
         )
-        .then((it) => ({ ...it, data: { aktivitet: { ...it.data.aktivitet, id: aktivitetId } } }));
+        .then((it) => ({
+            ...it,
+            data: {
+                aktivitet: { ...it.data.aktivitet, id: aktivitetId } ,
+                eier : { fnr: it.data.eier.fnr }
+            },
+        }));
 };
