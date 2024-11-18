@@ -86,9 +86,8 @@ export const handlers = [
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
-            const queryForEnAktivitet = body.query.includes('historikk'); // TODO: SE på aktivitetId-param
-            if (queryForEnAktivitet) {
-                const aktivitetId = body.variables.aktivitetId;
+            const aktivitetId = body.variables.aktivitetId;
+            if (aktivitetId) {
                 const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
                 await new Promise((resolve) => {
                     setTimeout(resolve, 2000);
@@ -194,7 +193,7 @@ export const aktivitestplanResponse = (
     };
 };
 
-const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
+export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
     const now = new Date();
     return {
         data: {
