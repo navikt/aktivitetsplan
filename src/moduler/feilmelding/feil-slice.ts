@@ -25,9 +25,9 @@ import {
 import { oppdaterMal } from '../mal/aktivitetsmal-slice';
 
 type FeilState = {
-    serializedError: Record<string, SerializedError>
-    feilEier: string | undefined
-}
+    serializedError: Record<string, SerializedError>;
+    feilEier: string | undefined;
+};
 
 const dismissableErrors = [
     flyttAktivitet.rejected.type,
@@ -45,7 +45,10 @@ const dismissableErrors = [
 
 const errorSlice = createSlice({
     name: 'feil',
-    initialState: {} as FeilState,
+    initialState: {
+        serializedError: {},
+        feilEier: undefined,
+    } as FeilState,
     reducers: {
         setErPåAnnenBrukersResssurs: (state, payload: PayloadAction<string>) => {
             console.log('Setter feil');
