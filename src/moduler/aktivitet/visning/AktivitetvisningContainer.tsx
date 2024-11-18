@@ -17,6 +17,7 @@ import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from 'reselect';
 import { setErPåAnnenBrukersResssurs } from '../../feilmelding/feil-slice';
+import { selectSistVisteAktivitet } from '../aktivitetview-selector';
 
 const selectAvhengigheter = createSelector(
     selectOppfolgingStatus,
@@ -37,7 +38,10 @@ const AktivitetvisningContainer = () => {
     const aktivitetId = id;
 
     // TODO: IMplementer
-    setErPåAnnenBrukersResssurs();
+
+    const test = useSelector(selectSistVisteAktivitet);
+    console.log("sist vist aktivitet", test);
+
 
     const erVeileder = useErVeileder();
     const valgtAktivitet = useSelector((state: RootState) =>
