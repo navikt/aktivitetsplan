@@ -16,6 +16,7 @@ import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from 'reselect';
+import { setErPåAnnenBrukersResssurs } from '../../feilmelding/feil-slice';
 
 const selectAvhengigheter = createSelector(
     selectOppfolgingStatus,
@@ -34,6 +35,9 @@ const selectAvhengigheter = createSelector(
 const AktivitetvisningContainer = () => {
     const { id } = useParams<{ id: string }>();
     const aktivitetId = id;
+
+    // TODO: IMplementer
+    setErPåAnnenBrukersResssurs();
 
     const erVeileder = useErVeileder();
     const valgtAktivitet = useSelector((state: RootState) =>

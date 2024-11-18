@@ -35,6 +35,7 @@ export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
 export const oppfolgingsdperiodeAdapter = createEntityAdapter<PeriodeEntityState>({
     selectId: (model) => model.id,
 });
+
 const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
     oppfolgingsdperiodeAdapter.getSelectors();
 const { selectById: selectAktivitetById, selectAll: selectAlleAktiviter } = aktivitetAdapter.getSelectors();
@@ -111,7 +112,7 @@ const aktivitetSlice = createSlice({
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
             const aktivitet = action.payload.data.aktivitet;
             const eier = action.payload.data.eier;
-            //TODO - implementer eier
+            console.log('Setter eier på state', eier);
             nyStateMedOppdatertAktivitet(state, aktivitet);
         });
         builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {

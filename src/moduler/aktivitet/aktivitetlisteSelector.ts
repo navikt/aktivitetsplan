@@ -58,6 +58,8 @@ export const selectAktivitetMedId = (state: RootState, aktivitetId: string) =>
         return aktivitet.id === aktivitetId;
     });
 
+// TODO: export const selectEier =
+
 export const selectAktivitetListeSlice = (state: RootState) => {
     const status = aggregerStatus(
         selectOppfolgingStatus(state),

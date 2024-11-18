@@ -1,4 +1,12 @@
-import { createSlice, isAnyOf, isAsyncThunkAction, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
+import {
+    createSlice,
+    isAnyOf,
+    isAsyncThunkAction,
+    isFulfilled,
+    isPending,
+    isRejected,
+    PayloadAction,
+} from '@reduxjs/toolkit';
 import { AnyAction } from 'redux';
 
 import { SerializedError } from '../../api/utils';
@@ -36,6 +44,9 @@ const errorSlice = createSlice({
     name: 'feil',
     initialState: {} as ErrorSliceType,
     reducers: {
+        setErPåAnnenBrukersResssurs: (state, payload: PayloadAction<string>) => {
+            console.log('Setter feil');
+        },
         fjernDismissableErrors: (state) => {
             dismissableErrors.forEach((type) => {
                 delete state[type];
@@ -47,7 +58,7 @@ const errorSlice = createSlice({
             (action: AnyAction) => isAsyncThunkAction(action) && isRejected(action),
             (state, action) => {
                 state[action.type] = { ...action.error, type: action.type };
-            }
+            },
         );
         builder.addMatcher(isAnyOf(isFulfilled, isPending), (state, action) => {
             const type = action.type.replace('pending', 'rejected').replace('fulfilled', 'rejected');
@@ -56,6 +67,5 @@ const errorSlice = createSlice({
     },
 });
 
-export const { fjernDismissableErrors } = errorSlice.actions;
-
+export const { fjernDismissableErrors, setErPåAnnenBrukersResssurs } = errorSlice.actions;
 export default errorSlice.reducer;
