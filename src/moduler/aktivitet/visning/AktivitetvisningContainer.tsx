@@ -18,6 +18,7 @@ import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from 'reselect';
 import { setErPåAnnenBrukersResssurs } from '../../feilmelding/feil-slice';
 import { selectSistVisteAktivitet } from '../aktivitetview-selector';
+import { selectFeilEier } from '../../feilmelding/feil-selector';
 
 const selectAvhengigheter = createSelector(
     selectOppfolgingStatus,
@@ -39,11 +40,12 @@ const AktivitetvisningContainer = () => {
 
     // TODO: IMplementer
 
-    const test = useSelector(selectSistVisteAktivitet);
-    console.log("sist vist aktivitet", test);
-
 
     const erVeileder = useErVeileder();
+
+    const feilEier = erVeileder ? useSelector(selectFeilEier) !== undefined: false;
+    console.log("er feil eier? ", feilEier)
+
     const valgtAktivitet = useSelector((state: RootState) =>
         aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
     );

@@ -19,6 +19,7 @@ import {
 import { RootState } from '../../store';
 import { createSelector } from 'reselect';
 import { root } from 'postcss';
+import { setErPåAnnenBrukersResssurs } from '../feilmelding/feil-slice';
 
 type PerioderMedAktiviteter = {
     id: string;
@@ -113,14 +114,14 @@ const aktivitetSlice = createSlice({
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
             const aktivitet = action.payload.data.aktivitet;
             const eier = action.payload.data.eier;
-            const aktivitetIDer =  selectAllOppfolgingsperioder(state).map ((periode) => {
-                selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => {aktivitet.id})
-            }).flat()
-            if (!aktivitetIDer.has(aktivitet.id)) {
+            const aktivitetIDer =  selectAllOppfolgingsperioder(state).map ((periode) =>
+                selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id)
+            ).flat()
+
+            if (!aktivitetIDer.includes(aktivitet.id)) {
+                setErPåAnnenBrukersResssurs(eier.fnr)
             }
 
-            selectAlleAktiviter(state).map((aktivitet) => {aktivitet.id}).has(aktivitet.id);
-            console.log('Setter eier på state', eier);
             nyStateMedOppdatertAktivitet(state, aktivitet);
         });
         builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {

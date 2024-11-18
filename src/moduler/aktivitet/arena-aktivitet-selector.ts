@@ -1,6 +1,6 @@
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
-import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
+import { selectErrors, selectSerialiedErrors } from '../feilmelding/feil-selector';
 import { hentArenaAktiviteter } from './arena-aktiviteter-slice';
 import { createSelector } from 'reselect';
 import { SerializedError } from '../../api/utils';
@@ -15,6 +15,6 @@ export const selectArenaFeilmeldinger: (state: RootState) => SerializedError[] =
     selectArenaAktivitetStatus,
     selectErrors,
     (arenaAktivitetStatus, errors) => {
-        return arenaAktivitetStatus === Status.ERROR ? selectFeil(errors, hentArenaAktiviteter.rejected.type) : [];
+        return arenaAktivitetStatus === Status.ERROR ? selectSerialiedErrors(errors, hentArenaAktiviteter.rejected.type) : [];
     },
 );

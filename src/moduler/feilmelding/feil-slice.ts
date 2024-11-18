@@ -24,7 +24,10 @@ import {
 } from '../aktivitet/aktivitet-actions';
 import { oppdaterMal } from '../mal/aktivitetsmal-slice';
 
-type ErrorSliceType = Record<string, SerializedError>;
+type FeilState = {
+    serializedError: Record<string, SerializedError>
+    feilEier: string | undefined
+}
 
 const dismissableErrors = [
     flyttAktivitet.rejected.type,
@@ -42,14 +45,14 @@ const dismissableErrors = [
 
 const errorSlice = createSlice({
     name: 'feil',
-    initialState: {} as ErrorSliceType,
+    initialState: {} as FeilState,
     reducers: {
         setErPåAnnenBrukersResssurs: (state, payload: PayloadAction<string>) => {
             console.log('Setter feil');
         },
         fjernDismissableErrors: (state) => {
             dismissableErrors.forEach((type) => {
-                delete state[type];
+                delete state.serializedError[type];
             });
         },
     },
@@ -57,12 +60,12 @@ const errorSlice = createSlice({
         builder.addMatcher(
             (action: AnyAction) => isAsyncThunkAction(action) && isRejected(action),
             (state, action) => {
-                state[action.type] = { ...action.error, type: action.type };
+                state.serializedError[action.type] = { ...action.error, type: action.type };
             },
         );
         builder.addMatcher(isAnyOf(isFulfilled, isPending), (state, action) => {
             const type = action.type.replace('pending', 'rejected').replace('fulfilled', 'rejected');
-            delete state[type];
+            delete state.serializedError[type];
         });
     },
 });
