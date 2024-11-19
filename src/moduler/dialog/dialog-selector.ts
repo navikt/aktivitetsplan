@@ -4,7 +4,7 @@ import { Status } from '../../createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { HistoriskOppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { RootState } from '../../store';
-import { selectErrors, selectSerialiedErrors } from '../feilmelding/feil-selector';
+import { selectErrors } from '../feilmelding/feil-selector';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
@@ -34,6 +34,6 @@ export const selectDialogFeilmeldinger: (state: RootState) => SerializedError[] 
     selectDialogerSlice,
     selectErrors,
     (dialogState, errors) => {
-        return dialogState.status === Status.ERROR ? selectSerialiedErrors(errors, hentDialoger.rejected.type) : [];
+        return dialogState.status === Status.ERROR ? selectErrors(errors, hentDialoger.rejected.type) : [];
     },
 );

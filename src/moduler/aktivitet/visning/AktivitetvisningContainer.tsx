@@ -16,9 +16,6 @@ import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from 'reselect';
-import { setErPåAnnenBrukersResssurs } from '../../feilmelding/feil-slice';
-import { selectSistVisteAktivitet } from '../aktivitetview-selector';
-import { selectFeilEier } from '../../feilmelding/feil-selector';
 
 const selectAvhengigheter = createSelector(
     selectOppfolgingStatus,
