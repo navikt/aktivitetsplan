@@ -121,7 +121,7 @@ const aktivitetSlice = createSlice({
 
             const aktivitetTilhorerBrukerIContext = !aktivitetIDer.includes(aktivitet.id)
 
-            if (aktivitetTilhorerBrukerIContext && useErVeileder()) {
+            if (aktivitetTilhorerBrukerIContext) {
                 lastAltPaaNyttMedNyBruker(eier.fnr);
             }
 
