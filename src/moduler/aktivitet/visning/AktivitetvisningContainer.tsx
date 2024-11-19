@@ -38,14 +38,7 @@ const AktivitetvisningContainer = () => {
     const { id } = useParams<{ id: string }>();
     const aktivitetId = id;
 
-    // TODO: IMplementer
-
-
     const erVeileder = useErVeileder();
-
-    const feilEier = erVeileder ? useSelector(selectFeilEier) !== undefined: false;
-    console.log("er feil eier? ", feilEier)
-
     const valgtAktivitet = useSelector((state: RootState) =>
         aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
     );

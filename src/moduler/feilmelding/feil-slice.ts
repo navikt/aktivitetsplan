@@ -1,12 +1,4 @@
-import {
-    createSlice,
-    isAnyOf,
-    isAsyncThunkAction,
-    isFulfilled,
-    isPending,
-    isRejected,
-    PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, isAsyncThunkAction, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
 import { AnyAction } from 'redux';
 
 import { SerializedError } from '../../api/utils';
@@ -24,10 +16,7 @@ import {
 } from '../aktivitet/aktivitet-actions';
 import { oppdaterMal } from '../mal/aktivitetsmal-slice';
 
-type FeilState = {
-    serializedError: Record<string, SerializedError>;
-    feilEier: string | undefined;
-};
+type ErrorSliceType = Record<string, SerializedError>;
 
 const dismissableErrors = [
     flyttAktivitet.rejected.type,
@@ -45,17 +34,11 @@ const dismissableErrors = [
 
 const errorSlice = createSlice({
     name: 'feil',
-    initialState: {
-        serializedError: {},
-        feilEier: undefined,
-    } as FeilState,
+    initialState: {} as ErrorSliceType,
     reducers: {
-        setErPåAnnenBrukersResssurs: (state, payload: PayloadAction<string>) => {
-            console.log('Setter feil');
-        },
         fjernDismissableErrors: (state) => {
             dismissableErrors.forEach((type) => {
-                delete state.serializedError[type];
+                delete state[type];
             });
         },
     },
@@ -63,15 +46,16 @@ const errorSlice = createSlice({
         builder.addMatcher(
             (action: AnyAction) => isAsyncThunkAction(action) && isRejected(action),
             (state, action) => {
-                state.serializedError[action.type] = { ...action.error, type: action.type };
-            },
+                state[action.type] = { ...action.error, type: action.type };
+            }
         );
         builder.addMatcher(isAnyOf(isFulfilled, isPending), (state, action) => {
             const type = action.type.replace('pending', 'rejected').replace('fulfilled', 'rejected');
-            delete state.serializedError[type];
+            delete state[type];
         });
     },
 });
 
-export const { fjernDismissableErrors, setErPåAnnenBrukersResssurs } = errorSlice.actions;
+export const { fjernDismissableErrors } = errorSlice.actions;
+
 export default errorSlice.reducer;

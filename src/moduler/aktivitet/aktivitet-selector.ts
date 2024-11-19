@@ -1,7 +1,7 @@
 import { SerializedError } from '../../api/utils';
 import { Status } from '../../createGenericSlice';
 import { RootState } from '../../store';
-import { selectErrors, selectSerialiedErrors } from '../feilmelding/feil-selector';
+import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import {
     flyttAktivitet,
     hentAktivitet,
@@ -25,17 +25,17 @@ export const selectAktivitetFeilmeldinger = createSelector(
     selectAktivitetStatus,
     selectErrors,
     (aktiviteterStatus, errors) => {
-        return aktiviteterStatus === Status.ERROR ? selectSerialiedErrors(errors, hentAktivitet.rejected.type) : [];
+        return aktiviteterStatus === Status.ERROR ? selectFeil(errors, hentAktivitet.rejected.type) : [];
     },
 );
 
 export const selecteEndreAktivitetFeilmeldinger: (state: RootState) => SerializedError[] = createSelector(
     selectErrors,
     (errors) => {
-        const oppdaterError = selectSerialiedErrors(errors, oppdaterAktivitet.rejected.type);
-        const oppdaterEtikettError = selectSerialiedErrors(errors, oppdaterAktivitetEtikett.rejected.type);
-        const oppdaterStillingFraNavError = selectSerialiedErrors(errors, oppdaterStillingFraNavSoknadsstatus.rejected.type);
-        const flyttAktivitetError = selectSerialiedErrors(errors, flyttAktivitet.rejected.type);
+        const oppdaterError = selectFeil(errors, oppdaterAktivitet.rejected.type);
+        const oppdaterEtikettError = selectFeil(errors, oppdaterAktivitetEtikett.rejected.type);
+        const oppdaterStillingFraNavError = selectFeil(errors, oppdaterStillingFraNavSoknadsstatus.rejected.type);
+        const flyttAktivitetError = selectFeil(errors, flyttAktivitet.rejected.type);
         return [...oppdaterError, ...oppdaterEtikettError, ...oppdaterStillingFraNavError, ...flyttAktivitetError];
     },
 );

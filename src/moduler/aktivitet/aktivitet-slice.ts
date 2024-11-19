@@ -18,8 +18,6 @@ import {
 } from './aktivitet-actions';
 import { RootState } from '../../store';
 import { createSelector } from 'reselect';
-import { root } from 'postcss';
-import { setErPåAnnenBrukersResssurs } from '../feilmelding/feil-slice';
 
 type PerioderMedAktiviteter = {
     id: string;
@@ -119,7 +117,7 @@ const aktivitetSlice = createSlice({
             ).flat()
 
             if (!aktivitetIDer.includes(aktivitet.id)) {
-                setErPåAnnenBrukersResssurs(eier.fnr)
+                //TODO: kall for å endre bruker i context
             }
 
             nyStateMedOppdatertAktivitet(state, aktivitet);
