@@ -4,7 +4,6 @@ import React, { ChangeEventHandler, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 
 import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
-import { AppDispatch } from '../../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import {
     VistOppfolgingsPeriode,
@@ -13,11 +12,12 @@ import {
 } from '../../oppfolging-status/oppfolging-selector';
 import { selectHistoriskPeriode } from './filter-selector';
 import { velgHistoriskPeriode } from './filter-slice';
+import Store, { Dispatch, RootState } from '../../../store';
 
 interface Props {
     harHistoriskePerioder: boolean;
     historiskePerioder: VistOppfolgingsPeriode[];
-    historiskPeriode?: Oppfolgingsperiode;
+    historiskPeriode: HistoriskOppfolgingsperiode | null;
     doVelgHistoriskPeriode: (periode: null | HistoriskOppfolgingsperiode) => void;
     skjulInneverende: boolean;
 }
@@ -81,11 +81,7 @@ const PeriodeFilter = ({
     );
 };
 
-(PeriodeFilter as any).defaultProps = {
-    historiskPeriode: null,
-};
-
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
     const historiskePerioder = selectSorterteHistoriskeOppfolgingsPerioder(state);
     return {
         historiskePerioder,
@@ -94,7 +90,7 @@ const mapStateToProps = (state: any) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     doVelgHistoriskPeriode: (historiskOppfolgingsperiode: null | HistoriskOppfolgingsperiode) =>
         dispatch(velgHistoriskPeriode(historiskOppfolgingsperiode)),
 });
