@@ -19,6 +19,8 @@ import {
 import { RootState } from '../../store';
 import { createSelector } from 'reselect';
 import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
+import { erEksternBruker } from '../../mocks/demo/localStorage';
+import { useErVeileder } from '../../Provider';
 
 type PerioderMedAktiviteter = {
     id: string;
@@ -117,10 +119,9 @@ const aktivitetSlice = createSlice({
                 selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id)
             ).flat()
 
-            console.log("aktivitets id-er: ", aktivitetIDer);
+            const aktivitetTilhorerBrukerIContext = !aktivitetIDer.includes(aktivitet.id)
 
-            if (!aktivitetIDer.includes(aktivitet.id)) {
-                //TODO: kall for å endre bruker i context
+            if (aktivitetTilhorerBrukerIContext && useErVeileder()) {
                 lastAltPaaNyttMedNyBruker(eier.fnr);
             }
 
