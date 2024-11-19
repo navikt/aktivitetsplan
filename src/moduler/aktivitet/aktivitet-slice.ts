@@ -18,6 +18,7 @@ import {
 } from './aktivitet-actions';
 import { RootState } from '../../store';
 import { createSelector } from 'reselect';
+import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
 
 type PerioderMedAktiviteter = {
     id: string;
@@ -116,8 +117,11 @@ const aktivitetSlice = createSlice({
                 selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id)
             ).flat()
 
+            console.log("aktivitets id-er: ", aktivitetIDer);
+
             if (!aktivitetIDer.includes(aktivitet.id)) {
                 //TODO: kall for å endre bruker i context
+                lastAltPaaNyttMedNyBruker(eier.fnr);
             }
 
             nyStateMedOppdatertAktivitet(state, aktivitet);
