@@ -135,8 +135,11 @@ const query: string = `
     }
 `;
 
-const aktivitetMedHistorikkQuery = `
+const aktivitetQuery = `
     query($aktivitetId: String!) {
+        eier(aktivitetId: $aktivitetId) {
+            fnr
+        },
         aktivitet(aktivitetId: $aktivitetId) {
             ${allAktivitetFields}
             historikk {
@@ -160,8 +163,8 @@ const queryBody = (fnr: string) => ({
     },
 });
 
-const aktivitetMedHistorikkQueryBody = (aktivitetId: string) => ({
-    query: aktivitetMedHistorikkQuery,
+const aktivitetQueryBody = (aktivitetId: string) => ({
+    query: aktivitetQuery,
     variables: {
         aktivitetId,
     },
@@ -190,7 +193,7 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
 };
 
-export const hentAktivitetMedHistorikkGraphql = (aktivitetId: string) => {
+export const hentAktivitetGraphql = (aktivitetId: string) => {
     return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
         ...DEFAULT_CONFIG,
         method: 'POST',
@@ -198,14 +201,21 @@ export const hentAktivitetMedHistorikkGraphql = (aktivitetId: string) => {
             'Content-Type': 'application/json',
             'Nav-Consumer-Id': 'aktivitetsplan',
         },
-        body: JSON.stringify(aktivitetMedHistorikkQueryBody(aktivitetId)),
+        body: JSON.stringify(aktivitetQueryBody(aktivitetId)),
     })
         .then(sjekkStatuskode)
         .then(toJson)
         .then(
             sjekkGraphqlFeil<{
                 aktivitet: VeilarbAktivitet & { historikk: Historikk; id: string; oppfolgingsperiodeId: string };
+                eier: { fnr: string};
             }>,
         )
-        .then((it) => ({ ...it, data: { aktivitet: { ...it.data.aktivitet, id: aktivitetId } } }));
+        .then((it) => ({
+            ...it,
+            data: {
+                aktivitet: { ...it.data.aktivitet, id: aktivitetId } ,
+                eier : { fnr: it.data.eier.fnr }
+            },
+        }));
 };

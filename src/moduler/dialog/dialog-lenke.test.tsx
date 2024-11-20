@@ -1,5 +1,5 @@
 import { setupServer } from 'msw/node';
-import { aktivitestplanResponse, handlers } from '../../mocks/handlers';
+import { aktivitestplanResponse, aktivitetResponse, handlers } from '../../mocks/handlers';
 import { describe } from 'vitest';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { WrappedHovedside } from '../../testUtils/WrappedHovedside';
@@ -35,8 +35,14 @@ const server = setupServer(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(
             () => false,
-            () => {
-                return aktivitestplanResponse({ aktiviteter: testAktiviteter });
+            async (req) => {
+                const body = (await req.json()) as { query: string; variables: Record<string, any> };
+                const aktivitetId = body.variables.aktivitetId;
+                if (aktivitetId) {
+                    return aktivitetResponse(testAktiviteter.find((aktivitet) => aktivitet.id == aktivitetId)!);
+                } else {
+                    return aktivitestplanResponse({ aktiviteter: testAktiviteter });
+                }
             },
         ),
     ),

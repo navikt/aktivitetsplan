@@ -18,6 +18,10 @@ import {
 } from './aktivitet-actions';
 import { RootState } from '../../store';
 import { createSelector } from 'reselect';
+import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
+import { erEksternBruker } from '../../mocks/demo/localStorage';
+import { useErVeileder } from '../../Provider';
+import { loggDyplenkingTilAnnenBruker } from '../../amplitude/amplitude';
 
 type PerioderMedAktiviteter = {
     id: string;
@@ -35,6 +39,7 @@ export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
 export const oppfolgingsdperiodeAdapter = createEntityAdapter<PeriodeEntityState>({
     selectId: (model) => model.id,
 });
+
 const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
     oppfolgingsdperiodeAdapter.getSelectors();
 const { selectById: selectAktivitetById, selectAll: selectAlleAktiviter } = aktivitetAdapter.getSelectors();
@@ -110,6 +115,18 @@ const aktivitetSlice = createSlice({
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
             const aktivitet = action.payload.data.aktivitet;
+            const eier = action.payload.data.eier;
+            const aktivitetIDer =  selectAllOppfolgingsperioder(state).map ((periode) =>
+                selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id)
+            ).flat()
+
+            const aktivitetTilhorerBrukerIContext = !aktivitetIDer.includes(aktivitet.id)
+
+            if (aktivitetTilhorerBrukerIContext) {
+                loggDyplenkingTilAnnenBruker();
+                lastAltPaaNyttMedNyBruker(eier.fnr);
+            }
+
             nyStateMedOppdatertAktivitet(state, aktivitet);
         });
         builder.addCase(lagNyAktivitet.fulfilled, (state, action) => {
