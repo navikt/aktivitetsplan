@@ -21,6 +21,7 @@ import { createSelector } from 'reselect';
 import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
 import { erEksternBruker } from '../../mocks/demo/localStorage';
 import { useErVeileder } from '../../Provider';
+import { loggDyplenkingTilAnnenBruker } from '../../amplitude/amplitude';
 
 type PerioderMedAktiviteter = {
     id: string;
@@ -122,6 +123,7 @@ const aktivitetSlice = createSlice({
             const aktivitetTilhorerBrukerIContext = !aktivitetIDer.includes(aktivitet.id)
 
             if (aktivitetTilhorerBrukerIContext) {
+                loggDyplenkingTilAnnenBruker();
                 lastAltPaaNyttMedNyBruker(eier.fnr);
             }
 

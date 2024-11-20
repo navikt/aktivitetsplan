@@ -77,6 +77,10 @@ export function logModalLukket({
     });
 }
 
+export function loggDyplenkingTilAnnenBruker() {
+    return logAmplitudeEvent({ name: 'dyplenking', data: { text: 'Dyplenking til annen bruker' } });
+}
+
 type Modify<T, U> = Omit<T, keyof U> & U;
 export type TextCheckerAmplitudeAnalysis = Omit<
     Modify<
