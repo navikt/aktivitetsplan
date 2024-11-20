@@ -42,7 +42,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     AVKLARAG: 'Avklaring',
     VASV: 'Varig tilrettelagt arbeid i skjermet virksomhet',
     ARBRRHDAG: 'Arbeidsrettet rehabilitering',
-    DIGIOPPARB: 'Digitalt oppfølgingstiltak',
+    DIGIOPPARB: 'Digitalt jobbsøkerkurs',
     JOBBK: 'Jobbklubb',
     GRUPPEAMO: 'Arbeidsmarkedsopplæring (Gruppe)',
     GRUFAGYRKE: 'Fag- og yrkesopplæring (Gruppe)',
