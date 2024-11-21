@@ -21,10 +21,10 @@ const VeilederVarsel = (props: Props) => {
 
     return (
         <div className="container">
-            <Alert variant="warning" className="mb-5">
+            <Alert variant="warning" className="my-4">
                 <BodyShort>
-                    Nav har sendt varsel {dato}{' '}
-                    <LenkeTilDialog dialogId={tilhorendeDialogId}>Les meldingen</LenkeTilDialog>
+                    Nav har sendt varsel {dato}.{' '}
+                    <LenkeTilDialog dialogId={tilhorendeDialogId}>Les meldingen.</LenkeTilDialog>
                 </BodyShort>
             </Alert>
         </div>
