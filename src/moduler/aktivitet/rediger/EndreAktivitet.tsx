@@ -1,5 +1,5 @@
 import  { isFulfilled } from '@reduxjs/toolkit';
-import React, { MouseEventHandler, MutableRefObject, useRef } from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -144,22 +144,6 @@ function EndreAktivitet() {
             return true;
         }
         return false;
-    };
-
-    const onReqBack: MouseEventHandler = (e) => {
-        e.preventDefault();
-        if (!isDirty.current || window.confirm(CONFIRM)) {
-            const aktivitet = valgtAktivitet?.type;
-            if (aktivitet) {
-                logModalLukket({
-                    isDirty: isDirty.current,
-                    aktivitet: aktivitet,
-                    modalType: 'endre-aktivitet',
-                    navType: 'onReqBack',
-                });
-            }
-            navigate(-1);
-        }
     };
 
     const formProps = {
