@@ -1,4 +1,4 @@
-import { isFulfilled } from '@reduxjs/toolkit';
+import  { isFulfilled } from '@reduxjs/toolkit';
 import React, { MouseEventHandler, MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -182,7 +182,6 @@ function EndreAktivitet() {
             onClose={tilHovedside}
             heading="Endre aktivitet"
             onRequestClose={onReqClose}
-            tilbakeLenke={{ tekst: 'Tilbake', onTilbakeKlikk: onReqBack }}
         >
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
