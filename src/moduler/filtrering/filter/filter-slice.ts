@@ -27,6 +27,7 @@ const initialState: FilterState = {
         TILTAKSAKTIVITET: false,
         UTDANNINGSAKTIVITET: false,
         VARIG_LONNSTILSKUDD: false,
+        ARBEIDSTRENING: false
     },
     aktivitetEtiketter: {
         AVSLAG: false,
