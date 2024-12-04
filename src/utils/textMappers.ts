@@ -37,6 +37,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     ARENA_TILTAK: 'Tiltak gjennom Nav',
     MIDLERTIDIG_LONNSTILSKUDD: 'Avtale midlertidig lønnstilskudd',
     VARIG_LONNSTILSKUDD: 'Avtale varig lønnstilskudd',
+    ARBEIDSTRENING: 'Arbeidstrening',
     INDOPPFAG: 'Oppfølging',
     ARBFORB: 'Arbeidsforberedende trening',
     AVKLARAG: 'Avklaring',
