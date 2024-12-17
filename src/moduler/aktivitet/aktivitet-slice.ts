@@ -31,6 +31,8 @@ type PerioderMedAktiviteter = {
 interface PeriodeEntityState {
     id: string;
     aktiviteter: EntityState<VeilarbAktivitet>;
+    start: string;
+    slutt: string | undefined;
 }
 
 export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
@@ -40,7 +42,7 @@ export const oppfolgingsdperiodeAdapter = createEntityAdapter<PeriodeEntityState
     selectId: (model) => model.id,
 });
 
-const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
+export const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
     oppfolgingsdperiodeAdapter.getSelectors();
 const { selectById: selectAktivitetById, selectAll: selectAlleAktiviter } = aktivitetAdapter.getSelectors();
 
@@ -84,6 +86,8 @@ function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbA
     return oppfolgingsdperiodeAdapter.upsertOne(state, {
         id: oppfolgingsperiode.id,
         aktiviteter: aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet),
+        start: oppfolgingsperiode.start,
+        slutt: oppfolgingsperiode.slutt,
     });
 }
 
@@ -93,6 +97,8 @@ const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: st
             // Hvis ingen oppfølgingsperiode funnet, opprett en ny
             id: oppfolgingsperiodeId,
             aktiviteter: aktivitetAdapter.getInitialState(),
+            start: 'NaN',
+            slutt: undefined,
         }
     );
 };
@@ -109,6 +115,8 @@ const aktivitetSlice = createSlice({
                 return {
                     id: periode.id,
                     aktiviteter: aktivitetAdapter.upsertMany(periodeState.aktiviteter, periode.aktiviteter),
+                    start: periode.start,
+                    slutt: periode.slutt,
                 };
             });
             oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
@@ -116,11 +124,11 @@ const aktivitetSlice = createSlice({
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
             const aktivitet = action.payload.data.aktivitet;
             const eier = action.payload.data.eier;
-            const aktivitetIDer =  selectAllOppfolgingsperioder(state).map ((periode) =>
-                selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id)
-            ).flat()
+            const aktivitetIDer = selectAllOppfolgingsperioder(state)
+                .map((periode) => selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id))
+                .flat();
 
-            const aktivitetTilhorerBrukerIContext = !aktivitetIDer.includes(aktivitet.id)
+            const aktivitetTilhorerBrukerIContext = !aktivitetIDer.includes(aktivitet.id);
 
             if (aktivitetTilhorerBrukerIContext) {
                 loggDyplenkingTilAnnenBruker();

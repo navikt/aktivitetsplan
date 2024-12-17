@@ -27,7 +27,7 @@ const initialState: FilterState = {
         TILTAKSAKTIVITET: false,
         UTDANNINGSAKTIVITET: false,
         VARIG_LONNSTILSKUDD: false,
-        ARBEIDSTRENING: false
+        ARBEIDSTRENING: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,
@@ -71,9 +71,6 @@ const filterSlice = createSlice({
         toggleArenaAktivitetsEtikett: (state, action: PayloadAction<keyof ArenaEtikettFilterType>) => {
             state.arenaAktivitetEtiketter[action.payload] = !state.arenaAktivitetEtiketter[action.payload];
         },
-        velgHistoriskPeriode: (state, action: PayloadAction<HistoriskOppfolgingsperiode | null>) => {
-            state.historiskPeriode = action.payload;
-        },
         toggleAktivitetAvtaltMedNav: (state, action: PayloadAction<keyof AvtaltFilterType>) => {
             state.aktivitetAvtaltMedNav[action.payload] = !state.aktivitetAvtaltMedNav[action.payload];
         },
@@ -85,7 +82,6 @@ export const {
     toggleArenaAktivitetsEtikett,
     toggleAktivitetsType,
     toggleAktivitetAvtaltMedNav,
-    velgHistoriskPeriode,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

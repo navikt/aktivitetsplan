@@ -10,7 +10,7 @@ const fullforAktivitetRoute = (aktivitetId: string, erVeileder: boolean) =>
     `${erVeileder ? basename : ''}/aktivitet/fullfor/${aktivitetId}`;
 const avbrytAktivitetRoute = (aktivitetId: string, erVeileder: boolean) =>
     `${erVeileder ? basename : ''}/aktivitet/avbryt/${aktivitetId}`;
-const hovedsideRoute = (erVeileder: boolean) => `${erVeileder ? basename : ''}/`;
+export const hovedsideRoute = (erVeileder: boolean) => `${erVeileder ? basename : ''}/`;
 const malRoute = (erVeileder: boolean) => `${erVeileder ? basename : ''}/mal`;
 const informasjonRoute = (erVeileder: boolean) => `${erVeileder ? basename : ''}/informasjon`;
 

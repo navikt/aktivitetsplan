@@ -24,7 +24,7 @@ import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { hentMalverk } from './data/malverk';
 import { me } from './data/me';
-import getOppfolging, { settDigital } from './data/oppfolging';
+import getOppfolging, { mockOppfolging, settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
 import { veilederMe } from './data/Veileder';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
@@ -182,12 +182,14 @@ export const handlers = [
 export const aktivitestplanResponse = (
     { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter },
 ) => {
-    const perioder = Array.from(new Set(aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)));
+    // const perioder = Array.from(new Set(aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)));
     return {
         data: {
-            perioder: perioder.map((periodeId) => ({
-                id: periodeId,
-                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId),
+            perioder: mockOppfolging.oppfolgingsPerioder.map((periode) => ({
+                id: periode.uuid,
+                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.uuid),
+                start: periode.startDato,
+                slutt: periode.sluttDato,
             })),
         },
     };

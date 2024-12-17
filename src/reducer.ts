@@ -19,6 +19,7 @@ import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-sli
 import veilederReducer from './moduler/veileder/veileder-slice';
 import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';
 import { innsynsrettReducer } from './moduler/aktivitet/innsynsrett/innsynsrett-slice';
+import valgtPeriodeReducer from './moduler/filtrering/filter/valgt-periode-slice';
 
 const reducer = {
     data: combineReducers({
@@ -39,6 +40,7 @@ const reducer = {
         feature: featureReducer,
         errors: errorReducer,
         innsynsrett: innsynsrettReducer,
+        valgtPeriode: valgtPeriodeReducer,
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,

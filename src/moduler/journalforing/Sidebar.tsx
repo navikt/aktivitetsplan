@@ -83,18 +83,18 @@ const Sidebar: FunctionComponent = () => {
                     defaultValue={oppfolgingsperiodeId}
                 >
                     {[...oppfolgingsperioder]
-                        .sort((a, b) => Date.parse(b.startDato) - Date.parse(a.startDato))
+                        .sort((a, b) => Date.parse(b.start) - Date.parse(a.start))
                         .map((periode) => (
                             <option
-                                key={`oppfolgingsperiodeoption-${periode.uuid}`}
-                                value={periode.uuid}
+                                key={`oppfolgingsperiodeoption-${periode.id}`}
+                                value={periode.id}
                                 // selected={oppfolgingsperiodeId === periode.uuid}
                             >
-                                {periode.sluttDato == undefined
+                                {periode.slutt == undefined
                                     ? 'Nåværende periode'
-                                    : formaterDatoKortManed(periode.startDato) +
+                                    : formaterDatoKortManed(periode.start) +
                                       ' - ' +
-                                      formaterDatoKortManed(periode.sluttDato)}
+                                      formaterDatoKortManed(periode.slutt)}
                             </option>
                         ))}
                 </Select>

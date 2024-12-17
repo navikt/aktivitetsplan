@@ -6,19 +6,19 @@ import { useErVeileder } from '../../Provider';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigitalOppfolging';
 import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 import { useSelector } from 'react-redux';
-import { selectOppfolgingStatus } from './oppfolging-selector';
+import { MinimalPeriode, selectOppfolgingStatus } from './oppfolging-selector';
 import { Status } from '../../createGenericSlice';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
     erVeileder: boolean;
-    manuell: boolean;
+    manuell: boolean | undefined;
     underOppfolging: boolean;
-    reservasjonKRR: boolean;
-    oppfolgingsPerioder: Oppfolgingsperiode[];
-    servicegruppe: string;
+    reservasjonKRR: boolean | undefined;
+    oppfolgingsPerioder: MinimalPeriode[];
+    servicegruppe: string | undefined;
     ident: string;
-    aktorId: string;
+    aktorId: string | undefined;
 }
 
 const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
@@ -30,9 +30,9 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
 
     useEffect(() => {
-        if (erVeileder) {
+        if (erVeileder && servicegruppe) {
             loggAntalVeiledere(servicegruppe, underOppfolging, ident, aktorId);
-        } else {
+        } else if (servicegruppe && aktorId) {
             loggingAntallBrukere(servicegruppe, underOppfolging, aktorId);
         }
     }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);

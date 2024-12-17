@@ -24,11 +24,20 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
         ],
     },
     {
+        uuid: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
+        aktorId: '1234567988888',
+        veileder: null,
+        startDato: '2018-01-30T10:46:10.971+01:00',
+        sluttDato: '2018-12-31T10:46:10.971+01:00',
+        begrunnelse: null,
+        kvpPerioder: [],
+    },
+    {
         uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2018-01-31T10:46:10.971+01:00',
-        sluttDato: null,
+        sluttDato: undefined,
         begrunnelse: null,
     },
 ];

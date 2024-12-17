@@ -26,6 +26,13 @@ const gammelOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
     erHistorisk(it),
 ) as HistoriskOppfolgingsperiode;
 
+const endaGamlerePeriode = {
+    ...gammelOppfolgingsperiode,
+    id: '4',
+    startDato: '2017-05-03T10:44:28.113+02:00',
+    sluttDato: '2018-05-03T10:44:28.113+02:00',
+} as HistoriskOppfolgingsperiode;
+
 const arenaAktivitet = {
     ...arenaMockAktiviteter[0],
     tittel: 'Arenaaktivitet',
@@ -64,8 +71,30 @@ const gammelVeilarbAktivitet = {
     id: '2',
     oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
 };
+const endaGamlereAktivitet = {
+    ...mockTestAktiviteter[0],
+    tittel: 'Enda gamlere Veilarbaktivitet',
+    id: '3',
+    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
+};
 
 const getAktiviteterState = () => {
+    const state = oppfolgingsdperiodeAdapter.getInitialState({
+        status: Status.OK,
+    });
+    return oppfolgingsdperiodeAdapter.setAll(state, [
+        {
+            id: endaGamlereAktivitet.oppfolgingsperiodeId,
+            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), veilarbAktivitet),
+        },
+        {
+            id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
+            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
+        },
+    ]);
+};
+
+const bareLukkedePerioder = () => {
     const state = oppfolgingsdperiodeAdapter.getInitialState({
         status: Status.OK,
     });

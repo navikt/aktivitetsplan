@@ -1,8 +1,10 @@
 import { createSelector } from 'reselect';
+import { compareDesc } from 'date-fns';
 
-import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
+import { HistoriskOppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { RootState } from '../../store';
-import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectAktiviteterSlice, selectAllOppfolgingsperioder } from '../aktivitet/aktivitet-slice';
+import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 
 export function selectOppfolgingSlice(state: RootState) {
     return state.data.oppfolging;
@@ -22,58 +24,54 @@ export function selectServicegruppe(state: RootState) {
     return selectOppfolgingData(state)?.servicegruppe;
 }
 
-export const selectOppfolgingsPerioder = createSelector(selectOppfolgingData, (oppfolginsStatus) => {
-    return oppfolginsStatus?.oppfolgingsPerioder || [];
+export const selectOppfolgingsPerioderMedKvpPerioder = createSelector(selectOppfolgingData, (oppfolgingsStatus) => {
+    return oppfolgingsStatus?.oppfolgingsPerioder || [];
 });
 
-export function selectNyesteOppfolgingsperiode(state: RootState) {
-    return selectOppfolgingsPerioder(state).find((oppfolgingsperiode) => !oppfolgingsperiode.sluttDato);
+export function selectAktivOppfolgingsperiode(state: RootState) {
+    return selectOppfolgingsPerioder(state).find((oppfolgingsperiode) => !oppfolgingsperiode.slutt);
 }
 
-export const selectHistoriskeOppfolgingsPerioder: (state: RootState) => HistoriskOppfolgingsperiode[] = createSelector(
-    selectOppfolgingsPerioder,
-    (oppfolgingsPerioder: Oppfolgingsperiode[]) =>
-        oppfolgingsPerioder.filter((p) => p.sluttDato) as HistoriskOppfolgingsperiode[],
+export interface MinimalPeriode {
+    id: string;
+    start: string;
+    slutt: string | undefined;
+}
+export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] = createSelector(
+    selectAktiviteterSlice,
+    (state) => {
+        return selectAllOppfolgingsperioder(state).map((periode) => ({
+            id: periode.id,
+            start: periode.start,
+            slutt: periode.slutt,
+        }));
+    },
 );
 
 export const selectForrigeHistoriskeSluttDato: (store: RootState) => string | undefined = createSelector(
-    selectHistoriskeOppfolgingsPerioder,
-    (historiskeOppfolgingsPerioder: HistoriskOppfolgingsperiode[]) =>
-        historiskeOppfolgingsPerioder
-            .map((p) => p.sluttDato)
+    selectOppfolgingsPerioder,
+    (perioder) =>
+        perioder
+            .filter((periode) => periode.slutt !== undefined)
+            .map((periode) => periode.slutt)
             .sort()
             .reverse()[0],
 );
 
 export type VistOppfolgingsPeriode = HistoriskOppfolgingsperiode & { fra: string; til: string };
-export const selectSorterteHistoriskeOppfolgingsPerioder: (store: RootState) => VistOppfolgingsPeriode[] =
-    createSelector(selectHistoriskeOppfolgingsPerioder, (historiskeOppfolgingsperioder) => {
-        let nesteFra = new Date().toISOString();
-        return historiskeOppfolgingsperioder
-            .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
-            .map((periode) => {
-                const { sluttDato } = periode;
-                const fra = nesteFra;
-                nesteFra = sluttDato;
-                return {
-                    ...periode,
-                    fra,
-                    til: sluttDato,
-                };
-            })
-            .reverse();
+export const selectSorterteOppfolgingsperioder = createSelector(selectOppfolgingsPerioder, (perioder) => {
+    return perioder.toSorted((a, b) => {
+        return compareDesc(a.start, b.start);
     });
+});
 
 // TODO refaktorer, må fikse typer oppfolgingsperioder-typene i hele appen
 export function selectKvpPeriodeForValgteOppfolging(state: RootState) {
-    let valgtOppfolging: any = selectHistoriskPeriode(state);
-    if (!valgtOppfolging) {
-        // valgtOppfolging er null når man ikke har brukt periodefilteret, eller når man ikke har noen historiske oppfolgingsperioder
-        valgtOppfolging =
-            selectNyesteOppfolgingsperiode(state) ?? selectSorterteHistoriskeOppfolgingsPerioder(state)[0];
-    }
-    const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.uuid;
-    const oppfolging = selectOppfolgingsPerioder(state).find((p) => p.uuid === valgtOppfolgingId);
+    const valgtOppfolgingId = selectValgtPeriodeId(state);
+    const perioderMedKvpPerioder = selectOppfolgingsPerioderMedKvpPerioder(state);
+    const oppfolging = perioderMedKvpPerioder.find(
+        (periodeMedKvpPerioder) => periodeMedKvpPerioder.uuid === valgtOppfolgingId,
+    );
     return oppfolging && oppfolging.kvpPerioder;
 }
 
