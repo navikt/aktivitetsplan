@@ -4,25 +4,16 @@ import React, { ChangeEventHandler, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
-import {
-    selectErUnderOppfolging,
-    selectSorterteOppfolgingsperioder,
-} from '../../oppfolging-status/oppfolging-selector';
+import { selectSorterteOppfolgingsperioder } from '../../oppfolging-status/oppfolging-selector';
 import { velgPeriode } from './valgt-periode-slice';
 
-interface Props {}
-
 const PeriodeFilter = () => {
-    const erUnderOppfolging = useSelector(selectErUnderOppfolging);
-    const skjulInneverende = !erUnderOppfolging;
-
     const perioder = useSelector(selectSorterteOppfolgingsperioder);
     const historiskePerioder = perioder.filter((periode) => periode.slutt !== undefined);
     const harHistoriskePerioder = historiskePerioder.length > 0;
 
     const dispatch = useAppDispatch();
 
-    console.log(perioder);
     const nyestePeriode = perioder.length > 0 ? perioder[0] : null;
 
     useEffect(() => {
@@ -30,8 +21,6 @@ const PeriodeFilter = () => {
             dispatch(velgPeriode(nyestePeriode.id));
         }
     }, [perioder]);
-
-    console.log(nyestePeriode);
 
     if (!harHistoriskePerioder) return null;
     // 0 periode? - ikke vis dropdown - har ikke hist

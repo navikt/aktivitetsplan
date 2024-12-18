@@ -28,7 +28,7 @@ type PerioderMedAktiviteter = {
     aktiviteter: VeilarbAktivitet[];
 };
 
-interface PeriodeEntityState {
+export interface PeriodeEntityState {
     id: string;
     aktiviteter: EntityState<VeilarbAktivitet>;
     start: string;

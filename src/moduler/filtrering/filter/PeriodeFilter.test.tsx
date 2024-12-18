@@ -2,7 +2,7 @@
 import React from 'react';
 import { arenaMockAktiviteter } from '../../../mocks/data/arena';
 import { render, waitFor } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, EntityState } from '@reduxjs/toolkit';
 import reducer from '../../../reducer';
 import { mockTestAktiviteter } from '../../../mocks/aktivitet';
 import { Status } from '../../../createGenericSlice';
@@ -18,18 +18,15 @@ import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { rest } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
-import { aktivitetAdapter, oppfolgingsdperiodeAdapter } from '../../aktivitet/aktivitet-slice';
+import { aktivitetAdapter, oppfolgingsdperiodeAdapter, PeriodeEntityState } from '../../aktivitet/aktivitet-slice';
+import { compareDesc } from 'date-fns';
 
-const gjeldendeOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) => !erHistorisk(it))!!; // NOSONAR
-const gammelOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
-    erHistorisk(it),
-) as HistoriskOppfolgingsperiode;
-const endaGamlerePeriode = {
-    ...gammelOppfolgingsperiode,
-    id: '4',
-    startDato: '2017-05-03T10:44:28.113+02:00',
-    sluttDato: '2018-05-03T10:44:28.113+02:00',
-} as HistoriskOppfolgingsperiode;
+const perioder = mockOppfolging.oppfolgingsPerioder.toSorted((a, b) => {
+    return compareDesc(a.startDato, b.startDato);
+});
+const gjeldendeOppfolgingsperiode = perioder.find((it) => !erHistorisk(it))!!; // NOSONAR
+const gammelOppfolgingsperiode = perioder.find((it) => erHistorisk(it)) as HistoriskOppfolgingsperiode;
+const endaGamlerePeriode = perioder[2];
 
 const arenaAktivitet = {
     ...arenaMockAktiviteter[0],
@@ -72,18 +69,18 @@ const gammelVeilarbAktivitet = {
 const endaGamlereAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Enda gamlere Veilarbaktivitet',
-    id: '3',
-    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
+    id: '4',
+    oppfolgingsperiodeId: endaGamlerePeriode.uuid,
 };
 
 const aktiviteterIBareLukkedePerioder = () => {
     const state = oppfolgingsdperiodeAdapter.getInitialState({
         status: Status.OK,
     });
-    return oppfolgingsdperiodeAdapter.setAll(state, [
+    const perioder = oppfolgingsdperiodeAdapter.setAll(state, [
         {
             id: endaGamlereAktivitet.oppfolgingsperiodeId,
-            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), veilarbAktivitet),
+            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), endaGamlereAktivitet),
             start: endaGamlerePeriode.startDato,
             slutt: endaGamlerePeriode.sluttDato,
         },
@@ -94,6 +91,7 @@ const aktiviteterIBareLukkedePerioder = () => {
             slutt: gammelOppfolgingsperiode.sluttDato,
         },
     ]);
+    return perioder;
 };
 
 const aktiviteterÅpenOgLukketPeriode = () => {
@@ -116,20 +114,32 @@ const aktiviteterÅpenOgLukketPeriode = () => {
     ]);
 };
 
-const initialStore = {
-    data: {
-        ...emptyLoadedVeilederState.data,
-        aktiviteter: aktiviteterÅpenOgLukketPeriode(),
-        arenaAktiviteter: {
-            status: Status.OK,
-            data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
+const initialStore = (aktiviteter: EntityState<PeriodeEntityState>) =>
+    ({
+        data: {
+            ...emptyLoadedVeilederState.data,
+            aktiviteter,
+            arenaAktiviteter: {
+                status: Status.OK,
+                data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
+            },
+            oppfolging: {
+                status: Status.OK,
+                data: mockOppfolging,
+            },
         },
-        oppfolging: {
-            status: Status.OK,
-            data: mockOppfolging,
-        },
-    },
-} as unknown as RootState;
+    }) as unknown as RootState;
+
+const lagStore = (initialStore: RootState) =>
+    configureStore({
+        reducer,
+        preloadedState: initialStore,
+    });
+
+const gitt = {
+    aktiviteterÅpenOgLukketPeriode: () => lagStore(initialStore(aktiviteterÅpenOgLukketPeriode())),
+    aktiviteterIBareLukkedePerioder: () => lagStore(initialStore(aktiviteterIBareLukkedePerioder())),
+};
 
 // Overstyr lesing av aktiviteter i denne testen
 const server = setupServer(
@@ -161,19 +171,13 @@ describe('PeriodeFilter.tsx', () => {
 
     describe('Veilarbaktivitet filtrering', () => {
         it('skal vise veilarb-aktivitet i nåværende periode (første i listen)', async () => {
-            const store = configureStore({
-                reducer,
-                preloadedState: initialStore,
-            });
+            const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Veilarbaktivitet'));
             expect(queryByText('Gammel Veilarbaktivitet')).not.toBeTruthy();
         });
         it('skal vise veilarb-aktivitet i tidligere periode', async () => {
-            const store = configureStore({
-                reducer,
-                preloadedState: initialStore,
-            });
+            const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
@@ -184,16 +188,13 @@ describe('PeriodeFilter.tsx', () => {
 
     describe('Arenaaktivitet filtrering', () => {
         it('skal vise arena-ativitet i nåværende periode (første i listen)', async () => {
-            const store = configureStore({ reducer, preloadedState: initialStore });
+            const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Arenaaktivitet'));
             expect(queryByText('Gammel Arenaaktivitet')).not.toBeTruthy();
         });
         it('skal vise arena-aktivitet i tidligere periode', async () => {
-            const store = configureStore({
-                reducer,
-                preloadedState: initialStore,
-            });
+            const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
@@ -201,40 +202,49 @@ describe('PeriodeFilter.tsx', () => {
             expect(queryByText('Arenaaktivitet')).not.toBeTruthy();
         });
         it('skal vise aktivitet endret før siste oppfølginsperiode men etter tidligere oppfølgingsperiode i siste oppfølgingsperode', async () => {
-            const store = configureStore({
-                reducer,
-                preloadedState: initialStore,
-            });
+            const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             waitFor(() => getByText(arenaAktivitetUtenforPeriode.tittel));
         });
         it('skal ikke vise aktivitet endret før oppfølging i noen av periodene', async () => {
-            const store = configureStore({
-                reducer,
-                preloadedState: initialStore,
-            });
+            const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { queryByText, getByLabelText, getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             expect(queryByText(arenaAktivitetForOppfolging.tittel)).not.toBeTruthy();
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
             expect(queryByText(arenaAktivitetForOppfolging.tittel)).not.toBeTruthy();
         });
-        describe('datoErIPeriode-filter', () => {
-            const gammelOpprettetDato = gammelArenaAktivitet.opprettetDato;
-            const currentOpprettetDato = arenaAktivitet.opprettetDato;
-            const gammelPeriodeSlutt = gammelOppfolgingsperiode.sluttDato;
-            it('nåværende periode - gammel aktivitet skal ikke vises', () => {
-                expect(datoErIPeriode(gammelOpprettetDato, null, gammelPeriodeSlutt)).toBeFalsy();
-            });
-            it('nåværende periode - aktivitet i nåværende periode skal vises', () => {
-                expect(datoErIPeriode(currentOpprettetDato, null, gammelPeriodeSlutt)).toBeTruthy();
-            });
-            it('gammel periode - gammel aktivitet skal vises', () => {
-                expect(datoErIPeriode(gammelOpprettetDato, gammelOppfolgingsperiode, gammelPeriodeSlutt)).toBeTruthy();
-            });
-            it('gammel periode - aktivitet i nåværende periode skal ikke vises', () => {
-                expect(datoErIPeriode(currentOpprettetDato, gammelOppfolgingsperiode, gammelPeriodeSlutt)).toBeFalsy();
-            });
+    });
+
+    describe('datoErIPeriode-filter', () => {
+        const gammelOpprettetDato = gammelArenaAktivitet.opprettetDato;
+        const currentOpprettetDato = arenaAktivitet.opprettetDato;
+        const gammelPeriodeSlutt = gammelOppfolgingsperiode.sluttDato;
+        it('nåværende periode - gammel aktivitet skal ikke vises', () => {
+            expect(datoErIPeriode(gammelOpprettetDato, null, gammelPeriodeSlutt)).toBeFalsy();
+        });
+        it('nåværende periode - aktivitet i nåværende periode skal vises', () => {
+            expect(datoErIPeriode(currentOpprettetDato, null, gammelPeriodeSlutt)).toBeTruthy();
+        });
+        it('gammel periode - gammel aktivitet skal vises', () => {
+            expect(datoErIPeriode(gammelOpprettetDato, gammelOppfolgingsperiode, gammelPeriodeSlutt)).toBeTruthy();
+        });
+        it('gammel periode - aktivitet i nåværende periode skal ikke vises', () => {
+            expect(datoErIPeriode(currentOpprettetDato, gammelOppfolgingsperiode, gammelPeriodeSlutt)).toBeFalsy();
+        });
+    });
+
+    describe('Default oppfolgingsperiode', () => {
+        it('hvis det finnes en gjeldende periode skal aktiviteter i denne vises', async () => {
+            const store = gitt.aktiviteterÅpenOgLukketPeriode();
+            const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+            await waitFor(() => getByText(veilarbAktivitet.tittel));
+        });
+        it('hvis bare lukkede perioder skal aktiviteter i nyeste periode vises', async () => {
+            const store = gitt.aktiviteterIBareLukkedePerioder();
+            const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+            await waitFor(() => getByText(gammelVeilarbAktivitet.tittel));
+            expect(queryByText(endaGamlereAktivitet.tittel)).not.toBeTruthy();
         });
     });
 });
