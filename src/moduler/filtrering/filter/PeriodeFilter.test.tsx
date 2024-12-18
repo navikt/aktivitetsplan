@@ -204,10 +204,10 @@ describe('PeriodeFilter.tsx', () => {
             getByText('Gammel Arenaaktivitet');
             expect(queryByText('Arenaaktivitet')).not.toBeTruthy();
         });
-        it('skal vise aktivitet endret før siste oppfølginsperiode men etter tidligere oppfølgingsperiode i siste oppfølgingsperode', async () => {
+        it('skal ikke vise aktivitet endret før siste oppfølginsperiode men etter tidligere oppfølgingsperiode i siste oppfølgingsperode', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
-            const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            await waitFor(() => getByText(arenaAktivitetUtenforPeriode.tittel));
+            const { queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+            expect(queryByText(arenaAktivitetUtenforPeriode.tittel)).toBeFalsy();
         });
         it('skal ikke vise aktivitet endret før oppfølging i noen av periodene', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
