@@ -159,6 +159,9 @@ const server = setupServer(
     ),
     ...handlers,
 );
+
+const gammelPeriodeDropdownTekst = '30. Jan 2017 - 31. Dec 2017';
+
 describe('PeriodeFilter.tsx', () => {
     // Start server before all tests
     beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
@@ -180,8 +183,8 @@ describe('PeriodeFilter.tsx', () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Periode'));
-            await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
-            getByText('Gammel Veilarbaktivitet');
+            await userEvent.selectOptions(getByLabelText('Periode'), gammelPeriodeDropdownTekst);
+            getByText(gammelVeilarbAktivitet.tittel);
             expect(queryByText('Veilarbaktivitet')).not.toBeTruthy();
         });
     });
@@ -197,7 +200,7 @@ describe('PeriodeFilter.tsx', () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Periode'));
-            await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
+            await userEvent.selectOptions(getByLabelText('Periode'), gammelPeriodeDropdownTekst);
             getByText('Gammel Arenaaktivitet');
             expect(queryByText('Arenaaktivitet')).not.toBeTruthy();
         });
@@ -211,7 +214,7 @@ describe('PeriodeFilter.tsx', () => {
             const { queryByText, getByLabelText, getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             expect(queryByText(arenaAktivitetForOppfolging.tittel)).not.toBeTruthy();
             await waitFor(() => getByText('Periode'));
-            await userEvent.selectOptions(getByLabelText('Periode'), '30. Jan 2017 - 31. Dec 2017');
+            await userEvent.selectOptions(getByLabelText('Periode'), gammelPeriodeDropdownTekst);
             expect(queryByText(arenaAktivitetForOppfolging.tittel)).not.toBeTruthy();
         });
     });
