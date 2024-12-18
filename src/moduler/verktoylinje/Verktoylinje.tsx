@@ -1,10 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import Filter from '../filtrering/Filter';
 import PeriodeFilter from '../filtrering/filter/PeriodeFilter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
-import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import LeggTilNyttAktivitetsKort from '../aktivitet/ny-aktivitet/LeggTilNyttAktivitetsKort';
 
 const Verktoylinje = () => {

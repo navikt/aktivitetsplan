@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigitalOppfolging';
