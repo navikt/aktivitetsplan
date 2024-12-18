@@ -177,7 +177,7 @@ describe('PeriodeFilter.tsx', () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Veilarbaktivitet'));
-            expect(queryByText('Gammel Veilarbaktivitet')).not.toBeTruthy();
+            expect(queryByText('Gammel Veilarbaktivitet')).toBeFalsy();
         });
         it('skal vise veilarb-aktivitet i tidligere periode', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
@@ -185,7 +185,7 @@ describe('PeriodeFilter.tsx', () => {
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), gammelPeriodeDropdownTekst);
             getByText(gammelVeilarbAktivitet.tittel);
-            expect(queryByText('Veilarbaktivitet')).not.toBeTruthy();
+            expect(queryByText(veilarbAktivitet.tittel)).toBeFalsy();
         });
     });
 
@@ -193,16 +193,16 @@ describe('PeriodeFilter.tsx', () => {
         it('skal vise arena-ativitet i nåværende periode (første i listen)', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            await waitFor(() => getByText('Arenaaktivitet'));
-            expect(queryByText('Gammel Arenaaktivitet')).not.toBeTruthy();
+            await waitFor(() => getByText(arenaAktivitet.tittel));
+            expect(queryByText(gammelArenaAktivitet.tittel)).toBeFalsy();
         });
         it('skal vise arena-aktivitet i tidligere periode', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText, queryByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Periode'));
             await userEvent.selectOptions(getByLabelText('Periode'), gammelPeriodeDropdownTekst);
-            getByText('Gammel Arenaaktivitet');
-            expect(queryByText('Arenaaktivitet')).not.toBeTruthy();
+            getByText(gammelArenaAktivitet.tittel);
+            expect(queryByText(arenaAktivitet.tittel)).toBeFalsy();
         });
         it('skal ikke vise aktivitet endret før siste oppfølginsperiode men etter tidligere oppfølgingsperiode i siste oppfølgingsperode', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();

@@ -7,6 +7,7 @@ import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 import { useSelector } from 'react-redux';
 import { MinimalPeriode, selectOppfolgingStatus } from './oppfolging-selector';
 import { Status } from '../../createGenericSlice';
+import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
@@ -25,6 +26,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         props;
 
     const oppfolgingsStatus = useSelector(selectOppfolgingStatus);
+    const aktivitetStatus = useSelector(selectAktivitetStatus);
     const erVeileder = useErVeileder();
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
 
@@ -36,7 +38,12 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         }
     }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);
 
-    if (oppfolgingsStatus === Status.OK && !underOppfolging && oppfolgingsPerioder.length === 0) {
+    if (
+        oppfolgingsStatus === Status.OK &&
+        aktivitetStatus === Status.OK &&
+        !underOppfolging &&
+        oppfolgingsPerioder.length === 0
+    ) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
 
