@@ -82,7 +82,7 @@ describe('Send melding knapp (Dialog lenker)', () => {
                 getByText('Aktivitet med dialog');
             });
             await act(() => fireEvent.click(getByText('Aktivitet med dialog')));
-            fireEvent.click(getByText('Send en melding'));
+            await act(() => fireEvent.click(getByText('Send en melding')));
             expect(pushStateMock).toHaveBeenCalledWith('', 'Dialog', `/dialog/${testDialoger[0].id}`);
         });
 
@@ -92,7 +92,7 @@ describe('Send melding knapp (Dialog lenker)', () => {
             await waitFor(() => getByText('Aktivitet uten dialog'));
             await act(() => fireEvent.click(getByText('Aktivitet uten dialog')));
             await waitFor(() => getByText('Endre på aktiviteten'));
-            fireEvent.click(getByText('Send en melding'));
+            await act(() => fireEvent.click(getByText('Send en melding')));
             expect(pushStateMock).toHaveBeenCalledWith(
                 '',
                 'Dialog',
