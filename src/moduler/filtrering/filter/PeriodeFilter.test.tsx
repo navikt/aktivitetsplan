@@ -207,7 +207,7 @@ describe('PeriodeFilter.tsx', () => {
         it('skal vise aktivitet endret før siste oppfølginsperiode men etter tidligere oppfølgingsperiode i siste oppfølgingsperode', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            waitFor(() => getByText(arenaAktivitetUtenforPeriode.tittel));
+            await waitFor(() => getByText(arenaAktivitetUtenforPeriode.tittel));
         });
         it('skal ikke vise aktivitet endret før oppfølging i noen av periodene', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
