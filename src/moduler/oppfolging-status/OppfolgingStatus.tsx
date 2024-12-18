@@ -17,29 +17,9 @@ interface Props {
 }
 
 const OppfolgingStatus = ({ children }: Props) => {
-    const erVeileder = useErVeileder();
-    const underOppfolging = useSelector(selectErUnderOppfolging);
-    const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
-    const manuell = useSelector(selectErBrukerManuell);
-    const reservasjonKRR = useSelector(selectReservasjonKRR);
-    const servicegruppe = useSelector(selectServicegruppe);
-    const aktorId = useSelector(selectAktorId);
-    const ident = useSelector(selectIdentitetId);
-
-    const props = {
-        erVeileder,
-        underOppfolging,
-        oppfolgingsPerioder,
-        manuell,
-        reservasjonKRR,
-        servicegruppe,
-        aktorId,
-        ident,
-    };
-
     return (
         <div className="w-full">
-            <VidereSendBrukereEllerRenderChildren {...props}>{children}</VidereSendBrukereEllerRenderChildren>
+            <VidereSendBrukereEllerRenderChildren>{children}</VidereSendBrukereEllerRenderChildren>
         </div>
     );
 };

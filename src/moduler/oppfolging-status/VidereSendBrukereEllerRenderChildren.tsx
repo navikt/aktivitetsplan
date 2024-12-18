@@ -5,25 +5,32 @@ import { useErVeileder } from '../../Provider';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigitalOppfolging';
 import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 import { useSelector } from 'react-redux';
-import { MinimalPeriode, selectOppfolgingStatus } from './oppfolging-selector';
+import {
+    MinimalPeriode,
+    selectAktorId,
+    selectErBrukerManuell,
+    selectErUnderOppfolging,
+    selectOppfolgingsPerioder,
+    selectOppfolgingStatus,
+    selectReservasjonKRR,
+    selectServicegruppe,
+} from './oppfolging-selector';
 import { Status } from '../../createGenericSlice';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
+import { selectIdentitetId } from '../identitet/identitet-selector';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
-    erVeileder: boolean;
-    manuell: boolean | undefined;
-    underOppfolging: boolean;
-    reservasjonKRR: boolean | undefined;
-    oppfolgingsPerioder: MinimalPeriode[];
-    servicegruppe: string | undefined;
-    ident: string;
-    aktorId: string | undefined;
 }
 
 const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
-    const { servicegruppe, underOppfolging, ident, aktorId, children, manuell, oppfolgingsPerioder, reservasjonKRR } =
-        props;
+    const underOppfolging = useSelector(selectErUnderOppfolging);
+    const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
+    const manuell = useSelector(selectErBrukerManuell);
+    const reservasjonKRR = useSelector(selectReservasjonKRR);
+    const servicegruppe = useSelector(selectServicegruppe);
+    const aktorId = useSelector(selectAktorId);
+    const ident = useSelector(selectIdentitetId);
 
     const oppfolgingsStatus = useSelector(selectOppfolgingStatus);
     const aktivitetStatus = useSelector(selectAktivitetStatus);
@@ -51,7 +58,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return <AktiverDigitalOppfolging />;
     }
 
-    return <>{children}</>;
+    return <>{props.children}</>;
 };
 
 export default VidereSendBrukereEllerRenderChildren;
