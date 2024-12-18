@@ -21,11 +21,9 @@ import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
 import { aktivitetAdapter, oppfolgingsdperiodeAdapter } from '../../aktivitet/aktivitet-slice';
 
 const gjeldendeOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) => !erHistorisk(it))!!; // NOSONAR
-
 const gammelOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.find((it) =>
     erHistorisk(it),
 ) as HistoriskOppfolgingsperiode;
-
 const endaGamlerePeriode = {
     ...gammelOppfolgingsperiode,
     id: '4',
@@ -78,7 +76,7 @@ const endaGamlereAktivitet = {
     oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
 };
 
-const getAktiviteterState = () => {
+const aktiviteterIBareLukkedePerioder = () => {
     const state = oppfolgingsdperiodeAdapter.getInitialState({
         status: Status.OK,
     });
@@ -86,15 +84,19 @@ const getAktiviteterState = () => {
         {
             id: endaGamlereAktivitet.oppfolgingsperiodeId,
             aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), veilarbAktivitet),
+            start: endaGamlerePeriode.startDato,
+            slutt: endaGamlerePeriode.sluttDato,
         },
         {
             id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
             aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
+            start: gammelOppfolgingsperiode.startDato,
+            slutt: gammelOppfolgingsperiode.sluttDato,
         },
     ]);
 };
 
-const bareLukkedePerioder = () => {
+const aktiviteterÅpenOgLukketPeriode = () => {
     const state = oppfolgingsdperiodeAdapter.getInitialState({
         status: Status.OK,
     });
@@ -102,10 +104,14 @@ const bareLukkedePerioder = () => {
         {
             id: veilarbAktivitet.oppfolgingsperiodeId,
             aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), veilarbAktivitet),
+            start: gjeldendeOppfolgingsperiode.startDato,
+            slutt: undefined,
         },
         {
             id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
             aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
+            start: gammelOppfolgingsperiode.startDato,
+            slutt: gammelOppfolgingsperiode.sluttDato,
         },
     ]);
 };
@@ -113,7 +119,7 @@ const bareLukkedePerioder = () => {
 const initialStore = {
     data: {
         ...emptyLoadedVeilederState.data,
-        aktiviteter: getAktiviteterState(),
+        aktiviteter: aktiviteterÅpenOgLukketPeriode(),
         arenaAktiviteter: {
             status: Status.OK,
             data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
