@@ -55,7 +55,6 @@ const initialState: FilterState = {
         AVTALT_MED_NAV: false,
         IKKE_AVTALT_MED_NAV: false,
     },
-    historiskPeriode: null,
 };
 
 const filterSlice = createSlice({

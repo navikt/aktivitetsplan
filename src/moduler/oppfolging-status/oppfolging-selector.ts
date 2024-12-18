@@ -75,6 +75,28 @@ export function selectKvpPeriodeForValgteOppfolging(state: RootState) {
     return oppfolging && oppfolging.kvpPerioder;
 }
 
+export const selectValgtPeriode = createSelector(
+    selectValgtPeriodeId,
+    selectOppfolgingsPerioder,
+    (valgtPeriodeId, perioder) => {
+        return perioder.find((periode) => periode.id === valgtPeriodeId);
+    },
+);
+
+export const selectViserHistoriskPeriode: (state: RootState) => boolean = createSelector(
+    selectValgtPeriode,
+    (valgtPeriode) => {
+        return !valgtPeriode?.slutt;
+    },
+);
+
+export const selectViserAktivPeriode: (state: RootState) => boolean = createSelector(
+    selectViserHistoriskPeriode,
+    (viserHistoriskPeriode) => {
+        return !viserHistoriskPeriode;
+    },
+);
+
 export function selectErUnderOppfolging(state: RootState): boolean {
     return selectOppfolgingData(state)?.underOppfolging || false;
 }

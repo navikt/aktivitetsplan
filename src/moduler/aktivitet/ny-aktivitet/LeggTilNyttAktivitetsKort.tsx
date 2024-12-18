@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import { Status } from '../../../createGenericSlice';
 import { useErVeileder } from '../../../Provider';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import { useRoutes } from '../../../routing/useRoutes';
+import { selectViserHistoriskPeriode } from '../../oppfolging-status/oppfolging-selector';
 
 const veilederAktivitetsValg = (nyAktivitetBasePath: string) => [
     {
