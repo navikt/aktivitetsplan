@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { Oppfolgingsperiode } from '../../../../datatypes/oppfolgingTypes';
 import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, msSince } from '../../../../utils/dateUtils';

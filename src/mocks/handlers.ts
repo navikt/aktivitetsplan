@@ -182,7 +182,6 @@ export const handlers = [
 export const aktivitestplanResponse = (
     { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter },
 ) => {
-    // const perioder = Array.from(new Set(aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)));
     return {
         data: {
             perioder: mockOppfolging.oppfolgingsPerioder.map((periode) => ({

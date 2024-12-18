@@ -50,7 +50,7 @@ const PeriodeFilter = () => {
                             ? 'Nåværende periode'
                             : `${fraDato} - ${format(new Date(oppfolgingsperiode.slutt), 'dd. MMM yyyy')}`;
                     return (
-                        <option value={oppfolgingsperiode.id} key={index}>
+                        <option value={oppfolgingsperiode.id} key={oppfolgingsperiode.id}>
                             {navn}
                         </option>
                     );

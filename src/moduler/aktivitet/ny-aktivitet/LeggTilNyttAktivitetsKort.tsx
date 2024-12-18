@@ -65,7 +65,7 @@ const LeggTilNyttAktivitetsKort = () => {
                 </Button>
                 <Dropdown.Menu>
                     {menuItemsGroup.map((item, index) => (
-                        <Dropdown.Menu.GroupedList key={index}>
+                        <Dropdown.Menu.GroupedList key={item.groupTittel}>
                             <Dropdown.Menu.GroupedList.Heading>{item.groupTittel}</Dropdown.Menu.GroupedList.Heading>
                             {item.groupedItems.map((subItem, subIndex) => (
                                 <Dropdown.Menu.GroupedList.Item as={Link} to={subItem.link} key={subIndex}>
