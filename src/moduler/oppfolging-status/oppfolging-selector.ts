@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import { compareDesc } from 'date-fns';
 
-import { HistoriskOppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { RootState } from '../../store';
 import { selectAktiviteterSlice, selectAllOppfolgingsperioder } from '../aktivitet/aktivitet-slice';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';

@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { AktivitetFilterType, ArenaEtikettFilterType, AvtaltFilterType, EtikettFilterType } from './FilterVisning';
 
 export interface FilterState {
@@ -8,7 +7,6 @@ export interface FilterState {
     aktivitetEtiketter: EtikettFilterType;
     arenaAktivitetEtiketter: ArenaEtikettFilterType;
     aktivitetAvtaltMedNav: AvtaltFilterType;
-    historiskPeriode: HistoriskOppfolgingsperiode | null;
 }
 
 const initialState: FilterState = {
