@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
+import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
 import { Button, Switch, Textarea } from '@navikt/ds-react';
-import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from '@reduxjs/toolkit';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch'
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-selector';
 import Feilmelding from '../../../feilmelding/Feilmelding';
-import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
+import { oppdaterReferat, utenHistorikk } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 
@@ -76,13 +76,14 @@ const OppdaterReferatForm = (props: Props) => {
     };
 
     const updateAndPubliser = handleSubmit((values) => {
-        return updateReferat(values, false).then((action: PayloadAction<any>) => {
-            if (action.payload) {
-                dispatch(publiserReferat(action.payload)).then(() => {
-                    const analysis = checkText(values.referat);
-                    logReferatFullfort(analysis, true, open);
-                });
+        const oppdatertAktivitet = { ...utenHistorikk(aktivitet), erReferatPublisert: true, referat: values.referat }
+        return dispatch(oppdaterReferat(oppdatertAktivitet)).then((action) => {
+            const analysis = checkText(values.referat);
+            logReferatFullfort(analysis, aktivitet.erReferatPublisert, open);
+            if (isFulfilled(action)) {
+                onFerdig();
             }
+            return action;
         });
     });
 
