@@ -86,7 +86,7 @@ export const selectValgtPeriode = createSelector(
 export const selectViserHistoriskPeriode: (state: RootState) => boolean = createSelector(
     selectValgtPeriode,
     (valgtPeriode) => {
-        return !valgtPeriode?.slutt;
+        return !!valgtPeriode?.slutt;
     },
 );
 
