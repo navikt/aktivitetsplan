@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import hiddenIfHOC from './hidden-if';
+import hiddenIfHOC, { div as HiddenIfDiv } from './hidden-if.tsx';
 
 describe('hidden-if', () => {
     it('Skal rendre hvis hidden er undefined', () => {
@@ -20,5 +20,25 @@ describe('hidden-if', () => {
         const Komp = hiddenIfHOC(() => <div>test</div>);
         const { getByText } = render(<Komp hidden={() => false} />);
         getByText('test');
+    });
+
+    it('Skal kunne styles', () => {
+        const testClass = 'myClass';
+        const { getByText } = render(
+            <HiddenIfDiv className={testClass} hidden={false}>
+                LOL
+            </HiddenIfDiv>,
+        );
+        expect(getByText('LOL').className).toBe(testClass);
+    });
+
+    it('Skal ikke rendre hvis hidden er true', () => {
+        const { queryByText } = render(<HiddenIfDiv hidden={true}>LOL</HiddenIfDiv>);
+        expect(queryByText('LOL')).toBeFalsy();
+    });
+
+    it('Skal ikke rendre hvis hidden er () => true', () => {
+        const { queryByText } = render(<HiddenIfDiv hidden={() => true}>LOL</HiddenIfDiv>);
+        expect(queryByText('LOL')).toBeFalsy();
     });
 });
