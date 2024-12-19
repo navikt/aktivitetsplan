@@ -1,4 +1,4 @@
-import { isAfter, isBefore, isWithinInterval } from 'date-fns';
+import { isBefore, isWithinInterval } from 'date-fns';
 
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';

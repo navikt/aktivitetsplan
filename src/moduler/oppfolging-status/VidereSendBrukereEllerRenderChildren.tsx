@@ -6,7 +6,6 @@ import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigit
 import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 import { useSelector } from 'react-redux';
 import {
-    MinimalPeriode,
     selectAktorId,
     selectErBrukerManuell,
     selectErUnderOppfolging,
