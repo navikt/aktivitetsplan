@@ -78,7 +78,7 @@ const ForhaandsorienteringForm = (props: Props) => {
                       sendForhaandsorienteringArenaAktivitet({
                           arenaAktivitet: aktivitet,
                           forhaandsorientering,
-                          oppfolgingsPeriodeId: currentOpenOppfolgingsperiode.uuid,
+                          oppfolgingsPeriodeId: currentOpenOppfolgingsperiode.id,
                       }),
                   ) // Skal ikke kunne vise denne formen hvis man ikke er under oppfølging så dette skal ikke skje
                 : new Promise((resolve) => resolve(undefined))

@@ -81,7 +81,7 @@ const NyAktivitetForm = () => {
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
             return dispatch(
-                lagNyAktivitet({ aktivitet: nyAktivitet, oppfolgingsPeriodeId: currentOpenOppfolgingsPeriode.uuid }),
+                lagNyAktivitet({ aktivitet: nyAktivitet, oppfolgingsPeriodeId: currentOpenOppfolgingsPeriode.id }),
             ).then((action) => {
                 if (isFulfilled(action)) {
                     navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id));
