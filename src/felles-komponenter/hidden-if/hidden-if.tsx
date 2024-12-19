@@ -23,9 +23,6 @@ export default function hiddenIfHOC(WrappingComponent: ReactComponentLike) {
     };
 }
 
-// 1 prop
-// Må kunne styles
-
 export const div = HiddenIf('div');
 export const span = HiddenIf('span');
 export const section = HiddenIf('section');
