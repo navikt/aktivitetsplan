@@ -2,9 +2,9 @@ import { BodyLong } from '@navikt/ds-react';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-selector';
 import { selectMalListe } from './malliste-selector';
+import { selectViserHistoriskPeriode } from '../oppfolging-status/oppfolging-selector';
 
 const Malvisning = () => {
     const malData = useSelector(selectGjeldendeMal, shallowEqual);

@@ -76,7 +76,6 @@ const VisValgtFilter = () => {
                 {Object.entries(filterSlice as Record<string, Record<string, string> | null>).map(
                     ([filterCategoryKey, activeFiltersMap]) => {
                         if (activeFiltersMap === null) return null;
-                        if (filterCategoryKey === 'historiskPeriode') return null;
 
                         return Object.entries(activeFiltersMap)
                             .filter(([_, isFilterEnabled]) => isFilterEnabled)

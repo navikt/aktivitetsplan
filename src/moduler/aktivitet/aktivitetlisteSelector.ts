@@ -7,45 +7,25 @@ import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAk
 import { RootState } from '../../store';
 import { aktivitetMatchesFilters } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
-import { selectOppfolgingsPerioder, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
+import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
-import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectAktiviteterByPeriode, selectAktiviteterData } from './aktivitet-slice';
+import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],
     (aktiviteter, arenaAktiviteter) => (aktiviteter as AlleAktiviteter[]).concat(arenaAktiviteter),
 );
 
-export const selectVistOppfolgingsperiode = createSelector(
-    selectHistoriskPeriode,
-    selectOppfolgingsPerioder,
-    (valgtHistoriskPeriode, oppfolgingsPerioder) => {
-        if (valgtHistoriskPeriode) return valgtHistoriskPeriode;
-
-        const inneværendePeriode = oppfolgingsPerioder.find((periode) => !periode.sluttDato);
-
-        if (inneværendePeriode) {
-            return inneværendePeriode;
-        } else {
-            const sorterteHistoriskePerioder = [...oppfolgingsPerioder].sort((a, b) =>
-                a.startDato.localeCompare(b.startDato),
-            );
-            return sorterteHistoriskePerioder[0];
-        }
-    },
-);
 export const selectAktiviterForAktuellePerioden = createSelector(
     selectArenaAktiviteterData,
-    selectVistOppfolgingsperiode,
+    selectValgtPeriodeId,
     selectAktiviteterByPeriode,
-    (arenaAktiviteterIAllePerioder, valgtPeriode, veilarbAktiviteter): AlleAktiviteter[] => {
+    (arenaAktiviteterIAllePerioder, valgtPeriodeId, veilarbAktiviteter): AlleAktiviteter[] => {
         return [
-            ...(veilarbAktiviteter.find((periode) => periode.id === valgtPeriode?.uuid)?.aktiviteter || []),
-            ...arenaAktiviteterIAllePerioder.filter(
-                (aktivitet) => aktivitet.oppfolgingsperiodeId === valgtPeriode?.uuid,
-            ),
+            ...(veilarbAktiviteter.find((periode) => periode.id === valgtPeriodeId)?.aktiviteter || []),
+            ...arenaAktiviteterIAllePerioder.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === valgtPeriodeId),
         ];
     },
 );

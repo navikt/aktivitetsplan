@@ -13,16 +13,16 @@ import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
-import { selectVistOppfolgingsperiode } from '../aktivitet/aktivitetlisteSelector';
+import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
-    const vistOppfolgingsperiode = useSelector(selectVistOppfolgingsperiode);
+    const vistOppfolgingsperiode = useSelector(selectValgtPeriodeId);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const doHentDialog = () => dispatch(hentDialoger(true));
+        const doHentDialog = () => dispatch(hentDialoger());
 
         if (!erVeileder) {
             let interval: NodeJS.Timeout;
@@ -76,7 +76,7 @@ function Navigasjonslinje() {
                 {!ER_PROD
                     ? erVeileder && (
                           <ReactRouterLink
-                              to={`journalforing/${vistOppfolgingsperiode?.uuid}`}
+                              to={`journalforing/${vistOppfolgingsperiode}`}
                               className="text-text-action underline hover:no-underline"
                           >
                               Journalføring

@@ -9,6 +9,7 @@ export interface Dialog {
     opprettetDato: string;
     henvendelser?: Henvendelse[];
     egenskaper?: string[];
+    oppfolgingsperiode: string;
 }
 
 export interface Henvendelse {

@@ -3,10 +3,13 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErUnderOppfolging,
+    selectHarSkriveTilgang,
+    selectViserHistoriskPeriode,
+} from '../oppfolging-status/oppfolging-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-selector';
 import MalForm from './MalForm';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import Malvisning from './mal-visning';
 
 interface Props {
@@ -23,7 +26,7 @@ const MalContainer = (props: Props) => {
 
     const mal = malData && malData.mal;
 
-    const [edit, setEdit] = useState( !viserHistoriskPeriode && underOppfolging && harSkriveTilgang);
+    const [edit, setEdit] = useState(!viserHistoriskPeriode && underOppfolging && harSkriveTilgang);
     useEffect(() => {
         setEdit(!viserHistoriskPeriode && underOppfolging && harSkriveTilgang);
     }, [viserHistoriskPeriode, underOppfolging, harSkriveTilgang]);
@@ -43,8 +46,7 @@ const MalContainer = (props: Props) => {
         );
     }
 
-   return <Malvisning/>;
-
+    return <Malvisning />;
 };
 
 export default MalContainer;

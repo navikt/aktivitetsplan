@@ -5,8 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import { useRoutes } from '../../routing/useRoutes';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErUnderOppfolging,
+    selectHarSkriveTilgang,
+    selectViserHistoriskPeriode,
+} from '../oppfolging-status/oppfolging-selector';
 import MalContainer from './mal-container';
 import MalHistorikk from './mal-historikk';
 import { MalModal } from './mal-modal';
@@ -22,7 +25,6 @@ const Mal = () => {
 
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
-
 
     const onModalRequestClosed = () => {
         if (!isDirty.current || window.confirm(CONFIRM)) {
@@ -49,10 +51,10 @@ const Mal = () => {
                         <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
                     </ul>
                 </ReadMore>
-                    <section>
-                        <MalContainer onLagre={onModalRequestClosed} dirtyRef={isDirty} />
-                        <MalHistorikk />
-                    </section>
+                <section>
+                    <MalContainer onLagre={onModalRequestClosed} dirtyRef={isDirty} />
+                    <MalHistorikk />
+                </section>
             </div>
         </MalModal>
     );
