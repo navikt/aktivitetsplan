@@ -35,7 +35,7 @@ export function selectAktivOppfolgingsperiode(state: RootState) {
 export interface MinimalPeriode {
     id: string;
     start: string;
-    slutt: string | undefined;
+    slutt: string | null;
 }
 export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] = createSelector(
     selectAktiviteterSlice,
@@ -48,17 +48,6 @@ export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] =
     },
 );
 
-export const selectForrigeHistoriskeSluttDato: (store: RootState) => string | undefined = createSelector(
-    selectOppfolgingsPerioder,
-    (perioder) =>
-        perioder
-            .filter((periode) => periode.slutt !== undefined)
-            .map((periode) => periode.slutt)
-            .sort()
-            .reverse()[0],
-);
-
-export type VistOppfolgingsPeriode = HistoriskOppfolgingsperiode & { fra: string; til: string };
 export const selectSorterteOppfolgingsperioder = createSelector(selectOppfolgingsPerioder, (perioder) => {
     return perioder.toSorted((a, b) => {
         return compareDesc(a.start, b.start);

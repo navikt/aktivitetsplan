@@ -9,7 +9,7 @@ import { velgPeriode } from './valgt-periode-slice';
 
 const PeriodeFilter = () => {
     const perioder = useSelector(selectSorterteOppfolgingsperioder);
-    const historiskePerioder = perioder.filter((periode) => periode.slutt !== undefined);
+    const historiskePerioder = perioder.filter((periode) => !!periode.slutt);
     const harHistoriskePerioder = historiskePerioder.length > 0;
 
     const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ const PeriodeFilter = () => {
     const nyestePeriode = perioder.length > 0 ? perioder[0] : null;
 
     useEffect(() => {
-        if (nyestePeriode !== null) {
+        if (!!nyestePeriode) {
             dispatch(velgPeriode(nyestePeriode.id));
         }
     }, [perioder]);
@@ -43,14 +43,14 @@ const PeriodeFilter = () => {
                 label="Periode"
                 onChange={onPeriodeChange}
             >
-                {perioder.map((oppfolgingsperiode, index) => {
-                    const fraDato = format(new Date(oppfolgingsperiode.start), 'dd. MMM yyyy');
+                {perioder.map(({ start, slutt, id }) => {
+                    const fraDato = format(new Date(start), 'dd. MMM yyyy');
                     const navn =
-                        oppfolgingsperiode.slutt === undefined
+                        slutt === undefined || slutt === null
                             ? 'Nåværende periode'
-                            : `${fraDato} - ${format(new Date(oppfolgingsperiode.slutt), 'dd. MMM yyyy')}`;
+                            : `${fraDato} - ${format(new Date(slutt), 'dd. MMM yyyy')}`;
                     return (
-                        <option value={oppfolgingsperiode.id} key={oppfolgingsperiode.id}>
+                        <option value={id} key={id}>
                             {navn}
                         </option>
                     );
