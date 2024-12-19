@@ -7,7 +7,7 @@ import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../
 import { hentAktiviteterGraphql, hentAktivitetGraphql } from '../../api/aktivitetsplanGraphql';
 import { Historikk } from '../../datatypes/Historikk';
 
-const utenHistorikk = <Aktivitet extends VeilarbAktivitet>(aktivitet: Aktivitet) => {
+export const utenHistorikk = <Aktivitet extends VeilarbAktivitet>(aktivitet: Aktivitet) => {
     const { historikk, ...aktivitetUtenHistorikk } = aktivitet as Aktivitet & { historikk: Historikk };
     return aktivitetUtenHistorikk as unknown as Aktivitet;
 };
