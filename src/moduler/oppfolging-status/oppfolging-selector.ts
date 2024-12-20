@@ -48,9 +48,10 @@ export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] =
 );
 
 export const selectSorterteOppfolgingsperioder = createSelector(selectOppfolgingsPerioder, (perioder) => {
-    return perioder.toSorted((a, b) => {
+    const sortertePerioder = Array.from(perioder).sort((a, b) => {
         return compareDesc(a.start, b.start);
     });
+    return sortertePerioder;
 });
 
 // TODO refaktorer, må fikse typer oppfolgingsperioder-typene i hele appen
