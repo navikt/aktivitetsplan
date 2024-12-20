@@ -128,6 +128,8 @@ const query: string = `
     query($fnr: String!) {
         perioder(fnr: $fnr) {
             id,
+            start,
+            slutt,
             aktiviteter {
                 ${allAktivitetFields}
             },
@@ -173,6 +175,8 @@ const aktivitetQueryBody = (aktivitetId: string) => ({
 interface OppfolgingsPerioder {
     id: string;
     aktiviteter: VeilarbAktivitet[];
+    start: string;
+    slutt: string | undefined;
 }
 
 type AktivitetsplanResponse = GraphqlResponse<{ perioder: OppfolgingsPerioder[] }>;
@@ -208,14 +212,14 @@ export const hentAktivitetGraphql = (aktivitetId: string) => {
         .then(
             sjekkGraphqlFeil<{
                 aktivitet: VeilarbAktivitet & { historikk: Historikk; id: string; oppfolgingsperiodeId: string };
-                eier: { fnr: string};
+                eier: { fnr: string };
             }>,
         )
         .then((it) => ({
             ...it,
             data: {
-                aktivitet: { ...it.data.aktivitet, id: aktivitetId } ,
-                eier : { fnr: it.data.eier.fnr }
+                aktivitet: { ...it.data.aktivitet, id: aktivitetId },
+                eier: { fnr: it.data.eier.fnr },
             },
         }));
 };

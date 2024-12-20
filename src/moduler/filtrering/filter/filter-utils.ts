@@ -4,7 +4,7 @@ import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { RootState } from '../../../store';
-import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
+import { selectValgtPeriode } from '../../oppfolging-status/oppfolging-selector';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './TiltakstatusFilter';
 import { getStillingStatusFilterValue } from './EtikettFilter';
@@ -13,7 +13,6 @@ import {
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
     selectArenaAktivitetEtiketterFilter,
-    selectHistoriskPeriode,
 } from './filter-selector';
 
 function erAktivtFilter(filterData: any) {
@@ -21,21 +20,15 @@ function erAktivtFilter(filterData: any) {
 }
 
 export function selectDatoErIPeriode(dato: string, state: RootState): boolean {
-    const historiskPeriode = selectHistoriskPeriode(state);
-    const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
-
-    return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
+    const valgtPeriode = selectValgtPeriode(state);
+    if (!valgtPeriode) return false;
+    const intervall = {
+        start: new Date(valgtPeriode.start),
+        end: valgtPeriode.slutt ? new Date(valgtPeriode.slutt) : new Date(),
+    };
+    return isWithinInterval(dato, intervall);
 }
 
-export function selectDatoErIPeriodeUtenState(
-    dato: string,
-    historiskPeriode: HistoriskOppfolgingsperiode | undefined | null,
-    forrigeHistoriskeSluttDato: string | undefined,
-): boolean {
-    return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
-}
-
-//TODO: Flytte til utils når den er ts
 const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, dateToCompare);
 
 export function datoErIPeriode(

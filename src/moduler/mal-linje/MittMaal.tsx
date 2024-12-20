@@ -10,11 +10,14 @@ import { Await, useRouteLoaderData } from 'react-router-dom';
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErUnderOppfolging,
+    selectHarSkriveTilgang,
+    selectViserHistoriskPeriode,
+} from '../oppfolging-status/oppfolging-selector';
 import MaalIkon from './Aktivitetsplan_maal.svg?react';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import MalContent from './MalContent';

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsorienteringTypes';
 import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { Oppfolgingsperiode } from '../../../../datatypes/oppfolgingTypes';
 import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, msSince } from '../../../../utils/dateUtils';
@@ -23,9 +22,7 @@ export const useSendAvtaltMetrikker = () => {
             .filter((aktivitet) => aktivitet.avtalt)
             .filter((a) => !a.historisk).length !== 0;
 
-    const aktivOppfolgingsPeriode = useSelector<any, Oppfolgingsperiode[]>(selectOppfolgingsPerioder).filter(
-        (periode) => !periode.sluttDato,
-    )[0];
+    const aktivOppfolgingsPeriode = useSelector(selectOppfolgingsPerioder).filter((periode) => !periode.slutt)[0];
     const kanSendeVarsel = useKanSendeVarsel();
 
     return (
@@ -35,8 +32,8 @@ export const useSendAvtaltMetrikker = () => {
     ) => {
         loggForhandsorientering(!kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringsType, aktivitetType);
 
-        if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
-            metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.startDato));
+        if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.start)) {
+            metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.start));
         }
     };
 };

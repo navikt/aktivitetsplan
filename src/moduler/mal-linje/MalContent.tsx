@@ -4,10 +4,10 @@ import { useRoutes } from '../../routing/useRoutes';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
 import { shallowEqual, useSelector } from 'react-redux';
-import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { BodyShort, Button } from '@navikt/ds-react';
 import React from 'react';
 import MalText from './MalTekst';
+import { selectViserAktivPeriode } from '../oppfolging-status/oppfolging-selector';
 
 interface MalContentProps {
     mal?: string;
@@ -25,7 +25,7 @@ function MalContent(props: MalContentProps) {
         logKlikkKnapp(tekst);
     };
 
-    const viserInnevaerendePeriode = useSelector(selectViserInneverendePeriode, shallowEqual);
+    const viserInnevaerendePeriode = useSelector(selectViserAktivPeriode, shallowEqual);
 
     if (!mal && !disabled) {
         return (

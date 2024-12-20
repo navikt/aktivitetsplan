@@ -12,7 +12,7 @@ import { useRoutes } from '../../../routing/useRoutes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectLagNyAktivitetFeil } from '../../feilmelding/feil-selector';
 import Feilmelding from '../../feilmelding/Feilmelding';
-import { selectErUnderOppfolging, selectNyesteOppfolgingsperiode } from '../../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectAktivOppfolgingsperiode } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
@@ -51,7 +51,7 @@ const NyAktivitetForm = () => {
 
     const opprettFeil = useSelector(selectLagNyAktivitetFeil);
     const underOppfolging = useSelector(selectErUnderOppfolging);
-    const currentOpenOppfolgingsPeriode = useSelector(selectNyesteOppfolgingsperiode);
+    const currentOpenOppfolgingsPeriode = useSelector(selectAktivOppfolgingsperiode);
 
     const dirtyRef = useRef(false);
     useConfirmOnBeforeUnload(dirtyRef);
@@ -81,7 +81,7 @@ const NyAktivitetForm = () => {
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
             return dispatch(
-                lagNyAktivitet({ aktivitet: nyAktivitet, oppfolgingsPeriodeId: currentOpenOppfolgingsPeriode.uuid }),
+                lagNyAktivitet({ aktivitet: nyAktivitet, oppfolgingsPeriodeId: currentOpenOppfolgingsPeriode.id }),
             ).then((action) => {
                 if (isFulfilled(action)) {
                     navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id));
