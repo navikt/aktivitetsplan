@@ -12,8 +12,6 @@ import { Status } from '../../../createGenericSlice';
 import { mockOppfolging } from '../../../mocks/data/oppfolging';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../../mocks/handlers';
-import { rest } from 'msw';
-import { opprettAktivitet } from '../../../mocks/aktivitet';
 import { lagNyAktivitet } from '../aktivitet-actions';
 
 const initialStore = {
@@ -47,15 +45,7 @@ const gitt = {
     tomAktivOppfolgingsPeriode: () => lagStore(initialStore),
 };
 
-let nyePeriodeIder: string[] = [];
-
-const server = setupServer(
-    rest.post('/veilarbaktivitet/api/aktivitet/:periodeId/ny', async (req, res, ctx) => {
-        nyePeriodeIder.push(req.params.periodeId);
-        return res(ctx.json(await opprettAktivitet(req)));
-    }),
-    ...handlers,
-);
+const server = setupServer(...handlers);
 
 vi.mock('../aktivitet-actions', { spy: true });
 
@@ -71,9 +61,7 @@ describe('ny aktivitet', () => {
 
     it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
         const store = gitt.tomAktivOppfolgingsPeriode();
-        const { getByText, getByLabelText, findAllByText, queryByText } = render(
-            <WrappedHovedside fnr={mockfnr} store={store} />,
-        );
+        const { getByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
         const leggTilKnapp = await waitFor(() => getByText('Legg til aktivitet'));
         fireEvent.click(leggTilKnapp);
         await act(() => fireEvent.click(getByText('Samtalereferat')));
