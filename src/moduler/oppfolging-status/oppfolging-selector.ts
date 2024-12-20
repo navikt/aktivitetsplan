@@ -34,7 +34,7 @@ export function selectAktivOppfolgingsperiode(state: RootState) {
 export interface MinimalPeriode {
     id: string;
     start: string;
-    slutt: string | null;
+    slutt: string | null | undefined;
 }
 export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] = createSelector(
     selectAktiviteterSlice,

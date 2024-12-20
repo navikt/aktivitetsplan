@@ -32,7 +32,7 @@ export interface PeriodeEntityState {
     id: string;
     aktiviteter: EntityState<VeilarbAktivitet>;
     start: string;
-    slutt: string | undefined;
+    slutt: string | undefined | null;
 }
 
 export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
