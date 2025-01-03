@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, EntityState, isAnyOf } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, EntityState, isAnyOf, createSelector } from '@reduxjs/toolkit';
 
 import { Status } from '../../createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
@@ -17,10 +17,7 @@ import {
     settAktivitetTilAvtalt,
 } from './aktivitet-actions';
 import { RootState } from '../../store';
-import { createSelector } from 'reselect';
 import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
-import { erEksternBruker } from '../../mocks/demo/localStorage';
-import { useErVeileder } from '../../Provider';
 import { loggDyplenkingTilAnnenBruker } from '../../amplitude/amplitude';
 
 type PerioderMedAktiviteter = {
