@@ -1,16 +1,18 @@
-import { isAfter, parseISO } from 'date-fns';
+import { isBefore, parseISO, subMinutes } from 'date-fns';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
-import { Status } from '../../../../createGenericSlice';
+import { MOTE_TYPE } from '../../../../constant';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
-import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import {
+    MoteAktivitet,
+    SamtalereferatAktivitet,
+    VeilarbAktivitetType,
+} from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { publiserReferat } from '../../aktivitet-actions';
-import { selectAktivitetStatus } from '../../aktivitet-selector';
 import OppdaterReferatForm from './OppdaterReferatForm';
 import ReferatVisning from './ReferatVisning';
 
@@ -18,50 +20,56 @@ interface Props {
     aktivitet: MoteAktivitet | SamtalereferatAktivitet;
 }
 
+const sjekkErFullførtEllerAvbrutt = (status: AktivitetStatus) =>
+    [AktivitetStatus.AVBRUTT, AktivitetStatus.FULLFOERT].includes(status);
+
+const sjekKanIkkeHaReferat = (
+    aktivitetType: VeilarbAktivitetType.MOTE_TYPE | VeilarbAktivitetType.SAMTALEREFERAT_TYPE,
+    fraDato: string,
+    erFullfortEllerAvbrutt: boolean,
+) => {
+    /* Kan ikke opprette referat på møter som ikke har vært */
+    if (aktivitetType === MOTE_TYPE && !erFullfortEllerAvbrutt) {
+        const now = new Date();
+        const fraDatoMedSlack = subMinutes(parseISO(fraDato), 15);
+        return isBefore(now, fraDatoMedSlack);
+    } else {
+        return false;
+    }
+};
+
 const ReferatContainer = (props: Props) => {
     const { aktivitet } = props;
+    const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
 
     const dispatch = useAppDispatch();
-    const [isOppdaterReferat, setOppdaterReferat] = useState(false);
+    const [oppdatererReferat, setOppdatererReferat] = useState(false);
 
-    const publiserer = useSelector(selectAktivitetStatus) === (Status.PENDING || Status.RELOADING);
     const erVeileder = useErVeileder();
     const underOppfolging = useSelector(selectErUnderOppfolging);
 
-    const { referat, erReferatPublisert, type: aktivitetType } = aktivitet;
-
-    const erFullførtEllerAvbrutt = [AktivitetStatus.AVBRUTT, AktivitetStatus.FULLFOERT].includes(aktivitet.status);
-    const kanHaReferat =
-        (aktivitetType === MOTE_TYPE && (isAfter(new Date(), parseISO(aktivitet.fraDato)) || erFullførtEllerAvbrutt)) ||
-        aktivitetType === SAMTALEREFERAT_TYPE;
-
-    const erAktivAktivitet =
-        !aktivitet.historisk &&
-        underOppfolging &&
-        aktivitet.status !== AktivitetStatus.AVBRUTT &&
-        aktivitet.status !== AktivitetStatus.FULLFOERT;
-
-    if (!kanHaReferat) return null;
-
+    const erFullførtEllerAvbrutt = sjekkErFullførtEllerAvbrutt(aktivitet.status);
+    const kanIkkeHaReferatEnda = sjekKanIkkeHaReferat(aktivitetType, aktivitet.fraDato, erFullførtEllerAvbrutt);
+    const erAktivAktivitet = !aktivitet.historisk && underOppfolging && !erFullførtEllerAvbrutt;
     const manglerReferat = erVeileder && !referat && erAktivAktivitet;
-    if (manglerReferat || isOppdaterReferat) {
-        return <OppdaterReferatForm aktivitet={aktivitet} onFerdig={() => setOppdaterReferat(false)} />;
-    }
 
-    if (referat) {
+    if (kanIkkeHaReferatEnda) {
+        return null;
+    } else if (manglerReferat || oppdatererReferat) {
+        return <OppdaterReferatForm aktivitet={aktivitet} onFerdig={() => setOppdatererReferat(false)} />;
+    } else if (referat) {
         return (
             <ReferatVisning
                 referat={referat}
                 erAktivAktivitet={erAktivAktivitet}
                 dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
-                publiserer={publiserer}
                 erReferatPublisert={erReferatPublisert}
-                startOppdaterReferat={() => setOppdaterReferat(true)}
+                startOppdaterReferat={() => setOppdatererReferat(true)}
             />
         );
+    } else {
+        return null;
     }
-
-    return null;
 };
 
 export default ReferatContainer;
