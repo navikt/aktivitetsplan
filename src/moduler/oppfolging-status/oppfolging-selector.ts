@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { compareDesc } from 'date-fns';
 
 import { RootState } from '../../store';

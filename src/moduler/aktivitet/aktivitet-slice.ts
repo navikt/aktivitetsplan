@@ -17,7 +17,7 @@ import {
     settAktivitetTilAvtalt,
 } from './aktivitet-actions';
 import { RootState } from '../../store';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
 import { erEksternBruker } from '../../mocks/demo/localStorage';
 import { useErVeileder } from '../../Provider';
