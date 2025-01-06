@@ -1,5 +1,6 @@
 import { Alert, Heading, Link } from '@navikt/ds-react';
 import React from 'react';
+import { erKRRBruker } from '../../mocks/demo/localStorage';
 
 interface Props {
     reservertIKRR: boolean;
@@ -17,17 +18,21 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
         );
     }
 
+    if (!erKRRBruker()){
+        console.log("erKRRBruker ikke i krr 121231342g eviwjfbo2ebvojwbvohjwr");
+    }
+
     if (!reservertIKRR) {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                 Du har ikke digital oppfølging fra Nav. Du har derfor ikke en digital aktivitetsplan.
             </Alert>
         );
-    } else {
+    } else if (reservertIKRR) {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                 <Heading spacing size="small" level="3">
-                Du har reservert deg mot digital kommunikasjon &nbsp;
+                    Du har reservert deg mot digital kommunikasjon &nbsp;
                 </Heading>
                 Du kan ikke bruke aktivitetsplanen fordi du har reservert deg
                 mot digital kommunikasjon i kontakt og reservasjonsregisteret (KRR)
