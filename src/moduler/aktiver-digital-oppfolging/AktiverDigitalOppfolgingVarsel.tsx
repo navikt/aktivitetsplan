@@ -1,4 +1,4 @@
-import { Alert, Link } from '@navikt/ds-react';
+import { Alert, Heading, Link } from '@navikt/ds-react';
 import React from 'react';
 
 interface Props {
@@ -26,9 +26,13 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
     } else {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-                For å ta i bruk aktivitetsplanen, må du fjerne reservasjonen din mot digital kommunikasjon. &nbsp;
+                <Heading spacing size="small" level="3">
+                Du har reservert deg mot digital kommunikasjon &nbsp;
+                </Heading>
+                Du kan ikke bruke aktivitetsplanen fordi du har reservert deg
+                mot digital kommunikasjon i kontakt og reservasjonsregisteret (KRR)
                 <Link href={'https://www.norge.no/nb/digital-borgar/reservasjon'}>
-                    Gå til Norge.no for å fjerne reservasjonen
+                    Gå til norge.no for å fjerne reservasjonen.
                 </Link>
             </Alert>
         );
