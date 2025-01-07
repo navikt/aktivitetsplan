@@ -53,7 +53,7 @@ export const features = [
         checked: erManuellBruker,
     },
     {
-        label: 'KRR',
+        label: 'Er reservert i KRR',
         id: LocalStorageElement.KRR_BRUKER,
         checked: erKRRBruker,
     },

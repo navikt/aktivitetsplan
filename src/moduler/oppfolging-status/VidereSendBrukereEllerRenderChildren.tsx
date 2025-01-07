@@ -7,19 +7,56 @@ import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 import { useSelector } from 'react-redux';
 import {
     selectAktorId,
-    selectErBrukerManuell,
-    selectErUnderOppfolging,
+    selectErBrukerManuell, selectErRegisrertIKRR,
+    selectErUnderOppfolging, selectKanVarsles,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
     selectReservasjonKRR,
-    selectServicegruppe,
+    selectServicegruppe
 } from './oppfolging-selector';
 import { Status } from '../../createGenericSlice';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
 import { selectIdentitetId } from '../identitet/identitet-selector';
+import { Alert, Heading, Link } from '@navikt/ds-react';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
+}
+
+function KRRAdvarsel({kanVarsles, erRegistrertIKRR} : {kanVarsles: boolean, erRegistrertIKRR: boolean}) {
+    if (!kanVarsles && erRegistrertIKRR){
+        return (
+        <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+            <Heading spacing size="small" level="3">
+                Kontaktinformasjonen din er utdatert;
+            </Heading>
+            <p>
+            Du kan ikke sende meldinger i dialogen fordi
+            kontaktinformasjonen din er utdatert i kontakt og reservasjonsregisteret (KRR).
+            </p>
+            <Link href={'https://www.norge.no/nb/digital-borgar/oppdatere'}>
+                Gå til norge.no for å oppdatere.
+            </Link>
+        </Alert>
+        )
+    }
+    if (kanVarsles && !erRegistrertIKRR) {
+        return (
+            <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+                <Heading spacing size="small" level="3">
+                    Vi har ikke din kontaktinformasjon;
+                </Heading>
+                <p>
+                    Du kan ikke bruke aktivitetsplanen fordi du ikke har registrert e-post
+                    eller telefonnummeret ditt i kontakt og reservasjonsregisteret (KRR).
+                </p>
+                <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
+                    Gå til norge.no for å registrere.
+                </Link>
+            </Alert>
+        )
+    }
+
 }
 
 const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
@@ -27,6 +64,8 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
     const manuell = useSelector(selectErBrukerManuell);
     const reservasjonKRR = useSelector(selectReservasjonKRR);
+    const kanVarsles = useSelector(selectKanVarsles);
+    const erRegistrertIKRR = useSelector(selectErRegisrertIKRR);
     const servicegruppe = useSelector(selectServicegruppe);
     const aktorId = useSelector(selectAktorId);
     const ident = useSelector(selectIdentitetId);
@@ -52,7 +91,9 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     ) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
-
+    if (!kanVarsles || !erRegistrertIKRR) {
+        return <KRRAdvarsel kanVarsles={kanVarsles} erRegistrertIKRR={erRegistrertIKRR} />;
+    }
     if (!erVeileder && ikkeDigitalOppfolging) {
         return <AktiverDigitalOppfolging />;
     }

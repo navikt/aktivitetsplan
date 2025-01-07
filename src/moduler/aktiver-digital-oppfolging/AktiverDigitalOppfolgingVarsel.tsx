@@ -17,6 +17,7 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
         );
     }
 
+    // Må være enten manuell eller reservert i krr for å kunne komme hit
     if (!reservertIKRR) {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
@@ -31,21 +32,6 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
                 </Heading>
                 Du kan ikke bruke aktivitetsplanen fordi du har reservert deg
                 mot digital kommunikasjon i kontakt og reservasjonsregisteret (KRR)
-                <Link href={'https://www.norge.no/nb/digital-borgar/reservasjon'}>
-                    Gå til norge.no for å fjerne reservasjonen.
-                </Link>
-            </Alert>
-        );
-    }
-    if (window.localStorage.getItem('registrertKRR') === 'false') {
-        console.log("erKRRBruker i krr 121231342g eviwjfbo2ebvojwbvohjwr")
-        return (
-            <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-                <Heading spacing size="small" level="3">
-                    Vi har ikke din kontaktinformasjon &nbsp;
-                </Heading>
-                Du kan ikke sende meldinger i dialogen fordi du ikke har registrert
-                e-post eller telefonnummeret ditt i kontakt og reservasjonsregisteret (KRR).
                 <Link href={'https://www.norge.no/nb/digital-borgar/reservasjon'}>
                     Gå til norge.no for å fjerne reservasjonen.
                 </Link>
