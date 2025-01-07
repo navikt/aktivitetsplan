@@ -17,10 +17,10 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
             </Alert>
         );
     }
-
-    if (!erKRRBruker()) {
-        console.log("erKRRBruker ikke i krr 121231342g eviwjfbo2ebvojwbvohjwr");
+    if (erKRRBruker()) {
+        console.log('The user is a KRR user.');
     }
+
 
     if (!reservertIKRR) {
         return (
@@ -42,7 +42,8 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
             </Alert>
         );
     }
-    if (!erKRRBruker()) {
+    if (!erKRRBruker()){
+        console.log("erKRRBruker i krr 121231342g eviwjfbo2ebvojwbvohjwr")
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                 <Heading spacing size="small" level="3">
