@@ -11,6 +11,7 @@ import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 import { Loader } from '@navikt/ds-react';
+import OppfolgingStatus from '../moduler/oppfolging-status/OppfolgingStatus';
 
 const Hovedside = () => {
     const navigate = useNavigate();
