@@ -39,8 +39,7 @@ function KRRAdvarsel({kanVarsles, erRegistrertIKRR} : {kanVarsles: boolean, erRe
             </Link>
         </Alert>
         )
-    }
-    if (kanVarsles && !erRegistrertIKRR) {
+    } else {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                 <Heading spacing size="small" level="3">
