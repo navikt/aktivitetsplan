@@ -91,7 +91,8 @@ const AktivitetStatusForm = (props: Props) => {
     }, [isDirty]);
 
     const status = watch('aktivitetstatus');
-    const visAdvarsel = status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT;
+    const isDirtyManuell = aktivitet.status !== status; // ser ut som isDirty ikke fungerer riktig
+    const visAdvarsel = isDirtyManuell && (status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT);
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
 
     const onChangeStatus = (value: AktivitetStatus) => {
