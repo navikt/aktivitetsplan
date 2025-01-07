@@ -37,7 +37,7 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
             </Alert>
         );
     }
-    if (localStorage.getItem('erKRRBruker') === 'false') {
+    if (localStorage.getItem('registrertKRR') === 'false') {
         console.log("erKRRBruker i krr 121231342g eviwjfbo2ebvojwbvohjwr")
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
