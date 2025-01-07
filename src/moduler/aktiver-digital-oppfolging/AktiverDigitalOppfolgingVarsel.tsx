@@ -1,6 +1,5 @@
 import { Alert, Heading, Link } from '@navikt/ds-react';
 import React from 'react';
-import { erKRRBruker } from '../../mocks/demo/localStorage';
 
 interface Props {
     reservertIKRR: boolean;
@@ -17,10 +16,6 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
             </Alert>
         );
     }
-    if (erKRRBruker()) {
-        console.log('The user is a KRR user.');
-    }
-
 
     if (!reservertIKRR) {
         return (
@@ -42,7 +37,7 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
             </Alert>
         );
     }
-    if (!erKRRBruker()){
+    if (localStorage.getItem('erKRRBruker') === 'false') {
         console.log("erKRRBruker i krr 121231342g eviwjfbo2ebvojwbvohjwr")
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
