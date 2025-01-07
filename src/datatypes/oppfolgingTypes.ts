@@ -24,6 +24,7 @@ export interface OppfolgingStatus {
     servicegruppe: string;
     formidlingsgruppe: string;
     rettighetsgruppe: string;
+    registrertKRR : boolean;
 }
 
 export interface Oppfolgingsperiode {
