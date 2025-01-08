@@ -91,9 +91,17 @@ const AktivitetStatusForm = (props: Props) => {
     }, [isDirty]);
 
     const status = watch('aktivitetstatus');
-    const isDirtyManuell = aktivitet.status !== status; // ser ut som isDirty ikke fungerer riktig
+    const isDirtyManuell = status !== aktivitet.status; // ser ut som isDirty ikke fungerer riktig
     const visAdvarsel = isDirtyManuell && (status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT);
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
+
+    useEffect(() => {
+        if(isDirtyManuell) {
+            setFormIsDirty('status', true);
+        } else {
+            setFormIsDirty('status', false);
+        }
+    }, [isDirtyManuell]);
 
     const onChangeStatus = (value: AktivitetStatus) => {
         setValue('aktivitetstatus', value);
