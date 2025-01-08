@@ -7,12 +7,14 @@ import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 import { useSelector } from 'react-redux';
 import {
     selectAktorId,
-    selectErBrukerManuell, selectErRegisrertIKRR,
-    selectErUnderOppfolging, selectKanVarsles,
+    selectErBrukerManuell,
+    selectErRegisrertIKRR,
+    selectErUnderOppfolging,
+    selectKanVarsles,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
     selectReservasjonKRR,
-    selectServicegruppe
+    selectServicegruppe,
 } from './oppfolging-selector';
 import { Status } from '../../createGenericSlice';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
@@ -23,39 +25,42 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
 }
 
-function KRRAdvarsel({kanVarsles, erRegistrertIKRR} : {kanVarsles: boolean, erRegistrertIKRR: boolean}) {
-    if (!kanVarsles && erRegistrertIKRR){
+function KRRAdvarsel({ kanVarsles, erRegistrertIKRR }: { kanVarsles: boolean; erRegistrertIKRR: boolean}) {
+    if (!kanVarsles && erRegistrertIKRR) {
         return (
-        <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-            <Heading spacing size="small" level="3">
-                Kontaktinformasjonen din er utdatert;
-            </Heading>
-            <p>
-            Du kan ikke sende meldinger i dialogen fordi
-            kontaktinformasjonen din er utdatert i kontakt og reservasjonsregisteret (KRR).
-            </p>
-            <Link href={'https://www.norge.no/nb/digital-borgar/oppdatere'}>
-                Gå til norge.no for å oppdatere.
-            </Link>
-        </Alert>
-        )
+            <div className="flex items-center flex-col">
+                <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+                    <Heading spacing size="small" level="3">
+                        Kontaktinformasjonen din er utdatert;
+                    </Heading>
+                    <p>
+                        Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen din er utdatert i kontakt og
+                        reservasjonsregisteret (KRR).
+                    </p>
+                    <Link href={'https://www.norge.no/nb/digital-borgar/oppdatere'}>
+                        Gå til norge.no for å oppdatere.
+                    </Link>
+                </Alert>
+            </div>
+        );
     } else {
         return (
-            <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-                <Heading spacing size="small" level="3">
-                    Vi har ikke din kontaktinformasjon;
-                </Heading>
-                <p>
-                    Du kan ikke bruke aktivitetsplanen fordi du ikke har registrert e-post
-                    eller telefonnummeret ditt i kontakt og reservasjonsregisteret (KRR).
-                </p>
-                <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
-                    Gå til norge.no for å registrere.
-                </Link>
-            </Alert>
-        )
+            <div className="flex items-center flex-col">
+                <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+                    <Heading spacing size="small" level="3">
+                        Vi har ikke din kontaktinformasjon;
+                    </Heading>
+                    <p>
+                        Du kan ikke bruke aktivitetsplanen fordi du ikke har registrert e-post eller telefonnummeret
+                        ditt i kontakt og reservasjonsregisteret (KRR).
+                    </p>
+                    <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
+                        Gå til norge.no for å registrere.
+                    </Link>
+                </Alert>
+            </div>
+        );
     }
-
 }
 
 const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
