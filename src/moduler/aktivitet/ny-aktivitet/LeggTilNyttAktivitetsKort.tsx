@@ -1,5 +1,5 @@
 import { PlusIcon } from '@navikt/aksel-icons';
-import { ActionMenu, Button, Dropdown } from '@navikt/ds-react';
+import { ActionMenu, Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -56,7 +56,6 @@ const LeggTilNyttAktivitetsKort = () => {
             <ActionMenu>
                 <ActionMenu.Trigger>
                     <Button
-                        // as={Dropdown.Toggle}
                         loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
                         className="relative w-full"
                         icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
@@ -68,7 +67,6 @@ const LeggTilNyttAktivitetsKort = () => {
                 <ActionMenu.Content>
                     {menuItemsGroup.map((item, index) => (
                         <ActionMenu.Group key={item.groupTittel} label={item.groupTittel}>
-                            {/*<Dropdown.Menu.GroupedList.Heading>{item.groupTittel}</Dropdown.Menu.GroupedList.Heading>*/}
                             {item.groupedItems.map((subItem) => (
                                 <ActionMenu.Item as={Link} to={subItem.link} key={subItem.tittle}>
                                     {subItem.tittle}
