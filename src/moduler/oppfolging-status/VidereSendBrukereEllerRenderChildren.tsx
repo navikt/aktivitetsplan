@@ -10,7 +10,7 @@ import {
     selectErBrukerManuell,
     selectErRegisrertIKRR,
     selectErUnderOppfolging,
-    selectKanVarsles,
+    // selectKanVarsles,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
     selectReservasjonKRR,
@@ -25,25 +25,34 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
 }
 
-function KRRAdvarsel({ kanVarsles, erRegistrertIKRR }: { kanVarsles: boolean; erRegistrertIKRR: boolean}) {
-    if (!kanVarsles && erRegistrertIKRR) {
-        return (
-            <div className="flex items-center flex-col">
-                <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-                    <Heading spacing size="small" level="3">
-                        Kontaktinformasjonen din er utdatert;
-                    </Heading>
-                    <p>
-                        Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen din er utdatert i kontakt og
-                        reservasjonsregisteret (KRR).
-                    </p>
-                    <Link href={'https://www.norge.no/nb/digital-borgar/oppdatere'}>
-                        Gå til norge.no for å oppdatere.
-                    </Link>
-                </Alert>
-            </div>
-        );
-    } else {
+function KRRAdvarsel({
+    // kanVarsles,
+    erRegistrertIKRR,
+    erVeilder,
+}: {
+    // kanVarsles: boolean;
+    erRegistrertIKRR: boolean;
+    erVeilder: boolean;
+}) {
+    // if (!kanVarsles && erRegistrertIKRR && !erVeilder) {
+    //     return (
+    //         <div className="flex items-center flex-col">
+    //             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+    //                 <Heading spacing size="small" level="3">
+    //                     Kontaktinformasjonen din er utdatert;
+    //                 </Heading>
+    //                 <p>
+    //                     Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen din er utdatert i kontakt og
+    //                     reservasjonsregisteret (KRR).
+    //                 </p>
+    //                 <Link href={'https://www.norge.no/nb/digital-borgar/oppdatere'}>
+    //                     Gå til norge.no for å oppdatere.
+    //                 </Link>
+    //             </Alert>
+    //         </div>
+    //     );
+    // }
+     if (!erRegistrertIKRR && !erVeilder) {
         return (
             <div className="flex items-center flex-col">
                 <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
@@ -60,7 +69,42 @@ function KRRAdvarsel({ kanVarsles, erRegistrertIKRR }: { kanVarsles: boolean; er
                 </Alert>
             </div>
         );
+    } else if (erVeilder && !erRegistrertIKRR){
+        return(
+        <div className="flex items-center flex-col">
+            <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+                <Heading spacing size="small" level="3">
+                    Brukeren er ikke registrert i KRR
+                </Heading>
+                <p>
+                    Du kan ikke bruke aktivitetsplanen fordi brukeren ikke
+                    har registrert e-post eller telefonnummeret sitt i KRR
+                </p>
+                <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
+                    Brukeren må gå til norge.no for å registrere..
+                </Link>
+            </Alert>
+        </div>
+        )
     }
+    // else if (erVeilder && !kanVarsles){
+    //     return(
+    //         <div className="flex items-center flex-col">
+    //             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+    //                 <Heading spacing size="small" level="3">
+    //                     Brukeren er ikke registrert i KRR
+    //                 </Heading>
+    //                 <p>
+    //                     Du kan ikke bruke aktivitetsplanen fordi brukeren ikke
+    //                     har registrert e-post eller telefonnummeret sitt i KRR
+    //                 </p>
+    //                 <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
+    //                     Brukeren må gå til norge.no for å registrere..
+    //                 </Link>
+    //             </Alert>
+    //         </div>
+    //     )
+    // }
 }
 
 const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
@@ -68,7 +112,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
     const manuell = useSelector(selectErBrukerManuell);
     const reservasjonKRR = useSelector(selectReservasjonKRR);
-    const kanVarsles = useSelector(selectKanVarsles);
+    // const kanVarsles = useSelector(selectKanVarsles);
     const erRegistrertIKRR = useSelector(selectErRegisrertIKRR);
     const servicegruppe = useSelector(selectServicegruppe);
     const aktorId = useSelector(selectAktorId);
@@ -95,10 +139,12 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     ) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
-    if (!kanVarsles || !erRegistrertIKRR) {
-        return <KRRAdvarsel kanVarsles={kanVarsles} erRegistrertIKRR={erRegistrertIKRR} />;
+    if (//!kanVarsles ||
+        !erRegistrertIKRR) {
+        return <KRRAdvarsel// kanVarsles={kanVarsles}
+            erRegistrertIKRR={erRegistrertIKRR} erVeilder={erVeileder} />;
     }
-    if (!erVeileder && ikkeDigitalOppfolging) {
+    if (ikkeDigitalOppfolging) {
         return <AktiverDigitalOppfolging />;
     }
 
