@@ -1,5 +1,5 @@
 import { Dispatch } from '../store';
-import { defer, LoaderFunction, useRouteLoaderData } from 'react-router-dom';
+import { LoaderFunction, useRouteLoaderData } from 'react-router-dom';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunks } from './initialPageLoadThunk';
@@ -10,7 +10,7 @@ export const initialPageLoader =
     (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
     async () => {
         const thunks = initialPageLoadThunks;
-        return defer({
+        return Response.json({
             oppfolging: dispatch(thunks.oppfolging(isVeileder)),
             identitet: dispatch(thunks.identitet(isVeileder)),
             veileder: dispatch(thunks.veileder(isVeileder)),
@@ -37,7 +37,7 @@ export interface InitialPageLoadResult {
 
 export const malLoader = (dispatch: Dispatch) => {
     return () =>
-        defer({
+        Response.json({
             data: Promise.all([dispatch(hentMal()), dispatch(hentMalListe())]),
         });
 };
@@ -47,7 +47,7 @@ export const aktivitetsVisningLoader =
     ({ params }) => {
         if (!params.id) return {};
         const arenaId = erArenaId(params.id);
-        return defer({
+        return Response.json({
             aktivitet: arenaId ? dispatch(hentArenaAktiviteter()) : dispatch(hentAktivitet(params.id)),
         });
     };
