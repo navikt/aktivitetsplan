@@ -6,7 +6,8 @@ import {
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
-    ingenOppfPerioder, kanIkkeVarsles
+    ingenOppfPerioder,
+    kanIkkeVarsles,
 } from '../demo/localStorage';
 import { mockfnr } from '../utils';
 
@@ -63,8 +64,13 @@ const oppfolging = {
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
     kanVarsles: !kanIkkeVarsles(),
-    registrertKRR : !erIkkeRegistrertIKRR(),
-} as Partial<OppfolgingStatus>;
+    registrertKRR: !erIkkeRegistrertIKRR(),
+    erSykmeldtMedArbeidsgiver: false,
+    formidlingsgruppe: 'ARBS',
+    inaktivIArena: null,
+    oppfolgingUtgang: null,
+    rettighetsgruppe: 'IYT',
+} as OppfolgingStatus;
 
 export const mockOppfolging = oppfolging;
 

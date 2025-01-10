@@ -15,7 +15,7 @@ import { datoErIPeriode } from './filter-utils';
 import { expect } from 'vitest';
 import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
-import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { rest } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
 import { aktivitetAdapter, oppfolgingsdperiodeAdapter, PeriodeEntityState } from '../../aktivitet/aktivitet-slice';
@@ -117,7 +117,7 @@ const aktiviteterÅpenOgLukketPeriode = () => {
 const initialStore = (aktiviteter: EntityState<PeriodeEntityState>) =>
     ({
         data: {
-            ...emptyLoadedVeilederState.data,
+            ...emptyHalfLoadedVeilederState.data,
             aktiviteter,
             arenaAktiviteter: {
                 status: Status.OK,

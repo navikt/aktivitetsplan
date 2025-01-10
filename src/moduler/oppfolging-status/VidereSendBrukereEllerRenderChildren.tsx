@@ -25,10 +25,12 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
 }
 
-function KRRAdvarsel({ // kanVarsles,
+function KRRAdvarsel({
+    // kanVarsles,
     erRegistrertIKRR,
     erVeilder,
-}: { // kanVarsles: boolean;
+}: {
+    // kanVarsles: boolean;
     erRegistrertIKRR: boolean;
     erVeilder: boolean;
 }) {
@@ -50,7 +52,7 @@ function KRRAdvarsel({ // kanVarsles,
     //         </div>
     //     );
     // }
-     if (!erRegistrertIKRR && !erVeilder) {
+    if (!erRegistrertIKRR && !erVeilder) {
         return (
             <div className="flex items-center flex-col">
                 <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
@@ -67,23 +69,23 @@ function KRRAdvarsel({ // kanVarsles,
                 </Alert>
             </div>
         );
-    } else if (erVeilder && !erRegistrertIKRR){
-        return(
-        <div className="flex items-center flex-col">
-            <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-                <Heading spacing size="small" level="3">
-                    Brukeren er ikke registrert i KRR
-                </Heading>
-                <p>
-                    Du kan ikke bruke aktivitetsplanen fordi brukeren ikke
-                    har registrert e-post eller telefonnummeret sitt i KRR
-                </p>
-                <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
-                    Brukeren må gå til norge.no for å registrere..
-                </Link>
-            </Alert>
-        </div>
-        )
+    } else if (erVeilder && !erRegistrertIKRR) {
+        return (
+            <div className="flex items-center flex-col">
+                <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+                    <Heading spacing size="small" level="3">
+                        Brukeren er ikke registrert i KRR
+                    </Heading>
+                    <p>
+                        Du kan ikke bruke aktivitetsplanen fordi brukeren ikke har registrert e-post eller
+                        telefonnummeret sitt i KRR
+                    </p>
+                    <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
+                        Brukeren må gå til norge.no for å registrere..
+                    </Link>
+                </Alert>
+            </div>
+        );
     }
     // else if (erVeilder && !kanVarsles){
     //     return(
@@ -137,10 +139,17 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     ) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
-    if (//!kanVarsles ||
-        !erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
-        return <KRRAdvarsel// kanVarsles={kanVarsles}
-            erRegistrertIKRR={erRegistrertIKRR} erVeilder={erVeileder} />;
+    if (
+        //!kanVarsles ||
+        !erRegistrertIKRR &&
+        oppfolgingsStatus === Status.OK
+    ) {
+        return (
+            <KRRAdvarsel // kanVarsles={kanVarsles}
+                erRegistrertIKRR={erRegistrertIKRR}
+                erVeilder={erVeileder}
+            />
+        );
     }
     if (ikkeDigitalOppfolging) {
         return <AktiverDigitalOppfolging />;
