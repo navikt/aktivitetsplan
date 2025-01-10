@@ -1,5 +1,5 @@
-import { BodyShort, Select, Textarea } from '@navikt/ds-react';
-import React from 'react';
+import { BodyShort, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 
@@ -8,44 +8,72 @@ import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div
 import { AVTALT_TEKST } from '../utilsForhaandsorientering';
 import VarslingInfo from '../VarslingInfo';
 import { ForhaandsorienteringDialogFormValues } from './AvtaltForm';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { z } from 'zod';
+import { DirtyContext } from '../../../../context/dirty-context';
 
 interface Props {
-    register: UseFormRegister<ForhaandsorienteringDialogFormValues>;
     oppdaterer: boolean;
-    forhaandsorienteringType: ForhaandsorienteringType;
     avtaltText119: string;
+    register: UseFormRegister<ForhaandsorienteringDialogFormValues>;
     errors: FieldErrors<ForhaandsorienteringDialogFormValues>;
 }
 
+const schema = z.object({
+    forhaandsorienteringType: z.nativeEnum(ForhaandsorienteringType)
+});
+
+export type ForhaansorienteringFormValues = z.infer<typeof schema>;
+
 const ForhaandsorienteringsMelding = (props: Props) => {
-    const { register, oppdaterer, forhaandsorienteringType, avtaltText119, errors } = props;
+    const { oppdaterer, avtaltText119, register, errors } = props;
+    const [forhaandsorienteringTypeState, setForhaandsorienteringTypeState] = useState<ForhaandsorienteringType>();
+
+    const {
+        setValue,
+        formState: { isDirty, isSubmitting }
+    } = useForm<ForhaansorienteringFormValues>({ resolver: zodResolver(schema), shouldFocusError: true });
+
+    const { setFormIsDirty } = useContext(DirtyContext);
+
+    useEffect(() => {
+        setFormIsDirty('forhaandsorienteringType', isDirty);
+        console.log("isDirty ", isDirty)
+    }, [setFormIsDirty, isDirty]);
+
+    const disable = isSubmitting || oppdaterer;
+
+    const onChangeForhaandsorienteringType = (value: ForhaandsorienteringType) => {
+        setValue('forhaandsorienteringType', value);
+        setForhaandsorienteringTypeState(value)
+    };
 
     return (
-        <>
-            <Select
-                label="Velg type forhåndsorientering"
-                disabled={oppdaterer}
-                className="mt-4"
-                {...register('forhaandsorienteringType')}
-            >
-                <option value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</option>
-                <option value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</option>
-                <option value={ForhaandsorienteringType.IKKE_SEND}>Ingen forhåndsorientering</option>
-            </Select>
-            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
-                <VarslingInfo />
+        <form>
+            <RadioGroup legend="Velg type forhåndsorientering"
+                        disabled={disable}
+                        onChange={onChangeForhaandsorienteringType}>
+                <Radio value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</Radio>
+                <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</Radio>
+                <Radio value={ForhaandsorienteringType.IKKE_SEND}>Ingen forhåndsorientering</Radio>
+            </RadioGroup>
+            <VisibleIfDiv visible={forhaandsorienteringTypeState === ForhaandsorienteringType.SEND_STANDARD}>
+                <Label>Teksten som blir lagt til aktiviteten:</Label>
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
+                <VarslingInfo />
             </VisibleIfDiv>
-            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
+            <VisibleIfDiv visible={forhaandsorienteringTypeState === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea
-                    label={<VarslingInfo />}
+                    label="Teksten som blir lagt til aktiviteten"
                     maxLength={500}
                     value={avtaltText119}
                     {...register('avtaltText119')}
                     error={(errors as any).avtaltText119 && (errors as any).avtaltText119.message}
                 />
+                <VarslingInfo />
             </VisibleIfDiv>
-        </>
+        </form>
     );
 };
 

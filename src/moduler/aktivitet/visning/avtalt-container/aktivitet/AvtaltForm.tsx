@@ -141,7 +141,7 @@ const AvtaltForm = (props: Props) => {
                     ) : null}
                     <Feilmelding feilmeldinger={feil} />
                     <Button loading={isSubmitting} disabled={lasterData}>
-                        Bekreft
+                        Legg til
                     </Button>
                 </div>
             )}
