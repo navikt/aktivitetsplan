@@ -25,12 +25,10 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
 }
 
-function KRRAdvarsel({
-    // kanVarsles,
+function KRRAdvarsel({ // kanVarsles,
     erRegistrertIKRR,
     erVeilder,
-}: {
-    // kanVarsles: boolean;
+}: { // kanVarsles: boolean;
     erRegistrertIKRR: boolean;
     erVeilder: boolean;
 }) {
@@ -140,7 +138,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
     if (//!kanVarsles ||
-        !erRegistrertIKRR) {
+        !erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
         return <KRRAdvarsel// kanVarsles={kanVarsles}
             erRegistrertIKRR={erRegistrertIKRR} erVeilder={erVeileder} />;
     }
