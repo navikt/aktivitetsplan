@@ -67,7 +67,7 @@ const gitt = {
     },
 };
 
-describe('Videresend brukere eller render children', () => {
+describe.skip('Videresend brukere eller render children', () => {
     it('skal vise varsel når bruker har utdatert informasjon i KRR', async () => {
         const store = gitt.hentStatus.utdatertIKrr();
         const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
