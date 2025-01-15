@@ -2,7 +2,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 // @ts-ignore
-import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+import workerUrl from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Alert, Loader } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
