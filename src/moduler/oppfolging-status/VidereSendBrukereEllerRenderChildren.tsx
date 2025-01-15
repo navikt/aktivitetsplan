@@ -54,7 +54,7 @@ function KRRAdvarsel({ erRegistrertIKRR, erVeilder}: { erRegistrertIKRR: boolean
                     har registrert e-post eller telefonnummeret sitt i KRR
                 </p>
                 <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
-                    Brukeren må gå til norge.no for å registrere..
+                    Brukeren må gå til norge.no for å registrere.
                 </Link>
             </Alert>
         </div>

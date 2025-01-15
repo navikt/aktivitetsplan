@@ -46,10 +46,10 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
                 <Heading spacing size="small" level="3">
                     Brukeren er reservert i KRR &nbsp;
                 </Heading>
-                Du kan ikke sende meldinger fordi brukeren har
+                Du kan ikke bruke aktivitetsplanen fordi brukeren har
                 reservert seg mot digital kommunikasjon KRR.
-                <Link href={'https://www.norge.no/nb/digital-borgar/reservasjon'}>
-                    Gå til norge.no for å fjerne reservasjonen.
+                <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
+                    Brukeren må gå til norge.no for å fjerne reservasjonen.
                 </Link>
             </Alert>
         )
