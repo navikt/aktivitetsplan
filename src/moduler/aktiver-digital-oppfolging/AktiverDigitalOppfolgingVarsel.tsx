@@ -30,29 +30,27 @@ const AktiverDigitalOppfolgingVarsel = (props: Props) => {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                 <Heading spacing size="small" level="3">
-                    Du har reservert deg mot digital kommunikasjon &nbsp;
+                    Du har reservert deg mot digital kommunikasjon
                 </Heading>
-                Du kan ikke bruke aktivitetsplanen fordi du har reservert deg
-                mot digital kommunikasjon i kontakt og reservasjonsregisteret (KRR)
+                Du kan ikke bruke aktivitetsplanen fordi du har reservert deg mot digital kommunikasjon i kontakt og
+                reservasjonsregisteret (KRR)
                 <Link href={'https://www.norge.no/nb/digital-borgar/reservasjon'}>
                     Gå til norge.no for å fjerne reservasjonen.
                 </Link>
             </Alert>
         );
-    }
-    else if (reservertIKRR && erVeileder) {
+    } else if (reservertIKRR && erVeileder) {
         return (
             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                 <Heading spacing size="small" level="3">
-                    Brukeren er reservert i KRR &nbsp;
+                    Brukeren er reservert i KRR
                 </Heading>
-                Du kan ikke sende meldinger fordi brukeren har
-                reservert seg mot digital kommunikasjon KRR.
+                Du kan ikke sende meldinger fordi brukeren har reservert seg mot digital kommunikasjon KRR.
                 <Link href={'https://www.norge.no/nb/digital-borgar/reservasjon'}>
                     Gå til norge.no for å fjerne reservasjonen.
                 </Link>
             </Alert>
-        )
+        );
     }
 };
 

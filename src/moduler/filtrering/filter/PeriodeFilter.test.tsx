@@ -20,6 +20,8 @@ import { rest } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
 import { aktivitetAdapter, oppfolgingsdperiodeAdapter, PeriodeEntityState } from '../../aktivitet/aktivitet-slice';
 import { compareDesc } from 'date-fns';
+import { mockLoadedStore } from '../../../testUtils/storeMockUtils';
+import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 
 const perioder = mockOppfolging.oppfolgingsPerioder.toSorted((a, b) => {
     return compareDesc(a.startDato, b.startDato);
@@ -73,62 +75,68 @@ const endaGamlereAktivitet = {
     oppfolgingsperiodeId: endaGamlerePeriode.uuid,
 };
 
-const aktiviteterIBareLukkedePerioder = () => {
-    const state = oppfolgingsdperiodeAdapter.getInitialState({
-        status: Status.OK,
-    });
-    const perioder = oppfolgingsdperiodeAdapter.setAll(state, [
-        {
-            id: endaGamlereAktivitet.oppfolgingsperiodeId,
-            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), endaGamlereAktivitet),
-            start: endaGamlerePeriode.startDato,
-            slutt: endaGamlerePeriode.sluttDato,
-        },
-        {
-            id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
-            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
-            start: gammelOppfolgingsperiode.startDato,
-            slutt: gammelOppfolgingsperiode.sluttDato,
-        },
-    ]);
-    return perioder;
+const aktiviteterIBareLukkedePerioder = (): VeilarbAktivitet[] => {
+    return [endaGamlereAktivitet, gammelVeilarbAktivitet];
+    // const state = oppfolgingsdperiodeAdapter.getInitialState({
+    //     status: Status.OK,
+    // });
+    // const perioder = oppfolgingsdperiodeAdapter.setAll(state, [
+    //     {
+    //         id: endaGamlereAktivitet.oppfolgingsperiodeId,
+    //         aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), endaGamlereAktivitet),
+    //         start: endaGamlerePeriode.startDato,
+    //         slutt: endaGamlerePeriode.sluttDato,
+    //     },
+    //     {
+    //         id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
+    //         aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
+    //         start: gammelOppfolgingsperiode.startDato,
+    //         slutt: gammelOppfolgingsperiode.sluttDato,
+    //     },
+    // ]);
+    // return perioder;
 };
 
-const aktiviteterÅpenOgLukketPeriode = () => {
-    const state = oppfolgingsdperiodeAdapter.getInitialState({
-        status: Status.OK,
-    });
-    return oppfolgingsdperiodeAdapter.setAll(state, [
-        {
-            id: veilarbAktivitet.oppfolgingsperiodeId,
-            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), veilarbAktivitet),
-            start: gjeldendeOppfolgingsperiode.startDato,
-            slutt: undefined,
-        },
-        {
-            id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
-            aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
-            start: gammelOppfolgingsperiode.startDato,
-            slutt: gammelOppfolgingsperiode.sluttDato,
-        },
-    ]);
+const aktiviteterÅpenOgLukketPeriode = (): VeilarbAktivitet[] => {
+    return [veilarbAktivitet, gammelVeilarbAktivitet];
+    // const state = oppfolgingsdperiodeAdapter.getInitialState({
+    //     status: Status.OK,
+    // });
+    // return oppfolgingsdperiodeAdapter.setAll(state, [
+    //     {
+    //         id: veilarbAktivitet.oppfolgingsperiodeId,
+    //         aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), veilarbAktivitet),
+    //         start: gjeldendeOppfolgingsperiode.startDato,
+    //         slutt: undefined,
+    //     },
+    //     {
+    //         id: gammelVeilarbAktivitet.oppfolgingsperiodeId,
+    //         aktiviteter: aktivitetAdapter.upsertOne(aktivitetAdapter.getInitialState(), gammelVeilarbAktivitet),
+    //         start: gammelOppfolgingsperiode.startDato,
+    //         slutt: gammelOppfolgingsperiode.sluttDato,
+    //     },
+    // ]);
 };
 
-const initialStore = (aktiviteter: EntityState<PeriodeEntityState>) =>
-    ({
-        data: {
-            ...emptyHalfLoadedVeilederState.data,
-            aktiviteter,
-            arenaAktiviteter: {
-                status: Status.OK,
-                data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
-            },
-            oppfolging: {
-                status: Status.OK,
-                data: mockOppfolging,
-            },
-        },
-    }) as unknown as RootState;
+const initialStore = (aktiviteter: VeilarbAktivitet[]): RootState =>
+    mockLoadedStore({
+        aktiviteter,
+        arenaAktiviteter: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
+    });
+// {
+//     data: {
+//         ...emptyHalfLoadedVeilederState.data,
+//         aktiviteter,
+//         arenaAktiviteter: {
+//             status: Status.OK,
+//             data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
+//         },
+//         oppfolging: {
+//             status: Status.OK,
+//             data: mockOppfolging,
+//         },
+//     },
+// }) as unknown as RootState;
 
 const lagStore = (initialStore: RootState) =>
     configureStore({

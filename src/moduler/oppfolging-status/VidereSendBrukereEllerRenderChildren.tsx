@@ -57,7 +57,7 @@ function KRRAdvarsel({
             <div className="flex items-center flex-col">
                 <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
                     <Heading spacing size="small" level="3">
-                        Vi har ikke din kontaktinformasjon;
+                        Vi har ikke din kontaktinformasjon
                     </Heading>
                     <p>
                         Du kan ikke bruke aktivitetsplanen fordi du ikke har registrert e-post eller telefonnummeret

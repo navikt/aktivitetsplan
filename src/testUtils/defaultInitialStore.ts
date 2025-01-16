@@ -95,5 +95,10 @@ export const initialLoadedEmptyState: RootState = {
             status: Status.OK,
             data: [],
         },
+        dialog: {
+            status: Status.OK,
+            sistOppdatert: '',
+            data: [],
+        },
     },
 };
