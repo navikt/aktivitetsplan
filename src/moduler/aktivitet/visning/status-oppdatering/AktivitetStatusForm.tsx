@@ -84,6 +84,10 @@ const AktivitetStatusForm = (props: Props) => {
     const { setFormIsDirty } = useContext(DirtyContext);
 
     useEffect(() => {
+        setValue('aktivitet', aktivitet);
+    }, [aktivitet]);
+
+    useEffect(() => {
         setFormIsDirty('status', isDirty);
         return () => {
             setFormIsDirty('status', false);

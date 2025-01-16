@@ -10,7 +10,6 @@ import {
     selectErBrukerManuell,
     selectErRegisrertIKRR,
     selectErUnderOppfolging,
-    // selectKanVarsles,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
     selectReservasjonKRR,
@@ -25,34 +24,10 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
 }
 
-function KRRAdvarsel({
-    // kanVarsles,
-    erRegistrertIKRR,
-    erVeilder,
-}: {
-    // kanVarsles: boolean;
-    erRegistrertIKRR: boolean;
-    erVeilder: boolean;
-}) {
-    // if (!kanVarsles && erRegistrertIKRR && !erVeilder) {
-    //     return (
-    //         <div className="flex items-center flex-col">
-    //             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-    //                 <Heading spacing size="small" level="3">
-    //                     Kontaktinformasjonen din er utdatert;
-    //                 </Heading>
-    //                 <p>
-    //                     Du kan ikke sende meldinger i dialogen fordi kontaktinformasjonen din er utdatert i kontakt og
-    //                     reservasjonsregisteret (KRR).
-    //                 </p>
-    //                 <Link href={'https://www.norge.no/nb/digital-borgar/oppdatere'}>
-    //                     Gå til norge.no for å oppdatere.
-    //                 </Link>
-    //             </Alert>
-    //         </div>
-    //     );
-    // }
-    if (!erRegistrertIKRR && !erVeilder) {
+
+function KRRAdvarsel({ erRegistrertIKRR, erVeilder}: { erRegistrertIKRR: boolean; erVeilder: boolean; }) {
+     if (!erRegistrertIKRR && !erVeilder) {
+
         return (
             <div className="flex items-center flex-col">
                 <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
@@ -69,42 +44,25 @@ function KRRAdvarsel({
                 </Alert>
             </div>
         );
-    } else if (erVeilder && !erRegistrertIKRR) {
-        return (
-            <div className="flex items-center flex-col">
-                <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-                    <Heading spacing size="small" level="3">
-                        Brukeren er ikke registrert i KRR
-                    </Heading>
-                    <p>
-                        Du kan ikke bruke aktivitetsplanen fordi brukeren ikke har registrert e-post eller
-                        telefonnummeret sitt i KRR
-                    </p>
-                    <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
-                        Brukeren må gå til norge.no for å registrere..
-                    </Link>
-                </Alert>
-            </div>
-        );
+
+    } else if (erVeilder && !erRegistrertIKRR){
+        return(
+        <div className="flex items-center flex-col">
+            <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
+                <Heading spacing size="small" level="3">
+                    Brukeren er ikke registrert i KRR
+                </Heading>
+                <p>
+                    Du kan ikke bruke aktivitetsplanen fordi brukeren ikke
+                    har registrert e-post eller telefonnummeret sitt i KRR
+                </p>
+                <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
+                    Brukeren må gå til norge.no for å registrere.
+                </Link>
+            </Alert>
+        </div>
+        )
     }
-    // else if (erVeilder && !kanVarsles){
-    //     return(
-    //         <div className="flex items-center flex-col">
-    //             <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
-    //                 <Heading spacing size="small" level="3">
-    //                     Brukeren er ikke registrert i KRR
-    //                 </Heading>
-    //                 <p>
-    //                     Du kan ikke bruke aktivitetsplanen fordi brukeren ikke
-    //                     har registrert e-post eller telefonnummeret sitt i KRR
-    //                 </p>
-    //                 <Link href={'https://www.norge.no/nb/digital-borgar/registrere'}>
-    //                     Brukeren må gå til norge.no for å registrere..
-    //                 </Link>
-    //             </Alert>
-    //         </div>
-    //     )
-    // }
 }
 
 const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRenderChildrenProps) => {
@@ -112,7 +70,6 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
     const manuell = useSelector(selectErBrukerManuell);
     const reservasjonKRR = useSelector(selectReservasjonKRR);
-    // const kanVarsles = useSelector(selectKanVarsles);
     const erRegistrertIKRR = useSelector(selectErRegisrertIKRR);
     const servicegruppe = useSelector(selectServicegruppe);
     const aktorId = useSelector(selectAktorId);
@@ -139,23 +96,16 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     ) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
-    if (
-        //!kanVarsles ||
-        !erRegistrertIKRR &&
-        oppfolgingsStatus === Status.OK
-    ) {
-        return (
-            <KRRAdvarsel // kanVarsles={kanVarsles}
-                erRegistrertIKRR={erRegistrertIKRR}
-                erVeilder={erVeileder}
-            />
-        );
+
+    if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
+        return <KRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeilder={erVeileder}/>;
+
     }
     if (ikkeDigitalOppfolging) {
         return <AktiverDigitalOppfolging />;
     }
 
-    return <>{props.children}</>;
+     return <>{props.children}</>;
 };
 
 export default VidereSendBrukereEllerRenderChildren;

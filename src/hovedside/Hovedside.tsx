@@ -11,6 +11,7 @@ import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 import { Loader } from '@navikt/ds-react';
+import OppfolgingStatus from '../moduler/oppfolging-status/OppfolgingStatus';
 
 const Hovedside = () => {
     const navigate = useNavigate();
@@ -25,6 +26,8 @@ const Hovedside = () => {
     return (
         <main id="main" className="hovedside">
             <div className="flex items-center flex-col w-full h-full">
+                <OppfolgingStatus>
+                </OppfolgingStatus>
                 <HovedsideFeilmelding />
                 <InformasjonsHenting />
                 <Varslinger />
