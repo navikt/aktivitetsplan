@@ -24,8 +24,10 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
 }
 
+
 function KRRAdvarsel({ erRegistrertIKRR, erVeilder}: { erRegistrertIKRR: boolean; erVeilder: boolean; }) {
      if (!erRegistrertIKRR && !erVeilder) {
+
         return (
             <div className="flex items-center flex-col">
                 <Alert variant="warning" className="mx-2 mb-5 max-w-2xl">
@@ -42,6 +44,7 @@ function KRRAdvarsel({ erRegistrertIKRR, erVeilder}: { erRegistrertIKRR: boolean
                 </Alert>
             </div>
         );
+
     } else if (erVeilder && !erRegistrertIKRR){
         return(
         <div className="flex items-center flex-col">
@@ -93,8 +96,10 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     ) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
+
     if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
         return <KRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeilder={erVeileder}/>;
+
     }
     if (ikkeDigitalOppfolging) {
         return <AktiverDigitalOppfolging />;

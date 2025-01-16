@@ -47,7 +47,6 @@ export const dialog = PT.shape({
     aktivitetId: PT.string,
     lest: PT.bool,
     sisteDato: PT.string,
-    sisteTekst: PT.string,
     erLestAvBruker: PT.bool,
     venterPaSvar: PT.bool,
     ferdigBehandlet: PT.bool,
