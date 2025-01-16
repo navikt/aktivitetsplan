@@ -4,6 +4,7 @@ import React from 'react';
 import { CvKanDelesData } from '../../../../datatypes/internAktivitetTypes';
 import { formaterDatoManed } from '../../../../utils/dateUtils';
 import { JaSvarTekst, NeiSvarTekst } from './tekster';
+import { LesMerDelingAvCV } from './LesMerDelingAvCV';
 
 interface Props {
     cvKanDelesData: CvKanDelesData;
@@ -35,6 +36,7 @@ export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
                     Arbeidsgiveren eller Nav vil kontakte deg hvis du er aktuell for stillingen
                 </BodyShort>
             ) : null}
+            {cvKanDeles ? <div className="mt-4"><LesMerDelingAvCV /></div> : null}
         </div>
     );
 };
