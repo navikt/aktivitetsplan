@@ -118,25 +118,22 @@ const aktiviteterÅpenOgLukketPeriode = (): VeilarbAktivitet[] => {
     // ]);
 };
 
-const initialStore = (aktiviteter: VeilarbAktivitet[]): RootState =>
-    mockLoadedStore({
-        aktiviteter,
-        arenaAktiviteter: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
-    });
-// {
-//     data: {
-//         ...emptyHalfLoadedVeilederState.data,
-//         aktiviteter,
-//         arenaAktiviteter: {
-//             status: Status.OK,
-//             data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
-//         },
-//         oppfolging: {
-//             status: Status.OK,
-//             data: mockOppfolging,
-//         },
-//     },
-// }) as unknown as RootState;
+
+const initialStore = (aktiviteter: EntityState<PeriodeEntityState>) =>
+    ({
+        data: {
+            ...emptyHalfLoadedVeilederState.data,
+            aktiviteter,
+            arenaAktiviteter: {
+                status: Status.OK,
+                data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
+            },
+            oppfolging: {
+                status: Status.OK,
+                data: mockOppfolging,
+            },
+        },
+    }) as unknown as RootState;
 
 const lagStore = (initialStore: RootState) =>
     configureStore({
