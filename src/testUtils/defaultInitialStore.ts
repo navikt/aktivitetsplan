@@ -6,8 +6,6 @@ import { MinimalPeriode } from '../moduler/oppfolging-status/oppfolging-selector
 import { RootState } from '../store';
 import { aktivitestplanResponse } from '../mocks/handlers';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
-import aktivitetViewReducer from '../moduler/aktivitet/aktivitetview-slice';
-import dragAndDropSlice from '../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { VeilederInfo } from '../datatypes/types';
 import { Mal, Oppfolgingsperiode } from '../datatypes/oppfolgingTypes';
 
@@ -101,7 +99,7 @@ export const emptyHalfLoadedVeilederState: RootState = {
     view: {},
 };
 
-const initAction = { type: '@@INIT' };
+
 export const initialLoadedEmptyState: RootState = {
     data: {
         aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({

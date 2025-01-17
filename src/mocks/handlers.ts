@@ -17,7 +17,7 @@ import {
 } from './aktivitet';
 import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './data/arena';
 import { auth } from './data/auth';
-import dialoger, { opprettDialog } from './data/dialog';
+import dialoger from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
 import { lest } from './data/lest';
@@ -188,7 +188,7 @@ export const aktivitestplanResponse = (
                 id: periode.uuid,
                 aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.uuid),
                 start: periode.startDato,
-                slutt: periode.sluttDato || undefined,
+                slutt: periode.sluttDato ?? undefined,
             })),
         },
     };

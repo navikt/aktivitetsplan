@@ -1,7 +1,4 @@
-import { RestRequest } from 'msw';
-
-import { erEksternBruker, ulesteDialoger } from '../demo/localStorage';
-import { rndId } from '../utils';
+import {  ulesteDialoger } from '../demo/localStorage';
 import { Dialog } from '../../datatypes/dialogTypes';
 
 const dialoger: Dialog[] = [

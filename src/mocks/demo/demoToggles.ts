@@ -20,7 +20,6 @@ import {
     ulesteDialoger,
     visArenaAktiviteter,
     visAutomatiskeAktiviteter,
-    visEksterneAktiviteter,
     visTestAktiviteter
 } from './localStorage';
 
