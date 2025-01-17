@@ -27,13 +27,25 @@ process.on('unhandledRejection', (reason) => {
     throw reason;
 });
 
-vi.mock('./felles-komponenter/utils/logging', async () => {
-    const actual = await vi.importActual('./felles-komponenter/utils/logging');
+vi.mock('./felles-komponenter/utils/logging', async (importOriginal) => {
+    const actual = await importOriginal();
     return {
         ...actual,
         default: vi.fn(),
         loggTidBruktGaaInnPaaAktivitetsplanen: vi.fn(),
         logTimeToAktivitestavlePaint: vi.fn(),
         loggingAntallBrukere: vi.fn(),
+    };
+});
+
+/* Mock fetchHarFlereAktorId,
+   its run on-mount and has no side-effects visible for this app
+   so it cant be tested
+*/
+vi.mock('./api/oppfolgingAPI', async (importOriginal) => {
+    const actual = await importOriginal();
+    return {
+        ...actual,
+        fetchHarFlereAktorId: vi.fn(),
     };
 });

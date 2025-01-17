@@ -88,7 +88,8 @@ function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbA
     });
 }
 
-const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: string): PeriodeEntityState => {
+// Exported only for testing setup
+export const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: string): PeriodeEntityState => {
     return (
         selectOppfolgingsperiodeById(state, oppfolgingsperiodeId) || {
             // Hvis ingen oppfølgingsperiode funnet, opprett en ny

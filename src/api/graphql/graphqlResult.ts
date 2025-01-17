@@ -4,7 +4,7 @@ interface GraphqlError {
 
 export interface GraphqlResponse<T> {
     data: T;
-    errors: GraphqlError[];
+    errors?: GraphqlError[];
 }
 
 export const sjekkGraphqlFeil = <T>(response: GraphqlResponse<T>): Promise<GraphqlResponse<T>> => {

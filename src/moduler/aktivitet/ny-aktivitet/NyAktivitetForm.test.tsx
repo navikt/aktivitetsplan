@@ -7,7 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
 import reducer from '../../../reducer';
 import { aktivitetAdapter, oppfolgingsdperiodeAdapter } from '../aktivitet-slice';
-import { defaultAktivPeriode, emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { defaultAktivPeriode, emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { Status } from '../../../createGenericSlice';
 import { mockOppfolging } from '../../../mocks/data/oppfolging';
 import { setupServer } from 'msw/node';
@@ -16,7 +16,7 @@ import { lagNyAktivitet } from '../aktivitet-actions';
 
 const initialStore = {
     data: {
-        ...emptyLoadedVeilederState.data,
+        ...emptyHalfLoadedVeilederState.data,
         aktiviteter: oppfolgingsdperiodeAdapter.setOne(
             oppfolgingsdperiodeAdapter.getInitialState({
                 status: Status.NOT_STARTED,

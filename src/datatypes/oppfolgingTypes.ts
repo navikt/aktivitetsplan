@@ -14,16 +14,17 @@ export interface OppfolgingStatus {
     underOppfolging: boolean;
     underKvp: boolean;
     kanStarteOppfolging: boolean;
-    oppfolginUtgang: string;
+    oppfolgingUtgang: string | null;
     oppfolgingsPerioder: Oppfolgingsperiode[];
     harSkriveTilgang: boolean;
-    inaktivIArena: boolean;
+    inaktivIArena: boolean | null;
     kanReaktiveres: boolean;
     inaktiveringsdato: string;
     erSykmeldtMedArbeidsgiver: boolean;
     servicegruppe: string;
     formidlingsgruppe: string;
     rettighetsgruppe: string;
+    registrertKRR: boolean;
 }
 
 export interface Oppfolgingsperiode {
