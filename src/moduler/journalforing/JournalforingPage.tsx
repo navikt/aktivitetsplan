@@ -1,7 +1,7 @@
 import React from 'react';
 import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { defer, LoaderFunctionArgs } from 'react-router-dom';
+import { LoaderFunctionArgs } from 'react-router-dom';
 import { Dispatch } from '../../store';
 import Sidebar from './Sidebar';
 import { PdfViewer } from './PdfViewer';
@@ -39,7 +39,7 @@ export const arkivLoader =
                 oppfolgingsperiodeId,
             }),
         );
-        return defer({
+        return Response.json({
             forhaandsvisning,
         });
     };
