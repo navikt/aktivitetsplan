@@ -3,7 +3,6 @@ import { isAfter } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router-dom';
-
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { ARBEIDSRETTET_DIALOG_URL, ER_PROD, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
@@ -14,6 +13,7 @@ import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp } from '../../amplitude/amplitude';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
+import { useMediaQuery } from '../../utils/use-media-query';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -44,6 +44,7 @@ function Navigasjonslinje() {
     }, [dispatch, erVeileder, sistOppdatert]);
 
     const canPrint = useSelector(selectCanPrint);
+    const isMobile = useMediaQuery('(max-width: 768px)');
 
     function handleClick() {
         loggEvent(APNE_OM_TJENESTEN);
@@ -69,7 +70,7 @@ function Navigasjonslinje() {
                     Hva er aktivitetsplanen?
                 </ReactRouterLink>
                 {canPrint && (
-                    <ReactRouterLink to="utskrift" className="text-text-action underline hover:no-underline">
+                    <ReactRouterLink hidden={isMobile} to="utskrift" className="text-text-action underline hover:no-underline">
                         Skriv ut
                     </ReactRouterLink>
                 )}
