@@ -110,12 +110,6 @@ describe('Videresend brukere eller render children', () => {
     });
 
     describe('Veiledere:', () => {
-        it('TODO: skal vise varsel når bruker har utdatert informasjon i KRR', async () => {
-            const store = gitt.hentStatus.utdatertIKrr();
-            const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            // TODO: Vurder å vise feilmelding her
-            // await waitFor(() => getByText('Kontaktinformasjonen din er utdatert'));
-        });
         it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
             const store = gitt.hentStatus.ikkeRegistrertIKrr();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
@@ -136,12 +130,6 @@ describe('Videresend brukere eller render children', () => {
         });
     });
     describe('Brukere:', () => {
-        it('TODO: skal vise varsel når bruker har utdatert informasjon i KRR', async () => {
-            const store = gitt.hentStatus.utdatertIKrr();
-            const { getByText } = render(<WrappedHovedside store={store} />);
-            // Rendrer aktivitetsplan som normalt her, TODO: fiks logikk og test
-            // await waitFor(() => getByText('Kontaktinformasjonen din er utdatert'));
-        });
         it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
             const store = gitt.hentStatus.ikkeRegistrertIKrr();
             const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
