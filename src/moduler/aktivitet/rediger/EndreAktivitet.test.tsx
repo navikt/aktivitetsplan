@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, expect } from 'vitest';
 import { fireEvent, render } from '@testing-library/react';
-import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { WrappedComponent } from '../../../testUtils/WrappedHovedside';
 import EndreAktivitet from './EndreAktivitet';
 import { configureStore } from '@reduxjs/toolkit';
@@ -14,7 +14,7 @@ const moteAktivitet = enMoteAktivitet();
 
 const initialStore = {
     data: {
-        ...emptyLoadedVeilederState.data,
+        ...emptyHalfLoadedVeilederState.data,
         aktiviteter: {
             status: Status.OK,
             data: {

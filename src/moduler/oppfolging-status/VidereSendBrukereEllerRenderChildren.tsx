@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import {
     selectAktorId,
     selectErBrukerManuell,
+    selectErRegisrertIKRR,
     selectErUnderOppfolging,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
@@ -17,6 +18,7 @@ import {
 import { Status } from '../../createGenericSlice';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
 import { selectIdentitetId } from '../identitet/identitet-selector';
+import { IkkeRegistrertIKRRAdvarsel } from './IkkeRegistrertIKRRAdvarsel';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
@@ -27,6 +29,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
     const manuell = useSelector(selectErBrukerManuell);
     const reservasjonKRR = useSelector(selectReservasjonKRR);
+    const erRegistrertIKRR = useSelector(selectErRegisrertIKRR);
     const servicegruppe = useSelector(selectServicegruppe);
     const aktorId = useSelector(selectAktorId);
     const ident = useSelector(selectIdentitetId);
@@ -53,8 +56,21 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
 
-    if (!erVeileder && ikkeDigitalOppfolging) {
-        return <AktiverDigitalOppfolging />;
+    if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
+        return (
+            <>
+                <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeileder={erVeileder} />
+                {erVeileder ? props.children : null}
+            </>
+        );
+    }
+    if (ikkeDigitalOppfolging) {
+        return (
+            <>
+                <AktiverDigitalOppfolging />
+                {erVeileder ? props.children : null}
+            </>
+        );
     }
 
     return <>{props.children}</>;
