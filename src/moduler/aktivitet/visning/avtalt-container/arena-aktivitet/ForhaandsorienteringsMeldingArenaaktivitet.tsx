@@ -1,4 +1,4 @@
-import { BodyShort, Button, Select, Textarea } from '@navikt/ds-react';
+import { BodyShort, Button, Label, Select, Textarea } from '@navikt/ds-react';
 import React from 'react';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form/dist/types/form';
 
@@ -32,17 +32,21 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                 <option value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</option>
             </Select>
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
-                <VarslingInfo />
+                <Label>Teksten som blir lagt til aktiviteten:</Label>
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
+                <br/>
+                <VarslingInfo />
             </VisibleIfDiv>
 
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea
-                    label={<VarslingInfo />}
+                    label={"Teksten som blir lagt til aktiviteten:"}
                     maxLength={500}
                     value={avtaltText119}
                     {...register('avtaltText119')}
                 />
+                <br/>
+                <VarslingInfo />
             </VisibleIfDiv>
 
             <Button loading={lasterData}>Legg til</Button>
