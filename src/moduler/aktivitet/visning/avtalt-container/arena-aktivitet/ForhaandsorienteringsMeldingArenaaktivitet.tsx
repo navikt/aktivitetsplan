@@ -1,7 +1,6 @@
-import { BodyShort, Button, Label, Select, Textarea } from '@navikt/ds-react';
-import React from 'react';
+import { BodyShort, Button, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
+import React, { useState } from 'react';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form/dist/types/form';
-
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
 import { ForhaandsorienteringFormValues } from '../aktivitet/ForhaandsorienteringForm';
@@ -17,20 +16,25 @@ interface Props {
 const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     const { lasterData, register, watch } = props;
 
-    const forhaandsorienteringType = watch('forhaandsorienteringType');
     const avtaltText119 = watch('avtaltText119');
+    const [forhaandsorienteringType, setForhaandsorienteringType] = useState<string | null>(null);
+
+    const valgtforhandsorientering = (val: string) => {
+        setForhaandsorienteringType(val);
+    };
 
     return (
         <div className="space-y-8">
-            <Select
-                label="Velg type forhåndsorientering"
+            <RadioGroup
+                onChange={valgtforhandsorientering}
+                legend="Velg type forhåndsorientering"
                 disabled={lasterData}
                 className="mt-4"
-                {...register('forhaandsorienteringType')}
             >
-                <option value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</option>
-                <option value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</option>
-            </Select>
+                <Radio value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</Radio>
+                <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</Radio>
+            </RadioGroup>
+
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <Label>Teksten som blir lagt til aktiviteten:</Label>
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
