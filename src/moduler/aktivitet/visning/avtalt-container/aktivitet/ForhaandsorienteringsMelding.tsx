@@ -35,15 +35,20 @@ const ForhaandsorienteringsMelding = (props: Props) => {
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <VarslingInfo />
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
+                <br/>
+                <VarslingInfo />
             </VisibleIfDiv>
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea
-                    label={<VarslingInfo />}
+                    label={"Teksten som blir lagt til aktiviteten:"}
                     maxLength={500}
                     value={avtaltText119}
                     {...register('avtaltText119')}
                     error={(errors as any).avtaltText119 && (errors as any).avtaltText119.message}
+
                 />
+                <br/>
+                <VarslingInfo />
             </VisibleIfDiv>
         </>
     );
