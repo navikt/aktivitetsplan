@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useErVeileder } from '../../Provider';
 import { useRoutes } from '../../routing/useRoutes';
 import { byttTilDialogFlate, getDialogLenke } from './DialogFlateUtils';
+import { Link } from '@navikt/ds-react';
 
 interface Props {
     className?: string;
@@ -32,9 +33,9 @@ const LenkeTilDialog = (props: Props) => {
     }
 
     return (
-        <a href={getDialogLenke({ erVeileder, aktivitetId, dialogId })} onClick={internalOnClick} className={className}>
+        <Link href={getDialogLenke({ erVeileder, aktivitetId, dialogId })} onClick={internalOnClick} className={className}>
             {children}
-        </a>
+        </Link>
     );
 };
 

@@ -1,55 +1,36 @@
 import { Select } from '@navikt/ds-react';
 import { format } from 'date-fns';
 import React, { ChangeEventHandler, useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { HistoriskOppfolgingsperiode, Oppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
-import { AppDispatch } from '../../../felles-komponenter/hooks/useAppDispatch';
-import loggEvent, { VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
-import {
-    VistOppfolgingsPeriode,
-    selectErUnderOppfolging,
-    selectSorterteHistoriskeOppfolgingsPerioder,
-} from '../../oppfolging-status/oppfolging-selector';
-import { selectHistoriskPeriode } from './filter-selector';
-import { velgHistoriskPeriode } from './filter-slice';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
+import { selectSorterteOppfolgingsperioder } from '../../oppfolging-status/oppfolging-selector';
+import { velgPeriode } from './valgt-periode-slice';
 
-interface Props {
-    harHistoriskePerioder: boolean;
-    historiskePerioder: VistOppfolgingsPeriode[];
-    historiskPeriode?: Oppfolgingsperiode;
-    doVelgHistoriskPeriode: (periode: null | HistoriskOppfolgingsperiode) => void;
-    skjulInneverende: boolean;
-}
+const PeriodeFilter = () => {
+    const perioder = useSelector(selectSorterteOppfolgingsperioder);
+    const historiskePerioder = perioder.filter((periode) => !!periode.slutt);
+    const harHistoriskePerioder = historiskePerioder.length > 0;
 
-const PeriodeFilter = ({
-    harHistoriskePerioder,
-    historiskPeriode,
-    historiskePerioder,
-    doVelgHistoriskPeriode,
-    skjulInneverende,
-}: Props) => {
-    const erUnderOppfolging = useSelector(selectErUnderOppfolging);
-    const sorterteHistoriskePerioder = useSelector(selectSorterteHistoriskeOppfolgingsPerioder);
+    const dispatch = useAppDispatch();
+
+    const nyestePeriode = perioder.length > 0 ? perioder[0] : null;
 
     useEffect(() => {
-        if (!erUnderOppfolging && harHistoriskePerioder) {
-            const nyesteHistoriskPeriode = sorterteHistoriskePerioder[0];
-            doVelgHistoriskPeriode(nyesteHistoriskPeriode);
+        if (!!nyestePeriode) {
+            dispatch(velgPeriode(nyestePeriode.id));
         }
-    }, []);
+    }, [perioder]);
 
     if (!harHistoriskePerioder) return null;
+    // 0 periode? - ikke vis dropdown - har ikke hist
+    // Kun 1 aktiv periode - IKKE vis dropdown -- har ikke hist
+    // Kun 1 historisk periode - vis dropdown
+    // Alt annet - vis dropdown
 
     const onPeriodeChange: ChangeEventHandler<HTMLSelectElement> = (val) => {
         const selectedPeriodeId = val.target.value;
-        if (selectedPeriodeId === 'inneverende') doVelgHistoriskPeriode(null);
-        else {
-            const periode = historiskePerioder.find((periode) => periode.uuid === selectedPeriodeId);
-            if (!periode) return;
-            loggEvent(VIS_HISTORISK_PERIODE);
-            doVelgHistoriskPeriode(periode);
-        }
+        dispatch(velgPeriode(selectedPeriodeId));
     };
 
     return (
@@ -58,21 +39,19 @@ const PeriodeFilter = ({
                 className="w-full sm:w-64"
                 hideLabel
                 autoComplete="on"
-                defaultValue={!historiskPeriode ? 'inneverende' : historiskPeriode.uuid}
+                defaultValue={nyestePeriode?.id}
                 label="Periode"
                 onChange={onPeriodeChange}
             >
-                {skjulInneverende ? null : (
-                    <option value="inneverende" className="filter__radio--periode">
-                        Nåværende periode
-                    </option>
-                )}
-                {historiskePerioder.map((oppfolgingsperiode, index) => {
-                    const fraDato = format(new Date(oppfolgingsperiode.startDato), 'dd. MMM yyyy');
-                    const tilDato = format(new Date(oppfolgingsperiode.sluttDato), 'dd. MMM yyyy');
+                {perioder.map(({ start, slutt, id }) => {
+                    const fraDato = format(new Date(start), 'dd. MMM yyyy');
+                    const navn =
+                        slutt === undefined || slutt === null
+                            ? 'Nåværende periode'
+                            : `${fraDato} - ${format(new Date(slutt), 'dd. MMM yyyy')}`;
                     return (
-                        <option value={oppfolgingsperiode.uuid} key={index}>
-                            {`${fraDato} - ${tilDato}`}
+                        <option value={id} key={id}>
+                            {navn}
                         </option>
                     );
                 })}
@@ -81,22 +60,4 @@ const PeriodeFilter = ({
     );
 };
 
-(PeriodeFilter as any).defaultProps = {
-    historiskPeriode: null,
-};
-
-const mapStateToProps = (state: any) => {
-    const historiskePerioder = selectSorterteHistoriskeOppfolgingsPerioder(state);
-    return {
-        historiskePerioder,
-        historiskPeriode: selectHistoriskPeriode(state),
-        harHistoriskePerioder: historiskePerioder.length > 0,
-    };
-};
-
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-    doVelgHistoriskPeriode: (historiskOppfolgingsperiode: null | HistoriskOppfolgingsperiode) =>
-        dispatch(velgHistoriskPeriode(historiskOppfolgingsperiode)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PeriodeFilter);
+export default PeriodeFilter;

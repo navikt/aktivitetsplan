@@ -142,6 +142,7 @@ export function isSamtaleOrMote(aktivitet: AlleAktiviteter): aktivitet is Samtal
         aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE || aktivitet.type === VeilarbAktivitetType.MOTE_TYPE
     );
 }
+
 export const isEksternAktivitet = (aktivitet: AlleAktiviteter): aktivitet is EksternAktivitet => {
     return aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
 };
@@ -163,13 +164,14 @@ export enum EksternAktivitetType {
     ARENA_TILTAK_TYPE = 'ARENA_TILTAK',
     MIDL_LONNSTILSKUDD_TYPE = 'MIDLERTIDIG_LONNSTILSKUDD',
     VARIG_LONNSTILSKUDD_TYPE = 'VARIG_LONNSTILSKUDD',
+    ARBEIDSTRENING = 'ARBEIDSTRENING',
     INDOPPFAG = 'INDOPPFAG',
-    ARBFORB =  'ARBFORB',
-    AVKLARAG =  'AVKLARAG',
+    ARBFORB = 'ARBFORB',
+    AVKLARAG = 'AVKLARAG',
     VASV = 'VASV',
     ARBRRHDAG = 'ARBRRHDAG',
     DIGIOPPARB = 'DIGIOPPARB',
     JOBBK = 'JOBBK',
     GRUPPEAMO = 'GRUPPEAMO',
-    GRUFAGYRKE = 'GRUFAGYRKE'
+    GRUFAGYRKE = 'GRUFAGYRKE',
 }

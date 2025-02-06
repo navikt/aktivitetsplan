@@ -17,14 +17,14 @@ import {
 } from './aktivitet';
 import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './data/arena';
 import { auth } from './data/auth';
-import dialoger, { opprettDialog } from './data/dialog';
+import dialoger from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { hentMalverk } from './data/malverk';
 import { me } from './data/me';
-import getOppfolging, { settDigital } from './data/oppfolging';
+import getOppfolging, { mockOppfolging, settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
 import { veilederMe } from './data/Veileder';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
@@ -43,6 +43,7 @@ import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils'
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
 import { subDays, subMinutes } from 'date-fns';
+import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -65,7 +66,6 @@ export const handlers = [
     // veilarbdialog
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
     rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
-    rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),
     rest.post(
         '/veilarbdialog/graphql',
         failOrGrahpqlResponse(dialogFeilet, () => ({
@@ -86,13 +86,13 @@ export const handlers = [
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
-            if (body.query.includes('historikk')) {
-                const aktivitetId = body.variables.aktivitetId;
+            const aktivitetId = body.variables.aktivitetId;
+            if (aktivitetId) {
                 const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
                 await new Promise((resolve) => {
                     setTimeout(resolve, 2000);
                 });
-                return aktivitetHistorikkResponse(aktivitet);
+                return aktivitetResponse(aktivitet);
             } else {
                 return aktivitestplanResponse(); // Default aktiviteter
             }
@@ -181,22 +181,26 @@ export const handlers = [
 
 export const aktivitestplanResponse = (
     { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter },
-) => {
-    const perioder = Array.from(new Set(aktiviteter.map((aktivitet) => aktivitet.oppfolgingsperiodeId)));
+): AktivitetsplanResponse => {
     return {
         data: {
-            perioder: perioder.map((periodeId) => ({
-                id: periodeId,
-                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periodeId),
+            perioder: mockOppfolging.oppfolgingsPerioder.map((periode) => ({
+                id: periode.uuid,
+                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.uuid),
+                start: periode.startDato,
+                slutt: periode.sluttDato ?? undefined,
             })),
         },
     };
 };
 
-const aktivitetHistorikkResponse = (aktivitet: VeilarbAktivitet) => {
+export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
     const now = new Date();
     return {
         data: {
+            eier: {
+                fnr: '13837597573',
+            },
             aktivitet: {
                 ...aktivitet,
                 historikk: {

@@ -1,10 +1,16 @@
 type Query {
     perioder(fnr: String!): [OppfolgingsPeriode]
+    aktivitet(aktivitetId: String!): AktivitetDTO
+    eier (aktivitetId: String!): Eier
 }
 
 type OppfolgingsPeriode {
     id: String
     aktiviteter: [AktivitetDTO]
+}
+
+type Eier {
+    fnr: String
 }
 
 type AktivitetDTO {
@@ -120,6 +126,7 @@ enum Sentiment {
 enum AktivitetskortType {
     MIDLERTIDIG_LONNSTILSKUDD
     VARIG_LONNSTILSKUDD
+    ARBEIDSTRENING
     ARENA_TILTAK
     INDOPPFAG
     ARBFORB

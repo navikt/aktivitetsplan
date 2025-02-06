@@ -9,7 +9,7 @@ env:
     CI: true
     TZ: Europe/Oslo
 
-permissions: 
+permissions:
   contents: write
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
               uses: actions/checkout@v3
             - uses: actions/setup-node@v3
               with:
-                node-version: 18
+                node-version: 20
                 registry-url: "https://npm.pkg.github.com"
             - uses: actions/cache@v1
               with:
@@ -38,6 +38,7 @@ jobs:
               if: success()
               uses: crazy-max/ghaction-github-pages@v2
               with:
+                  jekyll: false
                   build_dir: build
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

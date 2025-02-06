@@ -1,7 +1,14 @@
 import { RestRequest } from 'msw';
 
 import { Oppfolgingsperiode, OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
-import { erKRRBruker, erManuellBruker, erPrivatBruker, ingenOppfPerioder } from '../demo/localStorage';
+import {
+    erIkkeRegistrertIKRR,
+    erKRRBruker,
+    erManuellBruker,
+    erPrivatBruker,
+    ingenOppfPerioder,
+    kanIkkeVarsles,
+} from '../demo/localStorage';
 import { mockfnr } from '../utils';
 
 const oppfolgingsperioder: Oppfolgingsperiode[] = [
@@ -24,16 +31,25 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
         ],
     },
     {
+        uuid: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
+        aktorId: '1234567988888',
+        veileder: null,
+        startDato: '2016-01-30T10:46:10.971+01:00',
+        sluttDato: '2016-12-31T10:46:10.971+01:00',
+        begrunnelse: null,
+        kvpPerioder: [],
+    },
+    {
         uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2018-01-31T10:46:10.971+01:00',
-        sluttDato: null,
+        sluttDato: undefined,
         begrunnelse: null,
     },
 ];
 
-const oppfolging: OppfolgingStatus = {
+const oppfolging = {
     fnr: mockfnr,
     aktorId: '1234567988888',
     veilederId: null,
@@ -47,7 +63,14 @@ const oppfolging: OppfolgingStatus = {
     kanReaktiveres: false,
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
-} as unknown as OppfolgingStatus;
+    kanVarsles: !kanIkkeVarsles(),
+    registrertKRR: !erIkkeRegistrertIKRR(),
+    erSykmeldtMedArbeidsgiver: false,
+    formidlingsgruppe: 'ARBS',
+    inaktivIArena: null,
+    oppfolgingUtgang: null,
+    rettighetsgruppe: 'IYT',
+} as OppfolgingStatus;
 
 export const mockOppfolging = oppfolging;
 

@@ -1,5 +1,5 @@
 import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
-import React, { MouseEventHandler, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes, useMatch, useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import { useRoutes } from '../../../routing/useRoutes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectLagNyAktivitetFeil } from '../../feilmelding/feil-selector';
 import Feilmelding from '../../feilmelding/Feilmelding';
-import { selectErUnderOppfolging, selectNyesteOppfolgingsperiode } from '../../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectAktivOppfolgingsperiode } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
@@ -46,12 +46,12 @@ const NyAktivitetForm = () => {
     const erVeileder = useErVeileder();
     const match = useMatch(`${erVeileder ? '/aktivitetsplan' : ''}/aktivitet/ny/:aktivitetType`) as RouteMatch;
     const dispatch = useAppDispatch();
-    const { aktivitetRoute, hovedsideRoute, nyAktivitetRoute } = useRoutes();
+    const { aktivitetRoute, hovedsideRoute } = useRoutes();
     const tilHovedside = () => navigate(hovedsideRoute());
 
     const opprettFeil = useSelector(selectLagNyAktivitetFeil);
     const underOppfolging = useSelector(selectErUnderOppfolging);
-    const currentOpenOppfolgingsPeriode = useSelector(selectNyesteOppfolgingsperiode);
+    const currentOpenOppfolgingsPeriode = useSelector(selectAktivOppfolgingsperiode);
 
     const dirtyRef = useRef(false);
     useConfirmOnBeforeUnload(dirtyRef);
@@ -68,17 +68,6 @@ const NyAktivitetForm = () => {
         return false;
     }
 
-    const onReqBack: MouseEventHandler = (e) => {
-        e.preventDefault();
-        const isItReallyDirty = dirtyRef.current;
-        if (!isItReallyDirty || window.confirm(CONFIRM)) {
-            // Assign to const before navigating to avoid race-condition
-            const aktivitet = match.params.aktivitetType;
-            navigate(nyAktivitetRoute());
-            logModalLukket({ isDirty: isItReallyDirty, aktivitet, modalType: 'ny-aktivitet', navType: 'onReqBack' });
-        }
-    };
-
     if (!underOppfolging || !currentOpenOppfolgingsPeriode) {
         return null;
     }
@@ -92,7 +81,7 @@ const NyAktivitetForm = () => {
                 ...filteredAktivitet,
             } as VeilarbAktivitet;
             return dispatch(
-                lagNyAktivitet({ aktivitet: nyAktivitet, oppfolgingsPeriodeId: currentOpenOppfolgingsPeriode.uuid }),
+                lagNyAktivitet({ aktivitet: nyAktivitet, oppfolgingsPeriodeId: currentOpenOppfolgingsPeriode.id }),
             ).then((action) => {
                 if (isFulfilled(action)) {
                     navigate(aktivitetRoute((action as PayloadAction<VeilarbAktivitet>).payload.id));
@@ -104,7 +93,6 @@ const NyAktivitetForm = () => {
     return (
         <Modal
             heading={match?.params?.aktivitetType ? aktivitetHeadings[match.params.aktivitetType] : ''}
-            tilbakeLenke={{ tekst: 'Til kategoriene', onTilbakeKlikk: onReqBack }}
             onRequestClose={onRequestClose}
             onClose={tilHovedside}
             lukkPåKlikkUtenfor={false}

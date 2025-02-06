@@ -13,7 +13,7 @@ import { fjernDismissableErrors } from '../moduler/feilmelding/feil-slice';
 import { Dispatch } from '../store';
 import Hovedside from '../hovedside/Hovedside';
 import { aktivitetsVisningLoader, initialPageLoader, malLoader } from './loaders';
-import LeggTilForm from '../moduler/aktivitet/ny-aktivitet/LeggTilForm';
+import LeggTilNyttAktivitetsKort from '../moduler/aktivitet/ny-aktivitet/LeggTilNyttAktivitetsKort';
 import NyAktivitetForm from '../moduler/aktivitet/ny-aktivitet/NyAktivitetForm';
 import AktivitetvisningContainer from '../moduler/aktivitet/visning/AktivitetvisningContainer';
 import EndreAktivitet from '../moduler/aktivitet/rediger/EndreAktivitet';
@@ -75,7 +75,7 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
                     {
                         path: 'aktivitet',
                         children: [
-                            { path: 'ny', element: <LeggTilForm /> },
+                            { path: 'ny', element: <LeggTilNyttAktivitetsKort /> },
                             { path: 'ny/*', element: <NyAktivitetForm /> },
                             {
                                 id: 'aktivitetsVisning',

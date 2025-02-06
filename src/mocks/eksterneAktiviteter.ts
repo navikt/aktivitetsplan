@@ -79,7 +79,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
           }),
           wrapAktivitet({
               ...enEksternAktivitet({
-                  tittel: 'Arbeidstrening hos Biggen Blues og Bensin',
+                  tittel: 'Varig lønnstilskudd hos Biggen Blues og Bensin',
                   status: AktivitetStatus.PLANLAGT,
                   avtalt: true,
                   beskrivelse: 'Pumpeoperatør',
@@ -95,6 +95,24 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   },
               }),
           }),
+        wrapAktivitet({
+                      ...enEksternAktivitet({
+                          tittel: 'Arbeidstrening hos Biggen Blues og Bensin',
+                          status: AktivitetStatus.GJENNOMFOERT,
+                          avtalt: true,
+                          beskrivelse: 'Pumpeoperatør',
+                          eksternAktivitet: {
+                              type: EksternAktivitetType.ARBEIDSTRENING,
+                              oppgave: undefined,
+                              handlinger: undefined,
+                              detaljer: [
+                                  { label: 'Arbeidsgiver', verdi: 'Biggen Blues og Bensin' },
+                                  { label: 'Stillingsprosent', verdi: '100%' },
+                              ],
+                              etiketter: undefined,
+                          },
+                      }),
+                  }),
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Oppfølging hos Biggen',

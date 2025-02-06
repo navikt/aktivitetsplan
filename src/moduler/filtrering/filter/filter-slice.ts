@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { AktivitetFilterType, ArenaEtikettFilterType, AvtaltFilterType, EtikettFilterType } from './FilterVisning';
 
 export interface FilterState {
@@ -8,7 +7,6 @@ export interface FilterState {
     aktivitetEtiketter: EtikettFilterType;
     arenaAktivitetEtiketter: ArenaEtikettFilterType;
     aktivitetAvtaltMedNav: AvtaltFilterType;
-    historiskPeriode: HistoriskOppfolgingsperiode | null;
 }
 
 const initialState: FilterState = {
@@ -27,6 +25,7 @@ const initialState: FilterState = {
         TILTAKSAKTIVITET: false,
         UTDANNINGSAKTIVITET: false,
         VARIG_LONNSTILSKUDD: false,
+        ARBEIDSTRENING: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,
@@ -54,7 +53,6 @@ const initialState: FilterState = {
         AVTALT_MED_NAV: false,
         IKKE_AVTALT_MED_NAV: false,
     },
-    historiskPeriode: null,
 };
 
 const filterSlice = createSlice({
@@ -70,9 +68,6 @@ const filterSlice = createSlice({
         toggleArenaAktivitetsEtikett: (state, action: PayloadAction<keyof ArenaEtikettFilterType>) => {
             state.arenaAktivitetEtiketter[action.payload] = !state.arenaAktivitetEtiketter[action.payload];
         },
-        velgHistoriskPeriode: (state, action: PayloadAction<HistoriskOppfolgingsperiode | null>) => {
-            state.historiskPeriode = action.payload;
-        },
         toggleAktivitetAvtaltMedNav: (state, action: PayloadAction<keyof AvtaltFilterType>) => {
             state.aktivitetAvtaltMedNav[action.payload] = !state.aktivitetAvtaltMedNav[action.payload];
         },
@@ -84,7 +79,6 @@ export const {
     toggleArenaAktivitetsEtikett,
     toggleAktivitetsType,
     toggleAktivitetAvtaltMedNav,
-    velgHistoriskPeriode,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

@@ -15,7 +15,7 @@ import { kanEndreAktivitetDetaljer, selectAktivitetMedId } from '../aktivitetlis
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 
 const selectAvhengigheter = createSelector(
     selectOppfolgingStatus,
