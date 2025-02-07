@@ -58,16 +58,12 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
 
     if (!erVeileder && !erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
         return (
-            <>
                 <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeileder={erVeileder} />
-            </>
         );
     }
     if ( !erVeileder && ikkeDigitalOppfolging) {
         return (
-            <>
                 <AktiverDigitalOppfolging />
-            </>
         );
     }
 

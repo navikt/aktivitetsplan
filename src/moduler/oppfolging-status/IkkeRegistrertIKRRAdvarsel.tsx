@@ -7,7 +7,6 @@ export function IkkeRegistrertIKRRAdvarsel({
     erRegistrertIKRR,
 }: {
     erRegistrertIKRR: boolean;
-    erVeileder: boolean;
 }) {
     if (erRegistrertIKRR) return null;
     return (
