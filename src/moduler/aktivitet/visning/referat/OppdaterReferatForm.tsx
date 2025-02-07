@@ -18,6 +18,7 @@ import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, utenHistorikk } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
+import checkSensitive from './SjekkSensitiv';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -33,6 +34,7 @@ interface Props {
 const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
     const [open, setOpen] = useState(true);
+    const [kategorier, setKategorier] = useState<string | null>(null);
     const startTekst = useReferatStartTekst();
     const dispatch = useAppDispatch();
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
@@ -91,6 +93,18 @@ const OppdaterReferatForm = (props: Props) => {
 
     const referatValue = watch('referat');
 
+    async function sjekktekst(verdi) {
+        console.log('checkar sensitive')
+        const isSensitive = await checkSensitive(verdi)
+        console.log('isSensitive', isSensitive)
+        if (isSensitive.sensitiv) {
+            console.log(isSensitive.feilmedling)
+            setKategorier(isSensitive.kategorier);
+        } else {
+            setKategorier(null);
+        }
+    }
+
     return (
         <form
             onSubmit={handleSubmit((values) => updateReferat(values))}
@@ -104,6 +118,18 @@ const OppdaterReferatForm = (props: Props) => {
                 {...register('referat')}
                 value={referatValue}
             />
+            <Button type="button" variant="secondary" onClick={() => sjekktekst(referatValue)}>
+                Språkmodell
+            </Button>
+            { kategorier && (
+                <ul>
+                    {kategorier.map((item, index) => (
+                        <li key={index}>
+                            {item.kategori}: {item.grunn}
+                        </li>
+                    ))}
+                </ul>
+            )}
             <>
                 <Switch
                     checked={open}
