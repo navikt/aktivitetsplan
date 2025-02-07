@@ -74,5 +74,4 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     return <>{props.children}</>;
 };
 
-
 export default VidereSendBrukereEllerRenderChildren;
