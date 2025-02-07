@@ -56,19 +56,17 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
 
-    if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
+    if (!erVeileder && !erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
         return (
             <>
                 <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeileder={erVeileder} />
-                {erVeileder ? props.children : null}
             </>
         );
     }
-    if (ikkeDigitalOppfolging) {
+    if ( !erVeileder && ikkeDigitalOppfolging) {
         return (
             <>
                 <AktiverDigitalOppfolging />
-                {erVeileder ? props.children : null}
             </>
         );
     }
