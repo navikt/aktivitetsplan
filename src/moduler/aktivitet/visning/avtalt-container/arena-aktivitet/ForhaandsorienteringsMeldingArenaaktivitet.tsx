@@ -18,9 +18,19 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
 
     const avtaltText119 = watch('avtaltText119');
     const [forhaandsorienteringType, setForhaandsorienteringType] = useState<string | null>(null);
+    const [error, setError] = useState("");
 
     const valgtforhandsorientering = (val: string) => {
         setForhaandsorienteringType(val);
+        setError("");
+    };
+
+    const handleSubmit = () => {
+        if (!forhaandsorienteringType) {
+            setError("Du må velge en type forhåndsorientering før du kan gå videre.");
+            register('forhaandsorienteringType')
+            return;
+        }
     };
 
     return (
@@ -30,6 +40,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                 legend="Velg type forhåndsorientering"
                 disabled={lasterData}
                 className="mt-4"
+                error={error}
             >
                 <Radio value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</Radio>
                 <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</Radio>
@@ -53,7 +64,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                 <VarslingInfo />
             </VisibleIfDiv>
 
-            <Button loading={lasterData}>Legg til</Button>
+            <Button loading={lasterData} onClick={handleSubmit}>Legg til</Button>
         </div>
     );
 };
