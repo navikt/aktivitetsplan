@@ -33,7 +33,6 @@ const ForhaandsorienteringsMelding = (props: Props) => {
                 <option value={ForhaandsorienteringType.IKKE_SEND}>Ingen forhåndsorientering</option>
             </Select>
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
-                <VarslingInfo />
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
                 <br/>
                 <VarslingInfo />
