@@ -201,4 +201,45 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   },
               }),
           }),
+        wrapAktivitet({
+            ...enEksternAktivitet({
+                tittel: 'Alfheim ordinære virksomhet',
+                status: AktivitetStatus.GJENNOMFOERT,
+                avtalt: true,
+                beskrivelse:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce blandit sollicitudin odio, nec eleifend nibh pulvinar ac. Donec sed sem.',
+                eksternAktivitet: {
+                    type: EksternAktivitetType.VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET,
+                    oppgave: {
+                        ekstern: {
+                            tekst: 'Du må godkjenne avtalen',
+                            subtekst:
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet justo sit amet turpis eleifend bibendum nec ac ipsum. Mauris et hendrerit justo. Nulla varius tristique magna at pellentesque.',
+                            url: 'https://www.nav.no/',
+                            knapptekst: 'Lorem ipsum',
+                        },
+                        intern: undefined,
+                    },
+                    handlinger: [
+                        {
+                            tekst: 'Gå til avtalen',
+                            subtekst: 'Avtale undertekst blah blah',
+                            url: 'https://www.nav.no/',
+                            lenkeType: 'FELLES',
+                        },
+                        {
+                            tekst: 'Denne handlingen kan kun veiledere se',
+                            subtekst: undefined,
+                            url: 'https://www.nav.no/',
+                            lenkeType: 'INTERN',
+                        },
+                    ],
+                    detaljer: [
+                        { label: 'Arbeidsmiljø', verdi: 'mixed' },
+                        { label: 'Arbeidssted', verdi: 'verksted' },
+                    ],
+                    etiketter: undefined,
+                },
+            }),
+        }),
       ];
