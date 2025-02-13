@@ -19,11 +19,19 @@ interface Props {
 
 const ForhaandsorienteringsMelding = (props: Props) => {
     const { register, oppdaterer, avtaltText119, errors } = props;
-
+    const [error, setError] = useState("");
     const [selectedType, setForhaandsorienteringType] = useState<string | null>(null);
 
     const valgtforhandsorientering = (val: string) => {
         setForhaandsorienteringType(val);
+        setError("");
+    };
+
+    const handleSubmit = () => {
+        if (!selectedType) {
+            setError("Du må velge en type forhåndsorientering før du kan gå videre.");
+            return;
+        }
     };
 
     return (
@@ -32,8 +40,9 @@ const ForhaandsorienteringsMelding = (props: Props) => {
                 legend="Velg type forhåndsorientering"
                 disabled={oppdaterer}
                 className="mt-4"
-                onChange={valgtforhandsorientering}
                 value={selectedType}
+                error={error}
+                onChange={valgtforhandsorientering}
             >
                 <Radio value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</Radio>
                 <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</Radio>
@@ -53,7 +62,6 @@ const ForhaandsorienteringsMelding = (props: Props) => {
                     value={avtaltText119}
                     {...register('avtaltText119')}
                     error={(errors as any).avtaltText119 && (errors as any).avtaltText119.message}
-
                 />
                 <br />
                 <VarslingInfo />
