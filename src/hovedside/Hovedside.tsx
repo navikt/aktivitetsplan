@@ -10,7 +10,6 @@ import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
-import { Loader } from '@navikt/ds-react';
 
 const Hovedside = () => {
     const navigate = useNavigate();
@@ -37,14 +36,6 @@ const Hovedside = () => {
                 <Outlet />
             </div>
         </main>
-    );
-};
-
-const Fallback = () => {
-    return (
-        <div className="flex flex-col items-center justify-center">
-            <Loader size="2xlarge" />
-        </div>
     );
 };
 

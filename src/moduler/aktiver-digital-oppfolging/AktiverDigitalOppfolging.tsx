@@ -10,7 +10,7 @@ import AktiverDigitalOppfolgingVarsel from './AktiverDigitalOppfolgingVarsel';
 
 const AktiverDigitalOppfolging = () => {
     const oppfolgingStatus = useSelector(selectOppfolgingStatus);
-    const reservertKrr = useSelector(selectReservasjonKRR);
+    const reservertKrr = useSelector(selectReservasjonKRR) || false;
 
     const settOppfolgingFeilet = oppfolgingStatus === Status.ERROR;
     const lasterOppfolging = oppfolgingStatus === Status.PENDING || oppfolgingStatus === Status.RELOADING;

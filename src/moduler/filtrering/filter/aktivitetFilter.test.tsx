@@ -23,7 +23,7 @@ import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
 import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
-import { emptyLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { rest } from 'msw';
 import { failOrGrahpqlResponse } from '../../../mocks/utils';
 
@@ -78,7 +78,7 @@ describe('aktivitets-filter', () => {
     afterEach(() => server.resetHandlers());
 
     it('should filter avtalt med nav', async () => {
-        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
+        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
         makeTestAktiviteter(store, [true, false], (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -109,7 +109,7 @@ describe('aktivitets-filter', () => {
             VeilarbAktivitetType.MOTE_TYPE,
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
-        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
+        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
         const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
             return {
                 ...aktivitet,
@@ -142,7 +142,7 @@ describe('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling fra Nav)', async () => {
-        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
+        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
         const statuser: StillingFraNavSoknadsstatus[] = [
             StillingFraNavSoknadsstatus.AVSLAG,
             StillingFraNavSoknadsstatus.VENTER,
@@ -170,7 +170,7 @@ describe('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling)', async () => {
-        const store = configureStore({ reducer, preloadedState: emptyLoadedVeilederState as any });
+        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
         const statuser: StillingStatus[] = [StillingStatus.INNKALT_TIL_INTERVJU, StillingStatus.SOKNAD_SENDT];
         makeTestAktiviteter(store, statuser, (aktivitet, value) => {
             return {
