@@ -35,7 +35,7 @@ const query = `
     }
 `;
 
-type DialogResponse = GraphqlResponse<{ dialoger: Dialog[]; stansVarsel?: Eskaleringsvarsel }>;
+export type DialogResponse = GraphqlResponse<{ dialoger: Dialog[]; stansVarsel?: Eskaleringsvarsel }>;
 
 const queryBody = (fnr: string) => ({
     query,

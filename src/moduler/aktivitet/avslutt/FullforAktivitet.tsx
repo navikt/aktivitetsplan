@@ -13,7 +13,7 @@ import { RootState } from '../../../store';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseForm from './BegrunnelseForm';
-import PubliserReferat from './PubliserReferat';
+import ReferatIkkePubliserAdvarsel from './ReferatIkkePubliserAdvarsel';
 import VisAdvarsel from './vis-advarsel';
 
 const headerTekst = 'Fullført aktivitet';
@@ -61,13 +61,13 @@ const FullforAktivitet = () => {
 
     return (
         <Modal onClose={() => navigate(hovedsideRoute(), { replace: true })} heading="Fullfør aktivitet">
-            <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.FULLFOERT}>
+            <ReferatIkkePubliserAdvarsel aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.FULLFOERT}>
                 {valgtAktivitet.avtalt &&
                 valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&
                 valgtAktivitet.type !== MOTE_TYPE
                     ? begrunnelse
                     : advarsel}
-            </PubliserReferat>
+            </ReferatIkkePubliserAdvarsel>
         </Modal>
     );
 };

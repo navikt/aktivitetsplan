@@ -1,5 +1,5 @@
 import { PlusIcon } from '@navikt/aksel-icons';
-import { Button, Dropdown } from '@navikt/ds-react';
+import { ActionMenu, Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -53,30 +53,30 @@ const LeggTilNyttAktivitetsKort = () => {
         : brukerAktivitetsValg(nyAktivitetBasePath);
     return (
         <div className="self-stretch sm:self-auto">
-            <Dropdown>
-                <Button
-                    as={Dropdown.Toggle}
-                    loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
-                    className="relative w-full"
-                    icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
-                    disabled={aktivitetStatus !== Status.OK || viserHistoriskPeriode}
-                >
-                    Legg til aktivitet
-                </Button>
-                <Dropdown.Menu>
+            <ActionMenu>
+                <ActionMenu.Trigger>
+                    <Button
+                        loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
+                        className="relative w-full"
+                        icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
+                        disabled={aktivitetStatus !== Status.OK || viserHistoriskPeriode}
+                    >
+                        Legg til aktivitet
+                    </Button>
+                </ActionMenu.Trigger>
+                <ActionMenu.Content>
                     {menuItemsGroup.map((item, index) => (
-                        <Dropdown.Menu.GroupedList key={item.groupTittel}>
-                            <Dropdown.Menu.GroupedList.Heading>{item.groupTittel}</Dropdown.Menu.GroupedList.Heading>
+                        <ActionMenu.Group key={item.groupTittel} label={item.groupTittel}>
                             {item.groupedItems.map((subItem) => (
-                                <Dropdown.Menu.GroupedList.Item as={Link} to={subItem.link} key={subItem.tittle}>
+                                <ActionMenu.Item as={Link} to={subItem.link} key={subItem.tittle}>
                                     {subItem.tittle}
-                                </Dropdown.Menu.GroupedList.Item>
+                                </ActionMenu.Item>
                             ))}
-                            {index != menuItemsGroup.length - 1 ? <Dropdown.Menu.Divider /> : null}
-                        </Dropdown.Menu.GroupedList>
+                            {index != menuItemsGroup.length - 1 ? <ActionMenu.Divider /> : null}
+                        </ActionMenu.Group>
                     ))}
-                </Dropdown.Menu>
-            </Dropdown>
+                </ActionMenu.Content>
+            </ActionMenu>
         </div>
     );
 };

@@ -70,7 +70,7 @@ export const enStillingFraNavAktivitet = ({
 };
 export const jaCvKanDeles = {
     kanDeles: true,
-    endretTidspunkt: new Date(),
+    endretTidspunkt: new Date().toISOString(),
     endretAv: 'V123',
     endretAvType: 'BRUKER',
 };

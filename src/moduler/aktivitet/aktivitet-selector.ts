@@ -9,7 +9,7 @@ import {
     oppdaterAktivitetEtikett,
     oppdaterStillingFraNavSoknadsstatus,
 } from './aktivitet-actions';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { Historikk } from '../../datatypes/Historikk';
 import { selectAktivitet, selectAktiviteterSlice } from './aktivitet-slice';
 

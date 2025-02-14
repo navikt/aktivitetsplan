@@ -1,5 +1,5 @@
 import { RootState } from '../../../store';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 
 const selectVersjonerSlice = (state: RootState) => state.data.versjoner;
 

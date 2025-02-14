@@ -76,29 +76,36 @@ const AktivitetStatusForm = (props: Props) => {
     const {
         register,
         handleSubmit,
-        reset,
         setValue,
         watch,
         formState: { errors, isDirty, isSubmitting },
     } = useForm<AktivitetStatusFormValues>({ defaultValues, resolver: zodResolver(schema), shouldFocusError: true });
 
+    const { setFormIsDirty } = useContext(DirtyContext);
+
     useEffect(() => {
-        reset();
         setValue('aktivitet', aktivitet);
     }, [aktivitet]);
-
-    const { setFormIsDirty } = useContext(DirtyContext);
 
     useEffect(() => {
         setFormIsDirty('status', isDirty);
         return () => {
             setFormIsDirty('status', false);
         };
-    }, [setFormIsDirty, isDirty]);
+    }, [isDirty]);
 
     const status = watch('aktivitetstatus');
-    const visAdvarsel = status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT;
+    const isDirtyManuell = status !== aktivitet.status; // ser ut som isDirty ikke fungerer riktig
+    const visAdvarsel = isDirtyManuell && (status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT);
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
+
+    useEffect(() => {
+        if(isDirtyManuell) {
+            setFormIsDirty('status', true);
+        } else {
+            setFormIsDirty('status', false);
+        }
+    }, [isDirtyManuell]);
 
     const onChangeStatus = (value: AktivitetStatus) => {
         setValue('aktivitetstatus', value);

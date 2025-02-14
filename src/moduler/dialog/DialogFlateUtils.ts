@@ -36,7 +36,7 @@ export const getDialogLenke = ({
 }: {
     erVeileder: boolean;
     fnr?: string;
-    aktivitetId: string;
+    aktivitetId?: string;
     dialogId?: string;
 }) => {
     if (erVeileder) {

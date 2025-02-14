@@ -20,7 +20,7 @@ const getManglerPubliseringTekst = (aktivitet: SamtalereferatAktivitet | MoteAkt
     }
 };
 
-const PubliserReferat = ({ aktivitet, nyStatus, children }: Props) => {
+const ReferatIkkePubliserAdvarsel = ({ aktivitet, nyStatus, children }: Props) => {
     if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
         return (
             <Alert variant="error" inline>
@@ -31,4 +31,4 @@ const PubliserReferat = ({ aktivitet, nyStatus, children }: Props) => {
     return children;
 };
 
-export default PubliserReferat;
+export default ReferatIkkePubliserAdvarsel;

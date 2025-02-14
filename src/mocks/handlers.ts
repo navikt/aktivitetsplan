@@ -17,7 +17,7 @@ import {
 } from './aktivitet';
 import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './data/arena';
 import { auth } from './data/auth';
-import dialoger, { opprettDialog } from './data/dialog';
+import dialoger from './data/dialog';
 import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
 import { lest } from './data/lest';
@@ -43,6 +43,7 @@ import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils'
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
 import { subDays, subMinutes } from 'date-fns';
+import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -65,7 +66,6 @@ export const handlers = [
     // veilarbdialog
     rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
     rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
-    rest.post('/veilarbdialog/api/dialog', jsonResponse(opprettDialog)),
     rest.post(
         '/veilarbdialog/graphql',
         failOrGrahpqlResponse(dialogFeilet, () => ({
@@ -181,14 +181,14 @@ export const handlers = [
 
 export const aktivitestplanResponse = (
     { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter },
-) => {
+): AktivitetsplanResponse => {
     return {
         data: {
             perioder: mockOppfolging.oppfolgingsPerioder.map((periode) => ({
                 id: periode.uuid,
                 aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.uuid),
                 start: periode.startDato,
-                slutt: periode.sluttDato,
+                slutt: periode.sluttDato ?? undefined,
             })),
         },
     };

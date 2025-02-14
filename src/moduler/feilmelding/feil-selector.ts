@@ -17,7 +17,7 @@ import { hentLest } from '../lest/lest-slice';
 import { hentMal, oppdaterMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
 export const selectFeil = (errors: RootState['data']['errors'], ...types: string[]): SerializedError[] => {

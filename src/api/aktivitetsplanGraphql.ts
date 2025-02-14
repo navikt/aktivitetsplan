@@ -179,7 +179,7 @@ interface OppfolgingsPerioder {
     slutt: string | undefined;
 }
 
-type AktivitetsplanResponse = GraphqlResponse<{ perioder: OppfolgingsPerioder[] }>;
+export type AktivitetsplanResponse = GraphqlResponse<{ perioder: OppfolgingsPerioder[] }>;
 
 export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';

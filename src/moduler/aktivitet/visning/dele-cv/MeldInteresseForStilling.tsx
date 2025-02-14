@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
-import { endOfToday, parseISO, startOfDay, subDays } from 'date-fns';
+import { Alert, BodyShort, Button, Heading, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import { endOfToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { ZodErrorMap, z } from 'zod';
+import { z, ZodErrorMap } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
@@ -17,6 +17,7 @@ import CustomErrorSummary from '../../aktivitet-forms/CustomErrorSummary';
 import { Ingress } from './DeleCvContainer';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
 import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
+import { LesMerDelingAvCV } from './LesMerDelingAvCV';
 
 enum SvarType {
     JA = 'ja',
@@ -140,7 +141,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                     </Radio>
                     <Radio value={SvarType.NEI.toString()}>{NeiSvarTekst}</Radio>
                 </RadioGroup>
-
+                <LesMerDelingAvCV />
                 <CustomErrorSummary errors={errors} />
                 <Feilmelding feilmeldinger={oppdaterCvFeil} />
                 <div className="flex gap-4 items-center mt-8">

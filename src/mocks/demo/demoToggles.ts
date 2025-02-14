@@ -3,7 +3,7 @@ import {
     arenaFeilet,
     dialogFeilet,
     erEskalertBruker,
-    erEskalertBrukerGammel,
+    erEskalertBrukerGammel, erIkkeRegistrertIKRR,
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
@@ -11,7 +11,7 @@ import {
     forhaandsvisningFeiler,
     ikkeLoggetInnNivaa4,
     ingenOppfPerioder,
-    journalforingFeiler,
+    journalforingFeiler, kanIkkeVarsles,
     LocalStorageElement,
     maalFeilet,
     nivaa4Feilet,
@@ -20,8 +20,7 @@ import {
     ulesteDialoger,
     visArenaAktiviteter,
     visAutomatiskeAktiviteter,
-    visEksterneAktiviteter,
-    visTestAktiviteter,
+    visTestAktiviteter
 } from './localStorage';
 
 export const brukertype = {
@@ -53,7 +52,7 @@ export const features = [
         checked: erManuellBruker,
     },
     {
-        label: 'KRR',
+        label: 'Er reservert i KRR',
         id: LocalStorageElement.KRR_BRUKER,
         checked: erKRRBruker,
     },
@@ -87,6 +86,16 @@ export const features = [
         id: LocalStorageElement.UNDER18,
         checked: erUnder18,
     },
+    {
+        label: 'Kan ikke varsles',
+        id: LocalStorageElement.KAN_IKKE_VARSLES,
+        checked: kanIkkeVarsles,
+    },
+    {
+        label: 'Ikke registrert i KRR',
+        id: LocalStorageElement.ER_IKKE_REGISTRERT_I_KRR,
+        checked : erIkkeRegistrertIKRR,
+    },
 ];
 export const aktivitetTilstand = [
     {
@@ -103,11 +112,6 @@ export const aktivitetTilstand = [
         label: 'Testaktiviteter',
         id: LocalStorageElement.TEST_AKTIVITETER,
         checked: visTestAktiviteter,
-    },
-    {
-        label: 'Eksterne aktiviteter',
-        id: LocalStorageElement.EKSTERNE_AKTIVITETER,
-        checked: visEksterneAktiviteter,
     },
 ];
 export const feiltilstander = [

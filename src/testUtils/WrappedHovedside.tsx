@@ -15,7 +15,7 @@ export const WrappedHovedside = ({
     enhetId,
 }: {
     store: ToolkitStore;
-    fnr: string | undefined;
+    fnr?: string | undefined;
     enhetId?: string | undefined;
 }) => {
     return (

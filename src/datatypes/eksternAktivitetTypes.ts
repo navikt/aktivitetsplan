@@ -11,7 +11,8 @@ type Lenke = RequiredLenkeProps;
 type SentimentType = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE';
 
 export interface Oppgave extends Lenke {
-    knapptekst: string;
+    // TODO: Få denne fra backend, den finnes ikke der idag (desverre :( )
+    knapptekst?: string;
 }
 
 export interface LenkeMedType extends RequiredLenkeProps {

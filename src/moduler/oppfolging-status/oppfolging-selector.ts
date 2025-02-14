@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { compareDesc } from 'date-fns';
 
 import { RootState } from '../../store';
@@ -18,6 +18,8 @@ export function selectOppfolgingStatus(state: RootState) {
 }
 
 export const selectReservasjonKRR = (state: RootState) => selectOppfolgingData(state)?.reservasjonKRR;
+export const selectKanVarsles = (state: RootState)  => selectOppfolgingData(state)?.kanVarsles || false;
+export const selectErRegisrertIKRR = (state: RootState) => selectOppfolgingData(state)?.registrertKRR || false;
 
 export function selectServicegruppe(state: RootState) {
     return selectOppfolgingData(state)?.servicegruppe;
@@ -48,9 +50,10 @@ export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] =
 );
 
 export const selectSorterteOppfolgingsperioder = createSelector(selectOppfolgingsPerioder, (perioder) => {
-    return perioder.toSorted((a, b) => {
+    const sortertePerioder = Array.from(perioder).sort((a, b) => {
         return compareDesc(a.start, b.start);
     });
+    return sortertePerioder;
 });
 
 // TODO refaktorer, må fikse typer oppfolgingsperioder-typene i hele appen

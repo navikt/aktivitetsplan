@@ -49,6 +49,7 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
     const dispatch = useAppDispatch();
     const erVeileder = useErVeileder();
     const disableStatusEndring = useDisableStatusEndring(aktivitet, erVeileder);
+    const { setFormIsDirty } = useContext(DirtyContext);
 
     const onSubmit = (formValues: AktivitetStatusFormValues): Promise<any> => {
         setFormIsDirty('status', false);
@@ -62,7 +63,6 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
     };
 
     const subtittel = <BodyShort>{aktivitetStatusMap[aktivitet.status]}</BodyShort>;
-    const { setFormIsDirty } = useContext(DirtyContext);
     const form = <AktivitetStatusForm disabled={disableStatusEndring} onSubmit={onSubmit} aktivitet={aktivitet} />;
 
     return (

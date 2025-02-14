@@ -12,8 +12,9 @@ import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseForm from './BegrunnelseForm';
-import PubliserReferat from './PubliserReferat';
+import ReferatIkkePubliserAdvarsel from './ReferatIkkePubliserAdvarsel';
 import VisAdvarsel from './vis-advarsel';
+import { RootState } from '../../../store';
 
 const headerTekst = 'Avbrutt aktivitet';
 const beskrivelseLabel =
@@ -22,7 +23,9 @@ const beskrivelseLabel =
 
 const AvbrytAktivitet = () => {
     const { id: aktivitetId } = useParams<{ id: string }>();
-    const valgtAktivitet = useSelector((state) => (aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined));
+    const valgtAktivitet = useSelector((state: RootState) =>
+        aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
+    );
     const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
 
     const navigate = useNavigate();
@@ -41,6 +44,7 @@ const AvbrytAktivitet = () => {
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
                 lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
+                navigate(hovedsideRoute());
             }}
         />
     ) : null;
@@ -60,9 +64,9 @@ const AvbrytAktivitet = () => {
     return (
         <Modal onClose={() => navigate(hovedsideRoute(), { replace: true })} heading={'Avbryt aktivitet'}>
             {valgtAktivitet ? (
-                <PubliserReferat aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.AVBRUTT}>
+                <ReferatIkkePubliserAdvarsel aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.AVBRUTT}>
                     {maaBegrunnes ? begrunnelse : advarsel}
-                </PubliserReferat>
+                </ReferatIkkePubliserAdvarsel>
             ) : (
                 <Loader />
             )}

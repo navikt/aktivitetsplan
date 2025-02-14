@@ -1,6 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
-import { createSelector } from 'reselect';
 
 const valgtPeriodeSlice = createSlice({
     name: 'valgtPeriodeSlice',

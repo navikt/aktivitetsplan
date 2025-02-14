@@ -27,6 +27,8 @@ export enum LocalStorageElement {
     ULESTE_DIALOGER = 'uleste_dialoger',
     FNR = 'aktivitetsplan_fnr',
     UNDER18 = 'under18',
+    KAN_IKKE_VARSLES = 'kanVarsles',
+    ER_IKKE_REGISTRERT_I_KRR = 'erIkkeRegistrertIKRR',
 }
 
 export const settLocalStorage = (key: string, value: string | boolean) => {
@@ -75,6 +77,11 @@ export const visEksterneAktiviteter = () => erSatt(LocalStorageElement.EKSTERNE_
 export const visDialoger = () => erSatt(LocalStorageElement.TEST_DIALOGER);
 
 export const erUnder18 = () => erSatt(LocalStorageElement.UNDER18);
+
+export const kanIkkeVarsles = () => erSatt(LocalStorageElement.KAN_IKKE_VARSLES);
+
+export const erIkkeRegistrertIKRR = () => erSatt(LocalStorageElement.ER_IKKE_REGISTRERT_I_KRR);
+
 export const oppfFeilet = () => erSatt(LocalStorageElement.OPPF_FEILET);
 
 export const dialogFeilet = () => erSatt(LocalStorageElement.DIALOG_FEILET);

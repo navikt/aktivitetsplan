@@ -2,7 +2,7 @@ import React from 'react';
 import { describe } from 'vitest';
 import { WrappedHovedside } from '../testUtils/WrappedHovedside';
 import { act, render } from '@testing-library/react';
-import { emptyLoadedVeilederState } from '../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../testUtils/defaultInitialStore';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../mocks/utils';
@@ -16,7 +16,7 @@ import { oppfolgingsdperiodeAdapter } from '../moduler/aktivitet/aktivitet-slice
 
 const initialState = {
     data: {
-        ...emptyLoadedVeilederState.data,
+        ...emptyHalfLoadedVeilederState.data,
         aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({ status: Status.NOT_STARTED }),
         arenaAktiviteter: {
             status: Status.NOT_STARTED,
