@@ -16,7 +16,6 @@ const initialState: FilterState = {
         EGEN: false,
         GRUPPEAKTIVITET: false,
         IJOBB: false,
-        MIDLERTIDIG_LONNSTILSKUDD: false,
         MOTE: false,
         SAMTALEREFERAT: false,
         SOKEAVTALE: false,
@@ -24,8 +23,10 @@ const initialState: FilterState = {
         STILLING_FRA_NAV: false,
         TILTAKSAKTIVITET: false,
         UTDANNINGSAKTIVITET: false,
+        MIDLERTIDIG_LONNSTILSKUDD: false,
         VARIG_LONNSTILSKUDD: false,
         ARBEIDSTRENING: false,
+        VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,

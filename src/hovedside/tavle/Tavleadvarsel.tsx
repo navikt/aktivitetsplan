@@ -6,7 +6,7 @@ import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE
 } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
@@ -34,6 +34,8 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
 
                 case EksternAktivitetType.MIDL_LONNSTILSKUDD_TYPE:
                 case EksternAktivitetType.VARIG_LONNSTILSKUDD_TYPE:
+                case EksternAktivitetType.ARBEIDSTRENING:
+                case EksternAktivitetType.VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET:
                     return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status.';
             }
             return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til fagsystemet for å endre aktiviteten.';
