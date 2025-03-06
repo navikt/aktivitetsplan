@@ -44,6 +44,7 @@ import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
 import { subDays, subMinutes } from 'date-fns';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
+import { sjekkTryggTekst } from './data/tryggtekst';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -177,6 +178,9 @@ export const handlers = [
 
     // veilarbmalverk
     rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
+
+    // tryggtekst
+    rest.post('/tryggtekst/completion', sjekkTryggTekst),
 ];
 
 export const aktivitestplanResponse = (
