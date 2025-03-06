@@ -18,7 +18,7 @@ import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, utenHistorikk } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
-import { TryggTekst } from '../../aktivitet-forms/tryggtekst/TryggTekst';
+import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -115,7 +115,7 @@ const OppdaterReferatForm = (props: Props) => {
                 >
                     Klarspråkhjelpen
                 </Switch>
-                <TryggTekst value={referatValue} />
+                <TryggTekstBakFeatureToggle value={referatValue} />
                 <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
             </>
             <Feilmelding feilmeldinger={feil} />

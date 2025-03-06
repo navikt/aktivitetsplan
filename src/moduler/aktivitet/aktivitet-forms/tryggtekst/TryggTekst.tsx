@@ -5,6 +5,9 @@ import { EyeIcon } from '@navikt/aksel-icons';
 import { Status } from '../../../../createGenericSlice';
 import { sjekkForPersonopplysninger } from './tryggtekst-slice';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
+import { useEffect } from 'react';
+import { hentFeatures } from '../../../feature/feature-slice';
+import { selectFeature, selectFeatureSlice } from '../../../feature/feature-selector';
 
 export const TryggTekst = ({ value }: { value: string }) => {
     const dispatch = useAppDispatch();
@@ -52,4 +55,18 @@ export const TryggTekst = ({ value }: { value: string }) => {
 
 const capitalize = (tekst: string) => {
     return tekst.charAt(0).toUpperCase() + tekst.slice(1);
+};
+
+export const TryggTekstBakFeatureToggle = ({ value }: { value: string }) => {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(hentFeatures());
+    }, []);
+
+    const { status, data } = useSelector(selectFeatureSlice);
+
+    return status === Status.OK && data && data['aktivitetsplan.tryggtekst'] === true ? (
+        <TryggTekst value={value} />
+    ) : null;
 };

@@ -13,7 +13,7 @@ import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import { useReferatStartTekst } from './useReferatStartTekst';
-import { TryggTekst } from '../tryggtekst/TryggTekst';
+import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -125,7 +125,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                             >
                                 Klarspråkhjelpen
                             </Switch>
-                            <TryggTekst value={referatValue} />
+                            <TryggTekstBakFeatureToggle value={referatValue} />
                             <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
                         </>
                     )}
