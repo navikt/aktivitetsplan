@@ -13,11 +13,11 @@ import { selectErBruker } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { skalMarkereForhaandsorienteringSomLest } from './avtalt-container/utilsForhaandsorientering';
+import { useSelectedAktivitet } from './useSelectedAktivitet';
 
 const DIALOG_TEKST = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
 interface Props {
-    aktivitet?: AlleAktiviteter;
     avhengigheter: Avhengighet[];
     children: React.ReactNode;
 }
@@ -25,7 +25,8 @@ interface Props {
 const emptySelector = () => [];
 
 const AktivitetvisningModal = (props: Props) => {
-    const { aktivitet, avhengigheter, children } = props;
+    const { avhengigheter, children } = props;
+    const aktivitet = useSelectedAktivitet();
     const dirty = useContext(DirtyContext);
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
