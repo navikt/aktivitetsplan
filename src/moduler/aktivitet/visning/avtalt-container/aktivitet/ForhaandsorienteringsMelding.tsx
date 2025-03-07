@@ -1,4 +1,4 @@
-import { BodyShort, Label, Radio, RadioGroup, Select, Textarea } from '@navikt/ds-react';
+import { BodyShort, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
@@ -12,6 +12,7 @@ import { ForhaandsorienteringDialogFormValues } from './AvtaltForm';
 interface Props {
     register: UseFormRegister<ForhaandsorienteringDialogFormValues>;
     oppdaterer: boolean;
+    forhaandsorienteringType: ForhaandsorienteringType;
     avtaltText119: string;
     errors: FieldErrors<ForhaandsorienteringDialogFormValues>;
 }
@@ -20,14 +21,14 @@ const ForhaandsorienteringsMelding = (props: Props) => {
     const { register, oppdaterer, avtaltText119, errors } = props;
     const [radioValue, setRadioValue] = useState("");
 
-    const onChangeForhaansorientering = (value: ForhaandsorienteringType) => {
+    const onChangeForhaandsorientering = (value: ForhaandsorienteringType) => {
         setRadioValue(value);
     }
 
     return (
         <>
-            <RadioGroup defaultValue={radioValue} onChange={onChangeForhaansorientering} legend="Velg type forhåndsorientering" disabled={oppdaterer} className="mt-4">
-                <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
+            <RadioGroup {...register('forhaandsorienteringType')} onChange={onChangeForhaandsorientering} defaultValue={radioValue} legend="Velg type forhåndsorientering" disabled={oppdaterer} className="mt-4">
+                <Radio  value={ForhaandsorienteringType.SEND_STANDARD}>
                     Forhåndsorientering (standard melding)
                 </Radio>
                 <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>

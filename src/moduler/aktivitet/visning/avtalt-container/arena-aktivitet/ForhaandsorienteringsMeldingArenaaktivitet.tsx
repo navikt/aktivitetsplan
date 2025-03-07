@@ -18,7 +18,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     const { lasterData, register, watch } = props;
     const [radioValue, setRadioValue] = useState("");
 
-    const onChangeForhaansorientering = (value: ForhaandsorienteringType) => {
+    const onChangeForhaandsorientering = (value: ForhaandsorienteringType) => {
         setRadioValue(value);
     }
 
@@ -27,7 +27,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
 
     return (
         <div className="space-y-8 my-4">
-            <RadioGroup defaultValue={radioValue} onChange={onChangeForhaansorientering} legend="Velg type forhåndsorientering" disabled={lasterData} className="mt-4">
+            <RadioGroup {...register('forhaandsorienteringType')} defaultValue={radioValue} onChange={onChangeForhaandsorientering} legend="Velg type forhåndsorientering" disabled={lasterData} className="mt-4">
                 <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
                     Forhåndsorientering (standard melding)
                 </Radio>

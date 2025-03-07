@@ -133,6 +133,7 @@ const AvtaltForm = (props: Props) => {
                     {kanSendeForhaandsvarsel ? (
                         <ForhaandsorienteringsMelding
                             register={register}
+                            forhaandsorienteringType={forhaandsorienteringType}
                             avtaltText119={avtaltText119}
                             oppdaterer={isSubmitting}
                             errors={errors}
