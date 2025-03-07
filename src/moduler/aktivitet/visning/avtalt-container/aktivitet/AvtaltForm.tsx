@@ -84,6 +84,7 @@ const AvtaltForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
+        setValue,
         formState: { errors, isDirty, isSubmitting },
     } = useForm<ForhaandsorienteringDialogFormValues>({
         defaultValues,
@@ -133,6 +134,7 @@ const AvtaltForm = (props: Props) => {
                     {kanSendeForhaandsvarsel ? (
                         <ForhaandsorienteringsMelding
                             register={register}
+                            setValue={(forhaandsorienteringType: ForhaandsorienteringType) => setValue('forhaandsorienteringType', forhaandsorienteringType)}
                             forhaandsorienteringType={forhaandsorienteringType}
                             avtaltText119={avtaltText119}
                             oppdaterer={isSubmitting}

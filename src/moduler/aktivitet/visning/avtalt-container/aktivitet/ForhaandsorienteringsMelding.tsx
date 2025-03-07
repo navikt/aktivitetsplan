@@ -11,6 +11,7 @@ import { ForhaandsorienteringDialogFormValues } from './AvtaltForm';
 
 interface Props {
     register: UseFormRegister<ForhaandsorienteringDialogFormValues>;
+    setValue: (forhaandsorienteringType: ForhaandsorienteringType) => void;
     oppdaterer: boolean;
     forhaandsorienteringType: ForhaandsorienteringType;
     avtaltText119: string;
@@ -18,17 +19,12 @@ interface Props {
 }
 
 const ForhaandsorienteringsMelding = (props: Props) => {
-    const { register, oppdaterer, avtaltText119, errors } = props;
-    const [radioValue, setRadioValue] = useState("");
-
-    const onChangeForhaandsorientering = (value: ForhaandsorienteringType) => {
-        setRadioValue(value);
-    }
+    const { register, setValue, forhaandsorienteringType, oppdaterer, avtaltText119, errors } = props;
 
     return (
         <>
-            <RadioGroup {...register('forhaandsorienteringType')} onChange={onChangeForhaandsorientering} defaultValue={radioValue} legend="Velg type forhåndsorientering" disabled={oppdaterer} className="mt-4">
-                <Radio  value={ForhaandsorienteringType.SEND_STANDARD}>
+            <RadioGroup {...register('forhaandsorienteringType')} onChange={forhaandsorienteringType} legend="Velg type forhåndsorientering" disabled={oppdaterer} className="mt-4">
+                <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
                     Forhåndsorientering (standard melding)
                 </Radio>
                 <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
@@ -38,12 +34,12 @@ const ForhaandsorienteringsMelding = (props: Props) => {
                     Ingen forhåndsorientering
                 </Radio>
             </RadioGroup>
-            <VisibleIfDiv visible={radioValue === ForhaandsorienteringType.SEND_STANDARD}>
+            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <Label>Teksten som blir lagt til aktiviteten</Label>
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
                 <VarslingInfo />
             </VisibleIfDiv>
-            <VisibleIfDiv visible={radioValue === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
+            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea
                     label="Teksten som blir lagt til aktiviteten"
                     maxLength={500}
