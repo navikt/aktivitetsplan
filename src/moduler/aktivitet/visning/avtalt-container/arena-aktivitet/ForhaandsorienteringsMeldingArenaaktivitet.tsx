@@ -51,7 +51,7 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                 <VarslingInfo />
             </VisibleIfDiv>
 
-            <Button loading={lasterData}>Bekreft</Button>
+            <Button loading={lasterData}>Legg til</Button>
         </div>
     );
 };
