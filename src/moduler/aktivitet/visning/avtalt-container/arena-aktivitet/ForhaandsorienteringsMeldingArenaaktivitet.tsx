@@ -1,5 +1,5 @@
-import { BodyShort, Button, Select, Textarea } from '@navikt/ds-react';
-import React from 'react';
+import { BodyShort, Button, Label, Radio, RadioGroup, Select, Textarea } from '@navikt/ds-react';
+import React, { useState } from 'react';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form/dist/types/form';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
@@ -16,33 +16,39 @@ interface Props {
 
 const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     const { lasterData, register, watch } = props;
+    const [radioValue, setRadioValue] = useState("");
+
+    const onChangeForhaansorientering = (value: ForhaandsorienteringType) => {
+        setRadioValue(value);
+    }
 
     const forhaandsorienteringType = watch('forhaandsorienteringType');
     const avtaltText119 = watch('avtaltText119');
 
     return (
-        <div className="space-y-8">
-            <Select
-                label="Velg type forhåndsorientering"
-                disabled={lasterData}
-                className="mt-4"
-                {...register('forhaandsorienteringType')}
-            >
-                <option value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</option>
-                <option value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</option>
-            </Select>
-            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
-                <VarslingInfo />
+        <div className="space-y-8 my-4">
+            <RadioGroup defaultValue={radioValue} onChange={onChangeForhaansorientering} legend="Velg type forhåndsorientering" disabled={lasterData} className="mt-4">
+                <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
+                    Forhåndsorientering (standard melding)
+                </Radio>
+                <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
+                    Forhåndsorientering for §11-9 (AAP)
+                </Radio>
+            </RadioGroup>
+            <VisibleIfDiv visible={radioValue === ForhaandsorienteringType.SEND_STANDARD}>
+                <Label>Teksten som blir lagt til aktiviteten</Label>
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
+                <VarslingInfo />
             </VisibleIfDiv>
 
-            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
+            <VisibleIfDiv visible={radioValue === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea
-                    label={<VarslingInfo />}
+                    label="Teksten som blir lagt til aktiviteten"
                     maxLength={500}
                     value={avtaltText119}
                     {...register('avtaltText119')}
                 />
+                <VarslingInfo />
             </VisibleIfDiv>
 
             <Button loading={lasterData}>Bekreft</Button>

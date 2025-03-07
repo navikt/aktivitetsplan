@@ -125,7 +125,7 @@ const AvtaltForm = (props: Props) => {
                 <Detail className="text-right flex-grow">FOR NAV-ANSATT</Detail>
             </div>
             {showForm && (
-                <div className="space-y-4 mb-2">
+                <div className="space-y-4 mb-4">
                     <KanIkkeSendeForhaandsorienteringInfotekst
                         mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                         manglerTilDato={!aktivitet.tilDato}
@@ -133,7 +133,6 @@ const AvtaltForm = (props: Props) => {
                     {kanSendeForhaandsvarsel ? (
                         <ForhaandsorienteringsMelding
                             register={register}
-                            forhaandsorienteringType={forhaandsorienteringType}
                             avtaltText119={avtaltText119}
                             oppdaterer={isSubmitting}
                             errors={errors}
@@ -141,7 +140,7 @@ const AvtaltForm = (props: Props) => {
                     ) : null}
                     <Feilmelding feilmeldinger={feil} />
                     <Button loading={isSubmitting} disabled={lasterData}>
-                        Bekreft
+                        Legg til
                     </Button>
                 </div>
             )}
