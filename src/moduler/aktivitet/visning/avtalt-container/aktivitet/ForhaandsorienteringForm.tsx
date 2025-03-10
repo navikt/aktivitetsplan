@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
-
 import { Status } from '../../../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
@@ -55,10 +54,12 @@ const ForhaandsorienteringForm = (props: Props) => {
 
     const isArena = isArenaAktivitet(aktivitet);
 
-    const { register, handleSubmit, watch } = useForm<ForhaandsorienteringFormValues>({
+    const { register, setValue, handleSubmit, watch } = useForm<ForhaandsorienteringFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
     });
+
+    const forhaandsorienteringType = watch('forhaandsorienteringType');
 
     const onSubmit = (formValues: ForhaandsorienteringFormValues) => {
         const tekst =
@@ -113,7 +114,12 @@ const ForhaandsorienteringForm = (props: Props) => {
                 <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med Nav&quot;</p>
             ) : null}
             {showForm ? (
-                <ForhaandsorienteringsMeldingArenaaktivitet lasterData={lasterData} register={register} watch={watch} />
+                <ForhaandsorienteringsMeldingArenaaktivitet
+                    lasterData={lasterData}
+                    setValue={(forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9) => setValue('forhaandsorienteringType', forhaandsorienteringType)}
+                    forhaandsorienteringType={forhaandsorienteringType}
+                    register={register}
+                    watch={watch} />
             ) : null}
         </form>
     );

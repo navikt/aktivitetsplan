@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Button, Checkbox, Detail, HelpText } from '@navikt/ds-react';
 import React, { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
@@ -72,7 +72,11 @@ const AvtaltForm = (props: Props) => {
 
     const kanSendeForhaandsvarsel = useKanSendeVarsel() && !mindreEnnSyvDagerTil;
 
-    const defaultValues: ForhaandsorienteringDialogFormValues = {
+    const defaultValues: {
+        forhaandsorienteringType: ForhaandsorienteringType;
+        avtaltText: string;
+        avtaltText119: string;
+    } = {
         forhaandsorienteringType: kanSendeForhaandsvarsel
             ? ForhaandsorienteringType.SEND_STANDARD
             : ForhaandsorienteringType.IKKE_SEND,
@@ -80,18 +84,14 @@ const AvtaltForm = (props: Props) => {
         avtaltText119: AVTALT_TEKST_119,
     };
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors, isDirty, isSubmitting },
-    } = useForm<ForhaandsorienteringDialogFormValues>({
+    const formMethods = useForm<ForhaandsorienteringDialogFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
     });
-
-    const forhaandsorienteringType = watch('forhaandsorienteringType');
-    const avtaltText119 = watch('avtaltText119');
+    const {
+        handleSubmit,
+        formState: { isDirty, isSubmitting },
+    } = formMethods;
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
@@ -125,23 +125,19 @@ const AvtaltForm = (props: Props) => {
                 <Detail className="text-right flex-grow">FOR NAV-ANSATT</Detail>
             </div>
             {showForm && (
-                <div className="space-y-4 mb-2">
+                <div className="space-y-4 mb-4">
                     <KanIkkeSendeForhaandsorienteringInfotekst
                         mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                         manglerTilDato={!aktivitet.tilDato}
                     />
                     {kanSendeForhaandsvarsel ? (
-                        <ForhaandsorienteringsMelding
-                            register={register}
-                            forhaandsorienteringType={forhaandsorienteringType}
-                            avtaltText119={avtaltText119}
-                            oppdaterer={isSubmitting}
-                            errors={errors}
-                        />
+                        <FormProvider {...formMethods}>
+                            <ForhaandsorienteringsMelding />
+                        </FormProvider>
                     ) : null}
                     <Feilmelding feilmeldinger={feil} />
                     <Button loading={isSubmitting} disabled={lasterData}>
-                        Bekreft
+                        Legg til
                     </Button>
                 </div>
             )}
