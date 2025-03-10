@@ -10,24 +10,24 @@ import VarslingInfo from '../VarslingInfo';
 
 interface Props {
     lasterData: boolean;
+    setValue: (forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9) => void;
+    forhaandsorienteringType: ForhaandsorienteringType;
     register: UseFormRegister<ForhaandsorienteringFormValues>;
     watch: UseFormWatch<ForhaandsorienteringFormValues>;
 }
 
 const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
-    const { lasterData, register, watch } = props;
-    const [radioValue, setRadioValue] = useState("");
+    const { lasterData, setValue, forhaandsorienteringType, register, watch } = props;
 
-    const onChangeForhaandsorientering = (value: ForhaandsorienteringType) => {
-        setRadioValue(value);
+    const onChangeForhaandsorientering = (forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9) => {
+        setValue(forhaandsorienteringType);
     }
 
-    const forhaandsorienteringType = watch('forhaandsorienteringType');
     const avtaltText119 = watch('avtaltText119');
 
     return (
         <div className="space-y-8 my-4">
-            <RadioGroup {...register('forhaandsorienteringType')} defaultValue={radioValue} onChange={onChangeForhaandsorientering} legend="Velg type forhåndsorientering" disabled={lasterData} className="mt-4">
+            <RadioGroup {...register('forhaandsorienteringType')} onChange={onChangeForhaandsorientering} legend="Velg type forhåndsorientering" disabled={lasterData} className="mt-4">
                 <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
                     Forhåndsorientering (standard melding)
                 </Radio>
@@ -35,13 +35,13 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                     Forhåndsorientering for §11-9 (AAP)
                 </Radio>
             </RadioGroup>
-            <VisibleIfDiv visible={radioValue === ForhaandsorienteringType.SEND_STANDARD}>
+            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <Label>Teksten som blir lagt til aktiviteten</Label>
                 <BodyShort className="blokk-xs">{AVTALT_TEKST}</BodyShort>
                 <VarslingInfo />
             </VisibleIfDiv>
 
-            <VisibleIfDiv visible={radioValue === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
+            <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea
                     label="Teksten som blir lagt til aktiviteten"
                     maxLength={500}

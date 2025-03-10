@@ -1,5 +1,5 @@
 import { BodyShort, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 
@@ -21,9 +21,12 @@ interface Props {
 const ForhaandsorienteringsMelding = (props: Props) => {
     const { register, setValue, forhaandsorienteringType, oppdaterer, avtaltText119, errors } = props;
 
+    const onChangeForhaandsorientering = (forhaandsorienteringType: ForhaandsorienteringType) => {
+        setValue(forhaandsorienteringType);
+    }
     return (
         <>
-            <RadioGroup {...register('forhaandsorienteringType')} onChange={forhaandsorienteringType} legend="Velg type forhåndsorientering" disabled={oppdaterer} className="mt-4">
+            <RadioGroup {...register('forhaandsorienteringType')} onChange={onChangeForhaandsorientering} legend="Velg type forhåndsorientering" disabled={oppdaterer} className="mt-4">
                 <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
                     Forhåndsorientering (standard melding)
                 </Radio>
