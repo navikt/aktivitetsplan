@@ -25,12 +25,12 @@ const ForhaandsorienteringsMelding = (props: Props) => {
     const onChangeForhaandsorientering = (forhaandsorienteringType: ForhaandsorienteringType) => {
         if (!forhaandsorienteringType) return;
         setValue('forhaandsorienteringType', forhaandsorienteringType);
+        console.log("forhaandsorienteringType", forhaandsorienteringType);
     };
 
     return (
         <>
             <RadioGroup
-                {...register('forhaandsorienteringType')}
                 onChange={onChangeForhaandsorientering}
                 defaultValue={defaultValues?.forhaandsorienteringType}
                 legend="Velg type forhåndsorientering"
