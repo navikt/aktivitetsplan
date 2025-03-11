@@ -110,7 +110,7 @@ export const handlers = [
         failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON']),
     ),
     rest.put(
-        '/veilarbaktivitet/api/arena/forhaandsorientering',
+        '/veilarbaktivitet/api/arena/:oppfolgingsperiode/forhaandsorientering',
         failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterArenaaktivitet),
     ),
     rest.put(
