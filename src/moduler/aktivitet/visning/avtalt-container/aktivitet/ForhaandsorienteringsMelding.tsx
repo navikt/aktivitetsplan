@@ -1,7 +1,5 @@
 import { BodyShort, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import React from 'react';
-import { FieldErrors } from 'react-hook-form/dist/types/errors';
-import { UseFormRegister } from 'react-hook-form/dist/types/form';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
@@ -25,7 +23,6 @@ const ForhaandsorienteringsMelding = (props: Props) => {
     const onChangeForhaandsorientering = (forhaandsorienteringType: ForhaandsorienteringType) => {
         if (!forhaandsorienteringType) return;
         setValue('forhaandsorienteringType', forhaandsorienteringType);
-        console.log("forhaandsorienteringType", forhaandsorienteringType);
     };
 
     return (

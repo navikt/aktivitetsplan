@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
-
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { EksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../../felles-komponenter/hooks/useAppDispatch';

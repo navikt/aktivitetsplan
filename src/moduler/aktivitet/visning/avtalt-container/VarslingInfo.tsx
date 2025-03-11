@@ -1,7 +1,5 @@
-import { HelpText, Label, ReadMore } from '@navikt/ds-react';
+import { ReadMore } from '@navikt/ds-react';
 import React from 'react';
-
-import styles from './VarslingInfo.module.less';
 
 const VarslingInfo = () => (
     <div className="mt-8">

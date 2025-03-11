@@ -1,33 +1,40 @@
-import { BodyShort, Button, Label, Radio, RadioGroup, Select, Textarea } from '@navikt/ds-react';
-import React, { useState } from 'react';
-import { UseFormRegister, UseFormWatch } from 'react-hook-form/dist/types/form';
+import { BodyShort, Label, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
+import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
-import { ForhaandsorienteringFormValues } from '../aktivitet/ForhaandsorienteringForm';
 import { AVTALT_TEKST } from '../utilsForhaandsorientering';
 import VarslingInfo from '../VarslingInfo';
+import { useFormContext } from 'react-hook-form';
+import { ForhaandsorienteringFormValues } from '../aktivitet/ForhaandsorienteringForm';
 
-interface Props {
-    lasterData: boolean;
-    setValue: (forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9) => void;
-    forhaandsorienteringType: ForhaandsorienteringType;
-    register: UseFormRegister<ForhaandsorienteringFormValues>;
-    watch: UseFormWatch<ForhaandsorienteringFormValues>;
-}
+interface Props {}
 
 const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
-    const { lasterData, setValue, forhaandsorienteringType, register, watch } = props;
-
-    const onChangeForhaandsorientering = (forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9) => {
-        setValue(forhaandsorienteringType);
-    }
+    const {
+        setValue,
+        register,
+        watch,
+        formState: { errors, isSubmitting, defaultValues },
+    } = useFormContext<ForhaandsorienteringFormValues>();
 
     const avtaltText119 = watch('avtaltText119');
+    const forhaandsorienteringType = watch('forhaandsorienteringType');
+
+    const onChangeForhaandsorientering = (forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9) => {
+        if (!forhaandsorienteringType) return;
+        setValue('forhaandsorienteringType', forhaandsorienteringType);
+    }
 
     return (
         <div className="space-y-8 my-4">
-            <RadioGroup {...register('forhaandsorienteringType')} onChange={onChangeForhaandsorientering} legend="Velg type forhåndsorientering" disabled={lasterData} className="mt-4">
+            <RadioGroup
+                onChange={onChangeForhaandsorientering}
+                defaultValue={defaultValues?.forhaandsorienteringType}
+                legend="Velg type forhåndsorientering"
+                disabled={isSubmitting}
+                className="mt-4"
+            >
                 <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
                     Forhåndsorientering (standard melding)
                 </Radio>
@@ -47,11 +54,10 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                     maxLength={500}
                     value={avtaltText119}
                     {...register('avtaltText119')}
+                    error={(errors as any).avtaltText119 && (errors as any).avtaltText119.message}
                 />
                 <VarslingInfo />
             </VisibleIfDiv>
-
-            <Button loading={lasterData}>Legg til</Button>
         </div>
     );
 };
