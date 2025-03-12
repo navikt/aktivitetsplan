@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { Checkbox, Detail } from '@navikt/ds-react';
+import { Button, Checkbox, Detail } from '@navikt/ds-react';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
-
 import { Status } from '../../../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { ArenaAktivitet } from '../../../../../datatypes/arenaAktivitetTypes';
@@ -28,12 +27,12 @@ interface Props {
 
 export const schema = z.discriminatedUnion('forhaandsorienteringType', [
     z.object({
-        forhaandsorienteringType: z.literal(ForhaandsorienteringType.SEND_STANDARD),
+        forhaandsorienteringType: z.literal(ForhaandsorienteringType.SEND_STANDARD)
     }),
     z.object({
         forhaandsorienteringType: z.literal(ForhaandsorienteringType.SEND_PARAGRAF_11_9),
-        avtaltText119: z.string().min(1, 'Du må fylle ut teksten').max(500, 'Du må korte ned teksten til 500 tegn'),
-    }),
+        avtaltText119: z.string().min(1, 'Du må fylle ut teksten').max(500, 'Du må korte ned teksten til 500 tegn')
+    })
 ]);
 
 export type ForhaandsorienteringFormValues = z.infer<typeof schema>;
@@ -50,15 +49,19 @@ const ForhaandsorienteringForm = (props: Props) => {
 
     const defaultValues: ForhaandsorienteringFormValues = {
         forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD as any,
-        avtaltText119: AVTALT_TEKST_119,
+        avtaltText119: AVTALT_TEKST_119
     };
 
     const isArena = isArenaAktivitet(aktivitet);
 
-    const { register, handleSubmit, watch } = useForm<ForhaandsorienteringFormValues>({
+    const formMethods = useForm<ForhaandsorienteringFormValues>({
         defaultValues,
-        resolver: zodResolver(schema),
+        resolver: zodResolver(schema)
     });
+    const {
+        handleSubmit,
+        formState: { isSubmitting }
+    } = formMethods;
 
     const onSubmit = (formValues: ForhaandsorienteringFormValues) => {
         const tekst =
@@ -68,19 +71,19 @@ const ForhaandsorienteringForm = (props: Props) => {
 
         const forhaandsorientering: Forhaandsorientering = {
             type: formValues.forhaandsorienteringType,
-            tekst,
+            tekst
         };
 
         setForhandsorienteringType(formValues.forhaandsorienteringType);
         const settTilAvtalt = isArena
             ? currentOpenOppfolgingsperiode
                 ? dispatch(
-                      sendForhaandsorienteringArenaAktivitet({
-                          arenaAktivitet: aktivitet,
-                          forhaandsorientering,
-                          oppfolgingsPeriodeId: currentOpenOppfolgingsperiode.id,
-                      }),
-                  ) // Skal ikke kunne vise denne formen hvis man ikke er under oppfølging så dette skal ikke skje
+                    sendForhaandsorienteringArenaAktivitet({
+                        arenaAktivitet: aktivitet,
+                        forhaandsorientering,
+                        oppfolgingsPeriodeId: currentOpenOppfolgingsperiode.id
+                    })
+                ) // Skal ikke kunne vise denne formen hvis man ikke er under oppfølging så dette skal ikke skje
                 : new Promise((resolve) => resolve(undefined))
             : dispatch(settAktivitetTilAvtalt({ aktivitet, forhaandsorientering }));
         return settTilAvtalt.then(() => {
@@ -113,7 +116,12 @@ const ForhaandsorienteringForm = (props: Props) => {
                 <p className="mt-2">Tiltaket er automatisk merket &quot;Avtalt med Nav&quot;</p>
             ) : null}
             {showForm ? (
-                <ForhaandsorienteringsMeldingArenaaktivitet lasterData={lasterData} register={register} watch={watch} />
+                <div>
+                    <FormProvider {...formMethods}>
+                        <ForhaandsorienteringsMeldingArenaaktivitet />
+                    </FormProvider>
+                    <Button loading={isSubmitting} disabled={lasterData}>Legg til</Button>
+                </div>
             ) : null}
         </form>
     );
