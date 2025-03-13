@@ -1,4 +1,4 @@
-import { RestRequest } from 'msw';
+import { StrictRequest } from 'msw';
 
 const egenMalverk = [
     {
@@ -38,7 +38,7 @@ const egenMalverk = [
     },
 ];
 
-export const hentMalverk = async (req: RestRequest) => {
+export const hentMalverk = async (req: StrictRequest<{ type: 'EGEN' | 'SOKEAVTALE' }>) => {
     const body = await req.json();
     const { type } = body;
 

@@ -4,7 +4,7 @@ import { WrappedHovedside } from '../testUtils/WrappedHovedside';
 import { act, render } from '@testing-library/react';
 import { emptyHalfLoadedVeilederState } from '../testUtils/defaultInitialStore';
 import { setupServer } from 'msw/node';
-import { rest } from 'msw';
+import { http } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../mocks/utils';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../reducer';
@@ -29,7 +29,7 @@ const initialState = {
 const server = setupServer(
     ...[
         // If handlers on same route are declared twice the first one is used
-        rest.post(
+        http.post(
             '/veilarbaktivitet/graphql',
             failOrGrahpqlResponse(
                 () => true,

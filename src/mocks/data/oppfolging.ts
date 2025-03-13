@@ -1,4 +1,4 @@
-import { RestRequest } from 'msw';
+import { DefaultBodyType, StrictRequest } from 'msw';
 
 import { Oppfolgingsperiode, OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import {
@@ -74,8 +74,8 @@ const oppfolging = {
 
 export const mockOppfolging = oppfolging;
 
-export const getOppfolging = (req: RestRequest) => {
-    return { ...oppfolging, fnr: req.url.searchParams.get('fnr') ?? undefined };
+export const getOppfolging = (request: StrictRequest<DefaultBodyType>) => {
+    return { ...oppfolging, fnr: new URL(request.url).searchParams.get('fnr') ?? undefined };
 };
 
 export function settDigital() {
