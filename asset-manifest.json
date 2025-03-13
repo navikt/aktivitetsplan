@@ -1,0 +1,108 @@
+{
+  "_Radio-CIaiowRM.js": {
+    "file": "assets/Radio-CIaiowRM.js",
+    "name": "Radio",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_index-Dp434r6o.css": {
+    "file": "assets/index-Dp434r6o.css",
+    "src": "_index-Dp434r6o.css"
+  },
+  "_internAktivitetTypes-BJPopLba.js": {
+    "file": "assets/internAktivitetTypes-BJPopLba.js",
+    "name": "internAktivitetTypes"
+  },
+  "_routerConfig-DiDd8pZ-.js": {
+    "file": "assets/routerConfig-DiDd8pZ-.js",
+    "name": "routerConfig",
+    "imports": [
+      "index.html",
+      "_Radio-CIaiowRM.js",
+      "_internAktivitetTypes-BJPopLba.js"
+    ],
+    "css": [
+      "assets/routerConfig-UzkUHJrn.css"
+    ],
+    "assets": [
+      "assets/logo-DXVplSjy.png",
+      "assets/pdf.worker.min-DKQKFyKK.js"
+    ]
+  },
+  "_routerConfig-UzkUHJrn.css": {
+    "file": "assets/routerConfig-UzkUHJrn.css",
+    "src": "_routerConfig-UzkUHJrn.css"
+  },
+  "index.html": {
+    "file": "assets/index-CINuzyYd.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/webcomponentWrapper.tsx",
+      "src/rootWrapper.tsx",
+      "src/mocks/index.ts",
+      "src/mocks/demo/DemoBanner.tsx"
+    ]
+  },
+  "node_modules/pdfjs-dist/build/pdf.worker.min.js": {
+    "file": "assets/pdf.worker.min-DKQKFyKK.js",
+    "src": "node_modules/pdfjs-dist/build/pdf.worker.min.js"
+  },
+  "src/mocks/demo/DemoBanner.tsx": {
+    "file": "assets/DemoBanner-BXf3wfLp.js",
+    "name": "DemoBanner",
+    "src": "src/mocks/demo/DemoBanner.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_Radio-CIaiowRM.js"
+    ],
+    "css": [
+      "assets/DemoBanner-JU26N4WQ.css",
+      "assets/index-Dp434r6o.css"
+    ]
+  },
+  "src/mocks/index.ts": {
+    "file": "assets/index-CZLsN2Pk.js",
+    "name": "index",
+    "src": "src/mocks/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_internAktivitetTypes-BJPopLba.js"
+    ]
+  },
+  "src/moduler/utskrift/ikoner/logo.png": {
+    "file": "assets/logo-DXVplSjy.png",
+    "src": "src/moduler/utskrift/ikoner/logo.png"
+  },
+  "src/rootWrapper.tsx": {
+    "file": "assets/rootWrapper-By-qdCim.js",
+    "name": "rootWrapper",
+    "src": "src/rootWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DiDd8pZ-.js",
+      "_Radio-CIaiowRM.js",
+      "_internAktivitetTypes-BJPopLba.js"
+    ],
+    "css": [
+      "assets/index-Dp434r6o.css"
+    ]
+  },
+  "src/webcomponentWrapper.tsx": {
+    "file": "assets/webcomponentWrapper-B_9bSbLs.js",
+    "name": "webcomponentWrapper",
+    "src": "src/webcomponentWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DiDd8pZ-.js",
+      "_Radio-CIaiowRM.js",
+      "_internAktivitetTypes-BJPopLba.js"
+    ]
+  }
+}
