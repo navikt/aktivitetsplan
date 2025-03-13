@@ -60,15 +60,15 @@ export const handlers = [
     http.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
     http.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
     http.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
-    http.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan',  () => {
+    http.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () => {
         return new HttpResponse(null, {
             status: 204,
-        })
+        });
     }),
     http.post('/veilarboppfolging/api/v3/veileder/lest-aktivitetsplan', () => {
         return new HttpResponse(null, {
             status: 204,
-        })
+        });
     }),
     http.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
@@ -185,14 +185,10 @@ export const handlers = [
     http.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([])),
 
     // veilarbmalverk
-<<<<<<< HEAD
-    rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
+    http.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
 
     // tryggtekst
-    rest.post('/tryggtekst/proxy', sjekkTryggTekst),
-=======
-    http.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
->>>>>>> b18e8686327e4f2ef6e369471620bbf0696627a4
+    http.post('/tryggtekst/proxy', sjekkTryggTekst),
 ];
 
 export const aktivitestplanResponse = (

@@ -1,4 +1,4 @@
-import { ResponseComposition, RestContext, RestRequest } from 'msw';
+import { delay, HttpResponse, ResponseComposition, RestContext, RestRequest } from 'msw';
 import { LLMResponse } from '../../api/tryggTekstAPI';
 
 const jsonContent = {
@@ -20,6 +20,7 @@ const response = {
     } as LLMResponse,
 };
 
-export const sjekkTryggTekst = async (_: RestRequest, res: ResponseComposition, ctx: RestContext) => {
-    return res(ctx.delay(2000), ctx.json(response));
+export const sjekkTryggTekst = async () => {
+    await delay(2000);
+    return HttpResponse.json(response);
 };
