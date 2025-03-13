@@ -24,7 +24,7 @@ import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMap
 import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
-import { rest } from 'msw';
+import { http } from 'msw';
 import { failOrGrahpqlResponse } from '../../../mocks/utils';
 
 let id = 12012;
@@ -55,7 +55,7 @@ function makeTestAktiviteter<T>(
 
 let filterTestData = aktiviteterData.aktiviteter;
 const server = setupServer(
-    rest.post(
+    http.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(
             () => false,

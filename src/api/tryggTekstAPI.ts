@@ -111,10 +111,6 @@ ${inp}\\n<|eot_id|>assistant`,
                 throw new Error('Network response was not ok');
             }
         })
-        .then((r) => {
-            console.log(r.data);
-            return r.data;
-        })
         .catch((e) => {
             console.log(e);
             return e;
