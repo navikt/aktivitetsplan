@@ -99,7 +99,7 @@ async function postRequest(inp: string): Promise<LLMResponse> {
 kan innholde flere kategorier eller ingen. Returnere med kategori og settningen som triggret kategorien uten å endre den eller sammenfatte den.<|start_header_id|>user<|end_header_id|>
 ${inp}\\n<|eot_id|>assistant`,
     };
-    return await fetch(`/tryggtekst/completion`, {
+    return await fetch(`/tryggtekst/proxy`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache', 'Content-Type': 'application/json' },
