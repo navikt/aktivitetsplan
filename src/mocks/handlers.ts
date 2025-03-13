@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, WebSocket } from 'msw';
 
 import {
     aktiviteterData,
@@ -44,7 +44,7 @@ import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
 import { subDays, subMinutes } from 'date-fns';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
-import { sjekkTryggTekst } from './data/tryggtekst';
+import { handleTryggTekstWebSocket, sjekkTryggTekst } from './data/tryggtekst';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -189,6 +189,12 @@ export const handlers = [
 
     // tryggtekst
     http.post('/tryggtekst/proxy', sjekkTryggTekst),
+];
+
+// WebSocket handlers
+export const wsHandlers = [
+    // tryggtekst WebSocket handler
+    WebSocket.link('ws://34.34.85.30:8007/ws', handleTryggTekstWebSocket),
 ];
 
 export const aktivitestplanResponse = (
