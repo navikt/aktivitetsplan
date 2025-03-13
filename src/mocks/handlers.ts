@@ -180,7 +180,7 @@ export const handlers = [
     rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
 
     // tryggtekst
-    rest.post('/tryggtekst/completion', sjekkTryggTekst),
+    rest.post('/tryggtekst/proxy', sjekkTryggTekst),
 ];
 
 export const aktivitestplanResponse = (
