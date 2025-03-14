@@ -4,7 +4,13 @@ import.meta.env.VITE_API_URL_BASE = 'http://localhost:3000'; // Dette er det som
 
 HTMLDialogElement.prototype.showModal = () => {};
 window.IntersectionObserver = vi.fn();
-window.matchMedia = ()  => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() });
+window.matchMedia = () => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() });
+
+class WebSocketMock {
+    static link() {}
+}
+window.WebSocket = WebSocketMock;
+
 // Mocked because react-dnd uses es6 import and have to be transpiled to work in these tests
 vi.mock('react-dnd', () => ({
     useDrag: () => {

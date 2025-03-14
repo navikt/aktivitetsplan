@@ -1,4 +1,4 @@
-import { http, HttpResponse, WebSocket } from 'msw';
+import { http, HttpResponse, ws } from 'msw';
 
 import {
     aktiviteterData,
@@ -194,7 +194,7 @@ export const handlers = [
 // WebSocket handlers
 export const wsHandlers = [
     // tryggtekst WebSocket handler
-    WebSocket.link('ws://34.34.85.30:8007/ws', handleTryggTekstWebSocket),
+    ws.link('ws://34.34.85.30:8007/ws').addEventListener('connection', handleTryggTekstWebSocket),
 ];
 
 export const aktivitestplanResponse = (

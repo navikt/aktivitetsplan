@@ -26,8 +26,17 @@ export const sjekkTryggTekst = async () => {
     return HttpResponse.json(response);
 };
 
+// Define types for WebSocket connection event
+interface WebSocketConnectionEvent {
+    client: {
+        send: (data: string) => void;
+        addEventListener: (event: string, listener: (event: MessageEvent) => void) => void;
+    };
+    server: unknown;
+}
+
 // WebSocket message handler for streaming
-export const handleTryggTekstWebSocket = (socket: WebSocket) => {
+export const handleTryggTekstWebSocket = ({ client }: WebSocketConnectionEvent) => {
     // Simulate streaming chunks
     const streamChunks = [
         { content: '{"kategorier":', done: false },
@@ -43,7 +52,7 @@ export const handleTryggTekstWebSocket = (socket: WebSocket) => {
     const sendNextChunk = () => {
         if (chunkIndex < streamChunks.length) {
             const chunk = streamChunks[chunkIndex];
-            socket.send(JSON.stringify(chunk));
+            client.send(JSON.stringify(chunk));
             chunkIndex++;
             
             if (chunkIndex < streamChunks.length) {
@@ -56,14 +65,9 @@ export const handleTryggTekstWebSocket = (socket: WebSocket) => {
     setTimeout(sendNextChunk, 500);
     
     // Handle messages from client
-    socket.addEventListener('message', (event) => {
+    client.addEventListener('message', (event: MessageEvent) => {
         // Reset and start streaming again when receiving a new request
         chunkIndex = 0;
         setTimeout(sendNextChunk, 500);
-    });
-    
-    // Handle socket closure
-    socket.addEventListener('close', () => {
-        console.log('WebSocket connection closed');
     });
 };
