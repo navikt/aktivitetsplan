@@ -20,6 +20,7 @@ import veilederReducer from './moduler/veileder/veileder-slice';
 import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';
 import { innsynsrettReducer } from './moduler/aktivitet/innsynsrett/innsynsrett-slice';
 import valgtPeriodeReducer from './moduler/filtrering/filter/valgt-periode-slice';
+import { tryggTekstReducer } from './moduler/aktivitet/aktivitet-forms/tryggtekst/tryggtekst-slice';
 
 const reducer = {
     data: combineReducers({
@@ -41,6 +42,7 @@ const reducer = {
         errors: errorReducer,
         innsynsrett: innsynsrettReducer,
         valgtPeriode: valgtPeriodeReducer,
+        tryggTekst: tryggTekstReducer,
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
