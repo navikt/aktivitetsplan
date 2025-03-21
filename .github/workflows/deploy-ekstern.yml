@@ -9,9 +9,6 @@ on:
       bucket:
         required: true
         type: string
-      NAIS_MANAGEMENT_PROJECT_ID:
-        required: true
-        type: string
     secrets:
       SENTRY_AUTH_TOKEN:
         required: false
@@ -19,8 +16,6 @@ on:
         required: true
       SLACK_WEBHOOK:
         required: false
-      NAIS_WORKLOAD_IDENTITY_PROVIDER:
-        required: true
 
 jobs:
   deploy:
@@ -50,8 +45,6 @@ jobs:
           source: ./build/
           destination: /${{ inputs.bucket }}/
           no_cache_paths: ${{ inputs.bucket }}/build/index.html
-          project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
       - name: Create sentry release
         uses: getsentry/action-release@v1
         if: inputs.bucket == 'aktivitetsplan-prod'
