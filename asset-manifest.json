@@ -1,0 +1,108 @@
+{
+  "_Radio-DULx-GLx.js": {
+    "file": "assets/Radio-DULx-GLx.js",
+    "name": "Radio",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_index-DjukoUac.css": {
+    "file": "assets/index-DjukoUac.css",
+    "src": "_index-DjukoUac.css"
+  },
+  "_internAktivitetTypes-95iMt6Iq.js": {
+    "file": "assets/internAktivitetTypes-95iMt6Iq.js",
+    "name": "internAktivitetTypes"
+  },
+  "_routerConfig-DuJdAzXp.js": {
+    "file": "assets/routerConfig-DuJdAzXp.js",
+    "name": "routerConfig",
+    "imports": [
+      "index.html",
+      "_Radio-DULx-GLx.js",
+      "_internAktivitetTypes-95iMt6Iq.js"
+    ],
+    "css": [
+      "assets/routerConfig-UzkUHJrn.css"
+    ],
+    "assets": [
+      "assets/logo-DXVplSjy.png",
+      "assets/pdf.worker.min-DKQKFyKK.js"
+    ]
+  },
+  "_routerConfig-UzkUHJrn.css": {
+    "file": "assets/routerConfig-UzkUHJrn.css",
+    "src": "_routerConfig-UzkUHJrn.css"
+  },
+  "index.html": {
+    "file": "assets/index-DGy-CiFG.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/webcomponentWrapper.tsx",
+      "src/rootWrapper.tsx",
+      "src/mocks/index.ts",
+      "src/mocks/demo/DemoBanner.tsx"
+    ]
+  },
+  "node_modules/pdfjs-dist/build/pdf.worker.min.js": {
+    "file": "assets/pdf.worker.min-DKQKFyKK.js",
+    "src": "node_modules/pdfjs-dist/build/pdf.worker.min.js"
+  },
+  "src/mocks/demo/DemoBanner.tsx": {
+    "file": "assets/DemoBanner-5V3E-Etv.js",
+    "name": "DemoBanner",
+    "src": "src/mocks/demo/DemoBanner.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_Radio-DULx-GLx.js"
+    ],
+    "css": [
+      "assets/DemoBanner-JU26N4WQ.css",
+      "assets/index-DjukoUac.css"
+    ]
+  },
+  "src/mocks/index.ts": {
+    "file": "assets/index-ZCwIRuEu.js",
+    "name": "index",
+    "src": "src/mocks/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_internAktivitetTypes-95iMt6Iq.js"
+    ]
+  },
+  "src/moduler/utskrift/ikoner/logo.png": {
+    "file": "assets/logo-DXVplSjy.png",
+    "src": "src/moduler/utskrift/ikoner/logo.png"
+  },
+  "src/rootWrapper.tsx": {
+    "file": "assets/rootWrapper-CUiEVS9V.js",
+    "name": "rootWrapper",
+    "src": "src/rootWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DuJdAzXp.js",
+      "_Radio-DULx-GLx.js",
+      "_internAktivitetTypes-95iMt6Iq.js"
+    ],
+    "css": [
+      "assets/index-DjukoUac.css"
+    ]
+  },
+  "src/webcomponentWrapper.tsx": {
+    "file": "assets/webcomponentWrapper-DjoCgMTp.js",
+    "name": "webcomponentWrapper",
+    "src": "src/webcomponentWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DuJdAzXp.js",
+      "_Radio-DULx-GLx.js",
+      "_internAktivitetTypes-95iMt6Iq.js"
+    ]
+  }
+}
