@@ -5,8 +5,6 @@ on:
     secrets:
       READER_TOKEN:
         required: true
-      NAIS_WORKLOAD_IDENTITY_PROVIDER:
-        required: true
       SLACK_WEBHOOK:
         required: false
     inputs:
@@ -16,10 +14,6 @@ on:
       bucket:
         required: true
         type: string
-      NAIS_MANAGEMENT_PROJECT_ID:
-        required: true
-        type: string
-
 jobs:
   deploy:
     name: Deploy application to CDN
@@ -52,8 +46,6 @@ jobs:
           source: ./build/
           destination: /${{ inputs.bucket }}/
           no_cache_paths: ${{ inputs.bucket }}/build/asset-manifest.json
-          project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
       - name: Slack Notification (deploy failure)
         if: failure() && inputs.bucket == 'aktivitetsplan-prod-intern'
         uses: rtCamp/action-slack-notify@v2
