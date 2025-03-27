@@ -21,11 +21,9 @@ jobs:
     with:
       kommando: npm run build:dev-ekstern
       bucket: aktivitetsplan-dev-ekstern
-      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
   dev-intern:
     name: Deploy application to dev intern
@@ -33,10 +31,8 @@ jobs:
     with:
       kommando: npm run build:dev-intern
       bucket: aktivitetsplan-dev-intern
-      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
 
   prod-ekstern:
     name: Deploy application to prod ekstern
@@ -45,11 +41,9 @@ jobs:
     with:
       kommando: npm run build:prod-ekstern
       bucket: aktivitetsplan-prod-ekstern
-      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
   prod-intern:
@@ -59,8 +53,6 @@ jobs:
     with:
       kommando: npm run build:prod-intern
       bucket: aktivitetsplan-prod-intern
-      NAIS_MANAGEMENT_PROJECT_ID: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

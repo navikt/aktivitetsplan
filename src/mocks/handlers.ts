@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 import {
     aktiviteterData,
@@ -50,23 +50,31 @@ const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
 const getAktivitetFeiler = () => aktivitetFeilet() && !oppdateringKunFeiler();
 
 export const handlers = [
-    rest.get('/auth/info', jsonResponse(auth)),
+    http.get('/auth/info', jsonResponse(auth)),
 
     // veilarboppfolging
-    rest.get('/veilarboppfolging/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
-    rest.post('/veilarboppfolging/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
-    rest.post('/veilarboppfolging/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
-    rest.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
-    rest.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
-    rest.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
-    rest.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
-    rest.post('/veilarboppfolging/api/v3/veileder/lest-aktivitetsplan', (_, res, ctx) => res(ctx.status(204))),
-    rest.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
+    http.get('/veilarboppfolging/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
+    http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
+    http.post('/veilarboppfolging/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
+    http.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
+    http.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
+    http.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
+    http.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan',  () => {
+        return new HttpResponse(null, {
+            status: 204,
+        })
+    }),
+    http.post('/veilarboppfolging/api/v3/veileder/lest-aktivitetsplan', () => {
+        return new HttpResponse(null, {
+            status: 204,
+        })
+    }),
+    http.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
     // veilarbdialog
-    rest.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
-    rest.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
-    rest.post(
+    http.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),
+    http.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: 1678793406845 })),
+    http.post(
         '/veilarbdialog/graphql',
         failOrGrahpqlResponse(dialogFeilet, () => ({
             data: {
@@ -77,12 +85,12 @@ export const handlers = [
     ),
 
     // veilarbaktivitet
-    rest.post('/veilarbaktivitet/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
-    rest.get(
+    http.post('/veilarbaktivitet/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
+    http.get(
         '/veilarbaktivitet/api/aktivitet',
         failOrGetResponse(getAktivitetFeiler, () => aktiviteterData),
     ),
-    rest.post(
+    http.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
@@ -98,85 +106,85 @@ export const handlers = [
             }
         }),
     ),
-    rest.post(
+    http.post(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(
             () => arenaFeilet() && !oppdateringKunFeiler(),
             () => arena,
         ),
     ),
-    rest.get(
+    http.get(
         '/veilarbaktivitet/api/aktivitet/kanaler',
         failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON']),
     ),
-    rest.put(
-        '/veilarbaktivitet/api/arena/forhaandsorientering',
+    http.put(
+        '/veilarbaktivitet/api/arena/:oppfolgingsperiode/forhaandsorientering',
         failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterArenaaktivitet),
     ),
-    rest.put(
+    http.put(
         '/veilarbaktivitet/api/arena/forhaandsorientering/lest',
         failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterLestFhoArenaaktivitet),
     ),
-    rest.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet)),
-    rest.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet)),
-    rest.post(
+    http.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet)),
+    http.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet)),
+    http.post(
         '/veilarbaktivitet/api/aktivitet/:oppfolgingsperiode/ny',
         failOrGetResponse(aktivitetFeilet, opprettAktivitet),
     ),
-    rest.get(
+    http.get(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner',
         failOrGetResponse(getAktivitetFeiler, getAktivitetVersjoner),
     ),
-    rest.put(
+    http.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/status',
         failOrGetResponse(aktivitetFeilet, oppdaterAktivitetStatus),
     ),
     // todo sjekk ut denne, tror ikke det kun er stillingsaktivitet
-    rest.put(
+    http.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett',
         failOrGetResponse(aktivitetFeilet, oppdaterEtikett),
     ),
-    rest.put(
+    http.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser',
         failOrGetResponse(aktivitetFeilet, publiserReferat),
     ),
-    rest.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetResponse(aktivitetFeilet, endreReferat)),
-    rest.put('/veilarbaktivitet/api/avtaltMedNav', failOrGetResponse(aktivitetFeilet, oppdaterAvtaltMedNav)),
-    rest.put('/veilarbaktivitet/api/avtaltMedNav/lest', failOrGetResponse(aktivitetFeilet, oppdaterLestFho)),
-    rest.put(
+    http.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetResponse(aktivitetFeilet, endreReferat)),
+    http.put('/veilarbaktivitet/api/avtaltMedNav', failOrGetResponse(aktivitetFeilet, oppdaterAvtaltMedNav)),
+    http.put('/veilarbaktivitet/api/avtaltMedNav/lest', failOrGetResponse(aktivitetFeilet, oppdaterLestFho)),
+    http.put(
         '/veilarbaktivitet/api/stillingFraNav/kanDeleCV',
         failOrGetResponse(aktivitetFeilet, oppdaterCVKanDelesSvar),
     ),
-    rest.put(
+    http.put(
         '/veilarbaktivitet/api/stillingFraNav/soknadStatus',
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
-    rest.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
-    rest.get(
+    http.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
+    http.get(
         '/veilarbaktivitet/api/arkivering/forhaandsvisning',
         failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 500),
     ),
-    rest.post(
+    http.post(
         '/veilarbaktivitet/api/arkivering/journalfor',
         failOrGetResponse(journalforingFeiler, () => journalføring, 2000),
     ),
-    rest.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
+    http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
     // veilarblest
-    rest.post('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),
-    rest.put('/veilarblest/api/informasjon/les', jsonResponse(lest)),
+    http.post('/veilarblest/api/aktivitetsplan/les', jsonResponse(lest)),
+    http.put('/veilarblest/api/informasjon/les', jsonResponse(lest)),
 
     // veilarbperson
-    rest.post('/veilarbperson/api/v3/hent-person', jsonResponse(getPerson)),
-    rest.post('/veilarbperson/api/v3/person/hent-postadresse', jsonResponse(getPostadresse)),
+    http.post('/veilarbperson/api/v3/hent-person', jsonResponse(getPerson)),
+    http.post('/veilarbperson/api/v3/person/hent-postadresse', jsonResponse(getPostadresse)),
 
     // veilarbveileder
-    rest.get('/veilarbveileder/api/veileder/me', jsonResponse(veilederMe)),
+    http.get('/veilarbveileder/api/veileder/me', jsonResponse(veilederMe)),
 
     // veilarboppgave
-    rest.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([])),
+    http.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([])),
 
     // veilarbmalverk
-    rest.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
+    http.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
 ];
 
 export const aktivitestplanResponse = (

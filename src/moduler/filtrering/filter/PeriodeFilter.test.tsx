@@ -16,7 +16,7 @@ import { expect } from 'vitest';
 import { erHistorisk, HistoriskOppfolgingsperiode, OppfolgingStatus } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { aktiviteterState, emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
-import { rest } from 'msw';
+import { http } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
 import { PeriodeEntityState } from '../../aktivitet/aktivitet-slice';
 import { compareDesc } from 'date-fns';
@@ -126,14 +126,14 @@ const gitt = {
 
 // Overstyr lesing av aktiviteter i denne testen
 const server = setupServer(
-    rest.post(
+    http.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(
             () => false,
             () => aktivitestplanResponse({ aktiviteter: [veilarbAktivitet, gammelVeilarbAktivitet] }),
         ),
     ),
-    rest.get(
+    http.get(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGrahpqlResponse(
             () => false,

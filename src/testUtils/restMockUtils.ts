@@ -1,6 +1,6 @@
 import { aktivitestplanResponse, aktivitetResponse, handlers } from '../mocks/handlers';
 import { failOrGrahpqlResponse } from '../mocks/utils';
-import { rest } from 'msw';
+import { http } from 'msw';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { Dialog } from '../datatypes/dialogTypes';
 
@@ -12,7 +12,7 @@ export const handlersWithGraphqlOverride = ({
     dialoger: Dialog[];
 }) => {
     return [
-        rest.post(
+        http.post(
             '/veilarbaktivitet/graphql',
             failOrGrahpqlResponse(
                 () => false,
@@ -27,7 +27,7 @@ export const handlersWithGraphqlOverride = ({
                 },
             ),
         ),
-        rest.post(
+        http.post(
             '/veilarbdialog/graphql',
             failOrGrahpqlResponse(
                 () => false,
