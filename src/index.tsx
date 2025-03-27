@@ -37,10 +37,11 @@ if (USE_MOCK) {
     document.getElementById('mainapp')?.appendChild(webComponentTag);
     Promise.all([import('./mocks'), import('./mocks/demo/DemoBanner')]).then(
         ([{ default: startWorker }, { default: DemoBanner }]) => {
-            startWorker();
-            const demoRoot = createRoot(document.getElementById('demo'));
-            demoRoot.render(<DemoBanner />);
-            renderApp();
+            startWorker().then(() => {
+                const demoRoot = createRoot(document.getElementById('demo'));
+                demoRoot.render(<DemoBanner />);
+                renderApp();
+            });
         },
     );
 } else {
