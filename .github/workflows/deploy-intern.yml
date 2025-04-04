@@ -45,7 +45,8 @@ jobs:
           team: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          no_cache_paths: ${{ inputs.bucket }}/build/asset-manifest.json
+          headers: |-
+            cache-control: 'public, max-age=120, stale-while-revalidate=60, stale-if-error=600'
       - name: Slack Notification (deploy failure)
         if: failure() && inputs.bucket == 'aktivitetsplan-prod-intern'
         uses: rtCamp/action-slack-notify@v2
