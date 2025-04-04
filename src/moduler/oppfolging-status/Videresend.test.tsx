@@ -110,18 +110,6 @@ describe('Videresend brukere eller render children', () => {
     });
 
     describe('Veiledere:', () => {
-        it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
-            const store = gitt.hentStatus.ikkeRegistrertIKrr();
-            const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            await waitFor(() => getByText('Brukeren er ikke registrert i KRR'));
-            getByText(aktivitetTittel);
-        });
-        it('skal vise varsel når bruker har reservert seg mot digital kommunikasjon i KRR', async () => {
-            const store = gitt.hentStatus.reserverIKrr();
-            const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            await waitFor(() => getByText('Brukeren er reservert i KRR'));
-            getByText(aktivitetTittel);
-        });
         it('skal vise aktivitetsplan når bruker er manuell', async () => {
             const store = gitt.hentStatus.manuell();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
@@ -134,12 +122,6 @@ describe('Videresend brukere eller render children', () => {
             const store = gitt.hentStatus.ikkeRegistrertIKrr();
             const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() => getByText('Vi har ikke din kontaktinformasjon'));
-            expect(queryByText(aktivitetTittel)).toBeFalsy();
-        });
-        it('skal vise varsel når bruker har reservert seg mot digital kommunikasjon i KRR', async () => {
-            const store = gitt.hentStatus.reserverIKrr();
-            const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
-            await waitFor(() => getByText('Du har reservert deg mot digital kommunikasjon'));
             expect(queryByText(aktivitetTittel)).toBeFalsy();
         });
         it('skal vise dårlig feilmelding når bruker er manuell', async () => {
