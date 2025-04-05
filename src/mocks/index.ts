@@ -1,8 +1,8 @@
 import { setupWorker } from 'msw/browser';
 
-import { handlers } from './handlers';
+import { handlers, wsHandlers } from './handlers';
 
-const worker = setupWorker(...handlers);
+const worker = setupWorker(...handlers, ...wsHandlers);
 
 export default () =>
     worker.start({
