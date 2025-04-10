@@ -25,7 +25,7 @@ const baseUrl = 'http://34.34.85.30:8007';
 async function postRequest(referatTekst: string): Promise<LLMResponse> {
     return await fetch(`/tryggtekst/proxy`, {
         method: 'POST',
-        body: referatTekst,
+        body: JSON.stringify({ payload: referatTekst }),
         headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache', 'Content-Type': 'application/json' },
     })
         .then((res) => {
