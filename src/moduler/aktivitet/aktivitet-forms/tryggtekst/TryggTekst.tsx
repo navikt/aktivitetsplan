@@ -38,11 +38,11 @@ export const TryggTekst = ({ value }: { value: string }) => {
                     </div>
                 ) : status === Status.OK ? (
                     <List>
-                        {data.kategorier.map((kategori) => {
+                        {(data?.kategorier || []).map((kategori) => {
                             return (
                                 <List.Item key={kategori.kategori}>
                                     <BodyShort className="font-bold">{capitalize(kategori.kategori)}</BodyShort>
-                                    <BodyLong>{kategori.grunn}</BodyLong>
+                                    <BodyLong>{kategori.trigger}</BodyLong>
                                 </List.Item>
                             );
                         })}

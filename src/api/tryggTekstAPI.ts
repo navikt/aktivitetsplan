@@ -10,7 +10,7 @@ export type LLMResponse = {
 };
 
 interface LLMContent {
-    grunn: string;
+    trigger: string;
     kategori: string;
 }
 
@@ -44,7 +44,7 @@ async function postRequest(referatTekst: string): Promise<LLMResponse> {
 const postSjekkForPersonopplysninger = async (verdi: string) => {
     let feil = '';
     let sensitiv = false;
-    let kategorier: { kategori: string; grunn: string }[] = [];
+    let kategorier: { kategori: string; trigger: string }[] = [];
     console.log('useSensitive', verdi);
 
     if (!verdi) {
@@ -59,7 +59,7 @@ const postSjekkForPersonopplysninger = async (verdi: string) => {
             if (containsSensitive.kategorier && containsSensitive.kategorier.length > 0) {
                 kategorier = containsSensitive.kategorier.map((item: LLMContent) => ({
                     kategori: item.kategori,
-                    grunn: item.grunn,
+                    trigger: item.trigger,
                 }));
                 feil = `⚠️ Det ser ut som du har skrevet inn personopplysninger om ${kategorier.map((k) => k.kategori).join(', ')} i skjemaet.`;
                 sensitiv = true;
