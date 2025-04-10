@@ -5,8 +5,6 @@ on:
     secrets:
       READER_TOKEN:
         required: true
-      NAIS_WORKLOAD_IDENTITY_PROVIDER:
-        required: true
       SLACK_WEBHOOK:
         required: false
     inputs:
@@ -16,10 +14,6 @@ on:
       bucket:
         required: true
         type: string
-      NAIS_MANAGEMENT_PROJECT_ID:
-        required: true
-        type: string
-
 jobs:
   deploy:
     name: Deploy application to CDN
@@ -51,9 +45,10 @@ jobs:
           team: dab
           source: ./build/
           destination: /${{ inputs.bucket }}/
-          no_cache_paths: ${{ inputs.bucket }}/build/asset-manifest.json
-          project_id: ${{ inputs.NAIS_MANAGEMENT_PROJECT_ID }}
-          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+      - name: Set special cache for asset-manifest.json
+        shell: bash
+        run: |
+          gcloud storage objects update gs://${BUCKET_NAME}/dab/${{ inputs.bucket }}/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=7200, stale-if-error=600"
       - name: Slack Notification (deploy failure)
         if: failure() && inputs.bucket == 'aktivitetsplan-prod-intern'
         uses: rtCamp/action-slack-notify@v2
