@@ -9,6 +9,7 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 import * as path from 'node:path';
+import { sentryVitePlugin } from '@sentry/vite-plugin';
 
 const require = createRequire(import.meta.url);
 const cMapsDir = normalizePath(path.join(path.dirname(require.resolve('pdfjs-dist/package.json')), 'cmaps'));
@@ -46,6 +47,14 @@ export default defineConfig(({ mode }) => {
                     { src: cMapsDir, dest: '' },
                     { src: standardFontsDir, dest: '' },
                 ],
+            }),
+            sentryVitePlugin({
+                org: 'nav',
+                project: 'aktivitetsplan-intern',
+                url: 'https://sentry.gc.nav.no',
+                applicationKey: 'aktivitetsplan-intern',
+                // Auth tokens can be obtained from https://sentry.io/orgredirect/organizations/:orgslug/settings/auth-tokens/
+                authToken: process.env.SENTRY_AUTH_TOKEN,
             }),
         ],
         server: {
