@@ -25,9 +25,7 @@ export default defineConfig(({ mode }) => {
     process.env.VITE_SENTRY_RELEASE = execSync('git rev-parse HEAD').toString().trim();
     const buildMode = process.env.MODE as BuildMode;
     const sentryProject =
-        buildMode === 'prod-ekstern' || buildMode === 'dev-ekstern'
-            ? 'aktivitetsplan-ekstern'
-            : 'aktivitetsplan-intern';
+        buildMode === 'prod-ekstern' || buildMode === 'dev-ekstern' ? 'aktivitetsplan' : 'aktivitetsplan-intern';
 
     return {
         build: {
