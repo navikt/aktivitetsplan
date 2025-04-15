@@ -17,10 +17,17 @@ const standardFontsDir = normalizePath(
     path.join(path.dirname(require.resolve('pdfjs-dist/package.json')), 'standard_fonts'),
 );
 
+type BuildMode = 'prod-intern' | 'dev-intern' | 'prod-ekstern' | 'dev-ekstern' | undefined;
+
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd());
     // Make sure release is set client-side, automatic release tagging did not work
     process.env.VITE_SENTRY_RELEASE = execSync('git rev-parse HEAD').toString().trim();
+    const buildMode = process.env.MODE as BuildMode;
+    const sentryProject =
+        buildMode === 'prod-ekstern' || buildMode === 'dev-ekstern'
+            ? 'aktivitetsplan-ekstern'
+            : 'aktivitetsplan-intern';
 
     return {
         build: {
@@ -50,11 +57,20 @@ export default defineConfig(({ mode }) => {
             }),
             sentryVitePlugin({
                 org: 'nav',
-                project: 'aktivitetsplan-intern',
+                project: sentryProject,
                 url: 'https://sentry.gc.nav.no',
-                applicationKey: 'aktivitetsplan-intern',
+                applicationKey: sentryProject,
+                release: {
+                    deploy: {
+                        env: buildMode === 'prod-intern' || buildMode === 'prod-ekstern' ? 'prod' : 'dev',
+                    },
+                },
                 // Auth tokens can be obtained from https://sentry.io/orgredirect/organizations/:orgslug/settings/auth-tokens/
                 authToken: process.env.SENTRY_AUTH_TOKEN,
+                moduleMetadata: {
+                    org: 'nav',
+                    project: sentryProject,
+                },
             }),
         ],
         server: {
