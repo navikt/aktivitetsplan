@@ -47,7 +47,7 @@
     "react-modal": "^3.16.3",
     "react-pdf": "^7.7.3",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^6.30.0",
+    "react-router-dom": "^7.5.2",
     "rebound": "^0.1.0",
     "rollup-plugin-visualizer": "^5.14.0",
     "source-map-explorer": "^2.5.3",
