@@ -41,7 +41,7 @@ const MalForm = (props: Props) => {
 
     const onSubmit = (data: { mal: string }) => {
         if (data.mal !== props.mal) {
-            dispatch(oppdaterMal({ mal: data.mal })).then((action) => {
+            dispatch(oppdaterMal({ mal: data.mal.trim() })).then((action) => {
                 if (isFulfilled(action)) {
                     dispatch(hentMalListe()).then(() => handleComplete());
                 }
@@ -87,7 +87,9 @@ const MalForm = (props: Props) => {
                 disabled={isSubmitting || !harSkriveTilgang || !underOppfolging}
             />
             <Feilmelding feilmeldinger={feil} />
-            <Button onClick={() => logKlikkKnapp('Lagre mål')} disabled={isSubmitting}>Lagre</Button>
+            <Button onClick={() => logKlikkKnapp('Lagre mål')} disabled={isSubmitting}>
+                Lagre
+            </Button>
         </form>
     );
 };
