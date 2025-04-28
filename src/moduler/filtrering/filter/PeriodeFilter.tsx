@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { selectSorterteOppfolgingsperioder } from '../../oppfolging-status/oppfolging-selector';
-import { velgPeriode } from './valgt-periode-slice';
+import { selectValgtPeriodeId, velgPeriode } from './valgt-periode-slice';
 
 const PeriodeFilter = () => {
     const perioder = useSelector(selectSorterteOppfolgingsperioder);
@@ -15,9 +15,10 @@ const PeriodeFilter = () => {
     const dispatch = useAppDispatch();
 
     const nyestePeriode = perioder.length > 0 ? perioder[0] : null;
+    const valgtPeriodeId = useSelector(selectValgtPeriodeId);
 
     useEffect(() => {
-        if (!!nyestePeriode) {
+        if (!!nyestePeriode && !valgtPeriodeId) {
             dispatch(velgPeriode(nyestePeriode.id));
         }
     }, [perioder]);
@@ -41,6 +42,7 @@ const PeriodeFilter = () => {
                 autoComplete="on"
                 defaultValue={nyestePeriode?.id}
                 label="Periode"
+                value={valgtPeriodeId || undefined}
                 onChange={onPeriodeChange}
             >
                 {perioder.map(({ start, slutt, id }) => {
