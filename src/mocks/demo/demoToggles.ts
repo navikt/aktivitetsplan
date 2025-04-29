@@ -20,7 +20,8 @@ import {
     ulesteDialoger,
     visArenaAktiviteter,
     visAutomatiskeAktiviteter,
-    visTestAktiviteter
+    visTestAktiviteter,
+    visEksterneAktiviteter
 } from './localStorage';
 
 export const brukertype = {
@@ -112,6 +113,11 @@ export const aktivitetTilstand = [
         label: 'Testaktiviteter',
         id: LocalStorageElement.TEST_AKTIVITETER,
         checked: visTestAktiviteter,
+    },
+    {
+        label: 'Eksterne aktiviteter',
+        id: LocalStorageElement.EKSTERNE_AKTIVITETER,
+        checked: visEksterneAktiviteter,
     },
 ];
 export const feiltilstander = [

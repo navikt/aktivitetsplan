@@ -202,6 +202,37 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
               }),
           }),
         wrapAktivitet({
+                      ...enEksternAktivitet({
+                          tittel: 'Rekrutteringstreff hos Biggen',
+                          status: AktivitetStatus.PLANLAGT,
+                          avtalt: false,
+                          beskrivelse:
+                              'Velkommen til jobmesse hos Biggen. Her vil du møte flere arbeidsgivere som er på jakt etter nye medarbeidere. Du vil også få mulighet til å delta på workshops og få tips til hvordan du kan skrive en god CV og forberede deg til jobbintervju.',
+                          eksternAktivitet: {
+                              type: EksternAktivitetType.REKRUTTERINGSTREFF,
+                              handlinger: [
+                                  {
+                                      tekst: 'Gå til arrangementet for å bekrefte om du kommer eller ikke',
+                                      subtekst: 'Du _må_ ikke',
+                                      url: 'https://www.nav.no/',
+                                      lenkeType: 'FELLES',
+                                  },
+                                  {
+                                      tekst: 'Bekreft om bruker planlegger å delta',
+                                      subtekst: undefined,
+                                      url: 'https://www.nav.no/',
+                                      lenkeType: 'INTERN',
+                                  },
+                              ],
+                              detaljer: [
+                                  { label: 'Tid', verdi: '10.januar 2026' },
+                                  { label: 'Sted', verdi: 'Verkstedveien 20, Lillestrøm' },
+                              ],
+                              etiketter: [{ tekst: 'Venter på svar', sentiment: 'POSITIVE' }],
+                          },
+                      }),
+                  }),
+        wrapAktivitet({
             ...enEksternAktivitet({
                 tittel: 'Alfheim ordinære virksomhet',
                 status: AktivitetStatus.GJENNOMFOERT,
