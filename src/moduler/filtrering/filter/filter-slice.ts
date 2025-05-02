@@ -27,6 +27,7 @@ const initialState: FilterState = {
         VARIG_LONNSTILSKUDD: false,
         ARBEIDSTRENING: false,
         VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: false,
+        REKRUTTERINGSTREFF: false
     },
     aktivitetEtiketter: {
         AVSLAG: false,
