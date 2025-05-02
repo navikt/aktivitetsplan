@@ -1,5 +1,7 @@
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+
+import {  GlobalWorkerOptions } from "pdfjs-dist";
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Alert, Loader } from '@navikt/ds-react';
@@ -7,7 +9,10 @@ import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
 import { selectForhaandsvisningStatus, selectJournalføringstatus } from '../verktoylinje/arkivering/arkiv-slice';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+GlobalWorkerOptions.workerSrc = new URL(
+    "pdfjs-dist/build/pdf.worker.min.mjs",
+    import.meta.url
+).toString();
 
 interface PdfProps {
     pdf: string | undefined;
