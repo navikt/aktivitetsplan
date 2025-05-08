@@ -98,6 +98,7 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                     <ControlledDatePicker
                         field={{ name: 'fraDato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                        disabledDays={[{ after: new Date() }]}
                     />
 
                     <Select label="Møteform (obligatorisk)" {...register('kanal')}>
