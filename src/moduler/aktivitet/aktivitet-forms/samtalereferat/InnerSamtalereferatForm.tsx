@@ -22,7 +22,7 @@ const schema = z.object({
     }).refine(
         (date) => date.getTime() < new Date().getTime(),
         {
-            message: 'Fra dato må være før dagens dato',
+            message: 'Fra dato kan ikke være etter dagens dato',
         },
     ),
     kanal: z.nativeEnum(Kanal),
