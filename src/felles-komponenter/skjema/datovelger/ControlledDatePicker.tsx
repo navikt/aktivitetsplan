@@ -59,9 +59,9 @@ const ControlledDatePicker = ({
 
     const onBlur = () => {
         field.onBlur();
+        trigger('fraDato');
         if (!isValid(field.value)) return;
         setDisplayValue(format(field.value, 'dd.M.y'));
-        trigger('fraDato');
     };
     const togglePopover = () => {
         setIsPopoverOpen(!isPopoverOpen);
