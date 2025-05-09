@@ -19,7 +19,12 @@ const schema = z.object({
     fraDato: z.date({
         required_error: 'Fra dato må fylles ut',
         invalid_type_error: 'Ikke en gyldig dato',
-    }),
+    }).refine(
+        (date) => date.getTime() < new Date().getTime(),
+        {
+            message: 'Fra dato må være før dagens dato',
+        },
+    ),
     kanal: z.nativeEnum(Kanal),
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
