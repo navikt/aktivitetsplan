@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, ws } from 'msw';
 
 import {
     aktiviteterData,
@@ -44,6 +44,7 @@ import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
 import { subDays, subMinutes } from 'date-fns';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
+import { handleTryggTekstWebSocket, sjekkTryggTekst } from './data/tryggtekst';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
@@ -59,15 +60,15 @@ export const handlers = [
     http.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
     http.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
     http.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
-    http.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan',  () => {
+    http.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () => {
         return new HttpResponse(null, {
             status: 204,
-        })
+        });
     }),
     http.post('/veilarboppfolging/api/v3/veileder/lest-aktivitetsplan', () => {
         return new HttpResponse(null, {
             status: 204,
-        })
+        });
     }),
     http.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
 
@@ -185,6 +186,15 @@ export const handlers = [
 
     // veilarbmalverk
     http.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
+
+    // tryggtekst
+    http.post('/tryggtekst/proxy', sjekkTryggTekst),
+];
+
+// WebSocket handlers
+export const wsHandlers = [
+    // tryggtekst WebSocket handler
+    ws.link('ws://34.34.85.30:8007/ws').addEventListener('connection', handleTryggTekstWebSocket),
 ];
 
 export const aktivitestplanResponse = (
