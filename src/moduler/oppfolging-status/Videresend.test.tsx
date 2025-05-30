@@ -113,7 +113,7 @@ describe('Videresend brukere eller render children', () => {
         it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
             const store = gitt.hentStatus.ikkeRegistrertIKrr();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            await waitFor(() => getByText('Brukeren er ikke registrert i KRR'));
+            await waitFor(() => getByText('Brukeren har ikke registrert kontaktinformasjon i KRR'));
             getByText(aktivitetTittel);
         });
         it('skal vise varsel når bruker har reservert seg mot digital kommunikasjon i KRR', async () => {

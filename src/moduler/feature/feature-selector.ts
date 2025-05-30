@@ -1,7 +1,7 @@
 import { RootState } from '../../store';
 import { Feature, Features } from './feature';
 
-const selectFeatureSlice = (state: RootState) => state.data.feature;
+export const selectFeatureSlice = (state: RootState) => state.data.feature;
 
 const selectFeatureData = (state: RootState) => selectFeatureSlice(state).data as Features;
 

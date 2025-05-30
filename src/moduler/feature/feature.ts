@@ -1,4 +1,4 @@
-const ALL_TOGGLES = [] as const;
+const ALL_TOGGLES = ['aktivitetsplan.tryggtekst'] as const;
 
 export type Feature = (typeof ALL_TOGGLES)[number];
 export type Features = Record<Feature, boolean>;
