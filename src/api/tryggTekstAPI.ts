@@ -1,29 +1,18 @@
-import { Dispatch, SetStateAction } from 'react';
-
-type UseSensitive = (
-    verdi: string | null | undefined,
-    feilmelding?: string,
-) => [string | undefined, Dispatch<SetStateAction<string | undefined>>, () => boolean];
-
 export type LLMResponse = {
     content: string;
+    svar: string;
+    vurdering: string;
 };
-
-interface LLMContent {
+interface OpplysningsAdvarsel {
     trigger: string;
     kategori: string;
 }
-
-interface IsSensitive {
-    kategori: string;
-    sensitiv: boolean;
-    feilmedling: string | null;
+interface OpplysningSjekkContent {
+    kategorier: OpplysningsAdvarsel[];
 }
 
-const baseUrl = 'http://34.34.85.30:8007';
-
 async function postRequest(referatTekst: string): Promise<LLMResponse> {
-    return await fetch(`/tryggtekst/proxy`, {
+    return await fetch(`/tryggtekst/proxy/completion`, {
         method: 'POST',
         body: JSON.stringify({ payload: referatTekst }),
         headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache', 'Content-Type': 'application/json' },
@@ -43,34 +32,30 @@ async function postRequest(referatTekst: string): Promise<LLMResponse> {
 
 const postSjekkForPersonopplysninger = async (verdi: string) => {
     let feil = '';
-    let sensitiv = false;
     let kategorier: { kategori: string; trigger: string }[] = [];
     console.log('useSensitive', verdi);
 
     if (!verdi) {
-        console.log('ingen verdi', verdi);
-        return { kategorier: [], sensitiv: sensitiv, feilmedling: feil };
+        return { kategorier: [] };
     } else {
         console.log('verdi som ska til llm', verdi);
-        const b = await postRequest(verdi).then(async (c: LLMResponse) => {
-            const containsSensitive = JSON.parse(c.content);
+        await postRequest(verdi).then(async (response: LLMResponse) => {
+            const containsSensitive: OpplysningSjekkContent = JSON.parse(response.content);
             console.log('containsSensitive', containsSensitive);
 
             if (containsSensitive.kategorier && containsSensitive.kategorier.length > 0) {
-                kategorier = containsSensitive.kategorier.map((item: LLMContent) => ({
+                kategorier = containsSensitive.kategorier.map((item) => ({
                     kategori: item.kategori,
                     trigger: item.trigger,
                 }));
                 feil = `⚠️ Det ser ut som du har skrevet inn personopplysninger om ${kategorier.map((k) => k.kategori).join(', ')} i skjemaet.`;
-                sensitiv = true;
             } else {
                 feil = '👌✅';
-                sensitiv = false;
             }
-            return { kategorier: kategorier, sensitiv: sensitiv, feilmedling: feil };
+            return { kategorier: kategorier, feilmedling: feil };
         });
     }
-    return { kategorier: kategorier, sensitiv: sensitiv, feilmedling: feil };
+    return { kategorier: kategorier, feilmedling: feil };
 };
 
 export default postSjekkForPersonopplysninger;

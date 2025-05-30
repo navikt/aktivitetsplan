@@ -8,13 +8,13 @@ const tekster = {
         lenkeTekst: 'Gå til norge.no for å registrere.',
     },
     veileder: {
-        tittel: 'Brukeren er ikke registrert i KRR',
+        tittel: 'Brukeren har ikke registrert kontaktinformasjon i KRR',
         tekst: 'Du kan ikke bruke aktivitetsplanen fordi brukeren ikke har registrert e-post eller telefonnummeret sitt i KRR',
         lenkeTekst: 'Brukeren må gå til norge.no for å registrere.',
     },
 };
 
-const linkIkkeIKrr = "https://www.norge.no/nb/digital-borger/oppdater-kontaktinformasjon"
+const linkIkkeIKrr = 'https://www.norge.no/nb/digital-borger/oppdater-kontaktinformasjon';
 
 export function IkkeRegistrertIKRRAdvarsel({
     erRegistrertIKRR,
