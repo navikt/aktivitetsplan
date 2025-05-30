@@ -175,4 +175,5 @@ export enum EksternAktivitetType {
     JOBBK = 'JOBBK',
     GRUPPEAMO = 'GRUPPEAMO',
     GRUFAGYRKE = 'GRUFAGYRKE',
+    REKRUTTERINGSTREFF = 'REKRUTTERINGSTREFF',
 }

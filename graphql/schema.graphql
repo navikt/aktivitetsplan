@@ -138,6 +138,7 @@ enum AktivitetskortType {
     JOBBK
     GRUPPEAMO
     GRUFAGYRKE
+    REKRUTTERINGSTREFF
 }
 
 

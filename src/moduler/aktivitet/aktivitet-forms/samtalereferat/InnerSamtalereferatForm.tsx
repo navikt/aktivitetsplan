@@ -20,7 +20,12 @@ const schema = z.object({
     fraDato: z.date({
         required_error: 'Fra dato må fylles ut',
         invalid_type_error: 'Ikke en gyldig dato',
-    }),
+    }).refine(
+        (date) => date.getTime() < new Date().getTime(),
+        {
+            message: 'Dato kan ikke være etter dagens dato',
+        },
+    ),
     kanal: z.nativeEnum(Kanal),
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
@@ -99,6 +104,7 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                     <ControlledDatePicker
                         field={{ name: 'fraDato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                        disabledDays={[{ after: new Date() }]}
                     />
 
                     <Select label="Møteform (obligatorisk)" {...register('kanal')}>

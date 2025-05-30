@@ -29,7 +29,7 @@ export const internalServerError = new Response(
 
 export const failOrGetResponse = <T extends DefaultBodyType = DefaultBodyType>(
     failFn: () => boolean,
-    successFn: (req: StrictRequest<T>, params: PathParams) => object | undefined,
+    successFn: (req: StrictRequest<T>, params: PathParams) => (object | undefined) | Promise<object | undefined>,
     delay?: number | undefined,
 ): HttpResponseResolver<PathParams, T, T> => {
     return (async ({ request, params }): Promise<Response> => {
@@ -37,7 +37,7 @@ export const failOrGetResponse = <T extends DefaultBodyType = DefaultBodyType>(
             return internalServerError;
         }
         if (delay) await _delay(delay);
-        const result = successFn(request, params);
+        const result = await successFn(request, params);
         return new Response(JSON.stringify(result));
     }) as HttpResponseResolver<PathParams, T, T>;
 };

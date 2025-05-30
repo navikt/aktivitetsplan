@@ -20,6 +20,7 @@ const ControlledDatePicker = ({
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const closePopover = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closePopover);
+    const { trigger } = useFormContext();
 
     const { control, setValue, clearErrors } = useFormContext();
     const {
@@ -58,6 +59,7 @@ const ControlledDatePicker = ({
 
     const onBlur = () => {
         field.onBlur();
+        trigger('fraDato');
         if (!isValid(field.value)) return;
         setDisplayValue(format(field.value, 'dd.M.y'));
     };
