@@ -37,8 +37,10 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
                 case EksternAktivitetType.ARBEIDSTRENING:
                 case EksternAktivitetType.VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET:
                     return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status.';
+                case EksternAktivitetType.REKRUTTERINGSTREFF:
+                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til rekrutteringsbistand for å endre status.'
             }
-            return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til fagsystemet for å endre aktiviteten.';
+            return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til det aktuelle fagsystemet for å endre aktiviteten.';
         }
         return 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.';
     }
@@ -59,7 +61,7 @@ export const Tavleadvarsel = (props: Props) => {
     }
 
     return (
-        <div className="fixed z-50 left-0 right-0 max-w-lg mx-auto">
+        <div className="fixed z-50 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg">
             <GuidePanel illustration={<ObsSVG />} poster>
                 <BodyShort>{getAdvarseltekst(draggingAktivitet, erVeileder)}</BodyShort>
             </GuidePanel>
