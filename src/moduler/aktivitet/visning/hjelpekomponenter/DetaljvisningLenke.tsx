@@ -21,7 +21,11 @@ const DetaljvisningLenke = (props: Props) => {
     }
     let shortenedUrl;
     try {
-        shortenedUrl = new URL(lenke.startsWith('http') ? lenke : 'http://' + lenke).hostname;
+        const url = new URL(lenke.startsWith('http') ? lenke : 'http://' + lenke);
+        const hostname = url.hostname;
+        const pathSegments = url.pathname.split('/').filter(Boolean);
+        const firstSegment = pathSegments.length > 0 ? '/' + pathSegments[0] : '';
+        shortenedUrl = hostname + firstSegment;
     } catch (e) {
         shortenedUrl = lenke;
     }
