@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed, formaterTid } from '../../utils/dateUtils';
 import { useFnrOgEnhetContext } from '../../Provider';
+import { logKlikkKnapp } from '../../amplitude/amplitude';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -38,6 +39,7 @@ const Sidebar: FunctionComponent = () => {
     const sendTilArkiv = () => {
         if (forhaandsvisningOpprettet) {
             dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
+            logKlikkKnapp('Journalfør aktivitetsplan')
         }
     };
 
