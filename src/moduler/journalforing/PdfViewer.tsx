@@ -51,6 +51,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
     }, [pdf]);
 
     useEffect(() => {
+        setVisAlert(true)
         const timeoutId = setTimeout(() => {
             setVisAlert(false);
         }, 5000);
