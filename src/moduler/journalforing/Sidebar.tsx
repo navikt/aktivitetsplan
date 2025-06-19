@@ -37,9 +37,9 @@ const Sidebar: FunctionComponent = () => {
     }
 
     const sendTilArkiv = () => {
+        logKlikkKnapp('Journalfør aktivitetsplan')
         if (forhaandsvisningOpprettet) {
             dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
-            logKlikkKnapp('Journalfør aktivitetsplan')
         }
     };
 
