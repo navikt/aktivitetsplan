@@ -74,16 +74,14 @@ function Navigasjonslinje() {
                         Skriv ut
                     </ReactRouterLink>
                 )}
-                {!ER_PROD
-                    ? erVeileder && (
+                {erVeileder && (
                           <ReactRouterLink
                               to={`journalforing/${vistOppfolgingsperiode}`}
                               className="text-text-action underline hover:no-underline"
                           >
                               Journalføring
                           </ReactRouterLink>
-                      )
-                    : null}
+                      )}
             </div>
             <Heading level="1" size="xlarge">
                 Aktivitetsplan
