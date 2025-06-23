@@ -77,6 +77,7 @@ function Navigasjonslinje() {
                         hidden={isMobile}
                         to="utskrift"
                         className="text-text-action underline hover:no-underline"
+                        onClick={() =>  logKlikkKnapp('Skriv ut')}
                     >
                         Skriv ut
                     </ReactRouterLink>
@@ -86,6 +87,7 @@ function Navigasjonslinje() {
                           <ReactRouterLink
                               to={`journalforing/${vistOppfolgingsperiode}`}
                               className="text-text-action underline hover:no-underline"
+                              onClick={() => logKlikkKnapp('Journalføring')}
                           >
                               Journalføring
                           </ReactRouterLink>
