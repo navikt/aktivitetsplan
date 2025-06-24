@@ -39,6 +39,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     VARIG_LONNSTILSKUDD: 'Avtale varig lønnstilskudd',
     ARBEIDSTRENING: 'Arbeidstrening',
     VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: 'Varig tilrettelagt arbeid i ordinær virksomhet',
+    MENTOR: 'Mentor',
     INDOPPFAG: 'Oppfølging',
     ARBFORB: 'Arbeidsforberedende trening',
     AVKLARAG: 'Avklaring',
