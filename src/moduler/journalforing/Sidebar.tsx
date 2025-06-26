@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import { BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
-    hentPdfTilForhaandsvisning,
     journalfør,
     selectForhaandsvisningOpprettet,
     selectForhaandsvisningStatus,
@@ -36,14 +35,8 @@ const Sidebar: FunctionComponent = () => {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
     }
 
-    useEffect(() => {
-        if (!journalførendeEnhet || !oppfolgingsperiodeId) return;
-
-        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId }));
-    }, [oppfolgingsperiodeId, dispatch, journalførendeEnhet]);
-
     const sendTilArkiv = () => {
-        logKlikkKnapp('Journalfør aktivitetsplan')
+        logKlikkKnapp('Journalfør aktivitetsplan');
         if (forhaandsvisningOpprettet) {
             dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
         }
@@ -57,9 +50,9 @@ const Sidebar: FunctionComponent = () => {
     const disabled = henterForhaandsvisning || !forhaandsvisningOpprettet || journalfører;
 
     const sistJournalførtTekst = (): string => {
-        if (forhaandsvisningStatus == Status.ERROR) {
+        if (forhaandsvisningStatus === Status.ERROR) {
             return 'Kunne ikke hente sist journalført';
-        } else if (forhaandsvisningStatus == Status.OK) {
+        } else if (forhaandsvisningStatus === Status.OK) {
             return sistJournalfort
                 ? formaterDatoKortManed(sistJournalfort) + ' kl. ' + formaterTid(sistJournalfort)
                 : 'Aldri';
@@ -99,8 +92,8 @@ const Sidebar: FunctionComponent = () => {
                                 {periode.slutt == undefined
                                     ? 'Nåværende periode'
                                     : formaterDatoKortManed(periode.start) +
-                                      ' - ' +
-                                      formaterDatoKortManed(periode.slutt)}
+                                    ' - ' +
+                                    formaterDatoKortManed(periode.slutt)}
                             </option>
                         ))}
                 </Select>
@@ -108,7 +101,7 @@ const Sidebar: FunctionComponent = () => {
                     <Label>Sist journalført</Label>
                     <BodyShort>{sistJournalførtTekst()}</BodyShort>
                 </div>
-                <Button loading={journalfører} variant="primary" onClick={() => sendTilArkiv()}>
+                <Button loading={journalfører} variant="primary" onClick={sendTilArkiv}>
                     Journalfør
                 </Button>
             </div>
