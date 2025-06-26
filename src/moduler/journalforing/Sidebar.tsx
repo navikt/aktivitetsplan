@@ -82,7 +82,7 @@ const Sidebar: FunctionComponent = () => {
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
                     disabled={disabled}
-                    defaultValue={oppfolgingsperiodeId}
+                    value={oppfolgingsperiodeId}
                 >
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.start) - Date.parse(a.start))
@@ -90,7 +90,6 @@ const Sidebar: FunctionComponent = () => {
                             <option
                                 key={`oppfolgingsperiodeoption-${periode.id}`}
                                 value={periode.id}
-                                // selected={oppfolgingsperiodeId === periode.uuid}
                             >
                                 {periode.slutt == undefined
                                     ? 'Nåværende periode'
