@@ -73,11 +73,11 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
             )}
             {!blob || henterForhaandsvisning ? (
                 <div className="min-h-[calc(100vh-180px)] flex flex-col justify-center items-center">
-                    <Loader size="3xlarge" title="Venter..." className="mt-32 mb-4" />
-                    <BodyShort as="div" size="medium" className="mb-1" spacing>
+                    <Loader size="3xlarge" title="Venter..." className="mt-32 mb-6" />
+                    <BodyShort as="div" size="medium" className="text-subtle mb-1" spacing>
                         Vi lager en PDF
                     </BodyShort>
-                    <BodyShort as="div" size="small" className="text-subtle" spacing>
+                    <BodyShort as="div" size="medium" className="text-subtle" spacing>
                         Noen ganger trenger vi litt tid til dette dessverre
                     </BodyShort>
                 </div>
