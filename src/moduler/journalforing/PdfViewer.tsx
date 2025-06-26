@@ -73,7 +73,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
             )}
             {!blob || henterForhaandsvisning ? (
                 <div className="min-h-[calc(100vh-180px)] flex justify-center">
-                    <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
+                    <Loader size="3xlarge" title="Venter..." variant="neutral" className="mt-32 self-center" />
                 </div>
             ) : (
                 <Document
