@@ -73,14 +73,19 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
             )}
             {!blob || henterForhaandsvisning ? (
                 <div className="min-h-[calc(100vh-180px)] flex justify-center">
-                    <Loader size="3xlarge" title="Venter..." variant="interaction" className="mt-32 self-center" />
+                    <Loader size="3xlarge" title="Venter..." className="mt-32 self-center" />
                 </div>
             ) : (
                 <Document
                     className="space-y-4 min-h-[calc(100vh-180px)] z-0"
                     onLoadSuccess={onDocumentLoadSuccess}
                     file={blob}
-                    loading=""
+                    loading={
+                        <div>
+                            Vi lager en PDF<br />
+                            Noen ganger trenger vi litt tid til dette dessverre
+                        </div>
+                    }
                 >
                     {Array.from(new Array(numPages), (el, index) => (
                         <Page
