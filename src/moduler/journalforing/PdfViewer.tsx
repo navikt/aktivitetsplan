@@ -4,7 +4,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 import {  GlobalWorkerOptions } from "pdfjs-dist";
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Alert, Loader } from '@navikt/ds-react';
+import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
 import { useSelector } from 'react-redux';
 import { selectForhaandsvisningStatus, selectJournalføringstatus } from '../verktoylinje/arkivering/arkiv-slice';
@@ -72,20 +72,21 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
                 </Alert>
             )}
             {!blob || henterForhaandsvisning ? (
-                <div className="min-h-[calc(100vh-180px)] flex justify-center">
-                    <Loader size="3xlarge" title="Venter..." className="mt-32 self-center" />
+                <div className="min-h-[calc(100vh-180px)] flex flex-col justify-center items-center">
+                    <Loader size="3xlarge" title="Venter..." className="mt-32 mb-4" />
+                    <BodyShort as="div" size="medium" className="mb-1" spacing>
+                        Vi lager en PDF
+                    </BodyShort>
+                    <BodyShort as="div" size="small" className="text-subtle" spacing>
+                        Noen ganger trenger vi litt tid til dette dessverre
+                    </BodyShort>
                 </div>
             ) : (
                 <Document
                     className="space-y-4 min-h-[calc(100vh-180px)] z-0"
                     onLoadSuccess={onDocumentLoadSuccess}
                     file={blob}
-                    loading={
-                        <div>
-                            Vi lager en PDF<br />
-                            Noen ganger trenger vi litt tid til dette dessverre
-                        </div>
-                    }
+                    loading=""
                 >
                     {Array.from(new Array(numPages), (el, index) => (
                         <Page
