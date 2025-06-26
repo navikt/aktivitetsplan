@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
@@ -36,6 +36,12 @@ const Sidebar: FunctionComponent = () => {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
     }
 
+    useEffect(() => {
+        if (!journalførendeEnhet || !oppfolgingsperiodeId) return;
+
+        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId }));
+    }, [oppfolgingsperiodeId, dispatch, journalførendeEnhet]);
+
     const sendTilArkiv = () => {
         logKlikkKnapp('Journalfør aktivitetsplan')
         if (forhaandsvisningOpprettet) {
@@ -46,7 +52,6 @@ const Sidebar: FunctionComponent = () => {
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const valgtOppfølgingsperiode = e.target.value;
         navigate(`/aktivitetsplan/journalforing/${valgtOppfølgingsperiode}`, { replace: true });
-        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId: valgtOppfølgingsperiode }));
     };
 
     const disabled = henterForhaandsvisning || !forhaandsvisningOpprettet || journalfører;
