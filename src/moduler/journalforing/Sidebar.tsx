@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
-    hentPdfTilForhaandsvisning,
     journalfør,
     selectForhaandsvisningOpprettet,
     selectForhaandsvisningStatus,
@@ -37,7 +36,7 @@ const Sidebar: FunctionComponent = () => {
     }
 
     const sendTilArkiv = () => {
-        logKlikkKnapp('Journalfør aktivitetsplan')
+        logKlikkKnapp('Journalfør aktivitetsplan');
         if (forhaandsvisningOpprettet) {
             dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
         }
@@ -46,15 +45,14 @@ const Sidebar: FunctionComponent = () => {
     const onEndretOppfolgingsperiode = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const valgtOppfølgingsperiode = e.target.value;
         navigate(`/aktivitetsplan/journalforing/${valgtOppfølgingsperiode}`, { replace: true });
-        dispatch(hentPdfTilForhaandsvisning({ journalførendeEnhet, oppfolgingsperiodeId: valgtOppfølgingsperiode }));
     };
 
     const disabled = henterForhaandsvisning || !forhaandsvisningOpprettet || journalfører;
 
     const sistJournalførtTekst = (): string => {
-        if (forhaandsvisningStatus == Status.ERROR) {
+        if (forhaandsvisningStatus === Status.ERROR) {
             return 'Kunne ikke hente sist journalført';
-        } else if (forhaandsvisningStatus == Status.OK) {
+        } else if (forhaandsvisningStatus === Status.OK) {
             return sistJournalfort
                 ? formaterDatoKortManed(sistJournalfort) + ' kl. ' + formaterTid(sistJournalfort)
                 : 'Aldri';
@@ -64,7 +62,10 @@ const Sidebar: FunctionComponent = () => {
     };
 
     return (
-        <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 h-screen">
+        <div
+            className="items-start space-y-4 max-w-96 py-8 px-8 bg-white overflow-y-auto"
+            style={{ maxHeight: 'calc(100dvh - 160px)' }}
+        >
             <ReactRouterLink
                 className="text-text-action underline hover:no-underline"
                 to={hovedsideRoute()}
@@ -82,7 +83,7 @@ const Sidebar: FunctionComponent = () => {
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
                     disabled={disabled}
-                    defaultValue={oppfolgingsperiodeId}
+                    value={oppfolgingsperiodeId}
                 >
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.start) - Date.parse(a.start))
@@ -90,13 +91,12 @@ const Sidebar: FunctionComponent = () => {
                             <option
                                 key={`oppfolgingsperiodeoption-${periode.id}`}
                                 value={periode.id}
-                                // selected={oppfolgingsperiodeId === periode.uuid}
                             >
                                 {periode.slutt == undefined
                                     ? 'Nåværende periode'
                                     : formaterDatoKortManed(periode.start) +
-                                      ' - ' +
-                                      formaterDatoKortManed(periode.slutt)}
+                                    ' - ' +
+                                    formaterDatoKortManed(periode.slutt)}
                             </option>
                         ))}
                 </Select>
@@ -104,7 +104,7 @@ const Sidebar: FunctionComponent = () => {
                     <Label>Sist journalført</Label>
                     <BodyShort>{sistJournalførtTekst()}</BodyShort>
                 </div>
-                <Button loading={journalfører} variant="primary" onClick={() => sendTilArkiv()}>
+                <Button loading={journalfører} variant="primary" onClick={sendTilArkiv}>
                     Journalfør
                 </Button>
             </div>
