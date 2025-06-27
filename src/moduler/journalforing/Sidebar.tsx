@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
@@ -30,6 +30,24 @@ const Sidebar: FunctionComponent = () => {
     const { hovedsideRoute } = useRoutes();
     const navigate = useNavigate();
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+
+    const [headerHeight, setHeaderHeight] = useState(0);
+
+    useEffect(() => {
+        const header = document.querySelector('header'); // Bytt ut selector hvis header har annen tag/klasse/id
+        if (header) {
+            setHeaderHeight(header.getBoundingClientRect().height);
+        }
+
+        const onResize = () => {
+            if (header) {
+                setHeaderHeight(header.getBoundingClientRect().height);
+            }
+        };
+
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     if (!journalførendeEnhet || !oppfolgingsperiodeId) {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
@@ -64,7 +82,7 @@ const Sidebar: FunctionComponent = () => {
     return (
         <div
             className="items-start space-y-4 max-w-96 py-8 px-8 bg-white overflow-y-auto"
-            style={{ maxHeight: 'calc(100dvh - 192px)' }}
+            style={{ maxHeight: `calc(100vh - ${headerHeight}px)` }}
         >
             <ReactRouterLink
                 className="text-text-action underline hover:no-underline"
@@ -88,15 +106,10 @@ const Sidebar: FunctionComponent = () => {
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.start) - Date.parse(a.start))
                         .map((periode) => (
-                            <option
-                                key={`oppfolgingsperiodeoption-${periode.id}`}
-                                value={periode.id}
-                            >
+                            <option key={`oppfolgingsperiodeoption-${periode.id}`} value={periode.id}>
                                 {periode.slutt == undefined
                                     ? 'Nåværende periode'
-                                    : formaterDatoKortManed(periode.start) +
-                                    ' - ' +
-                                    formaterDatoKortManed(periode.slutt)}
+                                    : formaterDatoKortManed(periode.start) + ' - ' + formaterDatoKortManed(periode.slutt)}
                             </option>
                         ))}
                 </Select>
