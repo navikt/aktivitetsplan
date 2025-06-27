@@ -64,7 +64,7 @@ const Sidebar: FunctionComponent = () => {
     return (
         <div
             className="items-start space-y-4 max-w-96 py-8 px-8 bg-white overflow-y-auto"
-            style={{ maxHeight: 'calc(100dvh - 150px)' }}
+            style={{ maxHeight: 'calc(100dvh - 160px)' }}
         >
             <ReactRouterLink
                 className="text-text-action underline hover:no-underline"
