@@ -62,7 +62,7 @@ const Sidebar: FunctionComponent = () => {
     };
 
     return (
-        <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 h-screen">
+        <div className="items-start space-y-4 max-w-96 py-8 px-8 bg-white md:sticky top-0 max-h-screen overflow-y-auto">
             <ReactRouterLink
                 className="text-text-action underline hover:no-underline"
                 to={hovedsideRoute()}
