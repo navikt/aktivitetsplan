@@ -1,0 +1,120 @@
+{
+  "_Radio-BGYtc5wT.js": {
+    "file": "assets/Radio-BGYtc5wT.js",
+    "name": "Radio",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "__vite-browser-external": {
+    "file": "assets/__vite-browser-external-BIHI7g3E.js",
+    "name": "__vite-browser-external",
+    "src": "__vite-browser-external",
+    "isDynamicEntry": true
+  },
+  "_index-DdM0PGkw.css": {
+    "file": "assets/index-DdM0PGkw.css",
+    "src": "_index-DdM0PGkw.css"
+  },
+  "_internAktivitetTypes-BdgDMPwM.js": {
+    "file": "assets/internAktivitetTypes-BdgDMPwM.js",
+    "name": "internAktivitetTypes"
+  },
+  "_routerConfig-DgXWCbs5.js": {
+    "file": "assets/routerConfig-DgXWCbs5.js",
+    "name": "routerConfig",
+    "imports": [
+      "index.html",
+      "_Radio-BGYtc5wT.js",
+      "_internAktivitetTypes-BdgDMPwM.js"
+    ],
+    "dynamicImports": [
+      "__vite-browser-external",
+      "__vite-browser-external",
+      "__vite-browser-external",
+      "__vite-browser-external"
+    ],
+    "css": [
+      "assets/routerConfig-UzkUHJrn.css"
+    ],
+    "assets": [
+      "assets/logo-DXVplSjy.png",
+      "assets/pdf.worker.min-GB3t0DcA.mjs"
+    ]
+  },
+  "_routerConfig-UzkUHJrn.css": {
+    "file": "assets/routerConfig-UzkUHJrn.css",
+    "src": "_routerConfig-UzkUHJrn.css"
+  },
+  "index.html": {
+    "file": "assets/index-BwpJbDGT.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/webcomponentWrapper.tsx",
+      "src/rootWrapper.tsx",
+      "src/mocks/index.ts",
+      "src/mocks/demo/DemoBanner.tsx"
+    ]
+  },
+  "node_modules/pdfjs-dist/build/pdf.worker.min.mjs": {
+    "file": "assets/pdf.worker.min-GB3t0DcA.mjs",
+    "src": "node_modules/pdfjs-dist/build/pdf.worker.min.mjs"
+  },
+  "src/mocks/demo/DemoBanner.tsx": {
+    "file": "assets/DemoBanner-Dlrq25Fz.js",
+    "name": "DemoBanner",
+    "src": "src/mocks/demo/DemoBanner.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_Radio-BGYtc5wT.js"
+    ],
+    "css": [
+      "assets/DemoBanner-DSp5JhxX.css",
+      "assets/index-DdM0PGkw.css"
+    ]
+  },
+  "src/mocks/index.ts": {
+    "file": "assets/index-C_mWd7bw.js",
+    "name": "index",
+    "src": "src/mocks/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_internAktivitetTypes-BdgDMPwM.js"
+    ]
+  },
+  "src/moduler/utskrift/ikoner/logo.png": {
+    "file": "assets/logo-DXVplSjy.png",
+    "src": "src/moduler/utskrift/ikoner/logo.png"
+  },
+  "src/rootWrapper.tsx": {
+    "file": "assets/rootWrapper-DLPFD5Js.js",
+    "name": "rootWrapper",
+    "src": "src/rootWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DgXWCbs5.js",
+      "_Radio-BGYtc5wT.js",
+      "_internAktivitetTypes-BdgDMPwM.js"
+    ],
+    "css": [
+      "assets/index-DdM0PGkw.css"
+    ]
+  },
+  "src/webcomponentWrapper.tsx": {
+    "file": "assets/webcomponentWrapper-CVPNSGNH.js",
+    "name": "webcomponentWrapper",
+    "src": "src/webcomponentWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DgXWCbs5.js",
+      "_Radio-BGYtc5wT.js",
+      "_internAktivitetTypes-BdgDMPwM.js"
+    ]
+  }
+}
