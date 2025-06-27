@@ -31,22 +31,19 @@ const Sidebar: FunctionComponent = () => {
     const navigate = useNavigate();
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
 
-    const [headerHeight, setHeaderHeight] = useState(0);
+    const [availableHeight, setAvailableHeight] = useState(window.innerHeight);
 
     useEffect(() => {
-        const header = document.querySelector('header'); // Bytt ut selector hvis header har annen tag/klasse/id
-        if (header) {
-            setHeaderHeight(header.getBoundingClientRect().height);
-        }
-
-        const onResize = () => {
-            if (header) {
-                setHeaderHeight(header.getBoundingClientRect().height);
-            }
+        const calculateHeight = () => {
+            const header = document.querySelector('header'); // Juster selector om header har annen tag/klasse/id
+            const headerHeight = header ? header.getBoundingClientRect().height : 0;
+            setAvailableHeight(window.innerHeight - headerHeight);
         };
 
-        window.addEventListener('resize', onResize);
-        return () => window.removeEventListener('resize', onResize);
+        calculateHeight();
+
+        window.addEventListener('resize', calculateHeight);
+        return () => window.removeEventListener('resize', calculateHeight);
     }, []);
 
     if (!journalførendeEnhet || !oppfolgingsperiodeId) {
@@ -82,7 +79,7 @@ const Sidebar: FunctionComponent = () => {
     return (
         <div
             className="items-start space-y-4 max-w-96 py-8 px-8 bg-white overflow-y-auto"
-            style={{ maxHeight: `calc(100vh - ${headerHeight}px)` }}
+            style={{ maxHeight: availableHeight, height: availableHeight }}
         >
             <ReactRouterLink
                 className="text-text-action underline hover:no-underline"
