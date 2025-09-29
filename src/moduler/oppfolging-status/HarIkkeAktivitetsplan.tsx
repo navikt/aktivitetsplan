@@ -14,7 +14,7 @@ const HarIkkeAktivitetsplan = (props: Props) => {
         : 'Du må være registrert som arbeidssøker hos Nav for å bruke aktivitetsplanen.';
 
     return (
-        <div className="flex items-center flex-col">
+        <div className="flex items-center flex-col mt-8">
             <Alert variant="warning">
                 <BodyShort>{advarsel}</BodyShort>
                 {!erVeileder && <Link href={ARBEIDSSOKERREGISTRERING_URL}>Register deg arbeidssøker hos Nav</Link>}
