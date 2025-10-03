@@ -12,9 +12,6 @@ concurrency:
   group: pto_frontend_container_prod
   cancel-in-progress: true
 
-env:
-  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
