@@ -56,7 +56,6 @@ spec:
           namespace: poao
       external:
         - host: navtestb2c.b2clogin.com
-        - host: veilarbmalverk.dev-fss-pub.nais.io
         - host: veilarbveileder.dev-fss-pub.nais.io
   gcp:
     buckets:

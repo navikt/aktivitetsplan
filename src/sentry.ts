@@ -77,7 +77,7 @@ init({
         }),
         httpClientIntegration({
             failedRequestTargets: [
-                /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)\/*/,
+                /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbveileder)\/*/,
             ],
         }),
         captureConsoleIntegration({
@@ -104,7 +104,7 @@ init({
     release: import.meta.env.VITE_SENTRY_RELEASE,
     tracePropagationTargets: [
         'localhost',
-        /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbmalverk|veilarbveileder)/,
+        /https:\/\/aktivitetsplan(\.ekstern\.dev)?\.nav\.no\/(veilarbaktivitet|veilarbdialog|veilarboppfolging|veilarblest|veilarbperson|veilarbveileder)/,
     ],
 });
 
