@@ -22,7 +22,6 @@ import { eskaleringsvarsel } from './data/eskaleringsvarsel';
 import { features } from './data/feature';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
-import { hentMalverk } from './data/malverk';
 import { me } from './data/me';
 import getOppfolging, { mockOppfolging, settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
@@ -183,9 +182,6 @@ export const handlers = [
 
     // veilarboppgave
     http.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([])),
-
-    // veilarbmalverk
-    http.post('/veilarbmalverk/api/mal', jsonResponse(hentMalverk)),
 
     // tryggtekst
     http.post('/tryggtekst/proxy', sjekkTryggTekst),

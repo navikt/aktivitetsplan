@@ -8,7 +8,6 @@ import { z } from 'zod';
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { useErVeileder } from '../../../../Provider';
-import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
@@ -89,16 +88,6 @@ const EgenAktivitetForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
-    const onMalChange = (newInitalValues: any) => {
-        if (!newInitalValues) {
-            reset();
-        } else {
-            Object.entries(newInitalValues).forEach(([name, value], _) => {
-                setValue(name as any, value); // TODO pls typ malverk. pls fjern malverk
-            });
-        }
-    };
-
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
@@ -106,7 +95,6 @@ const EgenAktivitetForm = (props: Props) => {
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE} />
 
                     <InnsynsrettInfo />
-                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} />
 
                     <TextField
                         disabled={avtalt}

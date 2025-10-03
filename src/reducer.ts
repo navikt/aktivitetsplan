@@ -13,7 +13,6 @@ import identitetReducer from './moduler/identitet/identitet-slice';
 import lestReducer from './moduler/lest/lest-slice';
 import malReducer from './moduler/mal/aktivitetsmal-slice';
 import malListeReducer from './moduler/mal/malliste-slice';
-import malverkReducer from './moduler/malverk/malverk-slice';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-slice';
 import eskaleringsvarselReducer from './moduler/varslinger/eskaleringsvarsel-slice';
 import veilederReducer from './moduler/veileder/veileder-slice';
@@ -33,7 +32,6 @@ const reducer = {
         malListe: malListeReducer,
         oppfolging: oppfolgingReducer,
         versjoner: versjonReducer,
-        malverk: malverkReducer,
         arkiv: arkivReducer,
         lest: lestReducer,
         veileder: veilederReducer,
