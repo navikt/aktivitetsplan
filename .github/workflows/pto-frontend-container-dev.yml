@@ -20,7 +20,7 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v5
       - name: deploy gcp dev ekstern
         uses: nais/deploy/actions/deploy@v1
         env:
