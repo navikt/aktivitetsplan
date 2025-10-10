@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { TextField, Textarea } from '@navikt/ds-react';
-import { isAfter } from 'date-fns';
-import React, { MutableRefObject } from 'react';
+import { TextField, Textarea, Select } from '@navikt/ds-react';
+import { addDays, format, formatISO, isAfter } from 'date-fns';
+import React, { ChangeEventHandler, MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -13,6 +13,7 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
+import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDateRangePicker';
 
 const schema = z
     .object({
@@ -87,6 +88,25 @@ const EgenAktivitetForm = (props: Props) => {
     }
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
+    const fraDato = watch('fraDato');
+    const tilDato = watch('tilDato');
+
+    const onTemplateChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+        if (event.target.value === 'ingen') {
+            reset();
+        } else {
+            (Object.entries(malverkTemplate) as [keyof typeof malverkTemplate, string][]).forEach(
+                ([name, value], _) => {
+                    setValue(name, value);
+                },
+            );
+            const now = new Date();
+            const fraDato = now;
+            const tilDato = addDays(now, 8);
+            setValue('fraDato', fraDato);
+            setValue('tilDato', tilDato);
+        }
+    };
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
@@ -95,6 +115,10 @@ const EgenAktivitetForm = (props: Props) => {
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE} />
 
                     <InnsynsrettInfo />
+                    <Select id="malverk" name={'malverk'} label="Ferdig utfylt aktivitet" onChange={onTemplateChange}>
+                        <option value="ingen">Ingen ferdig utfylt aktivitet valgt</option>
+                        <option value={malverkTemplate.tittel}>{malverkTemplate.tittel}</option>
+                    </Select>
 
                     <TextField
                         disabled={avtalt}
@@ -103,10 +127,10 @@ const EgenAktivitetForm = (props: Props) => {
                         {...register('tittel')}
                         error={errors.tittel && errors.tittel.message}
                     />
-                    <MaybeAvtaltDateRangePicker
-                        aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato', required: true }}
+                    <DateRangePicker
+                        // aktivitet={aktivitet}
+                        from={{ name: 'fraDato', required: true, defaultValue: fraDato }}
+                        to={{ name: 'tilDato', required: true, defaultValue: tilDato }}
                     />
                     <TextField
                         disabled={avtalt}
@@ -144,5 +168,15 @@ const EgenAktivitetForm = (props: Props) => {
         </form>
     );
 };
+
+const malverkTemplate = {
+    tittel: 'Oppdater CV-en og jobbønsker',
+    hensikt: 'Tydeliggjøre arbeidserfaring og jobbønsker slik at Nav kan bidra til å hjelpe deg ut i jobb',
+    beskrivelse:
+        'Når du registrerer CV-en din og jobbønskene dine, kan Nav følge deg opp på en bedre måte. CV-en gir oss nyttig informasjon om din kompetanse og dine jobbønsker. Etter avtale med deg, videreformidler NAV relevant informasjon til aktuelle arbeidsgivere og bemanningsbransjen for å hjelpe deg ut i jobb.',
+    // lenke: '{lenke}',
+    // fraDato: '{now}',
+    // tilDato: '{now + 8d}',
+} as const;
 
 export default EgenAktivitetForm;

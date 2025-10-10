@@ -1,5 +1,5 @@
-import { DatePicker as DatePicker, useRangeDatepicker } from '@navikt/ds-react';
-import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
+import { DatePicker as DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
+// import { RangeValidationT } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
 import React, { useEffect, useMemo } from 'react';
 import { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
