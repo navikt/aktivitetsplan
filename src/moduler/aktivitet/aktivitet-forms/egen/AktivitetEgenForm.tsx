@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
-import { addDays, format, formatISO, isAfter } from 'date-fns';
+import { addDays, format, formatISO, isAfter, startOfDay } from 'date-fns';
 import React, { ChangeEventHandler, MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -101,7 +101,7 @@ const EgenAktivitetForm = (props: Props) => {
                 },
             );
             const now = new Date();
-            const fraDato = now;
+            const fraDato = startOfDay(now);
             const tilDato = addDays(now, 8);
             setValue('fraDato', fraDato);
             setValue('tilDato', tilDato);
