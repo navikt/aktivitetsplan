@@ -1,12 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
-import { addDays, format, formatISO, isAfter, startOfDay } from 'date-fns';
+import { addDays, isAfter, startOfDay } from 'date-fns';
 import React, { ChangeEventHandler, MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import { useErVeileder } from '../../../../Provider';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -95,11 +94,9 @@ const EgenAktivitetForm = (props: Props) => {
         if (event.target.value === 'ingen') {
             reset();
         } else {
-            (Object.entries(malverkTemplate) as [keyof typeof malverkTemplate, string][]).forEach(
-                ([name, value], _) => {
-                    setValue(name, value);
-                },
-            );
+            for (const [name, value] of Object.entries(malverkTemplate) as [keyof typeof malverkTemplate, string][]) {
+                setValue(name, value);
+            }
             const now = new Date();
             const fraDato = startOfDay(now);
             const tilDato = addDays(now, 8);
