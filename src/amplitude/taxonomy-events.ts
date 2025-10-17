@@ -1,10 +1,10 @@
-import { TextCheckerAmplitudeAnalysis } from './amplitude';
+import { TextCheckerAnalytics } from './amplitude';
 
-export type AmplitudeEvent =
+export type AnalyticsEvent =
     | {
           name: 'referat lagret';
           data: {
-              analysis: TextCheckerAmplitudeAnalysis;
+              analysis: TextCheckerAnalytics;
               referatPublisert: boolean;
               spraksjekkEnabled: boolean;
           };
