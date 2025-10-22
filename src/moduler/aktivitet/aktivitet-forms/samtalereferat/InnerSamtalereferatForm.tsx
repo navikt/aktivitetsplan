@@ -89,6 +89,10 @@ const InnerSamtalereferatForm = (props: Props) => {
         });
     };
 
+    setInterval(() => {
+        console.log("SetInterval kjører")
+    }, 10000)
+
     return (
         <form autoComplete="off" noValidate>
             <FormProvider {...formHandlers}>
