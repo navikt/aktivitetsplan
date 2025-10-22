@@ -90,9 +90,11 @@ const InnerSamtalereferatForm = (props: Props) => {
     };
 
     useEffect(() => {
-        setInterval(() => {
-            console.log(referatValue)
-        }, 10000)
+        const interval = setInterval(() => {
+            const referat = watch('referat');
+            console.log(referat);
+        }, 10000);
+        return () => clearInterval(interval);
     },[])
 
     return (
