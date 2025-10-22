@@ -17,15 +17,14 @@ import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.date({
-        required_error: 'Fra dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }).refine(
-        (date) => date.getTime() < new Date().getTime(),
-        {
+    fraDato: z
+        .date({
+            required_error: 'Fra dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        })
+        .refine((date) => date.getTime() < new Date().getTime(), {
             message: 'Dato kan ikke være etter dagens dato',
-        },
-    ),
+        }),
     kanal: z.nativeEnum(Kanal),
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
@@ -92,10 +91,13 @@ const InnerSamtalereferatForm = (props: Props) => {
     useEffect(() => {
         const interval = setInterval(() => {
             const referat = watch('referat');
-            console.log(referat);
+            localStorage.setItem('referat_kladd', referat);
         }, 10000);
-        return () => clearInterval(interval);
-    },[])
+        return () => {
+            clearInterval(interval);
+            localStorage.removeItem('referat_kladd');
+        };
+    }, []);
 
     return (
         <form autoComplete="off" noValidate>
