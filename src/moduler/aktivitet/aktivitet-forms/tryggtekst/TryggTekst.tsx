@@ -20,14 +20,14 @@ export const TryggTekst = ({ value }: { value: string }) => {
 
     return (
         <ExpansionCard
-            aria-label="Sjekk for personopplysninger"
+            aria-label="Sjekk for sensitive personopplysninger"
             className="bg-surface-info-subtle"
             onToggle={sjekkPersonopplysninger}
         >
             <ExpansionCard.Header className="">
                 <div className="flex items-center space-x-4">
                     <EyeIcon fontSize={48} />
-                    <Heading size="small">Sjekk for personopplysninger</Heading>
+                    <Heading size="small">Sjekk for sensitive personopplysninger</Heading>
                 </div>
             </ExpansionCard.Header>
             <ExpansionCard.Content>
