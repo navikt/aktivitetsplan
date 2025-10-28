@@ -50,8 +50,8 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     GRUPPEAMO: 'Arbeidsmarkedsopplæring (Gruppe)',
     GRUFAGYRKE: 'Fag- og yrkesopplæring (Gruppe)',
     REKRUTTERINGSTREFF: 'Rekrutteringstreff',
-    ENKELAMO: 'Arbeidsmarkedsopplæring',
-    ENKFAGYRKE: 'Fag- og yrkesopplæring',
+    ENKELAMO: 'Arbeidsmarkedsopplæring (enkeltplass)',
+    ENKFAGYRKE: 'Fag- og yrkesopplæring (enkeltplass)',
     HOYERE_UTDANNING: 'Høyere utdanning'
 };
 
