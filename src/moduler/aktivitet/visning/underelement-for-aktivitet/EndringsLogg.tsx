@@ -2,7 +2,7 @@ import { Accordion } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import VersjonerForAktivitet from '../versjoner/VersjonerForAktivitet';
-import { logAccordionAapnet } from '../../../../amplitude/amplitude';
+import { logAccordionAapnet } from '../../../../amplitude/umami.client';
 
 const EndringsLogg = () => {
     const [open, setOpen] = useState(false);

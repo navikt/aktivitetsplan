@@ -1,6 +1,6 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import React, { useState } from 'react';
-import { logAccordionAapnet } from '../../amplitude/amplitude';
+import { logAccordionAapnet } from '../../amplitude/umami.client';
 
 export function RettigheterPanel() {
     const [open, setOpen] = useState(false);
