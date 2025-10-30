@@ -1,7 +1,6 @@
 // umami.client.ts
-import { EnvType, getEnv } from "~/util/envUtil";
 import { TextCheckerResult } from "@navikt/dab-spraksjekk";
-import { Env } from '../environment';
+import { Env, getEnv } from '../environment';
 
 declare global {
     interface Window {
@@ -68,7 +67,7 @@ export async function loadUmami(): Promise<void> {
 }
 
 async function logUmamiEvent(eventName: string, data?: Record<string, any>): Promise<void> {
-    if (env.type === EnvType.local) {
+    if (env === Env.Local) {
         console.log("Umami localhost event:", eventName, data);
         return;
     }
