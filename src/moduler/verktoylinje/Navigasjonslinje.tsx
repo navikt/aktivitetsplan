@@ -11,7 +11,7 @@ import { useErVeileder } from '../../Provider';
 import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
-import { logKlikkKnapp } from '../../amplitude/umami.client';
+import { logKlikkKnapp } from '../../analytics/umami.client';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { useMediaQuery } from '../../utils/use-media-query';
 import { useToggle } from '../feature/feature';

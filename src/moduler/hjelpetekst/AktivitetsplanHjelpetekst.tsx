@@ -1,7 +1,7 @@
 import { HelpText } from '@navikt/ds-react';
 import React from 'react';
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
-import { logKlikkKnapp } from '../../amplitude/umami.client';
+import { logKlikkKnapp } from '../../analytics/umami.client';
 
 const hjelpetekster: Record<AktivitetStatus, { tittel: string; innhold: string }> = {
     BRUKER_ER_INTERESSERT: {

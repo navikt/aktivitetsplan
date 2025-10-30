@@ -1,6 +1,6 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import React, { useState } from 'react';
-import { logAccordionAapnet } from '../../amplitude/umami.client';
+import { logAccordionAapnet } from '../../analytics/umami.client';
 
 export const OkonomiskStotte = () => {
     const [open, setOpen] = useState(false);

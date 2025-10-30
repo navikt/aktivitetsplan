@@ -18,7 +18,7 @@ import {
 } from './aktivitet-actions';
 import { RootState } from '../../store';
 import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
-import { loggDyplenkingTilAnnenBruker } from '../../amplitude/umami.client';
+import { loggDyplenkingTilAnnenBruker } from '../../analytics/umami.client';
 
 type PerioderMedAktiviteter = {
     id: string;

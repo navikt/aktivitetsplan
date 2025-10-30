@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed, formaterTid } from '../../utils/dateUtils';
 import { useFnrOgEnhetContext } from '../../Provider';
-import { logKlikkKnapp } from '../../amplitude/umami.client';
+import { logKlikkKnapp } from '../../analytics/umami.client';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();

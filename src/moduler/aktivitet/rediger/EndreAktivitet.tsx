@@ -51,7 +51,7 @@ import {
     selecteEndreAktivitetFeilmeldinger,
 } from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
-import { logModalLukket } from '../../../amplitude/umami.client';
+import { logModalLukket } from '../../../analytics/umami.client';
 
 export type AktivitetFormValues =
     | StillingAktivitetFormValues

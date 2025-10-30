@@ -22,7 +22,7 @@ import SamtalereferatForm from '../aktivitet-forms/samtalereferat/Samtalereferat
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
 import { AktivitetFormValues } from '../rediger/EndreAktivitet';
-import { logModalLukket } from '../../../amplitude/umami.client';
+import { logModalLukket } from '../../../analytics/umami.client';
 import { useErVeileder } from '../../../Provider';
 
 const aktivitetHeadings = {

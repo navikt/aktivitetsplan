@@ -2,7 +2,7 @@ import { useErVeileder } from '../../Provider';
 import { useNavigate } from 'react-router-dom';
 import { useRoutes } from '../../routing/useRoutes';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
-import { logKlikkKnapp } from '../../amplitude/umami.client';
+import { logKlikkKnapp } from '../../analytics/umami.client';
 import { shallowEqual, useSelector } from 'react-redux';
 import { BodyShort, Button } from '@navikt/ds-react';
 import React from 'react';
