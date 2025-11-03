@@ -1,4 +1,3 @@
-// umami.client.ts
 import { TextCheckerResult } from "@navikt/dab-spraksjekk";
 import { Env, getEnv } from '../environment';
 
