@@ -31,7 +31,7 @@ const initialState: FilterState = {
         REKRUTTERINGSTREFF: false,
         ENKELAMO: false,
         ENKFAGYRKE: false,
-        HOYERE_UTDANNING: false,
+        HOYEREUTD: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,
