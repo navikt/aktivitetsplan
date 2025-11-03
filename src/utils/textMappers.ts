@@ -52,7 +52,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     REKRUTTERINGSTREFF: 'Rekrutteringstreff',
     ENKELAMO: 'Arbeidsmarkedsopplæring (enkeltplass)',
     ENKFAGYRKE: 'Fag- og yrkesopplæring (enkeltplass)',
-    HOYERE_UTDANNING: 'Høyere utdanning'
+    HOYEREUTD: 'Høyere utdanning'
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
