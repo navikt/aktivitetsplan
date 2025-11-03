@@ -42,7 +42,7 @@ function getUmamiWebsiteId(): string {
 
 const websiteId = getUmamiWebsiteId();
 
-type TextCheckerAmplitudeAnalysis = Omit<TextCheckerResult, "tools"> & {
+type TextCheckerAnalysis = Omit<TextCheckerResult, "tools"> & {
     tools: Omit<TextCheckerResult["tools"], "wordFrequency">;
 };
 
@@ -78,7 +78,7 @@ async function logUmamiEvent(eventName: string, data?: Record<string, any>): Pro
     }
 }
 
-function mapSpraksjekkAnalysis(analysis: TextCheckerResult): TextCheckerAmplitudeAnalysis {
+function mapSpraksjekkAnalysis(analysis: TextCheckerResult): TextCheckerAnalysis {
     return {
         longParagraphs: analysis.longParagraphs.length,
         longSentences: analysis.longSentences.length,

@@ -1,4 +1,6 @@
+/*
 import * as amplitude from '@amplitude/analytics-browser';
+
 import { track } from '@amplitude/analytics-browser';
 import { TextCheckerResult } from '@navikt/dab-spraksjekk';
 
@@ -123,3 +125,4 @@ function mapSpraksjekkAnalysis(analysis: TextCheckerResult): TextCheckerAmplitud
         tools: { lix: analysis.tools.lix, wordCount: analysis.tools.wordCount },
     };
 }
+*/
