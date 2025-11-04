@@ -101,7 +101,7 @@ function mapSpraksjekkAnalysis(analysis: TextCheckerResult): TextCheckerAnalysis
 }
 
 export function logKlikkKnapp(tekst: string) {
-    return logUmamiEvent("knapp klikket", { tekst });
+    return logUmamiEvent("knapp klikket", { tekst: tekst });
 }
 
 export function logAccordionAapnet(accordion: string) {
@@ -109,11 +109,11 @@ export function logAccordionAapnet(accordion: string) {
 }
 
 export function logValgtFilter(filterValgt: string) {
-    return logUmamiEvent("filtervalg", { filternavn: filterValgt });
+    return logUmamiEvent("filtervalg", { tekst: filterValgt });
 }
 
 export function logToggleSpraksjekkToggle(enabled: boolean) {
-    return logUmamiEvent("toggle", { text: "Slå på klarspråkhjelp", enabled });
+    return logUmamiEvent("toggle", { tekst: "Slå på klarspråkhjelp", enabled });
 }
 
 export function logReferatFullfort(
