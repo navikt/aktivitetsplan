@@ -72,7 +72,7 @@ spec:
             "bucketContextPath": "dab/aktivitetsplan-dev-ekstern/build/"
           },
           "dekorator": {
-            "env": "dev",
+            "env": "lol",
             "simple": true,
             "chatbot": false
           },
