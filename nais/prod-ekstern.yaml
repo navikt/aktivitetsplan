@@ -55,6 +55,8 @@ spec:
           namespace: dab
         - application: veilarboppfolging
           namespace: poao
+        - application: nav-dekoratoren
+          namespace: personbruker
       external:
         - host: navnob2c.b2clogin.com
         - host: veilarbaktivitet.prod-fss-pub.nais.io
