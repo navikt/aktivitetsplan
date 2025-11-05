@@ -5,7 +5,6 @@ import { createRequire } from 'node:module';
 import react from '@vitejs/plugin-react-swc';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, normalizePath } from 'vite';
-import { createHtmlPlugin } from 'vite-plugin-html';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 import * as path from 'node:path';
@@ -30,14 +29,6 @@ export default defineConfig(({ mode }) => {
         plugins: [
             react(),
             svgr(),
-            createHtmlPlugin({
-                minify: true,
-                inject: {
-                    data: {
-                        VITE_DEKORATOREN_URL: env.VITE_DEKORATOREN_URL,
-                    },
-                },
-            }),
             visualizer({
                 filename: 'bundle-stats.html',
             }),
