@@ -1,4 +1,4 @@
-import { TextCheckerAmplitudeAnalysis } from './amplitude';
+/*import { TextCheckerAmplitudeAnalysis } from './amplitude';
 
 export type AmplitudeEvent =
     | {
@@ -23,3 +23,4 @@ export type AmplitudeEvent =
               navType: 'onReqBack' | 'onReqClose';
           };
       };
+*/
