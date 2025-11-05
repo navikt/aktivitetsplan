@@ -9,6 +9,7 @@ import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon, selectLestStatus } from '../lest/lest-selector';
 import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
 import { useFnrOgEnhetContext } from '../../Provider';
+import { captureException } from '@sentry/react';
 
 let erVist = false;
 function InformasjonsHenting() {
@@ -18,7 +19,7 @@ function InformasjonsHenting() {
 
     const { fnr } = useFnrOgEnhetContext();
     useEffect(() => {
-        fetchHarFlereAktorId(fnr);
+        fetchHarFlereAktorId(fnr).catch((error) => captureException(error));
     }, []);
 
     const { informasjonRoute, hovedsideRoute } = useRoutes();
