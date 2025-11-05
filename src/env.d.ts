@@ -5,7 +5,6 @@ interface ImportMetaEnv {
     readonly PROD: boolean;
     readonly SSR: boolean;
     readonly VITE_USE_HASH_ROUTER: string | undefined;
-    readonly VITE_DEKORATOR_URL: string;
     readonly VITE_STILLING_FRA_NAV_BASE_URL: string;
     readonly VITE_MINSIDE_URL: string;
     readonly VITE_ARBEIDSSOKERREGISTRERING_URL: string;
