@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2025.11.05_09.25-b34a8e35f6cc
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2025.11.06_11.54-2e17c18266e9
   port: 8080
   liveness:
     path: /internal/isAlive
