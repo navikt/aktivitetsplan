@@ -36,7 +36,7 @@ function getUmamiWebsiteId(): string {
         if (host.includes("aktivitetsplan.ekstern.dev.nav.no")) return "bd001fd0-7685-4086-b9ee-beeccdbd6b99";
     }
 
-    return ""; // Local eller ukjent host
+    return "";
 }
 
 const websiteId = getUmamiWebsiteId();
@@ -48,7 +48,7 @@ type TextCheckerAnalysis = Omit<TextCheckerResult, "tools"> & {
 export async function loadUmami(): Promise<void> {
     if (!websiteId || window.umami) {
         console.warn("Umami ikke lastet, ukjent host eller lokal environment:", window.location.host);
-        return; // ikke last script
+        return;
     }
 
     await new Promise<void>((resolve, reject) => {
