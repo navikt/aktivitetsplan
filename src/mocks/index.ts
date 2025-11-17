@@ -1,6 +1,7 @@
 import { setupWorker } from 'msw/browser';
 
 import { handlers } from './handlers';
+import { injectDecoratorClientSide } from '@navikt/nav-dekoratoren-moduler';
 
 const worker = setupWorker(...handlers);
 
@@ -25,3 +26,11 @@ export default () =>
             print.warning();
         },
     });
+
+injectDecoratorClientSide({
+    env: 'dev',
+    params: {
+        simple: false,
+        chatbot: true,
+    },
+});

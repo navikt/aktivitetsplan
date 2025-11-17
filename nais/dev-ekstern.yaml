@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.10.04_13.21-c31f6e652a0c
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2025.11.05_09.25-b34a8e35f6cc
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -54,6 +54,8 @@ spec:
           namespace: dab
         - application: veilarboppfolging
           namespace: poao
+        - application: nav-dekoratoren
+          namespace: personbruker
       external:
         - host: navtestb2c.b2clogin.com
         - host: veilarbveileder.dev-fss-pub.nais.io
@@ -70,6 +72,11 @@ spec:
           "gcs": {
             "bucketName": "nais-cdn-nav-dab-42cc",
             "bucketContextPath": "dab/aktivitetsplan-dev-ekstern/build/"
+          },
+          "dekorator": {
+            "env": "dev",
+            "simple": false,
+            "chatbot": false
           },
           "auth": {
             "loginProvider": "ID_PORTEN"
