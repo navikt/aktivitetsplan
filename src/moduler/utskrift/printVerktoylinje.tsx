@@ -5,7 +5,7 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
-import { logKlikkKnapp } from '../../amplitude/amplitude';
+import { logKlikkKnapp } from '../../analytics/umami';
 
 interface Props {
     tilbakeRoute?: string;

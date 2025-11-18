@@ -1,6 +1,6 @@
 import { Accordion, Heading } from '@navikt/ds-react';
 import React, { MouseEventHandler, ReactNode, useState } from 'react';
-import { logAccordionAapnet } from '../../../../amplitude/amplitude';
+import { logAccordionAapnet } from '../../../../analytics/umami';
 
 interface Props {
     tittel: string;
