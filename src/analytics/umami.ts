@@ -6,6 +6,7 @@ const eventLogger = getAnalyticsInstance('aktivitetsplan');
 
 async function logAnalyticsEvent(event: AnalyticsEvent, extraData?: Record<string, unknown>): Promise<void> {
     try {
+        console.log('AnalyticsEvent', event, extraData);
         eventLogger(event.name, { ...('data' in event ? event.data : {}), ...extraData, app: 'aktivitetsplan' });
     } catch (e) {
         console.error(e);
