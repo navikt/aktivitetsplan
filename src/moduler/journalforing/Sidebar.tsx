@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed, formaterTid } from '../../utils/dateUtils';
 import { useFnrOgEnhetContext } from '../../Provider';
-import { logKlikkKnapp } from '../../analytics/umami';
+import { logKlikkKnapp } from '../../analytics/analytics';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -88,15 +88,12 @@ const Sidebar: FunctionComponent = () => {
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.start) - Date.parse(a.start))
                         .map((periode) => (
-                            <option
-                                key={`oppfolgingsperiodeoption-${periode.id}`}
-                                value={periode.id}
-                            >
+                            <option key={`oppfolgingsperiodeoption-${periode.id}`} value={periode.id}>
                                 {periode.slutt == undefined
                                     ? 'Nåværende periode'
                                     : formaterDatoKortManed(periode.start) +
-                                    ' - ' +
-                                    formaterDatoKortManed(periode.slutt)}
+                                      ' - ' +
+                                      formaterDatoKortManed(periode.slutt)}
                             </option>
                         ))}
                 </Select>

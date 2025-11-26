@@ -23,7 +23,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@amplitude/analytics-browser": "^2.18.1",
     "@hookform/resolvers": "^3.10.0",
     "@navikt/aksel-icons": "^7.31.0",
     "@navikt/dab-spraksjekk": "^1.0.15",

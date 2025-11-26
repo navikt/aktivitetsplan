@@ -1,18 +1,19 @@
-import { getAnalyticsInstance } from '@navikt/nav-dekoratoren-moduler';
-import { TextCheckerResult } from '@navikt/dab-spraksjekk';
 import { AnalyticsEvent } from './analytics-taxonomy-events';
-import { ER_INTERN_FLATE } from '../constant';
+import { initAnalytics, queueOrTrackEvent } from './initAnalytics';
+import { TextCheckerResult } from '@navikt/dab-spraksjekk/dist/library';
 
-const eventLogger = getAnalyticsInstance('aktivitetsplan');
+initAnalytics();
+const logEvent = queueOrTrackEvent;
 
 async function logAnalyticsEvent(event: AnalyticsEvent, extraData?: Record<string, unknown>): Promise<void> {
-    if(!ER_INTERN_FLATE) {
-        try {
-            console.log('AnalyticsEvent', event, extraData);
-            eventLogger(event.name, { ...('data' in event ? event.data : {}), ...extraData, app: 'aktivitetsplan' });
-        } catch (e) {
-            console.error(e);
-        }
+    try {
+        const eventData = {
+            ...('data' in event ? event.data : {}),
+            ...extraData,
+        };
+        logEvent(event.name, eventData);
+    } catch (e) {
+        console.error(e);
     }
 }
 
@@ -53,11 +54,11 @@ export function logReferatFullfort(analysis: TextCheckerResult, referatPublisert
 }
 
 export function logModalLukket({
-                                   isDirty,
-                                   aktivitet,
-                                   modalType,
-                                   navType,
-                               }: {
+    isDirty,
+    aktivitet,
+    modalType,
+    navType,
+}: {
     isDirty: boolean;
     aktivitet: string;
     modalType: 'ny-aktivitet' | 'endre-aktivitet';

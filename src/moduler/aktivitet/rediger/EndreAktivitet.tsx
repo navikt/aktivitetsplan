@@ -1,4 +1,4 @@
-import  { isFulfilled } from '@reduxjs/toolkit';
+import { isFulfilled } from '@reduxjs/toolkit';
 import React, { MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -51,7 +51,7 @@ import {
     selecteEndreAktivitetFeilmeldinger,
 } from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
-import { logModalLukket } from '../../../analytics/umami';
+import { logModalLukket } from '../../../analytics/analytics';
 
 export type AktivitetFormValues =
     | StillingAktivitetFormValues
@@ -161,12 +161,7 @@ function EndreAktivitet() {
     const tilHovedside = () => navigate(hovedsideRoute());
 
     return (
-        <Modal
-            lukkPåKlikkUtenfor={false}
-            onClose={tilHovedside}
-            heading="Endre aktivitet"
-            onRequestClose={onReqClose}
-        >
+        <Modal lukkPåKlikkUtenfor={false} onClose={tilHovedside} heading="Endre aktivitet" onRequestClose={onReqClose}>
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>{aktivitetForm}</ModalContainer>

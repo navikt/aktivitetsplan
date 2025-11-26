@@ -1,16 +1,16 @@
-import { TextCheckerAmplitudeAnalysis } from './amplitude';
+import { TextCheckerAnalyticsAnalysis } from './analytics';
 
 export type AmplitudeEvent =
     | {
           name: 'referat lagret';
           data: {
-              analysis: TextCheckerAmplitudeAnalysis;
+              analysis: TextCheckerAnalyticsAnalysis;
               referatPublisert: boolean;
               spraksjekkEnabled: boolean;
           };
       }
     | { name: 'toggle'; data: { text: string; enabled: boolean } }
-    | { name: 'dyplenking'; data: {text: string }}
+    | { name: 'dyplenking'; data: { text: string } }
     | { name: 'knapp klikket'; data: { tekst: string } }
     | { name: 'accordion åpnet'; data: { tekst: string } }
     | { name: 'filtervalg'; data: { filternavn: string } }

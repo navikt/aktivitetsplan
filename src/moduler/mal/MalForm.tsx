@@ -11,7 +11,7 @@ import { selectOppdaterMalFeil } from '../feilmelding/feil-selector';
 import Feilmelding from '../feilmelding/Feilmelding';
 import { oppdaterMal } from './aktivitetsmal-slice';
 import { hentMalListe } from './malliste-slice';
-import { logKlikkKnapp } from '../../analytics/umami';
+import { logKlikkKnapp } from '../../analytics/analytics';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 
 const schema = z.object({

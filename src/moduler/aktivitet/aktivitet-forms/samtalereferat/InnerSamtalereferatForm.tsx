@@ -5,7 +5,7 @@ import React, { MutableRefObject, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/umami';
+import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
@@ -17,15 +17,14 @@ import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.date({
-        required_error: 'Fra dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }).refine(
-        (date) => date.getTime() < new Date().getTime(),
-        {
+    fraDato: z
+        .date({
+            required_error: 'Fra dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        })
+        .refine((date) => date.getTime() < new Date().getTime(), {
             message: 'Dato kan ikke være etter dagens dato',
-        },
-    ),
+        }),
     kanal: z.nativeEnum(Kanal),
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
