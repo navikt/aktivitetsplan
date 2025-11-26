@@ -56,6 +56,5 @@ export const umamiTrack: TrackingFunction = (eventName, eventData) => {
         return;
     }
 
-    console.log('[umamiTrack] Tracking event:', eventName, eventData);
     window.umami.track(eventName, eventData);
 };
