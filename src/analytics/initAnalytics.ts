@@ -1,5 +1,6 @@
 import { Env, getEnv } from '../environment';
 import { ER_INTERN_FLATE } from '../constant';
+import { umamiTrack } from './umamiFromScript';
 
 export type EventDataValue = string | boolean | number | null | undefined;
 export type EventData = Record<string, EventDataValue>;
@@ -30,7 +31,7 @@ export const initAnalytics = () => {
     if (!ER_INTERN_FLATE) {
         /* window.dekoratorenAnalytics does not return a function instantly, have to wait for it to be ready */
         setTimeout(() => {
-            const dekoratorenTracking = window.dekoratorenAnalytics;
+            const dekoratorenTracking = globalThis.window.dekoratorenAnalytics;
             trackingFunction = (eventName, eventData) => {
                 dekoratorenTracking({ origin: 'aktivitetsplan', eventName, eventData });
             };
@@ -39,14 +40,12 @@ export const initAnalytics = () => {
         }, 1000);
     } else {
         /* Use umami from included <script> tag */
-        import('./umamiFromScript').then((module) => {
-            trackingFunction = (eventName, eventData) => {
-                // Dette er riktig ifølge umami doc
-                module.umamiTrack(eventName, { ...eventData, origin: 'aktivitetsplan' });
-            };
-            isInitialized = true;
-            flushEventQueue(trackingFunction);
-        });
+        trackingFunction = (eventName, eventData) => {
+            // Dette er riktig ifølge umami doc
+            umamiTrack(eventName, { ...eventData, origin: 'aktivitetsplan' });
+        };
+        isInitialized = true;
+        flushEventQueue(trackingFunction);
     }
 };
 

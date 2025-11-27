@@ -9,7 +9,7 @@ const umamiLoadedPromise: Promise<void> = new Promise((resolve, reject) => {
     timeout = setTimeout(() => {
         clearTimeout(timeout);
         clearInterval(interval);
-        reject(`Did not find/load umami after ${timeoutMs}ms`);
+        reject(new Error(`Did not find/load umami after ${timeoutMs}ms`));
     }, timeoutMs);
 
     interval = setInterval(() => {
