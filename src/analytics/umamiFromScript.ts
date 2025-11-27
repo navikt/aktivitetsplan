@@ -46,7 +46,7 @@ export const umamiTrack: TrackingFunction = (eventName, eventData) => {
         return;
     }
     if (umamiLoadedPromise === undefined) {
-        console.warn('[umamiTrack] Umami has not been initialized, can't track event);
+        console.warn("[umamiTrack] Umami has not been initialized, can't track event");
     }
 
     if (!globalThis.window.umami) {
