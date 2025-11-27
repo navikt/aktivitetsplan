@@ -37,12 +37,12 @@ declare global {
 }
 
 export const umamiTrack: TrackingFunction = (eventName, eventData) => {
-    if (typeof window === 'undefined') {
+    if (typeof globalThis.window === 'undefined') {
         console.warn('[umamiTrack] Window is undefined (SSR context)');
         return;
     }
 
-    if (!window.umami) {
+    if (!globalThis.window.umami) {
         console.warn('[umamiTrack] window.umami is not available yet. Waiting for script to load...', {
             eventName,
             eventData,
@@ -52,7 +52,7 @@ export const umamiTrack: TrackingFunction = (eventName, eventData) => {
         umamiLoadedPromise
             .then(() => {
                 console.log('[umamiTrack] Umami now available, tracking event:', eventName, eventData);
-                window.umami!.track(eventName, eventData);
+                globalThis.window.umami!.track(eventName, eventData);
             })
             .catch((err) => {
                 console.error(
@@ -66,5 +66,5 @@ export const umamiTrack: TrackingFunction = (eventName, eventData) => {
         return;
     }
 
-    window.umami.track(eventName, eventData);
+    globalThis.window.umami.track(eventName, eventData);
 };
