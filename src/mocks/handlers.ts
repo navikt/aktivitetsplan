@@ -185,6 +185,19 @@ export const handlers = [
 
     // tryggtekst
     http.post('/tryggtekst/proxy', sjekkTryggTekst),
+
+    // Umami tracking
+    http.post('https://umami.nav.no/api/send', () => new HttpResponse()),
+
+    // Skyra - noe dekorator tracking greier
+    http.post('https://ingest.staging.skyra.no/response', () => new HttpResponse()),
+    http.get('https://ingest.staging.skyra.no/survey/arbeids-og-velferdsetaten-nav', () => new HttpResponse()),
+
+    // Browser metadata
+    http.get('/site.webmanifest', () => new HttpResponse()),
+
+    // Dekoratoren login
+    http.get('https://login.ekstern.dev.nav.no/oauth2/session', () => new HttpResponse()),
 ];
 
 export const aktivitestplanResponse = (

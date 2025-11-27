@@ -1,7 +1,7 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import DialogVideo from './Video/DialogVideo';
-import { logAccordionAapnet } from '../../analytics/umami';
+import { logAccordionAapnet } from '../../analytics/analytics';
 
 export const DialogPanel = () => {
     const [open, setOpen] = useState(false);

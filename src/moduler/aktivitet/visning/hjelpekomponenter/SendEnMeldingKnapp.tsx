@@ -9,7 +9,7 @@ import { useErVeileder } from '../../../../Provider';
 import { useRoutes } from '../../../../routing/useRoutes';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import { byttTilDialogFlate, getDialogLenke } from '../../../dialog/DialogFlateUtils';
-import { logKlikkKnapp } from '../../../../analytics/umami';
+import { logKlikkKnapp } from '../../../../analytics/analytics';
 
 interface Props {
     aktivitet: AlleAktiviteter;
