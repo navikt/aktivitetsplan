@@ -47,11 +47,14 @@ export const umamiTrack: TrackingFunction = (eventName, eventData) => {
                 console.log('[umamiTrack] Umami now available, tracking event:', eventName, eventData);
                 window.umami!.track(eventName, eventData);
             })
-            .catch(() => {
-                console.error('[umamiTrack] Umami script failed to load within timeout. Event not tracked:', {
-                    eventName,
-                    eventData,
-                });
+            .catch((err) => {
+                console.error(
+                    `[umamiTrack] Umami script failed to load within timeout. ${err.toString()} Event not tracked:`,
+                    {
+                        eventName,
+                        eventData,
+                    },
+                );
             });
         return;
     }
