@@ -1,6 +1,6 @@
 import { Env, getEnv } from '../environment';
 import { ER_INTERN_FLATE } from '../constant';
-import { umamiTrack } from './umamiFromScript';
+import { startWaitingForUmamiToAppearOnWindow, umamiTrack } from './umamiFromScript';
 
 export type EventDataValue = string | boolean | number | null | undefined;
 export type EventData = Record<string, EventDataValue>;
@@ -40,6 +40,7 @@ export const initAnalytics = () => {
         }, 1000);
     } else {
         /* Use umami from included <script> tag */
+        startWaitingForUmamiToAppearOnWindow();
         trackingFunction = (eventName, eventData) => {
             // Dette er riktig ifølge umami doc
             umamiTrack(eventName, { ...eventData, origin: 'aktivitetsplan' });

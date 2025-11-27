@@ -2,24 +2,28 @@
 import { EventDataValue, TrackingFunction } from './initAnalytics';
 
 const timeoutMs = 5000;
-const umamiLoadedPromise: Promise<void> = new Promise((resolve, reject) => {
-    let timeout: NodeJS.Timeout | undefined;
-    let interval: NodeJS.Timeout | undefined;
 
-    timeout = setTimeout(() => {
-        clearTimeout(timeout);
-        clearInterval(interval);
-        reject(new Error(`Did not find/load umami after ${timeoutMs}ms`));
-    }, timeoutMs);
+let umamiLoadedPromise: Promise<void> | undefined;
+export const startWaitingForUmamiToAppearOnWindow = () => {
+    umamiLoadedPromise = new Promise((resolve, reject) => {
+        let timeout: NodeJS.Timeout | undefined;
+        let interval: NodeJS.Timeout | undefined;
 
-    interval = setInterval(() => {
-        if (globalThis.window.umami) {
+        timeout = setTimeout(() => {
             clearTimeout(timeout);
             clearInterval(interval);
-            resolve();
-        }
-    }, 200);
-});
+            reject(`Did not find/load umami after ${timeoutMs}ms`);
+        }, timeoutMs);
+
+        interval = setInterval(() => {
+            if (globalThis.window.umami) {
+                clearTimeout(timeout);
+                clearInterval(interval);
+                resolve();
+            }
+        }, 200);
+    });
+};
 
 declare global {
     interface Window {
@@ -40,6 +44,9 @@ export const umamiTrack: TrackingFunction = (eventName, eventData) => {
     if (globalThis.window === 'undefined') {
         console.warn('[umamiTrack] Window is undefined (SSR context)');
         return;
+    }
+    if (umamiLoadedPromise === undefined) {
+        console.warn('[umamiTrack] Umami has not been initialized, can't track event);
     }
 
     if (!globalThis.window.umami) {
