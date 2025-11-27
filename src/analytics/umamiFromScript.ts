@@ -13,7 +13,7 @@ const umamiLoadedPromise: Promise<void> = new Promise((resolve, reject) => {
     }, timeoutMs);
 
     interval = setInterval(() => {
-        if (window.umami) {
+        if (globalThis.window.umami) {
             clearTimeout(timeout);
             clearInterval(interval);
             resolve();
@@ -37,7 +37,7 @@ declare global {
 }
 
 export const umamiTrack: TrackingFunction = (eventName, eventData) => {
-    if (typeof globalThis.window === 'undefined') {
+    if (globalThis.window === 'undefined') {
         console.warn('[umamiTrack] Window is undefined (SSR context)');
         return;
     }
