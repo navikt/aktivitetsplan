@@ -3,15 +3,22 @@ import { EventDataValue, TrackingFunction } from './initAnalytics';
 
 const timeoutMs = 5000;
 const umamiLoadedPromise: Promise<void> = new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => {
+    let timeout: NodeJS.Timeout | undefined;
+    let interval: NodeJS.Timeout | undefined;
+
+    timeout = setTimeout(() => {
+        clearTimeout(timeout);
+        clearInterval(interval);
         reject(`Did not find/load umami after ${timeoutMs}ms`);
     }, timeoutMs);
-    const umamiScript = document.getElementById('umami-script');
-    if (!umamiScript) reject('No umami script found id=umami-script');
-    umamiScript?.addEventListener('load', () => {
-        clearTimeout(timeout);
-        resolve();
-    });
+
+    interval = setInterval(() => {
+        if (window.umami) {
+            clearTimeout(timeout);
+            clearInterval(interval);
+            resolve();
+        }
+    }, 200);
 });
 
 declare global {
