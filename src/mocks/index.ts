@@ -11,7 +11,7 @@ export default () =>
             url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
         },
         onUnhandledRequest: (req, print) => {
-            const hostBlacklist = ['amplitude.nav.no', 'nav.psplugin.com', 'dekoratoren.ekstern.dev.nav.no'];
+            const hostBlacklist = ['nav.psplugin.com', 'dekoratoren.ekstern.dev.nav.no'];
             const ignoredFileExtensions = ['.ts', '.js', '.tsx', '.jsx', 'css', 'svg', 'png', '.less'];
 
             const url = new URL(req.url);
