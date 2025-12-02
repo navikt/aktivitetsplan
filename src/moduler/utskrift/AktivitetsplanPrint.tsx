@@ -1,7 +1,7 @@
 import { Loader, Modal } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { defer, LoaderFunctionArgs, useNavigate } from 'react-router-dom';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
 import { Bruker, Postadresse } from '../../datatypes/types';
@@ -24,6 +24,9 @@ import Print from './print/print';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
+import { Dispatch } from '../../store';
+import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
+import { PdfViewer } from '../journalforing/PdfViewer';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -51,6 +54,7 @@ const AktivitetsplanPrint = () => {
     const mittMal = useSelector(selectGjeldendeMal);
     const erManuell = useSelector(selectErBrukerManuell);
     const { hovedsideRoute } = useRoutes();
+    const pdf = useSelector(selectPdf);
 
     const avhengigheter = [
         useSelector(selectMalStatus),
@@ -149,22 +153,35 @@ const AktivitetsplanPrint = () => {
             <div className="aktivitetsplanprint flex justify-center items-center">
                 {prompt}
                 <PrintVerktoylinje tilbakeRoute={hovedsideRoute()} kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT} />
-                <div className="border px-12 print:border-none">
-                    <Print
-                        dialoger={dialoger}
-                        bruker={bruker}
-                        adresse={adresse}
-                        printMelding={printMelding}
-                        aktiviteter={aktiviteter}
-                        mittMal={mittMal}
-                        erVeileder={erVeileder}
-                        utskriftPlanType={utskriftform}
-                        kvpPerioder={kvpPerioder}
-                    />
+                <div className="border print:border-none">
+                    {/*<div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">*/}
+                        <PdfViewer pdf={pdf} />
+                    {/*</div>*/}
                 </div>
             </div>
         </section>
     );
 };
+
+export const aktivitetsplanPrintLoader =
+    (dispatch: Dispatch, aktivEnhet: string) =>
+        ({
+             params: { oppfolgingsperiodeId },
+         }: LoaderFunctionArgs<{
+            oppfolgingsperiodeId: string;
+        }>) => {
+            if (!oppfolgingsperiodeId) {
+                throw Error('path param is not set, this should never happen');
+            }
+            const forhaandsvisning = dispatch(
+                hentPdfTilForhaandsvisning({
+                    journalførendeEnhet: aktivEnhet,
+                    oppfolgingsperiodeId,
+                }),
+            );
+            return defer({
+                forhaandsvisning,
+            });
+        };
 
 export default AktivitetsplanPrint;
