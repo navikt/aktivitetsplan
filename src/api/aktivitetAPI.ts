@@ -112,9 +112,9 @@ export const journalfoerAktivitetsplanOgDialog = (
         forhaandsvisningOpprettet,
         journalforendeEnhet: journalførendeEnhet,
     });
-export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, journalførendeEnhet: string, filter?: ArkivFilter) =>
+export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, filter?: ArkivFilter) =>
     postAsJson(
-        `${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}&journalforendeEnhet=${journalførendeEnhet}`, {
+        `${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
             filter,
         }
     );

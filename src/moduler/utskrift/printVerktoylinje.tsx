@@ -10,6 +10,7 @@ import { logKlikkKnapp } from '../../analytics/analytics';
 interface Props {
     tilbakeRoute?: string;
     kanSkriveUt: boolean;
+    oppdaterForhaandsvistPdf: () => void;
 }
 
 function PrintVerktoylinje(props: Props) {
@@ -42,6 +43,7 @@ function PrintVerktoylinje(props: Props) {
                     </Button>
                 ) : null}
                 <Filter />
+                <Button onClick={props.oppdaterForhaandsvistPdf}>Oppdater visning</Button>
             </div>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
