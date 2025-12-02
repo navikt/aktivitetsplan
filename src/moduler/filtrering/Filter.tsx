@@ -14,6 +14,7 @@ import EtikettFilter from './filter/EtikettFilter';
 const Filter = () => {
     const [open, setOpen] = useState(false);
 
+
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
     const harAktivitet = aktiviteter.length > 1;
     const avhengigheter = [useSelector(selectAktivitetListeStatus)];
