@@ -78,15 +78,13 @@ export function selectJournalføringstatus(state: RootState) {
 export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
     async ({
-        journalførendeEnhet,
         oppfolgingsperiodeId,
         filter
     }: {
-        journalførendeEnhet: string;
         oppfolgingsperiodeId: string;
         filter?: ArkivFilter;
     }) => {
-        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, journalførendeEnhet, filter);
+        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, filter);
     },
 );
 
@@ -109,5 +107,10 @@ export function selectSistJournalfort(state: RootState) {
 export const arkivReducer = arkivSlice.reducer;
 
 export interface ArkivFilter {
-    inkluderHistorikk: boolean
+    inkluderHistorikk: boolean;
+    aktivitetAvtaltMedNav?: {
+        avtaltMedNav: boolean;
+        ikkeAvtaltMedNav: boolean;
+    }
+    // avtaltMedNav: 'AVTALT_MED_NAV' | 'IKKE_AVTALT_MED_NAV' | null;
 }

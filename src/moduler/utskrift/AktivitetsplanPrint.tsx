@@ -1,7 +1,7 @@
 import { Loader, Modal } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { defer, LoaderFunctionArgs, useNavigate } from 'react-router-dom';
+import { defer, LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
 
 import { hentAdresse, hentPerson } from '../../api/personAPI';
 import { Bruker, Postadresse } from '../../datatypes/types';
@@ -25,8 +25,9 @@ import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
-import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
+import { ArkivFilter, hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { PdfViewer } from '../journalforing/PdfViewer';
+import { selectFilterSlice } from '../filtrering/filter/filter-selector';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -54,7 +55,13 @@ const AktivitetsplanPrint = () => {
     const mittMal = useSelector(selectGjeldendeMal);
     const erManuell = useSelector(selectErBrukerManuell);
     const { hovedsideRoute } = useRoutes();
+    const filtre = useSelector(selectFilterSlice);
+    const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
     const pdf = useSelector(selectPdf);
+
+    if (!oppfolgingsperiodeId) {
+        throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
+    }
 
     const avhengigheter = [
         useSelector(selectMalStatus),
@@ -119,6 +126,23 @@ const AktivitetsplanPrint = () => {
         return <Loader />;
     }
 
+    const oppdaterForhaandsvistPdf = () => {
+        const forhaandsvisningsfilter = {
+            inkluderHistorikk: false,
+            aktivitetAvtaltMedNav: {
+                avtaltMedNav: filtre.aktivitetAvtaltMedNav.AVTALT_MED_NAV,
+                ikkeAvtaltMedNav: filtre.aktivitetAvtaltMedNav.IKKE_AVTALT_MED_NAV,
+            },
+        } as ArkivFilter;
+
+        dispatch(
+            hentPdfTilForhaandsvisning({
+                oppfolgingsperiodeId,
+                filter: forhaandsvisningsfilter,
+            })
+        );
+    };
+
     const getPrompt = () => {
         if (steps[stepIndex] === STEP_MELDING_FORM) {
             return (
@@ -152,10 +176,14 @@ const AktivitetsplanPrint = () => {
         <section className="flex flex-col justify-center items-center p-8">
             <div className="aktivitetsplanprint flex justify-center items-center">
                 {prompt}
-                <PrintVerktoylinje tilbakeRoute={hovedsideRoute()} kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT} />
+                <PrintVerktoylinje
+                    tilbakeRoute={hovedsideRoute()}
+                    kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
+                    oppdaterForhaandsvistPdf={oppdaterForhaandsvistPdf}
+                />
                 <div className="border print:border-none">
                     {/*<div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">*/}
-                        <PdfViewer pdf={pdf} />
+                    <PdfViewer pdf={pdf} />
                     {/*</div>*/}
                 </div>
             </div>
@@ -165,24 +193,24 @@ const AktivitetsplanPrint = () => {
 
 export const aktivitetsplanPrintLoader =
     (dispatch: Dispatch, aktivEnhet: string) =>
-        ({
-             params: { oppfolgingsperiodeId },
-         }: LoaderFunctionArgs<{
-            oppfolgingsperiodeId: string;
-        }>) => {
-            if (!oppfolgingsperiodeId) {
-                throw Error('path param is not set, this should never happen');
-            }
-            const forhaandsvisning = dispatch(
-                hentPdfTilForhaandsvisning({
-                    journalførendeEnhet: aktivEnhet,
-                    oppfolgingsperiodeId,
-                    filter: { inkluderHistorikk: false }
-                }),
-            );
-            return defer({
-                forhaandsvisning,
-            });
-        };
+    ({
+        params: { oppfolgingsperiodeId },
+    }: LoaderFunctionArgs<{
+        oppfolgingsperiodeId: string;
+    }>) => {
+        if (!oppfolgingsperiodeId) {
+            throw Error('path param is not set, this should never happen');
+        }
+        const forhaandsvisning = dispatch(
+            hentPdfTilForhaandsvisning({
+                journalførendeEnhet: aktivEnhet,
+                oppfolgingsperiodeId,
+                filter: { inkluderHistorikk: false },
+            }),
+        );
+        return defer({
+            forhaandsvisning,
+        });
+    };
 
 export default AktivitetsplanPrint;
