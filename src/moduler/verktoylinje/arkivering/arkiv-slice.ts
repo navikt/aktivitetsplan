@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as Api from '../../../api/aktivitetAPI';
 import { Status } from '../../../createGenericSlice';
 import { RootState } from '../../../store';
+import { AvtaltFilterType } from '../../filtrering/filter/FilterVisning';
 
 interface ArkivState {
     forhaandsvisningStatus: Status;
@@ -108,9 +109,5 @@ export const arkivReducer = arkivSlice.reducer;
 
 export interface ArkivFilter {
     inkluderHistorikk: boolean;
-    aktivitetAvtaltMedNav?: {
-        avtaltMedNav: boolean;
-        ikkeAvtaltMedNav: boolean;
-    }
-    // avtaltMedNav: 'AVTALT_MED_NAV' | 'IKKE_AVTALT_MED_NAV' | null;
+    aktivitetAvtaltMedNav?: AvtaltFilterType[];
 }

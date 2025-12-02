@@ -17,10 +17,9 @@ import { hentMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus,
+    selectOppfolgingStatus
 } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
-import Print from './print/print';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
@@ -28,6 +27,7 @@ import { Dispatch } from '../../store';
 import { ArkivFilter, hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
+import { AvtaltFilterType } from '../filtrering/filter/FilterVisning';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -67,7 +67,7 @@ const AktivitetsplanPrint = () => {
         useSelector(selectMalStatus),
         useSelector(selectOppfolgingStatus),
         useSelector(selectAktivitetListeStatus),
-        useSelector(selectDialogStatus),
+        useSelector(selectDialogStatus)
     ];
 
     const dispatch = useAppDispatch();
@@ -129,16 +129,16 @@ const AktivitetsplanPrint = () => {
     const oppdaterForhaandsvistPdf = () => {
         const forhaandsvisningsfilter = {
             inkluderHistorikk: false,
-            aktivitetAvtaltMedNav: {
-                avtaltMedNav: filtre.aktivitetAvtaltMedNav.AVTALT_MED_NAV,
-                ikkeAvtaltMedNav: filtre.aktivitetAvtaltMedNav.IKKE_AVTALT_MED_NAV,
-            },
+            aktivitetAvtaltMedNav: [
+                filtre.aktivitetAvtaltMedNav.AVTALT_MED_NAV && 'AVTALT_MED_NAV',
+                filtre.aktivitetAvtaltMedNav.IKKE_AVTALT_MED_NAV && 'IKKE_AVTALT_MED_NAV'
+            ].filter(Boolean) as unknown as AvtaltFilterType[]
         } as ArkivFilter;
 
         dispatch(
             hentPdfTilForhaandsvisning({
                 oppfolgingsperiodeId,
-                filter: forhaandsvisningsfilter,
+                filter: forhaandsvisningsfilter
             })
         );
     };
@@ -193,24 +193,24 @@ const AktivitetsplanPrint = () => {
 
 export const aktivitetsplanPrintLoader =
     (dispatch: Dispatch, aktivEnhet: string) =>
-    ({
-        params: { oppfolgingsperiodeId },
-    }: LoaderFunctionArgs<{
-        oppfolgingsperiodeId: string;
-    }>) => {
-        if (!oppfolgingsperiodeId) {
-            throw Error('path param is not set, this should never happen');
-        }
-        const forhaandsvisning = dispatch(
-            hentPdfTilForhaandsvisning({
-                journalførendeEnhet: aktivEnhet,
-                oppfolgingsperiodeId,
-                filter: { inkluderHistorikk: false },
-            }),
-        );
-        return defer({
-            forhaandsvisning,
-        });
-    };
+        ({
+             params: { oppfolgingsperiodeId }
+         }: LoaderFunctionArgs<{
+            oppfolgingsperiodeId: string;
+        }>) => {
+            if (!oppfolgingsperiodeId) {
+                throw Error('path param is not set, this should never happen');
+            }
+            const forhaandsvisning = dispatch(
+                hentPdfTilForhaandsvisning({
+                    journalførendeEnhet: aktivEnhet,
+                    oppfolgingsperiodeId,
+                    filter: { inkluderHistorikk: false }
+                })
+            );
+            return defer({
+                forhaandsvisning
+            });
+        };
 
 export default AktivitetsplanPrint;
