@@ -177,6 +177,7 @@ export const aktivitetsplanPrintLoader =
                 hentPdfTilForhaandsvisning({
                     journalførendeEnhet: aktivEnhet,
                     oppfolgingsperiodeId,
+                    filter: { inkluderHistorikk: false }
                 }),
             );
             return defer({
