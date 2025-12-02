@@ -75,7 +75,7 @@ function Navigasjonslinje() {
                 {canPrint && (
                     <ReactRouterLink
                         hidden={isMobile}
-                        to="utskrift"
+                        to={`utskrift/${vistOppfolgingsperiode}`}
                         className="text-text-action underline hover:no-underline"
                         onClick={() => logKlikkKnapp('Skriv ut')}
                     >
