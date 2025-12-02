@@ -8,7 +8,7 @@ import { useErVeileder } from '../../../Provider';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { useRoutes } from '../../../routing/useRoutes';
 import { selectViserHistoriskPeriode } from '../../oppfolging-status/oppfolging-selector';
-import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';
 
 const veilederAktivitetsValg = (nyAktivitetBasePath: string) => [
     {

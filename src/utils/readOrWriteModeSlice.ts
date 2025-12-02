@@ -68,8 +68,11 @@ const oppdaterSkriveLeseTilgang = (
         valgtPeriode &&
         !valgtPeriode.slutt
     ) {
-        console.log('[hentOppfolging] Setter write mode');
+        console.log(`[${action.type}] Setter write mode`);
         listenerApi.dispatch(setWriteMode());
+    } else {
+        console.log(`[${action.type}] Setter write mode`);
+        listenerApi.dispatch(setReadMode());
     }
 };
 

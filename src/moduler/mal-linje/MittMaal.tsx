@@ -16,7 +16,7 @@ import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-select
 import MaalIkon from './Aktivitetsplan_maal.svg?react';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import MalContent from './MalContent';
-import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 
 function MittMaal() {
     const avhengigheter = useSelector(selectMalStatus, shallowEqual);

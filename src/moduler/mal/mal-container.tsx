@@ -6,7 +6,7 @@ import { useErVeileder } from '../../Provider';
 import { selectGjeldendeMal } from './aktivitetsmal-selector';
 import MalForm from './MalForm';
 import Malvisning from './mal-visning';
-import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 
 interface Props {
     dirtyRef: MutableRefObject<boolean>;

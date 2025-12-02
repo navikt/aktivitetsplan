@@ -12,7 +12,7 @@ import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
 import EndreLinje from '../endre-linje/EndreLinje';
 import SoknadsstatusForm, { SoknadsstatusFormValues } from './SoknadsstatusForm';
-import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeSlice';
 
 const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
     const { historisk } = aktivitet;

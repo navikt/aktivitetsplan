@@ -11,7 +11,7 @@ import LesMerOmStillingenKnapp from './LesMerOmStillingenKnapp';
 import SendEnMeldingKnapp from './SendEnMeldingKnapp';
 import { useSelector } from 'react-redux';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeSlice';
 
 interface Props {
     aktivitet: AlleAktiviteter;

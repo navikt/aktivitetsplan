@@ -17,7 +17,7 @@ import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { kanEndreAktivitetStatus } from '../../aktivitetlisteSelector';
 import EndreLinje from '../endre-linje/EndreLinje';
 import AktivitetStatusForm, { AktivitetStatusFormValues } from './AktivitetStatusForm';
-import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeSlice';
 
 const useDisableStatusEndring = (aktivitet: VeilarbAktivitet, erVeileder: boolean) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);

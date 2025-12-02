@@ -9,7 +9,7 @@ import MalContainer from './mal-container';
 import MalHistorikk from './mal-historikk';
 import { MalModal } from './mal-modal';
 import { selectMalListe } from './malliste-selector';
-import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 
 const Mal = () => {
     const readOnly = useSelector(selectReadWriteMode, shallowEqual) == ReadWriteMode.READ;

@@ -20,7 +20,7 @@ import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';
 import { innsynsrettReducer } from './moduler/aktivitet/innsynsrett/innsynsrett-slice';
 import valgtPeriodeReducer from './moduler/filtrering/filter/valgt-periode-slice';
 import { tryggTekstReducer } from './moduler/aktivitet/aktivitet-forms/tryggtekst/tryggtekst-slice';
-import readOrWriteModeReducer from './utils/readOrWriteModeReducer';
+import readOrWriteModeReducer from './utils/readOrWriteModeSlice';
 
 const reducer = {
     data: combineReducers({

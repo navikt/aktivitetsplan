@@ -25,7 +25,7 @@ import { erDroppbar } from './tavleUtils';
 import { Await, useRouteLoaderData } from 'react-router-dom';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
-import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeReducer';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
     useEffect(() => {
