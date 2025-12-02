@@ -204,7 +204,10 @@ export const aktivitetsplanPrintLoader =
             const forhaandsvisning = dispatch(
                 hentPdfTilForhaandsvisning({
                     oppfolgingsperiodeId,
-                    filter: { inkluderHistorikk: false }
+                    filter: {
+                        inkluderHistorikk: false,
+                        aktivitetAvtaltMedNav: []
+                    }
                 })
             );
             return defer({

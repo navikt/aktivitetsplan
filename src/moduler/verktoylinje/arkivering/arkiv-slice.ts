@@ -109,5 +109,5 @@ export const arkivReducer = arkivSlice.reducer;
 
 export interface ArkivFilter {
     inkluderHistorikk: boolean;
-    aktivitetAvtaltMedNav?: AvtaltFilterType[];
+    aktivitetAvtaltMedNav: AvtaltFilterType[];
 }
