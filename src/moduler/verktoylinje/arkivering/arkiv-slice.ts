@@ -80,11 +80,13 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
     async ({
         journalførendeEnhet,
         oppfolgingsperiodeId,
+        filter
     }: {
         journalførendeEnhet: string;
         oppfolgingsperiodeId: string;
+        filter?: ArkivFilter;
     }) => {
-        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, journalførendeEnhet);
+        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, journalførendeEnhet, filter);
     },
 );
 
@@ -105,3 +107,7 @@ export function selectSistJournalfort(state: RootState) {
 }
 
 export const arkivReducer = arkivSlice.reducer;
+
+export interface ArkivFilter {
+    inkluderHistorikk: boolean
+}

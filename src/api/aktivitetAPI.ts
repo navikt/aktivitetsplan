@@ -4,6 +4,7 @@ import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../dat
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
+import { ArkivFilter } from '../moduler/verktoylinje/arkivering/arkiv-slice';
 
 export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
@@ -111,7 +112,9 @@ export const journalfoerAktivitetsplanOgDialog = (
         forhaandsvisningOpprettet,
         journalforendeEnhet: journalførendeEnhet,
     });
-export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, journalførendeEnhet: string) =>
-    fetchToJson(
-        `${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}&journalforendeEnhet=${journalførendeEnhet}`,
+export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, journalførendeEnhet: string, filter?: ArkivFilter) =>
+    postAsJson(
+        `${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}&journalforendeEnhet=${journalførendeEnhet}`, {
+            filter,
+        }
     );
