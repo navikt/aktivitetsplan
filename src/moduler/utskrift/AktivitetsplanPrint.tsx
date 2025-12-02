@@ -203,7 +203,6 @@ export const aktivitetsplanPrintLoader =
             }
             const forhaandsvisning = dispatch(
                 hentPdfTilForhaandsvisning({
-                    journalførendeEnhet: aktivEnhet,
                     oppfolgingsperiodeId,
                     filter: { inkluderHistorikk: false }
                 })
