@@ -11,6 +11,7 @@ import LesMerOmStillingenKnapp from './LesMerOmStillingenKnapp';
 import SendEnMeldingKnapp from './SendEnMeldingKnapp';
 import { useSelector } from 'react-redux';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
+import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeReducer';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -22,9 +23,9 @@ const getActions = ({
     aktivitet,
     tillatEndring,
     laster,
-    underOppfolging,
+    readOnly,
     erVeileder,
-}: Props & { erVeileder: boolean; underOppfolging: boolean }) => {
+}: Props & { erVeileder: boolean; readOnly: boolean }) => {
     switch (aktivitet.type) {
         case VeilarbAktivitetType.MOTE_TYPE:
         case VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE:
@@ -38,7 +39,7 @@ const getActions = ({
                         id={aktivitet.id}
                         tillatEndring={tillatEndring}
                         laster={laster}
-                        underOppfolging={underOppfolging}
+                        readOnly={readOnly}
                     />
                     <SendEnMeldingKnapp aktivitet={aktivitet} />
                 </>
@@ -51,7 +52,7 @@ const getActions = ({
                             id={aktivitet.id}
                             tillatEndring={tillatEndring}
                             laster={laster}
-                            underOppfolging={underOppfolging}
+                            readOnly={readOnly}
                         />
                     ) : null}
                     <SendEnMeldingKnapp aktivitet={aktivitet} />
@@ -65,7 +66,7 @@ const getActions = ({
                         id={aktivitet.id}
                         tillatEndring={tillatEndring}
                         laster={laster}
-                        underOppfolging={underOppfolging}
+                        readOnly={readOnly}
                     />
                     <SendEnMeldingKnapp aktivitet={aktivitet} />
                 </>
@@ -91,8 +92,8 @@ const getActions = ({
 
 const ActionRad = (props: Props) => {
     const erVeileder = useErVeileder();
-    const underOppfolging = useSelector(selectErUnderOppfolging);
-    const actions = getActions({ ...props, erVeileder, underOppfolging });
+    const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
+    const actions = getActions({ ...props, erVeileder, readOnly });
 
     return <div className="my-4 gap-4 flex flex-wrap">{actions}</div>;
 };

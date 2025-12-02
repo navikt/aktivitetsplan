@@ -100,7 +100,7 @@ const AktivitetStatusForm = (props: Props) => {
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
 
     useEffect(() => {
-        if(isDirtyManuell) {
+        if (isDirtyManuell) {
             setFormIsDirty('status', true);
         } else {
             setFormIsDirty('status', false);
@@ -154,9 +154,11 @@ const AktivitetStatusForm = (props: Props) => {
             ) : null}
             <CustomErrorSummary errors={errors} />
             <Feilmelding feilmeldinger={useSelector(selectOppdaterAktivitetStatusFeil)} />
-            <Button loading={isSubmitting} className="mt-4" disabled={disabled}>
-                Lagre
-            </Button>
+            {!disabled ? (
+                <Button loading={isSubmitting} className="mt-4" disabled={disabled}>
+                    Lagre
+                </Button>
+            ) : null}
         </form>
     );
 };

@@ -17,19 +17,20 @@ import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { kanEndreAktivitetStatus } from '../../aktivitetlisteSelector';
 import EndreLinje from '../endre-linje/EndreLinje';
 import AktivitetStatusForm, { AktivitetStatusFormValues } from './AktivitetStatusForm';
+import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeReducer';
 
 const useDisableStatusEndring = (aktivitet: VeilarbAktivitet, erVeileder: boolean) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
-    const underOppfolging = useSelector(selectErUnderOppfolging);
+    const erIReadMode = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
     const kanEndreAktivitet = kanEndreAktivitetStatus(aktivitet, erVeileder);
 
-    return lasterAktivitet || !underOppfolging || !kanEndreAktivitet;
+    return lasterAktivitet || erIReadMode || !kanEndreAktivitet;
 };
 
 const lagreStatusEndringer = (
     dispatch: AppDispatch,
     values: { aktivitetstatus: AktivitetStatus; begrunnelse?: string },
-    aktivitet: VeilarbAktivitet
+    aktivitet: VeilarbAktivitet,
 ) => {
     if (values.aktivitetstatus === aktivitet.status) {
         return Promise.resolve();

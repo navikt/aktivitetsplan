@@ -14,7 +14,6 @@ import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
-import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
 import { RootState } from '../../store';
 import useIsVisible from '../../utils/useIsVisible';
@@ -26,6 +25,7 @@ import { erDroppbar } from './tavleUtils';
 import { Await, useRouteLoaderData } from 'react-router-dom';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeReducer';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
     useEffect(() => {
@@ -42,7 +42,7 @@ const Aktivitetstavle = () => {
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);
     const erVeileder = useErVeileder();
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
-    const underOppfolging = useSelector(selectErUnderOppfolging);
+    const erReadMode = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
 
     const aktivitetNotStarted =
         statusAktiviteter === Status.NOT_STARTED && statusArenaAktiviteter === Status.NOT_STARTED;
@@ -56,7 +56,7 @@ const Aktivitetstavle = () => {
     }, [aktivitetNotStarted, erVeileder, fnr]);
 
     const dragging = !!draggingAktivitet;
-    const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, underOppfolging);
+    const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, erReadMode);
     const skjulAdvarsel = !dragging || droppable;
 
     // SCROLLING //
