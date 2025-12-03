@@ -51,15 +51,13 @@ export const readWriteModeMiddleware = createListenerMiddleware();
 
 const oppdaterSkriveLeseTilgang = (
     action: any,
-    listenerApi: ListenerEffectAPI<unknown, ThunkDispatch<any, any, any>>,
+    listenerApi: ListenerEffectAPI<RootState, ThunkDispatch<any, any, any>>,
 ) => {
-    const state = listenerApi.getState() as RootState;
+    const state = listenerApi.getState();
     const valgtPeriode = selectValgtPeriode(state);
     const harSkriveTilgang = selectHarSkriveTilgang(state);
     const erUnderOppfolging = selectErUnderOppfolging(state);
     const reservertMotDigitalKommunikasjonIKrr = selectReservasjonKRR(state);
-
-    console.info(`[Middleware ${action.type}] - hentOppfolging`, valgtPeriode?.id);
 
     if (
         !reservertMotDigitalKommunikasjonIKrr &&
@@ -68,10 +66,8 @@ const oppdaterSkriveLeseTilgang = (
         valgtPeriode &&
         !valgtPeriode.slutt
     ) {
-        console.log(`[${action.type}] Setter write mode`);
         listenerApi.dispatch(setWriteMode());
     } else {
-        console.log(`[${action.type}] Setter write mode`);
         listenerApi.dispatch(setReadMode());
     }
 };
