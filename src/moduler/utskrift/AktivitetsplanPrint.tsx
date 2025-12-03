@@ -24,10 +24,11 @@ import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
-import { ArkivFilter, hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
+import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
 import { AvtaltFilterType, EtikettFilterType } from '../filtrering/filter/FilterVisning';
+import { defaultFilter, mapTilJournalforingFilter } from '../journalforing/journalforingFilter';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -55,7 +56,7 @@ const AktivitetsplanPrint = () => {
     const mittMal = useSelector(selectGjeldendeMal);
     const erManuell = useSelector(selectErBrukerManuell);
     const { hovedsideRoute } = useRoutes();
-    const filtre = useSelector(selectFilterSlice);
+    const filterState = useSelector(selectFilterSlice);
     const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
     const pdf = useSelector(selectPdf);
 
@@ -127,30 +128,10 @@ const AktivitetsplanPrint = () => {
     }
 
     const oppdaterForhaandsvistPdf = () => {
-        const forhaandsvisningsfilter = {
-            inkluderHistorikk: false,
-            aktivitetAvtaltMedNavFilter: [
-                filtre.aktivitetAvtaltMedNav.AVTALT_MED_NAV && 'AVTALT_MED_NAV',
-                filtre.aktivitetAvtaltMedNav.IKKE_AVTALT_MED_NAV && 'IKKE_AVTALT_MED_NAV'
-            ].filter(Boolean) as unknown as AvtaltFilterType[],
-            stillingsstatusFilter: [
-                filtre.aktivitetEtiketter.AVSLAG && 'AVSLAG',
-                filtre.aktivitetEtiketter.CV_DELT && 'CV_DELT',
-                filtre.aktivitetEtiketter.IKKE_FATT_JOBBEN && 'IKKE_FATT_JOBBEN',
-                filtre.aktivitetEtiketter.INGEN_VALGT && 'INGEN_VALGT',
-                filtre.aktivitetEtiketter.INNKALT_TIL_INTERVJU && 'INNKALT_TIL_INTERVJU',
-                filtre.aktivitetEtiketter.JOBBTILBUD && 'JOBBTILBUD',
-                filtre.aktivitetEtiketter.SKAL_PAA_INTERVJU && 'SKAL_PAA_INTERVJU',
-                filtre.aktivitetEtiketter.SOKNAD_SENDT && 'SOKNAD_SENDT',
-                filtre.aktivitetEtiketter.VENTER && 'VENTER',
-                filtre.aktivitetEtiketter.FATT_JOBBEN && 'FATT_JOBBEN',
-            ].filter(Boolean) as unknown as EtikettFilterType[],
-        } as ArkivFilter;
-
         dispatch(
             hentPdfTilForhaandsvisning({
                 oppfolgingsperiodeId,
-                filter: forhaandsvisningsfilter
+                filter: mapTilJournalforingFilter(filterState, false, false),
             })
         );
     };
@@ -216,11 +197,7 @@ export const aktivitetsplanPrintLoader =
             const forhaandsvisning = dispatch(
                 hentPdfTilForhaandsvisning({
                     oppfolgingsperiodeId,
-                    filter: {
-                        inkluderHistorikk: false,
-                        aktivitetAvtaltMedNavFilter: [],
-                        stillingsstatusFilter: []
-                    }
+                    filter: defaultFilter
                 })
             );
             return defer({

@@ -4,6 +4,8 @@ import * as Api from '../../../api/aktivitetAPI';
 import { Status } from '../../../createGenericSlice';
 import { RootState } from '../../../store';
 import { AvtaltFilterType, EtikettFilterType } from '../../filtrering/filter/FilterVisning';
+import { ArenaAktivitet, ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
+import { AlleAktivitetTyper } from '../../../utils/textMappers';
 
 interface ArkivState {
     forhaandsvisningStatus: Status;
@@ -106,9 +108,3 @@ export function selectSistJournalfort(state: RootState) {
 }
 
 export const arkivReducer = arkivSlice.reducer;
-
-export interface ArkivFilter {
-    inkluderHistorikk: boolean;
-    aktivitetAvtaltMedNavFilter: AvtaltFilterType[];
-    stillingsstatusFilter: EtikettFilterType[];
-}
