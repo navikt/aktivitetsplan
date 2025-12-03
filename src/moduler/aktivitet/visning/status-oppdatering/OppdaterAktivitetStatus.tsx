@@ -11,7 +11,6 @@ import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/lo
 import { useErVeileder } from '../../../../Provider';
 import { aktivitetStatusMap } from '../../../../utils/textMappers';
 import { DirtyContext } from '../../../context/dirty-context';
-import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { kanEndreAktivitetStatus } from '../../aktivitetlisteSelector';

@@ -11,7 +11,6 @@ import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/loggi
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
-import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
 import { useRoutes } from '../../../routing/useRoutes';
 import { erDroppbar } from '../tavleUtils';
 import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';

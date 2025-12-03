@@ -3,7 +3,7 @@ import { Button, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
 import React, { MutableRefObject, useLayoutEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';

@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useState } from 'react';
+import React, { MutableRefObject } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
@@ -17,7 +17,7 @@ const MalContainer = (props: Props) => {
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal = malData && malData.mal;
     const erVeileder = useErVeileder();
-    const canEdit = useSelector(selectReadWriteMode, shallowEqual) == ReadWriteMode.WRITE;
+    const canEdit = useSelector(selectReadWriteMode) == ReadWriteMode.WRITE;
 
     if (canEdit) {
         return (
