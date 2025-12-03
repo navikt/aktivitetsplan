@@ -217,7 +217,8 @@ export const aktivitetsplanPrintLoader =
                     oppfolgingsperiodeId,
                     filter: {
                         inkluderHistorikk: false,
-                        aktivitetAvtaltMedNav: []
+                        aktivitetAvtaltMedNavFilter: [],
+                        stillingsstatusFilter: []
                     }
                 })
             );
