@@ -142,7 +142,8 @@ const AktivitetsplanPrint = () => {
                 filtre.aktivitetEtiketter.JOBBTILBUD && 'JOBBTILBUD',
                 filtre.aktivitetEtiketter.SKAL_PAA_INTERVJU && 'SKAL_PAA_INTERVJU',
                 filtre.aktivitetEtiketter.SOKNAD_SENDT && 'SOKNAD_SENDT',
-                filtre.aktivitetEtiketter.VENTER && 'VENTER'
+                filtre.aktivitetEtiketter.VENTER && 'VENTER',
+                filtre.aktivitetEtiketter.FATT_JOBBEN && 'FATT_JOBBEN',
             ].filter(Boolean) as unknown as EtikettFilterType[],
         } as ArkivFilter;
 
