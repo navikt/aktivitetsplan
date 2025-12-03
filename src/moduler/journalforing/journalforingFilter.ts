@@ -41,7 +41,39 @@ export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk
             filter.aktivitetEtiketter.VENTER && 'VENTER',
             filter.aktivitetEtiketter.FATT_JOBBEN && 'FATT_JOBBEN',
         ].filter(Boolean) as unknown as EtikettFilterType[],
-        arenaAktivitetStatusFilter: [],
-        aktivitetTypeFilter: []
+        arenaAktivitetStatusFilter: [
+            filter.arenaAktivitetEtiketter.AKTUELL && 'AKTUELL',
+            filter.arenaAktivitetEtiketter.AVSLAG && 'AVSLAG',
+            filter.arenaAktivitetEtiketter.IKKAKTUELL && 'IKKAKTUELL',
+            filter.arenaAktivitetEtiketter.IKKEM && 'IKKEM',
+            filter.arenaAktivitetEtiketter.INFOMOETE && 'INFOMOETE',
+            filter.arenaAktivitetEtiketter.JATAKK && 'JATAKK',
+            filter.arenaAktivitetEtiketter.NEITAKK && 'NEITAKK',
+            filter.arenaAktivitetEtiketter.TILBUD && 'TILBUD',
+            filter.arenaAktivitetEtiketter.VENTELISTE && 'VENTELISTE',
+        ].filter(Boolean) as unknown as ArenaEtikett[
+        ],
+        aktivitetTypeFilter: [
+            filter.aktivitetTyper.STILLING && 'STILLING',
+            filter.aktivitetTyper.TILTAKSAKTIVITET && 'TILTAKSAKTIVITET',
+            filter.aktivitetTyper.GRUPPEAKTIVITET && 'GRUPPEAKTIVITET',
+            filter.aktivitetTyper.UTDANNINGSAKTIVITET && 'UTDANNINGSAKTIVITET',
+            filter.aktivitetTyper.SOKEAVTALE && 'SOKEAVTALE',
+            filter.aktivitetTyper.IJOBB && 'IJOBB',
+            filter.aktivitetTyper.BEHANDLING && 'BEHANDLING',
+            filter.aktivitetTyper.MOTE && 'MOTE',
+            filter.aktivitetTyper.SAMTALEREFERAT && 'SAMTALEREFERAT',
+            filter.aktivitetTyper.STILLING_FRA_NAV && 'STILLING_FRA_NAV',
+            filter.aktivitetTyper.ARENA_TILTAK && 'ARENA_TILTAK',
+            filter.aktivitetTyper.MIDLERTIDIG_LONNSTILSKUDD && 'MIDLERTIDIG_LONNSTILSKUDD',
+            filter.aktivitetTyper.VARIG_LONNSTILSKUDD && 'VARIG_LONNSTILSKUDD',
+            filter.aktivitetTyper.ARBEIDSTRENING && 'ARBEIDSTRENING',
+            filter.aktivitetTyper.VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET && 'VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET',
+            filter.aktivitetTyper.MENTOR && 'MENTOR',
+            filter.aktivitetTyper.REKRUTTERINGSTREFF && 'REKRUTTERINGSTREFF',
+            filter.aktivitetTyper.ENKELAMO && 'ENKELAMO',
+            filter.aktivitetTyper.ENKFAGYRKE && 'ENKFAGYRKE',
+            filter.aktivitetTyper.HOYEREUTD && 'HOYEREUTD'
+        ].filter(Boolean) as unknown as AlleAktivitetTyper[],
     };
 };
