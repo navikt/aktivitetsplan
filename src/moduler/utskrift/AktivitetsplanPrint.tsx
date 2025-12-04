@@ -87,6 +87,12 @@ const AktivitetsplanPrint = () => {
     const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
     const [isLoadingBruker, setIsLoadingBruker] = useState(true);
 
+    const blob = useMemo(() => {
+        if (!pdf) return undefined;
+        return createBlob(pdf);
+    }, [pdf]);
+
+
     useEffect(() => {
         if (fnr) {
             hentPerson(fnr)
@@ -164,11 +170,6 @@ const AktivitetsplanPrint = () => {
         }
     };
     const prompt = getPrompt();
-
-    const blob = useMemo(() => {
-        if (!pdf) return undefined;
-        return createBlob(pdf);
-    }, [pdf]);
 
     const skrivUt = () => {
         const nyFane = window.open(blob, '_blank')
