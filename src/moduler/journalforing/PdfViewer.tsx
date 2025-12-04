@@ -15,10 +15,10 @@ GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 interface PdfProps {
-    pdf: string | undefined;
+    pdf: Blob;
 }
 
-const createBlob = (pdf: string) => {
+export const createBlob = (pdf: string) => {
     const bytes = atob(pdf);
     let length = bytes.length;
     const out = new Uint8Array(length);
@@ -45,11 +45,6 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
         [pdf],
     );
 
-    const blob = useMemo(() => {
-        if (!pdf) return undefined;
-        return createBlob(pdf);
-    }, [pdf]);
-
     useEffect(() => {
         setVisAlert(true)
         const timeoutId = setTimeout(() => {
@@ -71,7 +66,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
                     Aktivitetsplanen ble journalført.
                 </Alert>
             )}
-            {!blob || henterForhaandsvisning ? (
+            {!pdf || henterForhaandsvisning ? (
                 <div className="min-h-[calc(100vh-180px)] flex flex-col justify-center items-center">
                     <Loader size="3xlarge" title="Venter..." className="mt-32 mb-6" />
                     <BodyShort as="div" size="medium" className="text-subtle mb-1" spacing>
@@ -85,7 +80,7 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
                 <Document
                     className="space-y-4 min-h-[calc(100vh-180px)] z-0"
                     onLoadSuccess={onDocumentLoadSuccess}
-                    file={blob}
+                    file={pdf}
                     loading=""
                 >
                     {Array.from(new Array(numPages), (el, index) => (

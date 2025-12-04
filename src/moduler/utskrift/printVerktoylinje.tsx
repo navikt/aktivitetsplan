@@ -11,10 +11,10 @@ interface Props {
     tilbakeRoute?: string;
     kanSkriveUt: boolean;
     oppdaterForhaandsvistPdf: () => void;
+    skrivUt: () => void;
 }
 
-function PrintVerktoylinje(props: Props) {
-    const { tilbakeRoute, kanSkriveUt } = props;
+function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf, skrivUt}: Props ) {
     return (
         <>
             <Heading className="print:hidden" spacing size={'large'}>
@@ -34,7 +34,7 @@ function PrintVerktoylinje(props: Props) {
                     <Button
                         icon={<PrinterSmallIcon />}
                         onClick={() => {
-                            window.print();
+                            skrivUt()
                             loggEvent(TRYK_PRINT);
                             logKlikkKnapp('Skriv ut');
                         }}
@@ -43,7 +43,7 @@ function PrintVerktoylinje(props: Props) {
                     </Button>
                 ) : null}
                 <Filter />
-                <Button onClick={props.oppdaterForhaandsvistPdf}>Oppdater visning</Button>
+                <Button onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
             </div>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />

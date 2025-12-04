@@ -1,5 +1,5 @@
 import { Loader, Modal } from '@navikt/ds-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { defer, LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/Vel
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
 import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
-import { PdfViewer } from '../journalforing/PdfViewer';
+import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
 import { AvtaltFilterType, EtikettFilterType } from '../filtrering/filter/FilterVisning';
 import { defaultFilter, mapTilJournalforingFilter } from '../journalforing/journalforingFilter';
@@ -131,7 +131,7 @@ const AktivitetsplanPrint = () => {
         dispatch(
             hentPdfTilForhaandsvisning({
                 oppfolgingsperiodeId,
-                filter: mapTilJournalforingFilter(filterState, false, false),
+                filter: mapTilJournalforingFilter(filterState, false, false)
             })
         );
     };
@@ -165,6 +165,21 @@ const AktivitetsplanPrint = () => {
     };
     const prompt = getPrompt();
 
+    const blob = useMemo(() => {
+        if (!pdf) return undefined;
+        return createBlob(pdf);
+    }, [pdf]);
+
+    const skrivUt = () => {
+        const nyFane = window.open(blob, '_blank')
+        if(nyFane) {
+         nyFane.onload = () => {
+             nyFane.focus()
+             nyFane.print()
+         };
+        }
+    };
+
     return (
         <section className="flex flex-col justify-center items-center p-8">
             <div className="aktivitetsplanprint flex justify-center items-center">
@@ -173,10 +188,11 @@ const AktivitetsplanPrint = () => {
                     tilbakeRoute={hovedsideRoute()}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
                     oppdaterForhaandsvistPdf={oppdaterForhaandsvistPdf}
+                    skrivUt={skrivUt}
                 />
                 <div className="border print:border-none">
                     {/*<div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">*/}
-                    <PdfViewer pdf={pdf} />
+                    <PdfViewer pdf={blob} />
                     {/*</div>*/}
                 </div>
             </div>
