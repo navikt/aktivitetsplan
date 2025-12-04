@@ -6,6 +6,7 @@ import { FilterState } from '../filtrering/filter/filter-slice';
 export interface ArkivFilter {
     inkluderHistorikk: boolean;
     inkluderAktiviteterIKvpPeriode: boolean;
+    inkluderDialoger: boolean;
     aktivitetAvtaltMedNavFilter: AvtaltFilterType[];
     stillingsstatusFilter: EtikettFilterType[];
     arenaAktivitetStatusFilter: ArenaEtikett[];
@@ -15,6 +16,7 @@ export interface ArkivFilter {
 export const defaultFilter: ArkivFilter = {
         inkluderHistorikk: false,
         inkluderAktiviteterIKvpPeriode: false,
+        inkluderDialoger: false,
         aktivitetAvtaltMedNavFilter: [],
         stillingsstatusFilter: [],
         arenaAktivitetStatusFilter: [],
@@ -25,6 +27,7 @@ export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk
     return {
         inkluderHistorikk: inkluderHistorikk,
         inkluderAktiviteterIKvpPeriode: inkluderAktiviteterIKvpPeriode,
+        inkluderDialoger: false,
         aktivitetAvtaltMedNavFilter: [
             filter.aktivitetAvtaltMedNav.AVTALT_MED_NAV && 'AVTALT_MED_NAV',
             filter.aktivitetAvtaltMedNav.IKKE_AVTALT_MED_NAV && 'IKKE_AVTALT_MED_NAV',
