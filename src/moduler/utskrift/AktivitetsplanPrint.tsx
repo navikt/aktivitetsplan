@@ -119,10 +119,10 @@ const AktivitetsplanPrint = () => {
     };
 
     const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
-        if(formValues.utskritPlanType !== utskriftform) {
-            oppdaterForhaandsvistPdf()
-        }
         setUtskriftform(formValues.utskritPlanType);
+        if(formValues.utskritPlanType !== utskriftform) {
+            oppdaterForhaandsvistPdf(formValues.utskritPlanType)
+        }
         next();
         return Promise.resolve();
     };
@@ -138,8 +138,8 @@ const AktivitetsplanPrint = () => {
         return <Loader />;
     }
 
-    const oppdaterForhaandsvistPdf = () => {
-        const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
+    const oppdaterForhaandsvistPdf = (nyUtskriftsform: string) => {
+        const kvpUtvalgskriterie = lagKvpUtvalgskriterie(nyUtskriftsform, kvpPerioder);
         dispatch(
             hentPdfTilForhaandsvisning({
                 oppfolgingsperiodeId,
@@ -194,7 +194,7 @@ const AktivitetsplanPrint = () => {
                 <PrintVerktoylinje
                     tilbakeRoute={hovedsideRoute()}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                    oppdaterForhaandsvistPdf={oppdaterForhaandsvistPdf}
+                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(utskriftform)}
                     skrivUt={skrivUt}
                 />
                 <div className="border print:border-none">
