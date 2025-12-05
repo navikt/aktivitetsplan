@@ -119,6 +119,9 @@ const AktivitetsplanPrint = () => {
     };
 
     const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
+        if(formValues.utskritPlanType !== utskriftform) {
+            oppdaterForhaandsvistPdf()
+        }
         setUtskriftform(formValues.utskritPlanType);
         next();
         return Promise.resolve();

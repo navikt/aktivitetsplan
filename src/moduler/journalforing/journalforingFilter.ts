@@ -31,7 +31,7 @@ export const defaultFilter: ArkivFilter = {
         inkluderHistorikk: false,
         inkluderDialoger: true,
         kvpUtvalgskriterie: {
-            alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
+            alternativ: KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER,
         },
         aktivitetAvtaltMedNavFilter: [],
         stillingsstatusFilter: [],
