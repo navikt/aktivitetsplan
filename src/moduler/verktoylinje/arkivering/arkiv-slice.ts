@@ -109,7 +109,7 @@ export const journalforOgSendTilBruker = createAsyncThunk(
                forhaandsvisningOpprettet,
                journalførendeEnhet,
                oppfolgingsperiodeId,
-                filter
+               filter
            }: {
         forhaandsvisningOpprettet: string;
         journalførendeEnhet: string;
@@ -119,6 +119,10 @@ export const journalforOgSendTilBruker = createAsyncThunk(
         return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhet, filter);
     },
 )
+
+export function selectSendTilBrukerStatus(state: RootState) {
+    return state.data.arkiv.sendTilBrukerStatus;
+}
 
 export function selectForhaandsvisningStatus(state: RootState) {
     return state.data.arkiv.forhaandsvisningStatus;
