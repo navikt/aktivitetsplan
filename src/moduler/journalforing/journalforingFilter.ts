@@ -41,6 +41,9 @@ export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk
         inkluderHistorikk: inkluderHistorikk,
         inkluderAktiviteterIKvpPeriode: inkluderAktiviteterIKvpPeriode,
         inkluderDialoger: true,
+        kvpUtvalgskriterie: {
+            alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
+        },
         aktivitetAvtaltMedNavFilter: [
             filter.aktivitetAvtaltMedNav.AVTALT_MED_NAV && 'AVTALT_MED_NAV',
             filter.aktivitetAvtaltMedNav.IKKE_AVTALT_MED_NAV && 'IKKE_AVTALT_MED_NAV',
