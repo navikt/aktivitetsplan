@@ -12,9 +12,11 @@ interface Props {
     kanSkriveUt: boolean;
     oppdaterForhaandsvistPdf: () => void;
     skrivUt: () => void;
+    sendTilBruker: () => void;
+    kanSendeTilBruker: boolean;
 }
 
-function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf, skrivUt}: Props ) {
+function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf, skrivUt, kanSendeTilBruker, sendTilBruker}: Props ) {
     return (
         <>
             <Heading className="print:hidden" spacing size={'large'}>
@@ -44,6 +46,7 @@ function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf,
                 ) : null}
                 <Filter />
                 <Button onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
+                { kanSendeTilBruker && <Button onClick={sendTilBruker}>Send til bruker</Button>}
             </div>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
