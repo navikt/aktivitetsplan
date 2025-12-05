@@ -24,13 +24,18 @@ import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
-import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
+import {
+    hentPdfTilForhaandsvisning,
+    selectForhaandsvisningOpprettet,
+    selectPdf
+} from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
 import {
     defaultFilter, lagKvpUtvalgskriterie,
     mapTilJournalforingFilter
 } from '../journalforing/journalforingFilter';
+import { journalforOgSendTilBruker } from '../../api/aktivitetAPI';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -61,6 +66,8 @@ const AktivitetsplanPrint = () => {
     const filterState = useSelector(selectFilterSlice);
     const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
     const pdf = useSelector(selectPdf);
+    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+    const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
 
     if (!oppfolgingsperiodeId) {
         throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
@@ -120,8 +127,8 @@ const AktivitetsplanPrint = () => {
 
     const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
         setUtskriftform(formValues.utskritPlanType);
-        if(formValues.utskritPlanType !== utskriftform) {
-            oppdaterForhaandsvistPdf(formValues.utskritPlanType)
+        if (formValues.utskritPlanType !== utskriftform) {
+            oppdaterForhaandsvistPdf(formValues.utskritPlanType);
         }
         next();
         return Promise.resolve();
@@ -178,19 +185,21 @@ const AktivitetsplanPrint = () => {
     const prompt = getPrompt();
 
     const skrivUt = () => {
-        const nyFane = window.open(blob, '_blank')
-        if(nyFane) {
-         nyFane.onload = () => {
-             nyFane.focus()
-             nyFane.print()
-         };
+        const nyFane = window.open(blob, '_blank');
+        if (nyFane) {
+            nyFane.onload = () => {
+                nyFane.focus();
+                nyFane.print();
+            };
         }
     };
 
     const sendTilBruker = () => {
-        console.log('sendTilBruker');
-
-    }
+        const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
+        if (forhaandsvisningOpprettet && journalførendeEnhet) {
+            journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhet, mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie));
+        }
+    };
 
     const kanSendeTilBruker: boolean = erVeileder && utskriftform === 'aktivitetsplan';
 
