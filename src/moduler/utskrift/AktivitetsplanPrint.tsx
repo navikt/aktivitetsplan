@@ -27,8 +27,10 @@ import { Dispatch } from '../../store';
 import { hentPdfTilForhaandsvisning, selectPdf } from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
-import { AvtaltFilterType, EtikettFilterType } from '../filtrering/filter/FilterVisning';
-import { defaultFilter, mapTilJournalforingFilter } from '../journalforing/journalforingFilter';
+import {
+    defaultFilter, lagKvpUtvalgskriterie,
+    mapTilJournalforingFilter
+} from '../journalforing/journalforingFilter';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -134,10 +136,11 @@ const AktivitetsplanPrint = () => {
     }
 
     const oppdaterForhaandsvistPdf = () => {
+        const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
         dispatch(
             hentPdfTilForhaandsvisning({
                 oppfolgingsperiodeId,
-                filter: mapTilJournalforingFilter(filterState, false, false)
+                filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie)
             })
         );
     };
