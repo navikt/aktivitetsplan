@@ -101,10 +101,8 @@ const mapKvpUtvalgskriterie = (kvpValg: string): KvpUtvalgskriterieAlternativ =>
         return KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER;
     } else if (kvpValg === 'aktivitetsplan') {
         return KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER;
-    } else if (isDate(kvpValg)) {
-        return KvpUtvalgskriterieAlternativ.KUN_KVP_AKTIVITETER;
     } else {
-        throw Error(`Ugyldig valg: ${kvpValg}`);
+        return KvpUtvalgskriterieAlternativ.KUN_KVP_AKTIVITETER;
     }
 }
 
