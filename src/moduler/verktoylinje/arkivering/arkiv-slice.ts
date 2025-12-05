@@ -6,10 +6,12 @@ import { RootState } from '../../../store';
 import { AvtaltFilterType, EtikettFilterType } from '../../filtrering/filter/FilterVisning';
 import { ArenaAktivitet, ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
 import { AlleAktivitetTyper } from '../../../utils/textMappers';
+import { ArkivFilter } from '../../journalforing/journalforingFilter';
 
 interface ArkivState {
     forhaandsvisningStatus: Status;
     journalføringStatus: Status;
+    sendTilBrukerStatus: Status;
     forhaandsvisning:
         | {
               uuid: string;
@@ -52,6 +54,16 @@ const arkivSlice = createSlice({
             }
             state.journalføringStatus = Status.OK;
         });
+        builder.addCase(journalforOgSendTilBruker.pending, (state) => {
+            state.sendTilBrukerStatus =
+                state.sendTilBrukerStatus === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
+        });
+        builder.addCase(journalforOgSendTilBruker.rejected, (state) => {
+            state.sendTilBrukerStatus = Status.ERROR;
+        });
+        builder.addCase(journalforOgSendTilBruker.fulfilled, (state, action) => {
+            state.sendTilBrukerStatus = Status.OK;
+        });
     },
 });
 
@@ -90,6 +102,23 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
         return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, filter);
     },
 );
+
+export const journalforOgSendTilBruker = createAsyncThunk(
+    `${arkivSlice.name}/send-til-bruker`,
+    async ({
+               forhaandsvisningOpprettet,
+               journalførendeEnhet,
+               oppfolgingsperiodeId,
+                filter
+           }: {
+        forhaandsvisningOpprettet: string;
+        journalførendeEnhet: string;
+        oppfolgingsperiodeId: string;
+        filter: ArkivFilter;
+    }) => {
+        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhet, filter);
+    },
+)
 
 export function selectForhaandsvisningStatus(state: RootState) {
     return state.data.arkiv.forhaandsvisningStatus;

@@ -25,7 +25,7 @@ import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/Vel
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
 import {
-    hentPdfTilForhaandsvisning,
+    hentPdfTilForhaandsvisning, journalforOgSendTilBruker,
     selectForhaandsvisningOpprettet,
     selectPdf
 } from '../verktoylinje/arkivering/arkiv-slice';
@@ -35,7 +35,6 @@ import {
     defaultFilter, lagKvpUtvalgskriterie,
     mapTilJournalforingFilter
 } from '../journalforing/journalforingFilter';
-import { journalforOgSendTilBruker } from '../../api/aktivitetAPI';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -226,7 +225,7 @@ const AktivitetsplanPrint = () => {
 };
 
 export const aktivitetsplanPrintLoader =
-    (dispatch: Dispatch, aktivEnhet: string) =>
+    (dispatch: Dispatch) =>
         ({
              params: { oppfolgingsperiodeId }
          }: LoaderFunctionArgs<{
