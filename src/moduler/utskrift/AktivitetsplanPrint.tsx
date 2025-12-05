@@ -187,6 +187,13 @@ const AktivitetsplanPrint = () => {
         }
     };
 
+    const sendTilBruker = () => {
+        console.log('sendTilBruker');
+
+    }
+
+    const kanSendeTilBruker: boolean = erVeileder && utskriftform === 'aktivitetsplan';
+
     return (
         <section className="flex flex-col justify-center items-center p-8">
             <div className="aktivitetsplanprint flex justify-center items-center">
@@ -196,6 +203,8 @@ const AktivitetsplanPrint = () => {
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
                     oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(utskriftform)}
                     skrivUt={skrivUt}
+                    kanSendeTilBruker={kanSendeTilBruker}
+                    sendTilBruker={sendTilBruker}
                 />
                 <div className="border print:border-none">
                     {/*<div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">*/}
