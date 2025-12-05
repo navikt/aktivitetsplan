@@ -6,6 +6,10 @@ import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
 import { logKlikkKnapp } from '../../analytics/analytics';
+import { useSelector } from 'react-redux';
+import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
+import { Status } from '../../createGenericSlice';
+import { send } from 'vite';
 
 interface Props {
     tilbakeRoute?: string;
@@ -17,6 +21,9 @@ interface Props {
 }
 
 function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf, skrivUt, kanSendeTilBruker, sendTilBruker}: Props ) {
+    const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
+    const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
+
     return (
         <>
             <Heading className="print:hidden" spacing size={'large'}>
@@ -46,7 +53,7 @@ function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf,
                 ) : null}
                 <Filter />
                 <Button onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
-                { kanSendeTilBruker && <Button onClick={sendTilBruker}>Send til bruker</Button>}
+                { kanSendeTilBruker && <Button onClick={sendTilBruker} loading={senderTilBruker}>Send til bruker</Button>}
             </div>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
