@@ -2,23 +2,26 @@ import { AvtaltFilterType, EtikettFilterType } from '../filtrering/filter/Filter
 import { ArenaEtikett } from '../../datatypes/arenaAktivitetTypes';
 import { AlleAktivitetTyper } from '../../utils/textMappers';
 import { FilterState } from '../filtrering/filter/filter-slice';
+import { isDate } from 'date-fns';
+import { KvpPeriode } from '../../datatypes/oppfolgingTypes';
 
 export interface ArkivFilter {
     inkluderHistorikk: boolean;
-    inkluderAktiviteterIKvpPeriode: boolean;
     inkluderDialoger: true;
-    kvpUtvalgskriterie: {
-        alternativ: KvpUtvalgskriterieAlternativ,
-        start?: string,
-        slutt?: string,
-    }
+    kvpUtvalgskriterie: KvpUtvalgskriterie;
     aktivitetAvtaltMedNavFilter: AvtaltFilterType[];
     stillingsstatusFilter: EtikettFilterType[];
     arenaAktivitetStatusFilter: ArenaEtikett[];
     aktivitetTypeFilter: AlleAktivitetTyper[];
 }
 
-enum KvpUtvalgskriterieAlternativ {
+export interface KvpUtvalgskriterie {
+    alternativ: KvpUtvalgskriterieAlternativ,
+    start?: string,
+    slutt?: string,
+}
+
+export enum KvpUtvalgskriterieAlternativ {
     EKSKLUDER_KVP_AKTIVITETER = "EKSKLUDER_KVP_AKTIVITETER",
     INKLUDER_KVP_AKTIVITETER = "INKLUDER_KVP_AKTIVITETER",
     KUN_KVP_AKTIVITETER = "KUN_KVP_AKTIVITETER"
@@ -26,7 +29,6 @@ enum KvpUtvalgskriterieAlternativ {
 
 export const defaultFilter: ArkivFilter = {
         inkluderHistorikk: false,
-        inkluderAktiviteterIKvpPeriode: false,
         inkluderDialoger: true,
         kvpUtvalgskriterie: {
             alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
@@ -36,14 +38,11 @@ export const defaultFilter: ArkivFilter = {
         arenaAktivitetStatusFilter: [],
         aktivitetTypeFilter: [],
 };
-export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk: boolean, inkluderAktiviteterIKvpPeriode: boolean): ArkivFilter => {
+export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk: boolean, kvpUtvalgskriterie: KvpUtvalgskriterie): ArkivFilter => {
     return {
         inkluderHistorikk: inkluderHistorikk,
-        inkluderAktiviteterIKvpPeriode: inkluderAktiviteterIKvpPeriode,
         inkluderDialoger: true,
-        kvpUtvalgskriterie: {
-            alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
-        },
+        kvpUtvalgskriterie: kvpUtvalgskriterie,
         aktivitetAvtaltMedNavFilter: [
             filter.aktivitetAvtaltMedNav.AVTALT_MED_NAV && 'AVTALT_MED_NAV',
             filter.aktivitetAvtaltMedNav.IKKE_AVTALT_MED_NAV && 'IKKE_AVTALT_MED_NAV',
@@ -96,3 +95,33 @@ export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk
         ].filter(Boolean) as unknown as AlleAktivitetTyper[],
     };
 };
+
+const mapKvpUtvalgskriterie = (kvpValg: string): KvpUtvalgskriterieAlternativ => {
+    if (kvpValg === 'helePlanen') {
+        return KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER;
+    } else if (kvpValg === 'aktivitetsplan') {
+        return KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER;
+    } else if (isDate(kvpValg)) {
+        return KvpUtvalgskriterieAlternativ.KUN_KVP_AKTIVITETER;
+    } else {
+        throw Error("Ugyldig valg");
+    }
+}
+
+export const lagKvpUtvalgskriterie = (utskriftform: string, kvpPerioder: KvpPeriode[] | undefined): KvpUtvalgskriterie => {
+    const alternativ = mapKvpUtvalgskriterie(utskriftform)
+
+    if (alternativ === KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER ||
+        alternativ === KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER) {
+        return {
+            alternativ: alternativ
+        }
+    } else {
+        const valgtKvpPeriode = kvpPerioder && kvpPerioder.find((periode) => periode.opprettetDato === utskriftform);
+        return {
+            alternativ: alternativ,
+            start: valgtKvpPeriode?.opprettetDato,
+            slutt: valgtKvpPeriode?.avsluttetDato,
+        }
+    }
+}
