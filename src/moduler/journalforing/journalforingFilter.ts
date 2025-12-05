@@ -7,22 +7,35 @@ export interface ArkivFilter {
     inkluderHistorikk: boolean;
     inkluderAktiviteterIKvpPeriode: boolean;
     inkluderDialoger: true;
+    kvpUtvalgskriterie: {
+        alternativ: KvpUtvalgskriterieAlternativ,
+        start?: string,
+        slutt?: string,
+    }
     aktivitetAvtaltMedNavFilter: AvtaltFilterType[];
     stillingsstatusFilter: EtikettFilterType[];
     arenaAktivitetStatusFilter: ArenaEtikett[];
     aktivitetTypeFilter: AlleAktivitetTyper[];
 }
 
+enum KvpUtvalgskriterieAlternativ {
+    EKSKLUDER_KVP_AKTIVITETER = "EKSKLUDER_KVP_AKTIVITETER",
+    INKLUDER_KVP_AKTIVITETER = "INKLUDER_KVP_AKTIVITETER",
+    KUN_KVP_AKTIVITETER = "KUN_KVP_AKTIVITETER"
+}
+
 export const defaultFilter: ArkivFilter = {
         inkluderHistorikk: false,
         inkluderAktiviteterIKvpPeriode: false,
         inkluderDialoger: true,
+        kvpUtvalgskriterie: {
+            alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
+        },
         aktivitetAvtaltMedNavFilter: [],
         stillingsstatusFilter: [],
         arenaAktivitetStatusFilter: [],
         aktivitetTypeFilter: [],
 };
-
 export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk: boolean, inkluderAktiviteterIKvpPeriode: boolean): ArkivFilter => {
     return {
         inkluderHistorikk: inkluderHistorikk,
