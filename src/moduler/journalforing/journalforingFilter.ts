@@ -104,7 +104,7 @@ const mapKvpUtvalgskriterie = (kvpValg: string): KvpUtvalgskriterieAlternativ =>
     } else if (isDate(kvpValg)) {
         return KvpUtvalgskriterieAlternativ.KUN_KVP_AKTIVITETER;
     } else {
-        throw Error("Ugyldig valg");
+        throw Error(`Ugyldig valg: ${kvpValg}`);
     }
 }
 
