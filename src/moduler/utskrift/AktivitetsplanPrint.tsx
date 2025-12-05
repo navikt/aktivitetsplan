@@ -108,7 +108,7 @@ const AktivitetsplanPrint = () => {
 
     const [stepIndex, setStepIndex] = useState(0);
     const [printMelding, setPrintMelding] = useState('');
-    const [utskriftform, setUtskriftform] = useState('helePlanen');
+    const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
 
     const next = () => setStepIndex(stepIndex + 1);
 
