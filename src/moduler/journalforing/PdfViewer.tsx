@@ -16,6 +16,8 @@ GlobalWorkerOptions.workerSrc = new URL(
 
 interface PdfProps {
     pdf: Blob;
+    visSuksessmelding: boolean;
+    suksessmelding: string;
 }
 
 export const createBlob = (pdf: string) => {
@@ -31,9 +33,8 @@ export const createBlob = (pdf: string) => {
     return window.URL.createObjectURL(blob);
 };
 
-export const PdfViewer = ({ pdf }: PdfProps) => {
+export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding }: PdfProps) => {
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
-    const journalførtStatus = useSelector(selectJournalføringstatus);
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const [numPages, setNumPages] = useState(0);
     const [visAlert, setVisAlert] = useState(true);
@@ -54,16 +55,16 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
         return () => {
             clearTimeout(timeoutId);
         };
-    }, [journalførtStatus, forhaandsvisningStatus]);
+    }, [visSuksessmelding]);
 
     const containerWidth = 800;
     const maxWidth = 800;
 
     return (
         <div className="mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
-            {visAlert && journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK && (
+            {visAlert && visSuksessmelding && (
                 <Alert variant="success" role="alert" className="fixed z-10 mt-10">
-                    Aktivitetsplanen ble journalført.
+                    { suksessmelding }
                 </Alert>
             )}
             {!pdf || henterForhaandsvisning ? (

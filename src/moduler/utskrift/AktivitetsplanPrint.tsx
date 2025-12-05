@@ -27,7 +27,7 @@ import { Dispatch } from '../../store';
 import {
     hentPdfTilForhaandsvisning, journalforOgSendTilBruker,
     selectForhaandsvisningOpprettet,
-    selectPdf
+    selectPdf, selectSendTilBrukerStatus
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
@@ -35,6 +35,7 @@ import {
     defaultFilter, lagKvpUtvalgskriterie,
     mapTilJournalforingFilter
 } from '../journalforing/journalforingFilter';
+import { Status } from '../../createGenericSlice';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -67,6 +68,7 @@ const AktivitetsplanPrint = () => {
     const pdf = useSelector(selectPdf);
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
+    const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
 
     if (!oppfolgingsperiodeId) {
         throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
@@ -196,7 +198,12 @@ const AktivitetsplanPrint = () => {
     const sendTilBruker = () => {
         const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
         if (forhaandsvisningOpprettet && journalførendeEnhet) {
-            journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhet, mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie));
+            dispatch(journalforOgSendTilBruker({
+                forhaandsvisningOpprettet,
+                journalførendeEnhet,
+                oppfolgingsperiodeId,
+                filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie)}
+            ));
         }
     };
 
@@ -216,7 +223,7 @@ const AktivitetsplanPrint = () => {
                 />
                 <div className="border print:border-none">
                     {/*<div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">*/}
-                    <PdfViewer pdf={blob} />
+                    <PdfViewer pdf={blob} suksessmelding={"Aktivitetsplanen ble sendt til bruker"} visSuksessmelding={sendTilBrukerStatus === Status.OK}/>
                     {/*</div>*/}
                 </div>
             </div>
