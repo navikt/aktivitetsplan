@@ -94,12 +94,14 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
     async ({
         oppfolgingsperiodeId,
-        filter
+        filter,
+        tekstTilBruker
     }: {
         oppfolgingsperiodeId: string;
         filter?: ArkivFilter;
+        tekstTilBruker?: string;
     }) => {
-        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, filter);
+        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, filter, tekstTilBruker);
     },
 );
 
@@ -109,14 +111,16 @@ export const journalforOgSendTilBruker = createAsyncThunk(
                forhaandsvisningOpprettet,
                journalførendeEnhet,
                oppfolgingsperiodeId,
-               filter
+               filter,
+               tekstTilBruker
            }: {
         forhaandsvisningOpprettet: string;
         journalførendeEnhet: string;
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
+        tekstTilBruker?: string;
     }) => {
-        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhet, filter);
+        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhet, filter, tekstTilBruker);
     },
 )
 

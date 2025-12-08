@@ -53,7 +53,6 @@ export const arkivLoader =
             }
             const forhaandsvisning = dispatch(
                 hentPdfTilForhaandsvisning({
-                    journalførendeEnhet: aktivEnhet,
                     oppfolgingsperiodeId
                 })
             );

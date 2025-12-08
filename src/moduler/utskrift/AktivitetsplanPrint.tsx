@@ -17,7 +17,7 @@ import { hentMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus
+    selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
@@ -29,11 +29,17 @@ import {
     journalforOgSendTilBruker,
     selectForhaandsvisningOpprettet,
     selectPdf,
-    selectSendTilBrukerStatus
+    selectSendTilBrukerStatus,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
-import { defaultFilter, lagKvpUtvalgskriterie, mapTilJournalforingFilter } from '../journalforing/journalforingFilter';
+import {
+    defaultFilter,
+    KvpUtvalgskriterie,
+    KvpUtvalgskriterieAlternativ,
+    lagKvpUtvalgskriterie,
+    mapTilJournalforingFilter,
+} from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
 
@@ -78,7 +84,7 @@ const AktivitetsplanPrint = () => {
         useSelector(selectMalStatus),
         useSelector(selectOppfolgingStatus),
         useSelector(selectAktivitetListeStatus),
-        useSelector(selectDialogStatus)
+        useSelector(selectDialogStatus),
     ];
 
     const dispatch = useAppDispatch();
@@ -93,6 +99,9 @@ const AktivitetsplanPrint = () => {
     const { fnr } = useFnrOgEnhetContext();
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
     const [bruker, setBruker] = useState<Bruker>({});
+    const [kvpUtvalgskriterie, setKvpUtvalgskriterie] = useState<KvpUtvalgskriterie>({
+        alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
+    });
 
     const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
     const [isLoadingBruker, setIsLoadingBruker] = useState(true);
@@ -101,7 +110,6 @@ const AktivitetsplanPrint = () => {
         if (!pdf) return undefined;
         return createBlob(pdf);
     }, [pdf]);
-
 
     useEffect(() => {
         if (fnr) {
@@ -123,13 +131,15 @@ const AktivitetsplanPrint = () => {
     const printMeldingSubmit = (formValues: PrintFormValues) => {
         setPrintMelding(formValues.beskrivelse);
         next();
-        return Promise.resolve();
+        return Promise.resolve().then(() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, formValues.beskrivelse));
     };
 
     const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
         setUtskriftform(formValues.utskritPlanType);
         if (formValues.utskritPlanType !== utskriftform) {
-            oppdaterForhaandsvistPdf(formValues.utskritPlanType);
+            const nyKvpUtvalgskriterie = lagKvpUtvalgskriterie(formValues.utskritPlanType, kvpPerioder);
+            setKvpUtvalgskriterie(nyKvpUtvalgskriterie);
+            oppdaterForhaandsvistPdf(nyKvpUtvalgskriterie);
         }
         next();
         return Promise.resolve();
@@ -146,13 +156,17 @@ const AktivitetsplanPrint = () => {
         return <Loader />;
     }
 
-    const oppdaterForhaandsvistPdf = (nyUtskriftsform: string) => {
-        const kvpUtvalgskriterie = lagKvpUtvalgskriterie(nyUtskriftsform, kvpPerioder);
+    const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
         dispatch(
             hentPdfTilForhaandsvisning({
                 oppfolgingsperiodeId,
-                filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie)
-            })
+                filter: mapTilJournalforingFilter(
+                    filterState,
+                    false,
+                    nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
+                ),
+                tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding
+            }),
         );
     };
 
@@ -198,13 +212,15 @@ const AktivitetsplanPrint = () => {
     const sendTilBruker = () => {
         const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
         if (forhaandsvisningOpprettet && journalførendeEnhet) {
-            dispatch(journalforOgSendTilBruker({
+            dispatch(
+                journalforOgSendTilBruker({
                     forhaandsvisningOpprettet,
                     journalførendeEnhet,
                     oppfolgingsperiodeId,
-                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie)
-                }
-            ));
+                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie),
+                    tekstTilBruker: printMelding,
+                }),
+            );
         }
     };
 
@@ -217,20 +233,23 @@ const AktivitetsplanPrint = () => {
                 <PrintVerktoylinje
                     tilbakeRoute={hovedsideRoute()}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(utskriftform)}
+                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, printMelding)}
                     skrivUt={skrivUt}
                     kanSendeTilBruker={kanSendeTilBruker}
                     sendTilBruker={sendTilBruker}
                 />
-                    <StatusErrorBoundry
-                        statuser={[sendTilBrukerStatus]}
-                        errorMessage="Kunne ikke sende aktivitetsplan til bruker"
-                    >
-                        <div className="border print:border-none">
-                        <PdfViewer pdf={blob} suksessmelding={'Aktivitetsplanen ble sendt til bruker'}
-                                   visSuksessmelding={sendTilBrukerStatus === Status.OK} />
-                </div>
-                    </StatusErrorBoundry>
+                <StatusErrorBoundry
+                    statuser={[sendTilBrukerStatus]}
+                    errorMessage="Kunne ikke sende aktivitetsplan til bruker"
+                >
+                    <div className="border print:border-none">
+                        <PdfViewer
+                            pdf={blob}
+                            suksessmelding={'Aktivitetsplanen ble sendt til bruker'}
+                            visSuksessmelding={sendTilBrukerStatus === Status.OK}
+                        />
+                    </div>
+                </StatusErrorBoundry>
             </div>
         </section>
     );
@@ -238,23 +257,23 @@ const AktivitetsplanPrint = () => {
 
 export const aktivitetsplanPrintLoader =
     (dispatch: Dispatch) =>
-        ({
-             params: { oppfolgingsperiodeId }
-         }: LoaderFunctionArgs<{
-            oppfolgingsperiodeId: string;
-        }>) => {
-            if (!oppfolgingsperiodeId) {
-                throw Error('path param is not set, this should never happen');
-            }
-            const forhaandsvisning = dispatch(
-                hentPdfTilForhaandsvisning({
-                    oppfolgingsperiodeId,
-                    filter: defaultFilter
-                })
-            );
-            return defer({
-                forhaandsvisning
-            });
-        };
+    ({
+        params: { oppfolgingsperiodeId },
+    }: LoaderFunctionArgs<{
+        oppfolgingsperiodeId: string;
+    }>) => {
+        if (!oppfolgingsperiodeId) {
+            throw Error('path param is not set, this should never happen');
+        }
+        const forhaandsvisning = dispatch(
+            hentPdfTilForhaandsvisning({
+                oppfolgingsperiodeId,
+                filter: defaultFilter,
+            }),
+        );
+        return defer({
+            forhaandsvisning,
+        });
+    };
 
 export default AktivitetsplanPrint;
