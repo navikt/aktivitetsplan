@@ -9,6 +9,7 @@ import { logKlikkKnapp } from '../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
+import { selectAktiviterForAktuellePerioden } from '../aktivitet/aktivitetlisteSelector';
 
 interface Props {
     tilbakeRoute?: string;
@@ -19,16 +20,26 @@ interface Props {
     kanSendeTilBruker: boolean;
 }
 
-function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf, skrivUt, kanSendeTilBruker, sendTilBruker}: Props ) {
+function PrintVerktoylinje({
+                               tilbakeRoute,
+                               kanSkriveUt,
+                               oppdaterForhaandsvistPdf,
+                               skrivUt,
+                               kanSendeTilBruker,
+                               sendTilBruker
+                           }: Props) {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
+
+    const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
+    const harAktivitet = aktiviteter.length > 1;
 
     return (
         <>
             <Heading className="print:hidden" spacing size={'large'}>
                 Skriv ut aktivitetsplanen
             </Heading>
-            <div className="print:hidden self-start flex flex-row gap-x-10 mb-8 items-center">
+            <div className="print:hidden self-start flex flex-row mb-8 items-center gap-x-10">
                 {tilbakeRoute ? (
                     <ReactRouterLink
                         className="text-text-action underline hover:no-underline"
@@ -38,21 +49,27 @@ function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf,
                         Tilbake
                     </ReactRouterLink>
                 ) : null}
-                {kanSkriveUt ? (
-                    <Button
-                        icon={<PrinterSmallIcon />}
-                        onClick={() => {
-                            skrivUt()
-                            loggEvent(TRYK_PRINT);
-                            logKlikkKnapp('Skriv ut');
-                        }}
-                    >
-                        Skriv ut
-                    </Button>
-                ) : null}
-                <Filter />
-                <Button onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
-                { kanSendeTilBruker && <Button icon={<EnvelopeOpenIcon/>} onClick={sendTilBruker} loading={senderTilBruker}>Journalfør og send til bruker</Button>}
+                {harAktivitet &&
+                <div className="self-start flex flex-row gap-4 items-center">
+                    <Filter /><Button onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
+                </div>}
+                <div className="self-start flex flex-row items-center gap-4">
+                    {kanSkriveUt ? (
+                        <Button
+                            icon={<PrinterSmallIcon />}
+                            onClick={() => {
+                                skrivUt();
+                                loggEvent(TRYK_PRINT);
+                                logKlikkKnapp('Skriv ut');
+                            }}
+                        >
+                            Skriv ut
+                        </Button>
+                    ) : null}
+                    {kanSendeTilBruker &&
+                        <Button icon={<EnvelopeOpenIcon />} onClick={sendTilBruker} loading={senderTilBruker}>Journalfør
+                            og send til bruker</Button>}
+                </div>
             </div>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
