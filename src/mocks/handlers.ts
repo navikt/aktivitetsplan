@@ -36,7 +36,7 @@ import {
     journalforingFeiler,
     maalFeilet,
     oppdateringKunFeiler,
-    oppfFeilet
+    oppfFeilet, sendTilBrukerFeiler
 } from './demo/localStorage';
 import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
@@ -44,6 +44,7 @@ import { journalføring } from './data/journalføring';
 import { subDays, subMinutes } from 'date-fns';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 import { sjekkTryggTekst } from './data/tryggtekst';
+import { sendTilBruker } from './data/sendTilBruker';
 
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
