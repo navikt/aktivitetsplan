@@ -1,4 +1,4 @@
-import { PrinterSmallIcon } from '@navikt/aksel-icons';
+import { EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { logKlikkKnapp } from '../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
-import { send } from 'vite';
 
 interface Props {
     tilbakeRoute?: string;
@@ -53,7 +52,7 @@ function PrintVerktoylinje({tilbakeRoute, kanSkriveUt, oppdaterForhaandsvistPdf,
                 ) : null}
                 <Filter />
                 <Button onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
-                { kanSendeTilBruker && <Button onClick={sendTilBruker} loading={senderTilBruker}>Send til bruker</Button>}
+                { kanSendeTilBruker && <Button icon={<EnvelopeOpenIcon/>} onClick={sendTilBruker} loading={senderTilBruker}>Journalfør og send til bruker</Button>}
             </div>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
