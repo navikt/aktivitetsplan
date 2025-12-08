@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const StatusErrorBoundry = ({ statuser, children, errorMessage }: Props) => {
-    const [visErrorAlert, setVisErrorAlert] = useState(true);
+    const [visErrorAlert, setVisErrorAlert] = useState(false);
 
     const hasError = statuser.includes(Status.ERROR);
 
