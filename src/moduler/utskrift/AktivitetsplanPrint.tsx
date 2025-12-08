@@ -25,17 +25,17 @@ import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/Vel
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
 import {
-    hentPdfTilForhaandsvisning, journalforOgSendTilBruker,
+    hentPdfTilForhaandsvisning,
+    journalforOgSendTilBruker,
     selectForhaandsvisningOpprettet,
-    selectPdf, selectSendTilBrukerStatus
+    selectPdf,
+    selectSendTilBrukerStatus
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
-import {
-    defaultFilter, lagKvpUtvalgskriterie,
-    mapTilJournalforingFilter
-} from '../journalforing/journalforingFilter';
+import { defaultFilter, lagKvpUtvalgskriterie, mapTilJournalforingFilter } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
+import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -199,10 +199,11 @@ const AktivitetsplanPrint = () => {
         const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
         if (forhaandsvisningOpprettet && journalførendeEnhet) {
             dispatch(journalforOgSendTilBruker({
-                forhaandsvisningOpprettet,
-                journalførendeEnhet,
-                oppfolgingsperiodeId,
-                filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie)}
+                    forhaandsvisningOpprettet,
+                    journalførendeEnhet,
+                    oppfolgingsperiodeId,
+                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie)
+                }
             ));
         }
     };
@@ -221,11 +222,15 @@ const AktivitetsplanPrint = () => {
                     kanSendeTilBruker={kanSendeTilBruker}
                     sendTilBruker={sendTilBruker}
                 />
-                <div className="border print:border-none">
-                    {/*<div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">*/}
-                    <PdfViewer pdf={blob} suksessmelding={"Aktivitetsplanen ble sendt til bruker"} visSuksessmelding={sendTilBrukerStatus === Status.OK}/>
-                    {/*</div>*/}
+                    <StatusErrorBoundry
+                        statuser={[sendTilBrukerStatus]}
+                        errorMessage="Kunne ikke sende aktivitetsplan til bruker"
+                    >
+                        <div className="border print:border-none">
+                        <PdfViewer pdf={blob} suksessmelding={'Aktivitetsplanen ble sendt til bruker'}
+                                   visSuksessmelding={sendTilBrukerStatus === Status.OK} />
                 </div>
+                    </StatusErrorBoundry>
             </div>
         </section>
     );
