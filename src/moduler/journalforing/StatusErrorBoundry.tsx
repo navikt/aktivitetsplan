@@ -14,6 +14,8 @@ export const StatusErrorBoundry = ({ statuser, children, errorMessage }: Props) 
     const hasError = statuser.includes(Status.ERROR);
 
     useEffect(() => {
+        console.log("hasError ", hasError);
+        console.log("statuser ", statuser.includes(Status.ERROR));
         if (!hasError) {
             setVisErrorAlert(false);
             return;
@@ -21,6 +23,8 @@ export const StatusErrorBoundry = ({ statuser, children, errorMessage }: Props) 
         setVisErrorAlert(true);
         const timeout = setTimeout(() => setVisErrorAlert(false), 5000);
         return () => clearTimeout(timeout);
+        console.log("hasError ", hasError);
+        console.log("statuser ", statuser.includes(Status.ERROR));
     }, [hasError]);
 
     if (!hasError) {

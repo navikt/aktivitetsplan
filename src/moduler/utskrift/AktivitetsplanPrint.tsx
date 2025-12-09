@@ -17,7 +17,7 @@ import { hentMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus,
+    selectOppfolgingStatus
 } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
@@ -25,11 +25,11 @@ import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/Vel
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
 import {
-    hentPdfTilForhaandsvisning,
+    hentPdfTilForhaandsvisningSendTilBruker,
     journalforOgSendTilBruker,
-    selectForhaandsvisningOpprettet,
-    selectPdf,
-    selectSendTilBrukerStatus,
+    selectForhaandsvisningSendTilBrukerOpprettet, selectForhaandsvisningSendTilBrukerStatus,
+    selectPdfForhaandsvisningSendTilBruker,
+    selectSendTilBrukerStatus
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
@@ -38,7 +38,7 @@ import {
     KvpUtvalgskriterie,
     KvpUtvalgskriterieAlternativ,
     lagKvpUtvalgskriterie,
-    mapTilJournalforingFilter,
+    mapTilJournalforingFilter
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
@@ -71,10 +71,11 @@ const AktivitetsplanPrint = () => {
     const { hovedsideRoute } = useRoutes();
     const filterState = useSelector(selectFilterSlice);
     const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
-    const pdf = useSelector(selectPdf);
+    const pdf = useSelector(selectPdfForhaandsvisningSendTilBruker);
     const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
-    const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningOpprettet);
+    const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
+    const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
 
     if (!oppfolgingsperiodeId) {
         throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
@@ -158,7 +159,7 @@ const AktivitetsplanPrint = () => {
 
     const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
         dispatch(
-            hentPdfTilForhaandsvisning({
+            hentPdfTilForhaandsvisningSendTilBruker({
                 oppfolgingsperiodeId,
                 filter: mapTilJournalforingFilter(
                     filterState,
@@ -247,6 +248,7 @@ const AktivitetsplanPrint = () => {
                             pdf={blob}
                             suksessmelding={'Aktivitetsplanen ble sendt til bruker'}
                             visSuksessmelding={sendTilBrukerStatus === Status.OK}
+                            forhaandsvisningStatus={forhaandsvisningStatus}
                         />
                     </div>
                 </StatusErrorBoundry>
@@ -266,9 +268,10 @@ export const aktivitetsplanPrintLoader =
             throw Error('path param is not set, this should never happen');
         }
         const forhaandsvisning = dispatch(
-            hentPdfTilForhaandsvisning({
+            hentPdfTilForhaandsvisningSendTilBruker({
                 oppfolgingsperiodeId,
                 filter: defaultFilter,
+                tekstTilBruker: ""
             }),
         );
         return defer({

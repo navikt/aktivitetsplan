@@ -161,16 +161,20 @@ export const handlers = [
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
     ),
     http.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
-    http.post(
+    http.get(
         '/veilarbaktivitet/api/arkivering/forhaandsvisning',
-        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 500)
+        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 2000)
+    ),
+    http.post(
+        '/veilarbaktivitet/api/arkivering/forhaandsvisning-send-til-bruker',
+        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 2000)
     ),
     http.post(
         '/veilarbaktivitet/api/arkivering/journalfor',
         failOrGetResponse(journalforingFeiler, () => journalføring, 2000)
     ),
     http.post(
-        '/veilarbaktivitet/api/arkivering/send-til-bruker', failOrGetResponse(sendTilBrukerFeiler, () => sendTilBruker, 5000)
+        '/veilarbaktivitet/api/arkivering/send-til-bruker', failOrGetResponse(sendTilBrukerFeiler, () => sendTilBruker, 2000)
     ),
     http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
     // veilarblest
