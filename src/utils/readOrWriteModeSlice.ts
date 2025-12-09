@@ -11,7 +11,6 @@ import { velgPeriode } from '../moduler/filtrering/filter/valgt-periode-slice';
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 import {
     selectErUnderOppfolging,
-    selectHarSkriveTilgang,
     selectReservasjonKRR,
     selectValgtPeriode,
 } from '../moduler/oppfolging-status/oppfolging-selector';
@@ -55,17 +54,10 @@ const oppdaterSkriveLeseTilgang = (
 ) => {
     const state = listenerApi.getState();
     const valgtPeriode = selectValgtPeriode(state);
-    const harSkriveTilgang = selectHarSkriveTilgang(state);
     const erUnderOppfolging = selectErUnderOppfolging(state);
     const reservertMotDigitalKommunikasjonIKrr = selectReservasjonKRR(state);
 
-    if (
-        !reservertMotDigitalKommunikasjonIKrr &&
-        harSkriveTilgang &&
-        erUnderOppfolging &&
-        valgtPeriode &&
-        !valgtPeriode.slutt
-    ) {
+    if (!reservertMotDigitalKommunikasjonIKrr && erUnderOppfolging && valgtPeriode && !valgtPeriode.slutt) {
         listenerApi.dispatch(setWriteMode());
     } else {
         listenerApi.dispatch(setReadMode());

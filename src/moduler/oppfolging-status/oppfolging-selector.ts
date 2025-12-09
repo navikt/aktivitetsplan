@@ -104,10 +104,6 @@ export function selectErUnderKvp(state: RootState) {
     return selectOppfolgingData(state)?.underKvp;
 }
 
-export function selectHarSkriveTilgang(state: RootState) {
-    return selectOppfolgingData(state)?.harSkriveTilgang || false;
-}
-
 export function selectKanReaktiveres(state: RootState) {
     return selectOppfolgingData(state)?.kanReaktiveres;
 }
