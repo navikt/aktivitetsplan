@@ -64,20 +64,12 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
             </>
         );
     }
-    if (manuell && !reservasjonKRR) {
-        return (
-            <>
-                <AktiverDigitalOppfolging />
-                {props.children}
-            </>
-        );
-    }
 
     if (ikkeDigitalOppfolging) {
         return (
             <>
                 <AktiverDigitalOppfolging />
-                {erVeileder ? props.children : null}
+                {props.children}
             </>
         );
     }
