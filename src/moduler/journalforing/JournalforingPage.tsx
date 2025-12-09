@@ -3,7 +3,7 @@ import {
     hentPdfTilForhaandsvisning,
     selectForhaandsvisningStatus,
     selectJournalføringstatus,
-    selectPdf
+    selectPdfForhaandsvisning
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
 import { defer, LoaderFunctionArgs } from 'react-router-dom';
@@ -14,7 +14,7 @@ import { StatusErrorBoundry } from './StatusErrorBoundry';
 import { Status } from '../../createGenericSlice';
 
 export const JournalforingPage = () => {
-    const pdf = useSelector(selectPdf);
+    const pdf = useSelector(selectPdfForhaandsvisning);
     const journalførtStatus = useSelector(selectJournalføringstatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
 
@@ -33,7 +33,7 @@ export const JournalforingPage = () => {
                                     errorMessage="Noe gikk galt med journalføringen">
                     <div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
                         <PdfViewer pdf={blob} visSuksessmelding={visSuksessmelding}
-                                   suksessmelding={'Aktivitetsplanen ble journalført.'} />
+                                   suksessmelding={'Aktivitetsplanen ble journalført.'} forhaandsvisningStatus={forhaandsvisningStatus} />
                     </div>
                 </StatusErrorBoundry>
             </section>

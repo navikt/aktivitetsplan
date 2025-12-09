@@ -114,10 +114,15 @@ export const journalfoerAktivitetsplanOgDialog = (
     });
 export const genererPdfTilForhaandsvisning = (
     oppfolgingsperiodeId: string,
-    filter?: ArkivFilter,
-    tekstTilBruker?: string,
 ) =>
-    postAsJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
+    fetchToJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}`);
+
+export const genererPdfTilForhaandsvisningSendTilBruker = (
+    oppfolgingsperiodeId: string,
+    filter: ArkivFilter,
+    tekstTilBruker: string,
+) =>
+    postAsJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning-send-til-bruker?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
         filter,
         tekstTilBruker,
     });

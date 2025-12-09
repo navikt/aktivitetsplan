@@ -18,6 +18,7 @@ interface PdfProps {
     pdf: Blob;
     visSuksessmelding: boolean;
     suksessmelding: string;
+    forhaandsvisningStatus: Status;
 }
 
 export const createBlob = (pdf: string) => {
@@ -33,8 +34,7 @@ export const createBlob = (pdf: string) => {
     return window.URL.createObjectURL(blob);
 };
 
-export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding }: PdfProps) => {
-    const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
+export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvisningStatus }: PdfProps) => {
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const [numPages, setNumPages] = useState(0);
     const [visAlert, setVisAlert] = useState(true);
