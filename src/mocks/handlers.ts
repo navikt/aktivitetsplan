@@ -174,7 +174,7 @@ export const handlers = [
         failOrGetResponse(journalforingFeiler, () => journalføring, 2000)
     ),
     http.post(
-        '/veilarbaktivitet/api/arkivering/send-til-bruker', failOrGetResponse(sendTilBrukerFeiler, () => sendTilBruker, 2000)
+        '/veilarbaktivitet/api/arkivering/send-til-bruker', failOrGetResponse(sendTilBrukerFeiler, () => undefined, 2000, 204)
     ),
     http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
     // veilarblest

@@ -78,7 +78,7 @@ const arkivSlice = createSlice({
         builder.addCase(journalforOgSendTilBruker.rejected, (state) => {
             state.sendTilBrukerStatus = Status.ERROR;
         });
-        builder.addCase(journalforOgSendTilBruker.fulfilled, (state, action) => {
+        builder.addCase(journalforOgSendTilBruker.fulfilled, (state) => {
             state.sendTilBrukerStatus = Status.OK;
         });
     },
