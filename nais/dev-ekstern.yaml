@@ -55,8 +55,6 @@ spec:
           namespace: poao
         - application: nav-dekoratoren
           namespace: personbruker
-      external:
-        - host: veilarbveileder.dev-fss-pub.nais.io
   gcp:
     buckets:
       - name: aktivitetsplan-dev
