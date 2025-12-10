@@ -49,7 +49,7 @@ const arkivSlice = createSlice({
         builder.addCase(hentPdfTilForhaandsvisningSendTilBruker.pending, (state) => {
             state.forhaandsvisningSendTilBrukerStatus =
                 state.forhaandsvisningSendTilBrukerStatus === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
-            state.journalføringStatus = Status.NOT_STARTED;
+            state.sendTilBrukerStatus = Status.NOT_STARTED;
         });
         builder.addCase(hentPdfTilForhaandsvisningSendTilBruker.fulfilled, (state, action) => {
             state.forhaandsvisningSendTilBruker = action.payload;
