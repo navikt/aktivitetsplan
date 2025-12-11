@@ -1,17 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
 import { addDays, isAfter, startOfDay } from 'date-fns';
-import React, { ChangeEventHandler, MutableRefObject, useState } from 'react';
+import React, { ChangeEventHandler, MutableRefObject } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { useErVeileder } from '../../../../Provider';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
-import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
+import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDateRangePicker';
 
 const schema = z
     .object({
@@ -53,6 +54,8 @@ interface Props {
 const EgenAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
+    const erVeileder = useErVeileder();
+
     const defaultValues: Partial<EgenAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
         fraDato: dateOrUndefined(aktivitet?.fraDato),
@@ -62,8 +65,6 @@ const EgenAktivitetForm = (props: Props) => {
         oppfolging: aktivitet?.oppfolging || '',
         lenke: aktivitet?.lenke || '',
     };
-    const [defaultFraDato, setDefaultFraDato] = useState(defaultValues.tilDato);
-    const [defaultTilDato, setDefaultTilDato] = useState(defaultValues.fraDato);
 
     const avtalt = aktivitet?.avtalt === true;
 
@@ -78,7 +79,7 @@ const EgenAktivitetForm = (props: Props) => {
         handleSubmit,
         reset,
         watch,
-        formState: { errors, isDirty, isSubmitting, isValid },
+        formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -86,11 +87,11 @@ const EgenAktivitetForm = (props: Props) => {
     }
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
+    const fraDato = watch('fraDato');
+    const tilDato = watch('tilDato');
 
     const onTemplateChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
         if (event.target.value === 'ingen') {
-            setDefaultFraDato(defaultValues.fraDato);
-            setDefaultTilDato(defaultValues.tilDato);
             reset();
         } else {
             for (const [name, value] of Object.entries(malverkTemplate) as [keyof typeof malverkTemplate, string][]) {
@@ -100,9 +101,7 @@ const EgenAktivitetForm = (props: Props) => {
             const fraDato = startOfDay(now);
             const tilDato = addDays(now, 8);
             setValue('fraDato', fraDato);
-            setDefaultFraDato(fraDato);
             setValue('tilDato', tilDato);
-            setDefaultTilDato(tilDato);
         }
     };
 
@@ -126,8 +125,9 @@ const EgenAktivitetForm = (props: Props) => {
                         error={errors.tittel && errors.tittel.message}
                     />
                     <DateRangePicker
-                        from={{ name: 'fraDato', required: true, defaultValue: defaultFraDato }}
-                        to={{ name: 'tilDato', required: true, defaultValue: defaultTilDato }}
+                        // aktivitet={aktivitet}
+                        from={{ name: 'fraDato', required: true, defaultValue: fraDato }}
+                        to={{ name: 'tilDato', required: true, defaultValue: tilDato }}
                     />
                     <TextField
                         disabled={avtalt}

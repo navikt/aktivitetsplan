@@ -1,5 +1,6 @@
-import { DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
-import React, { useEffect, ChangeEventHandler, useState } from 'react';
+import { DatePicker as DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
+import React, { useEffect, useMemo } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { coerceToUndefined, handlers, preventCloseOnInsideClick, useOutsideClick } from './common';
@@ -66,30 +67,34 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
             validateRemoveErrors(validation);
         },
         onRangeChange: (val) => {
-            if (val?.to) {
-                setValue(to.name, coerceToUndefined(val?.to), { shouldDirty: true });
-            }
-            if (val?.from) {
-                setValue(from.name, coerceToUndefined(val?.from), { shouldDirty: true });
-            }
+            setValue(to.name, coerceToUndefined(val?.to), { shouldDirty: true });
+            setValue(from.name, coerceToUndefined(val?.from), { shouldDirty: true });
+            // if (val?.to != undefined && val.from !== undefined) {
+            //     closeToggle();
+            // }
         },
     });
 
+    //
+    const memoDefaultDates = useMemo(() => {
+        return { fromDefaultValue: from.defaultValue, toDefaultValue: to.defaultValue };
+    }, [from.defaultValue?.getTime(), to.defaultValue?.getTime()]);
     // Needed to make change in defaultValue actually have any effect
     useEffect(() => {
         reset();
+        // Only using reset
         setSelected({
-            from: from.defaultValue,
-            to: to.defaultValue,
+            from: memoDefaultDates.fromDefaultValue,
+            to: memoDefaultDates.toDefaultValue,
         });
-    }, [from.defaultValue, to.defaultValue]);
+    }, [memoDefaultDates]);
 
     /* These on-change handlers are needed to handle manual text-input */
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setValue(from.name, event.target.value);
+        setValue(from.name, coerceToUndefined(event.target.value));
     };
     const setHookFormToValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setValue(to.name, event.target.value);
+        setValue(from.name, coerceToUndefined(event.target.value));
     };
 
     return (
@@ -112,6 +117,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormFromValue, fromInputProps.onChange])}
                         ref={(ref) => {
+                            // fromInputProps.setAnchorRef(ref);
                             fromField.ref(ref);
                         }}
                     />
@@ -124,6 +130,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         onBlur={handlers([toField.onBlur, toInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormToValue, toInputProps.onChange])}
                         ref={(ref) => {
+                            // toInputProps.setAnchorRef(ref);
                             toField.ref(ref);
                         }}
                     />
