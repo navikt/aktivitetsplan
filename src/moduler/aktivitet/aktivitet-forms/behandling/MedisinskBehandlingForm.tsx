@@ -84,8 +84,6 @@ const MedisinskBehandlingForm = (props: Props) => {
         formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
-    console.log(errors);
-
     if (dirtyRef) {
         dirtyRef.current = isDirty;
     }

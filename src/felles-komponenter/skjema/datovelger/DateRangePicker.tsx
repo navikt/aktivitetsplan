@@ -1,6 +1,5 @@
-import { DatePicker as DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
-import React, { useEffect, useMemo } from 'react';
-import { ChangeEventHandler, useState } from 'react';
+import { DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
+import React, { useEffect, ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { coerceToUndefined, handlers, preventCloseOnInsideClick, useOutsideClick } from './common';
@@ -25,7 +24,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     const closeToggle = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closeToggle);
 
-    const { setError, clearErrors, control, setValue, watch } = useFormContext();
+    const { setError, clearErrors, control, setValue } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,
         name: from.name,
@@ -113,7 +112,6 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         onBlur={handlers([fromField.onBlur, fromInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormFromValue, fromInputProps.onChange])}
                         ref={(ref) => {
-                            // fromInputProps.setAnchorRef(ref);
                             fromField.ref(ref);
                         }}
                     />
@@ -126,7 +124,6 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         onBlur={handlers([toField.onBlur, toInputProps.onBlur, validateInputs, closeToggle])}
                         onChange={handlers([setHookFormToValue, toInputProps.onChange])}
                         ref={(ref) => {
-                            // toInputProps.setAnchorRef(ref);
                             toField.ref(ref);
                         }}
                     />
