@@ -52,7 +52,7 @@
     "rollup-plugin-visualizer": "^5.14.0",
     "source-map-explorer": "^2.5.3",
     "typescript": "^5.9.2",
-    "vite": "^6.3.6",
+    "vite": "^6.4.1",
     "vite-plugin-svgr": "^4.5.0",
     "vitest": "^3.2.4",
     "zod": "^3.25.76"
