@@ -85,7 +85,7 @@ spec:
               "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
               "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com","data:","uxsignals-frontend.uxsignals.app.iterate.no"],
               "frameSrc":["*.hotjar.com","player.vimeo.com","video.qbrick.com"],
-              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com","*.uxsignals.com"],
+              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com","*.uxsignals.com", "blob:"],
               "workerSrc": ["'self'", "*.nav.no", "blob:"]
             }
           },
