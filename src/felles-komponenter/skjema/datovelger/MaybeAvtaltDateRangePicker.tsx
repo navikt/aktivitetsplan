@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import ControlledDatePicker from './ControlledDatePicker';
-import ControlledDateRangePicker, { FieldSettings } from './ControlledDateRangePicker';
+import ControlledDateRangePicker, { FieldSettings } from './DateRangePicker';
 
 type FormValuesWithDates = { fraDato: string; tilDato: string };
 
