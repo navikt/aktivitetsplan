@@ -4,7 +4,7 @@ import React, { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { preventCloseOnInsideClick, useOutsideClick } from './common';
-import { FieldSettings } from './ControlledDateRangePicker';
+import { FieldSettings } from './DateRangePicker';
 import { isValidDate } from '../../../utils/dateUtils';
 import { parseDate } from '../../../utils/dateParser';
 

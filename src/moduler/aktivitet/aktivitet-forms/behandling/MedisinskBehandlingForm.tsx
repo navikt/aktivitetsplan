@@ -84,6 +84,8 @@ const MedisinskBehandlingForm = (props: Props) => {
         formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
+    console.log(errors);
+
     if (dirtyRef) {
         dirtyRef.current = isDirty;
     }
@@ -95,7 +97,7 @@ const MedisinskBehandlingForm = (props: Props) => {
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE} />
-                    <InnsynsrettInfo/>
+                    <InnsynsrettInfo />
                     <TextField
                         disabled={avtalt}
                         label="Type behandling (obligatorisk)"

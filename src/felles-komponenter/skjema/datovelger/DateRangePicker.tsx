@@ -25,7 +25,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
     const closeToggle = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closeToggle);
 
-    const { setError, clearErrors, control, setValue } = useFormContext();
+    const { setError, clearErrors, control, setValue, watch } = useFormContext();
     const { field: fromField, fieldState: fromState } = useController({
         control,
         name: from.name,
@@ -67,34 +67,30 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
             validateRemoveErrors(validation);
         },
         onRangeChange: (val) => {
-            setValue(to.name, coerceToUndefined(val?.to), { shouldDirty: true });
-            setValue(from.name, coerceToUndefined(val?.from), { shouldDirty: true });
-            // if (val?.to != undefined && val.from !== undefined) {
-            //     closeToggle();
-            // }
+            if (val?.to) {
+                setValue(to.name, coerceToUndefined(val?.to), { shouldDirty: true });
+            }
+            if (val?.from) {
+                setValue(from.name, coerceToUndefined(val?.from), { shouldDirty: true });
+            }
         },
     });
 
-    //
-    const memoDefaultDates = useMemo(() => {
-        return { fromDefaultValue: from.defaultValue, toDefaultValue: to.defaultValue };
-    }, [from.defaultValue?.getTime(), to.defaultValue?.getTime()]);
     // Needed to make change in defaultValue actually have any effect
     useEffect(() => {
         reset();
-        // Only using reset
         setSelected({
-            from: memoDefaultDates.fromDefaultValue,
-            to: memoDefaultDates.toDefaultValue,
+            from: from.defaultValue,
+            to: to.defaultValue,
         });
-    }, [memoDefaultDates]);
+    }, [from.defaultValue, to.defaultValue]);
 
     /* These on-change handlers are needed to handle manual text-input */
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setValue(from.name, coerceToUndefined(event.target.value));
+        setValue(from.name, event.target.value);
     };
     const setHookFormToValue: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setValue(from.name, coerceToUndefined(event.target.value));
+        setValue(to.name, event.target.value);
     };
 
     return (
