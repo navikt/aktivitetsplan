@@ -46,7 +46,6 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: pto-proxy
         - application: veilarblest
           namespace: dab
         - application: veilarbaktivitet
@@ -57,10 +56,6 @@ spec:
           namespace: poao
         - application: nav-dekoratoren
           namespace: personbruker
-      external:
-        - host: navnob2c.b2clogin.com
-        - host: veilarbaktivitet.prod-fss-pub.nais.io
-        - host: veilarbveileder.prod-fss-pub.nais.io
   gcp:
     buckets:
       - name: aktivitetsplan-prod
