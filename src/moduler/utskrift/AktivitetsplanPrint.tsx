@@ -17,7 +17,7 @@ import { hentMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus
+    selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
@@ -27,9 +27,10 @@ import { Dispatch } from '../../store';
 import {
     hentPdfTilForhaandsvisningSendTilBruker,
     journalforOgSendTilBruker,
-    selectForhaandsvisningSendTilBrukerOpprettet, selectForhaandsvisningSendTilBrukerStatus,
+    selectForhaandsvisningSendTilBrukerOpprettet,
+    selectForhaandsvisningSendTilBrukerStatus,
     selectPdfForhaandsvisningSendTilBruker,
-    selectSendTilBrukerStatus
+    selectSendTilBrukerStatus,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
@@ -38,7 +39,7 @@ import {
     KvpUtvalgskriterie,
     KvpUtvalgskriterieAlternativ,
     lagKvpUtvalgskriterie,
-    mapTilJournalforingFilter
+    mapTilJournalforingFilter,
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
@@ -101,7 +102,9 @@ const AktivitetsplanPrint = () => {
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
     const [bruker, setBruker] = useState<Bruker>({});
     const [kvpUtvalgskriterie, setKvpUtvalgskriterie] = useState<KvpUtvalgskriterie>({
-        alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
+        alternativ: erVeileder
+            ? KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER
+            : KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER,
     });
 
     const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
@@ -166,7 +169,7 @@ const AktivitetsplanPrint = () => {
                     false,
                     nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
                 ),
-                tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding
+                tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
             }),
         );
     };
@@ -258,7 +261,7 @@ const AktivitetsplanPrint = () => {
 };
 
 export const aktivitetsplanPrintLoader =
-    (dispatch: Dispatch) =>
+    (dispatch: Dispatch, erVeileder: boolean) =>
     ({
         params: { oppfolgingsperiodeId },
     }: LoaderFunctionArgs<{
@@ -270,8 +273,8 @@ export const aktivitetsplanPrintLoader =
         const forhaandsvisning = dispatch(
             hentPdfTilForhaandsvisningSendTilBruker({
                 oppfolgingsperiodeId,
-                filter: defaultFilter,
-                tekstTilBruker: ""
+                filter: defaultFilter(erVeileder),
+                tekstTilBruker: '',
             }),
         );
         return defer({
