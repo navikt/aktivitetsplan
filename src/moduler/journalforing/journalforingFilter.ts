@@ -27,17 +27,19 @@ export enum KvpUtvalgskriterieAlternativ {
     KUN_KVP_AKTIVITETER = "KUN_KVP_AKTIVITETER"
 }
 
-export const defaultFilter: ArkivFilter = {
+export const defaultFilter = (erVeileder: boolean): ArkivFilter => {
+    return {
         inkluderHistorikk: false,
         inkluderDialoger: true,
         kvpUtvalgskriterie: {
-            alternativ: KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER,
+            alternativ: erVeileder ? KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER : KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER,
         },
         aktivitetAvtaltMedNavFilter: [],
         stillingsstatusFilter: [],
         arenaAktivitetStatusFilter: [],
         aktivitetTypeFilter: [],
-};
+    }
+}
 export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk: boolean, kvpUtvalgskriterie: KvpUtvalgskriterie): ArkivFilter => {
     return {
         inkluderHistorikk: inkluderHistorikk,

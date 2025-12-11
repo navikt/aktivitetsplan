@@ -92,7 +92,7 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
             },
             {
                 path: 'utskrift/:oppfolgingsperiodeId',
-                loader: aktivitetsplanPrintLoader(dispatch),
+                loader: aktivitetsplanPrintLoader(dispatch, isVeileder),
                 element: <AktivitetsplanPrint />
             },
             {
