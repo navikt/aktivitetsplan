@@ -90,6 +90,7 @@ export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvis
                             pageNumber={index + 1}
                             width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
                             renderTextLayer={false}
+                            renderAnnotationLayer={false}
                         />
                     ))}
                 </Document>
