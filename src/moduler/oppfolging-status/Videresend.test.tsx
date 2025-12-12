@@ -138,9 +138,9 @@ describe('Videresend brukere eller render children', () => {
         });
         it('skal vise varsel når bruker har reservert seg mot digital kommunikasjon i KRR', async () => {
             const store = gitt.hentStatus.reserverIKrr();
-            const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
+            const { getByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() => getByText('Du har reservert deg mot digital kommunikasjon'));
-            expect(queryByText(aktivitetTittel)).toBeFalsy();
+            getByText(aktivitetTittel);
         });
         it('skal vise dårlig feilmelding når bruker er manuell', async () => {
             const store = gitt.hentStatus.manuell();

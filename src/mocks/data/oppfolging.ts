@@ -59,7 +59,6 @@ const oppfolging = {
     underKvp: false,
     kanStarteOppfolging: false,
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfolgingsperioder,
-    harSkriveTilgang: true,
     kanReaktiveres: false,
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',

@@ -5,7 +5,7 @@ import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 export function erDroppbar(
     aktivitet: AlleAktiviteter & { nesteStatus?: string },
     erBruker: boolean,
-    underOppfolging: boolean
+    erReadMode: boolean,
 ) {
     const { type, status, nesteStatus } = aktivitet;
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
@@ -14,7 +14,7 @@ export function erDroppbar(
     const erFerdig = [AktivitetStatus.FULLFOERT, AktivitetStatus.AVBRUTT].includes(status);
     const brukerKanOppdater = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
     return (
-        underOppfolging &&
+        !erReadMode &&
         !nesteStatus &&
         !historisk &&
         !erFerdig &&
