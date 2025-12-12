@@ -62,8 +62,8 @@ const EgenAktivitetForm = (props: Props) => {
         oppfolging: aktivitet?.oppfolging || '',
         lenke: aktivitet?.lenke || '',
     };
-    const [defaultFraDato, setDefaultFraDato] = useState(defaultValues.tilDato);
-    const [defaultTilDato, setDefaultTilDato] = useState(defaultValues.fraDato);
+    const [defaultFraDato, setDefaultFraDato] = useState(defaultValues.fraDato);
+    const [defaultTilDato, setDefaultTilDato] = useState(defaultValues.tilDato);
 
     const avtalt = aktivitet?.avtalt === true;
 
