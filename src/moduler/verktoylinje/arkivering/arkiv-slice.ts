@@ -88,17 +88,17 @@ export const journalfør = createAsyncThunk(
     `${arkivSlice.name}/journalfoering`,
     async ({
         forhaandsvisningOpprettet,
-        journalførendeEnhet,
+        journalførendeEnhetId,
         oppfolgingsperiodeId,
     }: {
         forhaandsvisningOpprettet: string;
-        journalførendeEnhet: string;
+        journalførendeEnhetId: string;
         oppfolgingsperiodeId: string;
     }) => {
         return await Api.journalfoerAktivitetsplanOgDialog(
             oppfolgingsperiodeId,
             forhaandsvisningOpprettet,
-            journalførendeEnhet,
+            journalførendeEnhetId,
         );
     },
 );
@@ -111,10 +111,12 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning`,
     async ({
         oppfolgingsperiodeId,
+        journalførendeEnhetId,
     }: {
         oppfolgingsperiodeId: string;
+        journalførendeEnhetId: string;
     }) => {
-        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId);
+        return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, journalførendeEnhetId);
     },
 );
 
@@ -123,13 +125,15 @@ export const hentPdfTilForhaandsvisningSendTilBruker = createAsyncThunk(
     async ({
                oppfolgingsperiodeId,
                filter,
+               journalførendeEnhetId,
                tekstTilBruker
            }: {
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
+        journalførendeEnhetId: string;
         tekstTilBruker: string;
     }) => {
-        return await Api.genererPdfTilForhaandsvisningSendTilBruker(oppfolgingsperiodeId, filter, tekstTilBruker);
+        return await Api.genererPdfTilForhaandsvisningSendTilBruker(oppfolgingsperiodeId, filter, journalførendeEnhetId, tekstTilBruker);
     },
 );
 
@@ -138,18 +142,18 @@ export const journalforOgSendTilBruker = createAsyncThunk(
     `${arkivSlice.name}/send-til-bruker`,
     async ({
                forhaandsvisningOpprettet,
-               journalførendeEnhet,
+               journalførendeEnhetId,
                oppfolgingsperiodeId,
                filter,
                tekstTilBruker
            }: {
         forhaandsvisningOpprettet: string;
-        journalførendeEnhet: string;
+        journalførendeEnhetId: string;
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
         tekstTilBruker?: string;
     }) => {
-        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhet, filter, tekstTilBruker);
+        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhetId, filter, tekstTilBruker);
     },
 )
 

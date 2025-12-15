@@ -12,6 +12,7 @@ import Sidebar from './Sidebar';
 import { createBlob, PdfViewer } from './PdfViewer';
 import { StatusErrorBoundry } from './StatusErrorBoundry';
 import { Status } from '../../createGenericSlice';
+import { useFnrOgEnhetContext } from '../../Provider';
 
 export const JournalforingPage = () => {
     const pdf = useSelector(selectPdfForhaandsvisning);
@@ -47,13 +48,15 @@ export const arkivLoader =
              params: { oppfolgingsperiodeId }
          }: LoaderFunctionArgs<{
             oppfolgingsperiodeId: string;
+            aktivEnhet: string;
         }>) => {
             if (!oppfolgingsperiodeId) {
                 throw Error('path param is not set, this should never happen');
             }
             const forhaandsvisning = dispatch(
                 hentPdfTilForhaandsvisning({
-                    oppfolgingsperiodeId
+                    oppfolgingsperiodeId,
+                    journalførendeEnhetId: aktivEnhet
                 })
             );
             return defer({

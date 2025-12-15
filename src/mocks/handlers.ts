@@ -161,7 +161,7 @@ export const handlers = [
         failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
     ),
     http.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
-    http.get(
+    http.post(
         '/veilarbaktivitet/api/arkivering/forhaandsvisning',
         failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 2000)
     ),

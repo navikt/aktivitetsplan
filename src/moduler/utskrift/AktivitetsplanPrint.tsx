@@ -73,7 +73,7 @@ const AktivitetsplanPrint = () => {
     const filterState = useSelector(selectFilterSlice);
     const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
     const pdf = useSelector(selectPdfForhaandsvisningSendTilBruker);
-    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+    const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
@@ -169,6 +169,7 @@ const AktivitetsplanPrint = () => {
                     false,
                     nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
                 ),
+                journalførendeEnhetId: journalførendeEnhetId ? journalførendeEnhetId : "",
                 tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
             }),
         );
@@ -215,11 +216,11 @@ const AktivitetsplanPrint = () => {
 
     const sendTilBruker = () => {
         const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
-        if (forhaandsvisningOpprettet && journalførendeEnhet) {
+        if (forhaandsvisningOpprettet && journalførendeEnhetId) {
             dispatch(
                 journalforOgSendTilBruker({
                     forhaandsvisningOpprettet,
-                    journalførendeEnhet,
+                    journalførendeEnhetId,
                     oppfolgingsperiodeId,
                     filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie),
                     tekstTilBruker: printMelding,
@@ -261,11 +262,12 @@ const AktivitetsplanPrint = () => {
 };
 
 export const aktivitetsplanPrintLoader =
-    (dispatch: Dispatch, erVeileder: boolean) =>
+    (dispatch: Dispatch, erVeileder: boolean, aktivEnhet: string) =>
     ({
         params: { oppfolgingsperiodeId },
     }: LoaderFunctionArgs<{
         oppfolgingsperiodeId: string;
+        aktivEnhet: string;
     }>) => {
         if (!oppfolgingsperiodeId) {
             throw Error('path param is not set, this should never happen');
@@ -274,6 +276,7 @@ export const aktivitetsplanPrintLoader =
             hentPdfTilForhaandsvisningSendTilBruker({
                 oppfolgingsperiodeId,
                 filter: defaultFilter(erVeileder),
+                journalførendeEnhetId: aktivEnhet ? aktivEnhet : "",
                 tekstTilBruker: '',
             }),
         );

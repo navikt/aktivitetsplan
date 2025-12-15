@@ -29,16 +29,16 @@ const Sidebar: FunctionComponent = () => {
     const journalfører = [Status.PENDING, Status.RELOADING].includes(journalføringsStatus);
     const { hovedsideRoute } = useRoutes();
     const navigate = useNavigate();
-    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+    const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
 
-    if (!journalførendeEnhet || !oppfolgingsperiodeId) {
+    if (!journalførendeEnhetId || !oppfolgingsperiodeId) {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
     }
 
     const sendTilArkiv = () => {
         logKlikkKnapp('Journalfør aktivitetsplan');
         if (forhaandsvisningOpprettet) {
-            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
+            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhetId, oppfolgingsperiodeId }));
         }
     };
 
