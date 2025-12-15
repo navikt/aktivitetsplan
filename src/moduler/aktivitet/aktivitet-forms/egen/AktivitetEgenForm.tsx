@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
 import { addDays, isAfter, startOfDay } from 'date-fns';
-import React, { ChangeEventHandler, MutableRefObject, useState } from 'react';
+import React, { ChangeEventHandler, MutableRefObject, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -87,7 +87,15 @@ const EgenAktivitetForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
+    /*
+    const [template, setTemplate] = useState('ingen');
+
+    useEffect(() => {
+        reset();
+    }, [template]);*/
+
     const onTemplateChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+        // setTemplate(event.target.value);
         if (event.target.value === 'ingen') {
             setDefaultFraDato(defaultValues.fraDato);
             setDefaultTilDato(defaultValues.tilDato);

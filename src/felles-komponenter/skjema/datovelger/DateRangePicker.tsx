@@ -66,6 +66,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
             validateRemoveErrors(validation);
         },
         onRangeChange: (val) => {
+            console.log('On range change', val);
             if (val?.to) {
                 setValue(to.name, coerceToUndefined(val?.to), { shouldDirty: true });
             }
@@ -75,6 +76,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         },
     });
 
+    /*
     // Needed to make change in defaultValue actually have any effect
     useEffect(() => {
         reset();
@@ -82,7 +84,8 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
             from: from.defaultValue,
             to: to.defaultValue,
         });
-    }, [from.defaultValue, to.defaultValue]);
+        console.log('FORM WAS RESET');
+    }, [from.defaultValue, to.defaultValue]);*/
 
     /* These on-change handlers are needed to handle manual text-input */
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {
