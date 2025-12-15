@@ -16,9 +16,6 @@ function MaybeAvtaltDateRangePicker<T extends FormValuesWithDates>({ aktivitet, 
     const defaultToValue = aktivitet?.tilDato ? new Date(aktivitet.tilDato) : to.defaultValue;
     const defaultFromValue = aktivitet?.fraDato ? new Date(aktivitet.fraDato) : from.defaultValue;
 
-    console.log('Default from ', defaultFromValue);
-    console.log('Default to ', defaultToValue);
-
     return aktivitet && aktivitet.avtalt && aktivitet.fraDato ? (
         <div className="flex gap-4">
             <ControlledDatePicker field={{ ...from, disabled: true, defaultValue: defaultFromValue }} />

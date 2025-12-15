@@ -1,5 +1,5 @@
 import { DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
-import React, { useEffect, ChangeEventHandler, useState } from 'react';
+import React, { useEffect, ChangeEventHandler, useState, useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { coerceToUndefined, handlers, preventCloseOnInsideClick, useOutsideClick } from './common';
@@ -66,7 +66,6 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
             validateRemoveErrors(validation);
         },
         onRangeChange: (val) => {
-            console.log('On range change', val);
             if (val?.to) {
                 setValue(to.name, coerceToUndefined(val?.to), { shouldDirty: true });
             }
@@ -76,16 +75,18 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         },
     });
 
-    /*
-    // Needed to make change in defaultValue actually have any effect
+    // Needed to make change in defaultValue actually have any effect because useRangeDatepicker does not know
+    // about form changes in react-hook-form
+    const defaultValue = useMemo(() => {
+        return (from?.defaultValue?.getTime() || 0) + (to?.defaultValue?.getTime() || 0);
+    }, [from.defaultValue, to.defaultValue]);
     useEffect(() => {
         reset();
         setSelected({
             from: from.defaultValue,
             to: to.defaultValue,
         });
-        console.log('FORM WAS RESET');
-    }, [from.defaultValue, to.defaultValue]);*/
+    }, [defaultValue]);
 
     /* These on-change handlers are needed to handle manual text-input */
     const setHookFormFromValue: ChangeEventHandler<HTMLInputElement> = (event) => {
