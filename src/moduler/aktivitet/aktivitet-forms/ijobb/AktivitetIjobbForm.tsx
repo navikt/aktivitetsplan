@@ -6,7 +6,6 @@ import { z } from 'zod';
 
 import { JobbStatusType } from '../../../../datatypes/aktivitetTypes';
 import { IJobbAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
