@@ -251,6 +251,7 @@ const AktivitetsplanPrint = () => {
                     skrivUt={skrivUt}
                     kanSendeTilBruker={kanSendeTilBruker}
                     sendTilBruker={sendTilBruker}
+                    pdfMåOppdateresEtterFilterendring={pdfMåOppdateresEtterFilterendring}
                 />
                 <StatusErrorBoundry
                     statuser={[sendTilBrukerStatus]}

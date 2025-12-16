@@ -18,6 +18,7 @@ interface Props {
     skrivUt: () => void;
     sendTilBruker: () => void;
     kanSendeTilBruker: boolean;
+    pdfMåOppdateresEtterFilterendring: boolean;
 }
 
 function PrintVerktoylinje({
@@ -26,7 +27,8 @@ function PrintVerktoylinje({
                                oppdaterForhaandsvistPdf,
                                skrivUt,
                                kanSendeTilBruker,
-                               sendTilBruker
+                               sendTilBruker,
+                               pdfMåOppdateresEtterFilterendring
                            }: Props) {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
@@ -67,8 +69,7 @@ function PrintVerktoylinje({
                         </Button>
                     ) : null}
                     {kanSendeTilBruker &&
-                        <Button icon={<EnvelopeOpenIcon />} onClick={sendTilBruker} loading={senderTilBruker}>Journalfør
-                            og send til bruker</Button>}
+                        <Button icon={<EnvelopeOpenIcon />} onClick={sendTilBruker} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til bruker</Button>}
                 </div>
             </div>
             <div className="print:hidden mb-8">
