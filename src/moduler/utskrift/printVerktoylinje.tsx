@@ -64,6 +64,7 @@ function PrintVerktoylinje({
                                 loggEvent(TRYK_PRINT);
                                 logKlikkKnapp('Skriv ut');
                             }}
+                            disabled={pdfMåOppdateresEtterFilterendring}
                         >
                             Skriv ut
                         </Button>
