@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Radio, RadioGroup, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useMemo } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -11,19 +11,31 @@ import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
+import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
+import { isAfter } from 'date-fns';
 
-const schema = z.object({
-    tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.date({
-        required_error: 'Fra dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }),
-    tilDato: z.date({ invalid_type_error: 'Ikke en gyldig dato' }).optional().nullable(),
-    jobbStatus: z.nativeEnum(JobbStatusType, { required_error: 'Du må velge heltid eller deltid' }),
-    ansettelsesforhold: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
-    arbeidstid: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
-    beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional().nullable(),
-});
+const schema = z
+    .object({
+        tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
+        fraDato: z.date({
+            required_error: 'Fra dato må være en gyldig dato',
+            invalid_type_error: 'Ikke en gyldig dato',
+        }),
+        tilDato: z.date({ invalid_type_error: 'Ikke en gyldig dato' }).optional().nullable(),
+        jobbStatus: z.nativeEnum(JobbStatusType, { required_error: 'Du må velge heltid eller deltid' }),
+        ansettelsesforhold: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
+        arbeidstid: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
+        beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional().nullable(),
+    })
+    .superRefine((formValues, context) => {
+        if (formValues.tilDato && isAfter(formValues.fraDato, formValues.tilDato)) {
+            context.addIssue({
+                path: ['tilDato'],
+                code: z.ZodIssueCode.custom,
+                message: 'Til dato kan ikke være før fra dato',
+            });
+        }
+    });
 
 export type IJobbAktivitetFormValues = z.infer<typeof schema>;
 
@@ -41,15 +53,18 @@ export const dateOrUndefined = (val: string | undefined) => {
 const IJobbAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const defaultValues: Partial<IJobbAktivitetFormValues> = {
-        tittel: aktivitet?.tittel,
-        fraDato: dateOrUndefined(aktivitet?.fraDato),
-        tilDato: dateOrUndefined(aktivitet?.tilDato),
-        jobbStatus: aktivitet?.jobbStatus,
-        ansettelsesforhold: aktivitet?.ansettelsesforhold,
-        arbeidstid: aktivitet?.arbeidstid,
-        beskrivelse: aktivitet?.beskrivelse,
-    };
+    const defaultValues: Partial<IJobbAktivitetFormValues> = useMemo(() => {
+        return {
+            tittel: aktivitet?.tittel,
+            fraDato: dateOrUndefined(aktivitet?.fraDato),
+            tilDato: dateOrUndefined(aktivitet?.tilDato),
+            jobbStatus: aktivitet?.jobbStatus,
+            ansettelsesforhold: aktivitet?.ansettelsesforhold,
+            arbeidstid: aktivitet?.arbeidstid,
+            beskrivelse: aktivitet?.beskrivelse,
+        };
+    }, [aktivitet]);
+
     const avtalt = aktivitet?.avtalt || false;
 
     const methods = useForm<IJobbAktivitetFormValues>({
@@ -71,6 +86,7 @@ const IJobbAktivitetForm = (props: Props) => {
     }
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
+    const fraDato = watch('fraDato');
 
     const onChangeStillingProsent = (value: JobbStatusType) => {
         setValue('jobbStatus', value, { shouldValidate: true });
@@ -81,7 +97,7 @@ const IJobbAktivitetForm = (props: Props) => {
             <FormProvider {...methods}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.IJOBB_AKTIVITET_TYPE} />
-                    <InnsynsrettInfo/>
+                    <InnsynsrettInfo />
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"
@@ -89,11 +105,23 @@ const IJobbAktivitetForm = (props: Props) => {
                         {...register('tittel')}
                         error={errors.tittel && errors.tittel.message}
                     />
-                    <MaybeAvtaltDateRangePicker
-                        aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato' }}
-                    />
+                    <div className="grid grid-cols-2">
+                        <ControlledDatePicker
+                            field={{
+                                name: 'fraDato',
+                                defaultValue: defaultValues.fraDato,
+                                label: 'Fra dato (obligatorisk)',
+                            }}
+                        />
+                        <ControlledDatePicker
+                            field={{
+                                name: 'tilDato',
+                                defaultValue: defaultValues.tilDato || undefined,
+                                label: 'Til dato (valgfri)',
+                            }}
+                            disabledDays={[{ before: fraDato }]}
+                        />
+                    </div>
                     <Controller
                         name="jobbStatus"
                         control={control}
