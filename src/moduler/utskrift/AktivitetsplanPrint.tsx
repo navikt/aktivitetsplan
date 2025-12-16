@@ -9,9 +9,9 @@ import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
-import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
-import { selectDialoger, selectDialogStatus } from '../dialog/dialog-selector';
-import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
+import { selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
+import { selectDialogStatus } from '../dialog/dialog-selector';
+import { selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
 import {
@@ -65,10 +65,7 @@ function getSteps(kanHaPrintValg?: boolean, kanHaPrintMelding?: boolean): string
 }
 
 const AktivitetsplanPrint = () => {
-    const aktiviteter = useSelector(selectAktivitetListe);
     const kvpPerioder = useSelector(selectKvpPeriodeForValgteOppfolging);
-    const dialoger = useSelector(selectDialoger);
-    const mittMal = useSelector(selectGjeldendeMal);
     const erManuell = useSelector(selectErBrukerManuell);
     const { hovedsideRoute } = useRoutes();
     const filterState = useSelector(selectFilterSlice);
@@ -78,7 +75,6 @@ const AktivitetsplanPrint = () => {
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
-    const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
     const [isLoadingBruker, setIsLoadingBruker] = useState(true);
     const [stepIndex, setStepIndex] = useState(0);
     const [printMelding, setPrintMelding] = useState('');
@@ -107,7 +103,6 @@ const AktivitetsplanPrint = () => {
     }, []);
 
     const { fnr } = useFnrOgEnhetContext();
-    const [adresse, setAdresse] = useState<null | Postadresse>(null);
     const [bruker, setBruker] = useState<Bruker>({});
     const [kvpUtvalgskriterie, setKvpUtvalgskriterie] = useState<KvpUtvalgskriterie>({
         alternativ: erVeileder
@@ -125,9 +120,6 @@ const AktivitetsplanPrint = () => {
             hentPerson(fnr)
                 .then((bruker) => setBruker(bruker))
                 .finally(() => setIsLoadingBruker(false));
-            hentAdresse(fnr)
-                .then((a) => setAdresse(a?.adresse))
-                .finally(() => setIsLoadingAdresse(false));
         }
     }, [fnr]);
 
@@ -163,7 +155,7 @@ const AktivitetsplanPrint = () => {
     const navigate = useNavigate();
 
     const goBack = () => navigate(-1);
-    if (fnr && (isLoadingAdresse || isLoadingBruker)) {
+    if (fnr && isLoadingBruker) {
         return <Loader />;
     }
 
