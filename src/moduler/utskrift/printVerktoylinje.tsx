@@ -1,4 +1,4 @@
-import { EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
+import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -53,7 +53,7 @@ function PrintVerktoylinje({
                 ) : null}
                 {harAktivitet &&
                 <div className="self-start flex flex-row gap-4 items-center">
-                    <Filter /><Button onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
+                    <Filter /><Button icon={<ArrowCirclepathIcon/>}onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
                 </div>}
                 <div className="self-start flex flex-row items-center gap-4">
                     {kanSkriveUt ? (
