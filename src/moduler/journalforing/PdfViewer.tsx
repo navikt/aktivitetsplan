@@ -15,10 +15,14 @@ GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 interface PdfProps {
-    pdf: string | undefined;
+    pdf: Blob;
+    visSuksessmelding: boolean;
+    suksessmelding: string;
+    forhaandsvisningStatus: Status;
+    blur?: boolean;
 }
 
-const createBlob = (pdf: string) => {
+export const createBlob = (pdf: string) => {
     const bytes = atob(pdf);
     let length = bytes.length;
     const out = new Uint8Array(length);
@@ -31,9 +35,7 @@ const createBlob = (pdf: string) => {
     return window.URL.createObjectURL(blob);
 };
 
-export const PdfViewer = ({ pdf }: PdfProps) => {
-    const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
-    const journalførtStatus = useSelector(selectJournalføringstatus);
+export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvisningStatus, blur }: PdfProps) => {
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const [numPages, setNumPages] = useState(0);
     const [visAlert, setVisAlert] = useState(true);
@@ -45,11 +47,6 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
         [pdf],
     );
 
-    const blob = useMemo(() => {
-        if (!pdf) return undefined;
-        return createBlob(pdf);
-    }, [pdf]);
-
     useEffect(() => {
         setVisAlert(true)
         const timeoutId = setTimeout(() => {
@@ -59,19 +56,19 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
         return () => {
             clearTimeout(timeoutId);
         };
-    }, [journalførtStatus, forhaandsvisningStatus]);
+    }, [visSuksessmelding]);
 
     const containerWidth = 800;
     const maxWidth = 800;
 
     return (
         <div className="mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
-            {visAlert && journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK && (
+            {visAlert && visSuksessmelding && (
                 <Alert variant="success" role="alert" className="fixed z-10 mt-10">
-                    Aktivitetsplanen ble journalført.
+                    { suksessmelding }
                 </Alert>
             )}
-            {!blob || henterForhaandsvisning ? (
+            {!pdf || henterForhaandsvisning ? (
                 <div className="min-h-[calc(100vh-180px)] flex flex-col justify-center items-center">
                     <Loader size="3xlarge" title="Venter..." className="mt-32 mb-6" />
                     <BodyShort as="div" size="medium" className="text-subtle mb-1" spacing>
@@ -83,9 +80,9 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
                 </div>
             ) : (
                 <Document
-                    className="space-y-4 min-h-[calc(100vh-180px)] z-0"
+                    className={`space-y-4 min-h-[calc(100vh-180px)] z-0 ${blur ? 'blur-sm' : ''}`}
                     onLoadSuccess={onDocumentLoadSuccess}
-                    file={blob}
+                    file={pdf}
                     loading=""
                 >
                     {Array.from(new Array(numPages), (el, index) => (
@@ -93,6 +90,8 @@ export const PdfViewer = ({ pdf }: PdfProps) => {
                             key={`page_${index + 1}`}
                             pageNumber={index + 1}
                             width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
+                            renderTextLayer={false}
+                            renderAnnotationLayer={false}
                         />
                     ))}
                 </Document>
