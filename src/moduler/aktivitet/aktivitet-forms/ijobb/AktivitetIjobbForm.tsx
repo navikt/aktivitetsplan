@@ -108,6 +108,7 @@ const IJobbAktivitetForm = (props: Props) => {
                     <div className="grid grid-cols-2">
                         <ControlledDatePicker
                             field={{
+                                disabled: aktivitet?.avtalt || false,
                                 name: 'fraDato',
                                 defaultValue: defaultValues.fraDato,
                                 label: 'Fra dato (obligatorisk)',
