@@ -14,7 +14,17 @@ import {
     selectAktivitetTyperFilter,
     selectArenaAktivitetEtiketterFilter,
 } from './filter-selector';
+import { FilterState } from './filter-slice';
 
+export const filterErAktivt = (filter: FilterState): boolean =>
+        erAktivtFilter(filter.aktivitetEtiketter) ||
+        erAktivtFilter(filter.aktivitetTyper) ||
+        erAktivtFilter(filter.arenaAktivitetEtiketter) ||
+        erAktivtFilter(filter.aktivitetAvtaltMedNav);
+
+export const filtreErLike = (filterA: FilterState, filterB: FilterState): boolean => {
+    return JSON.stringify(filterA) === JSON.stringify(filterB);
+}
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
 }

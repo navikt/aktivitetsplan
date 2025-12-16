@@ -19,6 +19,7 @@ interface PdfProps {
     visSuksessmelding: boolean;
     suksessmelding: string;
     forhaandsvisningStatus: Status;
+    blur?: boolean;
 }
 
 export const createBlob = (pdf: string) => {
@@ -34,7 +35,7 @@ export const createBlob = (pdf: string) => {
     return window.URL.createObjectURL(blob);
 };
 
-export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvisningStatus }: PdfProps) => {
+export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvisningStatus, blur }: PdfProps) => {
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const [numPages, setNumPages] = useState(0);
     const [visAlert, setVisAlert] = useState(true);
@@ -79,7 +80,7 @@ export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvis
                 </div>
             ) : (
                 <Document
-                    className="space-y-4 min-h-[calc(100vh-180px)] z-0"
+                    className={`space-y-4 min-h-[calc(100vh-180px)] z-0 ${blur ? 'blur-sm' : ''}`}
                     onLoadSuccess={onDocumentLoadSuccess}
                     file={pdf}
                     loading=""

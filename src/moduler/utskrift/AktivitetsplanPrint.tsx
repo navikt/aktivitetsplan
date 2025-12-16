@@ -43,6 +43,7 @@ import {
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
+import { filterErAktivt, filtreErLike } from '../filtrering/filter/filter-utils';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -77,6 +78,13 @@ const AktivitetsplanPrint = () => {
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
+    const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
+    const [isLoadingBruker, setIsLoadingBruker] = useState(true);
+    const [stepIndex, setStepIndex] = useState(0);
+    const [printMelding, setPrintMelding] = useState('');
+    const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
+    const [pdfMåOppdateresEtterFilterendring, setPdfMåOppdateresEtterFilterendring] = useState(false);
+    const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(filterState);
 
     if (!oppfolgingsperiodeId) {
         throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
@@ -107,9 +115,6 @@ const AktivitetsplanPrint = () => {
             : KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER,
     });
 
-    const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
-    const [isLoadingBruker, setIsLoadingBruker] = useState(true);
-
     const blob = useMemo(() => {
         if (!pdf) return undefined;
         return createBlob(pdf);
@@ -126,9 +131,11 @@ const AktivitetsplanPrint = () => {
         }
     }, [fnr]);
 
-    const [stepIndex, setStepIndex] = useState(0);
-    const [printMelding, setPrintMelding] = useState('');
-    const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
+    useEffect(() => {
+        const filterBrukt = filterErAktivt(filterState);
+        const filterEndretSidenForhaandsvisning = !filtreErLike(filterBruktTilForhaandsvisning, filterState);
+        setPdfMåOppdateresEtterFilterendring(filterBrukt || filterEndretSidenForhaandsvisning);
+    }, [filterState]);
 
     const next = () => setStepIndex(stepIndex + 1);
 
@@ -173,6 +180,8 @@ const AktivitetsplanPrint = () => {
                 tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
             }),
         );
+        setFilterBruktTilForhaandsvisning(filterState);
+        setPdfMåOppdateresEtterFilterendring(false);
     };
 
     const getPrompt = () => {
@@ -253,6 +262,7 @@ const AktivitetsplanPrint = () => {
                             suksessmelding={'Aktivitetsplanen ble sendt til bruker'}
                             visSuksessmelding={sendTilBrukerStatus === Status.OK}
                             forhaandsvisningStatus={forhaandsvisningStatus}
+                            blur={pdfMåOppdateresEtterFilterendring}
                         />
                     </div>
                 </StatusErrorBoundry>
