@@ -12,7 +12,6 @@ import Sidebar from './Sidebar';
 import { createBlob, PdfViewer } from './PdfViewer';
 import { StatusErrorBoundry } from './StatusErrorBoundry';
 import { Status } from '../../createGenericSlice';
-import { useFnrOgEnhetContext } from '../../Provider';
 
 export const JournalforingPage = () => {
     const pdf = useSelector(selectPdfForhaandsvisning);

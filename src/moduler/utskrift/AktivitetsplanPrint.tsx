@@ -3,8 +3,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { defer, LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
 
-import { hentAdresse, hentPerson } from '../../api/personAPI';
-import { Bruker, Postadresse } from '../../datatypes/types';
+import { hentPerson } from '../../api/personAPI';
+import { Bruker } from '../../datatypes/types';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODAL_OPEN } from '../../felles-komponenter/utils/logging';
@@ -17,7 +17,7 @@ import { hentMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus,
+    selectOppfolgingStatus
 } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
@@ -30,7 +30,7 @@ import {
     selectForhaandsvisningSendTilBrukerOpprettet,
     selectForhaandsvisningSendTilBrukerStatus,
     selectPdfForhaandsvisningSendTilBruker,
-    selectSendTilBrukerStatus,
+    selectSendTilBrukerStatus
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
@@ -39,7 +39,7 @@ import {
     KvpUtvalgskriterie,
     KvpUtvalgskriterieAlternativ,
     lagKvpUtvalgskriterie,
-    mapTilJournalforingFilter,
+    mapTilJournalforingFilter
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';

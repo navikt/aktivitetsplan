@@ -1,4 +1,4 @@
-import { DefaultBodyType, HttpResponseResolver, PathParams, StrictRequest, delay as _delay, HttpResponse } from 'msw';
+import { DefaultBodyType, delay as _delay, HttpResponse, HttpResponseResolver, PathParams, StrictRequest } from 'msw';
 
 export const mockfnr = '12345678910';
 export const mockAktivEnhet = '0909';

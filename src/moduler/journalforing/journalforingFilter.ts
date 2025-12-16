@@ -2,7 +2,6 @@ import { AvtaltFilterType, EtikettFilterType } from '../filtrering/filter/Filter
 import { ArenaEtikett } from '../../datatypes/arenaAktivitetTypes';
 import { AlleAktivitetTyper } from '../../utils/textMappers';
 import { FilterState } from '../filtrering/filter/filter-slice';
-import { isDate } from 'date-fns';
 import { KvpPeriode } from '../../datatypes/oppfolgingTypes';
 
 export interface ArkivFilter {
