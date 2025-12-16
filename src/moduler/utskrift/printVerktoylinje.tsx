@@ -52,9 +52,10 @@ function PrintVerktoylinje({
                     </ReactRouterLink>
                 ) : null}
                 {harAktivitet &&
-                <div className="self-start flex flex-row gap-4 items-center">
-                    <Filter /><Button icon={<ArrowCirclepathIcon/>}onClick={oppdaterForhaandsvistPdf}>Oppdater visning</Button>
-                </div>}
+                    <div className="self-start flex flex-row gap-4 items-center">
+                        <Filter /><Button icon={<ArrowCirclepathIcon />} onClick={oppdaterForhaandsvistPdf}>Oppdater
+                        visning</Button>
+                    </div>}
                 <div className="self-start flex flex-row items-center gap-4">
                     {kanSkriveUt ? (
                         <Button
@@ -70,7 +71,11 @@ function PrintVerktoylinje({
                         </Button>
                     ) : null}
                     {kanSendeTilBruker &&
-                        <Button icon={<EnvelopeOpenIcon />} onClick={sendTilBruker} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til bruker</Button>}
+                        <Button icon={<EnvelopeOpenIcon />} onClick={() => {
+                            sendTilBruker();
+                            logKlikkKnapp('Journalfør og send til bruker');
+                        }} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til
+                            bruker</Button>}
                 </div>
             </div>
             <div className="print:hidden mb-8">
