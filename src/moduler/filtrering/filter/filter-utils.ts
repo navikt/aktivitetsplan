@@ -15,6 +15,7 @@ import {
     selectArenaAktivitetEtiketterFilter,
 } from './filter-selector';
 import { FilterState } from './filter-slice';
+import { ArkivFilter } from '../../journalforing/journalforingFilter';
 
 export const filterErAktivt = (filter: FilterState): boolean =>
         erAktivtFilter(filter.aktivitetEtiketter) ||
@@ -22,9 +23,6 @@ export const filterErAktivt = (filter: FilterState): boolean =>
         erAktivtFilter(filter.arenaAktivitetEtiketter) ||
         erAktivtFilter(filter.aktivitetAvtaltMedNav);
 
-export const filtreErLike = (filterA: FilterState, filterB: FilterState): boolean => {
-    return JSON.stringify(filterA) === JSON.stringify(filterB);
-}
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
