@@ -59,7 +59,7 @@ export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvis
     const maxWidth = 800;
 
     return (
-        <div className="mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
+        <div className=" mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
             {visAlert && visSuksessmelding && (
                 <Alert variant="success" role="alert" className="fixed z-10 mt-10">
                     { suksessmelding }
