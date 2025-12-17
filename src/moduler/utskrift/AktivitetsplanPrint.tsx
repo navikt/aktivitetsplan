@@ -80,7 +80,8 @@ const AktivitetsplanPrint = () => {
     const [printMelding, setPrintMelding] = useState('');
     const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
     const [pdfMåOppdateresEtterFilterendring, setPdfMåOppdateresEtterFilterendring] = useState(false);
-    const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(defaultFilter);
+    const erVeileder = useErVeileder();
+    const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(defaultFilter(erVeileder));
     const [inkluderDialoger, setInkluderDialoger] = useState(true)
 
     if (!oppfolgingsperiodeId) {
@@ -96,7 +97,6 @@ const AktivitetsplanPrint = () => {
 
     const dispatch = useAppDispatch();
 
-    const erVeileder = useErVeileder();
     useEffect(() => {
         dispatch(hentMal());
         dispatch(hentMalListe());
@@ -132,7 +132,7 @@ const AktivitetsplanPrint = () => {
             kvpUtvalgskriterie,
             inkluderDialoger
         )
-        const filterEndretSidenForhaandsvisning = JSON.stringify(filterBrukt) === JSON.stringify(nyttArkivFilter);
+        const filterEndretSidenForhaandsvisning = JSON.stringify(filterBruktTilForhaandsvisning) !== JSON.stringify(nyttArkivFilter);
         setPdfMåOppdateresEtterFilterendring(filterBrukt || filterEndretSidenForhaandsvisning);
     }, [filterState, inkluderDialoger]);
 
