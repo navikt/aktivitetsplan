@@ -1,5 +1,5 @@
 import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
-import { Button, Heading } from '@navikt/ds-react';
+import { Button, Checkbox, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
@@ -19,6 +19,8 @@ interface Props {
     sendTilBruker: () => void;
     kanSendeTilBruker: boolean;
     pdfMåOppdateresEtterFilterendring: boolean;
+    inkluderDialoger: boolean;
+    setInkluderDialoger: (inkluderDialoger: boolean) => void;
 }
 
 function PrintVerktoylinje({
@@ -28,7 +30,9 @@ function PrintVerktoylinje({
                                skrivUt,
                                kanSendeTilBruker,
                                sendTilBruker,
-                               pdfMåOppdateresEtterFilterendring
+                               pdfMåOppdateresEtterFilterendring,
+                               inkluderDialoger,
+                               setInkluderDialoger
                            }: Props) {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
@@ -77,6 +81,11 @@ function PrintVerktoylinje({
                         }} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til
                             bruker</Button>}
                 </div>
+            </div>
+            <div>
+                <Checkbox checked={inkluderDialoger} onClick={() => setInkluderDialoger(!inkluderDialoger)} >
+                    Inkluder dialoger
+                </Checkbox>
             </div>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
