@@ -1,11 +1,11 @@
 import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
-import { logKlikkKnapp, logValgtFilter } from '../../analytics/analytics';
+import { logKlikkKnapp } from '../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';

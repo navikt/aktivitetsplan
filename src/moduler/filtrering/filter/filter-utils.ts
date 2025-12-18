@@ -12,10 +12,9 @@ import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
-    selectArenaAktivitetEtiketterFilter,
+    selectArenaAktivitetEtiketterFilter
 } from './filter-selector';
 import { FilterState } from './filter-slice';
-import { ArkivFilter } from '../../journalforing/journalforingFilter';
 
 export const filterErAktivt = (filter: FilterState): boolean =>
         erAktivtFilter(filter.aktivitetEtiketter) ||
