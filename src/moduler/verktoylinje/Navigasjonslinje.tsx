@@ -11,7 +11,7 @@ import { useErVeileder } from '../../Provider';
 import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
-import { logKlikkKnapp } from '../../analytics/analytics';
+import { logKlikkKnapp, logLenkeKlikket } from '../../analytics/analytics';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { useMediaQuery } from '../../utils/use-media-query';
 import { useToggle } from '../feature/feature';
@@ -77,7 +77,7 @@ function Navigasjonslinje() {
                         hidden={isMobile}
                         to={`utskrift/${vistOppfolgingsperiode}`}
                         className="text-text-action underline hover:no-underline"
-                        onClick={() => logKlikkKnapp('Skriv ut')}
+                        onClick={() => logLenkeKlikket('Skriv ut')}
                     >
                         Skriv ut
                     </ReactRouterLink>
@@ -87,7 +87,7 @@ function Navigasjonslinje() {
                           <ReactRouterLink
                               to={`journalforing/${vistOppfolgingsperiode}`}
                               className="text-text-action underline hover:no-underline"
-                              onClick={() => logKlikkKnapp('Journalføring')}
+                              onClick={() => logLenkeKlikket('Journalføring')}
                           >
                               Journalføring
                           </ReactRouterLink>
