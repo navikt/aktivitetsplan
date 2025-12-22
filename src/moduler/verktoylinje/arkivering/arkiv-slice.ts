@@ -12,16 +12,17 @@ interface ArkivState {
     sendTilBrukerStatus: Status;
     forhaandsvisning:
         | {
-              uuid: string;
               pdf: string;
               forhaandsvisningOpprettet: string;
               sistJournalført: string | undefined;
+              uuidCachetPdf: string;
           }
         | undefined;
     forhaandsvisningSendTilBruker:
         | {
         pdf: string;
         forhaandsvisningOpprettet: string;
+        uuidCachetPdf: string | undefined;
     }
         | undefined;
 }
@@ -90,15 +91,18 @@ export const journalfør = createAsyncThunk(
         forhaandsvisningOpprettet,
         journalførendeEnhetId,
         oppfolgingsperiodeId,
+        uuidCachetPdf
     }: {
         forhaandsvisningOpprettet: string;
         journalførendeEnhetId: string;
         oppfolgingsperiodeId: string;
+        uuidCachetPdf: string;
     }) => {
         return await Api.journalfoerAktivitetsplanOgDialog(
             oppfolgingsperiodeId,
             forhaandsvisningOpprettet,
             journalførendeEnhetId,
+            uuidCachetPdf
         );
     },
 );
@@ -145,15 +149,17 @@ export const journalforOgSendTilBruker = createAsyncThunk(
                journalførendeEnhetId,
                oppfolgingsperiodeId,
                filter,
-               tekstTilBruker
+               tekstTilBruker,
+               uuidCachetPdf,
            }: {
         forhaandsvisningOpprettet: string;
         journalførendeEnhetId: string;
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
+        uuidCachetPdf: string | undefined;
         tekstTilBruker?: string;
     }) => {
-        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhetId, filter, tekstTilBruker);
+        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhetId, filter, uuidCachetPdf, tekstTilBruker);
     },
 )
 
@@ -184,6 +190,15 @@ export function selectForhaandsvisningOpprettet(state: RootState) {
 export function selectForhaandsvisningSendTilBrukerOpprettet(state: RootState) {
     return state.data.arkiv?.forhaandsvisningSendTilBruker?.forhaandsvisningOpprettet;
 }
+
+export function selectForhaandsvisningUuidCachetPdf(state: RootState) {
+    return state.data.arkiv?.forhaandsvisning?.uuidCachetPdf;
+}
+
+export function selectForhaandsvisningSendTilBrukerUuidCachetPdf(state: RootState) {
+    return state.data.arkiv?.forhaandsvisningSendTilBruker?.uuidCachetPdf;
+}
+
 
 export function selectSistJournalfort(state: RootState) {
     return state.data.arkiv?.forhaandsvisning?.sistJournalført;

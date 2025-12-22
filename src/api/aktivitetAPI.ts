@@ -107,10 +107,12 @@ export const journalfoerAktivitetsplanOgDialog = (
     oppfolgingsperiodeId: string,
     forhaandsvisningOpprettet: string,
     journalførendeEnhetId: string,
+    uuidCachetPdf: string,
 ) =>
     postAsJson(`${AKTIVITET_BASE_URL}/arkivering/journalfor?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
         forhaandsvisningOpprettet,
         journalførendeEnhetId,
+        uuidCachetPdf
     });
 export const genererPdfTilForhaandsvisning = (
     oppfolgingsperiodeId: string,
@@ -118,6 +120,18 @@ export const genererPdfTilForhaandsvisning = (
 ) =>
     postAsJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
         journalførendeEnhetId
+    });
+
+export const journalforOgSendTilBruker = (
+    oppfolgingsperiodeId: string,
+    forhaandsvisningOpprettet: string,
+    journalførendeEnhetId: string,
+    filter: ArkivFilter,
+    uuidCachetPdf: string | undefined,
+    tekstTilBruker?: string,
+) =>
+    postAsJson(`${AKTIVITET_BASE_URL}/arkivering/send-til-bruker?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
+        forhaandsvisningOpprettet, journalførendeEnhetId, filter, uuidCachetPdf, tekstTilBruker
     });
 
 export const genererPdfTilForhaandsvisningSendTilBruker = (
@@ -130,15 +144,4 @@ export const genererPdfTilForhaandsvisningSendTilBruker = (
         filter,
         journalførendeEnhetId,
         tekstTilBruker,
-    });
-
-export const journalforOgSendTilBruker = (
-    oppfolgingsperiodeId: string,
-    forhaandsvisningOpprettet: string,
-    journalførendeEnhetId: string,
-    filter: ArkivFilter,
-    tekstTilBruker?: string,
-) =>
-    postAsJson(`${AKTIVITET_BASE_URL}/arkivering/send-til-bruker?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
-        forhaandsvisningOpprettet, journalførendeEnhetId, filter, tekstTilBruker
     });
