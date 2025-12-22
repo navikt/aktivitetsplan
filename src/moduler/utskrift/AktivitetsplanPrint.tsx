@@ -28,7 +28,7 @@ import {
     hentPdfTilForhaandsvisningSendTilBruker,
     journalforOgSendTilBruker,
     selectForhaandsvisningSendTilBrukerOpprettet,
-    selectForhaandsvisningSendTilBrukerStatus,
+    selectForhaandsvisningSendTilBrukerStatus, selectForhaandsvisningSendTilBrukerUuidCachetPdf,
     selectPdfForhaandsvisningSendTilBruker,
     selectSendTilBrukerStatus
 } from '../verktoylinje/arkivering/arkiv-slice';
@@ -73,6 +73,7 @@ const AktivitetsplanPrint = () => {
     const pdf = useSelector(selectPdfForhaandsvisningSendTilBruker);
     const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
+    const uuidCachetPdf = useSelector(selectForhaandsvisningSendTilBrukerUuidCachetPdf);
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
     const [isLoadingBruker, setIsLoadingBruker] = useState(true);
@@ -180,6 +181,7 @@ const AktivitetsplanPrint = () => {
                 filter: arkivFilter,
                 journalførendeEnhetId: journalførendeEnhetId ? journalførendeEnhetId : "",
                 tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
+                uuidCachetPdf,
             }),
         );
         setFilterBruktTilForhaandsvisning(arkivFilter);
@@ -234,6 +236,7 @@ const AktivitetsplanPrint = () => {
                     journalførendeEnhetId,
                     oppfolgingsperiodeId,
                     filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger),
+                    uuidCachetPdf,
                     tekstTilBruker: printMelding,
                 }),
             );
