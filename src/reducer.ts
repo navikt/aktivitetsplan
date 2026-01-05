@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 
 import dragAndDropSlice from './moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-slice';
-import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-slice';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-slice';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-slice';
 import dialogReducer from './moduler/dialog/dialog-slice';
