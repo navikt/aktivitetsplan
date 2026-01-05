@@ -4,9 +4,9 @@ import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-do
 import {
     journalfør,
     selectForhaandsvisningOpprettet,
-    selectForhaandsvisningStatus,
+    selectForhaandsvisningStatus, selectForhaandsvisningUuidCachetPdf,
     selectJournalføringstatus,
-    selectSistJournalfort,
+    selectSistJournalfort
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routing/useRoutes';
@@ -25,6 +25,7 @@ const Sidebar: FunctionComponent = () => {
     const sistJournalfort = useSelector(selectSistJournalfort);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
     const journalføringsStatus = useSelector(selectJournalføringstatus);
+    const uuidCachetPdf = useSelector(selectForhaandsvisningUuidCachetPdf);
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const journalfører = [Status.PENDING, Status.RELOADING].includes(journalføringsStatus);
     const { hovedsideRoute } = useRoutes();
@@ -37,8 +38,8 @@ const Sidebar: FunctionComponent = () => {
 
     const sendTilArkiv = () => {
         logKlikkKnapp('Journalfør aktivitetsplan');
-        if (forhaandsvisningOpprettet) {
-            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhetId, oppfolgingsperiodeId }));
+        if (forhaandsvisningOpprettet && uuidCachetPdf) {
+            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhetId, oppfolgingsperiodeId, uuidCachetPdf }));
         }
     };
 

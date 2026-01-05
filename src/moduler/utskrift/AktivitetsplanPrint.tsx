@@ -28,7 +28,7 @@ import {
     hentPdfTilForhaandsvisningSendTilBruker,
     journalforOgSendTilBruker,
     selectForhaandsvisningSendTilBrukerOpprettet,
-    selectForhaandsvisningSendTilBrukerStatus,
+    selectForhaandsvisningSendTilBrukerStatus, selectForhaandsvisningSendTilBrukerUuidCachetPdf,
     selectPdfForhaandsvisningSendTilBruker,
     selectSendTilBrukerStatus
 } from '../verktoylinje/arkivering/arkiv-slice';
@@ -43,7 +43,7 @@ import {
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
-import { filterErAktivt, filtreErLike } from '../filtrering/filter/filter-utils';
+import { filterErAktivt } from '../filtrering/filter/filter-utils';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -73,6 +73,7 @@ const AktivitetsplanPrint = () => {
     const pdf = useSelector(selectPdfForhaandsvisningSendTilBruker);
     const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
+    const uuidCachetPdf = useSelector(selectForhaandsvisningSendTilBrukerUuidCachetPdf);
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
     const [isLoadingBruker, setIsLoadingBruker] = useState(true);
@@ -80,7 +81,9 @@ const AktivitetsplanPrint = () => {
     const [printMelding, setPrintMelding] = useState('');
     const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
     const [pdfMåOppdateresEtterFilterendring, setPdfMåOppdateresEtterFilterendring] = useState(false);
-    const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(filterState);
+    const erVeileder = useErVeileder();
+    const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(defaultFilter(erVeileder));
+    const [inkluderDialoger, setInkluderDialoger] = useState(true)
 
     if (!oppfolgingsperiodeId) {
         throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
@@ -95,7 +98,6 @@ const AktivitetsplanPrint = () => {
 
     const dispatch = useAppDispatch();
 
-    const erVeileder = useErVeileder();
     useEffect(() => {
         dispatch(hentMal());
         dispatch(hentMalListe());
@@ -125,9 +127,15 @@ const AktivitetsplanPrint = () => {
 
     useEffect(() => {
         const filterBrukt = filterErAktivt(filterState);
-        const filterEndretSidenForhaandsvisning = !filtreErLike(filterBruktTilForhaandsvisning, filterState);
+        const nyttArkivFilter = mapTilJournalforingFilter(
+            filterState,
+            false,
+            kvpUtvalgskriterie,
+            inkluderDialoger
+        )
+        const filterEndretSidenForhaandsvisning = JSON.stringify(filterBruktTilForhaandsvisning) !== JSON.stringify(nyttArkivFilter);
         setPdfMåOppdateresEtterFilterendring(filterBrukt || filterEndretSidenForhaandsvisning);
-    }, [filterState]);
+    }, [filterState, inkluderDialoger]);
 
     const next = () => setStepIndex(stepIndex + 1);
 
@@ -160,19 +168,23 @@ const AktivitetsplanPrint = () => {
     }
 
     const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
+        const arkivFilter = mapTilJournalforingFilter(
+            filterState,
+            false,
+            nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
+            inkluderDialoger
+        )
+
         dispatch(
             hentPdfTilForhaandsvisningSendTilBruker({
                 oppfolgingsperiodeId,
-                filter: mapTilJournalforingFilter(
-                    filterState,
-                    false,
-                    nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
-                ),
+                filter: arkivFilter,
                 journalførendeEnhetId: journalførendeEnhetId ? journalførendeEnhetId : "",
                 tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
+                uuidCachetPdf,
             }),
         );
-        setFilterBruktTilForhaandsvisning(filterState);
+        setFilterBruktTilForhaandsvisning(arkivFilter);
         setPdfMåOppdateresEtterFilterendring(false);
     };
 
@@ -223,7 +235,8 @@ const AktivitetsplanPrint = () => {
                     forhaandsvisningOpprettet,
                     journalførendeEnhetId,
                     oppfolgingsperiodeId,
-                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie),
+                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger),
+                    uuidCachetPdf,
                     tekstTilBruker: printMelding,
                 }),
             );
@@ -244,12 +257,14 @@ const AktivitetsplanPrint = () => {
                     kanSendeTilBruker={kanSendeTilBruker}
                     sendTilBruker={sendTilBruker}
                     pdfMåOppdateresEtterFilterendring={pdfMåOppdateresEtterFilterendring}
+                    inkluderDialoger={inkluderDialoger}
+                    setInkluderDialoger={setInkluderDialoger}
                 />
                 <StatusErrorBoundry
                     statuser={[sendTilBrukerStatus]}
                     errorMessage="Kunne ikke sende aktivitetsplan til bruker"
                 >
-                    <div className="border print:border-none">
+                    <div className="bg-bg-subtle print:border-none">
                         <PdfViewer
                             pdf={blob}
                             suksessmelding={'Aktivitetsplanen ble sendt til bruker'}
