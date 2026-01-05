@@ -2,15 +2,9 @@ import { ArenaAktivitet } from '../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering } from '../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
-import { fetchToJson, postAsJson, putAsJson } from './utils';
+import { postAsJson, putAsJson } from './utils';
 import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
 import { ArkivFilter } from '../moduler/verktoylinje/arkivering/arkiv-slice';
-
-export const hentAktivitet = (aktivitetId: string): Promise<VeilarbAktivitet> =>
-    fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
-
-export const hentAktiviteter = (): Promise<{ aktiviteter: VeilarbAktivitet[] }> =>
-    fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet`);
 
 export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId: string): Promise<VeilarbAktivitet> =>
     postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${oppfolgingsperiodeId}/ny`, aktivitet);
@@ -70,9 +64,6 @@ export const oppdaterReferat = (
 ): Promise<SamtalereferatAktivitet | MoteAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet);
 
-export const hentVersjonerTilAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet[]> =>
-    fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
-
 export const oppdaterStillingFraNavSoknadsstatus = (
     aktivitetId: string,
     aktivitetVersjon: string,
@@ -112,12 +103,9 @@ export const journalfoerAktivitetsplanOgDialog = (
         forhaandsvisningOpprettet,
         journalførendeEnhetId,
     });
-export const genererPdfTilForhaandsvisning = (
-    oppfolgingsperiodeId: string,
-    journalførendeEnhetId: string,
-) =>
+export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, journalførendeEnhetId: string) =>
     postAsJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
-        journalførendeEnhetId
+        journalførendeEnhetId,
     });
 
 export const genererPdfTilForhaandsvisningSendTilBruker = (
@@ -126,11 +114,14 @@ export const genererPdfTilForhaandsvisningSendTilBruker = (
     journalførendeEnhetId: string,
     tekstTilBruker: string,
 ) =>
-    postAsJson(`${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning-send-til-bruker?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
-        filter,
-        journalførendeEnhetId,
-        tekstTilBruker,
-    });
+    postAsJson(
+        `${AKTIVITET_BASE_URL}/arkivering/forhaandsvisning-send-til-bruker?oppfolgingsperiodeId=${oppfolgingsperiodeId}`,
+        {
+            filter,
+            journalførendeEnhetId,
+            tekstTilBruker,
+        },
+    );
 
 export const journalforOgSendTilBruker = (
     oppfolgingsperiodeId: string,
@@ -140,5 +131,8 @@ export const journalforOgSendTilBruker = (
     tekstTilBruker?: string,
 ) =>
     postAsJson(`${AKTIVITET_BASE_URL}/arkivering/send-til-bruker?oppfolgingsperiodeId=${oppfolgingsperiodeId}`, {
-        forhaandsvisningOpprettet, journalførendeEnhetId, filter, tekstTilBruker
+        forhaandsvisningOpprettet,
+        journalførendeEnhetId,
+        filter,
+        tekstTilBruker,
     });

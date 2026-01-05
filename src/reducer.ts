@@ -31,7 +31,6 @@ const reducer = {
         mal: malReducer,
         malListe: malListeReducer,
         oppfolging: oppfolgingReducer,
-        versjoner: versjonReducer,
         arkiv: arkivReducer,
         lest: lestReducer,
         veileder: veilederReducer,
