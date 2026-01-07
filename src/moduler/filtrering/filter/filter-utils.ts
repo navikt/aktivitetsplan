@@ -12,8 +12,15 @@ import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
-    selectArenaAktivitetEtiketterFilter,
+    selectArenaAktivitetEtiketterFilter
 } from './filter-selector';
+import { FilterState } from './filter-slice';
+
+export const filterErAktivt = (filter: FilterState): boolean =>
+        erAktivtFilter(filter.aktivitetEtiketter) ||
+        erAktivtFilter(filter.aktivitetTyper) ||
+        erAktivtFilter(filter.arenaAktivitetEtiketter) ||
+        erAktivtFilter(filter.aktivitetAvtaltMedNav);
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;

@@ -1,7 +1,7 @@
 import { Accordion, BodyShort, Heading } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import AktivitetskortVideo from './Video/AktivitetskortVideo';
-import { logAccordionAapnet } from '../../amplitude/amplitude';
+import { logAccordionAapnet } from '../../analytics/analytics';
 
 export const BrukePlanenPanel = () => {
     const [open, setOpen] = useState(false);

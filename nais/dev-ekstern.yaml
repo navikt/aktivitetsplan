@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2025.11.05_06.54-7942bce02704
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2025.11.05_09.25-b34a8e35f6cc
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -45,7 +45,6 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: pto-proxy
         - application: veilarblest
           namespace: dab
         - application: veilarbaktivitet
@@ -56,9 +55,6 @@ spec:
           namespace: poao
         - application: nav-dekoratoren
           namespace: personbruker
-      external:
-        - host: navtestb2c.b2clogin.com
-        - host: veilarbveileder.dev-fss-pub.nais.io
   gcp:
     buckets:
       - name: aktivitetsplan-dev
@@ -89,7 +85,7 @@ spec:
               "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
               "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com","data:","uxsignals-frontend.uxsignals.app.iterate.no"],
               "frameSrc":["*.hotjar.com","player.vimeo.com","video.qbrick.com"],
-              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com","*.uxsignals.com"],
+              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com","*.uxsignals.com", "blob:"],
               "workerSrc": ["'self'", "*.nav.no", "blob:"]
             }
           },

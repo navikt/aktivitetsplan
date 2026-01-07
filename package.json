@@ -23,7 +23,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@amplitude/analytics-browser": "^2.18.1",
     "@hookform/resolvers": "^3.10.0",
     "@navikt/aksel-icons": "^7.31.0",
     "@navikt/dab-spraksjekk": "^1.0.15",
@@ -31,7 +30,7 @@
     "@navikt/ds-react": "^7.31.0",
     "@navikt/ds-tailwind": "^7.31.0",
     "@navikt/ds-tokens": "^7.31.0",
-    "@navikt/nav-dekoratoren-moduler": "^3.5.0",
+    "@navikt/nav-dekoratoren-moduler": "^3.6.0",
     "@reduxjs/toolkit": "^2.9.0",
     "@sentry/react": "^8.55.0",
     "@vitejs/plugin-react-swc": "^3.11.0",

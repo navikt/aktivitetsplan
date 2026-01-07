@@ -1,29 +1,49 @@
 import { Loader, Modal } from '@navikt/ds-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { defer, LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
 
-import { hentAdresse, hentPerson } from '../../api/personAPI';
-import { Bruker, Postadresse } from '../../datatypes/types';
+import { hentPerson } from '../../api/personAPI';
+import { Bruker } from '../../datatypes/types';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
-import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
-import { selectDialoger, selectDialogStatus } from '../dialog/dialog-selector';
-import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
+import { selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
+import { selectDialogStatus } from '../dialog/dialog-selector';
+import { selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus,
+    selectOppfolgingStatus
 } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
-import Print from './print/print';
 import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
+import { Dispatch } from '../../store';
+import {
+    hentPdfTilForhaandsvisningSendTilBruker,
+    journalforOgSendTilBruker,
+    selectForhaandsvisningSendTilBrukerOpprettet,
+    selectForhaandsvisningSendTilBrukerStatus, selectForhaandsvisningSendTilBrukerUuidCachetPdf,
+    selectPdfForhaandsvisningSendTilBruker,
+    selectSendTilBrukerStatus
+} from '../verktoylinje/arkivering/arkiv-slice';
+import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
+import { selectFilterSlice } from '../filtrering/filter/filter-selector';
+import {
+    defaultFilter,
+    KvpUtvalgskriterie,
+    KvpUtvalgskriterieAlternativ,
+    lagKvpUtvalgskriterie,
+    mapTilJournalforingFilter
+} from '../journalforing/journalforingFilter';
+import { Status } from '../../createGenericSlice';
+import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
+import { filterErAktivt } from '../filtrering/filter/filter-utils';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
@@ -45,12 +65,29 @@ function getSteps(kanHaPrintValg?: boolean, kanHaPrintMelding?: boolean): string
 }
 
 const AktivitetsplanPrint = () => {
-    const aktiviteter = useSelector(selectAktivitetListe);
     const kvpPerioder = useSelector(selectKvpPeriodeForValgteOppfolging);
-    const dialoger = useSelector(selectDialoger);
-    const mittMal = useSelector(selectGjeldendeMal);
     const erManuell = useSelector(selectErBrukerManuell);
     const { hovedsideRoute } = useRoutes();
+    const filterState = useSelector(selectFilterSlice);
+    const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
+    const pdf = useSelector(selectPdfForhaandsvisningSendTilBruker);
+    const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
+    const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
+    const uuidCachetPdf = useSelector(selectForhaandsvisningSendTilBrukerUuidCachetPdf);
+    const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
+    const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
+    const [isLoadingBruker, setIsLoadingBruker] = useState(true);
+    const [stepIndex, setStepIndex] = useState(0);
+    const [printMelding, setPrintMelding] = useState('');
+    const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
+    const [pdfMåOppdateresEtterFilterendring, setPdfMåOppdateresEtterFilterendring] = useState(false);
+    const erVeileder = useErVeileder();
+    const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(defaultFilter(erVeileder));
+    const [inkluderDialoger, setInkluderDialoger] = useState(true)
+
+    if (!oppfolgingsperiodeId) {
+        throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
+    }
 
     const avhengigheter = [
         useSelector(selectMalStatus),
@@ -61,7 +98,6 @@ const AktivitetsplanPrint = () => {
 
     const dispatch = useAppDispatch();
 
-    const erVeileder = useErVeileder();
     useEffect(() => {
         dispatch(hentMal());
         dispatch(hentMalListe());
@@ -69,37 +105,53 @@ const AktivitetsplanPrint = () => {
     }, []);
 
     const { fnr } = useFnrOgEnhetContext();
-    const [adresse, setAdresse] = useState<null | Postadresse>(null);
     const [bruker, setBruker] = useState<Bruker>({});
+    const [kvpUtvalgskriterie, setKvpUtvalgskriterie] = useState<KvpUtvalgskriterie>({
+        alternativ: erVeileder
+            ? KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER
+            : KvpUtvalgskriterieAlternativ.INKLUDER_KVP_AKTIVITETER,
+    });
 
-    const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
-    const [isLoadingBruker, setIsLoadingBruker] = useState(true);
+    const blob = useMemo(() => {
+        if (!pdf) return undefined;
+        return createBlob(pdf);
+    }, [pdf]);
 
     useEffect(() => {
         if (fnr) {
             hentPerson(fnr)
                 .then((bruker) => setBruker(bruker))
                 .finally(() => setIsLoadingBruker(false));
-            hentAdresse(fnr)
-                .then((a) => setAdresse(a?.adresse))
-                .finally(() => setIsLoadingAdresse(false));
         }
     }, [fnr]);
 
-    const [stepIndex, setStepIndex] = useState(0);
-    const [printMelding, setPrintMelding] = useState('');
-    const [utskriftform, setUtskriftform] = useState('helePlanen');
+    useEffect(() => {
+        const filterBrukt = filterErAktivt(filterState);
+        const nyttArkivFilter = mapTilJournalforingFilter(
+            filterState,
+            false,
+            kvpUtvalgskriterie,
+            inkluderDialoger
+        )
+        const filterEndretSidenForhaandsvisning = JSON.stringify(filterBruktTilForhaandsvisning) !== JSON.stringify(nyttArkivFilter);
+        setPdfMåOppdateresEtterFilterendring(filterBrukt || filterEndretSidenForhaandsvisning);
+    }, [filterState, inkluderDialoger]);
 
     const next = () => setStepIndex(stepIndex + 1);
 
     const printMeldingSubmit = (formValues: PrintFormValues) => {
         setPrintMelding(formValues.beskrivelse);
         next();
-        return Promise.resolve();
+        return Promise.resolve().then(() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, formValues.beskrivelse));
     };
 
     const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
         setUtskriftform(formValues.utskritPlanType);
+        if (formValues.utskritPlanType !== utskriftform) {
+            const nyKvpUtvalgskriterie = lagKvpUtvalgskriterie(formValues.utskritPlanType, kvpPerioder);
+            setKvpUtvalgskriterie(nyKvpUtvalgskriterie);
+            oppdaterForhaandsvistPdf(nyKvpUtvalgskriterie);
+        }
         next();
         return Promise.resolve();
     };
@@ -111,9 +163,30 @@ const AktivitetsplanPrint = () => {
     const navigate = useNavigate();
 
     const goBack = () => navigate(-1);
-    if (fnr && (isLoadingAdresse || isLoadingBruker)) {
+    if (fnr && isLoadingBruker) {
         return <Loader />;
     }
+
+    const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
+        const arkivFilter = mapTilJournalforingFilter(
+            filterState,
+            false,
+            nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
+            inkluderDialoger
+        )
+
+        dispatch(
+            hentPdfTilForhaandsvisningSendTilBruker({
+                oppfolgingsperiodeId,
+                filter: arkivFilter,
+                journalførendeEnhetId: journalførendeEnhetId ? journalførendeEnhetId : "",
+                tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
+                uuidCachetPdf,
+            }),
+        );
+        setFilterBruktTilForhaandsvisning(arkivFilter);
+        setPdfMåOppdateresEtterFilterendring(false);
+    };
 
     const getPrompt = () => {
         if (steps[stepIndex] === STEP_MELDING_FORM) {
@@ -144,27 +217,90 @@ const AktivitetsplanPrint = () => {
     };
     const prompt = getPrompt();
 
+    const skrivUt = () => {
+        const nyFane = window.open(blob, '_blank');
+        if (nyFane) {
+            nyFane.onload = () => {
+                nyFane.focus();
+                nyFane.print();
+            };
+        }
+    };
+
+    const sendTilBruker = () => {
+        const kvpUtvalgskriterie = lagKvpUtvalgskriterie(utskriftform, kvpPerioder);
+        if (forhaandsvisningOpprettet && journalførendeEnhetId) {
+            dispatch(
+                journalforOgSendTilBruker({
+                    forhaandsvisningOpprettet,
+                    journalførendeEnhetId,
+                    oppfolgingsperiodeId,
+                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger),
+                    uuidCachetPdf,
+                    tekstTilBruker: printMelding,
+                }),
+            );
+        }
+    };
+
+    const kanSendeTilBruker: boolean = erVeileder && utskriftform === 'aktivitetsplan';
+
     return (
         <section className="flex flex-col justify-center items-center p-8">
             <div className="aktivitetsplanprint flex justify-center items-center">
                 {prompt}
-                <PrintVerktoylinje tilbakeRoute={hovedsideRoute()} kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT} />
-                <div className="border px-12 print:border-none">
-                    <Print
-                        dialoger={dialoger}
-                        bruker={bruker}
-                        adresse={adresse}
-                        printMelding={printMelding}
-                        aktiviteter={aktiviteter}
-                        mittMal={mittMal}
-                        erVeileder={erVeileder}
-                        utskriftPlanType={utskriftform}
-                        kvpPerioder={kvpPerioder}
-                    />
-                </div>
+                <PrintVerktoylinje
+                    tilbakeRoute={hovedsideRoute()}
+                    kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
+                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, printMelding)}
+                    skrivUt={skrivUt}
+                    kanSendeTilBruker={kanSendeTilBruker}
+                    sendTilBruker={sendTilBruker}
+                    pdfMåOppdateresEtterFilterendring={pdfMåOppdateresEtterFilterendring}
+                    inkluderDialoger={inkluderDialoger}
+                    setInkluderDialoger={setInkluderDialoger}
+                />
+                <StatusErrorBoundry
+                    statuser={[sendTilBrukerStatus]}
+                    errorMessage="Kunne ikke sende aktivitetsplan til bruker"
+                >
+                    <div className="bg-bg-subtle print:border-none">
+                        <PdfViewer
+                            pdf={blob}
+                            suksessmelding={'Aktivitetsplanen ble sendt til bruker'}
+                            visSuksessmelding={sendTilBrukerStatus === Status.OK}
+                            forhaandsvisningStatus={forhaandsvisningStatus}
+                            blur={pdfMåOppdateresEtterFilterendring}
+                        />
+                    </div>
+                </StatusErrorBoundry>
             </div>
         </section>
     );
 };
+
+export const aktivitetsplanPrintLoader =
+    (dispatch: Dispatch, erVeileder: boolean, aktivEnhet: string) =>
+    ({
+        params: { oppfolgingsperiodeId },
+    }: LoaderFunctionArgs<{
+        oppfolgingsperiodeId: string;
+        aktivEnhet: string;
+    }>) => {
+        if (!oppfolgingsperiodeId) {
+            throw Error('path param is not set, this should never happen');
+        }
+        const forhaandsvisning = dispatch(
+            hentPdfTilForhaandsvisningSendTilBruker({
+                oppfolgingsperiodeId,
+                filter: defaultFilter(erVeileder),
+                journalførendeEnhetId: aktivEnhet ? aktivEnhet : "",
+                tekstTilBruker: '',
+            }),
+        );
+        return defer({
+            forhaandsvisning,
+        });
+    };
 
 export default AktivitetsplanPrint;

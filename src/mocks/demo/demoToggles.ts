@@ -21,7 +21,7 @@ import {
     visArenaAktiviteter,
     visAutomatiskeAktiviteter,
     visTestAktiviteter,
-    visEksterneAktiviteter
+    visEksterneAktiviteter, sendTilBrukerFeiler
 } from './localStorage';
 
 export const brukertype = {
@@ -165,5 +165,10 @@ export const feiltilstander = [
         label: 'Jounalføring feiler',
         id: LocalStorageElement.JOURNALFORING_FEILER,
         checked: journalforingFeiler,
+    },
+    {
+        label: 'Send til bruker feiler',
+        id: LocalStorageElement.SEND_TIL_BRUKER_FEILER,
+        checked: sendTilBrukerFeiler,
     },
 ];

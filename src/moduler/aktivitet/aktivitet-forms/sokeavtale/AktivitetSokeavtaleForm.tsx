@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
-import React, { MutableRefObject, useEffect, useState } from 'react';
+import React, { MutableRefObject, useEffect, useMemo, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -17,9 +17,9 @@ const numberErrorMessage = {
     invalid_type_error: 'Antall stillinger må fylles ut',
 };
 
-enum Mal {
+enum Template {
     'SØKEAVTALE' = 'SOKEAVTALE',
-    'EGEN' = 'EGEN',
+    'INGEN' = 'INGEN',
 }
 
 const commonFields = {
@@ -50,26 +50,35 @@ const SokeAvtaleFormValues = z.discriminatedUnion('skjemaVersjon', [
     NySokeAvtaleFormValues,
 ]);
 
-export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues> & { mal: Mal };
+export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>;
 
 interface Props {
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: SokeavtaleAktivitet;
-    // onChangeInitialValues: (initialValues?: InitalValues) => void;
-    // initialValues?: InitalValues;
 }
 
-const getDefaultValues = (aktivitet: SokeavtaleAktivitet | undefined): Partial<SokeavtaleAktivitetFormValues> => {
+const getDefaultValues = (
+    aktivitet: SokeavtaleAktivitet | undefined,
+    template: Template,
+): Partial<SokeavtaleAktivitetFormValues> => {
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
     const basevalues = {
-        mal: Mal.EGEN,
         tittel: aktivitet?.tittel || 'Avtale om å søke jobber',
         fraDato: aktivitet?.fraDato ? new Date(aktivitet.fraDato) : undefined,
         tilDato: aktivitet?.tilDato ? new Date(aktivitet.tilDato) : undefined,
         avtaleOppfolging: aktivitet?.avtaleOppfolging || '',
         beskrivelse: aktivitet?.beskrivelse || '',
     };
+    if (!aktivitet && template == Template.SØKEAVTALE) {
+        return {
+            skjemaVersjon: 'ny',
+            ...basevalues,
+            beskrivelse: beskrivelseTekst,
+            fraDato: new Date(),
+            tilDato: addMonths(new Date(), 3),
+        };
+    }
     if (brukeStillingerIUken) {
         return {
             skjemaVersjon: 'ny',
@@ -92,12 +101,11 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
     const brukeStillingerIUken = aktivitet ? !!aktivitet.antallStillingerIUken : true;
 
-    const defaultValues = getDefaultValues(aktivitet);
+    const [template, setTemplate] = useState(Template.INGEN);
+    const defaultValues = useMemo(() => {
+        return getDefaultValues(aktivitet, template);
+    }, [template, aktivitet]);
     const avtalt = aktivitet?.avtalt || false;
-    const [defaultDateValues, setDefaultDateValues] = useState<Partial<DateRange> | undefined>({
-        from: defaultValues.fraDato,
-        to: defaultValues?.tilDato,
-    });
 
     const formHandlers = useForm<SokeavtaleAktivitetFormValues>({
         defaultValues,
@@ -124,38 +132,33 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
               skjemaVersjon: 'gammel' as const,
           };
 
-    const mal = watch('mal');
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
     const avtaleOppfolging = watch('avtaleOppfolging'); // for <Textarea /> character-count to work
 
     useEffect(() => {
-        if (mal === Mal.EGEN && !aktivitet) {
-            reset();
-            setDefaultDateValues(undefined);
-        } else if (mal === Mal.SØKEAVTALE && !aktivitet) {
-            if (!aktivitet) {
-                reset();
-                setValue('mal', Mal.SØKEAVTALE);
-                setValue('beskrivelse', beskrivelseTekst);
-                setDefaultDateValues({ from: new Date(), to: addMonths(new Date(), 3) });
-            }
-        }
-    }, [mal]);
+        reset(getDefaultValues(aktivitet, template));
+    }, [template]);
+
+    const onTemplateChange = (event) => {
+        setTemplate(event.target.value);
+    };
 
     return (
         <form autoComplete="off" noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.SOKEAVTALE_AKTIVITET_TYPE} />
-                    <Select label="Ferdig utfylt aktivitet" {...register('mal')}>
-                        <option value={Mal.EGEN}>Ingen ferdig utfylt aktivitet valgt</option>
-                        <option value={Mal.SØKEAVTALE}>Avtale om å søke jobber</option>
-                    </Select>
+                    {aktivitet ? null : (
+                        <Select label="Ferdig utfylt aktivitet" onChange={onTemplateChange}>
+                            <option value={Template.INGEN}>Ingen ferdig utfylt aktivitet valgt</option>
+                            <option value={Template.SØKEAVTALE}>Avtale om å søke jobber</option>
+                        </Select>
+                    )}
                     <div className="dato-container">
                         <MaybeAvtaltDateRangePicker
                             aktivitet={aktivitet}
-                            from={{ name: 'fraDato', required: true, defaultValue: defaultDateValues?.from }}
-                            to={{ name: 'tilDato', required: true, defaultValue: defaultDateValues?.to }}
+                            from={{ name: 'fraDato', required: true, defaultValue: defaultValues?.fraDato }}
+                            to={{ name: 'tilDato', required: true, defaultValue: defaultValues?.tilDato }}
                         />
                     </div>
                     {errorWrapper.skjemaVersjon === 'ny' ? (

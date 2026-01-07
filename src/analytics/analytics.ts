@@ -1,57 +1,57 @@
-import * as amplitude from '@amplitude/analytics-browser';
-import { track } from '@amplitude/analytics-browser';
-import { TextCheckerResult } from '@navikt/dab-spraksjekk';
+import { AnalyticsEvent } from './analytics-taxonomy-events';
+import { initAnalytics, queueOrTrackEvent } from './initAnalytics';
+import { TextCheckerResult } from '@navikt/dab-spraksjekk/dist/library';
 
-import { AmplitudeEvent } from './taxonomy-events';
+initAnalytics();
+const logEvent = queueOrTrackEvent;
 
-export function initAmplitude() {
-    const apiKey = import.meta.env.VITE_AMPLITUDE_KEY ?? 'default';
-
-    amplitude.init(apiKey, undefined, {
-        defaultTracking: true,
-        serverUrl: import.meta.env.VITE_AMPLITUDE_API_URL,
-        ingestionMetadata: {
-            sourceName: window.location.toString(),
-        },
-    });
-}
-
-async function logAmplitudeEvent(event: AmplitudeEvent, extraData?: Record<string, unknown>): Promise<void> {
+async function logAnalyticsEvent(event: AnalyticsEvent, extraData?: Record<string, unknown>): Promise<void> {
     try {
-        track(event.name, { ...('data' in event ? event.data : {}), ...extraData, app: 'aktivitetsplan' });
+        const eventData = {
+            ...('data' in event ? event.data : {}),
+            ...extraData,
+        };
+        logEvent(event.name, eventData);
     } catch (e) {
         console.error(e);
     }
 }
 
 export function logKlikkKnapp(tekst: string) {
-    return logAmplitudeEvent({
+    return logAnalyticsEvent({
         name: 'knapp klikket',
         data: { tekst: tekst },
     });
 }
 
+export function logLenkeKlikket(tekst: string) {
+    return logAnalyticsEvent({
+        name: 'navigere',
+        data: { tekst: tekst },
+    });
+}
+
 export function logAccordionAapnet(accordion: string) {
-    return logAmplitudeEvent({
+    return logAnalyticsEvent({
         name: 'accordion åpnet',
         data: { tekst: accordion },
     });
 }
 
 export function logValgtFilter(filterValgt: string) {
-    return logAmplitudeEvent({
+    return logAnalyticsEvent({
         name: 'filtervalg',
         data: { filternavn: filterValgt },
     });
 }
 
 export function logToggleSpraksjekkToggle(enabled: boolean) {
-    return logAmplitudeEvent({ name: 'toggle', data: { text: 'Slå på klarspråkhjelp', enabled: enabled } });
+    return logAnalyticsEvent({ name: 'toggle', data: { text: 'Slå på klarspråkhjelp', enabled: enabled } });
 }
 
 export function logReferatFullfort(analysis: TextCheckerResult, referatPublisert: boolean, spraksjekkEnabled: boolean) {
     const mappedAnalysis = mapSpraksjekkAnalysis(analysis);
-    return logAmplitudeEvent(
+    return logAnalyticsEvent(
         {
             name: 'referat lagret',
             data: { analysis: mappedAnalysis, referatPublisert, spraksjekkEnabled },
@@ -71,18 +71,18 @@ export function logModalLukket({
     modalType: 'ny-aktivitet' | 'endre-aktivitet';
     navType: 'onReqClose' | 'onReqBack';
 }) {
-    return logAmplitudeEvent({
+    return logAnalyticsEvent({
         name: 'modal lukket',
         data: { isDirty, aktivitet: aktivitet.toLocaleLowerCase(), modalType, navType },
     });
 }
 
 export function loggDyplenkingTilAnnenBruker() {
-    return logAmplitudeEvent({ name: 'dyplenking', data: { text: 'Dyplenking til annen bruker' } });
+    return logAnalyticsEvent({ name: 'dyplenking', data: { text: 'Dyplenking til annen bruker' } });
 }
 
 type Modify<T, U> = Omit<T, keyof U> & U;
-export type TextCheckerAmplitudeAnalysis = Omit<
+export type TextCheckerAnalyticsAnalysis = Omit<
     Modify<
         TextCheckerResult,
         {
@@ -104,7 +104,7 @@ export type TextCheckerAmplitudeAnalysis = Omit<
     'tools'
 > & { tools: Omit<TextCheckerResult['tools'], 'wordFrequency'> };
 
-function mapSpraksjekkAnalysis(analysis: TextCheckerResult): TextCheckerAmplitudeAnalysis {
+function mapSpraksjekkAnalysis(analysis: TextCheckerResult): TextCheckerAnalyticsAnalysis {
     return {
         longParagraphs: analysis.longParagraphs.length,
         longSentences: analysis.longSentences.length,
