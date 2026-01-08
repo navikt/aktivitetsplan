@@ -5,7 +5,7 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
-import { logKlikkKnapp } from '../../analytics/analytics';
+import { logKlikkKnapp, logValgtFilter } from '../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
@@ -68,6 +68,10 @@ function PrintVerktoylinje({
                                 skrivUt();
                                 loggEvent(TRYK_PRINT);
                                 logKlikkKnapp('Skriv ut');
+                                console.log("logg valgt filter:", inkluderDialoger)
+                                logValgtFilter(
+                                    inkluderDialoger ? "Inkluder dialoger" : "Ekskluder dialoger"
+                                );
                             }}
                             disabled={pdfMåOppdateresEtterFilterendring}
                         >
@@ -78,6 +82,9 @@ function PrintVerktoylinje({
                         <Button icon={<EnvelopeOpenIcon />} onClick={() => {
                             sendTilBruker();
                             logKlikkKnapp('Journalfør og send til bruker');
+                            logValgtFilter(
+                                inkluderDialoger ? "Inkluder dialoger" : "Ekskluder dialoger"
+                            );
                         }} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til
                             bruker</Button>}
                 </div>
