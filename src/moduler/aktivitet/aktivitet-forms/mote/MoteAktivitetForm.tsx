@@ -142,6 +142,7 @@ const MoteAktivitetForm = (props: Props) => {
 
                     <div className="flex sm:flex-row flex-col gap-4">
                         <ControlledDatePicker
+                            disabledDays={[{ before: new Date() }]}
                             field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
                         />
                         <TextField
