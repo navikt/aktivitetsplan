@@ -30,7 +30,7 @@ const fillForm = () => {
         target: { value: 'Møte med Nav' },
     });
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)'), {
-        target: { value: '21.09.2023' },
+        target: { value: '21.09.2029' },
     });
     const klokkeslett = new Date('2023-09-20T06:00:00.000Z').getHours();
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)'), {
