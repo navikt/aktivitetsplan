@@ -15,13 +15,16 @@ import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
+import { endOfDay, subDays } from 'date-fns';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
-    dato: z.date({
-        required_error: 'Dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }),
+    dato: z
+        .date({
+            required_error: 'Dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        })
+        .min(endOfDay(subDays(new Date(), 1)), 'Dato kan ikke være tilbake i tid'),
     klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
     varighet: z.number({ invalid_type_error: 'Du må velge varighet' }), // Blir NaN på default value
     kanal: z.nativeEnum(Kanal, {
