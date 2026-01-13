@@ -18,7 +18,7 @@ export function selectOppfolgingStatus(state: RootState) {
 }
 
 export const selectReservasjonKRR = (state: RootState) => selectOppfolgingData(state)?.reservasjonKRR;
-export const selectKanVarsles = (state: RootState)  => selectOppfolgingData(state)?.kanVarsles || false;
+export const selectKanVarsles = (state: RootState) => selectOppfolgingData(state)?.kanVarsles || false;
 export const selectErRegisrertIKRR = (state: RootState) => selectOppfolgingData(state)?.registrertKRR || false;
 
 export function selectServicegruppe(state: RootState) {
@@ -102,10 +102,6 @@ export function selectAktorId(state: RootState) {
 
 export function selectErUnderKvp(state: RootState) {
     return selectOppfolgingData(state)?.underKvp;
-}
-
-export function selectHarSkriveTilgang(state: RootState) {
-    return selectOppfolgingData(state)?.harSkriveTilgang || false;
 }
 
 export function selectKanReaktiveres(state: RootState) {

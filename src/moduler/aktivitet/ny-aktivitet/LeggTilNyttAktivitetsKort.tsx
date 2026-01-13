@@ -7,7 +7,7 @@ import { Status } from '../../../createGenericSlice';
 import { useErVeileder } from '../../../Provider';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { useRoutes } from '../../../routing/useRoutes';
-import { selectViserHistoriskPeriode } from '../../oppfolging-status/oppfolging-selector';
+import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';
 
 const veilederAktivitetsValg = (nyAktivitetBasePath: string) => [
     {
@@ -42,7 +42,7 @@ const brukerAktivitetsValg = (nyAktivitetBasePath: string) => [
 ];
 
 const LeggTilNyttAktivitetsKort = () => {
-    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode);
+    const erReadMode = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const { nyAktivitetRoute } = useRoutes();
     const nyAktivitetBasePath = nyAktivitetRoute();
@@ -59,7 +59,7 @@ const LeggTilNyttAktivitetsKort = () => {
                         loading={[Status.RELOADING, Status.PENDING].includes(aktivitetStatus)}
                         className="relative w-full"
                         icon={<PlusIcon role="img" aria-hidden fontSize="1.5rem" />}
-                        disabled={aktivitetStatus !== Status.OK || viserHistoriskPeriode}
+                        disabled={aktivitetStatus !== Status.OK || erReadMode}
                     >
                         Legg til aktivitet
                     </Button>
