@@ -38,7 +38,6 @@ function PrintVerktoylinje({
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
 
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
-    const harAktivitet = aktiviteter.length > 1;
 
     return (
         <>
@@ -55,11 +54,10 @@ function PrintVerktoylinje({
                         Tilbake
                     </ReactRouterLink>
                 ) : null}
-                {harAktivitet &&
                     <div className="self-start flex flex-row gap-4 items-center">
                         <Filter /><Button icon={<ArrowCirclepathIcon />} onClick={oppdaterForhaandsvistPdf}>Oppdater
                         visning</Button>
-                    </div>}
+                    </div>
                 <div className="self-start flex flex-row items-center gap-4">
                     {kanSkriveUt ? (
                         <Button
@@ -68,7 +66,6 @@ function PrintVerktoylinje({
                                 skrivUt();
                                 loggEvent(TRYK_PRINT);
                                 logKlikkKnapp('Skriv ut');
-                                console.log("logg valgt filter:", inkluderDialoger)
                                 logValgtFilter(
                                     inkluderDialoger ? "Inkluder dialoger" : "Ekskluder dialoger"
                                 );
