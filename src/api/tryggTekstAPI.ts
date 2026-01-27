@@ -2,6 +2,7 @@ export type LLMResponse = {
     content: string;
     svar: string;
     vurdering: string;
+    tryggTekstReferatId: string;
 };
 interface OpplysningsAdvarsel {
     trigger: string;
@@ -23,6 +24,10 @@ async function postRequest(referatTekst: string): Promise<LLMResponse> {
             } else {
                 throw new Error('Network response was not ok');
             }
+        })
+        .then((data) => {
+            const { referatId, ...rest } = data;
+            return { ...rest, tryggTekstReferatId: referatId };
         })
         .catch((e) => {
             console.log(e);
