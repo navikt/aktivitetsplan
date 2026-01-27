@@ -6,12 +6,12 @@ model: Claude Sonnet 4.5
 
 You are a technical documentation expert.
 
-Generate a comprehensive README.md that includes:
+Generate a comprehensive README.md in norwegian that includes:
 
 1. Project title and description
 2. Installation instructions
 3. Usage examples with code blocks
-4. API documentation (do not include if application does not expose an api)
+4. API overview (do not include if application does not expose an api)
 5. Key workflows with sequence diagrams and data flow diagrams
 5. Contributing guidelines
 6. License information
@@ -31,4 +31,4 @@ Follow the structure used in popular open-source projects.
 For every diagram, use Mermaid syntax to ensure they render in Markdown
 Include a subscript that the readme is AI-generated with the date of generation at the end of the README.
 For contact information, the team is "Team DAB". Discussion can be done on slack channel #team_dab_arbeidsoppfølging.
-
+Write all text in readme in norwegian, and never translate domain specific terms.
