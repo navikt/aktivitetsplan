@@ -269,19 +269,6 @@ graph TB
     style J fill:#68a063
 ```
 
-### Redux State Flow
-
-```mermaid
-stateDiagram-v2
-    [*] --> Idle
-    Idle --> Loading: dispatch(fetchData)
-    Loading --> Success: Data mottatt
-    Loading --> Error: Feil oppstod
-    Success --> Idle: Reset
-    Error --> Idle: Retry
-    Success --> Loading: Refresh data
-```
-
 ---
 
 ## API-dokumentasjon
@@ -296,8 +283,6 @@ Prosjektet bruker GraphQL og REST API-er. Se `src/api/` og `graphql/schema.graph
 query($fnr: String!) {
   perioder(fnr: $fnr) {
     id
-    start
-    slutt
     aktiviteter {
       id
       funksjonellId
@@ -495,9 +480,8 @@ Dette prosjektet er lisensiert under MIT-lisensen. Se [LICENSE.md](LICENSE.md) f
 ## Kontakt
 
 - **Issues**: [GitHub Issues](https://github.com/navikt/aktivitetsplan/issues)
-- **Diskusjoner**: Bruk GitHub Discussions
-- **Team**: Team Produktivitet og Oppfølging (PTO)
-- **Slack**: Kontakt teamet via NAVs interne kanaler
+- **Team**: Team DAB
+- **Slack**: #team_dab_arbeidsoppfølging
 
 ---
 
@@ -509,5 +493,5 @@ Dette prosjektet er lisensiert under MIT-lisensen. Se [LICENSE.md](LICENSE.md) f
 
 ---
 
-<sub>*Denne README-filen er generert delvis av Claude Sonnet 4.5*</sub>
+<sub>*This README was generated in part by Claude Sonnet 4.5 on 2026-01-27*</sub>
 
