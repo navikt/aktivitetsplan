@@ -26,9 +26,7 @@ export const notifiserTryggTekstVedLagring = createAsyncThunk(
         const tryggTekstReferatId = state.data.tryggTekst.data?.tryggTekstReferatId;
 
         if (tryggTekstReferatId) {
-            notifiserTryggTekstOmLagretReferat(tekst, tryggTekstReferatId).catch((error) => {
-                console.error('TryggTekst: Feil ved notifisering om lagret referat', error);
-            });
+            return await postSjekkForPersonopplysninger(tekst, tryggTekstReferatId);
         }
     },
 );

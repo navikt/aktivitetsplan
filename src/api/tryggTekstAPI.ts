@@ -62,8 +62,4 @@ export const postSjekkForPersonopplysninger = async (verdi: string, tryggTekstRe
     return { kategorier, feilmedling: feil, tryggTekstReferatId: response.tryggTekstReferatId };
 };
 
-export const notifiserTryggTekstOmLagretReferat = async (tekst: string, tryggTekstReferatId: string) => {
-    await postRequest(tekst, tryggTekstReferatId);
-};
-
 export default postSjekkForPersonopplysninger;
