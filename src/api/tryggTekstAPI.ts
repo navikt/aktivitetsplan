@@ -17,7 +17,7 @@ async function postRequest(referatTekst: string, tryggTekstReferatId?: string): 
         method: 'POST',
         body: JSON.stringify({
             payload: referatTekst,
-            ...(tryggTekstReferatId && { trackingId: tryggTekstReferatId })
+            ...(tryggTekstReferatId && { trackingID: tryggTekstReferatId })
         }),
         headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache', 'Content-Type': 'application/json' },
     })
