@@ -192,7 +192,7 @@ export const handlers = [
     http.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([])),
 
     // tryggtekst
-    http.post('/tryggtekst/proxy', sjekkTryggTekst),
+    http.post('/tryggtekst/proxy/completion', sjekkTryggTekst),
 
     // Umami tracking
     http.post('https://umami.nav.no/api/send', () => new HttpResponse()),

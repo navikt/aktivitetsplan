@@ -2,20 +2,34 @@ import { selectPersonopplusningSjekk } from './tryggtekst-selector';
 import { useSelector } from 'react-redux';
 import { BodyLong, BodyShort, ExpansionCard, Heading, List, Loader } from '@navikt/ds-react';
 import { Status } from '../../../../createGenericSlice';
-import { sjekkForPersonopplysninger } from './tryggtekst-slice';
+import { sjekkForPersonopplysninger, nullstillTryggTekst } from './tryggtekst-slice';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { hentFeatures } from '../../../feature/feature-slice';
-import { selectFeature, selectFeatureSlice } from '../../../feature/feature-selector';
+import { selectFeatureSlice } from '../../../feature/feature-selector';
 import KISymbol from '../../../../Ikoner/KI_symbol';
+import { useParams } from 'react-router-dom';
 
-export const TryggTekst = ({ value }: { value: string }) => {
+const TryggTekst = ({ value }: { value: string }) => {
     const dispatch = useAppDispatch();
     const { status, data } = useSelector(selectPersonopplusningSjekk);
+    const { id: aktivitetId } = useParams<{ id: string }>();
+    const prevAktivitetIdRef = useRef<string | undefined>(aktivitetId);
+
+    useEffect(() => {
+        const prevAktivitetId = prevAktivitetIdRef.current;
+        if (prevAktivitetId && prevAktivitetId !== aktivitetId) {
+            dispatch(nullstillTryggTekst());
+        }
+        prevAktivitetIdRef.current = aktivitetId;
+    }, [aktivitetId, dispatch]);
 
     const sjekkPersonopplysninger = (isOpen) => {
         if (!isOpen) return;
-        dispatch(sjekkForPersonopplysninger(value));
+        dispatch(sjekkForPersonopplysninger({
+            tekst: value,
+            tryggTekstReferatId: data?.tryggTekstReferatId
+        }));
     };
 
     return (

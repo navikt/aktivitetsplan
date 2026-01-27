@@ -14,6 +14,8 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import { useReferatStartTekst } from './useReferatStartTekst';
 import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
+import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -48,6 +50,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     const [open, setOpen] = useState(true);
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
+    const dispatch = useAppDispatch();
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
@@ -84,6 +87,7 @@ const InnerSamtalereferatForm = (props: Props) => {
             }).then(() => {
                 const analysis = checkText(data.referat);
                 logReferatFullfort(analysis, erReferatPublisert, open);
+                dispatch(notifiserTryggTekstVedLagring(data.referat));
             });
         });
     };
