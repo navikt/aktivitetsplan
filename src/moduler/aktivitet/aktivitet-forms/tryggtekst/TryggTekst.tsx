@@ -15,7 +15,10 @@ export const TryggTekst = ({ value }: { value: string }) => {
 
     const sjekkPersonopplysninger = (isOpen) => {
         if (!isOpen) return;
-        dispatch(sjekkForPersonopplysninger(value));
+        dispatch(sjekkForPersonopplysninger({
+            tekst: value,
+            tryggTekstReferatId: data?.tryggTekstReferatId
+        }));
     };
 
     return (

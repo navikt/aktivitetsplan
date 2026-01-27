@@ -12,10 +12,13 @@ interface OpplysningSjekkContent {
     kategorier: OpplysningsAdvarsel[];
 }
 
-async function postRequest(referatTekst: string): Promise<LLMResponse> {
+async function postRequest(referatTekst: string, tryggTekstReferatId?: string): Promise<LLMResponse> {
     return await fetch(`/tryggtekst/proxy/completion`, {
         method: 'POST',
-        body: JSON.stringify({ payload: referatTekst }),
+        body: JSON.stringify({
+            payload: referatTekst,
+            ...(tryggTekstReferatId && { trackingId: tryggTekstReferatId })
+        }),
         headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache', 'Content-Type': 'application/json' },
     })
         .then((res) => {
@@ -35,11 +38,11 @@ async function postRequest(referatTekst: string): Promise<LLMResponse> {
         });
 }
 
-const postSjekkForPersonopplysninger = async (verdi: string) => {
+const postSjekkForPersonopplysninger = async (verdi: string, tryggTekstReferatId?: string) => {
     if (!verdi) {
         return { kategorier: [], feilmedling: '', tryggTekstReferatId: undefined };
     }
-    const response: LLMResponse = await postRequest(verdi);
+    const response: LLMResponse = await postRequest(verdi, tryggTekstReferatId);
     const containsSensitive: OpplysningSjekkContent = JSON.parse(response.content);
     console.log('containsSensitive', containsSensitive);
 
