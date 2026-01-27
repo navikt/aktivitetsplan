@@ -1,6 +1,6 @@
 import createGenericSlice from '../../../../createGenericSlice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import postSjekkForPersonopplysninger, { notifiserTryggTekstOmLagretReferat } from '../../../../api/tryggTekstAPI';
+import postSjekkForPersonopplysninger from '../../../../api/tryggTekstAPI';
 import { RootState } from '../../../../store';
 
 const tryggTekstSlice = createGenericSlice<PersonopplysningerSjekkResultat>({
