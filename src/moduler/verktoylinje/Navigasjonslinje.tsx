@@ -45,7 +45,6 @@ function Navigasjonslinje() {
     }, [dispatch, erVeileder, sistOppdatert]);
 
     const canPrint = useSelector(selectCanPrint);
-    const isMobile = useMediaQuery('(max-width: 768px)');
 
     const erJournalforingAktiv = useToggle('aktivitetsplan.journalforing');
 
@@ -74,7 +73,6 @@ function Navigasjonslinje() {
                 </ReactRouterLink>
                 {canPrint && (
                     <ReactRouterLink
-                        hidden={isMobile}
                         to={`utskrift/${vistOppfolgingsperiode}`}
                         className="text-text-action underline hover:no-underline"
                         onClick={() => logLenkeKlikket('Skriv ut')}
