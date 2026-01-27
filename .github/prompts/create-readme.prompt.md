@@ -1,6 +1,7 @@
 ---
 name: create-readme
 description: Generates a comprehensive README for a project
+model: Claude Sonnet 4.5
 ---
 
 You are a technical documentation expert.
