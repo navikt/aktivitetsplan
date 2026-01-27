@@ -36,31 +36,27 @@ async function postRequest(referatTekst: string): Promise<LLMResponse> {
 }
 
 const postSjekkForPersonopplysninger = async (verdi: string) => {
+    if (!verdi) {
+        return { kategorier: [], feilmedling: '', tryggTekstReferatId: undefined };
+    }
+    const response: LLMResponse = await postRequest(verdi);
+    const containsSensitive: OpplysningSjekkContent = JSON.parse(response.content);
+    console.log('containsSensitive', containsSensitive);
+
     let feil = '';
     let kategorier: { kategori: string; trigger: string }[] = [];
-    console.log('useSensitive', verdi);
 
-    if (!verdi) {
-        return { kategorier: [] };
+    if (containsSensitive.kategorier && containsSensitive.kategorier.length > 0) {
+        kategorier = containsSensitive.kategorier.map((item) => ({
+            kategori: item.kategori,
+            trigger: item.trigger,
+        }));
+        feil = `⚠️ Det ser ut som du har skrevet inn personopplysninger om ${kategorier.map((k) => k.kategori).join(', ')} i skjemaet.`;
     } else {
-        console.log('verdi som ska til llm', verdi);
-        await postRequest(verdi).then(async (response: LLMResponse) => {
-            const containsSensitive: OpplysningSjekkContent = JSON.parse(response.content);
-            console.log('containsSensitive', containsSensitive);
-
-            if (containsSensitive.kategorier && containsSensitive.kategorier.length > 0) {
-                kategorier = containsSensitive.kategorier.map((item) => ({
-                    kategori: item.kategori,
-                    trigger: item.trigger,
-                }));
-                feil = `⚠️ Det ser ut som du har skrevet inn personopplysninger om ${kategorier.map((k) => k.kategori).join(', ')} i skjemaet.`;
-            } else {
-                feil = '👌✅';
-            }
-            return { kategorier: kategorier, feilmedling: feil };
-        });
+        feil = '👌✅';
     }
-    return { kategorier: kategorier, feilmedling: feil };
+
+    return { kategorier, feilmedling: feil, tryggTekstReferatId: response.tryggTekstReferatId };
 };
 
 export default postSjekkForPersonopplysninger;
