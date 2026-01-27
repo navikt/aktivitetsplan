@@ -1,6 +1,7 @@
 import createGenericSlice from '../../../../createGenericSlice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import postSjekkForPersonopplysninger from '../../../../api/tryggTekstAPI';
+import postSjekkForPersonopplysninger, { notifiserTryggTekstOmLagretReferat } from '../../../../api/tryggTekstAPI';
+import { RootState } from '../../../../store';
 
 const tryggTekstSlice = createGenericSlice<PersonopplysningerSjekkResultat>({
     name: 'trykkTekst',
@@ -15,6 +16,20 @@ export const sjekkForPersonopplysninger = createAsyncThunk(
     `${tryggTekstSlice.name}/postSjekkForPersonopplysninger`,
     async ({ tekst, tryggTekstReferatId }: { tekst: string; tryggTekstReferatId?: string }) => {
         return await postSjekkForPersonopplysninger(tekst, tryggTekstReferatId);
+    },
+);
+
+export const notifiserTryggTekstVedLagring = createAsyncThunk(
+    `${tryggTekstSlice.name}/notifiserTryggTekstVedLagring`,
+    async (tekst: string, { getState }) => {
+        const state = getState() as RootState;
+        const tryggTekstReferatId = state.data.tryggTekst.data?.tryggTekstReferatId;
+
+        if (tryggTekstReferatId) {
+            notifiserTryggTekstOmLagretReferat(tekst, tryggTekstReferatId).catch((error) => {
+                console.error('TryggTekst: Feil ved notifisering om lagret referat', error);
+            });
+        }
     },
 );
 

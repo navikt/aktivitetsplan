@@ -6,16 +6,15 @@ import { sjekkForPersonopplysninger, nullstillTryggTekst } from './tryggtekst-sl
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useEffect } from 'react';
 import { hentFeatures } from '../../../feature/feature-slice';
-import { selectFeature, selectFeatureSlice } from '../../../feature/feature-selector';
+import { selectFeatureSlice } from '../../../feature/feature-selector';
 import KISymbol from '../../../../Ikoner/KI_symbol';
 import { useParams } from 'react-router-dom';
 
-export const TryggTekst = ({ value }: { value: string }) => {
+const TryggTekst = ({ value }: { value: string }) => {
     const dispatch = useAppDispatch();
     const { status, data } = useSelector(selectPersonopplusningSjekk);
     const { id: aktivitetId } = useParams<{ id: string }>();
 
-    // Nullstill state når aktivitet-ID endres
     useEffect(() => {
         return () => {
             dispatch(nullstillTryggTekst());

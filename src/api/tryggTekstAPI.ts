@@ -38,7 +38,7 @@ async function postRequest(referatTekst: string, tryggTekstReferatId?: string): 
         });
 }
 
-const postSjekkForPersonopplysninger = async (verdi: string, tryggTekstReferatId?: string) => {
+export const postSjekkForPersonopplysninger = async (verdi: string, tryggTekstReferatId?: string) => {
     if (!verdi) {
         return { kategorier: [], feilmedling: '', tryggTekstReferatId: undefined };
     }
@@ -60,6 +60,10 @@ const postSjekkForPersonopplysninger = async (verdi: string, tryggTekstReferatId
     }
 
     return { kategorier, feilmedling: feil, tryggTekstReferatId: response.tryggTekstReferatId };
+};
+
+export const notifiserTryggTekstOmLagretReferat = async (tekst: string, tryggTekstReferatId: string) => {
+    await postRequest(tekst, tryggTekstReferatId);
 };
 
 export default postSjekkForPersonopplysninger;
