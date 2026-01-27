@@ -4,7 +4,7 @@ import { BodyLong, BodyShort, ExpansionCard, Heading, List, Loader } from '@navi
 import { Status } from '../../../../createGenericSlice';
 import { sjekkForPersonopplysninger, nullstillTryggTekst } from './tryggtekst-slice';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { hentFeatures } from '../../../feature/feature-slice';
 import { selectFeatureSlice } from '../../../feature/feature-selector';
 import KISymbol from '../../../../Ikoner/KI_symbol';
@@ -14,11 +14,14 @@ const TryggTekst = ({ value }: { value: string }) => {
     const dispatch = useAppDispatch();
     const { status, data } = useSelector(selectPersonopplusningSjekk);
     const { id: aktivitetId } = useParams<{ id: string }>();
+    const prevAktivitetIdRef = useRef<string | undefined>(aktivitetId);
 
     useEffect(() => {
-        return () => {
+        const prevAktivitetId = prevAktivitetIdRef.current;
+        if (prevAktivitetId && prevAktivitetId !== aktivitetId) {
             dispatch(nullstillTryggTekst());
-        };
+        }
+        prevAktivitetIdRef.current = aktivitetId;
     }, [aktivitetId, dispatch]);
 
     const sjekkPersonopplysninger = (isOpen) => {
