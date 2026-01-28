@@ -1,39 +1,53 @@
 import { selectPersonopplusningSjekk } from './tryggtekst-selector';
 import { useSelector } from 'react-redux';
 import { BodyLong, BodyShort, ExpansionCard, Heading, List, Loader } from '@navikt/ds-react';
-import { EyeIcon } from '@navikt/aksel-icons';
 import { Status } from '../../../../createGenericSlice';
-import { sjekkForPersonopplysninger } from './tryggtekst-slice';
+import { sjekkForPersonopplysninger, nullstillTryggTekst } from './tryggtekst-slice';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { hentFeatures } from '../../../feature/feature-slice';
-import { selectFeature, selectFeatureSlice } from '../../../feature/feature-selector';
+import { selectFeatureSlice } from '../../../feature/feature-selector';
+import KISymbol from '../../../../Ikoner/KI_symbol';
+import { useParams } from 'react-router-dom';
 
-export const TryggTekst = ({ value }: { value: string }) => {
+const TryggTekst = ({ value }: { value: string }) => {
     const dispatch = useAppDispatch();
     const { status, data } = useSelector(selectPersonopplusningSjekk);
+    const { id: aktivitetId } = useParams<{ id: string }>();
+    const prevAktivitetIdRef = useRef<string | undefined>(aktivitetId);
+
+    useEffect(() => {
+        const prevAktivitetId = prevAktivitetIdRef.current;
+        if (prevAktivitetId && prevAktivitetId !== aktivitetId) {
+            dispatch(nullstillTryggTekst());
+        }
+        prevAktivitetIdRef.current = aktivitetId;
+    }, [aktivitetId, dispatch]);
 
     const sjekkPersonopplysninger = (isOpen) => {
         if (!isOpen) return;
-        dispatch(sjekkForPersonopplysninger(value));
+        dispatch(sjekkForPersonopplysninger({
+            tekst: value,
+            tryggTekstReferatId: data?.tryggTekstReferatId
+        }));
     };
 
     return (
         <ExpansionCard
-            aria-label="Sjekk for personopplysninger"
+            aria-label="Sjekk for sensitive personopplysninger"
             className="bg-surface-info-subtle"
             onToggle={sjekkPersonopplysninger}
         >
             <ExpansionCard.Header className="">
                 <div className="flex items-center space-x-4">
-                    <EyeIcon fontSize={48} />
-                    <Heading size="small">Sjekk for personopplysninger</Heading>
+                    <KISymbol />
+                    <Heading size="small">Sjekk teksten med TryggTekst</Heading>
                 </div>
             </ExpansionCard.Header>
             <ExpansionCard.Content>
                 {status === Status.PENDING || status === Status.RELOADING ? (
                     <div className="flex flex-col space-y-4 mt-4 justify-center items-center">
-                        <BodyShort>Teksten din sjekkes for sensitive personopplysninger</BodyShort>
+                        <BodyShort>KI-modellen sjekker for særlige kategorier av personopplysninger</BodyShort>
                         <Loader size="2xlarge" />
                     </div>
                 ) : status === Status.OK ? (

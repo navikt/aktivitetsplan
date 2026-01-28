@@ -49,7 +49,10 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     JOBBK: 'Jobbklubb',
     GRUPPEAMO: 'Arbeidsmarkedsopplæring (Gruppe)',
     GRUFAGYRKE: 'Fag- og yrkesopplæring (Gruppe)',
-    REKRUTTERINGSTREFF: 'Rekrutteringstreff'
+    REKRUTTERINGSTREFF: 'Rekrutteringstreff',
+    ENKELAMO: 'Arbeidsmarkedsopplæring (enkeltplass)',
+    ENKFAGYRKE: 'Fag- og yrkesopplæring (enkeltplass)',
+    HOYEREUTD: 'Høyere utdanning'
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {

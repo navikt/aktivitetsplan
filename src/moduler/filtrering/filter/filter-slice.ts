@@ -28,7 +28,10 @@ const initialState: FilterState = {
         ARBEIDSTRENING: false,
         VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: false,
         MENTOR: false,
-        REKRUTTERINGSTREFF: false
+        REKRUTTERINGSTREFF: false,
+        ENKELAMO: false,
+        ENKFAGYRKE: false,
+        HOYEREUTD: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,

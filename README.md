@@ -6,6 +6,9 @@ på en bestemt jobb eller motta behandling.
 
 ### Komme i gang
 
+For å kunne laste ned pakker fra NAVs package registry må man ha en .npmrc-fil enten i prosjektet eller globalt i hjemmappa. Fila må ha en linje som inneholder et access token med tillatelse til å lese pakker:
+`//npm.pkg.github.com/:_authToken=DITT_GITUB_ACCESS_TOKEN`
+
 ```sh
 # Installere avhengigheter
 npm i

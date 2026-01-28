@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import { Filter } from './FilterVisning';
-import { logValgtFilter } from '../../../amplitude/amplitude';
+import { logValgtFilter } from '../../../analytics/analytics';
 
 interface Props {
     filterTekst: string;

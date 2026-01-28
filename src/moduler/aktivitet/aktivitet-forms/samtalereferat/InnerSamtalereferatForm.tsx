@@ -5,7 +5,7 @@ import React, { MutableRefObject, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../amplitude/amplitude';
+import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
@@ -14,18 +14,19 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import { useReferatStartTekst } from './useReferatStartTekst';
 import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
+import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
+import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
-    fraDato: z.date({
-        required_error: 'Fra dato må fylles ut',
-        invalid_type_error: 'Ikke en gyldig dato',
-    }).refine(
-        (date) => date.getTime() < new Date().getTime(),
-        {
+    fraDato: z
+        .date({
+            required_error: 'Fra dato må fylles ut',
+            invalid_type_error: 'Ikke en gyldig dato',
+        })
+        .refine((date) => date.getTime() < new Date().getTime(), {
             message: 'Dato kan ikke være etter dagens dato',
-        },
-    ),
+        }),
     kanal: z.nativeEnum(Kanal),
     referat: z.string().min(1, 'Du må fylle ut samtalereferat').max(5000, 'Du må korte ned teksten til 5000 tegn'),
 });
@@ -49,6 +50,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     const [open, setOpen] = useState(true);
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
+    const dispatch = useAppDispatch();
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
@@ -85,6 +87,7 @@ const InnerSamtalereferatForm = (props: Props) => {
             }).then(() => {
                 const analysis = checkText(data.referat);
                 logReferatFullfort(analysis, erReferatPublisert, open);
+                dispatch(notifiserTryggTekstVedLagring(data.referat));
             });
         });
     };

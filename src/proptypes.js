@@ -164,20 +164,6 @@ export const aktivitettype = PT.oneOf([
     SAMTALEREFERAT_TYPE,
 ]);
 
-export const malverktype = PT.shape({
-    type: PT.string,
-    tittel: PT.string,
-    hensikt: PT.string,
-    antallStillingerSokes: PT.number,
-    avtaleOppfolging: PT.string,
-    oppfolging: PT.string,
-    beskrivelse: PT.string,
-    lenke: PT.string,
-    status: PT.string,
-    fraDato: PT.string,
-    tilDato: PT.string,
-});
-
 export const lest = PT.shape({
     tidspunkt: PT.string.isRequired,
     verdi: PT.string,

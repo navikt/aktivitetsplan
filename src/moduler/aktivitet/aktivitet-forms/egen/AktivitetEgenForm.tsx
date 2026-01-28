@@ -1,19 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
-import { TextField, Textarea } from '@navikt/ds-react';
-import { isAfter } from 'date-fns';
-import React, { MutableRefObject } from 'react';
+import { TextField, Textarea, Select } from '@navikt/ds-react';
+import { addDays, isAfter, startOfDay } from 'date-fns';
+import React, { ChangeEventHandler, MutableRefObject, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
-import { useErVeileder } from '../../../../Provider';
-import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
+import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
 
 const schema = z
     .object({
@@ -52,20 +50,51 @@ interface Props {
     aktivitet?: EgenAktivitet;
 }
 
+const getDefaultValues = (
+    aktivitet: EgenAktivitet | undefined,
+    template: EgenaktivitetTemplate,
+): Partial<EgenAktivitetFormValues> => {
+    if (aktivitet) {
+        return {
+            tittel: aktivitet?.tittel || '',
+            fraDato: dateOrUndefined(aktivitet?.fraDato),
+            tilDato: dateOrUndefined(aktivitet?.tilDato),
+            hensikt: aktivitet?.hensikt || '',
+            beskrivelse: aktivitet?.beskrivelse || '',
+            oppfolging: aktivitet?.oppfolging || '',
+            lenke: aktivitet?.lenke || '',
+        };
+    } else {
+        if (template == 'ingen') {
+            return {
+                tittel: '',
+                fraDato: undefined,
+                tilDato: undefined,
+                hensikt: '',
+                beskrivelse: '',
+                oppfolging: '',
+                lenke: '',
+            };
+        } else {
+            const now = new Date();
+            const fraDato = startOfDay(now);
+            const tilDato = addDays(now, 8);
+            return {
+                ...malverkTemplate,
+                fraDato,
+                tilDato,
+            };
+        }
+    }
+};
+
 const EgenAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const erVeileder = useErVeileder();
-
-    const defaultValues: Partial<EgenAktivitetFormValues> = {
-        tittel: aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(aktivitet?.fraDato),
-        tilDato: dateOrUndefined(aktivitet?.tilDato),
-        hensikt: aktivitet?.hensikt || '',
-        beskrivelse: aktivitet?.beskrivelse || '',
-        oppfolging: aktivitet?.oppfolging || '',
-        lenke: aktivitet?.lenke || '',
-    };
+    const [template, setTemplate] = useState<EgenaktivitetTemplate>('ingen');
+    const defaultValues = useMemo(() => {
+        return getDefaultValues(aktivitet, template);
+    }, [template, aktivitet]);
 
     const avtalt = aktivitet?.avtalt === true;
 
@@ -76,7 +105,6 @@ const EgenAktivitetForm = (props: Props) => {
     });
     const {
         register,
-        setValue,
         handleSubmit,
         reset,
         watch,
@@ -89,14 +117,13 @@ const EgenAktivitetForm = (props: Props) => {
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
-    const onMalChange = (newInitalValues: any) => {
-        if (!newInitalValues) {
-            reset();
-        } else {
-            Object.entries(newInitalValues).forEach(([name, value], _) => {
-                setValue(name as any, value); // TODO pls typ malverk. pls fjern malverk
-            });
-        }
+    useEffect(() => {
+        const newDefaultValues = getDefaultValues(aktivitet, template);
+        reset(newDefaultValues);
+    }, [template]);
+
+    const onTemplateChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+        setTemplate(event.target.value as EgenaktivitetTemplate);
     };
 
     return (
@@ -106,7 +133,21 @@ const EgenAktivitetForm = (props: Props) => {
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.EGEN_AKTIVITET_TYPE} />
 
                     <InnsynsrettInfo />
-                    <Malverk visible={erVeileder} endre={!!aktivitet} onChange={onMalChange} />
+                    {
+                        /* Ikke tillat bruk av template når man endrer en aktivitet */
+                        aktivitet ? null : (
+                            <Select
+                                id="malverk"
+                                name={'malverk'}
+                                label="Ferdig utfylt aktivitet"
+                                value={template}
+                                onChange={onTemplateChange}
+                            >
+                                <option value="ingen">Ingen ferdig utfylt aktivitet valgt</option>
+                                <option value={malverkTemplate.tittel}>{malverkTemplate.tittel}</option>
+                            </Select>
+                        )
+                    }
 
                     <TextField
                         disabled={avtalt}
@@ -115,10 +156,9 @@ const EgenAktivitetForm = (props: Props) => {
                         {...register('tittel')}
                         error={errors.tittel && errors.tittel.message}
                     />
-                    <MaybeAvtaltDateRangePicker
-                        aktivitet={aktivitet}
-                        from={{ name: 'fraDato', required: true }}
-                        to={{ name: 'tilDato', required: true }}
+                    <DateRangePicker
+                        from={{ name: 'fraDato', required: true, defaultValue: defaultValues.fraDato }}
+                        to={{ name: 'tilDato', required: true, defaultValue: defaultValues.tilDato }}
                     />
                     <TextField
                         disabled={avtalt}
@@ -156,5 +196,15 @@ const EgenAktivitetForm = (props: Props) => {
         </form>
     );
 };
+
+type EgenaktivitetTemplate = 'Oppdater CV-en og jobbønsker' | 'ingen';
+
+const malverkTemplate = {
+    tittel: 'Oppdater CV-en og jobbønsker',
+    hensikt: 'Tydeliggjøre arbeidserfaring og jobbønsker slik at Nav kan bidra til å hjelpe deg ut i jobb',
+    beskrivelse:
+        'Når du registrerer CV-en din og jobbønskene dine, kan Nav følge deg opp på en bedre måte. CV-en gir oss nyttig informasjon om din kompetanse og dine jobbønsker. Etter avtale med deg, videreformidler Nav relevant informasjon til aktuelle arbeidsgivere og bemanningsbransjen for å hjelpe deg ut i jobb.',
+    lenke: 'https://www.nav.no/min-cv',
+} as const;
 
 export default EgenAktivitetForm;

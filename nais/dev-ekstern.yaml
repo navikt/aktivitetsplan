@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2024.10.04_13.21-c31f6e652a0c
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2025.11.05_09.25-b34a8e35f6cc
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -45,7 +45,6 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: pto-proxy
         - application: veilarblest
           namespace: dab
         - application: veilarbaktivitet
@@ -54,10 +53,8 @@ spec:
           namespace: dab
         - application: veilarboppfolging
           namespace: poao
-      external:
-        - host: navtestb2c.b2clogin.com
-        - host: veilarbmalverk.dev-fss-pub.nais.io
-        - host: veilarbveileder.dev-fss-pub.nais.io
+        - application: nav-dekoratoren
+          namespace: personbruker
   gcp:
     buckets:
       - name: aktivitetsplan-dev
@@ -72,6 +69,11 @@ spec:
             "bucketName": "nais-cdn-nav-dab-42cc",
             "bucketContextPath": "dab/aktivitetsplan-dev-ekstern/build/"
           },
+          "dekorator": {
+            "env": "dev",
+            "simple": false,
+            "chatbot": false
+          },
           "auth": {
             "loginProvider": "ID_PORTEN"
           },
@@ -83,7 +85,7 @@ spec:
               "fontSrc":["*.psplugin.com","*.hotjar.com","cdn.nav.no","data:"],
               "imgSrc":["*.nav.no","*.psplugin.com","*.vimeocdn.com","*.hotjar.com","www.vergic.com","data:","uxsignals-frontend.uxsignals.app.iterate.no"],
               "frameSrc":["*.hotjar.com","player.vimeo.com","video.qbrick.com"],
-              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com","*.uxsignals.com"],
+              "connectSrc":["*.nav.no","*.boost.ai","*.psplugin.com","*.hotjar.com","*.hotjar.io","*.taskanalytics.com","*.uxsignals.com", "blob:"],
               "workerSrc": ["'self'", "*.nav.no", "blob:"]
             }
           },

@@ -4,9 +4,9 @@ import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-do
 import {
     journalfør,
     selectForhaandsvisningOpprettet,
-    selectForhaandsvisningStatus,
+    selectForhaandsvisningStatus, selectForhaandsvisningUuidCachetPdf,
     selectJournalføringstatus,
-    selectSistJournalfort,
+    selectSistJournalfort
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routing/useRoutes';
@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
 import { formaterDatoKortManed, formaterTid } from '../../utils/dateUtils';
 import { useFnrOgEnhetContext } from '../../Provider';
-import { logKlikkKnapp } from '../../amplitude/amplitude';
+import { logKlikkKnapp } from '../../analytics/analytics';
 
 const Sidebar: FunctionComponent = () => {
     const dispatch = useAppDispatch();
@@ -25,20 +25,21 @@ const Sidebar: FunctionComponent = () => {
     const sistJournalfort = useSelector(selectSistJournalfort);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
     const journalføringsStatus = useSelector(selectJournalføringstatus);
+    const uuidCachetPdf = useSelector(selectForhaandsvisningUuidCachetPdf);
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const journalfører = [Status.PENDING, Status.RELOADING].includes(journalføringsStatus);
     const { hovedsideRoute } = useRoutes();
     const navigate = useNavigate();
-    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+    const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
 
-    if (!journalførendeEnhet || !oppfolgingsperiodeId) {
+    if (!journalførendeEnhetId || !oppfolgingsperiodeId) {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
     }
 
     const sendTilArkiv = () => {
         logKlikkKnapp('Journalfør aktivitetsplan');
-        if (forhaandsvisningOpprettet) {
-            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
+        if (forhaandsvisningOpprettet && uuidCachetPdf) {
+            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhetId, oppfolgingsperiodeId, uuidCachetPdf }));
         }
     };
 
@@ -88,15 +89,12 @@ const Sidebar: FunctionComponent = () => {
                     {[...oppfolgingsperioder]
                         .sort((a, b) => Date.parse(b.start) - Date.parse(a.start))
                         .map((periode) => (
-                            <option
-                                key={`oppfolgingsperiodeoption-${periode.id}`}
-                                value={periode.id}
-                            >
+                            <option key={`oppfolgingsperiodeoption-${periode.id}`} value={periode.id}>
                                 {periode.slutt == undefined
                                     ? 'Nåværende periode'
                                     : formaterDatoKortManed(periode.start) +
-                                    ' - ' +
-                                    formaterDatoKortManed(periode.slutt)}
+                                      ' - ' +
+                                      formaterDatoKortManed(periode.slutt)}
                             </option>
                         ))}
                 </Select>

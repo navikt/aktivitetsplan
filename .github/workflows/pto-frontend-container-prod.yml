@@ -12,16 +12,15 @@ concurrency:
   group: pto_frontend_container_prod
   cancel-in-progress: true
 
-env:
-  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v5
       - name: deploy gcp prod ekstern
-        uses: nais/deploy/actions/deploy@v1
+        uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml

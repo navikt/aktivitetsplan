@@ -2,7 +2,6 @@ import { setDefaultOptions } from 'date-fns';
 import nn from 'date-fns/locale/nn';
 import React from 'react';
 
-import { initAmplitude } from './amplitude/amplitude';
 import { ER_INTERN_FLATE, USE_MOCK } from './constant';
 import { mockAktivEnhet, mockfnr } from './mocks/utils';
 import { createRoot } from 'react-dom/client';
@@ -45,6 +44,5 @@ if (USE_MOCK) {
         },
     );
 } else {
-    initAmplitude();
     renderApp();
 }

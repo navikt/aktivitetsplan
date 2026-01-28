@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
-import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../amplitude/amplitude';
+import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
 import { Status } from '../../../../createGenericSlice';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
@@ -19,6 +19,7 @@ import { oppdaterReferat, utenHistorikk } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
+import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -70,6 +71,7 @@ const OppdaterReferatForm = (props: Props) => {
                 logReferatFullfort(analysis, aktivitet.erReferatPublisert, open);
             }
             if (isFulfilled(action)) {
+                dispatch(notifiserTryggTekstVedLagring(referatData.referat));
                 onFerdig();
             }
             return action;
@@ -82,6 +84,7 @@ const OppdaterReferatForm = (props: Props) => {
             const analysis = checkText(values.referat);
             logReferatFullfort(analysis, aktivitet.erReferatPublisert, open);
             if (isFulfilled(action)) {
+                dispatch(notifiserTryggTekstVedLagring(values.referat));
                 onFerdig();
             }
             return action;
