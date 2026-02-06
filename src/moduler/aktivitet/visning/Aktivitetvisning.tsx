@@ -10,6 +10,7 @@ import AktivitetinformasjonVisning from './hjelpekomponenter/Aktivitetinformasjo
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/ReferatContainer';
+import { InfoCard } from '@navikt/ds-react';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -36,7 +37,17 @@ const Aktivitetvisning = (props: Props) => {
             <ActionRad aktivitet={aktivitet} tillatEndring={tillatEndring} laster={laster} />
             {aktivitet.type === VeilarbAktivitetType.MOTE_TYPE ||
             aktivitet.type === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ? (
+                <div>
                 <ReferatContainer aktivitet={aktivitet} />
+                    <InfoCard data-color="info">
+                        <InfoCard.Header>
+                            <InfoCard.Title>Nav tester en ny løsning for å styrke ditt personvern</InfoCard.Title>
+                        </InfoCard.Header>
+                        <InfoCard.Content>
+                            Nav tester en ny løsning for å styrke ditt personvern. Dette samtalereferatet er plukket ut til testformål. Les mer på: www.nav.no/xxx
+                        </InfoCard.Content>
+                    </InfoCard>
+                </div>
             ) : null}
             <AktivitetvisningAccordion aktivitet={aktivitet} />
         </div>
