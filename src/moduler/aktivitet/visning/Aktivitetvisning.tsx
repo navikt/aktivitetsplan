@@ -44,7 +44,7 @@ const Aktivitetvisning = (props: Props) => {
                             <InfoCard.Title>Nav tester en ny løsning for å styrke ditt personvern</InfoCard.Title>
                         </InfoCard.Header>
                         <InfoCard.Content>
-                            Nav tester en ny løsning for å styrke ditt personvern. Dette samtalereferatet er plukket ut til testformål. Les mer på: www.nav.no/xxx
+                            Dette samtalereferatet er plukket ut til testformål. Les mer på: www.nav.no/xxx
                         </InfoCard.Content>
                     </InfoCard>
                 </div>
