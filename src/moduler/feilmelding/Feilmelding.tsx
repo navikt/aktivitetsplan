@@ -3,7 +3,13 @@ import classNames from 'classnames';
 import React from 'react';
 
 import { SerializedError } from '../../api/utils';
-import { flyttAktivitet, hentAktivitet, hentAktiviteter, publiserReferat } from '../aktivitet/aktivitet-actions';
+import {
+    flyttAktivitet,
+    hentAktivitet,
+    hentAktiviteter,
+    oppdaterReferat,
+    publiserReferat,
+} from '../aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../aktivitet/arena-aktiviteter-slice';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { oppdaterMal } from '../mal/aktivitetsmal-slice';
@@ -35,6 +41,13 @@ export const getErrorText = (feilmeldinger: SerializedError[]) => {
         case oppdaterMal.rejected.type:
             return 'Noe gikk galt, og du får dessverre ikke oppdatert mål. Prøv igjen senere.';
         case publiserReferat.rejected.type:
+            return 'Noe gikk dessverre galt med deling av referat. Prøv igjen senere.';
+        case oppdaterReferat.rejected.type:
+            if (feil.code == '409')
+                return 'Konflikt ved oppdatering av referat, nye endringer har kommet siden aktiviteten sist ble åpnet';
+            if (feil.code == '400')
+                return 'Kunne ikke endre aktivitet, sjekk at den ikke er blitt flyttet i en ferdig status eller historisert';
+            if (feil.code == '403') return 'Oppdatering av referat krever skrive-tilgang til bruker';
             return 'Noe gikk dessverre galt med deling av referat. Prøv igjen senere.';
         default:
             return 'Noe gikk dessverre galt med aktivitetsplanen. Prøv igjen senere.';
