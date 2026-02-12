@@ -1,13 +1,14 @@
 name: Formatter kode med prettier og commit
 on: [workflow_dispatch]
 jobs:
+  setup-env:
+    name: Install pnpm - setup node - install deps
+    uses: ./.github/workflows/setup-env.yml
+    secrets:
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
   format:
     runs-on: ubuntu-latest
     steps:
-      - name: Install pnpm - setup node - install deps
-        uses: ./.github/workflows/setup-env.yml
-        secrets:
-          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Kjør prettier
         run: |
           pnpm run format-all

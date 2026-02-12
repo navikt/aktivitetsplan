@@ -18,18 +18,15 @@ on:
         required: false
 
 jobs:
+  setup-env:
+    name: Install pnpm - setup node - install deps
+    uses: ./.github/workflows/setup-env.yml
+    secrets:
+      READER_TOKEN: ${{ secrets.READER_TOKEN }}
   deploy:
     name: Deploy to GCP-bucket
     runs-on: ubuntu-latest
     steps:
-      - setup-env:
-        name: Install pnpm - setup node - install deps
-        uses: ./.github/workflows/setup-env.yml
-        secrets:
-          READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
       - name: Run tests
         run: pnpm run test
       - name: Build application
