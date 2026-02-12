@@ -11,8 +11,7 @@ jobs:
         name: Install pnpm - setup node - install deps
         uses: ./.github/workflows/setup-env.yml
         with:
-
-        READER_TOKEN: ${{ secrets.READER_TOKEN }}
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Kjør prettier
         run: |
           pnpm run format-all
