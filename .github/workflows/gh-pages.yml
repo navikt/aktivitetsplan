@@ -16,6 +16,7 @@ jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v5
             - name: Install pnpm - setup node - install deps
               uses: ./.github/actions/setup-pnpm
               with:
