@@ -15,13 +15,7 @@ on:
         required: true
         type: string
 jobs:
-  setup-env:
-    name: Install pnpm - setup node - install deps
-    uses: ./.github/workflows/setup-env.yml
-    secrets:
-      READER_TOKEN: ${{ secrets.READER_TOKEN }}
   deploy:
-    needs: setup-env
     name: Deploy application to CDN
     runs-on: ubuntu-latest
     permissions:
@@ -29,6 +23,10 @@ jobs:
       id-token: 'write'
       packages: 'write'
     steps:
+      - name: Install pnpm - setup node - install deps
+        uses: ./.github/actions/setup-pnpm
+        with:
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Run tests
         run: pnpm run test
       - name: Build application

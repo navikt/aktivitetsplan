@@ -13,15 +13,13 @@ permissions:
   contents: write
 
 jobs:
-    setup-env:
-      name: Install pnpm - setup node - install deps
-      uses: ./.github/workflows/setup-env.yml
-      secrets:
-        READER_TOKEN: ${{ secrets.READER_TOKEN }}
     build-and-deploy:
-        needs: setup-env
         runs-on: ubuntu-latest
         steps:
+            - name: Install pnpm - setup node - install deps
+              uses: ./.github/actions/setup-pnpm
+              with:
+                READER_TOKEN: ${{ secrets.READER_TOKEN }}
             - name: Build
               run: pnpm run build:gh-pages
             - name: Deploy
