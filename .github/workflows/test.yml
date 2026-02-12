@@ -14,9 +14,9 @@ jobs:
         with:
           node-version: 22
           registry-url: "https://npm.pkg.github.com"
-          cache: 'npm'
-      - run: npm ci
+          cache: 'pnpm'
+      - run: pnpm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      - run: npm run test
-      - run: npm run build
+      - run: pnpm run test
+      - run: pnpm run build

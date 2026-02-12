@@ -13,8 +13,8 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
       - name: Kjør prettier
         run: |
-          npm ci
-          npm run format-all
+          pnpm ci
+          pnpm run format-all
         env:
             NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Commit changes
