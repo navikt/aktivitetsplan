@@ -11,9 +11,6 @@ jobs:
     name: Install pnpm - setup node - install deps
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:

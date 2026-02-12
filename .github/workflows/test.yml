@@ -10,6 +10,7 @@ jobs:
     name: Build and run tests
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-pnpm@pnpm
         name: Install pnpm - setup node - install deps
         with:
