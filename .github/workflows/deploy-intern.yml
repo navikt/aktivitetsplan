@@ -21,6 +21,7 @@ jobs:
     secrets:
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
   deploy:
+    needs: setup-env
     name: Deploy application to CDN
     runs-on: ubuntu-latest
     permissions:

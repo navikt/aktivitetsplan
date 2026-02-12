@@ -19,6 +19,7 @@ jobs:
       secrets:
         READER_TOKEN: ${{ secrets.READER_TOKEN }}
     build-and-deploy:
+        needs: setup-env
         runs-on: ubuntu-latest
         steps:
             - name: Build
