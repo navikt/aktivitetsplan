@@ -5,8 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - setup-env:
-        name: Install pnpm - setup node - install deps
+      - name: Install pnpm - setup node - install deps
         uses: ./.github/workflows/setup-env.yml
         with:
           READER_TOKEN: ${{ secrets.READER_TOKEN }}
