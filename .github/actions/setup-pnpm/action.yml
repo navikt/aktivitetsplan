@@ -1,0 +1,24 @@
+name: Install pnpm - setup node - install deps
+
+inputs:
+  READER_TOKEN:
+    required: true
+    description: npm reader token
+
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+    - uses: actions/setup-node@v5
+      with:
+        node-version: 22
+        registry-url: "https://npm.pkg.github.com"
+        cache: 'pnpm'
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile --ignore-scripts
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.READER_TOKEN }}

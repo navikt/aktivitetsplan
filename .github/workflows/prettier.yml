@@ -5,16 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      - name: Install pnpm - setup node - install deps
+        uses: ./.github/workflows/setup-env.yml
         with:
-          ref: ${{ github.head_ref }}
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          registry-url: "https://npm.pkg.github.com"
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Kjør prettier
         run: |
-          npm ci
-          npm run format-all
+          pnpm run format-all
         env:
             NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Commit changes
