@@ -24,19 +24,12 @@ jobs:
       packages: 'write'
     steps:
       - uses: actions/checkout@v5
+      - name: Install pnpm - setup node - install deps
+        uses: ./.github/actions/setup-pnpm
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          registry-url: "https://npm.pkg.github.com"
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Run tests
-        run: npm run test
+        run: pnpm run test
       - name: Build application
         run: ${{ inputs.kommando }}
       - name: Upload to CDN

@@ -1,5 +1,3 @@
-import { RestRequest } from 'msw';
-
 export enum LocalStorageElement {
     PRIVAT_BRUKER = 'privatbruker',
     MANUELL_BRUKER = 'manuellbruker',
@@ -87,8 +85,9 @@ export const oppfFeilet = () => erSatt(LocalStorageElement.OPPF_FEILET);
 
 export const dialogFeilet = () => erSatt(LocalStorageElement.DIALOG_FEILET);
 
-export const aktivitetFeilet = (request: RestRequest) => {
+export const aktivitetFeilet = () => {
     if (erSatt(LocalStorageElement.AKTIVITET_FEILET)) return true;
+    return false;
 };
 
 export const arenaFeilet = () => erSatt(LocalStorageElement.ARENA_FEILET);
