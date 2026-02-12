@@ -6,15 +6,13 @@ env:
   PRINT_PAYLOAD: true
 
 jobs:
-  setup-env:
-    name: Install pnpm - setup node - install deps
-    uses: ./.github/workflows/setup-env.yml
-    secrets:
-      READER_TOKEN: ${{ secrets.READER_TOKEN }}
   build:
-    needs: setup-env
     name: Build and run tests
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/actions/setup-pnpm
+        name: Install pnpm - setup node - install deps
+        with:
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - run: pnpm run test
       - run: pnpm run build
