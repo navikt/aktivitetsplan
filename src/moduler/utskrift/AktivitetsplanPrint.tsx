@@ -1,4 +1,4 @@
-import { Loader, Modal } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { defer, LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
@@ -18,7 +18,6 @@ import {
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
-import PrintMeldingForm, { PrintFormValues } from './PrintMeldingForm';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
 import { Dispatch } from '../../store';
@@ -45,18 +44,13 @@ import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
 import { filterErAktivt } from '../filtrering/filter/filter-utils';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
-const STEP_MELDING_FORM = 'MELDING_FORM';
 const STEP_UTSKRIFT = 'UTSKRIFT';
 
-function getSteps(kanHaPrintValg?: boolean, kanHaPrintMelding?: boolean): string[] {
+function getSteps(kanHaPrintValg?: boolean): string[] {
     const steps = [];
 
     if (kanHaPrintValg) {
         steps.push(STEP_VELG_PLAN);
-    }
-
-    if (kanHaPrintMelding) {
-        steps.push(STEP_MELDING_FORM);
     }
 
     steps.push(STEP_UTSKRIFT);
@@ -75,7 +69,6 @@ const AktivitetsplanPrint = () => {
     const uuidCachetPdf = useSelector(selectForhaandsvisningSendTilBrukerUuidCachetPdf);
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
-    const [isLoadingBruker, setIsLoadingBruker] = useState(true);
     const [stepIndex, setStepIndex] = useState(0);
     const [printMelding, setPrintMelding] = useState('');
     const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
@@ -143,15 +136,11 @@ const AktivitetsplanPrint = () => {
     };
 
     const kanHaPrintValg = kvpPerioder && kvpPerioder.length > 0 && erVeileder;
-    const kanHaPrintMelding = erManuell && erVeileder;
 
-    const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
+    const steps = getSteps(kanHaPrintValg);
     const navigate = useNavigate();
 
     const goBack = () => navigate(-1);
-    if (fnr && isLoadingBruker) {
-        return <Loader />;
-    }
 
     const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
         const arkivFilter = mapTilJournalforingFilter(
@@ -175,20 +164,6 @@ const AktivitetsplanPrint = () => {
     };
 
     const getPrompt = () => {
-        if (steps[stepIndex] === STEP_MELDING_FORM) {
-            return (
-                <Modal
-                    closeOnBackdropClick
-                    onClose={goBack}
-                    open
-                    header={{ heading: `Tilpass beskrivelse`, closeButton: true }}
-                >
-                    <Innholdslaster avhengigheter={avhengigheter}>
-                        <PrintMeldingForm onSubmit={printMeldingSubmit} />
-                    </Innholdslaster>
-                </Modal>
-            );
-        }
         if (steps[stepIndex] === STEP_VELG_PLAN) {
             return (
                 <Modal onClose={goBack} open header={{ heading: 'Velg hva du ønsker å skrive ut', closeButton: true }}>
