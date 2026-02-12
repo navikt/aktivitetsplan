@@ -23,22 +23,10 @@ jobs:
       id-token: 'write'
       packages: 'write'
     steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          registry-url: "https://npm.pkg.github.com"
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Install pnpm - setup node - install deps
+        uses: ./.github/workflows/setup-env.yml
+        secrets:
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Run tests
         run: pnpm run test
       - name: Build application

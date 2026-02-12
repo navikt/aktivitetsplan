@@ -4,20 +4,12 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.head_ref }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          registry-url: "https://npm.pkg.github.com"
+      - name: Install pnpm - setup node - install deps
+        uses: ./.github/workflows/setup-env.yml
+        secrets:
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Kjør prettier
         run: |
-          pnpm install --frozen-lockfile --ignore-scripts
           pnpm run format-all
         env:
             NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}

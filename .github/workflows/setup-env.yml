@@ -1,0 +1,29 @@
+name: GCP root
+
+on:
+  workflow_call:
+    secrets:
+      READER_TOKEN:
+        required: true
+
+jobs:
+  deploy:
+    name: Install pnpm - setup node - install deps
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          registry-url: "https://npm.pkg.github.com"
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
