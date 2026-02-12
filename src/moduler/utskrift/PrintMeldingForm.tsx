@@ -4,14 +4,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Bruker } from '../../datatypes/types';
-
 const defaultBeskrivelse =
     'Her finner du avtalte aktiviteter med Nav som du skal gjennomføre for å nå målet ditt. ' +
     'Gi beskjed til Nav hvis det skjer endringer i situasjonen din eller hvis du ikke kan gjennomføre en aktivitet.';
 
 interface Props {
-    bruker: Bruker;
     onSubmit: (formValues: PrintFormValues) => Promise<void>;
 }
 
