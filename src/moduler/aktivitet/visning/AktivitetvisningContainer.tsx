@@ -64,7 +64,7 @@ const AktivitetvisningContainer = () => {
 
     return (
         <DirtyProvider>
-            <AktivitetvisningModal aktivitet={valgtAktivitet} avhengigheter={avhengigheter}>
+            <AktivitetvisningModal avhengigheter={avhengigheter}>
                 {valgtAktivitet ? (
                     <Aktivitetvisning aktivitet={valgtAktivitet} tillatEndring={tillatEndring} laster={laster} />
                 ) : (
