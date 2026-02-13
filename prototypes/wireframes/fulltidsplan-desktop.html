@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Fulltidsplan (Desktop)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .wf-header {
+            border-bottom: 3px solid #333;
+            background: #e0e0e0;
+            padding: 16px;
+            font-weight: bold;
+        }
+        .wf-box {
+            border: 2px solid #999;
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        .wf-text {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 8px;
+            margin: 4px 0;
+        }
+        .wf-button {
+            border: 2px solid #666;
+            background: #d0d0d0;
+            padding: 8px 16px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .container { max-width: 1600px; margin: 0 auto; padding: 16px; }
+        .grid { display: grid; gap: 16px; }
+        .grid-8 { grid-template-columns: 80px repeat(7, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .flex { display: flex; gap: 8px; align-items: center; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+        .annotation {
+            background: #ffffcc;
+            border-left: 4px solid #ff9800;
+            padding: 12px;
+            margin: 16px 0;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .calendar-header {
+            background: #e0e0e0;
+            border: 2px solid #666;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .time-label {
+            border: 1px solid #ccc;
+            padding: 4px;
+            text-align: right;
+            font-size: 11px;
+            background: #f5f5f5;
+        }
+        .time-slot {
+            border: 1px solid #ddd;
+            min-height: 60px;
+            background: white;
+            position: relative;
+        }
+        .activity-block {
+            border: 2px solid #666;
+            border-left-width: 6px;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            font-size: 11px;
+            margin: 2px;
+        }
+        .activity-block.work { border-left-color: #999; }
+        .activity-block.education { border-left-color: #666; }
+        .activity-block.meeting { border-left-color: #333; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="wf-header">
+        <div class="container">
+            <div class="flex-between">
+                <div>
+                    <div style="font-size: 20px;">WIREFRAME: FULLTIDSPLAN (Desktop)</div>
+                    <div style="font-size: 13px; margin-top: 4px;">[Bruker Navn] • [Program]</div>
+                </div>
+                <div class="wf-button">[+ Legg til]</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="annotation">
+            📐 WIREFRAME: Fulltidsplan - Daglig/ukentlig planlegging for spesialprogrammer (KVP, Ungdomsprogram)
+        </div>
+
+        <!-- Program info -->
+        <div class="wf-box" style="border-left: 6px solid #666;">
+            <div class="flex-between">
+                <div class="flex">
+                    <div style="width: 40px; height: 40px; border: 2px solid #666; border-radius: 8px; background: #ddd; display: flex; align-items: center; justify-content: center;">
+                        👥
+                    </div>
+                    <div>
+                        <div style="font-weight: bold;">[Program Navn]</div>
+                        <div style="font-size: 12px;">Fulltidsprogram • [Dato] - [Dato] • 37,5 timer/uke</div>
+                        <div style="font-size: 11px; margin-top: 4px;">📊 Denne uke: X / 37,5 timer</div>
+                    </div>
+                </div>
+                <div class="wf-button">[Se detaljer]</div>
+            </div>
+        </div>
+
+        <!-- Langtidstiltak banner -->
+        <div class="wf-box" style="border-left: 4px solid #999;">
+            <div class="flex-between">
+                <div class="flex">
+                    <span>💼</span>
+                    <div>
+                        <span style="font-weight: bold;">[Tiltak Navn]</span>
+                        <span style="font-size: 12px; margin-left: 8px;">• Planlagt X timer/uke i fulltidsplanen</span>
+                    </div>
+                </div>
+                <div class="wf-button">[Se tiltak]</div>
+            </div>
+        </div>
+
+        <!-- Ukenavigasjon -->
+        <div class="wf-box" style="background: #f5f5f5;">
+            <div class="flex-between">
+                <div class="wf-button">[←]</div>
+                <div style="font-weight: bold;">Uke X • [Dato] - [Dato] [År]</div>
+                <div class="wf-button">[→]</div>
+                <div class="wf-button">[I dag]</div>
+            </div>
+        </div>
+
+        <!-- Ukekalender -->
+        <div class="wf-box" style="padding: 0; overflow: hidden;">
+            <!-- Header med dager -->
+            <div class="grid grid-8" style="gap: 0;">
+                <div class="calendar-header" style="background: white;"></div>
+                <div class="calendar-header">
+                    <div style="font-size: 10px;">Man</div>
+                    <div>DD. MMM</div>
+                    <div style="font-size: 10px; margin-top: 4px;">X / 7,5t</div>
+                </div>
+                <div class="calendar-header" style="background: #d0d0d0; border: 3px solid #333;">
+                    <div style="font-size: 10px;">Tir (i dag)</div>
+                    <div>DD. MMM</div>
+                    <div style="font-size: 10px; margin-top: 4px;">X / 7,5t</div>
+                </div>
+                <div class="calendar-header">
+                    <div style="font-size: 10px;">Ons</div>
+                    <div>DD. MMM</div>
+                    <div style="font-size: 10px; margin-top: 4px;">X / 7,5t</div>
+                </div>
+                <div class="calendar-header">
+                    <div style="font-size: 10px;">Tor</div>
+                    <div>DD. MMM</div>
+                    <div style="font-size: 10px; margin-top: 4px;">X / 7,5t</div>
+                </div>
+                <div class="calendar-header">
+                    <div style="font-size: 10px;">Fre</div>
+                    <div>DD. MMM</div>
+                    <div style="font-size: 10px; margin-top: 4px;">X / 7,5t</div>
+                </div>
+                <div class="calendar-header" style="opacity: 0.5;">
+                    <div style="font-size: 10px;">Lør</div>
+                    <div>DD. MMM</div>
+                    <div style="font-size: 10px; margin-top: 4px;">-</div>
+                </div>
+                <div class="calendar-header" style="opacity: 0.5;">
+                    <div style="font-size: 10px;">Søn</div>
+                    <div>DD. MMM</div>
+                    <div style="font-size: 10px; margin-top: 4px;">-</div>
+                </div>
+            </div>
+
+            <!-- Tidslinje 08:00 -->
+            <div class="grid grid-8" style="gap: 0;">
+                <div class="time-label">08:00</div>
+                <div class="time-slot"></div>
+                <div class="time-slot" style="background: #e8e8e8;">
+                    <div class="activity-block meeting">
+                        <div style="font-weight: bold;">[Møte NAV]</div>
+                        <div>08:00-09:00 • 1t</div>
+                    </div>
+                </div>
+                <div class="time-slot"></div>
+                <div class="time-slot"></div>
+                <div class="time-slot"></div>
+                <div class="time-slot" style="opacity: 0.3;"></div>
+                <div class="time-slot" style="opacity: 0.3;"></div>
+            </div>
+
+            <!-- 09:00 -->
+            <div class="grid grid-8" style="gap: 0;">
+                <div class="time-label">09:00</div>
+                <div class="time-slot">
+                    <div class="activity-block work">
+                        <div style="font-weight: bold;">[Arbeid]</div>
+                        <div>09:00-13:00 • 4t</div>
+                    </div>
+                </div>
+                <div class="time-slot" style="background: #e8e8e8; position: relative;">
+                    <!-- Tidmarkør "nå" -->
+                    <div style="position: absolute; left: 0; right: 0; top: 30%; height: 2px; background: #666; z-index: 10;">
+                        <div style="position: absolute; left: -6px; top: -5px; width: 12px; height: 12px; border-radius: 50%; background: #666;"></div>
+                    </div>
+                </div>
+                <div class="time-slot">
+                    <div class="activity-block work">
+                        <div style="font-weight: bold;">[Arbeid]</div>
+                        <div>09:00-13:00 • 4t</div>
+                    </div>
+                </div>
+                <div class="time-slot">
+                    <div class="activity-block work">
+                        <div style="font-weight: bold;">[Arbeid]</div>
+                        <div>09:00-13:00 • 4t</div>
+                    </div>
+                </div>
+                <div class="time-slot">
+                    <div class="activity-block work">
+                        <div style="font-weight: bold;">[Arbeid]</div>
+                        <div>09:00-13:00 • 4t</div>
+                    </div>
+                </div>
+                <div class="time-slot" style="opacity: 0.3;"></div>
+                <div class="time-slot" style="opacity: 0.3;"></div>
+            </div>
+
+            <!-- 10:00 -->
+            <div class="grid grid-8" style="gap: 0;">
+                <div class="time-label">10:00</div>
+                <div class="time-slot"></div>
+                <div class="time-slot" style="background: #e8e8e8;">
+                    <div class="activity-block education">
+                        <div style="font-weight: bold;">[Kurs]</div>
+                        <div>10:00-12:00 • 2t</div>
+                    </div>
+                </div>
+                <div class="time-slot"></div>
+                <div class="time-slot"></div>
+                <div class="time-slot"></div>
+                <div class="time-slot" style="opacity: 0.3;"></div>
+                <div class="time-slot" style="opacity: 0.3;"></div>
+            </div>
+
+            <!-- ... flere tidspunkter ville vært her i full versjon ... -->
+            <div class="wf-text" style="text-align: center; margin: 16px;">
+                [...mer tidslinje 11:00-17:00...]
+            </div>
+        </div>
+
+        <!-- Ukeoppsummering -->
+        <div class="grid grid-3" style="margin-top: 16px;">
+            <div class="wf-box">
+                <div class="flex-between" style="margin-bottom: 8px;">
+                    <div style="font-weight: bold;">Timer denne uke</div>
+                    <span style="font-size: 24px;">⏱️</span>
+                </div>
+                <div style="font-size: 28px; font-weight: bold;">X / 37,5</div>
+                <div style="border: 2px solid #666; height: 16px; background: white; margin-top: 8px; position: relative;">
+                    <div style="background: repeating-linear-gradient(45deg, #999, #999 10px, #888 10px, #888 20px); height: 100%; width: 87%;"></div>
+                </div>
+                <div style="font-size: 11px; margin-top: 4px;">Mangler Y timer for full uke</div>
+            </div>
+
+            <div class="wf-box">
+                <div style="font-weight: bold; margin-bottom: 8px;">📊 Aktivitetstyper</div>
+                <div class="flex-between" style="font-size: 13px; margin: 4px 0;">
+                    <span>Arbeid</span>
+                    <span style="font-weight: bold;">Xt</span>
+                </div>
+                <div class="flex-between" style="font-size: 13px; margin: 4px 0;">
+                    <span>Utdanning</span>
+                    <span style="font-weight: bold;">Xt</span>
+                </div>
+                <div class="flex-between" style="font-size: 13px; margin: 4px 0;">
+                    <span>Egen aktivitet</span>
+                    <span style="font-weight: bold;">Xt</span>
+                </div>
+            </div>
+
+            <div class="wf-box">
+                <div style="font-weight: bold; margin-bottom: 8px;">📅 Kommende</div>
+                <div class="wf-text" style="font-size: 12px; margin: 4px 0;">
+                    [Hendelse 1] - [Dato]
+                </div>
+                <div class="wf-text" style="font-size: 12px; margin: 4px 0;">
+                    [Hendelse 2] - [Dato]
+                </div>
+                <div class="wf-text" style="font-size: 12px; margin: 4px 0;">
+                    [Hendelse 3] - [Dato]
+                </div>
+            </div>
+        </div>
+
+        <!-- Fargekode forklaring -->
+        <div class="wf-box" style="margin-top: 16px;">
+            <div style="font-weight: bold; margin-bottom: 8px;">Fargekoder</div>
+            <div class="grid grid-3" style="font-size: 12px;">
+                <div class="flex">
+                    <div style="width: 16px; height: 16px; border: 2px solid #999; border-left-width: 6px; background: #f0f0f0;"></div>
+                    <span style="margin-left: 8px;">Arbeid / Tiltak</span>
+                </div>
+                <div class="flex">
+                    <div style="width: 16px; height: 16px; border: 2px solid #666; border-left-width: 6px; background: #f0f0f0;"></div>
+                    <span style="margin-left: 8px;">Utdanning / Kurs</span>
+                </div>
+                <div class="flex">
+                    <div style="width: 16px; height: 16px; border: 2px solid #333; border-left-width: 6px; background: #f0f0f0;"></div>
+                    <span style="margin-left: 8px;">Møte med NAV</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="wf-box" style="margin-top: 24px; border: 3px solid #ff9800; background: #fff3e0;">
+            <div style="font-weight: bold; margin-bottom: 8px;">ℹ️ Om Fulltidsplan Wireframe</div>
+            <div style="font-size: 13px; line-height: 1.6;">
+                <p>Dette wireframet viser ukekalender-layout for brukere på spesialprogrammer:</p>
+                <ul style="margin: 8px 0; padding-left: 20px;">
+                    <li>Time-for-time visning (08:00-17:00)</li>
+                    <li>7-dagers oversikt med daglige timemål</li>
+                    <li>Automatisk timeberegning</li>
+                    <li>Fargekoding per aktivitetstype</li>
+                    <li>Tidmarkør for "nå"</li>
+                    <li>Ukeoppsummering nederst</li>
+                </ul>
+                <p style="margin-top: 8px;"><strong>Målgruppe:</strong> Ungdomsprogram, KVP, andre fulltidsprogrammer</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktivitetsplan - Design Alternativer v2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nav-tab { transition: all 0.2s; }
+        .nav-tab.active { border-bottom: 3px solid #0067c5; color: #0067c5; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0067c5;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #0067c5;
+        }
+        .timeline-item.completed::before { background: #06893a; box-shadow: 0 0 0 2px #06893a; }
+        .timeline-item.future::before { background: #e0e0e0; box-shadow: 0 0 0 2px #e0e0e0; }
+        .timeline-item.milestone::before { 
+            background: #0067c5; 
+            box-shadow: 0 0 0 3px #0067c5;
+            width: 16px;
+            height: 16px;
+            left: -28px;
+            top: 6px;
+        }
+        .timeline-item.milestone.completed::before { background: #06893a; box-shadow: 0 0 0 3px #06893a; }
+        .dialog-bubble { position: relative; }
+        .dialog-bubble::after {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 10px;
+            border: 6px solid transparent;
+            border-right-color: white;
+        }
+        .dialog-bubble.veileder::after { border-right-color: #f0f9ff; }
+        .unread-indicator { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-[#262626] text-white p-4">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-xl font-semibold">Aktivitetsplan - Design Alternativer v2</h1>
+            <p class="text-sm text-gray-300 mt-1">Med støtte for langtidstiltak, delmål og dialog</p>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto flex gap-1 px-4 overflow-x-auto">
+            <button onclick="showTab('milestone')" class="nav-tab active px-4 py-3 text-sm font-medium whitespace-nowrap" data-tab="milestone">1. Milepæl + Delmål</button>
+            <button onclick="showTab('progress')" class="nav-tab px-4 py-3 text-sm font-medium whitespace-nowrap" data-tab="progress">2. Fremdrift + Dialog</button>
+            <button onclick="showTab('dashboard')" class="nav-tab px-4 py-3 text-sm font-medium whitespace-nowrap" data-tab="dashboard">3. Dashboard (forbedret)</button>
+            <button onclick="showTab('combined')" class="nav-tab px-4 py-3 text-sm font-medium whitespace-nowrap" data-tab="combined">4. Kombinert (anbefalt)</button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-4">
+
+        <!-- Tab: Milepælsvisning med delmål -->
+        <section id="milestone" class="tab-content">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 1: Milepælsvisning med delmål</h3>
+                <p class="text-sm text-blue-700 mt-1">Hovedmål brytes ned i delmål. Aktiviteter og tiltak grupperes under relevante delmål. Langtidstiltak vises som "pågående bakgrunn".</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <!-- Hovedmål øverst -->
+                <div class="text-center mb-6 p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg">
+                    <div class="text-xs uppercase tracking-wide opacity-80">Hovedmål</div>
+                    <div class="text-xl font-semibold mt-1">🎯 Fast jobb med tilrettelegging</div>
+                    <div class="text-sm mt-2 opacity-80">Forventet: Desember 2026</div>
+                </div>
+
+                <!-- Pågående langtidstiltak (alltid synlig boks) -->
+                <div class="mb-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-semibold">Lønnstilskudd</h4>
+                                    <span class="px-2 py-0.5 text-xs bg-purple-200 text-purple-800 rounded-full">Langtidstiltak</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Hos Bedrift AS • 1. jan 2026 - 31. des 2026</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm text-purple-700 font-medium">Måned 2 av 12</div>
+                            <div class="w-32 bg-purple-200 rounded-full h-2 mt-1">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 17%"></div>
+                            </div>
+                        </div>
+                        <button class="ml-4 p-2 text-purple-600 hover:bg-purple-100 rounded-full" title="Åpne dialog">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                            <span class="absolute -mt-6 ml-3 w-2 h-2 bg-red-500 rounded-full unread-indicator"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Delmål-navigasjon -->
+                <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+                    <button class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium whitespace-nowrap border-2 border-green-500">
+                        ✓ Delmål 1: Avklaring
+                    </button>
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-medium whitespace-nowrap">
+                        → Delmål 2: Arbeidstrening
+                    </button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap">
+                        Delmål 3: Fast ansettelse
+                    </button>
+                </div>
+
+                <!-- Aktivt delmål -->
+                <div class="border-2 border-blue-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">2</span>
+                        <h3 class="font-semibold text-lg">Delmål: Arbeidstrening og kompetanseheving</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Bygge erfaring og ferdigheter gjennom lønnstilskudd hos arbeidsgiver</p>
+                    
+                    <!-- Tidslinje for aktiviteter under delmålet -->
+                    <div class="relative pl-8 border-l-4 border-blue-200 ml-4">
+                        <div class="timeline-item completed relative mb-4 pb-3">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded mb-1">Fullført</span>
+                                    <h4 class="font-medium">Oppstartsmøte med arbeidsgiver</h4>
+                                    <p class="text-sm text-gray-500">Avklarte arbeidsoppgaver og tilrettelegging</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-gray-400">5. jan</span>
+                                    <button class="p-1 text-gray-400 hover:text-blue-500 rounded" title="2 meldinger">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item relative mb-4 pb-3 bg-blue-50 -ml-8 pl-8 pr-4 py-3 rounded-r">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-2 py-0.5 bg-orange-100 text-orange-700 text-xs rounded mb-1">Pågår</span>
+                                    <h4 class="font-medium">Fagbrev-kurs (teori)</h4>
+                                    <p class="text-sm text-gray-500">Nettbasert kurs parallelt med arbeid</p>
+                                    <div class="mt-2 flex items-center gap-2">
+                                        <div class="w-24 bg-gray-200 rounded-full h-1.5">
+                                            <div class="bg-orange-500 h-1.5 rounded-full" style="width: 40%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500">4 av 10 moduler</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs text-gray-400">1. feb - 30. apr</span>
+                                    <button class="p-1 text-blue-500 hover:text-blue-700 rounded relative" title="1 ulest melding">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item future relative mb-4 pb-3 opacity-70">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded mb-1">Planlagt</span>
+                                    <h4 class="font-medium">Evalueringsmøte (3 mnd)</h4>
+                                    <p class="text-sm text-gray-500">Med veileder og arbeidsgiver</p>
+                                </div>
+                                <span class="text-xs text-gray-400">1. apr</span>
+                            </div>
+                        </div>
+
+                        <!-- Milepæl for delmål -->
+                        <div class="timeline-item milestone future relative opacity-60">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded mb-1">Milepæl</span>
+                                    <h4 class="font-semibold">🏁 Delmål 2 fullført</h4>
+                                    <p class="text-sm text-gray-500">Bestått fagprøve + 6 mnd erfaring</p>
+                                </div>
+                                <span class="text-xs text-gray-400">Juni 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fullført delmål (kollapset) -->
+                <details class="border rounded-lg mb-4">
+                    <summary class="p-4 cursor-pointer font-medium text-green-700 hover:bg-gray-50 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-sm">✓</span>
+                        Delmål 1: Avklaring og kartlegging (fullført)
+                    </summary>
+                    <div class="p-4 pt-0 text-sm text-gray-600 space-y-2 border-t">
+                        <div class="flex items-center gap-2 py-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Kartleggingssamtale - 5. des 2025</span>
+                        </div>
+                        <div class="flex items-center gap-2 py-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Arbeidsevnevurdering - 15. des 2025</span>
+                        </div>
+                        <div class="flex items-center gap-2 py-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Avtale om lønnstilskudd signert - 20. des 2025</span>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Fremtidig delmål (kollapset) -->
+                <details class="border rounded-lg opacity-60">
+                    <summary class="p-4 cursor-pointer font-medium text-gray-500 hover:bg-gray-50 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center text-sm">3</span>
+                        Delmål 3: Fast ansettelse
+                    </summary>
+                    <div class="p-4 pt-0 text-sm text-gray-500 border-t">
+                        <p>Aktiviteter planlegges når delmål 2 nærmer seg ferdig</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded">
+                <h4 class="font-semibold text-green-800">✓ Forbedringer i denne versjonen</h4>
+                <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                    <li><strong>Delmål:</strong> Hovedmålet brytes ned i håndterbare etapper</li>
+                    <li><strong>Langtidstiltak:</strong> Vises som "pågående bakgrunn" uten å rote til tidslinjen</li>
+                    <li><strong>Dialog-ikon:</strong> Hver aktivitet har rask tilgang til tilknyttet dialog</li>
+                    <li><strong>Ulest-indikator:</strong> Tydelig markering av nye meldinger</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Tab: Fremdrift med dialog -->
+        <section id="progress" class="tab-content hidden">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 2: Fremdriftsvisning med integrert dialog</h3>
+                <p class="text-sm text-blue-700 mt-1">Dialog vises i kontekst av aktiviteten. Lettere å følge samtalehistorikk.</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Venstre: Aktivitetsliste -->
+                <div class="col-span-2">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <!-- Fremdriftsindikator med delmål -->
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm font-medium">Fremdrift mot hovedmål</span>
+                                <span class="text-sm text-gray-500">Delmål 2 av 3</span>
+                            </div>
+                            <div class="relative">
+                                <div class="flex justify-between mb-1">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm">✓</div>
+                                        <span class="text-xs mt-1">Avklaring</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm animate-pulse">2</div>
+                                        <span class="text-xs mt-1 font-semibold">Trening</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm">3</div>
+                                        <span class="text-xs mt-1 text-gray-500">Ansettelse</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm">🎯</div>
+                                        <span class="text-xs mt-1 text-gray-500">Mål!</span>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-4 right-4 h-0.5 bg-gray-300 -z-10"></div>
+                                <div class="absolute top-4 left-4 h-0.5 bg-green-500 -z-10" style="width: 30%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Pågående langtidstiltak -->
+                        <div class="mb-4 p-3 bg-purple-50 border-l-4 border-purple-500 rounded-r flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="text-purple-600">⏱️</span>
+                                <div>
+                                    <span class="font-medium">Lønnstilskudd</span>
+                                    <span class="text-sm text-gray-500 ml-2">• Bedrift AS • Måned 2/12</span>
+                                </div>
+                            </div>
+                            <button onclick="selectActivity('lonnstilskudd')" class="text-sm text-purple-600 hover:underline flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                Dialog
+                                <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                            </button>
+                        </div>
+
+                        <!-- Aktivitetsliste -->
+                        <div class="space-y-3">
+                            <div onclick="selectActivity('fagbrev')" class="p-4 border-2 border-blue-300 bg-blue-50 rounded-lg cursor-pointer hover:border-blue-400 transition-colors">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 text-xs bg-orange-100 text-orange-700 rounded">Pågår</span>
+                                            <h4 class="font-medium">Fagbrev-kurs (teori)</h4>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">4 av 10 moduler fullført</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="flex items-center gap-1 text-sm text-blue-600">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                            </svg>
+                                            3
+                                            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div onclick="selectActivity('eval')" class="p-4 border rounded-lg cursor-pointer hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded">Planlagt</span>
+                                            <h4 class="font-medium">Evalueringsmøte (3 mnd)</h4>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">1. april 2026 kl 10:00</p>
+                                    </div>
+                                    <span class="text-sm text-gray-400">Om 48 dager</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Høyre: Dialog-panel -->
+                <div class="col-span-1">
+                    <div class="bg-white rounded-lg shadow sticky top-20">
+                        <div class="p-4 border-b bg-gray-50 rounded-t-lg">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-semibold">Dialog</h3>
+                                <span class="text-xs text-gray-500">Fagbrev-kurs</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 h-80 overflow-y-auto space-y-4">
+                            <!-- Veileder-melding -->
+                            <div class="flex gap-2">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs flex-shrink-0">
+                                    NAV
+                                </div>
+                                <div class="dialog-bubble veileder bg-blue-50 rounded-lg p-3 max-w-[85%]">
+                                    <p class="text-sm">Hei! Hvordan går det med modul 4? Trenger du noe hjelp?</p>
+                                    <span class="text-xs text-gray-400 mt-1 block">Veileder • I går 14:30</span>
+                                </div>
+                            </div>
+
+                            <!-- Bruker-melding -->
+                            <div class="flex gap-2 justify-end">
+                                <div class="dialog-bubble bg-white border rounded-lg p-3 max-w-[85%]">
+                                    <p class="text-sm">Det går bra! Litt utfordrende med teoridelen om HMS, men jeg jobber med det.</p>
+                                    <span class="text-xs text-gray-400 mt-1 block">Deg • I dag 09:15</span>
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs flex-shrink-0">
+                                    Du
+                                </div>
+                            </div>
+
+                            <!-- Veileder-melding med forslag -->
+                            <div class="flex gap-2">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs flex-shrink-0">
+                                    NAV
+                                </div>
+                                <div class="dialog-bubble veileder bg-blue-50 rounded-lg p-3 max-w-[85%]">
+                                    <p class="text-sm">Flott at du holder ut! Arbeidsgiver nevnte at de kan tilby ekstra HMS-opplæring. Vil du at jeg avtaler dette?</p>
+                                    <div class="mt-2 flex gap-2">
+                                        <button class="px-3 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600">Ja, gjerne</button>
+                                        <button class="px-3 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Ikke nå</button>
+                                    </div>
+                                    <span class="text-xs text-gray-400 mt-2 block">Veileder • I dag 10:45</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skriv melding -->
+                        <div class="p-4 border-t">
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="Skriv en melding..." class="flex-1 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500">
+                                <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded">
+                <h4 class="font-semibold text-green-800">✓ Dialog-integrasjon</h4>
+                <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                    <li><strong>Kontekstuell dialog:</strong> Meldinger er knyttet til spesifikk aktivitet</li>
+                    <li><strong>Handlingsknapper:</strong> Veileder kan foreslå tiltak direkte i dialogen</li>
+                    <li><strong>Ulest-telling:</strong> Ser raskt hvor det er nye meldinger</li>
+                    <li><strong>Side-panel:</strong> Dialog alltid tilgjengelig uten å forlate oversikten</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Tab: Dashboard (forbedret) -->
+        <section id="dashboard" class="tab-content hidden">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 3: Dashboard (forbedret for langtidstiltak)</h3>
+                <p class="text-sm text-blue-700 mt-1">Kalender erstattet med "Kommende hendelser". Langtidstiltak vises separat.</p>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <!-- KPI Kort -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-green-600">1/3</div>
+                            <div class="text-sm text-gray-600">Delmål fullført</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-orange-600">2</div>
+                            <div class="text-sm text-gray-600">Pågående aktiviteter</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-orange-600 animate-spin" style="animation-duration: 3s" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-blue-600">3</div>
+                            <div class="text-sm text-gray-600">Uleste meldinger</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center relative">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                            <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-sm text-gray-600 mb-1">Tid til hovedmål</div>
+                    <div class="text-2xl font-bold text-gray-800">10 mnd</div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 17%"></div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">17% av perioden brukt</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+                <!-- Langtidstiltak -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-semibold mb-3 text-gray-800 flex items-center gap-2">
+                        <span class="text-purple-600">⏱️</span> Pågående tiltak
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-purple-50 rounded-lg border border-purple-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-medium text-sm">Lønnstilskudd</h4>
+                                <span class="text-xs text-purple-600">Mnd 2/12</span>
+                            </div>
+                            <p class="text-xs text-gray-500">Bedrift AS</p>
+                            <div class="mt-2">
+                                <div class="w-full bg-purple-200 rounded-full h-1.5">
+                                    <div class="bg-purple-500 h-1.5 rounded-full" style="width: 17%"></div>
+                                </div>
+                            </div>
+                            <div class="mt-2 flex justify-between items-center">
+                                <span class="text-xs text-gray-400">jan 2026 - des 2026</span>
+                                <button class="text-xs text-purple-600 hover:underline">Dialog →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kommende hendelser (erstatter kalender) -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-semibold mb-3 text-gray-800 flex items-center gap-2">
+                        <span>📅</span> Kommende hendelser
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-3 items-start p-2 hover:bg-gray-50 rounded">
+                            <div class="text-center bg-orange-100 rounded px-2 py-1 min-w-[50px]">
+                                <div class="text-xs text-orange-600">FEB</div>
+                                <div class="text-lg font-bold text-orange-700">28</div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium">Frist: Modul 5</p>
+                                <p class="text-xs text-gray-500">Fagbrev-kurs</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start p-2 hover:bg-gray-50 rounded">
+                            <div class="text-center bg-blue-100 rounded px-2 py-1 min-w-[50px]">
+                                <div class="text-xs text-blue-600">APR</div>
+                                <div class="text-lg font-bold text-blue-700">1</div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium">Evalueringsmøte</p>
+                                <p class="text-xs text-gray-500">Med veileder og arbeidsgiver</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start p-2 hover:bg-gray-50 rounded">
+                            <div class="text-center bg-green-100 rounded px-2 py-1 min-w-[50px]">
+                                <div class="text-xs text-green-600">JUN</div>
+                                <div class="text-lg font-bold text-green-700">15</div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium">🏁 Delmål 2 ferdig</p>
+                                <p class="text-xs text-gray-500">Forventet milepæl</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dialog-oversikt -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-semibold mb-3 text-gray-800 flex items-center gap-2">
+                        <span>💬</span> Nylige dialoger
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-3 items-start p-2 bg-blue-50 rounded cursor-pointer hover:bg-blue-100">
+                            <div class="w-8 h-8 rounded-full bg-blue-200 flex items-center justify-center text-blue-600 text-xs">
+                                NAV
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex justify-between items-center">
+                                    <p class="text-sm font-medium truncate">Fagbrev-kurs</p>
+                                    <span class="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
+                                </div>
+                                <p class="text-xs text-gray-600 truncate">Vil du at jeg avtaler HMS-opplæring?</p>
+                                <span class="text-xs text-gray-400">I dag 10:45</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 items-start p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div class="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center text-purple-600 text-xs">
+                                NAV
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex justify-between items-center">
+                                    <p class="text-sm font-medium truncate">Lønnstilskudd</p>
+                                    <span class="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
+                                </div>
+                                <p class="text-xs text-gray-600 truncate">Husk å levere timeliste!</p>
+                                <span class="text-xs text-gray-400">I går 14:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded">
+                <h4 class="font-semibold text-green-800">✓ Forbedringer for langtidstiltak</h4>
+                <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                    <li><strong>Egen seksjon for tiltak:</strong> Langtidstiltak vises separat, ikke i kalenderen</li>
+                    <li><strong>Hendelser i stedet for kalender:</strong> Lettere å lese, funker for lange tidsrom</li>
+                    <li><strong>Dialog-oversikt:</strong> Ser alle samtaler på tvers av aktiviteter</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Tab: Kombinert (anbefalt) -->
+        <section id="combined" class="tab-content hidden">
+            <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-green-800">Alternativ 4: Kombinert visning (anbefalt)</h3>
+                <p class="text-sm text-green-700 mt-1">Kombinerer det beste fra alle alternativene: Delmål-progresjon, langtidstiltak-støtte, og integrert dialog.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow">
+                <!-- Header med hovedmål og fremdrift -->
+                <div class="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="text-xs uppercase tracking-wide opacity-80">Hovedmål</div>
+                            <div class="text-lg font-semibold">🎯 Fast jobb med tilrettelegging</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm opacity-80">Forventet</div>
+                            <div class="font-semibold">Desember 2026</div>
+                        </div>
+                    </div>
+                    <!-- Delmål-progresjon -->
+                    <div class="mt-4 flex items-center gap-2">
+                        <div class="flex items-center gap-1">
+                            <div class="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center text-white text-xs">✓</div>
+                            <div class="w-16 h-1 bg-green-400 rounded"></div>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center text-blue-600 text-xs font-bold">2</div>
+                            <div class="w-16 h-1 bg-white/30 rounded"></div>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <div class="w-6 h-6 rounded-full bg-white/30 flex items-center justify-center text-white/60 text-xs">3</div>
+                            <div class="w-16 h-1 bg-white/30 rounded"></div>
+                        </div>
+                        <div class="w-6 h-6 rounded-full bg-white/30 flex items-center justify-center text-white/60 text-xs">🎯</div>
+                    </div>
+                </div>
+
+                <!-- Hovedinnhold -->
+                <div class="p-4">
+                    <!-- Uleste meldinger varsel -->
+                    <div class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                            <span class="text-sm">Du har <strong>3 uleste meldinger</strong></span>
+                        </div>
+                        <button class="text-sm text-blue-600 hover:underline">Se alle →</button>
+                    </div>
+
+                    <!-- Pågående tiltak (kollapsbar) -->
+                    <details open class="mb-4 border rounded-lg">
+                        <summary class="p-3 bg-purple-50 cursor-pointer font-medium text-purple-800 rounded-t-lg flex items-center gap-2">
+                            <span>⏱️</span> Pågående langtidstiltak
+                            <span class="ml-auto text-sm font-normal text-purple-600">1 tiltak</span>
+                        </summary>
+                        <div class="p-3 border-t">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded bg-purple-100 flex items-center justify-center text-purple-600">
+                                        💼
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium">Lønnstilskudd hos Bedrift AS</h4>
+                                        <p class="text-sm text-gray-500">jan 2026 - des 2026 • Måned 2 av 12</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-24">
+                                        <div class="w-full bg-purple-200 rounded-full h-2">
+                                            <div class="bg-purple-500 h-2 rounded-full" style="width: 17%"></div>
+                                        </div>
+                                    </div>
+                                    <button class="p-2 text-purple-600 hover:bg-purple-100 rounded-full relative">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Aktivt delmål -->
+                    <div class="mb-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-7 h-7 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-sm">2</span>
+                            <h3 class="font-semibold">Delmål: Arbeidstrening og kompetanseheving</h3>
+                            <span class="text-sm text-gray-500 ml-auto">Forventet ferdig: Juni 2026</span>
+                        </div>
+
+                        <!-- Aktiviteter i delmålet -->
+                        <div class="space-y-2 ml-9">
+                            <!-- Pågående aktivitet med dialog -->
+                            <div class="border-l-4 border-orange-500 bg-orange-50 rounded-r-lg p-3">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 text-xs bg-orange-200 text-orange-800 rounded">Pågår</span>
+                                            <h4 class="font-medium">Fagbrev-kurs (teori)</h4>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1">Nettbasert kurs • 1. feb - 30. apr</p>
+                                        <div class="mt-2 flex items-center gap-3">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-20 bg-orange-200 rounded-full h-1.5">
+                                                    <div class="bg-orange-500 h-1.5 rounded-full" style="width: 40%"></div>
+                                                </div>
+                                                <span class="text-xs text-gray-500">4/10 moduler</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="flex items-center gap-1 px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-100 rounded-lg relative">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                        <span>Dialog (3)</span>
+                                        <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Inline mini-dialog (siste melding) -->
+                                <div class="mt-3 p-2 bg-white rounded border border-orange-200">
+                                    <div class="flex items-start gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs flex-shrink-0">
+                                            N
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-700 truncate">Vil du at jeg avtaler HMS-opplæring med arbeidsgiver?</p>
+                                            <div class="flex items-center gap-2 mt-1">
+                                                <span class="text-xs text-gray-400">Veileder • I dag 10:45</span>
+                                                <button class="text-xs text-blue-600 hover:underline">Svar →</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Planlagt aktivitet -->
+                            <div class="border-l-4 border-gray-300 bg-gray-50 rounded-r-lg p-3">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 text-xs bg-gray-200 text-gray-700 rounded">Planlagt</span>
+                                            <h4 class="font-medium">Evalueringsmøte (3 mnd)</h4>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">Med veileder og arbeidsgiver • 1. apr kl 10:00</p>
+                                    </div>
+                                    <span class="text-sm text-gray-400">Om 48 dager</span>
+                                </div>
+                            </div>
+
+                            <!-- Milepæl for delmål -->
+                            <div class="border-l-4 border-blue-500 bg-blue-50 rounded-r-lg p-3 opacity-70">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-lg">🏁</span>
+                                    <div>
+                                        <h4 class="font-medium text-blue-800">Delmål 2 fullført</h4>
+                                        <p class="text-sm text-blue-600">Bestått fagprøve + 6 mnd arbeidserfaring</p>
+                                    </div>
+                                    <span class="ml-auto text-sm text-blue-500">Juni 2026</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tidligere delmål (kollapset) -->
+                    <details class="mb-4 border rounded-lg">
+                        <summary class="p-3 cursor-pointer font-medium text-green-700 hover:bg-gray-50 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-sm">✓</span>
+                            Delmål 1: Avklaring og kartlegging
+                            <span class="ml-auto text-sm font-normal text-gray-500">3 aktiviteter fullført</span>
+                        </summary>
+                        <div class="p-3 border-t text-sm text-gray-600 space-y-2">
+                            <div class="flex items-center gap-2">✓ Kartleggingssamtale - 5. des 2025</div>
+                            <div class="flex items-center gap-2">✓ Arbeidsevnevurdering - 15. des 2025</div>
+                            <div class="flex items-center gap-2">✓ Avtale om lønnstilskudd - 20. des 2025</div>
+                        </div>
+                    </details>
+
+                    <!-- Kommende delmål -->
+                    <details class="border rounded-lg opacity-60">
+                        <summary class="p-3 cursor-pointer font-medium text-gray-500 hover:bg-gray-50 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center text-sm">3</span>
+                            Delmål 3: Fast ansettelse
+                            <span class="ml-auto text-sm font-normal">Planlegges senere</span>
+                        </summary>
+                        <div class="p-3 border-t text-sm text-gray-500">
+                            Aktiviteter planlegges når delmål 2 nærmer seg fullføring
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Oppsummering -->
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="p-4 bg-green-50 border border-green-200 rounded">
+                    <h4 class="font-semibold text-green-800">✓ Hvorfor dette designet fungerer</h4>
+                    <ul class="text-sm text-green-700 mt-2 space-y-2">
+                        <li><strong>Delmål:</strong> Bryter ned hovedmålet i håndterbare etapper - gir mestringsfølelse underveis</li>
+                        <li><strong>Langtidstiltak:</strong> Vises som "pågående bakgrunn" uten å forstyrre flyten</li>
+                        <li><strong>Integrert dialog:</strong> Siste melding vises inline - slipper å lete</li>
+                        <li><strong>Fokusert visning:</strong> Kun aktivt delmål er utvidet - reduserer kognitiv last</li>
+                        <li><strong>Progressiv avsløring:</strong> Detaljer skjules til de trengs</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-blue-50 border border-blue-200 rounded">
+                    <h4 class="font-semibold text-blue-800">📐 Implementerings-tips</h4>
+                    <ul class="text-sm text-blue-700 mt-2 space-y-2">
+                        <li><strong>Delmål-struktur:</strong> Kan være valgfritt - systemet fungerer også uten</li>
+                        <li><strong>Dialog-preview:</strong> Vis kun for aktiviteter med uleste meldinger</li>
+                        <li><strong>Langtidstiltak:</strong> Definer som aktiviteter med varighet > 3 måneder</li>
+                        <li><strong>Mobiltilpasning:</strong> Denne strukturen skalerer godt til smalere skjermer</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-8 p-6">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="font-semibold text-lg mb-2">💡 Oppsummering v2</h3>
+            <p class="text-gray-600 mb-4">
+                Denne iterasjonen adresserer tre viktige behov:
+            </p>
+            <div class="grid grid-cols-3 gap-4 text-sm">
+                <div class="p-3 bg-purple-50 rounded">
+                    <strong class="text-purple-800">Langtidstiltak</strong>
+                    <p class="text-purple-700 mt-1">Vises som "pågående bakgrunn" med egen fremdriftsmåler, uten å rote til tidslinjen</p>
+                </div>
+                <div class="p-3 bg-blue-50 rounded">
+                    <strong class="text-blue-800">Delmål</strong>
+                    <p class="text-blue-700 mt-1">Hovedmålet brytes ned i etapper som gir mestringsfølelse og tydelig retning</p>
+                </div>
+                <div class="p-3 bg-green-50 rounded">
+                    <strong class="text-green-800">Dialog</strong>
+                    <p class="text-green-700 mt-1">Integrert i kontekst - enten som side-panel eller inline preview med ulest-indikatorer</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        function selectActivity(id) {
+            // Placeholder for aktivitetsvalg
+            console.log('Selected activity:', id);
+        }
+    </script>
+</body>
+</html>
