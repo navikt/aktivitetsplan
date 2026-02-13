@@ -54,7 +54,11 @@ const KanIkkeSendeForhaandsorienteringInfotekst = (props: {
         return null;
     }
 
-    return <Alert variant="warning">{tekst}</Alert>;
+    return (
+        <Alert aria-live="polite" variant="warning">
+            {tekst}
+        </Alert>
+    );
 };
 
 export default KanIkkeSendeForhaandsorienteringInfotekst;

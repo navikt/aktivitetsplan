@@ -19,7 +19,7 @@ const DetaljFelt = (props: Props) => {
                 'flex-auto break-words': beskrivelse,
             })}
         >
-            <Heading level="2" size="xsmall">
+            <Heading level="4" size="xsmall">
                 {tittel}
             </Heading>
             {children}

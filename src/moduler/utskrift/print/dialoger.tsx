@@ -21,7 +21,7 @@ function Tittel(props: { dialog: Dialog }) {
     const dialog = props.dialog;
     if (dialog.aktivitetId) {
         return (
-            <Heading level="2" size="medium" className="printmodal-body__statusgruppe--overskrift">
+            <Heading level="3" size="medium" className="printmodal-body__statusgruppe--overskrift">
                 Dialog
             </Heading>
         );
@@ -51,7 +51,7 @@ export function DialogPrint(props: DialogProps) {
                 henvendelserSynkende.map((h) => (
                     <div className="my-4" key={h.id}>
                         <Label className="">{`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(
-                            h.sendt
+                            h.sendt,
                         )}`}</Label>
                         <CustomBodyLong formatLinebreaks formatLinks>
                             {h.tekst}

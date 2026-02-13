@@ -27,7 +27,7 @@ const AktivitetPrint = (props: Props) => {
     return (
         <div key={id} className="p-4 border border-border-default rounded-md print:break-inside-avoid-page">
             <Detail className="uppercase">{getAktivitetType(aktivitet)}</Detail>
-            <Heading level="2" size="medium" className="mb-4">
+            <Heading level="3" size="medium" className="mb-4">
                 {tittel}
             </Heading>
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} />
