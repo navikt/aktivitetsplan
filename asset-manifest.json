@@ -1,0 +1,96 @@
+{
+  "_Radio-BHeNKMRa.js": {
+    "file": "assets/Radio-BHeNKMRa.js",
+    "name": "Radio",
+    "imports": [
+      "index.html"
+    ]
+  },
+  "_index-D6z78Uka.css": {
+    "file": "assets/index-D6z78Uka.css",
+    "src": "_index-D6z78Uka.css"
+  },
+  "_internAktivitetTypes-BOx_g9gL.js": {
+    "file": "assets/internAktivitetTypes-BOx_g9gL.js",
+    "name": "internAktivitetTypes"
+  },
+  "_routerConfig-DVLo_X2e.js": {
+    "file": "assets/routerConfig-DVLo_X2e.js",
+    "name": "routerConfig",
+    "imports": [
+      "index.html",
+      "_Radio-BHeNKMRa.js",
+      "_internAktivitetTypes-BOx_g9gL.js"
+    ],
+    "css": [
+      "assets/routerConfig-T5Wr2bz5.css"
+    ]
+  },
+  "_routerConfig-T5Wr2bz5.css": {
+    "file": "assets/routerConfig-T5Wr2bz5.css",
+    "src": "_routerConfig-T5Wr2bz5.css"
+  },
+  "index.html": {
+    "file": "assets/index-9fgTwm93.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/webcomponentWrapper.tsx",
+      "src/rootWrapper.tsx",
+      "src/mocks/index.ts",
+      "src/mocks/demo/DemoBanner.tsx"
+    ]
+  },
+  "src/mocks/demo/DemoBanner.tsx": {
+    "file": "assets/DemoBanner-MdvOyUnb.js",
+    "name": "DemoBanner",
+    "src": "src/mocks/demo/DemoBanner.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_Radio-BHeNKMRa.js"
+    ],
+    "css": [
+      "assets/DemoBanner-DnawiELe.css",
+      "assets/index-D6z78Uka.css"
+    ]
+  },
+  "src/mocks/index.ts": {
+    "file": "assets/index-BEDqP1d8.js",
+    "name": "index",
+    "src": "src/mocks/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_internAktivitetTypes-BOx_g9gL.js"
+    ]
+  },
+  "src/rootWrapper.tsx": {
+    "file": "assets/rootWrapper--vY7aJkr.js",
+    "name": "rootWrapper",
+    "src": "src/rootWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DVLo_X2e.js",
+      "_Radio-BHeNKMRa.js",
+      "_internAktivitetTypes-BOx_g9gL.js"
+    ],
+    "css": [
+      "assets/index-D6z78Uka.css"
+    ]
+  },
+  "src/webcomponentWrapper.tsx": {
+    "file": "assets/webcomponentWrapper-BqCwAELf.js",
+    "name": "webcomponentWrapper",
+    "src": "src/webcomponentWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_routerConfig-DVLo_X2e.js",
+      "_Radio-BHeNKMRa.js",
+      "_internAktivitetTypes-BOx_g9gL.js"
+    ]
+  }
+}
