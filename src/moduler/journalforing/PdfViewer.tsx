@@ -1,15 +1,11 @@
-import { Document, Page } from 'react-pdf';
-import type { PDFDocumentProxy } from 'pdfjs-dist';
-import { GlobalWorkerOptions } from 'pdfjs-dist';
+import { pdfjs, Document, Page } from 'react-pdf';
+import pdfjsWorkerUrl from 'react-pdf/dist/pdf.worker.entry?worker&url';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
 
-GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/build/pdf.worker.min.mjs",
-    import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(pdfjsWorkerUrl, import.meta.url).toString();
 
 interface PdfProps {
     pdf: Blob;
@@ -45,7 +41,7 @@ export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvis
     );
 
     useEffect(() => {
-        setVisAlert(true)
+        setVisAlert(true);
         const timeoutId = setTimeout(() => {
             setVisAlert(false);
         }, 5000);
@@ -62,7 +58,7 @@ export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvis
         <div className=" mt-4 container pt-4 pb-4 relative z-0 flex justify-center">
             {visAlert && visSuksessmelding && (
                 <Alert variant="success" role="alert" className="fixed z-10 mt-10">
-                    { suksessmelding }
+                    {suksessmelding}
                 </Alert>
             )}
             {!pdf || henterForhaandsvisning ? (
