@@ -82,7 +82,7 @@ export const queueOrTrackEvent = (eventName: string, eventData: EventData) => {
     if (isInitialized) {
         trackingFunction(eventName, eventData);
     } else {
-        console.warn(`[AnalyticsEvent] - analytics not ready yet, queueing event <${eventName}>`);
+        // console.warn(`[AnalyticsEvent] - analytics not ready yet, queueing event <${eventName}>`);
         eventQueue.push({ eventName, eventData });
     }
 };
