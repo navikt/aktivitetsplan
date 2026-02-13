@@ -11,9 +11,9 @@ import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/loggi
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
-import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
 import { useRoutes } from '../../../routing/useRoutes';
 import { erDroppbar } from '../tavleUtils';
+import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';
 
 interface Props {
     status: AktivitetStatus;
@@ -32,14 +32,14 @@ function DropTargetKolonne({ status, children }: Props) {
     const navigate = useNavigate();
 
     const erBruker = useSelector(selectErBruker, shallowEqual);
-    const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+    const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
     const { avbrytAktivitetRoute, fullforAktivitetRoute } = useRoutes();
 
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,
         canDrop: ({ aktivitet }: DragItem<AlleAktiviteter>) =>
-            status !== aktivitet.status && erDroppbar(aktivitet, erBruker, erUnderOppfolging),
+            status !== aktivitet.status && erDroppbar(aktivitet, erBruker, readOnly),
         drop: ({ aktivitet }: DragItem<VeilarbAktivitet>) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === AktivitetStatus.FULLFOERT) {

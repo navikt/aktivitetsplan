@@ -7,27 +7,27 @@ import { AktivitetStatus, StillingFraNavSoknadsstatus } from '../../../../dataty
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch, { AppDispatch } from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
-import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
 import EndreLinje from '../endre-linje/EndreLinje';
 import SoknadsstatusForm, { SoknadsstatusFormValues } from './SoknadsstatusForm';
+import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeSlice';
 
 const useDisableSoknadsstatusEndring = (aktivitet: StillingFraNavAktivitet) => {
     const { historisk } = aktivitet;
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
-    const erUnderOppfolging = useSelector(selectErUnderOppfolging);
+    const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
     const kanEndreAktivitet =
         !historisk && aktivitet.status !== AktivitetStatus.FULLFOERT && aktivitet.status !== AktivitetStatus.AVBRUTT;
 
-    return lasterAktivitet || !erUnderOppfolging || !kanEndreAktivitet;
+    return lasterAktivitet || readOnly || !kanEndreAktivitet;
 };
 
 const lagreSoknadsstatus = (
     dispatch: AppDispatch,
     value: SoknadsstatusValue,
-    aktivitet: StillingFraNavAktivitet
+    aktivitet: StillingFraNavAktivitet,
 ): Promise<any> => {
     const { soknadsstatus } = value;
 
@@ -40,7 +40,7 @@ const lagreSoknadsstatus = (
             aktivitetId: aktivitet.id,
             aktivitetVersjon: aktivitet.versjon,
             soknadsstatus: soknadsstatus,
-        })
+        }),
     );
 };
 

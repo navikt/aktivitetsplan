@@ -13,8 +13,12 @@ import { mockOppfolging } from '../../../mocks/data/oppfolging';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../../mocks/handlers';
 import { lagNyAktivitet } from '../aktivitet-actions';
+import { ReadWriteMode } from '../../../utils/readOrWriteModeSlice';
 
 const initialStore = {
+    view: {
+        readOrWriteMode: { mode: ReadWriteMode.WRITE },
+    },
     data: {
         ...emptyHalfLoadedVeilederState.data,
         aktiviteter: oppfolgingsdperiodeAdapter.setOne(
@@ -61,9 +65,13 @@ describe('ny aktivitet', () => {
 
     it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
         const store = gitt.tomAktivOppfolgingsPeriode();
-        const { getByText, getByLabelText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-        const leggTilKnapp = await waitFor(() => getByText('Legg til aktivitet'));
+        const { getByText, getByLabelText, getByRole } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+        const leggTilKnapp = await waitFor(() => getByRole('button', { name: /Legg til aktivitet/i }));
+        await waitFor(() => {
+            expect(leggTilKnapp).not.toBeDisabled();
+        });
         fireEvent.click(leggTilKnapp);
+
         await act(() => fireEvent.click(getByText('Samtalereferat')));
         const tittel = 'Hei';
         fireEvent.change(getByLabelText('Tema for samtalen (obligatorisk)'), {

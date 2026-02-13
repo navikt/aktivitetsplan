@@ -5,22 +5,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import { useRoutes } from '../../routing/useRoutes';
-import {
-    selectErUnderOppfolging,
-    selectHarSkriveTilgang,
-    selectViserHistoriskPeriode,
-} from '../oppfolging-status/oppfolging-selector';
 import MalContainer from './mal-container';
 import MalHistorikk from './mal-historikk';
 import { MalModal } from './mal-modal';
 import { selectMalListe } from './malliste-selector';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 
 const Mal = () => {
-    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
-    const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
-    const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
+    const readOnly = useSelector(selectReadWriteMode, shallowEqual) == ReadWriteMode.READ;
     const historiskeMal = useSelector(selectMalListe, shallowEqual);
-
     const isDirty = useRef(false);
 
     const navigate = useNavigate();
@@ -37,11 +30,7 @@ const Mal = () => {
     return (
         <MalModal
             onRequestClosed={onModalRequestClosed}
-            heading={
-                viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
-                    ? 'Mitt mål fra en tidligere periode'
-                    : 'Mitt mål'
-            }
+            heading={readOnly ? 'Mitt mål fra en tidligere periode' : 'Mitt mål'}
         >
             <div>
                 <ReadMore className="mb-8" header="Tips til mål" defaultOpen={historiskeMal.length === 0}>

@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import reducer from './reducer';
 import { EnhancedStore } from '@reduxjs/toolkit/src/configureStore';
+import { readWriteModeMiddleware } from './utils/readOrWriteModeSlice';
 
 let store: EnhancedStore | null = null;
 const createStore = (preloadedState: any = undefined) => {
     const newStore = configureStore({
         reducer: reducer,
         preloadedState,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(readWriteModeMiddleware.middleware),
     });
     store = newStore;
     return newStore;
