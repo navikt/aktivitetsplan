@@ -1,5 +1,6 @@
 import { pdfjs, Document, Page } from 'react-pdf';
 import pdfjsWorkerUrl from 'react-pdf/dist/pdf.worker.entry?worker&url';
+// import { PDFWorker } from 'pdfjs-dist?worker&url';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';

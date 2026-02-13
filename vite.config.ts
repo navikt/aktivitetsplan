@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
     process.env.VITE_SENTRY_RELEASE = execSync('git rev-parse HEAD').toString().trim();
 
     return {
+        worker: {
+            format: 'es',
+        },
         build: {
             manifest: 'asset-manifest.json',
             outDir: 'build',
