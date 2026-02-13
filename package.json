@@ -37,7 +37,6 @@
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "prop-types": "^15.8.1",
-    "pdfjs-dist": "^4.10.38",
     "react": "^18.3.1",
     "react-collapse": "^5.1.1",
     "react-custom-scrollbars-2": "^4.5.0",
