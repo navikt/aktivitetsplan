@@ -26,7 +26,7 @@ const Filter = () => {
     useOutsideClick(open, handleClickOutside);
 
     return harAktivitet ? (
-        <div onClick={preventCloseOnInsideClick} className="self-stretch sm:self-auto">
+        <div onClick={preventCloseOnInsideClick} className="self-stretch ax-sm:self-auto">
             <Button
                 disabled={!filterErKlart}
                 variant="secondary"

@@ -68,7 +68,7 @@ const Sidebar: FunctionComponent = () => {
             style={{ maxHeight: 'calc(100dvh - 160px)' }}
         >
             <ReactRouterLink
-                className="text-text-action underline hover:no-underline"
+                className="text-ax-text-accent-subtle underline hover:no-underline"
                 to={hovedsideRoute()}
                 tabIndex={0}
             >

@@ -47,7 +47,7 @@ function PrintVerktoylinje({
             <div className="print:hidden self-start flex flex-row mb-8 items-center gap-x-10">
                 {tilbakeRoute ? (
                     <ReactRouterLink
-                        className="text-text-action underline hover:no-underline"
+                        className="text-ax-text-accent-subtle underline hover:no-underline"
                         to={tilbakeRoute}
                         tabIndex={0}
                     >

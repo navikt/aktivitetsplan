@@ -62,7 +62,7 @@ const Aktivitetskort = (props: Props) => {
             id={prefixAktivtetskortId(aktivitet)}
             className={classNames('rounded-md', styles.aktivitetskort, className, {
                 [styles.sistVist]: aktivitetBleVistSist,
-                ['border-gray-400 border']: !aktivitetBleVistSist,
+                ['border-ax-neutral-500 border']: !aktivitetBleVistSist,
             })}
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}

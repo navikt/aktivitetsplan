@@ -52,7 +52,7 @@ const LeggTilNyttAktivitetsKort = () => {
         ? veilederAktivitetsValg(nyAktivitetBasePath)
         : brukerAktivitetsValg(nyAktivitetBasePath);
     return (
-        <div className="self-stretch sm:self-auto">
+        <div className="self-stretch ax-sm:self-auto">
             <ActionMenu>
                 <ActionMenu.Trigger>
                     <Button

@@ -113,7 +113,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     return (
         <form
-            className={'bg-surface-subtle rounded-md border-border-default border p-4 space-y-8'}
+            className={'bg-ax-bg-neutral-soft rounded-md border-ax-border-neutral border p-4 space-y-8'}
             onSubmit={handleSubmit(onSubmit)}
             noValidate
         >

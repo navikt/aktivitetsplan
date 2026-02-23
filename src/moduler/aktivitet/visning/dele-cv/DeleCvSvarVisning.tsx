@@ -25,7 +25,7 @@ export const DeleCvSvarVisning = ({ cvKanDelesData }: Props) => {
     }
 
     return (
-        <div className="p-4 bg-surface-subtle border-border-default border rounded-md">
+        <div className="p-4 bg-ax-bg-neutral-soft border-ax-border-neutral border rounded-md">
             <Heading size="medium" className="mb-4">
                 {cvKanDeles ? 'Du svarte at du er interessert' : 'Du svarte at du ikke er interessert'}
             </Heading>

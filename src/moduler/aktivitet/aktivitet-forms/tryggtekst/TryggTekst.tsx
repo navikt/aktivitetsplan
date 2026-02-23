@@ -35,7 +35,7 @@ const TryggTekst = ({ value }: { value: string }) => {
     return (
         <ExpansionCard
             aria-label="Sjekk for sensitive personopplysninger"
-            className="bg-surface-info-subtle"
+            className="bg-ax-bg-info-soft"
             onToggle={sjekkPersonopplysninger}
         >
             <ExpansionCard.Header className="">
@@ -55,7 +55,7 @@ const TryggTekst = ({ value }: { value: string }) => {
                         {(data?.kategorier || []).map((kategori) => {
                             return (
                                 <List.Item key={kategori.kategori}>
-                                    <BodyShort className="font-bold">{capitalize(kategori.kategori)}</BodyShort>
+                                    <BodyShort className="font-ax-bold">{capitalize(kategori.kategori)}</BodyShort>
                                     <BodyLong>{kategori.trigger}</BodyLong>
                                 </List.Item>
                             );

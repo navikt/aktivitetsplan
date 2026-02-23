@@ -55,7 +55,7 @@ function Navigasjonslinje() {
 
     return (
         <div className="flex flex-col gap-y-2">
-            <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
+            <div className="flex gap-y-2 gap-x-8 flex-col ax-sm:flex-row mt-8 mb-4">
                 {!erVeileder ? (
                     <>
                         <Link href={MINSIDE_URL}>Min side</Link>
@@ -66,7 +66,7 @@ function Navigasjonslinje() {
                 ) : null}
                 <ReactRouterLink
                     to="informasjon"
-                    className="text-text-action underline hover:no-underline"
+                    className="text-ax-text-accent-subtle underline hover:no-underline"
                     onClick={handleClick}
                 >
                     Hva er aktivitetsplanen?
@@ -74,7 +74,7 @@ function Navigasjonslinje() {
                 {canPrint && (
                     <ReactRouterLink
                         to={`utskrift/${vistOppfolgingsperiode}`}
-                        className="text-text-action underline hover:no-underline"
+                        className="text-ax-text-accent-subtle underline hover:no-underline"
                         onClick={() => logLenkeKlikket('Skriv ut')}
                     >
                         Skriv ut
@@ -84,7 +84,7 @@ function Navigasjonslinje() {
                     ? erVeileder && (
                           <ReactRouterLink
                               to={`journalforing/${vistOppfolgingsperiode}`}
-                              className="text-text-action underline hover:no-underline"
+                              className="text-ax-text-accent-subtle underline hover:no-underline"
                               onClick={() => logLenkeKlikket('Journalføring')}
                           >
                               Journalføring

@@ -18,7 +18,7 @@ const identitetMap = (erVeileder: boolean, endretAv: string) => {
 function malListeVisning(gjeldendeMal: Mal, erVeileder: boolean) {
     return (
         <article key={gjeldendeMal.dato}>
-            <span className="font-bold">
+            <span className="font-ax-bold">
                 {gjeldendeMal.mal ? 'Skrevet av ' : 'Mål slettet av '}
                 <span>{identitetMap(erVeileder, gjeldendeMal.endretAv)}</span>
             </span>

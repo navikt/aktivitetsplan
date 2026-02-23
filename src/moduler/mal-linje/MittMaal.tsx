@@ -45,13 +45,13 @@ function MittMaal() {
     return (
         <>
             <div
-                className={classNames('border-border-default flex rounded-md p-4', {
+                className={classNames('border-ax-border-neutral flex rounded-md p-4', {
                     'border-2 border-dashed ': !mal && !disabled,
                     border: mal || disabled,
                 })}
             >
-                <div className="flex sm:flex-row items-center gap-6">
-                    <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />
+                <div className="flex ax-sm:flex-row items-center gap-6">
+                    <MaalIkon aria-hidden={true} role="img" className="hidden ax-sm:block mx-4 min-w-fit" />
                     <div>
                         <div className="flex mb-2 items-center">
                             <NotifikasjonMarkering visible={nyEndring} />
