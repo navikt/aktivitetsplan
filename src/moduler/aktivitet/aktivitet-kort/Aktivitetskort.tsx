@@ -63,11 +63,11 @@ const Aktivitetskort = (props: Props) => {
             className={classNames('rounded-md', styles.aktivitetskort, className, {
                 [styles.sistVist]: aktivitetBleVistSist,
             })}
-            style={!aktivitetBleVistSist ? {
-                border: '1px solid var(--ax-border-neutral)',
-                backgroundColor: 'var(--ax-bg-default)'
-            } : {
-                backgroundColor: 'var(--ax-bg-default)'
+            style={{
+                backgroundColor: 'var(--ax-bg-default)',
+                ...(!aktivitetBleVistSist && {
+                    border: '1px solid var(--ax-border-neutral)'
+                })
             }}
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}
