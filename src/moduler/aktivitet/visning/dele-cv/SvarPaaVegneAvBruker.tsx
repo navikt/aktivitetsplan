@@ -9,7 +9,7 @@ interface Props {
 
 export const SvarPaaVegneAvBruker = ({ datoBegrensninger }: Props) => {
     return (
-        <div className="mb-4 bg-ax-bg-brand-blue-soft border-ax-border-brand-blue border rounded-md p-4 space-y-4">
+        <div className="mb-4 bg-ax-bg-brand-blue-soft rounded-md p-4 space-y-4" style={{ border: '1px solid var(--ax-border-brand-blue)' }}>
             <div className="flex justify-between">
                 <Heading size="small" level="3">
                     Svar på vegne av brukeren

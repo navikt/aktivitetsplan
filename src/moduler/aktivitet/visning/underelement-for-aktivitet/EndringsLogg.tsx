@@ -15,7 +15,7 @@ const EndringsLogg = () => {
 
     return (
         <Accordion.Item>
-            <Accordion.Header onClick={handleClick}>
+            <Accordion.Header onClick={handleClick} className="text-ax-text-neutral">
                 <div className="flex gap-4 items-center">Historikk</div>
             </Accordion.Header>
             <Accordion.Content>

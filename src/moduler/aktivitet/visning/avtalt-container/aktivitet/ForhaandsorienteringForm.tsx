@@ -104,7 +104,8 @@ const ForhaandsorienteringForm = (props: Props) => {
     return (
         <form
             onSubmit={handleSubmit((data) => onSubmit(data))}
-            className="bg-ax-bg-brand-blue-soft py-2 px-4 border border-ax-border-brand-blue rounded-md"
+            className="bg-ax-bg-brand-blue-soft py-2 px-4 rounded-md"
+            style={{ border: '1px solid var(--ax-border-brand-blue)' }}
         >
             <div className="flex items-center justify-between">
                 <Checkbox disabled={lasterData} onChange={() => setShowForm(!showForm)}>

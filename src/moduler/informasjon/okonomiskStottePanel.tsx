@@ -15,7 +15,7 @@ export const OkonomiskStotte = () => {
     return (
         <Accordion.Item>
             <Accordion.Header onClick={handleClick}>
-                <Heading level="2" size="small">
+                <Heading level="2" size="small" className="text-ax-text-neutral">
                     Aktivitetsplanen handler ikke om økonomi
                 </Heading>
             </Accordion.Header>

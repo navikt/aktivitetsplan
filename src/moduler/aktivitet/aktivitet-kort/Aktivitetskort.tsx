@@ -62,8 +62,13 @@ const Aktivitetskort = (props: Props) => {
             id={prefixAktivtetskortId(aktivitet)}
             className={classNames('rounded-md', styles.aktivitetskort, className, {
                 [styles.sistVist]: aktivitetBleVistSist,
-                ['border-ax-neutral-500 border']: !aktivitetBleVistSist,
             })}
+            style={!aktivitetBleVistSist ? {
+                border: '1px solid var(--ax-border-neutral)',
+                backgroundColor: 'var(--ax-bg-default)'
+            } : {
+                backgroundColor: 'var(--ax-bg-default)'
+            }}
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}

@@ -63,9 +63,10 @@ const Tavle = (props: Props) => {
     const venstreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-forrige border', {
+            className={classNames('tavle__scrollknapp knapp-forrige', {
                 invisible: venstreKnappDisabled,
             })}
+            style={{ border: '1px solid var(--ax-border-neutral)' }}
             onClick={visForrige}
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
@@ -77,9 +78,10 @@ const Tavle = (props: Props) => {
     const hoyreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-neste border', {
+            className={classNames('tavle__scrollknapp knapp-neste', {
                 invisible: hoyreKnappDisabled,
             })}
+            style={{ border: '1px solid var(--ax-border-neutral)' }}
             onClick={visNeste}
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"

@@ -98,7 +98,8 @@ const OppdaterReferatForm = (props: Props) => {
     return (
         <form
             onSubmit={handleSubmit((values) => updateReferat(values))}
-            className="space-y-4 bg-ax-bg-brand-blue-soft p-4 border border-ax-border-brand-blue rounded-md"
+            className="space-y-4 bg-ax-bg-brand-blue-soft p-4 rounded-md"
+            style={{ border: '1px solid var(--ax-border-brand-blue)' }}
         >
             <Textarea
                 label={`Samtalereferat`}

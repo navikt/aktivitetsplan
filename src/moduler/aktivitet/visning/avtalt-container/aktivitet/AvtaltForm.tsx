@@ -106,7 +106,8 @@ const AvtaltForm = (props: Props) => {
             autoComplete="off"
             noValidate
             onSubmit={handleSubmit((data) => onSubmitHandler(data))}
-            className="bg-ax-bg-brand-blue-soft py-2 px-4 my-4 border border-ax-border-brand-blue rounded-md"
+            className="bg-ax-bg-brand-blue-soft py-2 px-4 my-4 rounded-md"
+            style={{ border: '1px solid var(--ax-border-brand-blue)' }}
         >
             <div className="flex items-center">
                 <Checkbox onChange={() => setShowForm(!showForm)}>Avtalt med Nav</Checkbox>

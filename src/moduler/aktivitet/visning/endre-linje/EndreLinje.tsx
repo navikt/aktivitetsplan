@@ -31,10 +31,10 @@ const EndreLinje = (props: Props) => {
                 <Accordion.Header onClick={handleClick} className="items-center">
                     <div className="flex flex-row gap-4 items-center">
                         <div>
-                            <Heading size="small" level="2">
+                            <Heading size="small" level="2" className="text-ax-text-neutral">
                                 {tittel}
                             </Heading>
-                            <div>{subtittel}</div>
+                            <div className="text-ax-text-neutral">{subtittel}</div>
                         </div>
                     </div>
                 </Accordion.Header>

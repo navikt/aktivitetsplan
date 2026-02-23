@@ -16,7 +16,7 @@ export const DialogPanel = () => {
     return (
         <Accordion.Item>
             <Accordion.Header onClick={handleClick}>
-                <Heading level="2" size="small">
+                <Heading level="2" size="small" className="text-ax-text-neutral">
                     Dialog med veilederen din
                 </Heading>
             </Accordion.Header>
