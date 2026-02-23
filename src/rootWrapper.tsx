@@ -16,7 +16,11 @@ import { createRouterWithWrapper } from './routing/routerConfig';
 const createRoutesForUser = createRouterWithWrapper(sentryCreateBrowserRouter);
 
 export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
-    const rootElement = createRoot(appElement || document.getElementById('root')!);
+    const rootElement = createRoot(appElement || document.getElementById('root')!, {
+        onCaughtError: Sentry.reactErrorHandler(),
+        onUncaughtError: Sentry.reactErrorHandler(),
+        onRecoverableError: Sentry.reactErrorHandler(),
+    });
     Sentry.setUser({ id: hash(props?.fnr) });
     rootElement.render(
         <Provider fnr={props?.fnr}>

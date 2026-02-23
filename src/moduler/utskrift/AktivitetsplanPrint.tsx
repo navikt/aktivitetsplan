@@ -1,7 +1,7 @@
 import { Modal } from '@navikt/ds-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { defer, LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
+import { LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
 
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
@@ -259,9 +259,9 @@ export const aktivitetsplanPrintLoader =
                 tekstTilBruker: '',
             }),
         );
-        return defer({
+        return {
             forhaandsvisning,
-        });
+        };
     };
 
 export default AktivitetsplanPrint;

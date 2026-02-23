@@ -20,12 +20,13 @@
     "format-all": "prettier --write 'src/'",
     "lint-staged": "lint-staged",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "msw-init": "msw init ./public"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@navikt/aksel-icons": "^7.40.0",
-    "@navikt/dab-spraksjekk": "^1.0.15",
+    "@navikt/dab-spraksjekk": "^1.0.19",
     "@navikt/ds-css": "^7.40.0",
     "@navikt/ds-react": "^7.40.0",
     "@navikt/ds-tailwind": "^7.40.0",
@@ -38,17 +39,16 @@
     "date-fns": "^4.1.0",
     "pdfjs-dist": "^5.4.624",
     "prop-types": "^15.8.1",
-    "react": "^18.3.1",
+    "react": "19.2.4",
     "react-collapse": "^5.1.1",
     "react-custom-scrollbars-2": "^4.5.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "19.2.4",
     "react-hook-form": "^7.71.1",
-    "react-modal": "^3.16.3",
     "react-pdf": "^10.3.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^6.30.3",
+    "react-router-dom": "^7.13.0",
     "rebound": "^0.1.0",
     "redux": "^5.0.1",
     "rollup-plugin-visualizer": "^5.14.0",
@@ -90,9 +90,9 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/moment-duration-format": "^2.2.7",
     "@types/node": "^22.19.7",
-    "@types/react": "^18.3.27",
+    "@types/react": "^19.2.14",
     "@types/react-collapse": "^5.0.4",
-    "@types/react-dom": "^18.3.7",
+    "@types/react-dom": "^19.2.3",
     "@types/react-modal": "^3.16.3",
     "@types/react-redux": "^7.1.34",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
@@ -127,6 +127,9 @@
     }
   },
   "msw": {
-    "workerDirectory": "public"
-  }
+    "workerDirectory": [
+      "public"
+    ]
+  },
+  "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
 }

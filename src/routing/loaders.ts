@@ -1,5 +1,5 @@
 import { Dispatch } from '../store';
-import { defer, LoaderFunction, useRouteLoaderData } from 'react-router-dom';
+import { LoaderFunction, useRouteLoaderData } from 'react-router-dom';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunks } from './initialPageLoadThunk';
@@ -10,7 +10,7 @@ export const initialPageLoader =
     (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
     async () => {
         const thunks = initialPageLoadThunks;
-        return defer({
+        return {
             oppfolging: dispatch(thunks.oppfolging(isVeileder)),
             identitet: dispatch(thunks.identitet(isVeileder)),
             veileder: dispatch(thunks.veileder(isVeileder)),
@@ -20,7 +20,7 @@ export const initialPageLoader =
             arenaAktiviteter: dispatch(thunks.arenaAktiviteter(isVeileder)),
             lest: dispatch(thunks.lest(isVeileder)),
             innsynsrett: dispatch(thunks.innsynsrett()),
-        });
+        };
     };
 
 export interface InitialPageLoadResult {
@@ -36,10 +36,9 @@ export interface InitialPageLoadResult {
 }
 
 export const malLoader = (dispatch: Dispatch) => {
-    return () =>
-        defer({
-            data: Promise.all([dispatch(hentMal()), dispatch(hentMalListe())]),
-        });
+    return () => ({
+        data: Promise.all([dispatch(hentMal()), dispatch(hentMalListe())]),
+    });
 };
 
 export const aktivitetsVisningLoader =
@@ -47,9 +46,9 @@ export const aktivitetsVisningLoader =
     ({ params }) => {
         if (!params.id) return {};
         const arenaId = erArenaId(params.id);
-        return defer({
+        return {
             aktivitet: arenaId ? dispatch(hentArenaAktiviteter()) : dispatch(hentAktivitet(params.id)),
-        });
+        };
     };
 
 export const useAktivitetsVisningLoaderData = () =>
