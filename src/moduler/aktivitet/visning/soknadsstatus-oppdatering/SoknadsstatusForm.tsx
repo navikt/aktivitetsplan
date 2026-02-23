@@ -10,18 +10,17 @@ import { DirtyContext } from '../../../context/dirty-context';
 import { selectOppdaterStillingFraNavSoknadsstatusFeil } from '../../../feilmelding/feil-selector';
 import Feilmelding from '../../../feilmelding/Feilmelding';
 
-type StatuserFraBackend = StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN | StillingFraNavSoknadsstatus.FATT_JOBBEN | StillingFraNavSoknadsstatus.CV_DELT
+type StatuserFraBackend =
+    | StillingFraNavSoknadsstatus.IKKE_FATT_JOBBEN
+    | StillingFraNavSoknadsstatus.FATT_JOBBEN
+    | StillingFraNavSoknadsstatus.CV_DELT;
 interface Props {
     soknadsstatus?: Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend>; // IKKE_FATT_JOBBEN, FATT_JOBBEN og CV_DELT kan kun endres i backend
     disabled: boolean;
     onSubmit(val: { soknadsstatus: string }): Promise<any>;
 }
 
-
-const RadioButtons: Record<
-    Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend>,
-    string
-> = {
+const RadioButtons: Record<Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend>, string> = {
     VENTER: 'Venter på å bli kontaktet av Nav eller arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
@@ -63,9 +62,7 @@ const SoknadsstatusForm = (props: Props) => {
 
     const disable = isSubmitting || disabled;
 
-    const onChangeSoknadsstatus = (
-        value: Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend >
-    ) => {
+    const onChangeSoknadsstatus = (value: Exclude<StillingFraNavSoknadsstatus, StatuserFraBackend>) => {
         setValue('soknadsstatus', value);
     };
 
@@ -86,9 +83,11 @@ const SoknadsstatusForm = (props: Props) => {
                 </RadioGroup>
             </div>
             <Feilmelding feilmeldinger={useSelector(selectOppdaterStillingFraNavSoknadsstatusFeil)} />
-            <Button className="oppdater-status" disabled={disable} loading={isSubmitting}>
-                Lagre
-            </Button>
+            {!disabled && (
+                <Button className="oppdater-status" loading={isSubmitting}>
+                    Lagre
+                </Button>
+            )}
         </form>
     );
 };

@@ -3,7 +3,7 @@ import { Button, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
 import React, { MutableRefObject, useLayoutEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
@@ -12,7 +12,6 @@ import Feilmelding from '../feilmelding/Feilmelding';
 import { oppdaterMal } from './aktivitetsmal-slice';
 import { hentMalListe } from './malliste-slice';
 import { logKlikkKnapp } from '../../analytics/analytics';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 
 const schema = z.object({
     mal: z.string().min(1, 'Feltet må fylles ut').max(500, 'Du må korte ned teksten til 500 tegn'),
@@ -72,8 +71,6 @@ const MalForm = (props: Props) => {
     const malValue = watch('mal'); // for <Textarea /> character-count to work
 
     const feil = useSelector(selectOppdaterMalFeil);
-    const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
-    const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
 
     return (
         <form className="my-4 space-y-8" onSubmit={handleSubmit((data) => onSubmit(data))}>
@@ -84,7 +81,7 @@ const MalForm = (props: Props) => {
                 {...register('mal')}
                 error={errors.mal && errors.mal.message}
                 value={malValue}
-                disabled={isSubmitting || !harSkriveTilgang || !underOppfolging}
+                disabled={isSubmitting}
             />
             <Feilmelding feilmeldinger={feil} />
             <Button onClick={() => logKlikkKnapp('Lagre mål')} disabled={isSubmitting}>
