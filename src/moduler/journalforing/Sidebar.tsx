@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, Label, List, Select, Box } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
     journalfør,
@@ -76,10 +76,10 @@ const Sidebar: FunctionComponent = () => {
             </ReactRouterLink>
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
-                <List as="ul" title="Dette er ikke inkludert i journalføringen:" size="small">
-                    <List.Item>Aktiviteter og dialog tilknyttet KVP</List.Item>
-                    <List.Item>Samtalereferat som ikke er delt med bruker</List.Item>
-                </List>
+                <div><Heading as="h3" size="xsmall">Dette er ikke inkludert i journalføringen:</Heading><Box marginBlock="space-12" asChild><List data-aksel-migrated-v8 as="ul" size="small">
+                            <List.Item>Aktiviteter og dialog tilknyttet KVP</List.Item>
+                            <List.Item>Samtalereferat som ikke er delt med bruker</List.Item>
+                        </List></Box></div>
                 <Select
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
