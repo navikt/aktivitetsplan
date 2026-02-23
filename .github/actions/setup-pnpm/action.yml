@@ -14,7 +14,7 @@ runs:
         version: 10
     - uses: actions/setup-node@v5
       with:
-        node-version: 22
+        node-version: 24
         registry-url: "https://npm.pkg.github.com"
         cache: 'pnpm'
     - name: Install dependencies
