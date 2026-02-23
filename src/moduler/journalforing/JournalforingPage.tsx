@@ -27,7 +27,7 @@ export const JournalforingPage = () => {
 
     return (
         <div className="flex flex-col grow">
-            <section className="flex ax-md:flex-row flex-col relative">
+            <section className="flex md:flex-row flex-col relative">
                 <Sidebar />
                 <StatusErrorBoundry statuser={[forhaandsvisningStatus, journalførtStatus]}
                                     errorMessage="Noe gikk galt med journalføringen">

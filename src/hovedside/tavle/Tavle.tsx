@@ -53,7 +53,7 @@ const Tavle = (props: Props) => {
     const kolonner = children.map((child, index) => (
         <section
             key={child.key || index}
-            className={'min-w-[300px] w-full ax-lg:max-w-[300px]'}
+            className={'min-w-[300px] w-full lg:max-w-[300px]'}
             data-testid={`aktivitetstavle.${child.props.status}`}
         >
             {child}
@@ -93,8 +93,8 @@ const Tavle = (props: Props) => {
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
                 <div
-                    className="kolonner flex flex-col ax-sm:gap-y-6 ax-sm:mx-8 ax-sm:max-w-[624px] ax-sm:mx-auto ax-md:max-w-[720px]
-                                ax-lg:flex-row ax-lg:gap-x-5 ax-lg:mx-4 ax-lg:max-w-full tavle-max-width:justify-center"
+                    className="kolonner flex flex-col sm:gap-y-6 sm:mx-8 sm:mw-[624px] sm:mx-auto md:max-w-[720px]
+                                lg:flex-row lg:gap-x-5 lg:mx-4 lg:mw-full tavle-max-width:justify-center"
                 >
                     {kolonner}
                 </div>

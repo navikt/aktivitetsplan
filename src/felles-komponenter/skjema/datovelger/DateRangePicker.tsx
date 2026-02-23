@@ -105,7 +105,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                 onClose={closeToggle}
                 wrapperClassName="flex flex-1"
             >
-                <div className="flex ax-sm:flex-row flex-col gap-4 items-start">
+                <div className="flex sm:flex-row flex-col gap-4 items-start">
                     <DatePicker.Input
                         disabled={from.disabled}
                         error={fromState.error?.message}

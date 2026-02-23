@@ -55,7 +55,7 @@ function Navigasjonslinje() {
 
     return (
         <div className="flex flex-col gap-y-2">
-            <div className="flex gap-y-2 gap-x-8 flex-col ax-sm:flex-row mt-8 mb-4">
+            <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
                 {!erVeileder ? (
                     <>
                         <Link href={MINSIDE_URL}>Min side</Link>
