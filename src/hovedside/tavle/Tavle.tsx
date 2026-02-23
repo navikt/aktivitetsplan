@@ -63,10 +63,9 @@ const Tavle = (props: Props) => {
     const venstreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-forrige', {
+            className={classNames('tavle__scrollknapp knapp-forrige border border-ax-border-neutral', {
                 invisible: venstreKnappDisabled,
             })}
-            style={{ border: '1px solid var(--ax-border-neutral)' }}
             onClick={visForrige}
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
@@ -78,10 +77,9 @@ const Tavle = (props: Props) => {
     const hoyreKnapp = (
         <button
             type="button"
-            className={classNames('tavle__scrollknapp knapp-neste', {
+            className={classNames('tavle__scrollknapp knapp-neste border border-ax-border-neutral', {
                 invisible: hoyreKnappDisabled,
             })}
-            style={{ border: '1px solid var(--ax-border-neutral)' }}
             onClick={visNeste}
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"
@@ -95,8 +93,8 @@ const Tavle = (props: Props) => {
             {venstreKnapp}
             <SprettendeScrollbars autoHeight autoHeightMax={9999} onScrollFrame={updateState} ref={scrollbars}>
                 <div
-                    className="kolonner flex flex-col sm:gap-y-6 sm:mx-8 sm:mw-[624px] sm:mx-auto md:max-w-[720px]
-                                lg:flex-row lg:gap-x-5 lg:mx-4 lg:mw-full tavle-max-width:justify-center"
+                    className="kolonner flex flex-col sm:gap-y-6 sm:mx-8 sm:max-w-[624px] sm:mx-auto md:max-w-[720px]
+                                lg:flex-row lg:gap-x-5 lg:mx-4 lg:max-w-full tavle-max-width:justify-center"
                 >
                     {kolonner}
                 </div>

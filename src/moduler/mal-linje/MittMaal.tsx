@@ -1,6 +1,7 @@
 import './mitt-maal.less';
 
 import { Alert, Button, Heading, Skeleton } from '@navikt/ds-react';
+import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { Suspense } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
@@ -44,12 +45,10 @@ function MittMaal() {
     return (
         <>
             <div
-                className="flex rounded-md p-4"
-                style={{
-                    border: !mal && !disabled
-                        ? '2px dashed var(--ax-border-neutral-subtle)'
-                        : '2px solid var(--ax-border-neutral-subtle)'
-                }}
+                className={classNames('flex rounded-md p-4 border-2 border-ax-border-neutral-subtle', {
+                    'border-dashed': !mal && !disabled,
+                    'border-solid': mal || disabled,
+                })}
             >
                 <div className="flex sm:flex-row items-center gap-6">
                     <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />

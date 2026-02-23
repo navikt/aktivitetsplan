@@ -1,2 +1,13 @@
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/*
+ * Tailwind v4 theme configuration.
+ * Import Aksel design tokens as Tailwind theme colors.
+ * The @config directive loads colors from tailwind.config.cjs which uses @navikt/ds-tailwind
+ */
+@config "../tailwind.config.cjs";
+
+/*
+ * Layer Aksel component styles after Tailwind base to prevent conflicts.
+ * Tailwind base includes border-style: solid which is needed for border utilities.
+ */

@@ -63,13 +63,12 @@ function DropTargetKolonne({ status, children }: Props) {
         <div ref={drop} className="z-50 h-full">
             <div
                 className={classNames(
-                    'bg-ax-bg-neutral-soft rounded-none p-4 sm:p-4 ax-lg:p-2 m-0 sm:rounded-md aktivitetstavle__kolonne',
+                    'bg-ax-bg-neutral-soft border-t border-ax-border-neutral-subtle rounded-none p-4 sm:p-4 ax-lg:p-2 m-0 sm:border-t-0 sm:rounded-md aktivitetstavle__kolonne',
                     {
                         'opacity-50': isDragging && !isOverAndCanDrop,
                         'bg-ax-bg-accent-moderate-hover ': isOverAndCanDrop,
                     },
                 )}
-                style={{ borderTop: '1px solid var(--ax-border-neutral-subtle)' }}
             >
                 {children}
             </div>

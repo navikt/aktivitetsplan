@@ -26,7 +26,7 @@ export default function FeilmeldingDetalj(props: PropTypes) {
     const tittel = feilmeldingMap[type] || type;
 
     return (
-        <div className="m-4 p-4 rounded-md" style={{ border: '1px solid var(--ax-border-neutral)' }}>
+        <div className="border border-ax-border-neutral m-4 p-4 rounded-md">
             <h2 className="font-ax-bold">{tittel}</h2>
             <div>{name}</div>
             <div className="break-words">{message}</div>

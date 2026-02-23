@@ -40,7 +40,7 @@ const Filter = () => {
                 Filtrer
             </Button>
             {open ? (
-                <div className="scroll-auto max-h-screen-h-1/2 rounded-md absolute p-4 bg-white z-10 w-96 max-h-screen-h-1/2 overflow-auto flex flex-col gap-y-4" style={{ border: '1px solid var(--ax-border-neutral)' }}>
+                <div className="scroll-auto max-h-screen-h-1/2 rounded-md absolute p-4 bg-white border border-ax-border-neutral z-10 w-96 max-h-screen-h-1/2 overflow-auto flex flex-col gap-y-4">
                     <AvtaltMedNavFilter />
                     <EtikettFilter />
                     <TiltakstatusFilter />

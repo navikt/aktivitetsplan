@@ -60,15 +60,10 @@ const Aktivitetskort = (props: Props) => {
     return (
         <LinkAsDiv
             id={prefixAktivtetskortId(aktivitet)}
-            className={classNames('rounded-md', styles.aktivitetskort, className, {
+            className={classNames('rounded-md bg-ax-bg-default', styles.aktivitetskort, className, {
                 [styles.sistVist]: aktivitetBleVistSist,
+                'border border-ax-border-neutral': !aktivitetBleVistSist,
             })}
-            style={{
-                backgroundColor: 'var(--ax-bg-default)',
-                ...(!aktivitetBleVistSist && {
-                    border: '1px solid var(--ax-border-neutral)'
-                })
-            }}
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
