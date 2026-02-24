@@ -45,7 +45,7 @@ export function DialogPrint(props: DialogProps) {
     const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(a.sendt, b.sendt));
 
     return (
-        <div hidden={!henvendelserSynkende} className="mt-4 pt-4 border-t border-border-divider">
+        <div hidden={!henvendelserSynkende} className="mt-4 pt-4 border-t border-ax-border-neutral-subtle">
             <Tittel dialog={dialog} />
             {henvendelserSynkende &&
                 henvendelserSynkende.map((h) => (

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const FiltreringLabel = ({ label, slettFilter }: Props) => (
-    <Chips.Removable variant="neutral" aria-label="slett-filter" onClick={slettFilter}>
+    <Chips.Removable data-color="neutral" aria-label="slett-filter" onClick={slettFilter}>
         {label as any}
     </Chips.Removable>
 );

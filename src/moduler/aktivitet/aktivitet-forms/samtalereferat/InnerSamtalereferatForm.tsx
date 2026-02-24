@@ -155,8 +155,8 @@ const Lagreknapper = (props: {
     const { isLoading, isNy, lagreOgDel } = props;
     if (isNy) {
         return (
-            <div className="mt-4">
-                <Button loading={isLoading} className="mr-4" onClick={lagreOgDel(true)}>
+            <div className="mt-4 flex gap-4">
+                <Button loading={isLoading} onClick={lagreOgDel(true)}>
                     Del med bruker
                 </Button>
                 <Button variant="secondary" loading={isLoading} onClick={lagreOgDel(false)}>

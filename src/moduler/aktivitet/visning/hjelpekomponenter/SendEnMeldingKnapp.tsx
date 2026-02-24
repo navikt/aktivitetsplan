@@ -49,7 +49,7 @@ const SendEnMeldingKnapp = (props: Props) => {
                     : 'Send en melding'}
             </Button>
             {ulestMeldinger ? (
-                <div className="absolute bg-red-500 rounded-full flex justify-center items-center w-3 h-3 text-white left-8 top-6"></div>
+                <div className="absolute bg-ax-danger-600 rounded-full flex justify-center items-center w-3 h-3 text-white left-8 top-6"></div>
             ) : null}
         </div>
     );

@@ -25,7 +25,7 @@ const ReferatVisning = (props: Props) => {
     const feil = useSelector(selectPubliserReferatFeil);
 
     return (
-        <section className="my-4 border-t pt-8">
+        <section className="my-4 border-t border-ax-border-neutral pt-8">
             <Heading level="2" size="large" className="mb-4">
                 Samtalereferat
             </Heading>

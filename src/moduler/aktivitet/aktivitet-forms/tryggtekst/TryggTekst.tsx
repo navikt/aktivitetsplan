@@ -1,6 +1,6 @@
 import { selectPersonopplusningSjekk } from './tryggtekst-selector';
 import { useSelector } from 'react-redux';
-import { BodyLong, BodyShort, ExpansionCard, Heading, List, Loader } from '@navikt/ds-react';
+import { BodyLong, BodyShort, ExpansionCard, Heading, List, Loader, Box } from '@navikt/ds-react';
 import { Status } from '../../../../createGenericSlice';
 import { sjekkForPersonopplysninger, nullstillTryggTekst } from './tryggtekst-slice';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
@@ -35,7 +35,7 @@ const TryggTekst = ({ value }: { value: string }) => {
     return (
         <ExpansionCard
             aria-label="Sjekk for sensitive personopplysninger"
-            className="bg-surface-info-subtle"
+            className="bg-ax-bg-info-soft"
             onToggle={sjekkPersonopplysninger}
         >
             <ExpansionCard.Header className="">
@@ -51,16 +51,16 @@ const TryggTekst = ({ value }: { value: string }) => {
                         <Loader size="2xlarge" />
                     </div>
                 ) : status === Status.OK ? (
-                    <List>
-                        {(data?.kategorier || []).map((kategori) => {
-                            return (
-                                <List.Item key={kategori.kategori}>
-                                    <BodyShort className="font-bold">{capitalize(kategori.kategori)}</BodyShort>
-                                    <BodyLong>{kategori.trigger}</BodyLong>
-                                </List.Item>
-                            );
-                        })}
-                    </List>
+                    <Box marginBlock="space-16" asChild><List data-aksel-migrated-v8>
+                            {(data?.kategorier || []).map((kategori) => {
+                                return (
+                                    <List.Item key={kategori.kategori}>
+                                        <BodyShort className="font-ax-bold">{capitalize(kategori.kategori)}</BodyShort>
+                                        <BodyLong>{kategori.trigger}</BodyLong>
+                                    </List.Item>
+                                );
+                            })}
+                        </List></Box>
                 ) : null}
             </ExpansionCard.Content>
         </ExpansionCard>

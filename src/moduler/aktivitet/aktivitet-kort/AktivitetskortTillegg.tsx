@@ -73,10 +73,9 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                     {aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
                         <EksterneEtiketter aktivitet={aktivitet} />
                     ) : null}
-                    {isKassert && <Tag size={'small'} variant={"neutral-filled"}>Slettet</Tag> }
+                    {isKassert && <Tag data-color="neutral" size={'small'} variant={"strong"}>Slettet</Tag> }
                 </div>
             </div>
-
             <HiddenIfDiv hidden={!dialog && henvendelser.length <= 0} className="h-0 self-end">
                 <DialogIkon
                     antallUleste={ulesteHenvendelser}

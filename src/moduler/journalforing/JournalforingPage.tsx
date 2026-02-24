@@ -31,7 +31,7 @@ export const JournalforingPage = () => {
                 <Sidebar />
                 <StatusErrorBoundry statuser={[forhaandsvisningStatus, journalførtStatus]}
                                     errorMessage="Noe gikk galt med journalføringen">
-                    <div className="h-full grow bg-bg-subtle max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
+                    <div className="h-full grow bg-ax-bg-neutral-soft max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
                         <PdfViewer pdf={blob} visSuksessmelding={visSuksessmelding}
                                    suksessmelding={'Aktivitetsplanen ble journalført.'} forhaandsvisningStatus={forhaandsvisningStatus} />
                     </div>

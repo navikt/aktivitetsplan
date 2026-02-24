@@ -45,9 +45,9 @@ function MittMaal() {
     return (
         <>
             <div
-                className={classNames('border-border-default flex rounded-md p-4', {
-                    'border-2 border-dashed ': !mal && !disabled,
-                    border: mal || disabled,
+                className={classNames('flex rounded-md p-4 border-2 border-ax-border-neutral-subtle', {
+                    'border-dashed': !mal && !disabled,
+                    'border-solid': mal || disabled,
                 })}
             >
                 <div className="flex sm:flex-row items-center gap-6">

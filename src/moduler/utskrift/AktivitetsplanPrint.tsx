@@ -225,7 +225,7 @@ const AktivitetsplanPrint = () => {
                     statuser={[sendTilBrukerStatus]}
                     errorMessage="Kunne ikke sende aktivitetsplan til bruker"
                 >
-                    <div className="bg-bg-subtle print:border-none">
+                    <div className="bg-ax-bg-neutral-soft print:border-none">
                         <PdfViewer
                             pdf={blob}
                             suksessmelding={'Aktivitetsplanen ble sendt til bruker'}

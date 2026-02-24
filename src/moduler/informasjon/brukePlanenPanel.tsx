@@ -16,7 +16,7 @@ export const BrukePlanenPanel = () => {
     return (
         <Accordion.Item>
             <Accordion.Header onClick={handleClick}>
-                <Heading level="2" size="small">
+                <Heading level="2" size="small" className="text-ax-text-neutral">
                     Slik bruker du aktivitetsplanen
                 </Heading>
             </Accordion.Header>
