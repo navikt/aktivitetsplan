@@ -75,6 +75,7 @@ const LeggTilNyttAktivitetsKort = () => {
                                     <Dropdown.Menu.GroupedList.Item
                                         key={subItem.tittle}
                                         onClick={() => navigate(subItem.link)}
+                                        className="text-ax-text-neutral"
                                     >
                                         {subItem.tittle}
                                     </Dropdown.Menu.GroupedList.Item>
