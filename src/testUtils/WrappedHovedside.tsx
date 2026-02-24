@@ -32,7 +32,7 @@ export const WrappedHovedside = ({
 const MemoryRouteProvider = () => {
     const dispatch = useAppDispatch();
     const erVeileder = useErVeileder();
-    const router = createMemoryRouter(routingConfig(dispatch, erVeileder), {
+    const router = createMemoryRouter(routingConfig(dispatch, erVeileder, '2121'), {
         initialEntries: ['/'],
         initialIndex: 0,
     });

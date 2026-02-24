@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node';
-import { describe } from 'vitest';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { describe, expect } from 'vitest';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { WrappedHovedside } from '../../testUtils/WrappedHovedside';
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
@@ -49,15 +49,19 @@ describe('Send melding knapp (Dialog lenker)', () => {
     let pushStateMock = vi.fn();
     // Start server before all tests
     beforeAll(() => {
-        Object.defineProperty(window, 'navigation', { value: vi.fn() });
-        Object.defineProperty(window.history, 'pushState', { value: pushStateMock });
+        vi.stubGlobal('navigation', vi.fn());
+        vi.stubGlobal('history', { pushState: pushStateMock });
         server.listen({ onUnhandledRequest: 'error' });
     });
     //  Close server after all tests
-    afterAll(() => server.close());
+    afterAll(() => {
+        vi.unstubAllGlobals();
+        server.close();
+    });
 
     // Reset handlers after each test `important for test isolation`
     afterEach(() => {
+        cleanup();
         server.resetHandlers();
         pushStateMock.mockReset();
     });
@@ -68,17 +72,21 @@ describe('Send melding knapp (Dialog lenker)', () => {
             await waitFor(() => {
                 getByText('Aktivitet med dialog');
             });
-            await act(() => fireEvent.click(getByText('Aktivitet med dialog')));
-            await act(() => fireEvent.click(getByText('Send en melding')));
-            expect(pushStateMock).toHaveBeenCalledWith('', 'Dialog', `/dialog/${testDialoger[0].id}`);
+            fireEvent.click(getByText('Aktivitet med dialog'));
+            await waitFor(() => getByText('Send en melding'));
+            fireEvent.click(getByText('Send en melding'));
+            await waitFor(() =>
+                expect(pushStateMock).toHaveBeenCalledWith('', 'Dialog', `/dialog/${testDialoger[0].id}`),
+            );
         });
 
         it('should use /ny when no dialog on aktivitet', async () => {
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Aktivitet uten dialog'));
-            await act(() => fireEvent.click(getByText('Aktivitet uten dialog')));
+            fireEvent.click(getByText('Aktivitet uten dialog'));
             await waitFor(() => getByText('Endre på aktiviteten'));
-            await act(() => fireEvent.click(getByText('Send en melding')));
+            fireEvent.click(getByText('Send en melding'));
+
             expect(pushStateMock).toHaveBeenCalledWith(
                 '',
                 'Dialog',
@@ -93,18 +101,19 @@ describe('Send melding knapp (Dialog lenker)', () => {
             await waitFor(() => {
                 getByText('Aktivitet med dialog');
             });
-            await act(() => fireEvent.click(getByText('Aktivitet med dialog')));
-            await act(() => fireEvent.click(getByText('Send en melding')));
-            expect(pushStateMock).not.toHaveBeenCalled();
+            fireEvent.click(getByText('Aktivitet med dialog'));
+            await waitFor(() => getByText('Send en melding'));
+            fireEvent.click(getByText('Send en melding'));
+            await waitFor(() => expect(pushStateMock).not.toHaveBeenCalled());
         });
 
         it('should not navigate when no dialog on aktivitet', async () => {
             const { getByText } = render(<WrappedHovedside fnr={undefined} store={store} />);
             await waitFor(() => getByText('Aktivitet uten dialog'));
-            await act(() => fireEvent.click(getByText('Aktivitet uten dialog')));
+            fireEvent.click(getByText('Aktivitet uten dialog'));
             await waitFor(() => getByText('Endre på aktiviteten'));
-            await act(() => fireEvent.click(getByText('Send en melding')));
-            expect(pushStateMock).not.toHaveBeenCalled();
+            fireEvent.click(getByText('Send en melding'));
+            await waitFor(() => expect(pushStateMock).not.toHaveBeenCalled());
         });
     });
 });

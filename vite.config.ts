@@ -46,6 +46,7 @@ export default defineConfig(({ mode }) => {
             port: 3000,
         },
         test: {
+            testTimeout: 2000,
             environment: 'jsdom',
             globals: true,
             setupFiles: ['./src/setupTests.jsx'],

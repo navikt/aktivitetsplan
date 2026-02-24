@@ -106,7 +106,7 @@
     "eslint-plugin-vitest": "^0.5.4",
     "husky": "^9.1.7",
     "import-sort-style-module": "^6.0.0",
-    "jsdom": "^28.0.0",
+    "jsdom": "^28.1.0",
     "less": "^4.5.1",
     "lint-staged": "^15.5.2",
     "msw": "^2.12.7",
