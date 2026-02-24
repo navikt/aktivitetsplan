@@ -19,7 +19,9 @@ function InformasjonsHenting() {
 
     const { fnr } = useFnrOgEnhetContext();
     useEffect(() => {
-        fetchHarFlereAktorId(fnr).catch((error) => captureException(error));
+        fetchHarFlereAktorId(fnr).catch((error) => {
+            captureException(error);
+        });
     }, []);
 
     const { informasjonRoute, hovedsideRoute } = useRoutes();
