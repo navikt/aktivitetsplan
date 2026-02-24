@@ -122,7 +122,7 @@ const OppdaterReferatForm = (props: Props) => {
                 <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
             </>
             <Feilmelding feilmeldinger={feil} />
-            <div className="space-x-4">
+            <div className="flex gap-4">
                 <HiddenIfHovedknapp
                     loading={oppdaterer}
                     disabled={oppdaterer}
