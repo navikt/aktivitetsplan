@@ -37,6 +37,7 @@ const PeriodeFilter = () => {
     return (
         <div className="flex items-start">
             <Select
+                key={valgtPeriodeId}
                 className="w-full sm:w-64"
                 hideLabel
                 autoComplete="on"
