@@ -53,8 +53,8 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     ENKELAMO: 'Arbeidsmarkedsopplæring (enkeltplass)',
     ENKFAGYRKE: 'Fag- og yrkesopplæring (enkeltplass)',
     HOYEREUTD: 'Høyere utdanning',
-    ARBEIDSMARKEDSOPPLAERING: 'Arbeidsmarkedsopplæring',
-    NORSKOPPLAERING_GRUNNLEGGENDE_FERDIGHETER_FOV: 'Norskopplæring',
+    ARBEIDSMARKEDSOPPLAERING: 'Arbeidsmarkedsopplæring (AMO)',
+    NORSKOPPLAERING_GRUNNLEGGENDE_FERDIGHETER_FOV: 'Norskopplæring, grunnleggende ferdigheter og FOV',
     STUDIESPESIALISERING: 'Studiespesialisering',
     FAG_OG_YRKESOPPLAERING: 'Fag- og yrkesopplæring',
     HOYERE_YRKESFAGLIG_UTDANNING: 'Høyere yrkesfaglig utdanning'
