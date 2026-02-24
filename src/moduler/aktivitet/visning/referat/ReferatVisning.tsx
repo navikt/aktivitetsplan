@@ -37,7 +37,7 @@ const ReferatVisning = (props: Props) => {
                     </Alert>
                 ) : null}
                 <Feilmelding feilmeldinger={feil} />
-                <div className="space-x-4">
+                <div className="flex gap-4">
                     <Button hidden={erReferatPublisert} onClick={dispatchPubliserReferat} loading={publiserer}>
                         Del med bruker
                     </Button>
