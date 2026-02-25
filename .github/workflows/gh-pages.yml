@@ -22,6 +22,8 @@ jobs:
               with:
                 READER_TOKEN: ${{ secrets.READER_TOKEN }}
             - name: Build
+              run: pnpm run msw-init
+            - name: Build
               run: pnpm run build:gh-pages
             - name: Deploy
               if: success()
