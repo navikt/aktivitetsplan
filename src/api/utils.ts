@@ -29,6 +29,14 @@ export interface SerializedError {
     type: string;
 }
 
+const getPath = (response: Response) => {
+    try {
+        new URL(response.url).pathname;
+    } catch (e) {
+        return response.url;
+    }
+};
+
 // Custom HTTP Error class for better Sentry grouping and reporting
 export class HttpError extends Error {
     public readonly code: string;
@@ -38,7 +46,7 @@ export class HttpError extends Error {
     public readonly endpoint: string;
 
     constructor(response: Response, operation?: string) {
-        const endpoint = new URL(response.url).pathname;
+        const endpoint = getPath(response);
         const message = `HTTP ${response.status}: ${response.statusText} - ${operation || endpoint}`;
         super(message);
 
