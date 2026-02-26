@@ -29,16 +29,38 @@ export interface SerializedError {
     type: string;
 }
 
-export async function sjekkStatuskode(response: Response): Promise<Response> {
+// Custom HTTP Error class for better Sentry grouping and reporting
+export class HttpError extends Error {
+    public readonly code: string;
+    public readonly url: string;
+    public readonly method: string;
+    public readonly operation?: string;
+    public readonly endpoint: string;
+
+    constructor(response: Response, operation?: string) {
+        const endpoint = new URL(response.url).pathname;
+        const message = `HTTP ${response.status}: ${response.statusText} - ${operation || endpoint}`;
+        super(message);
+
+        this.name = 'HttpError';
+        this.code = response.status.toString();
+        this.url = response.url;
+        this.method = response.type || 'unknown';
+        this.operation = operation;
+        this.endpoint = endpoint;
+
+        // Maintains proper stack trace for where our error was thrown (only available on V8)
+        if (typeof (Error as any).captureStackTrace === 'function') {
+            (Error as any).captureStackTrace(this, HttpError);
+        }
+    }
+}
+
+export async function sjekkStatuskode(response: Response, operation?: string): Promise<Response> {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
-    const error: Omit<SerializedError, 'type'> = {
-        code: response.status.toString(),
-        message: `${response.url}`,
-        name: `${response.statusText} (${response.status})`,
-    };
-    return Promise.reject(error);
+    throw new HttpError(response, operation);
 }
 
 export function toJson(response: Response) {
@@ -61,25 +83,37 @@ const defaultHeaders = {
     'Nav-Consumer-Id': 'aktivitetsplan',
 };
 
-export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders }) {
+export function fetchToJsonPlain(url: string, config = { headers: defaultHeaders }, operation?: string) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
-    return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
+    return fetch(url, configMedCredentials)
+        .then((response) => sjekkStatuskode(response, operation))
+        .then(toJson);
 }
 
-export function fetchToJson(url: string, config: RequestInit = { headers: defaultHeaders, method: 'get' }) {
+export function fetchToJson(
+    url: string,
+    config: RequestInit = { headers: defaultHeaders, method: 'get' },
+    operation?: string,
+) {
     const configMedCredentials = {
         ...DEFAULT_CONFIG,
         ...config,
     };
 
-    let fetchUrl = url;
-
-    return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
+    return fetch(url, configMedCredentials)
+        .then((response) => sjekkStatuskode(response, operation))
+        .then(toJson);
 }
 
 type HttpMethod = 'post' | 'put' | 'get' | 'patch';
 
-function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, config: RequestInit) {
+function methodToJson(
+    method: HttpMethod,
+    url: string,
+    data: Record<any, any>,
+    config: RequestInit,
+    operation?: string,
+) {
     // prettier-ignore
     return fetchToJson(url, {
         ...{
@@ -88,13 +122,13 @@ function methodToJson(method: HttpMethod, url: string, data: Record<any, any>, c
             body: Object.keys(data).length === 0 ? undefined : JSON.stringify(data)
         },
         ...config
-    });
+    }, operation);
 }
 
-export function postAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('post', url, data, config);
+export function postAsJson(url: string, data = {}, config = {}, operation?: string) {
+    return methodToJson('post', url, data, config, operation);
 }
 
-export function putAsJson(url: string, data = {}, config = {}) {
-    return methodToJson('put', url, data, config);
+export function putAsJson(url: string, data = {}, config = {}, operation?: string) {
+    return methodToJson('put', url, data, config, operation);
 }

@@ -192,7 +192,7 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         },
         body: JSON.stringify(queryBody(fnr)),
     })
-        .then(sjekkStatuskode)
+        .then((response) => sjekkStatuskode(response, 'hentAktiviteterGraphql'))
         .then(toJson)
         .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
 };
@@ -207,7 +207,7 @@ export const hentAktivitetGraphql = (aktivitetId: string) => {
         },
         body: JSON.stringify(aktivitetQueryBody(aktivitetId)),
     })
-        .then(sjekkStatuskode)
+        .then((response) => sjekkStatuskode(response, 'hentAktivitetGraphql'))
         .then(toJson)
         .then(
             sjekkGraphqlFeil<{
