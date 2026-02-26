@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktivitetsplan - Fulltidsplan (Desktop)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .time-slot { min-height: 60px; }
+        .time-slot:hover { background-color: #f9fafb; }
+        .activity-block {
+            transition: all 0.2s;
+            cursor: move;
+        }
+        .activity-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .week-nav-btn:hover { background-color: #f3f4f6; }
+        .day-column.today { background-color: #eff6ff; }
+        .day-header.today { background-color: #dbeafe; font-weight: 600; }
+        .time-marker {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ef4444;
+            z-index: 10;
+        }
+        .time-marker::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: -5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ef4444;
+        }
+        .program-badge {
+            animation: pulse-badge 2s infinite;
+        }
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-[#262626] text-white p-4 shadow-lg">
+        <div class="max-w-[1800px] mx-auto">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-semibold">Fulltidsplan - Uke 7, 2026</h1>
+                    <p class="text-sm text-gray-300 mt-1">Kari Nordmann • Ungdomsprogrammet</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="px-3 py-1.5 bg-purple-600 text-white text-sm rounded-full program-badge">
+                        👥 Ungdomsprogrammet
+                    </span>
+                    <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium">
+                        + Legg til aktivitet
+                    </button>
+                    <button class="p-2 hover:bg-gray-700 rounded-lg" title="Tilbake til oversikt">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-navigation / View toggle -->
+    <nav class="bg-white border-b sticky top-0 z-20 shadow-sm">
+        <div class="max-w-[1800px] mx-auto flex items-center justify-between px-4 py-2">
+            <div class="flex gap-1">
+                <button class="px-4 py-2 bg-blue-50 text-blue-700 border-b-2 border-blue-500 font-medium text-sm">
+                    📅 Ukeplan
+                </button>
+                <button class="px-4 py-2 text-gray-600 hover:bg-gray-50 text-sm">
+                    📊 Oversikt
+                </button>
+                <button class="px-4 py-2 text-gray-600 hover:bg-gray-50 text-sm">
+                    📋 Alle aktiviteter
+                </button>
+                <button class="px-4 py-2 text-gray-600 hover:bg-gray-50 text-sm">
+                    💬 Dialog
+                </button>
+            </div>
+
+            <!-- Ukenavigasjon -->
+            <div class="flex items-center gap-3">
+                <button class="week-nav-btn p-2 rounded-lg border" title="Forrige uke">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <span class="text-sm font-medium">Uke 7 • 10. feb - 16. feb 2026</span>
+                <button class="week-nav-btn p-2 rounded-lg border" title="Neste uke">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <button class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium">
+                    I dag
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="max-w-[1800px] mx-auto p-4">
+
+        <!-- Program info banner -->
+        <div class="mb-4 bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center text-white flex-shrink-0">
+                    👥
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-purple-900">Ungdomsprogrammet</h3>
+                    <p class="text-sm text-purple-700 mt-1">
+                        Fulltidsprogram • 1. jan 2026 - 31. des 2026 •
+                        <strong>37,5 timer per uke forventes</strong>
+                    </p>
+                    <div class="mt-2 flex items-center gap-4 text-sm">
+                        <span class="text-purple-600">📊 Denne uke: 32,5 / 37,5 timer</span>
+                        <span class="text-purple-600">👤 Veileder: Ola Hansen</span>
+                    </div>
+                </div>
+                <button class="px-3 py-1.5 bg-white border border-purple-300 rounded-lg text-sm hover:bg-purple-50">
+                    Se programdetaljer
+                </button>
+            </div>
+        </div>
+
+        <!-- Pågående langtidstiltak (hvis noen) -->
+        <div class="mb-4 bg-orange-50 border border-orange-200 rounded-lg p-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="text-orange-600 text-lg">💼</span>
+                    <div>
+                        <span class="font-medium text-sm">Lønnstilskudd hos Bakeri AS</span>
+                        <span class="text-xs text-orange-700 ml-2">• Planlagt 20 timer/uke i fulltidsplanen</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-orange-600">Mnd 2/12</span>
+                    <button class="px-3 py-1 text-xs bg-white border border-orange-300 rounded hover:bg-orange-50">
+                        Se tiltak
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ukekalender -->
+        <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
+            <!-- Header med dager -->
+            <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b bg-gray-50">
+                <div class="p-3 border-r"></div>
+                <div class="day-header p-3 border-r text-center">
+                    <div class="text-xs text-gray-500">Man</div>
+                    <div class="font-semibold">10. feb</div>
+                    <div class="text-xs text-gray-500 mt-1">0 / 7,5t</div>
+                </div>
+                <div class="day-header today p-3 border-r text-center">
+                    <div class="text-xs text-blue-600">Tir (i dag)</div>
+                    <div class="font-semibold text-blue-900">11. feb</div>
+                    <div class="text-xs text-blue-600 mt-1">6,5 / 7,5t</div>
+                </div>
+                <div class="day-header p-3 border-r text-center">
+                    <div class="text-xs text-gray-500">Ons</div>
+                    <div class="font-semibold">12. feb</div>
+                    <div class="text-xs text-green-600 mt-1">8 / 7,5t</div>
+                </div>
+                <div class="day-header p-3 border-r text-center">
+                    <div class="text-xs text-gray-500">Tor</div>
+                    <div class="font-semibold">13. feb</div>
+                    <div class="text-xs text-gray-500 mt-1">7,5 / 7,5t</div>
+                </div>
+                <div class="day-header p-3 border-r text-center">
+                    <div class="text-xs text-gray-500">Fre</div>
+                    <div class="font-semibold">14. feb</div>
+                    <div class="text-xs text-orange-600 mt-1">3 / 7,5t</div>
+                </div>
+                <div class="day-header p-3 border-r text-center bg-gray-100">
+                    <div class="text-xs text-gray-400">Lør</div>
+                    <div class="font-semibold text-gray-400">15. feb</div>
+                    <div class="text-xs text-gray-400 mt-1">Helg</div>
+                </div>
+                <div class="day-header p-3 text-center bg-gray-100">
+                    <div class="text-xs text-gray-400">Søn</div>
+                    <div class="font-semibold text-gray-400">16. feb</div>
+                    <div class="text-xs text-gray-400 mt-1">Helg</div>
+                </div>
+            </div>
+
+            <!-- Tidslinjer -->
+            <div class="overflow-y-auto" style="max-height: 800px;">
+                <!-- 08:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">08:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2 relative">
+                        <div class="activity-block bg-blue-100 border-l-4 border-blue-500 rounded p-2 h-full">
+                            <div class="text-xs font-medium text-blue-900">Oppstartmøte NAV</div>
+                            <div class="text-xs text-blue-700">08:00 - 09:00 • 1t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 09:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">09:00</div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-orange-100 border-l-4 border-orange-500 rounded p-2">
+                            <div class="text-xs font-medium text-orange-900">Arbeid - Bakeri AS</div>
+                            <div class="text-xs text-orange-700">09:00 - 13:00 • 4t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot today border-r p-2 relative">
+                        <!-- Tidmarkør for "nå" kl 10:30 -->
+                        <div class="time-marker" style="top: 30px;"></div>
+                    </div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-orange-100 border-l-4 border-orange-500 rounded p-2">
+                            <div class="text-xs font-medium text-orange-900">Arbeid - Bakeri AS</div>
+                            <div class="text-xs text-orange-700">09:00 - 13:00 • 4t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-orange-100 border-l-4 border-orange-500 rounded p-2">
+                            <div class="text-xs font-medium text-orange-900">Arbeid - Bakeri AS</div>
+                            <div class="text-xs text-orange-700">09:00 - 13:00 • 4t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-orange-100 border-l-4 border-orange-500 rounded p-2">
+                            <div class="text-xs font-medium text-orange-900">Arbeid - Bakeri AS</div>
+                            <div class="text-xs text-orange-700">09:00 - 13:00 • 4t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 10:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">10:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2">
+                        <div class="activity-block bg-green-100 border-l-4 border-green-500 rounded p-2">
+                            <div class="text-xs font-medium text-green-900">CV-kurs (online)</div>
+                            <div class="text-xs text-green-700">10:00 - 12:00 • 2t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 11:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">11:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 12:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">12:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 13:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">13:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2">
+                        <div class="activity-block bg-purple-100 border-l-4 border-purple-500 rounded p-2">
+                            <div class="text-xs font-medium text-purple-900">Jobbsøking (egen tid)</div>
+                            <div class="text-xs text-purple-700">13:00 - 15:00 • 2t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-blue-100 border-l-4 border-blue-500 rounded p-2">
+                            <div class="text-xs font-medium text-blue-900">Veiledning med Ola</div>
+                            <div class="text-xs text-blue-700">13:00 - 14:00 • 1t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 14:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">14:00</div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-green-100 border-l-4 border-green-500 rounded p-2">
+                            <div class="text-xs font-medium text-green-900">Videregående skole</div>
+                            <div class="text-xs text-green-700">14:00 - 16:00 • 2t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot today border-r p-2"></div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-green-100 border-l-4 border-green-500 rounded p-2">
+                            <div class="text-xs font-medium text-green-900">Videregående skole</div>
+                            <div class="text-xs text-green-700">14:00 - 16:00 • 2t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-green-100 border-l-4 border-green-500 rounded p-2">
+                            <div class="text-xs font-medium text-green-900">Videregående skole</div>
+                            <div class="text-xs text-green-700">14:00 - 17:00 • 3t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-green-100 border-l-4 border-green-500 rounded p-2">
+                            <div class="text-xs font-medium text-green-900">Videregående skole</div>
+                            <div class="text-xs text-green-700">14:00 - 16:00 • 2t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 15:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">15:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2">
+                        <div class="activity-block bg-yellow-100 border-l-4 border-yellow-500 rounded p-2">
+                            <div class="text-xs font-medium text-yellow-900">Leksehjelp</div>
+                            <div class="text-xs text-yellow-700">15:00 - 17:00 • 2t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-purple-100 border-l-4 border-purple-500 rounded p-2">
+                            <div class="text-xs font-medium text-purple-900">Jobbsøking</div>
+                            <div class="text-xs text-purple-700">15:00 - 16:30 • 1,5t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 16:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">16:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2"></div>
+                    <div class="time-slot border-r p-2">
+                        <div class="activity-block bg-pink-100 border-l-4 border-pink-500 rounded p-2">
+                            <div class="text-xs font-medium text-pink-900">Gruppemøte ungdom</div>
+                            <div class="text-xs text-pink-700">16:00 - 17:30 • 1,5t</div>
+                        </div>
+                    </div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+
+                <!-- 17:00 -->
+                <div class="grid grid-cols-[80px_repeat(7,1fr)] border-b hover:bg-gray-50">
+                    <div class="p-2 border-r text-xs text-gray-500 text-right pr-3">17:00</div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot today border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2"></div>
+                    <div class="time-slot border-r p-2 bg-gray-50"></div>
+                    <div class="time-slot p-2 bg-gray-50"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ukeoppsummering -->
+        <div class="mt-4 grid grid-cols-3 gap-4">
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-sm">Timer denne uke</h3>
+                    <span class="text-2xl">⏱️</span>
+                </div>
+                <div class="text-3xl font-bold text-gray-900">32,5 / 37,5</div>
+                <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-orange-500 h-2 rounded-full" style="width: 87%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">Mangler 5 timer for full uke</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-sm">Aktivitetstyper</h3>
+                    <span class="text-2xl">📊</span>
+                </div>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Arbeid</span>
+                        <span class="font-medium">20t</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Utdanning</span>
+                        <span class="font-medium">8t</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Egen aktivitet</span>
+                        <span class="font-medium">4,5t</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-sm">Kommende hendelser</h3>
+                    <span class="text-2xl">📅</span>
+                </div>
+                <div class="space-y-2 text-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="text-blue-500">●</span>
+                        <span>Oppstartmøte NAV - I morgen 08:00</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-purple-500">●</span>
+                        <span>Veiledning - Torsdag 13:00</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-pink-500">●</span>
+                        <span>Gruppemøte - Onsdag 16:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fargekode-forklaring -->
+        <div class="mt-4 bg-white rounded-lg shadow p-4">
+            <h3 class="font-semibold text-sm mb-3">Fargekoder</h3>
+            <div class="grid grid-cols-4 gap-4 text-sm">
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-orange-500 rounded"></div>
+                    <span>Arbeid / Tiltak</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-green-500 rounded"></div>
+                    <span>Utdanning / Kurs</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-blue-500 rounded"></div>
+                    <span>Møte med NAV</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-purple-500 rounded"></div>
+                    <span>Jobbsøking (egen tid)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+                    <span>Leksehjelp / Støtte</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-pink-500 rounded"></div>
+                    <span>Gruppemøte</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-red-500 rounded"></div>
+                    <span>Tidmarkør (nå)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Design-notater -->
+        <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 class="font-semibold text-blue-900 mb-2">💡 Design-konsept: Fulltidsplan for Spesialprogrammer</h3>
+            <div class="text-sm text-blue-800 space-y-2">
+                <p><strong>For hvem:</strong> Brukere på ungdomsprogram, KVP, og andre fulltidsprogrammer som krever tett oppfølging og daglig planlegging.</p>
+                <p><strong>Hovedfunksjoner:</strong></p>
+                <ul class="list-disc list-inside ml-4 space-y-1">
+                    <li>Ukekalender med time-for-time visning (08:00-17:00)</li>
+                    <li>Drag-and-drop for å flytte aktiviteter (ikke implementert i prototype)</li>
+                    <li>Automatisk timeberegning per dag og uke</li>
+                    <li>Visuell indikator for "nå" (rød linje)</li>
+                    <li>Fargekoding for ulike aktivitetstyper</li>
+                    <li>Integrasjon med langtidstiltak (vises både i banner og i kalender)</li>
+                    <li>Ukeoppsummering med timer, aktivitetstyper, og kommende hendelser</li>
+                    <li>Program-badge som viser hvilket spesialprogram brukeren er på</li>
+                </ul>
+                <p><strong>Neste steg:</strong> Implementer drag-and-drop, konfliktsjekk, SMS-varsler for neste dag, og eksport til kalender.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Placeholder for interaktivitet
+        console.log('Fulltidsplan desktop prototype loaded');
+
+        // Her ville vi implementert:
+        // - Drag-and-drop for aktiviteter
+        // - Klikk på time-slots for å legge til nye aktiviteter
+        // - Modal for aktivitetsdetaljer
+        // - Real-time oppdatering av timeberegning
+        // - Konfliktsjekk (overlappende aktiviteter)
+    </script>
+</body>
+</html>

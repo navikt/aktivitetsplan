@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktivitetsplan - Design Alternativer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nav-tab { transition: all 0.2s; }
+        .nav-tab.active { border-bottom: 3px solid #0067c5; color: #0067c5; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0067c5;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #0067c5;
+        }
+        .timeline-item.completed::before { background: #06893a; box-shadow: 0 0 0 2px #06893a; }
+        .timeline-item.future::before { background: #e0e0e0; box-shadow: 0 0 0 2px #e0e0e0; }
+        .gantt-bar { height: 24px; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-[#262626] text-white p-4">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-xl font-semibold">Aktivitetsplan - Design Alternativer</h1>
+            <p class="text-sm text-gray-300 mt-1">Klikk på fanene for å se ulike design-mønstre</p>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto flex gap-1 px-4">
+            <button onclick="showTab('trello')" class="nav-tab active px-4 py-3 text-sm font-medium" data-tab="trello">Nåværende (Trello)</button>
+            <button onclick="showTab('timeline')" class="nav-tab px-4 py-3 text-sm font-medium" data-tab="timeline">1. Tidslinje</button>
+            <button onclick="showTab('milestone')" class="nav-tab px-4 py-3 text-sm font-medium" data-tab="milestone">2. Milepæl</button>
+            <button onclick="showTab('progress')" class="nav-tab px-4 py-3 text-sm font-medium" data-tab="progress">3. Fremdrift</button>
+            <button onclick="showTab('dashboard')" class="nav-tab px-4 py-3 text-sm font-medium" data-tab="dashboard">4. Dashboard</button>
+            <button onclick="showTab('list')" class="nav-tab px-4 py-3 text-sm font-medium" data-tab="list">5. Liste</button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-4">
+        
+        <!-- Tab: Nåværende Trello-design -->
+        <section id="trello" class="tab-content">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Nåværende design (Trello/Kanban)</h3>
+                <p class="text-sm text-blue-700 mt-1">Aktiviteter organisert i kolonner basert på status. Brukeren drar kort mellom kolonnene.</p>
+            </div>
+            <div class="grid grid-cols-5 gap-4">
+                <!-- Kolonne: Forslag -->
+                <div class="bg-gray-200 rounded-lg p-3">
+                    <h3 class="font-semibold text-sm mb-3 text-gray-700">Forslag</h3>
+                    <div class="space-y-2">
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-yellow-400">
+                            <p class="text-sm font-medium">Jobbmesse NAV</p>
+                            <p class="text-xs text-gray-500 mt-1">15. mars 2026</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolonne: Planlagt -->
+                <div class="bg-gray-200 rounded-lg p-3">
+                    <h3 class="font-semibold text-sm mb-3 text-gray-700">Planlagt</h3>
+                    <div class="space-y-2">
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
+                            <p class="text-sm font-medium">CV-kurs</p>
+                            <p class="text-xs text-gray-500 mt-1">20. feb - 22. feb</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
+                            <p class="text-sm font-medium">Møte med veileder</p>
+                            <p class="text-xs text-gray-500 mt-1">25. feb 2026</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolonne: Gjennomføres -->
+                <div class="bg-gray-200 rounded-lg p-3">
+                    <h3 class="font-semibold text-sm mb-3 text-gray-700">Gjennomføres</h3>
+                    <div class="space-y-2">
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-orange-400">
+                            <p class="text-sm font-medium">Jobbsøkerkurs</p>
+                            <p class="text-xs text-gray-500 mt-1">1. feb - 28. feb</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-orange-400">
+                            <p class="text-sm font-medium">Søke 3 stillinger</p>
+                            <p class="text-xs text-gray-500 mt-1">Frist: 1. mars</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolonne: Fullført -->
+                <div class="bg-gray-200 rounded-lg p-3">
+                    <h3 class="font-semibold text-sm mb-3 text-gray-700">Fullført</h3>
+                    <div class="space-y-2">
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-green-400 opacity-75">
+                            <p class="text-sm font-medium">Registrere CV</p>
+                            <p class="text-xs text-gray-500 mt-1">✓ Fullført 10. jan</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-green-400 opacity-75">
+                            <p class="text-sm font-medium">Kartleggingssamtale</p>
+                            <p class="text-xs text-gray-500 mt-1">✓ Fullført 5. jan</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolonne: Avbrutt -->
+                <div class="bg-gray-200 rounded-lg p-3">
+                    <h3 class="font-semibold text-sm mb-3 text-gray-700">Avbrutt</h3>
+                    <div class="space-y-2">
+                        <div class="bg-white p-3 rounded shadow-sm border-l-4 border-red-400 opacity-50">
+                            <p class="text-sm font-medium line-through">Praksisplass X</p>
+                            <p class="text-xs text-gray-500 mt-1">Avbrutt - ikke aktuelt</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded">
+                <h4 class="font-semibold text-yellow-800">⚠️ Utfordringer med dette designet</h4>
+                <ul class="text-sm text-yellow-700 mt-2 list-disc list-inside space-y-1">
+                    <li>Vanskelig å se tidsmessig progresjon</li>
+                    <li>Gir ikke følelse av fremgang mot et mål</li>
+                    <li>Kolonnebasert design passer bedre for kontinuerlig arbeid (prosjekter)</li>
+                    <li>Mye visuelt "støy" når det er mange aktiviteter</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Tab: Tidslinje/Gantt -->
+        <section id="timeline" class="tab-content hidden">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 1: Tidslinje / Gantt-visning</h3>
+                <p class="text-sm text-blue-700 mt-1">Aktiviteter vist langs en horisontal tidslinje. Gir god oversikt over varighet og overlapp.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <!-- Tidslinje header -->
+                <div class="flex border-b pb-2 mb-4">
+                    <div class="w-48 font-semibold text-sm">Aktivitet</div>
+                    <div class="flex-1 flex text-xs text-gray-500">
+                        <div class="flex-1 text-center border-l">Jan</div>
+                        <div class="flex-1 text-center border-l">Feb</div>
+                        <div class="flex-1 text-center border-l bg-blue-50">Mars</div>
+                        <div class="flex-1 text-center border-l">April</div>
+                        <div class="flex-1 text-center border-l">Mai</div>
+                    </div>
+                </div>
+                <!-- Aktiviteter -->
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <div class="w-48 text-sm">
+                            <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                            Kartleggingssamtale
+                        </div>
+                        <div class="flex-1 relative h-6">
+                            <div class="gantt-bar bg-green-400 absolute" style="left: 2%; width: 5%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-48 text-sm">
+                            <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                            Registrere CV
+                        </div>
+                        <div class="flex-1 relative h-6">
+                            <div class="gantt-bar bg-green-400 absolute" style="left: 5%; width: 10%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-48 text-sm">
+                            <span class="inline-block w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+                            Jobbsøkerkurs
+                        </div>
+                        <div class="flex-1 relative h-6">
+                            <div class="gantt-bar bg-orange-400 absolute" style="left: 20%; width: 20%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-48 text-sm">
+                            <span class="inline-block w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                            CV-kurs
+                        </div>
+                        <div class="flex-1 relative h-6">
+                            <div class="gantt-bar bg-blue-400 absolute" style="left: 38%; width: 5%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-48 text-sm">
+                            <span class="inline-block w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                            Møte med veileder
+                        </div>
+                        <div class="flex-1 relative h-6">
+                            <div class="gantt-bar bg-blue-400 absolute" style="left: 45%; width: 2%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-48 text-sm">
+                            <span class="inline-block w-2 h-2 rounded-full bg-gray-400 mr-2"></span>
+                            Jobbmesse NAV
+                        </div>
+                        <div class="flex-1 relative h-6">
+                            <div class="gantt-bar bg-gray-300 border-2 border-dashed border-gray-400 absolute" style="left: 50%; width: 3%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dagens dato markør -->
+                <div class="relative mt-4 pt-4 border-t">
+                    <div class="absolute top-0 h-full w-0.5 bg-red-500" style="left: 42%;"></div>
+                    <p class="text-xs text-red-500" style="margin-left: 40%;">↑ I dag (12. feb)</p>
+                </div>
+            </div>
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="p-4 bg-green-50 border border-green-200 rounded">
+                    <h4 class="font-semibold text-green-800">✓ Fordeler</h4>
+                    <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Tydelig tidsbasert oversikt</li>
+                        <li>Ser overlappende aktiviteter</li>
+                        <li>Synliggjør fremdrift over tid</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-red-50 border border-red-200 rounded">
+                    <h4 class="font-semibold text-red-800">✗ Ulemper</h4>
+                    <ul class="text-sm text-red-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Kan bli uoversiktlig med mange aktiviteter</li>
+                        <li>Krever horisontal scrolling på mobil</li>
+                        <li>Komplekst å implementere interaktivt</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Milepælsvisning -->
+        <section id="milestone" class="tab-content hidden">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 2: Milepælsvisning</h3>
+                <p class="text-sm text-blue-700 mt-1">Vertikal tidslinje med tydelige milepæler som viser reisen mot målet.</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <!-- Mål øverst -->
+                <div class="text-center mb-8 p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg">
+                    <div class="text-sm uppercase tracking-wide opacity-80">Ditt mål</div>
+                    <div class="text-xl font-semibold mt-1">🎯 Fast jobb innen salg</div>
+                    <div class="text-sm mt-2 opacity-80">Forventet: Juni 2026</div>
+                </div>
+
+                <!-- Vertikal tidslinje -->
+                <div class="relative pl-8 border-l-4 border-gray-200 ml-4">
+                    <!-- Fullførte aktiviteter -->
+                    <div class="timeline-item completed relative mb-6 pb-4 border-b border-gray-100">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded mb-1">Fullført</span>
+                                <h4 class="font-semibold">Kartleggingssamtale</h4>
+                                <p class="text-sm text-gray-600">Avklarte mål og behov med veileder</p>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                <div>5. jan 2026</div>
+                                <div class="text-green-600">✓</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item completed relative mb-6 pb-4 border-b border-gray-100">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded mb-1">Fullført</span>
+                                <h4 class="font-semibold">Registrere CV på nav.no</h4>
+                                <p class="text-sm text-gray-600">CV synlig for arbeidsgivere</p>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                <div>10. jan 2026</div>
+                                <div class="text-green-600">✓</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pågående -->
+                    <div class="timeline-item relative mb-6 pb-4 border-b border-gray-100 bg-blue-50 -ml-8 pl-8 pr-4 py-3 rounded-r">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 bg-orange-100 text-orange-700 text-xs rounded mb-1">Pågår nå</span>
+                                <h4 class="font-semibold">Jobbsøkerkurs</h4>
+                                <p class="text-sm text-gray-600">Lærer effektive jobbsøkerteknikker</p>
+                                <div class="mt-2">
+                                    <div class="w-48 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-orange-500 h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <span class="text-xs text-gray-500">60% fullført</span>
+                                </div>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                <div>1. - 28. feb</div>
+                                <div class="text-orange-600">⏳</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Planlagte -->
+                    <div class="timeline-item future relative mb-6 pb-4 border-b border-gray-100 opacity-70">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded mb-1">Planlagt</span>
+                                <h4 class="font-semibold">CV-kurs</h4>
+                                <p class="text-sm text-gray-600">Få hjelp til å forbedre CV</p>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                <div>20. - 22. feb</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item future relative mb-6 pb-4 border-b border-gray-100 opacity-70">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded mb-1">Planlagt</span>
+                                <h4 class="font-semibold">Møte med veileder</h4>
+                                <p class="text-sm text-gray-600">Evaluere fremgang og justere plan</p>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                <div>25. feb</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item future relative opacity-50">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded mb-1">Forslag</span>
+                                <h4 class="font-semibold">Jobbmesse NAV</h4>
+                                <p class="text-sm text-gray-600">Møt arbeidsgivere direkte</p>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                <div>15. mars</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="p-4 bg-green-50 border border-green-200 rounded">
+                    <h4 class="font-semibold text-green-800">✓ Fordeler</h4>
+                    <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Tydelig "reise" fra start til mål</li>
+                        <li>Motiverende - ser hva som er oppnådd</li>
+                        <li>Fungerer godt på mobil</li>
+                        <li>Naturlig kronologisk rekkefølge</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-red-50 border border-red-200 rounded">
+                    <h4 class="font-semibold text-red-800">✗ Ulemper</h4>
+                    <ul class="text-sm text-red-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Kan bli lang liste ved mange aktiviteter</li>
+                        <li>Vanskeligere å sammenligne parallelle aktiviteter</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Fremdriftsindikator -->
+        <section id="progress" class="tab-content hidden">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 3: Fremdriftsindikator (Progress Tracker)</h3>
+                <p class="text-sm text-blue-700 mt-1">Visuell stegindikator som viser hvor langt brukeren har kommet i oppfølgingsløpet.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <!-- Hoved-fremdriftsindikator -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium">Din fremdrift mot jobb</span>
+                        <span class="text-sm text-gray-500">3 av 6 steg fullført</span>
+                    </div>
+                    <div class="relative">
+                        <div class="flex justify-between mb-2">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-semibold">✓</div>
+                                <span class="text-xs mt-1 text-center">Kartlegging</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-semibold">✓</div>
+                                <span class="text-xs mt-1 text-center">CV klar</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-semibold">✓</div>
+                                <span class="text-xs mt-1 text-center">Kompetanse</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold animate-pulse">4</div>
+                                <span class="text-xs mt-1 text-center font-semibold">Jobbsøking</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 font-semibold">5</div>
+                                <span class="text-xs mt-1 text-center text-gray-500">Intervju</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 font-semibold">🎯</div>
+                                <span class="text-xs mt-1 text-center text-gray-500">Jobb!</span>
+                            </div>
+                        </div>
+                        <div class="absolute top-5 left-5 right-5 h-0.5 bg-gray-300 -z-10"></div>
+                        <div class="absolute top-5 left-5 h-0.5 bg-green-500 -z-10" style="width: 45%"></div>
+                    </div>
+                </div>
+
+                <!-- Nåværende steg detaljer -->
+                <div class="border-2 border-blue-200 bg-blue-50 rounded-lg p-4 mb-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">Nåværende steg</span>
+                        <h3 class="font-semibold">Steg 4: Aktiv jobbsøking</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Du er nå klar til å søke jobber. Her er aktivitetene som hjelper deg fremover:</p>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 bg-white p-3 rounded border">
+                            <input type="checkbox" checked class="w-5 h-5 text-green-500" disabled>
+                            <div class="flex-1">
+                                <p class="font-medium text-sm">Jobbsøkerkurs</p>
+                                <p class="text-xs text-gray-500">Pågår - 60% fullført</p>
+                            </div>
+                            <span class="text-orange-500 text-sm">⏳ Pågår</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-white p-3 rounded border">
+                            <input type="checkbox" class="w-5 h-5" disabled>
+                            <div class="flex-1">
+                                <p class="font-medium text-sm">Søke 3 stillinger</p>
+                                <p class="text-xs text-gray-500">Frist: 1. mars 2026</p>
+                            </div>
+                            <span class="text-blue-500 text-sm">📋 Planlagt</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-white p-3 rounded border">
+                            <input type="checkbox" class="w-5 h-5" disabled>
+                            <div class="flex-1">
+                                <p class="font-medium text-sm">Møte med veileder</p>
+                                <p class="text-xs text-gray-500">25. februar 2026</p>
+                            </div>
+                            <span class="text-blue-500 text-sm">📋 Planlagt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historikk (kollapset) -->
+                <details class="border rounded-lg">
+                    <summary class="p-4 cursor-pointer font-medium text-gray-700 hover:bg-gray-50">
+                        ✓ Fullførte steg (3 steg)
+                    </summary>
+                    <div class="p-4 pt-0 text-sm text-gray-600 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Kartleggingssamtale - 5. jan</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Registrere CV - 10. jan</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>CV-kurs - 22. feb</span>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="p-4 bg-green-50 border border-green-200 rounded">
+                    <h4 class="font-semibold text-green-800">✓ Fordeler</h4>
+                    <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Svært motiverende - tydelig fremgang</li>
+                        <li>Fokuserer på "neste steg"</li>
+                        <li>Reduserer informasjonsoverbelastning</li>
+                        <li>Intuitivt og kjent mønster</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-red-50 border border-red-200 rounded">
+                    <h4 class="font-semibold text-red-800">✗ Ulemper</h4>
+                    <ul class="text-sm text-red-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Krever kategorisering av aktiviteter i "steg"</li>
+                        <li>Mindre fleksibelt for ikke-lineære løp</li>
+                        <li>Må definere hva hvert steg betyr</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Dashboard -->
+        <section id="dashboard" class="tab-content hidden">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 4: Dashboard med KPI-er</h3>
+                <p class="text-sm text-blue-700 mt-1">Kombinerer statistikk og oversikt med aktivitetsliste. Gir raskt innblikk i status.</p>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <!-- KPI Kort -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-3xl font-bold text-green-600">4</div>
+                    <div class="text-sm text-gray-600">Fullførte aktiviteter</div>
+                    <div class="text-xs text-green-500 mt-1">↑ 2 denne måneden</div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-3xl font-bold text-orange-600">2</div>
+                    <div class="text-sm text-gray-600">Pågående</div>
+                    <div class="text-xs text-gray-500 mt-1">1 nær frist</div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-3xl font-bold text-blue-600">3</div>
+                    <div class="text-sm text-gray-600">Planlagte</div>
+                    <div class="text-xs text-gray-500 mt-1">Neste: 20. feb</div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-3xl font-bold text-gray-800">67%</div>
+                    <div class="text-sm text-gray-600">Total fremdrift</div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 67%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+                <!-- Kommende aktiviteter -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-semibold mb-3 text-gray-800">📅 Kommende</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-2 bg-orange-50 rounded">
+                            <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">Jobbsøkerkurs</p>
+                                <p class="text-xs text-gray-500">Pågår til 28. feb</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">CV-kurs</p>
+                                <p class="text-xs text-gray-500">20. - 22. feb</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">Møte med veileder</p>
+                                <p class="text-xs text-gray-500">25. feb</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kalendervisning -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-semibold mb-3 text-gray-800">📆 Februar 2026</h3>
+                    <div class="grid grid-cols-7 gap-1 text-center text-xs">
+                        <div class="text-gray-400">Ma</div>
+                        <div class="text-gray-400">Ti</div>
+                        <div class="text-gray-400">On</div>
+                        <div class="text-gray-400">To</div>
+                        <div class="text-gray-400">Fr</div>
+                        <div class="text-gray-400">Lø</div>
+                        <div class="text-gray-400">Sø</div>
+                        <!-- Uke 1 -->
+                        <div class="p-1 text-gray-400">26</div>
+                        <div class="p-1 text-gray-400">27</div>
+                        <div class="p-1 text-gray-400">28</div>
+                        <div class="p-1 text-gray-400">29</div>
+                        <div class="p-1 text-gray-400">30</div>
+                        <div class="p-1 text-gray-400">31</div>
+                        <div class="p-1">1</div>
+                        <!-- Uke 2 -->
+                        <div class="p-1">2</div>
+                        <div class="p-1">3</div>
+                        <div class="p-1">4</div>
+                        <div class="p-1">5</div>
+                        <div class="p-1">6</div>
+                        <div class="p-1">7</div>
+                        <div class="p-1">8</div>
+                        <!-- Uke 3 -->
+                        <div class="p-1">9</div>
+                        <div class="p-1">10</div>
+                        <div class="p-1">11</div>
+                        <div class="p-1 bg-blue-500 text-white rounded">12</div>
+                        <div class="p-1">13</div>
+                        <div class="p-1">14</div>
+                        <div class="p-1">15</div>
+                        <!-- Uke 4 -->
+                        <div class="p-1">16</div>
+                        <div class="p-1">17</div>
+                        <div class="p-1">18</div>
+                        <div class="p-1">19</div>
+                        <div class="p-1 bg-orange-200 rounded">20</div>
+                        <div class="p-1 bg-orange-200 rounded">21</div>
+                        <div class="p-1 bg-orange-200 rounded">22</div>
+                        <!-- Uke 5 -->
+                        <div class="p-1">23</div>
+                        <div class="p-1">24</div>
+                        <div class="p-1 bg-green-200 rounded">25</div>
+                        <div class="p-1">26</div>
+                        <div class="p-1">27</div>
+                        <div class="p-1 bg-red-200 rounded">28</div>
+                        <div class="p-1 text-gray-400">1</div>
+                    </div>
+                    <div class="mt-2 text-xs space-y-1">
+                        <div class="flex items-center gap-1"><span class="w-2 h-2 bg-orange-200 rounded"></span> CV-kurs</div>
+                        <div class="flex items-center gap-1"><span class="w-2 h-2 bg-green-200 rounded"></span> Møte</div>
+                        <div class="flex items-center gap-1"><span class="w-2 h-2 bg-red-200 rounded"></span> Frist</div>
+                    </div>
+                </div>
+
+                <!-- Siste aktivitet -->
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-semibold mb-3 text-gray-800">🕐 Siste hendelser</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex gap-2">
+                            <span class="text-gray-400">I dag</span>
+                            <span>Du logget på jobbsøkerkurset</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="text-gray-400">I går</span>
+                            <span>Veileder la til forslag: Jobbmesse</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="text-gray-400">10. feb</span>
+                            <span>Du fullførte modul 3 av kurset</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="text-gray-400">5. feb</span>
+                            <span>CV-kurs ble planlagt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="p-4 bg-green-50 border border-green-200 rounded">
+                    <h4 class="font-semibold text-green-800">✓ Fordeler</h4>
+                    <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Rask oversikt over status</li>
+                        <li>Kvantifiserer fremgang</li>
+                        <li>Kalenderintegrasjon gir tidsforståelse</li>
+                        <li>Flere visninger i ett</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-red-50 border border-red-200 rounded">
+                    <h4 class="font-semibold text-red-800">✗ Ulemper</h4>
+                    <ul class="text-sm text-red-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Kan virke overveldende</li>
+                        <li>Mye informasjon på én gang</li>
+                        <li>Komplekst å vedlikeholde</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab: Listevisning -->
+        <section id="list" class="tab-content hidden">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                <h3 class="font-semibold text-blue-800">Alternativ 5: Enkel listevisning med progresjonsflagg</h3>
+                <p class="text-sm text-blue-700 mt-1">Minimalistisk liste sortert kronologisk med tydelige visuelle indikatorer.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow">
+                <!-- Header med fremdrift -->
+                <div class="p-4 border-b bg-gray-50">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="font-semibold">Mine aktiviteter</h2>
+                            <p class="text-sm text-gray-500">4 av 9 fullført</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="flex gap-1">
+                                <span class="px-2 py-1 text-xs bg-green-100 text-green-700 rounded cursor-pointer hover:bg-green-200">Fullført (4)</span>
+                                <span class="px-2 py-1 text-xs bg-orange-100 text-orange-700 rounded cursor-pointer hover:bg-orange-200">Pågår (2)</span>
+                                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded cursor-pointer hover:bg-blue-200">Planlagt (2)</span>
+                                <span class="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded cursor-pointer hover:bg-gray-200">Alle</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste -->
+                <div class="divide-y">
+                    <!-- Pågående - fremhevet -->
+                    <div class="p-4 bg-orange-50 border-l-4 border-orange-500">
+                        <div class="flex items-center gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white">
+                                    <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-semibold">Jobbsøkerkurs</h3>
+                                    <span class="px-2 py-0.5 text-xs bg-orange-200 text-orange-800 rounded-full">Pågår</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Kurs • 1. feb - 28. feb 2026</p>
+                                <div class="mt-2 flex items-center gap-2">
+                                    <div class="w-32 bg-orange-200 rounded-full h-1.5">
+                                        <div class="bg-orange-500 h-1.5 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <span class="text-xs text-orange-600">60%</span>
+                                </div>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                16 dager igjen
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-orange-50 border-l-4 border-orange-500">
+                        <div class="flex items-center gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white">📝</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-semibold">Søke 3 stillinger</h3>
+                                    <span class="px-2 py-0.5 text-xs bg-orange-200 text-orange-800 rounded-full">Pågår</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Jobbsøk • Frist: 1. mars 2026</p>
+                                <p class="text-xs text-orange-600 mt-1">⚠️ 1 av 3 søknader sendt</p>
+                            </div>
+                            <div class="text-right text-sm text-orange-600 font-medium">
+                                17 dager til frist
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Planlagte -->
+                    <div class="p-4 hover:bg-gray-50 border-l-4 border-blue-400">
+                        <div class="flex items-center gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">📚</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-semibold">CV-kurs</h3>
+                                    <span class="px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">Planlagt</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Kurs • 20. - 22. feb 2026</p>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                Om 8 dager
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 hover:bg-gray-50 border-l-4 border-blue-400">
+                        <div class="flex items-center gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">👤</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-semibold">Møte med veileder</h3>
+                                    <span class="px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">Planlagt</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Møte • 25. feb 2026 kl 10:00</p>
+                            </div>
+                            <div class="text-right text-sm text-gray-500">
+                                Om 13 dager
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Forslag -->
+                    <div class="p-4 hover:bg-gray-50 border-l-4 border-yellow-400 opacity-75">
+                        <div class="flex items-center gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">💡</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-semibold">Jobbmesse NAV</h3>
+                                    <span class="px-2 py-0.5 text-xs bg-yellow-100 text-yellow-700 rounded-full">Forslag fra veileder</span>
+                                </div>
+                                <p class="text-sm text-gray-600">Arrangement • 15. mars 2026</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="px-3 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600">Godta</button>
+                                <button class="px-3 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Avslå</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fullførte (kollapset) -->
+                    <details class="border-l-4 border-green-400">
+                        <summary class="p-4 cursor-pointer hover:bg-gray-50">
+                            <span class="font-medium text-green-700">✓ Fullførte aktiviteter (4)</span>
+                        </summary>
+                        <div class="bg-green-50">
+                            <div class="p-4 border-t flex items-center gap-4 opacity-60">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white">✓</div>
+                                <div class="flex-1">
+                                    <h3 class="font-medium">Registrere CV</h3>
+                                    <p class="text-sm text-gray-500">Fullført 10. jan 2026</p>
+                                </div>
+                            </div>
+                            <div class="p-4 border-t flex items-center gap-4 opacity-60">
+                                <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white">✓</div>
+                                <div class="flex-1">
+                                    <h3 class="font-medium">Kartleggingssamtale</h3>
+                                    <p class="text-sm text-gray-500">Fullført 5. jan 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="p-4 bg-green-50 border border-green-200 rounded">
+                    <h4 class="font-semibold text-green-800">✓ Fordeler</h4>
+                    <ul class="text-sm text-green-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Enkelt og oversiktlig</li>
+                        <li>Fungerer godt på alle enheter</li>
+                        <li>Tydelig prioritering av pågående</li>
+                        <li>Lett å implementere og vedlikeholde</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-red-50 border border-red-200 rounded">
+                    <h4 class="font-semibold text-red-800">✗ Ulemper</h4>
+                    <ul class="text-sm text-red-700 mt-2 list-disc list-inside space-y-1">
+                        <li>Mindre visuelt engasjerende</li>
+                        <li>Gir ikke samme "reise"-følelse</li>
+                        <li>Kan bli lang ved mange aktiviteter</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer med anbefaling -->
+    <footer class="bg-white border-t mt-8 p-6">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="font-semibold text-lg mb-2">💡 Anbefaling</h3>
+            <p class="text-gray-600">
+                For NAV Aktivitetsplan anbefales en kombinasjon av <strong>Alternativ 2 (Milepæl)</strong> og <strong>Alternativ 3 (Fremdrift)</strong>. 
+                Dette gir brukeren en tydelig følelse av fremgang mot et konkret mål, som er mer motiverende enn det nåværende kanban-designet. 
+                Milepælsvisningen fungerer godt fordi NAV-brukere typisk jobber mot et definert mål (jobb, utdanning) over en avgrenset periode.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            // Show selected tab
+            document.getElementById(tabId).classList.remove('hidden');
+            // Update nav styling
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
