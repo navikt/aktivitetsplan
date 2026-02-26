@@ -55,7 +55,7 @@ const TryggTekst = ({ value }: { value: string }) => {
                             {(data?.kategorier || []).map((kategori) => {
                                 return (
                                     <List.Item key={kategori.kategori}>
-                                        <BodyShort className="font-ax-bold">{capitalize(kategori.kategori)}</BodyShort>
+                                        <BodyShort><b>{capitalize(kategori.kategori)}</b></BodyShort>
                                         <BodyLong>{kategori.trigger}</BodyLong>
                                     </List.Item>
                                 );
