@@ -53,7 +53,7 @@ const TryggTekst = ({ value }: { value: string }) => {
                 {status === Status.PENDING || status === Status.RELOADING ? (
                     <div className="flex flex-col gap-y-4 mt-4 justify-center items-center">
                         <BodyShort>KI-modellen sjekker for særlige kategorier av personopplysninger</BodyShort>
-                        <Loader className="mb-4" size="2xlarge" />
+                        <Loader className="mb-2" size="2xlarge" />
                     </div>
                 ) : status === Status.OK ? (
                     (() => {
