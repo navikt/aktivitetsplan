@@ -22,7 +22,7 @@ jobs:
     name: Deploy to GCP-bucket
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Install pnpm - setup node - install deps
         uses: ./.github/actions/setup-pnpm
         with:
