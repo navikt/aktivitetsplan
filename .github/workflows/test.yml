@@ -5,6 +5,11 @@ on: [push, workflow_dispatch]
 env:
   PRINT_PAYLOAD: true
 
+permissions:
+  contents: 'read'
+  id-token: 'write'
+  packages: 'write'
+
 jobs:
   build:
     name: Build and run tests
