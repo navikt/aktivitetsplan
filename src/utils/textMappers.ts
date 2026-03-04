@@ -37,6 +37,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     ARENA_TILTAK: 'Tiltak gjennom Nav',
     MIDLERTIDIG_LONNSTILSKUDD: 'Midlertidig lønnstilskudd',
     VARIG_LONNSTILSKUDD: 'Varig lønnstilskudd',
+    FIREARIG_LONNSTILSKUDD: 'Fireårig lønnstilskudd for unge',
     ARBEIDSTRENING: 'Arbeidstrening',
     VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: 'Varig tilrettelagt arbeid i ordinær virksomhet',
     MENTOR: 'Mentor',
@@ -57,7 +58,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     NORSKOPPLAERING_GRUNNLEGGENDE_FERDIGHETER_FOV: 'Norskopplæring, grunnleggende ferdigheter og FOV',
     STUDIESPESIALISERING: 'Studiespesialisering',
     FAG_OG_YRKESOPPLAERING: 'Fag- og yrkesopplæring',
-    HOYERE_YRKESFAGLIG_UTDANNING: 'Høyere yrkesfaglig utdanning'
+    HOYERE_YRKESFAGLIG_UTDANNING: 'Høyere yrkesfaglig utdanning',
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
