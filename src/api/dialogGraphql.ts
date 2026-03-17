@@ -56,7 +56,7 @@ export const hentDialogerGraphql = async (): Promise<DialogResponse> => {
         },
         body: JSON.stringify(queryBody(fnr)),
     })
-        .then(sjekkStatuskode)
+        .then((response) => sjekkStatuskode(response, 'hentDialogerGraphql'))
         .then(toJson)
         .then(sjekkGraphqlFeil<{ dialoger: Dialog[] }>);
 };
