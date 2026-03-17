@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export const useSamtalereferatKladd = (brukerFnr: string) => {
+    const debouncedDelay = 500
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
     const localStorageKey = `samtalereferatKladd-${brukerFnr}`;
-    // const [samtalereferatKladd, setSamtalereferatKladd] = useState<string>(localStorage.getItem(localStorageKey) || '');
 
     const lagreSamtalereferatKladd = (referat: string) => {
-        // setSamtalereferatKladd(referat);
-        localStorage.setItem(localStorageKey, JSON.stringify(referat));
-        console.log(referat);
+        useCallback(() => {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+                localStorage.setItem(localStorageKey, JSON.stringify(referat))
+            }, debouncedDelay)
+        }, [localStorageKey, debouncedDelay]);
     }
 
     return {lagreSamtalereferatKladd};
