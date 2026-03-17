@@ -96,7 +96,6 @@ const AktivitetsplanPrint = () => {
         loggEvent(PRINT_MODAL_OPEN);
     }, []);
 
-    const { fnr } = useFnrOgEnhetContext();
     const [kvpUtvalgskriterie, setKvpUtvalgskriterie] = useState<KvpUtvalgskriterie>({
         alternativ: erVeileder
             ? KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER

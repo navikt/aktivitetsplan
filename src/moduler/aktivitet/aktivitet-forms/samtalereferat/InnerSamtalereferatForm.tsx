@@ -16,6 +16,8 @@ import { useReferatStartTekst } from './useReferatStartTekst';
 import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
+import { useSamtalereferatKladd } from './useSamtalereferatKladd';
+import { useFnrOgEnhetContext } from '../../../../Provider';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -51,6 +53,8 @@ const InnerSamtalereferatForm = (props: Props) => {
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
+    const { fnr } = useFnrOgEnhetContext();
+    const {lagreSamtalereferatKladd} = useSamtalereferatKladd(fnr!!)
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',
@@ -76,6 +80,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     }
 
     const referatValue = watch('referat'); // for <Textarea /> character-count to work
+    lagreSamtalereferatKladd(watch('referat'));
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
         return handleSubmit((data) => {
