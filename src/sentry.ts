@@ -66,7 +66,7 @@ const fjernPersonopplysninger = (event: ErrorEvent, hint: EventHint): ErrorEvent
                 http: {
                     url: maskedUrl,
                     method: originalException.method,
-                    status_code: parseInt(originalException.code, 10),
+                    status_code: Number.parseInt(originalException.code, 10),
                     operation: operationName,
                 },
             },
