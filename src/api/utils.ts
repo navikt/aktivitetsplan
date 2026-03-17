@@ -31,7 +31,7 @@ export interface SerializedError {
 
 const getPath = (response: Response) => {
     try {
-        new URL(response.url).pathname;
+        return new URL(response.url).pathname;
     } catch (e) {
         return response.url;
     }
