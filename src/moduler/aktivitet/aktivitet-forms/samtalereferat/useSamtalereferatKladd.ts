@@ -16,5 +16,9 @@ export const useSamtalereferatKladd = (brukerFnr: string) => {
         return localStorage.getItem(localStorageKey);
     }
 
-    return { lagreSamtalereferatKladd, hentSamtataleReferatKladd: hentSamtaleReferatKladd };
+    const slettSamtaleReferatKladd = () => {
+        localStorage.removeItem(localStorageKey);
+    }
+
+    return { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd};
 };

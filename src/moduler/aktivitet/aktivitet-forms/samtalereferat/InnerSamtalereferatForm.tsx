@@ -51,9 +51,9 @@ const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
     const [open, setOpen] = useState(true);
     const { fnr } = useFnrOgEnhetContext();
-    const { lagreSamtalereferatKladd, hentSamtataleReferatKladd } = useSamtalereferatKladd(fnr!!);
+    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(fnr!!);
     const referatStartTekst = useReferatStartTekst();
-    const kladd = hentSamtataleReferatKladd();
+    const kladd = hentSamtaleReferatKladd();
     const startTekst = kladd || referatStartTekst;
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
@@ -82,7 +82,9 @@ const InnerSamtalereferatForm = (props: Props) => {
     }
 
     const referatValue = watch('referat'); // for <Textarea /> character-count to work
-    lagreSamtalereferatKladd(watch('referat'));
+    if(nyAktivitet && !isSubmitting) {
+        lagreSamtalereferatKladd(watch('referat'));
+    }
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
         return handleSubmit((data) => {
@@ -94,6 +96,7 @@ const InnerSamtalereferatForm = (props: Props) => {
             }).then(() => {
                 const analysis = checkText(data.referat);
                 logReferatFullfort(analysis, erReferatPublisert, open);
+                slettSamtaleReferatKladd();
                 dispatch(notifiserTryggTekstVedLagring(data.referat));
             });
         });
