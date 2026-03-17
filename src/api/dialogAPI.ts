@@ -5,5 +5,5 @@ import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localS
 
 export const fetchSistOppdatert = (): Promise<SistOppdatert> => {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
-    return postAsJson(`${DIALOG_BASE_URL}/dialog/sistOppdatert`, { fnr }, {}, 'fetchSistOppdatert');
+    return postAsJson(`${DIALOG_BASE_URL}/dialog/sistOppdatert`, { fnr }, 'fetchSistOppdatert');
 };

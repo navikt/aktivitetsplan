@@ -7,7 +7,7 @@ import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localS
 import { ArkivFilter } from '../moduler/verktoylinje/arkivering/arkiv-slice';
 
 export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId: string): Promise<VeilarbAktivitet> =>
-    postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${oppfolgingsperiodeId}/ny`, aktivitet, {}, 'Opprett aktivitet');
+    postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${oppfolgingsperiodeId}/ny`, aktivitet, 'Opprett aktivitet');
 
 export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet, {}, 'Oppdater aktivitet');
@@ -16,7 +16,6 @@ export const hentInnsynsrett = (): Promise<{ foresatteHarInnsynsrett: boolean }>
     return postAsJson(
         `${AKTIVITET_BASE_URL}/innsynsrett`,
         { fnr: hentFraSessionStorage(LocalStorageElement.FNR) },
-        {},
         'Hent innsynsrett',
     );
 };
@@ -103,7 +102,6 @@ export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> =>
     postAsJson(
         `${AKTIVITET_BASE_URL}/arena/tiltak`,
         { fnr: hentFraSessionStorage(LocalStorageElement.FNR) },
-        {},
         'Hent arena aktiviteter',
     );
 
@@ -144,7 +142,6 @@ export const journalfoerAktivitetsplanOgDialog = (
             journalførendeEnhetId,
             uuidCachetPdf,
         },
-        {},
         'Journalfoer aktivitetsplan og dialog',
     );
 
@@ -154,7 +151,6 @@ export const genererPdfTilForhaandsvisning = (oppfolgingsperiodeId: string, jour
         {
             journalførendeEnhetId,
         },
-        {},
         'Generer pdf til forhaandsvisning',
     );
 
@@ -175,7 +171,6 @@ export const journalforOgSendTilBruker = (
             uuidCachetPdf,
             tekstTilBruker,
         },
-        {},
         'Journalfor og send til bruker',
     );
 
@@ -192,6 +187,5 @@ export const genererPdfTilForhaandsvisningSendTilBruker = (
             journalførendeEnhetId,
             tekstTilBruker,
         },
-        {},
         'Generer pdf til forhaandsvisning - send til bruker',
     );

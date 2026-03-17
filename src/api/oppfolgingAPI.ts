@@ -8,25 +8,24 @@ export const fetchIdentitet = (): Promise<Me> =>
 
 // Ikke synlid for veileder
 export const settDigital = (fnr: string | undefined): Promise<OppfolgingStatus> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/settDigital`, fnr ? { fnr } : undefined, {}, 'settDigital');
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/settDigital`, fnr ? { fnr } : undefined, 'settDigital');
 
 export const fetchOppfolging = (fnr: string | undefined): Promise<OppfolgingStatus> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/hent-status`, fnr ? { fnr } : undefined, {}, 'fetchOppfolging');
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/hent-status`, fnr ? { fnr } : undefined, 'fetchOppfolging');
 
 export const fetchMal = (fnr: string | undefined): Promise<Mal> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/v3/hent-maal`, fnr ? { fnr } : undefined, {}, 'fetchMal');
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/hent-maal`, fnr ? { fnr } : undefined, 'fetchMal');
 
 export const fetchMalListe = (fnr: string | undefined): Promise<Mal[]> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal/hent-alle`, fnr ? { fnr } : undefined, {}, 'fetchMalListe');
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal/hent-alle`, fnr ? { fnr } : undefined, 'fetchMalListe');
 
 export const lagreMal = (mal: string, fnr: string | undefined): Promise<Mal> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal`, { maalInnhold: { maal: mal }, fnr }, {}, 'lagreMal');
+    postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal`, { maalInnhold: { maal: mal }, fnr }, 'lagreMal');
 
 export const fetchHarFlereAktorId = (fnr: string | undefined): Promise<boolean> =>
     postAsJson(
         `${OPPFOLGING_BASE_URL}/v3/oppfolging/harFlereAktorIderMedOppfolging`,
         fnr ? { fnr } : undefined,
-        {},
         'fetchHarFlereAktorId',
     );
 

@@ -5,7 +5,7 @@ import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localS
 
 export const fetchSisteLest = (): Promise<Lest[]> => {
     const fnr = hentFraSessionStorage(LocalStorageElement.FNR);
-    return postAsJson(`${VEILARBLEST_BASE_URL}/aktivitetsplan/les`, { fnr }, {}, 'fetchSisteLest');
+    return postAsJson(`${VEILARBLEST_BASE_URL}/aktivitetsplan/les`, { fnr }, 'fetchSisteLest');
 };
 
 export const postLest = (versjon: string): Promise<void> =>
