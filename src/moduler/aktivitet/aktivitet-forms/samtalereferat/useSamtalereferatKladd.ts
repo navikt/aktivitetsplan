@@ -1,7 +1,15 @@
 import { useCallback, useRef } from 'react';
+import { Kanal } from '../../../../datatypes/aktivitetTypes';
+
+interface SamtalereferatKladd {
+    tittel: string | null;
+    fraDato: string | null;
+    kanal: Kanal;
+    referat: string;
+}
 
 interface KladdInnslag {
-    kladd: string;
+    samtalereferat: SamtalereferatKladd;
     tidspunkt: number;
 }
 
@@ -11,22 +19,22 @@ export const useSamtalereferatKladd = (brukerFnr: string) => {
     const localeStorageKeyPrefix = "samtalereferatKladd"
     const localStorageKey = `${localeStorageKeyPrefix}-${brukerFnr}`;
 
-    const lagreSamtalereferatKladd: (referat:string) => void = useCallback((referat: string) => {
+    const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladd) => {
         slettEldreSamtalereferatKladder();
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
-            const kladdInnslag = {kladd: referat, tidspunkt: Date.now()}
+            const kladdInnslag = {samtalereferat, tidspunkt: Date.now()}
             localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
         }, debouncedDelay);
     }, [localStorageKey]);
 
-    const hentSamtaleReferatKladd = (): string | null => {
+    const hentSamtaleReferatKladd = (): SamtalereferatKladd | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
         if (!kladdInnslag) {
             return null;
         } else {
             const parsedKladdInnslag: KladdInnslag = JSON.parse(kladdInnslag);
-            return parsedKladdInnslag.kladd;
+            return parsedKladdInnslag.samtalereferat;
         }
     }
 

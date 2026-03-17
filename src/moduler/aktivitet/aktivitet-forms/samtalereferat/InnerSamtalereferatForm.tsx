@@ -52,17 +52,16 @@ const InnerSamtalereferatForm = (props: Props) => {
     const [open, setOpen] = useState(true);
     const { fnr } = useFnrOgEnhetContext();
     const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(fnr!!);
-    const referatStartTekst = useReferatStartTekst();
     const kladd = hentSamtaleReferatKladd();
-    const startTekst = kladd || referatStartTekst;
+    const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
-        tittel: aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(aktivitet?.fraDato),
-        kanal: aktivitet?.kanal || Kanal.TELEFON,
-        referat: aktivitet?.referat || startTekst,
+        tittel: kladd?.tittel || aktivitet?.tittel || '',
+        fraDato: dateOrUndefined(kladd?.fraDato) || dateOrUndefined(aktivitet?.fraDato),
+        kanal: kladd?.kanal || aktivitet?.kanal || Kanal.TELEFON,
+        referat: kladd?.referat || aktivitet?.referat || startTekst,
     };
 
     const formHandlers = useForm<SamtalereferatAktivitetFormValues>({
@@ -81,9 +80,12 @@ const InnerSamtalereferatForm = (props: Props) => {
         dirtyRef.current = isDirty;
     }
 
+    const tittelValue = watch('tittel');
     const referatValue = watch('referat'); // for <Textarea /> character-count to work
-    if(nyAktivitet && !isSubmitting) {
-        lagreSamtalereferatKladd(watch('referat'));
+    const datoValue = watch('fraDato');
+    const kanalValue = watch('kanal');
+    if(!isSubmitting) {
+        lagreSamtalereferatKladd({tittel: tittelValue, referat: referatValue, fraDato: datoValue?.toString(), kanal: kanalValue});
     }
 
     const lagreOgDel = (erReferatPublisert: boolean) => {

@@ -44,7 +44,7 @@ interface Props {
     aktivitet?: IJobbAktivitet;
 }
 
-export const dateOrUndefined = (val: string | undefined) => {
+export const dateOrUndefined = (val: string | undefined | null) => {
     if (val === undefined || val === null) return undefined;
     return new Date(val);
 };
