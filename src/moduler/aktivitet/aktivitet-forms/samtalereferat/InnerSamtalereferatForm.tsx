@@ -50,11 +50,13 @@ interface Props {
 const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
     const [open, setOpen] = useState(true);
-    const startTekst = useReferatStartTekst();
+    const { fnr } = useFnrOgEnhetContext();
+    const { lagreSamtalereferatKladd, hentSamtataleReferatKladd } = useSamtalereferatKladd(fnr!!);
+    const referatStartTekst = useReferatStartTekst();
+    const kladd = hentSamtataleReferatKladd();
+    const startTekst = kladd || referatStartTekst;
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
-    const { fnr } = useFnrOgEnhetContext();
-    const {lagreSamtalereferatKladd} = useSamtalereferatKladd(fnr!!)
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: aktivitet?.tittel || '',

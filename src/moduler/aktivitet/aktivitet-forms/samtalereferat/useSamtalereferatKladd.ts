@@ -8,9 +8,13 @@ export const useSamtalereferatKladd = (brukerFnr: string) => {
     const lagreSamtalereferatKladd: (referat:string) => void = useCallback((referat: string) => {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
-            localStorage.setItem(localStorageKey, JSON.stringify(referat));
+            localStorage.setItem(localStorageKey, referat);
         }, debouncedDelay);
     }, [localStorageKey]);
 
-    return { lagreSamtalereferatKladd };
+    const hentSamtaleReferatKladd = () => {
+        return localStorage.getItem(localStorageKey);
+    }
+
+    return { lagreSamtalereferatKladd, hentSamtataleReferatKladd: hentSamtaleReferatKladd };
 };
