@@ -63,7 +63,6 @@ const InnerSamtalereferatForm = (props: Props) => {
         kanal: kladd?.kanal || aktivitet?.kanal || Kanal.TELEFON,
         referat: kladd?.referat || aktivitet?.referat || startTekst,
     };
-
     const formHandlers = useForm<SamtalereferatAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
@@ -84,8 +83,9 @@ const InnerSamtalereferatForm = (props: Props) => {
     const referatValue = watch('referat'); // for <Textarea /> character-count to work
     const datoValue = watch('fraDato');
     const kanalValue = watch('kanal');
+
     if(!isSubmitting) {
-        lagreSamtalereferatKladd({tittel: tittelValue, referat: referatValue, fraDato: datoValue?.toString(), kanal: kanalValue});
+        lagreSamtalereferatKladd({tittel: tittelValue, referat: referatValue, fraDato: datoValue?.toISOString(), kanal: kanalValue});
     }
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
@@ -118,7 +118,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                     />
 
                     <ControlledDatePicker
-                        field={{ name: 'fraDato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                        field={{ name: 'fraDato', required: true, defaultValue: defaultValues.fraDato }}
                         disabledDays={[{ after: new Date() }]}
                     />
 

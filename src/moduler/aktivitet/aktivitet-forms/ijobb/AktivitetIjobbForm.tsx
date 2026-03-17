@@ -46,7 +46,9 @@ interface Props {
 
 export const dateOrUndefined = (val: string | undefined | null) => {
     if (val === undefined || val === null) return undefined;
-    return new Date(val);
+    const d = new Date(val);
+    console.log("Date", d);
+    return d;
 };
 
 const IJobbAktivitetForm = (props: Props) => {
