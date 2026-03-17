@@ -10,7 +10,7 @@ export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId
     postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${oppfolgingsperiodeId}/ny`, aktivitet, 'Opprett aktivitet');
 
 export const oppdaterAktivitet = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
-    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet, {}, 'Oppdater aktivitet');
+    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet, 'Oppdater aktivitet');
 
 export const hentInnsynsrett = (): Promise<{ foresatteHarInnsynsrett: boolean }> => {
     return postAsJson(
@@ -31,7 +31,6 @@ export const settAktivitetTilAvtalt = (
             aktivitetVersjon,
             forhaandsorientering,
         },
-        {},
         'Sett aktivitet til avtalt',
     );
 
@@ -45,7 +44,6 @@ export const markerForhaandsorienteringSomLest = (
             aktivitetId,
             aktivitetVersion: aktivitetVersjon,
         },
-        {},
         'Marker forhaandsorientering som lest',
     );
 
@@ -62,26 +60,25 @@ export const oppdaterCvKanDelesSvar = (
             kanDeles,
             avtaltDato,
         },
-        {},
         'Oppdater Cv–Kan-Deles Svar',
     );
 };
 
 export const oppdaterAktivitetStatus = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
-    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet, {}, 'Oppdater aktivitet status');
+    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet, 'Oppdater aktivitet status');
 
 export const oppdaterAktivitetEtikett = (aktivitet: VeilarbAktivitet): Promise<VeilarbAktivitet> =>
-    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet, {}, 'Oppdater aktivitet etikett');
+    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet, 'Oppdater aktivitet etikett');
 
 export const publiserReferat = (
     aktivitet: SamtalereferatAktivitet | MoteAktivitet,
 ): Promise<SamtalereferatAktivitet | MoteAktivitet> =>
-    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`, aktivitet, {}, 'Publiser referat');
+    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`, aktivitet, 'Publiser referat');
 
 export const oppdaterReferat = (
     aktivitet: SamtalereferatAktivitet | MoteAktivitet,
 ): Promise<SamtalereferatAktivitet | MoteAktivitet> =>
-    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet, {}, 'Oppdater referat');
+    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet, 'Oppdater referat');
 
 export const oppdaterStillingFraNavSoknadsstatus = (
     aktivitetId: string,
@@ -94,7 +91,6 @@ export const oppdaterStillingFraNavSoknadsstatus = (
             aktivitetVersjon,
             soknadsstatus,
         },
-        {},
         'Oppdater Stilling-Fra-Nav soknadsstatus',
     );
 
@@ -117,14 +113,12 @@ export const sendForhaandsorienteringArenaAktivitet = ({
     putAsJson(
         `${AKTIVITET_BASE_URL}/arena/${oppfolgingsPeriodeId}/forhaandsorientering?arenaaktivitetId=${arenaaktivitetId}`,
         forhaandsorientering,
-        {},
         'Send forhaandsorientering for Arena-aktivitet',
     );
 
 export const markerForhaandsorienteringSomLestArenaAktivitet = (aktivitetId: string): Promise<ArenaAktivitet> =>
     putAsJson(
         `${AKTIVITET_BASE_URL}/arena/forhaandsorientering/lest?aktivitetId=${aktivitetId}`,
-        {},
         {},
         'Marker forhaandsorientering som lest Arena-aktivitet',
     );

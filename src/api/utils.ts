@@ -137,6 +137,6 @@ export function postAsJson(url: string, data = {}, operation?: string) {
     return methodToJson('post', url, data, {}, operation);
 }
 
-export function putAsJson(url: string, data = {}, config = {}, operation?: string) {
-    return methodToJson('put', url, data, config, operation);
+export function putAsJson(url: string, data = {}, operation?: string) {
+    return methodToJson('put', url, data, {}, operation);
 }
