@@ -59,20 +59,20 @@ export const useSamtalereferatKladd = (oppfolgingsperiodeId: string, aktivitetId
 
     const hentSamtaleReferatKladd = (): SamtalereferatKladdNyttAktivitetskort | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
-        if (!kladdInnslag) {
-            return null;
-        } else {
+        if (kladdInnslag) {
             const parsedKladdInnslag: KladdInnslag = JSON.parse(kladdInnslag);
             return parsedKladdInnslag?.samtalereferat as SamtalereferatKladdNyttAktivitetskort;
+        } else {
+            return null;
         }
     }
 
     const hentSamtaleReferatKladdLagretAktivitet = (): string | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
-        if (!kladdInnslag) {
-            return null;
-        } else {
+        if (kladdInnslag) {
             return JSON.parse(kladdInnslag).samtalereferat;
+        } else {
+            return null;
         }
     }
 

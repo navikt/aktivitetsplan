@@ -4,7 +4,6 @@ import { Button, Select, Switch, TextField, Textarea } from '@navikt/ds-react';
 import React, { MutableRefObject, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
-
 import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
@@ -17,7 +16,6 @@ import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from './useSamtalereferatKladd';
-import { useFnrOgEnhetContext } from '../../../../Provider';
 import { selectAktivOppfolgingsperiode } from '../../../oppfolging-status/oppfolging-selector';
 import { useSelector } from 'react-redux';
 

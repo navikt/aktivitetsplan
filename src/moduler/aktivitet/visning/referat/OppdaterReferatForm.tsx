@@ -21,7 +21,6 @@ import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
-import { useFnrOgEnhetContext } from '../../../../Provider';
 import { selectAktivOppfolgingsperiode } from '../../../oppfolging-status/oppfolging-selector';
 
 const schema = z.object({
