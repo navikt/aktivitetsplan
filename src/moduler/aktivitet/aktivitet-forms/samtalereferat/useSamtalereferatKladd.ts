@@ -36,10 +36,10 @@ export const slettGamleSamtalereferatKladder = () => {
     })
 }
 
-export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) => {
+export const useSamtalereferatKladd = (oppfolgingsperiodeId: string, aktivitetId?: string) => {
     const debouncedDelay = 500;
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-    const localStorageKey = aktivitetId ? `${localeStorageKeyPrefix}-${aktivitetId}` : `${localeStorageKeyPrefix}-${brukerFnr}`;
+    const localStorageKey = aktivitetId ? `${localeStorageKeyPrefix}-${aktivitetId}` : `${localeStorageKeyPrefix}-${oppfolgingsperiodeId}`;
 
     const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {
         clearTimeout(timeoutRef.current);

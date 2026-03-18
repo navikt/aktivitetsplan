@@ -18,6 +18,8 @@ import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch'
 import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from './useSamtalereferatKladd';
 import { useFnrOgEnhetContext } from '../../../../Provider';
+import { selectAktivOppfolgingsperiode } from '../../../oppfolging-status/oppfolging-selector';
+import { useSelector } from 'react-redux';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -50,12 +52,14 @@ interface Props {
 const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
     const [open, setOpen] = useState(true);
-    const { fnr } = useFnrOgEnhetContext();
-    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(fnr!!);
-    const kladd = hentSamtaleReferatKladd();
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
+
+    const oppfolgingsperiode = useSelector(selectAktivOppfolgingsperiode)
+    if (!oppfolgingsperiode) return;
+    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiode.id);
+    const kladd = hentSamtaleReferatKladd();
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: kladd?.tittel || aktivitet?.tittel || '',
