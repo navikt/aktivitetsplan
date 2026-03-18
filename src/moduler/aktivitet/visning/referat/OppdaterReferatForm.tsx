@@ -20,6 +20,8 @@ import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useRe
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
+import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
+import { useFnrOgEnhetContext } from '../../../../Provider';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -39,6 +41,8 @@ const OppdaterReferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
     const erReferatPublisert = aktivitet.erReferatPublisert;
+    const { fnr } = useFnrOgEnhetContext();
+    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(fnr!!, aktivitet.id);
 
     const {
         watch,
@@ -94,6 +98,10 @@ const OppdaterReferatForm = (props: Props) => {
     const feil = useSelector(selectPubliserOgOppdaterReferatFeil);
 
     const referatValue = watch('referat');
+
+    if (!isSubmitting) {
+        lagreSamtalereferatKladdLagretAktivitet(referatValue);
+    }
 
     return (
         <form

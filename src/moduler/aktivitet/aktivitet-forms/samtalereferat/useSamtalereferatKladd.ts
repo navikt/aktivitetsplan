@@ -13,11 +13,12 @@ interface KladdInnslag {
     tidspunkt: number;
 }
 
-export const useSamtalereferatKladd = (brukerFnr: string) => {
+export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) => {
     const debouncedDelay = 500;
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
     const localeStorageKeyPrefix = "samtalereferatKladd"
     const localStorageKey = `${localeStorageKeyPrefix}-${brukerFnr}`;
+    const localStorageKeyLagretAktivitet = `${localStorageKey}-${aktivitetId}`;
 
     const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladd) => {
         slettEldreSamtalereferatKladder();
@@ -27,6 +28,14 @@ export const useSamtalereferatKladd = (brukerFnr: string) => {
             localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
         }, debouncedDelay);
     }, [localStorageKey]);
+
+    const lagreSamtalereferatKladdLagretAktivitet = useCallback((referatKladd: string) => {
+        slettEldreSamtalereferatKladder();
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            localStorage.setItem(localStorageKeyLagretAktivitet, JSON.stringify(referatKladd));
+        }, debouncedDelay);
+    }, [localStorageKeyLagretAktivitet]);
 
     const hentSamtaleReferatKladd = (): SamtalereferatKladd | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
@@ -59,5 +68,5 @@ export const useSamtalereferatKladd = (brukerFnr: string) => {
         })
     }
 
-    return { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd};
+    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd};
 };
