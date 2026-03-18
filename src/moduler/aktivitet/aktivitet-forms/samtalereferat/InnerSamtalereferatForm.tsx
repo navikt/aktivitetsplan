@@ -18,6 +18,7 @@ import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from './useSamtalereferatKladd';
 import { selectAktivOppfolgingsperiode } from '../../../oppfolging-status/oppfolging-selector';
 import { useSelector } from 'react-redux';
+import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -53,10 +54,8 @@ const InnerSamtalereferatForm = (props: Props) => {
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
-
-    const oppfolgingsperiode = useSelector(selectAktivOppfolgingsperiode)
-    if (!oppfolgingsperiode) return;
-    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiode.id);
+    const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId)
+    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
     const kladd = hentSamtaleReferatKladd();
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {

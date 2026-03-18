@@ -22,6 +22,7 @@ import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/Try
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
 import { selectAktivOppfolgingsperiode } from '../../../oppfolging-status/oppfolging-selector';
+import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -41,9 +42,8 @@ const OppdaterReferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
     const erReferatPublisert = aktivitet.erReferatPublisert;
-    const oppfolgingsperiode = useSelector(selectAktivOppfolgingsperiode)
-    if (!oppfolgingsperiode) return;
-    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiode.id);
+    const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId)
+    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
 
     const {
         watch,

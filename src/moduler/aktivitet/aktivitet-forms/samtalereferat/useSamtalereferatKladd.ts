@@ -36,12 +36,13 @@ export const slettGamleSamtalereferatKladder = () => {
     })
 }
 
-export const useSamtalereferatKladd = (oppfolgingsperiodeId: string, aktivitetId?: string) => {
+export const useSamtalereferatKladd = (oppfolgingsperiodeId: string | null, aktivitetId?: string) => {
     const debouncedDelay = 500;
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
     const localStorageKey = aktivitetId ? `${localeStorageKeyPrefix}-${aktivitetId}` : `${localeStorageKeyPrefix}-${oppfolgingsperiodeId}`;
 
     const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {
+        if (!oppfolgingsperiodeId === null) return null;
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
             const kladdInnslag = {samtalereferat, tidspunkt: Date.now()}
@@ -50,6 +51,7 @@ export const useSamtalereferatKladd = (oppfolgingsperiodeId: string, aktivitetId
     }, [localStorageKey]);
 
     const lagreSamtalereferatKladdLagretAktivitet = useCallback((referatKladd: string) => {
+        if (!oppfolgingsperiodeId === null) return null;
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
             const kladdInnslag = {samtalereferat: referatKladd, tidspunkt: Date.now()}
