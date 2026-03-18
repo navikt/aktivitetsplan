@@ -47,6 +47,15 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
         }
     }
 
+    const hentSamtaleReferatKladdLagretAktivitet = (): string | null => {
+        const kladdInnslag = localStorage.getItem(localStorageKeyLagretAktivitet);
+        if (!kladdInnslag) {
+            return null;
+        } else {
+            return JSON.parse(kladdInnslag);
+        }
+    }
+
     const slettSamtaleReferatKladd = () => {
         localStorage.removeItem(localStorageKey);
     }
@@ -68,5 +77,5 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
         })
     }
 
-    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd};
+    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd, hentSamtaleReferatKladdLagretAktivitet};
 };

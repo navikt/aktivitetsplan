@@ -42,7 +42,7 @@ const OppdaterReferatForm = (props: Props) => {
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
     const erReferatPublisert = aktivitet.erReferatPublisert;
     const { fnr } = useFnrOgEnhetContext();
-    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(fnr!!, aktivitet.id);
+    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtaleReferatKladd} = useSamtalereferatKladd(fnr!!, aktivitet.id);
 
     const {
         watch,
@@ -52,7 +52,7 @@ const OppdaterReferatForm = (props: Props) => {
     } = useForm<ReferatInputProps>({
         resolver: zodResolver(schema),
         defaultValues: {
-            referat: aktivitet.referat || startTekst,
+            referat: hentSamtaleReferatKladdLagretAktivitet() || aktivitet.referat || startTekst,
         },
     });
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
