@@ -42,7 +42,7 @@ const OppdaterReferatForm = (props: Props) => {
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
     const erReferatPublisert = aktivitet.erReferatPublisert;
     const { fnr } = useFnrOgEnhetContext();
-    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtaleReferatKladd} = useSamtalereferatKladd(fnr!!, aktivitet.id);
+    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtalereferatKladdLagretAktivitet} = useSamtalereferatKladd(fnr!!, aktivitet.id);
 
     const {
         watch,
@@ -77,6 +77,7 @@ const OppdaterReferatForm = (props: Props) => {
             if (isFulfilled(action)) {
                 dispatch(notifiserTryggTekstVedLagring(referatData.referat));
                 onFerdig();
+                slettSamtalereferatKladdLagretAktivitet();
             }
             return action;
         });
@@ -90,6 +91,7 @@ const OppdaterReferatForm = (props: Props) => {
             if (isFulfilled(action)) {
                 dispatch(notifiserTryggTekstVedLagring(values.referat));
                 onFerdig();
+                slettSamtalereferatKladdLagretAktivitet();
             }
             return action;
         });

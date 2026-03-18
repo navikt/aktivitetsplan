@@ -60,6 +60,10 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
         localStorage.removeItem(localStorageKey);
     }
 
+    const slettSamtalereferatKladdLagretAktivitet = () => {
+        localStorage.removeItem(localStorageKeyLagretAktivitet);
+    }
+
     const slettEldreSamtalereferatKladder = () => {
         const nå = Date.now();
         const åtteTimerMillis = 3600000 * 8;
@@ -77,5 +81,5 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
         })
     }
 
-    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd, hentSamtaleReferatKladdLagretAktivitet};
+    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd, slettSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet};
 };
