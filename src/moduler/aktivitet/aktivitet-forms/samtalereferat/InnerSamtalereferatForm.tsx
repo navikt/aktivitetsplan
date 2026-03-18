@@ -16,7 +16,6 @@ import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from './useSamtalereferatKladd';
-import { selectAktivOppfolgingsperiode } from '../../../oppfolging-status/oppfolging-selector';
 import { useSelector } from 'react-redux';
 import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
 
