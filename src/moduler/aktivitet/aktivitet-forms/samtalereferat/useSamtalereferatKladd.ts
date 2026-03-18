@@ -1,15 +1,19 @@
 import { useCallback, useRef } from 'react';
 import { Kanal } from '../../../../datatypes/aktivitetTypes';
 
-interface SamtalereferatKladd {
+interface SamtalereferatKladdNyttAktivitetskort {
     tittel: string | null;
     fraDato: string | null;
     kanal: Kanal;
     referat: string;
 }
 
+interface SamtalereferatLagretAktivitetskort {
+    referat: string;
+}
+
 interface KladdInnslag {
-    samtalereferat: SamtalereferatKladd;
+    samtalereferat: SamtalereferatKladdNyttAktivitetskort | SamtalereferatLagretAktivitetskort;
     tidspunkt: number;
 }
 
@@ -37,7 +41,7 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
     const localStorageKey = aktivitetId ? `${localeStorageKeyPrefix}-${aktivitetId}` : `${localeStorageKeyPrefix}-${brukerFnr}`;
 
-    const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladd) => {
+    const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
             const kladdInnslag = {samtalereferat, tidspunkt: Date.now()}
@@ -48,17 +52,18 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
     const lagreSamtalereferatKladdLagretAktivitet = useCallback((referatKladd: string) => {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
-            localStorage.setItem(localStorageKey, JSON.stringify(referatKladd));
+            const kladdInnslag = {samtalereferat: referatKladd, tidspunkt: Date.now()}
+            localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
         }, debouncedDelay);
     }, [localStorageKey]);
 
-    const hentSamtaleReferatKladd = (): SamtalereferatKladd | null => {
+    const hentSamtaleReferatKladd = (): SamtalereferatKladdNyttAktivitetskort | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
         if (!kladdInnslag) {
             return null;
         } else {
             const parsedKladdInnslag: KladdInnslag = JSON.parse(kladdInnslag);
-            return parsedKladdInnslag.samtalereferat;
+            return parsedKladdInnslag?.samtalereferat as SamtalereferatKladdNyttAktivitetskort;
         }
     }
 
@@ -67,7 +72,7 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
         if (!kladdInnslag) {
             return null;
         } else {
-            return JSON.parse(kladdInnslag);
+            return JSON.parse(kladdInnslag).samtalereferat;
         }
     }
 
