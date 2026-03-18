@@ -17,8 +17,7 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
     const debouncedDelay = 500;
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
     const localeStorageKeyPrefix = "samtalereferatKladd"
-    const localStorageKey = `${localeStorageKeyPrefix}-${brukerFnr}`;
-    const localStorageKeyLagretAktivitet = `${localStorageKey}-${aktivitetId}`;
+    const localStorageKey = aktivitetId ? `${localeStorageKeyPrefix}-${aktivitetId}` : `${localeStorageKeyPrefix}-${brukerFnr}`;
 
     const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladd) => {
         slettEldreSamtalereferatKladder();
@@ -33,9 +32,9 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
         slettEldreSamtalereferatKladder();
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
-            localStorage.setItem(localStorageKeyLagretAktivitet, JSON.stringify(referatKladd));
+            localStorage.setItem(localStorageKey, JSON.stringify(referatKladd));
         }, debouncedDelay);
-    }, [localStorageKeyLagretAktivitet]);
+    }, [localStorageKey]);
 
     const hentSamtaleReferatKladd = (): SamtalereferatKladd | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
@@ -48,7 +47,7 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
     }
 
     const hentSamtaleReferatKladdLagretAktivitet = (): string | null => {
-        const kladdInnslag = localStorage.getItem(localStorageKeyLagretAktivitet);
+        const kladdInnslag = localStorage.getItem(localStorageKey);
         if (!kladdInnslag) {
             return null;
         } else {
@@ -58,10 +57,6 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
 
     const slettSamtaleReferatKladd = () => {
         localStorage.removeItem(localStorageKey);
-    }
-
-    const slettSamtalereferatKladdLagretAktivitet = () => {
-        localStorage.removeItem(localStorageKeyLagretAktivitet);
     }
 
     const slettEldreSamtalereferatKladder = () => {
@@ -81,5 +76,5 @@ export const useSamtalereferatKladd = (brukerFnr: string, aktivitetId?: string) 
         })
     }
 
-    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd, slettSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet};
+    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd, hentSamtaleReferatKladdLagretAktivitet};
 };
