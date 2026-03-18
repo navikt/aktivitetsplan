@@ -85,7 +85,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     const kanalValue = watch('kanal');
 
     if(!isSubmitting) {
-        lagreSamtalereferatKladd({tittel: tittelValue, referat: referatValue, fraDato: datoValue?.toISOString(), kanal: kanalValue});
+        lagreSamtalereferatKladd({tittel: tittelValue, referat: referatValue, fraDato: datoValue, kanal: kanalValue});
     }
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
