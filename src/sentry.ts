@@ -148,6 +148,9 @@ init({
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 0.2,
+    initialScope: {
+        tags: { microfrontend: 'aktivitetsplanen' },
+    },
     beforeSend: fjernPersonopplysninger,
     release: import.meta.env.VITE_SENTRY_RELEASE,
     tracePropagationTargets: [
