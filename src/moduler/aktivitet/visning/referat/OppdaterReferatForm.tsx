@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
 import { Button, Switch, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
@@ -43,6 +43,7 @@ const OppdaterReferatForm = (props: Props) => {
     const erReferatPublisert = aktivitet.erReferatPublisert;
     const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId)
     const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
+    const kladd =  useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
 
     const {
         watch,
@@ -52,7 +53,7 @@ const OppdaterReferatForm = (props: Props) => {
     } = useForm<ReferatInputProps>({
         resolver: zodResolver(schema),
         defaultValues: {
-            referat: hentSamtaleReferatKladdLagretAktivitet() || aktivitet.referat || startTekst,
+            referat: kladd || aktivitet.referat || startTekst,
         },
     });
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;

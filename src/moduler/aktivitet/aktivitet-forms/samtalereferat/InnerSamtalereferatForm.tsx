@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
 import { Button, Select, Switch, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useEffect, useState } from 'react';
+import React, { MutableRefObject, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
@@ -55,7 +55,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId)
     const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
-    const kladd = hentSamtaleReferatKladd();
+    const kladd = useMemo(() => hentSamtaleReferatKladd(), []);
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
         tittel: kladd?.tittel || aktivitet?.tittel || '',
