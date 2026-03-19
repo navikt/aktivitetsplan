@@ -24,16 +24,22 @@ export const slettGamleSamtalereferatKladder = () => {
     const åtteTimerMillis = 3600000 * 8;
     const lagredeItems = Object.keys(localStorage).filter((key) => key.startsWith(localeStorageKeyPrefix));
 
-    lagredeItems.forEach((key) => {
-        const kladdInnslag = localStorage.getItem(key);
-        if (kladdInnslag) {
-            const parsedKladdInnslag: KladdInnslag = JSON.parse(kladdInnslag);
-            const harUtlopt = (nå - åtteTimerMillis) > parsedKladdInnslag.tidspunkt;
-            if (harUtlopt) {
-                localStorage.removeItem(key);
+    try {
+        lagredeItems.forEach((key) => {
+            const kladdInnslag = localStorage.getItem(key);
+            if (kladdInnslag) {
+                try {
+                    const parsedKladdInnslag: KladdInnslag = JSON.parse(kladdInnslag);
+                    const harUtlopt = (nå - åtteTimerMillis) > parsedKladdInnslag.tidspunkt;
+                    if (harUtlopt) {
+                        localStorage.removeItem(key);
+                    }
+                } catch (error) {
+                    localStorage.removeItem(key);
+                }
             }
-        }
-    })
+        })
+    }
 }
 
 export const useSamtalereferatKladd = (oppfolgingsperiodeId: string | null, aktivitetId?: string) => {
