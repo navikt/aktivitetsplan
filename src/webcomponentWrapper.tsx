@@ -18,6 +18,9 @@ import {
   saveReduxStateToSessionStorage,
 } from './store';
 import { createRouterWithWrapper } from './routing/routerConfig';
+import {
+    slettGamleSamtalereferatKladder
+} from './moduler/aktivitet/aktivitet-forms/samtalereferat/useSamtalereferatKladd';
 
 // Clear redux-cache from session storage on page load to make sure new data is fetched
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
@@ -51,6 +54,7 @@ export class DabAktivitetsplan extends HTMLElement {
       settSessionStorage(LocalStorageElement.FNR, fnr);
       preloadedState = getPreloadedStateFromSessionStorage(fnr);
     }
+    slettGamleSamtalereferatKladder();
     this.root = createRoot(appRoot);
     this.root.render(
       <AkselProvider rootElement={appRoot}>

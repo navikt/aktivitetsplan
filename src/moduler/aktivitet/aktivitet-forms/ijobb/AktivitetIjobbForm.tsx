@@ -44,9 +44,10 @@ interface Props {
     aktivitet?: IJobbAktivitet;
 }
 
-export const dateOrUndefined = (val: string | undefined) => {
+export const dateOrUndefined = (val: string | undefined | null) => {
     if (val === undefined || val === null) return undefined;
-    return new Date(val);
+    const date = new Date(val);
+    return Number.isNaN(date.getTime()) ? undefined : date;
 };
 
 const IJobbAktivitetForm = (props: Props) => {

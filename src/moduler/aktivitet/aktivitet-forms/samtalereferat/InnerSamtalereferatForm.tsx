@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
 import { Button, Select, Switch, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useState } from 'react';
+import React, { MutableRefObject, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
-
 import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
@@ -16,6 +15,9 @@ import { useReferatStartTekst } from './useReferatStartTekst';
 import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
+import { useSamtalereferatKladd } from './useSamtalereferatKladd';
+import { useSelector } from 'react-redux';
+import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -51,14 +53,16 @@ const InnerSamtalereferatForm = (props: Props) => {
     const startTekst = useReferatStartTekst();
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
+    const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId);
+    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
+    const kladd = useMemo(() => hentSamtaleReferatKladd(), []);
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
-        tittel: aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(aktivitet?.fraDato),
-        kanal: aktivitet?.kanal || Kanal.TELEFON,
-        referat: aktivitet?.referat || startTekst,
+        tittel: kladd?.tittel || aktivitet?.tittel || '',
+        fraDato: dateOrUndefined(kladd?.fraDato) || dateOrUndefined(aktivitet?.fraDato),
+        kanal: kladd?.kanal || aktivitet?.kanal || Kanal.TELEFON,
+        referat: kladd?.referat || aktivitet?.referat || startTekst,
     };
-
     const formHandlers = useForm<SamtalereferatAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
@@ -75,7 +79,14 @@ const InnerSamtalereferatForm = (props: Props) => {
         dirtyRef.current = isDirty;
     }
 
+    const tittelValue = watch('tittel');
     const referatValue = watch('referat'); // for <Textarea /> character-count to work
+    const datoValue = watch('fraDato');
+    const kanalValue = watch('kanal');
+
+    useEffect(() => {
+        lagreSamtalereferatKladd({tittel: tittelValue, referat: referatValue, fraDato: datoValue, kanal: kanalValue});
+    }, [tittelValue, referatValue, datoValue, kanalValue]);
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
         return handleSubmit((data) => {
@@ -87,6 +98,7 @@ const InnerSamtalereferatForm = (props: Props) => {
             }).then(() => {
                 const analysis = checkText(data.referat);
                 logReferatFullfort(analysis, erReferatPublisert, open);
+                slettSamtaleReferatKladd();
                 dispatch(notifiserTryggTekstVedLagring(data.referat));
             });
         });
@@ -106,7 +118,7 @@ const InnerSamtalereferatForm = (props: Props) => {
                     />
 
                     <ControlledDatePicker
-                        field={{ name: 'fraDato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                        field={{ name: 'fraDato', required: true, defaultValue: defaultValues.fraDato }}
                         disabledDays={[{ after: new Date() }]}
                     />
 

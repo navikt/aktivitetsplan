@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
 import { Button, Switch, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
@@ -20,6 +20,8 @@ import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useRe
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
+import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
+import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -39,6 +41,9 @@ const OppdaterReferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
     const erReferatPublisert = aktivitet.erReferatPublisert;
+    const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId)
+    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
+    const kladd =  useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
 
     const {
         watch,
@@ -48,7 +53,7 @@ const OppdaterReferatForm = (props: Props) => {
     } = useForm<ReferatInputProps>({
         resolver: zodResolver(schema),
         defaultValues: {
-            referat: aktivitet.referat || startTekst,
+            referat: kladd || aktivitet.referat || startTekst,
         },
     });
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
@@ -73,6 +78,7 @@ const OppdaterReferatForm = (props: Props) => {
             if (isFulfilled(action)) {
                 dispatch(notifiserTryggTekstVedLagring(referatData.referat));
                 onFerdig();
+                slettSamtaleReferatKladd();
             }
             return action;
         });
@@ -86,14 +92,18 @@ const OppdaterReferatForm = (props: Props) => {
             if (isFulfilled(action)) {
                 dispatch(notifiserTryggTekstVedLagring(values.referat));
                 onFerdig();
+                slettSamtaleReferatKladd();
             }
             return action;
         });
     });
 
     const feil = useSelector(selectPubliserOgOppdaterReferatFeil);
-
     const referatValue = watch('referat');
+
+    useEffect(() => {
+        lagreSamtalereferatKladdLagretAktivitet(referatValue);
+    }, [referatValue]);
 
     return (
         <form
