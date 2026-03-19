@@ -98,12 +98,11 @@ const OppdaterReferatForm = (props: Props) => {
     });
 
     const feil = useSelector(selectPubliserOgOppdaterReferatFeil);
-
     const referatValue = watch('referat');
 
-    if (!isSubmitting) {
+    useEffect(() => {
         lagreSamtalereferatKladdLagretAktivitet(referatValue);
-    }
+    }, [referatValue]);
 
     return (
         <form
