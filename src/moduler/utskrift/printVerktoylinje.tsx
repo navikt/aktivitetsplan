@@ -1,7 +1,10 @@
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import { z } from 'zod';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
@@ -10,6 +13,12 @@ import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { selectAktiviterForAktuellePerioden } from '../aktivitet/aktivitetlisteSelector';
+
+const schema = z.object({
+    inkluderDialoger: z.boolean(),
+});
+
+export type PrintVerktoylinjeFormValues = z.infer<typeof schema>;
 
 interface Props {
     tilbakeRoute?: string;
@@ -37,7 +46,20 @@ function PrintVerktoylinje({
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
 
-    const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
+    const formHandlers = useForm<PrintVerktoylinjeFormValues>({
+        defaultValues: {
+            inkluderDialoger: inkluderDialoger,
+        },
+        resolver: zodResolver(schema),
+    });
+
+    const { register, watch } = formHandlers;
+
+    const inkluderDialogerValue = watch('inkluderDialoger');
+
+    React.useEffect(() => {
+        setInkluderDialoger(inkluderDialogerValue);
+    }, [inkluderDialogerValue, setInkluderDialoger]);
 
     return (
         <>
@@ -67,7 +89,7 @@ function PrintVerktoylinje({
                                 loggEvent(TRYK_PRINT);
                                 logKlikkKnapp('Skriv ut');
                                 logValgtFilter(
-                                    inkluderDialoger ? "Inkluder dialoger" : "Ekskluder dialoger"
+                                    inkluderDialogerValue ? "Inkluder dialoger" : "Ekskluder dialoger"
                                 );
                             }}
                             disabled={pdfMåOppdateresEtterFilterendring}
@@ -80,17 +102,19 @@ function PrintVerktoylinje({
                             sendTilBruker();
                             logKlikkKnapp('Journalfør og send til bruker');
                             logValgtFilter(
-                                inkluderDialoger ? "Inkluder dialoger" : "Ekskluder dialoger"
+                                inkluderDialogerValue ? "Inkluder dialoger" : "Ekskluder dialoger"
                             );
                         }} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til
                             bruker</Button>}
                 </div>
             </div>
-            <div>
-                <Checkbox checked={inkluderDialoger} onClick={() => setInkluderDialoger(!inkluderDialoger)} >
-                    Inkluder dialoger
-                </Checkbox>
-            </div>
+            <FormProvider {...formHandlers}>
+                <div>
+                    <Checkbox {...register('inkluderDialoger')}>
+                        Inkluder dialoger
+                    </Checkbox>
+                </div>
+            </FormProvider>
             <div className="print:hidden mb-8">
                 <VisValgtFilter />
             </div>
