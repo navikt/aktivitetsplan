@@ -192,7 +192,6 @@ const MoteAktivitetForm = (props: Props) => {
                         value={beskrivelseValue}
                     />
                     <Textarea
-                        disabled={avtalt}
                         label="Forberedelser til møtet (valgfri)"
                         maxLength={500}
                         {...register('forberedelser')}
