@@ -33,11 +33,12 @@ import {
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
 import {
+    DatoPeriode,
     defaultFilter,
     KvpUtvalgskriterie,
     KvpUtvalgskriterieAlternativ,
     lagKvpUtvalgskriterie,
-    mapTilJournalforingFilter,
+    mapTilJournalforingFilter
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
@@ -76,6 +77,7 @@ const AktivitetsplanPrint = () => {
     const erVeileder = useErVeileder();
     const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(defaultFilter(erVeileder));
     const [inkluderDialoger, setInkluderDialoger] = useState(true);
+    const [valgtDatoRange, setValgtDatoRange] = useState<DatoPeriode | undefined>();
 
     if (!oppfolgingsperiodeId) {
         throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
@@ -109,11 +111,11 @@ const AktivitetsplanPrint = () => {
 
     useEffect(() => {
         const filterBrukt = filterErAktivt(filterState);
-        const nyttArkivFilter = mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger);
+        const nyttArkivFilter = mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger, valgtDatoRange);
         const filterEndretSidenForhaandsvisning =
             JSON.stringify(filterBruktTilForhaandsvisning) !== JSON.stringify(nyttArkivFilter);
         setPdfMåOppdateresEtterFilterendring(filterBrukt || filterEndretSidenForhaandsvisning);
-    }, [filterState, inkluderDialoger]);
+    }, [filterState, inkluderDialoger, valgtDatoRange]);
 
     const next = () => setStepIndex(stepIndex + 1);
 
@@ -142,11 +144,15 @@ const AktivitetsplanPrint = () => {
     const goBack = () => navigate(-1);
 
     const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
+
+        console.log("DatoPeriode", valgtDatoRange);
+
         const arkivFilter = mapTilJournalforingFilter(
             filterState,
             false,
             nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
             inkluderDialoger,
+            valgtDatoRange
         );
 
         dispatch(
@@ -195,7 +201,7 @@ const AktivitetsplanPrint = () => {
                     forhaandsvisningOpprettet,
                     journalførendeEnhetId,
                     oppfolgingsperiodeId,
-                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger),
+                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger, valgtDatoRange),
                     uuidCachetPdf,
                     tekstTilBruker: printMelding,
                 }),
@@ -219,6 +225,7 @@ const AktivitetsplanPrint = () => {
                     pdfMåOppdateresEtterFilterendring={pdfMåOppdateresEtterFilterendring}
                     inkluderDialoger={inkluderDialoger}
                     setInkluderDialoger={setInkluderDialoger}
+                    setValgtDatoRange={setValgtDatoRange}
                 />
                 <StatusErrorBoundry
                     statuser={[sendTilBrukerStatus]}

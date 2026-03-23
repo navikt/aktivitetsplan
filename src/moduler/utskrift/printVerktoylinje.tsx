@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { z } from 'zod';
@@ -12,10 +12,15 @@ import { logKlikkKnapp, logValgtFilter } from '../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
-import { selectAktiviterForAktuellePerioden } from '../aktivitet/aktivitetlisteSelector';
+import DateRangePicker from '../../felles-komponenter/skjema/datovelger/DateRangePicker';
+import { selectValgtPeriode } from '../oppfolging-status/oppfolging-selector';
+import { dateOrUndefined } from '../aktivitet/aktivitet-forms/ijobb/AktivitetIjobbForm';
+import { DatoPeriode } from '../journalforing/journalforingFilter';
 
 const schema = z.object({
     inkluderDialoger: z.boolean(),
+    fraDato: z.date().optional(),
+    tilDato: z.date().optional(),
 });
 
 export type PrintVerktoylinjeFormValues = z.infer<typeof schema>;
@@ -30,6 +35,7 @@ interface Props {
     pdfMåOppdateresEtterFilterendring: boolean;
     inkluderDialoger: boolean;
     setInkluderDialoger: (inkluderDialoger: boolean) => void;
+    setValgtDatoRange: (DatoPeriode) => void;
 }
 
 function PrintVerktoylinje({
@@ -41,25 +47,41 @@ function PrintVerktoylinje({
                                sendTilBruker,
                                pdfMåOppdateresEtterFilterendring,
                                inkluderDialoger,
-                               setInkluderDialoger
+                               setInkluderDialoger,
+                               setValgtDatoRange
                            }: Props) {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
+    const valgtOppfolgingsperiode = useSelector(selectValgtPeriode); // TODO: Fiks, alltid undefined nå
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
 
+    const defaultValues = {
+        inkluderDialoger: inkluderDialoger,
+            fraDato: undefined,
+            tilDato: undefined
+    };
+
     const formHandlers = useForm<PrintVerktoylinjeFormValues>({
-        defaultValues: {
-            inkluderDialoger: inkluderDialoger,
-        },
+        defaultValues: defaultValues,
         resolver: zodResolver(schema),
     });
 
     const { register, watch } = formHandlers;
 
     const inkluderDialogerValue = watch('inkluderDialoger');
+    const fraDatoValue = watch('fraDato');
+    const tilDatoValue = watch('tilDato');
 
-    React.useEffect(() => {
+    useEffect(() => {
         setInkluderDialoger(inkluderDialogerValue);
-    }, [inkluderDialogerValue, setInkluderDialoger]);
+    }, [inkluderDialogerValue]);
+
+    useEffect(() => {
+        if (fraDatoValue && tilDatoValue) {
+            setValgtDatoRange({fraDatoValue, tilDatoValue});
+        }
+    }, [fraDatoValue, tilDatoValue]);
+
+    console.log("OPpfolgingsperiode", valgtOppfolgingsperiode);
 
     return (
         <>
@@ -113,6 +135,10 @@ function PrintVerktoylinje({
                     <Checkbox {...register('inkluderDialoger')}>
                         Inkluder dialoger
                     </Checkbox>
+                    <DateRangePicker
+                        from={{ name: 'fraDato', required: false, defaultValue: defaultValues.fraDato, minDate: dateOrUndefined(valgtOppfolgingsperiode?.start) }}
+                        to={{ name: 'tilDato', required: false, defaultValue: defaultValues.tilDato, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
+                    />
                 </div>
             </FormProvider>
             <div className="print:hidden mb-8">

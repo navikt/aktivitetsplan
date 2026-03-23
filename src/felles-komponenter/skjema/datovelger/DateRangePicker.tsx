@@ -10,6 +10,8 @@ export interface FieldSettings {
     required?: boolean;
     disabled?: boolean;
     defaultValue?: Date;
+    minDate?: Date;
+    maxDate?: Date | undefined;
 }
 
 interface Props {
@@ -118,6 +120,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         ref={(ref) => {
                             fromField.ref(ref);
                         }}
+                        min={from.minDate?.getTime()}
                     />
                     <DatePicker.Input
                         error={toState.error?.message}
@@ -130,6 +133,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         ref={(ref) => {
                             toField.ref(ref);
                         }}
+                        max={to.maxDate?.getTime()}
                     />
                 </div>
             </DatePicker>
