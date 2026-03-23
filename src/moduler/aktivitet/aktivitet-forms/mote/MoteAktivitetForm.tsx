@@ -136,7 +136,6 @@ const MoteAktivitetForm = (props: Props) => {
                     <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
 
                     <TextField
-                        disabled={avtalt}
                         label="Tema for møtet (obligatorisk)"
                         id={'tittel'}
                         {...register('tittel')}
@@ -186,7 +185,6 @@ const MoteAktivitetForm = (props: Props) => {
                         error={errors.adresse && errors.adresse.message}
                     />
                     <Textarea
-                        disabled={avtalt}
                         label="Hensikt med møtet (obligatorisk)"
                         maxLength={5000}
                         {...register('beskrivelse')}
