@@ -72,7 +72,7 @@ export type MoteAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (
-        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string; avtalt: boolean },
+        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean },
     ) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MoteAktivitet;
@@ -125,8 +125,8 @@ const MoteAktivitetForm = (props: Props) => {
                 return onSubmit({
                     ...rest,
                     ...beregnFraTil(data),
-                    status: AktivitetStatus.PLANLAGT,
-                    avtalt: false,
+                    status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
+                    avtalt,
                 });
             })}
         >
