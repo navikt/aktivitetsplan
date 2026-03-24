@@ -198,7 +198,7 @@ describe('MoteAktivitetForm', () => {
         );
     });
 
-    it('Skal ikke være disablede felter ved endring av avtalt aktivitet', () => {
+    it('Skal være disablede felter ved endring av aktivitet', () => {
         const aktivitet = {
             tittel: 'Dette er en test',
             opprettetDato: '2019-08-31T05:00:00.000Z',
@@ -210,7 +210,7 @@ describe('MoteAktivitetForm', () => {
         };
         mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
 
-        expect(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)').disabled).not.toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)').disabled).toBeTruthy();
         expect(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)').disabled).not.toBeTruthy();
         expect(screen.getByLabelText<HTMLInputElement>('Klokkeslett (obligatorisk)').disabled).not.toBeTruthy();
         expect(screen.getByLabelText<HTMLInputElement>('Varighet (obligatorisk)').disabled).not.toBeTruthy();
@@ -219,7 +219,7 @@ describe('MoteAktivitetForm', () => {
             screen.getByLabelText<HTMLInputElement>('Møtested eller annen praktisk informasjon (obligatorisk)')
                 .disabled,
         ).not.toBeTruthy();
-        expect(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)').disabled).not.toBeTruthy();
-        expect(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)').disabled).not.toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Hensikt med møtet (obligatorisk)').disabled).toBeTruthy();
+        expect(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)').disabled).toBeTruthy();
     });
 });
