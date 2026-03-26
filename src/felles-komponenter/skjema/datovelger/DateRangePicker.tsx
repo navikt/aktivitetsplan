@@ -1,4 +1,4 @@
-import { DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
+import { Button, DatePicker, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
 import React, { useEffect, ChangeEventHandler, useState, useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
@@ -18,9 +18,10 @@ interface Props {
     disabledDays?: any[];
     from: FieldSettings;
     to: FieldSettings;
+    onReset?: () => void;
 }
 
-const DateRangePicker = ({ from, to, disabledDays }: Props) => {
+const DateRangePicker = ({ from, to, disabledDays, onReset }: Props) => {
     /* Handle popover state self because it's used inside a web component which causes event.target to be showDom-root */
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const closeToggle = () => setIsPopoverOpen(false);
@@ -98,6 +99,13 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
         setValue(to.name, event.target.value);
     };
 
+    const resetValues = () => {
+        setValue(from.name, undefined);
+        setValue(to.name, undefined);
+        if (onReset) onReset();
+        reset();
+    }
+
     return (
         <div className="flex" onClick={preventCloseOnInsideClick}>
             <DatePicker
@@ -107,7 +115,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                 onClose={closeToggle}
                 wrapperClassName="flex flex-1"
             >
-                <div className="flex sm:flex-row flex-col gap-4 items-start">
+                <div className="flex sm:flex-row flex-col gap-4 items-end">
                     <DatePicker.Input
                         disabled={from.disabled}
                         error={fromState.error?.message}
@@ -135,6 +143,7 @@ const DateRangePicker = ({ from, to, disabledDays }: Props) => {
                         }}
                         max={to.maxDate?.getTime()}
                     />
+                    {onReset && <Button variant="tertiary" onClick={() => resetValues()}>Nullstill</Button> }
                 </div>
             </DatePicker>
         </div>

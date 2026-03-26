@@ -143,8 +143,8 @@ function PrintVerktoylinje({
                         <DateRangePicker
                             from={{ name: 'fraDato', required: false, defaultValue: defaultValues.fraDato, minDate: dateOrUndefined(valgtOppfolgingsperiode?.start) }}
                             to={{ name: 'tilDato', required: false, defaultValue: defaultValues.tilDato, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
+                            onReset={nullstillValgtDatoRange}
                         />
-                        <Button variant="tertiary" onClick={() => nullstillValgtDatoRange}>Nullstill</Button>
                     </div>
                 </div>
             </FormProvider>
