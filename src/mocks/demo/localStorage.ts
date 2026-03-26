@@ -1,5 +1,3 @@
-import { RestRequest } from 'msw';
-
 export enum LocalStorageElement {
     PRIVAT_BRUKER = 'privatbruker',
     MANUELL_BRUKER = 'manuellbruker',
@@ -15,6 +13,7 @@ export enum LocalStorageElement {
     NIVAA4_FEILET = 'nivaa4feilet',
     JOURNALFORING_FEILER = 'JOURNALFORING_FEILER',
     FORHAANDSVISNING_FEILER = 'FORHAANDSVISNING_FEILER',
+    SEND_TIL_BRUKER_FEILER = 'SEND_TIL_BRUKER_FEILER',
     OPPDATERING_KUN_FEILER = 'oppdonlyfeiler',
     EKSTERN_BRUKER = 'eksternbruker',
     INGEN_OPPF_PERIODER = 'ingen_oppf_perioder',
@@ -86,8 +85,9 @@ export const oppfFeilet = () => erSatt(LocalStorageElement.OPPF_FEILET);
 
 export const dialogFeilet = () => erSatt(LocalStorageElement.DIALOG_FEILET);
 
-export const aktivitetFeilet = (request: RestRequest) => {
+export const aktivitetFeilet = () => {
     if (erSatt(LocalStorageElement.AKTIVITET_FEILET)) return true;
+    return false;
 };
 
 export const arenaFeilet = () => erSatt(LocalStorageElement.ARENA_FEILET);
@@ -104,3 +104,4 @@ export const ingenMal = () => erSatt(LocalStorageElement.INGEN_MAL);
 
 export const forhaandsvisningFeiler = () => erSatt(LocalStorageElement.FORHAANDSVISNING_FEILER);
 export const journalforingFeiler = () => erSatt(LocalStorageElement.JOURNALFORING_FEILER);
+export const sendTilBrukerFeiler = () => erSatt(LocalStorageElement.SEND_TIL_BRUKER_FEILER);

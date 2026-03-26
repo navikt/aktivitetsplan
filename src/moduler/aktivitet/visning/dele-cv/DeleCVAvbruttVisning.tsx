@@ -43,7 +43,7 @@ export const DeleCVAvbruttVisning = (props: Props) => {
     const tekst = getTekst(status, livslopsstatus, erHistorisk, svarfrist);
 
     return (
-        <div className="p-4 bg-surface-subtle border-border-default border rounded-md">
+        <div className="p-4 bg-ax-bg-neutral-soft border border-ax-border-neutral rounded-md">
             <Heading size="medium" className="mb-4">
                 {overskrift}
             </Heading>

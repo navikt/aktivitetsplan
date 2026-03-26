@@ -69,8 +69,9 @@ export interface StillingAktivitet extends AktivitetBaseProps<FellesTransaksjons
     stillingsTittel?: string;
 }
 
-export interface SamtalereferatAktivitet
-    extends AktivitetBaseProps<FellesTransaksjonsTyper | SamtaleReferatTransaksjonsType> {
+export interface SamtalereferatAktivitet extends AktivitetBaseProps<
+    FellesTransaksjonsTyper | SamtaleReferatTransaksjonsType
+> {
     type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE;
     fraDato: string;
     kanal: Kanal;
@@ -117,8 +118,9 @@ export interface CvKanDelesData {
     endretAvType: BrukerType;
 }
 
-export interface StillingFraNavAktivitet
-    extends AktivitetBaseProps<FellesTransaksjonsTyper | StillingFraNavTransaksjonsType> {
+export interface StillingFraNavAktivitet extends AktivitetBaseProps<
+    FellesTransaksjonsTyper | StillingFraNavTransaksjonsType
+> {
     type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE;
     stillingFraNavData: StillingFraNavAktivitetData;
 }
@@ -164,6 +166,7 @@ export enum EksternAktivitetType {
     ARENA_TILTAK_TYPE = 'ARENA_TILTAK',
     MIDL_LONNSTILSKUDD_TYPE = 'MIDLERTIDIG_LONNSTILSKUDD',
     VARIG_LONNSTILSKUDD_TYPE = 'VARIG_LONNSTILSKUDD',
+    FIREARIG_LONNSTILSKUDD = 'FIREARIG_LONNSTILSKUDD',
     ARBEIDSTRENING = 'ARBEIDSTRENING',
     VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET = 'VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET',
     MENTOR = 'MENTOR',
@@ -179,5 +182,10 @@ export enum EksternAktivitetType {
     REKRUTTERINGSTREFF = 'REKRUTTERINGSTREFF',
     ENKELAMO = 'ENKELAMO',
     ENKFAGYRKE = 'ENKFAGYRKE',
-    HOYEREUTD = 'HOYEREUTD'
+    HOYEREUTD = 'HOYEREUTD',
+    ARBEIDSMARKEDSOPPLAERING = 'ARBEIDSMARKEDSOPPLAERING',
+    NORSKOPPLAERING_GRUNNLEGGENDE_FERDIGHETER_FOV = 'NORSKOPPLAERING_GRUNNLEGGENDE_FERDIGHETER_FOV',
+    STUDIESPESIALISERING = 'STUDIESPESIALISERING',
+    FAG_OG_YRKESOPPLAERING = 'FAG_OG_YRKESOPPLAERING',
+    HOYERE_YRKESFAGLIG_UTDANNING = 'HOYERE_YRKESFAGLIG_UTDANNING',
 }

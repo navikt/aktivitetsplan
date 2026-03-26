@@ -8,6 +8,7 @@ import { defineConfig, loadEnv, normalizePath } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 import * as path from 'node:path';
+import tailwindcss from '@tailwindcss/vite';
 
 const require = createRequire(import.meta.url);
 const cMapsDir = normalizePath(path.join(path.dirname(require.resolve('pdfjs-dist/package.json')), 'cmaps'));
@@ -21,6 +22,9 @@ export default defineConfig(({ mode }) => {
     process.env.VITE_SENTRY_RELEASE = execSync('git rev-parse HEAD').toString().trim();
 
     return {
+        worker: {
+            format: 'es',
+        },
         build: {
             manifest: 'asset-manifest.json',
             outDir: 'build',
@@ -29,6 +33,7 @@ export default defineConfig(({ mode }) => {
         plugins: [
             react(),
             svgr(),
+            tailwindcss(),
             visualizer({
                 filename: 'bundle-stats.html',
             }),

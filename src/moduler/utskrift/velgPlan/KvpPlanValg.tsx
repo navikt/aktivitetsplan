@@ -24,7 +24,7 @@ const KvpPlanValg = (props: Props) => {
 const KvpPlanSingelValgRadio = ({ kvpPeriode }: { kvpPeriode: KvpPeriode }) => {
     return (
         <Radio value={kvpPeriode.opprettetDato} disabled={!kvpPeriode.avsluttetDato}>
-            <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />
+            <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden. Velger du dette kan du ikke sende dokumentet automatisk til bruker." />
         </Radio>
     );
 };
@@ -34,7 +34,7 @@ const KvpPlanListeValg = (props: Props) => {
 
     return (
         <div className="">
-            <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />
+            <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden. Velger du dette kan du ikke sende dokumentet automatisk til bruker." />
             {kvpPerioder &&
                 kvpPerioder.map((kvpPeriode) => (
                     <Radio

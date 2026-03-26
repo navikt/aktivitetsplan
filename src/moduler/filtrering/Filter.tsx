@@ -14,6 +14,7 @@ import EtikettFilter from './filter/EtikettFilter';
 const Filter = () => {
     const [open, setOpen] = useState(false);
 
+
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
     const harAktivitet = aktiviteter.length > 1;
     const avhengigheter = [useSelector(selectAktivitetListeStatus)];
@@ -39,7 +40,7 @@ const Filter = () => {
                 Filtrer
             </Button>
             {open ? (
-                <div className="scroll-auto max-h-screen-h-1/2 rounded-md absolute p-4 bg-white border z-10 w-96 max-h-screen-h-1/2 overflow-auto flex flex-col gap-y-4">
+                <div className="scroll-auto max-h-screen-h-1/2 rounded-md absolute p-4 bg-white border border-ax-border-neutral z-10 w-96 max-h-screen-h-1/2 overflow-auto flex flex-col gap-y-4">
                     <AvtaltMedNavFilter />
                     <EtikettFilter />
                     <TiltakstatusFilter />

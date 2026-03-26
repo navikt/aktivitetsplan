@@ -17,6 +17,7 @@ import {
     createBrowserRouter,
 } from 'react-router-dom';
 import { Env, getEnv } from './environment';
+import { HttpError } from './api/utils';
 
 const fnrRegexRegel = {
     regex: /[0-9]{11}/g,
@@ -32,7 +33,7 @@ const toRoute = (route: string) => {
     return route.replace(fnrRegexRegel.regex, '&#58;fnr');
 };
 
-const tagsFilter = (tags: Event['tags']): Event['tags'] => {
+const tagsFilter = (tags: ErrorEvent['tags']): ErrorEvent['tags'] => {
     if (typeof tags !== 'object' || !('transaction' in tags) || !tags.transaction) return tags;
     return {
         ...tags,
@@ -42,6 +43,54 @@ const tagsFilter = (tags: Event['tags']): Event['tags'] => {
 
 const fjernPersonopplysninger = (event: ErrorEvent, hint: EventHint): ErrorEvent => {
     const url = event.request?.url ? maskerPersonopplysninger(event.request.url) : '';
+
+    // Enhanced error handling for HttpError instances
+    const originalException = hint.originalException;
+    if (originalException instanceof HttpError) {
+        const maskedEndpoint = maskerPersonopplysninger(originalException.endpoint) || originalException.endpoint;
+        const maskedUrl = maskerPersonopplysninger(originalException.url) || originalException.url;
+        const operationName = originalException.operation || maskedEndpoint;
+
+        return {
+            ...event,
+            message: `HTTP ${originalException.code} - ${operationName}`,
+            fingerprint: ['http-error', maskedEndpoint, originalException.code],
+            tags: {
+                ...event.tags,
+                http_status: originalException.code,
+                http_endpoint: maskedEndpoint,
+                http_operation: operationName,
+            },
+            contexts: {
+                ...event.contexts,
+                http: {
+                    url: maskedUrl,
+                    method: originalException.method,
+                    status_code: Number.parseInt(originalException.code, 10),
+                    operation: operationName,
+                },
+            },
+            request: {
+                ...event.request,
+                url: maskedUrl,
+                headers: {
+                    Referer: maskerPersonopplysninger(event.request?.headers?.Referer) || '',
+                },
+            },
+            breadcrumbs: (event.breadcrumbs || []).map((breadcrumb: Breadcrumb) => ({
+                ...breadcrumb,
+                message: maskerPersonopplysninger(breadcrumb.message),
+                data: {
+                    ...breadcrumb.data,
+                    url: maskerPersonopplysninger(breadcrumb.data?.url),
+                    from: maskerPersonopplysninger(breadcrumb.data?.from),
+                    to: maskerPersonopplysninger(breadcrumb.data?.to),
+                },
+            })),
+        };
+    }
+
+    // Default error handling for non-HttpError exceptions
     return {
         ...event,
         request: {
@@ -99,6 +148,9 @@ init({
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 0.2,
+    initialScope: {
+        tags: { microfrontend: 'aktivitetsplanen' },
+    },
     beforeSend: fjernPersonopplysninger,
     release: import.meta.env.VITE_SENTRY_RELEASE,
     tracePropagationTargets: [

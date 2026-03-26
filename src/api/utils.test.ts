@@ -1,5 +1,5 @@
 import { Status } from '../createGenericSlice';
-import { aggregerStatus, getCookie, sjekkStatuskode, toJson } from './utils';
+import { aggregerStatus, getCookie, HttpError, sjekkStatuskode, toJson } from './utils';
 
 const lol = {
     OK: Status.OK,
@@ -36,11 +36,9 @@ describe('utils', () => {
     });
 
     describe('Sjekk-statuskode', () => {
-        const error = (response: Response) => ({
-            code: response.status.toString(),
-            message: 'undefined',
-            name: `Feilstatus (${response.status.toString()})`,
-        });
+        const error = (response: Response) => {
+            return new HttpError(response, undefined);
+        };
 
         it('Skal returnere response når status er ok', async () => {
             const response = {

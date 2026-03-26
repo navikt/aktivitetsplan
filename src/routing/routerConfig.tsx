@@ -20,7 +20,7 @@ import EndreAktivitet from '../moduler/aktivitet/rediger/EndreAktivitet';
 import AvbrytAktivitet from '../moduler/aktivitet/avslutt/AvbrytAktivitet';
 import FullforAktivitet from '../moduler/aktivitet/avslutt/FullforAktivitet';
 import InformasjonModal from '../moduler/informasjon/informasjon-modal';
-import AktivitetsplanPrint from '../moduler/utskrift/AktivitetsplanPrint';
+import AktivitetsplanPrint, { aktivitetsplanPrintLoader } from '../moduler/utskrift/AktivitetsplanPrint';
 import Mal from '../moduler/mal/mal';
 import { arkivLoader, JournalforingPage } from '../moduler/journalforing/JournalforingPage';
 import { BasePage } from '../BasePage';
@@ -90,7 +90,11 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
                     },
                 ],
             },
-            { path: 'utskrift', element: <AktivitetsplanPrint /> },
+            {
+                path: 'utskrift/:oppfolgingsperiodeId',
+                loader: aktivitetsplanPrintLoader(dispatch, isVeileder, aktivEnhet),
+                element: <AktivitetsplanPrint />
+            },
             {
                 path: 'journalforing/:oppfolgingsperiodeId',
                 loader: arkivLoader(dispatch, aktivEnhet),

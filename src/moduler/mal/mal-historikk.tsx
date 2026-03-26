@@ -18,7 +18,7 @@ const identitetMap = (erVeileder: boolean, endretAv: string) => {
 function malListeVisning(gjeldendeMal: Mal, erVeileder: boolean) {
     return (
         <article key={gjeldendeMal.dato}>
-            <span className="font-bold">
+            <span className="font-ax-bold">
                 {gjeldendeMal.mal ? 'Skrevet av ' : 'Mål slettet av '}
                 <span>{identitetMap(erVeileder, gjeldendeMal.endretAv)}</span>
             </span>
@@ -42,7 +42,7 @@ const MalHistorikk = () => {
         <Accordion>
             <Accordion.Item>
                 <Accordion.Header>
-                    <Heading level="2" size="small">
+                    <Heading level="2" size="small" className="text-ax-text-neutral">
                         Tidligere lagrede mål
                     </Heading>
                 </Accordion.Header>

@@ -4,13 +4,14 @@ import React, { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { preventCloseOnInsideClick, useOutsideClick } from './common';
-import { FieldSettings } from './ControlledDateRangePicker';
+import { FieldSettings } from './DateRangePicker';
 import { isValidDate } from '../../../utils/dateUtils';
 import { parseDate } from '../../../utils/dateParser';
+import { DatePickerDefaultProps } from '@navikt/ds-react/src/date/datepicker/DatePicker.types';
 
 interface Props {
     field: FieldSettings;
-    disabledDays?: any[];
+    disabledDays?: DatePickerDefaultProps['disabled'];
 }
 
 const ControlledDatePicker = ({
@@ -20,9 +21,8 @@ const ControlledDatePicker = ({
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const closePopover = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closePopover);
-    const { trigger } = useFormContext();
 
-    const { control, setValue, clearErrors } = useFormContext();
+    const { trigger: triggerFormValidation, control, setValue, clearErrors, watch } = useFormContext();
     const {
         field,
         fieldState: { error },
@@ -31,6 +31,7 @@ const ControlledDatePicker = ({
         defaultValue,
         name: name,
     });
+    const fieldValue = watch(name);
 
     const [displayValue, setDisplayValue] = useState<string>(defaultValue ? format(defaultValue, 'dd.M.y') : '');
 
@@ -39,10 +40,14 @@ const ControlledDatePicker = ({
         if (isValidDate(day)) {
             setValue(name, day);
         } else {
-            setValue(name, undefined);
+            if (event.target.value === '') {
+                setValue(name, undefined);
+            } else {
+                setValue(name, event.target.value);
+            }
         }
         setDisplayValue(event.target.value);
-        if (isValid(day)) {
+        if (isValid(day) || event.target.value === '') {
             closePopover();
             clearErrors(name);
         }
@@ -59,9 +64,9 @@ const ControlledDatePicker = ({
 
     const onBlur = () => {
         field.onBlur();
-        trigger('fraDato');
-        if (!isValid(field.value)) return;
-        setDisplayValue(format(field.value, 'dd.M.y'));
+        triggerFormValidation(name);
+        if (!isValid(fieldValue) || fieldValue === '') return;
+        setDisplayValue(format(fieldValue, 'dd.M.y'));
     };
     const togglePopover = () => {
         setIsPopoverOpen(!isPopoverOpen);
@@ -75,7 +80,7 @@ const ControlledDatePicker = ({
                         setIsPopoverOpen(false);
                     }}
                     onSelect={onChangeDate}
-                    selected={isValid(field.value) ? field.value : undefined}
+                    selected={isValid(fieldValue) ? fieldValue : undefined}
                     disabled={disabledDays}
                     onOpenToggle={togglePopover}
                     open={isPopoverOpen}

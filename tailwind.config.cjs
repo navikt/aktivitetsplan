@@ -6,14 +6,15 @@ module.exports = {
     },
     plugins: [],
     theme: {
-        screens: {
-            sm: '640px',
-            md: '768px',
-            lg: '992px',
-            xl: '1280px',
-            'tavle-max-width': '1700px',
-        },
-        colors: {
+        extend: {
+            screens: {
+                sm: '640px',
+                md: '768px',
+                lg: '992px',
+                xl: '1280px',
+                'tavle-max-width': '1700px',
+            },
+            colors: {
             'border-default': 'rgba(0, 0, 0, 0.44)',
             'border-strong': 'rgba(0, 0, 0, 0.65)',
             'border-divider': 'rgba(0, 0, 0, 0.19)',
@@ -220,8 +221,7 @@ module.exports = {
             'icon-on-warning': 'rgba(38, 38, 38, 1)',
             'icon-on-info': 'rgba(38, 38, 38, 1)',
         },
-        extend: {
-            height: {
+        height: {
                 '300px': '300px',
             },
             minWidth: {

@@ -13,9 +13,8 @@ const AvtaltMarkering = (props: Props) => {
     }
 
     return (
-        <Tag variant="alt3-filled" size="small">
-            Avtalt med Nav
-        </Tag>
+        <Tag data-color="info" variant="strong" size="small">Avtalt med Nav
+                    </Tag>
     );
 };
 

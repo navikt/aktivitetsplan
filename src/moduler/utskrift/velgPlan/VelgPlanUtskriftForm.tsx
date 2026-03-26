@@ -44,13 +44,13 @@ const VelgPlanUtskriftForm = (props: Props) => {
                 <Radio value="helePlanen" id="id--helePlanen">
                     <UtskriftValg
                         tittelId="Hele oppfølgingsperioden"
-                        tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, også KVP-perioden"
+                        tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, også KVP-perioden. Velger du dette kan du ikke sende dokumentet automatisk til bruker."
                     />
                 </Radio>
                 <Radio value="aktivitetsplan" id="id--aktivitetsplan">
                     <UtskriftValg
                         tittelId="Oppfølgingsperioden uten KVP-perioden"
-                        tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, uten om KVP-perioden"
+                        tekstId="Du skriver ut alt innholdet du ser i aktivitetsplan, uten om KVP-perioden."
                     />
                 </Radio>
                 <KvpPlanValg kvpPerioder={kvpPerioder} />

@@ -2,8 +2,8 @@ import { Heading, Modal } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 // CSS is imported twice when in demo mode to support switching between web-components and normal render
-import '@navikt/ds-css';
 import '../../tailwind.css';
+import '@navikt/ds-css';
 import '../../index.less';
 // Importerer her for å unngå stygt error i konsollen,
 // Denne css-en er bare brukt i veielder-flaten og må importeres på en spesiell måte i web-components

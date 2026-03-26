@@ -19,7 +19,7 @@ const IkkeDeltFerdigMarkering = () => {
     const tekst = erBruker ? 'Samtalereferatet er ikke ferdig' : 'Samtalereferatet er ikke delt';
 
     return (
-        <Tag variant="warning" size="small" className="mt-0.5">
+        <Tag data-color="warning" variant="outline" size="small" className="mt-0.5">
             {tekst}
         </Tag>
     );

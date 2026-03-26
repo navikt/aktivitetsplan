@@ -60,9 +60,9 @@ const Aktivitetskort = (props: Props) => {
     return (
         <LinkAsDiv
             id={prefixAktivtetskortId(aktivitet)}
-            className={classNames('rounded-md', styles.aktivitetskort, className, {
+            className={classNames('rounded-md bg-ax-bg-default', styles.aktivitetskort, className, {
                 [styles.sistVist]: aktivitetBleVistSist,
-                ['border-gray-400 border']: !aktivitetBleVistSist,
+                'border border-ax-border-neutral': !aktivitetBleVistSist,
             })}
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}

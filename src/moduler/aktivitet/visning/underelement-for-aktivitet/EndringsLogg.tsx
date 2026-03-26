@@ -1,4 +1,4 @@
-import { Accordion } from '@navikt/ds-react';
+import { Accordion, Heading } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import VersjonerForAktivitet from '../versjoner/VersjonerForAktivitet';
@@ -16,7 +16,7 @@ const EndringsLogg = () => {
     return (
         <Accordion.Item>
             <Accordion.Header onClick={handleClick}>
-                <div className="flex gap-4 items-center">Historikk</div>
+                <Heading level="2" size="small" className="flex text-ax-text-neutral">Historikk</Heading>
             </Accordion.Header>
             <Accordion.Content>
                 <VersjonerForAktivitet />

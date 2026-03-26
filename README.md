@@ -11,13 +11,13 @@ For å kunne laste ned pakker fra NAVs package registry må man ha en .npmrc-fil
 
 ```sh
 # Installere avhengigheter
-npm i
+pnpm i
 
 # Bygge produksjons kode
-npm run build
+pnpm run build
 
 # Lokal utvikling
-npm run dev
+pnpm run dev
 ```
 
 ### Kontakt og spørsmål.

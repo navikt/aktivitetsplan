@@ -11,7 +11,7 @@ import { useErVeileder } from '../../Provider';
 import { selectSistOppdatert } from '../dialog/dialog-selector';
 import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
-import { logKlikkKnapp } from '../../analytics/analytics';
+import { logKlikkKnapp, logLenkeKlikket } from '../../analytics/analytics';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { useMediaQuery } from '../../utils/use-media-query';
 import { useToggle } from '../feature/feature';
@@ -45,7 +45,6 @@ function Navigasjonslinje() {
     }, [dispatch, erVeileder, sistOppdatert]);
 
     const canPrint = useSelector(selectCanPrint);
-    const isMobile = useMediaQuery('(max-width: 768px)');
 
     const erJournalforingAktiv = useToggle('aktivitetsplan.journalforing');
 
@@ -67,17 +66,16 @@ function Navigasjonslinje() {
                 ) : null}
                 <ReactRouterLink
                     to="informasjon"
-                    className="text-text-action underline hover:no-underline"
+                    className="text-ax-text-accent-subtle underline hover:no-underline"
                     onClick={handleClick}
                 >
                     Hva er aktivitetsplanen?
                 </ReactRouterLink>
                 {canPrint && (
                     <ReactRouterLink
-                        hidden={isMobile}
-                        to="utskrift"
-                        className="text-text-action underline hover:no-underline"
-                        onClick={() => logKlikkKnapp('Skriv ut')}
+                        to={`utskrift/${vistOppfolgingsperiode}`}
+                        className="text-ax-text-accent-subtle underline hover:no-underline"
+                        onClick={() => logLenkeKlikket('Skriv ut')}
                     >
                         Skriv ut
                     </ReactRouterLink>
@@ -86,8 +84,8 @@ function Navigasjonslinje() {
                     ? erVeileder && (
                           <ReactRouterLink
                               to={`journalforing/${vistOppfolgingsperiode}`}
-                              className="text-text-action underline hover:no-underline"
-                              onClick={() => logKlikkKnapp('Journalføring')}
+                              className="text-ax-text-accent-subtle underline hover:no-underline"
+                              onClick={() => logLenkeKlikket('Journalføring')}
                           >
                               Journalføring
                           </ReactRouterLink>

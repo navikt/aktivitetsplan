@@ -27,7 +27,7 @@ const CustomErrorSummary = <T extends FieldValues>(props: Props<T>) => {
                 if (value.type === z.ZodIssueCode.custom) {
                     return <ErrorSummary.Item key={index}>{value.message}</ErrorSummary.Item>;
                 }
-                const refId = (value.ref as HTMLElement).id ?? (value.ref as { name: string }).name;
+                const refId = (value.ref as HTMLElement)?.id ?? (value.ref as { name: string })?.name;
                 return (
                     <ErrorSummary.Item href={`#${refId}`} key={index}>
                         {value.message}

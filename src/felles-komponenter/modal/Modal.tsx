@@ -63,7 +63,7 @@ const Modal = (props: Props) => {
                     {tilbakeLenke ? (
                         <>
                             <ReactRouterLink
-                                className="hover:cursor-pointer text-text-action underline"
+                                className="hover:cursor-pointer text-ax-text-accent-subtle underline"
                                 to={nyAktivitetRoute()}
                                 tabIndex={0}
                             >

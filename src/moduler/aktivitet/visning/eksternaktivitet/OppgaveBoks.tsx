@@ -9,7 +9,7 @@ interface Props {
 }
 
 const customAlertStripe = (oppgave: Oppgave) => (
-    <Alert variant="warning">
+    <Alert variant="info">
         <Heading spacing size="small" level="3">
             {oppgave.tekst}
         </Heading>

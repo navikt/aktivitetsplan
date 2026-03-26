@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -8,10 +8,11 @@ interface Props {
     id: string;
     ariaLabel: string;
     onClick(): void;
+    style?: CSSProperties;
 }
 
 const LinkAsDiv = (props: Props) => {
-    const { to, children, id, className, ariaLabel, onClick } = props;
+    const { to, children, id, className, ariaLabel, onClick, style } = props;
     const navigate = useNavigate();
 
     return (
@@ -20,6 +21,7 @@ const LinkAsDiv = (props: Props) => {
             aria-label={ariaLabel}
             id={id}
             className={className}
+            style={style}
             tabIndex={0}
             onClick={() => {
                 navigate(to);

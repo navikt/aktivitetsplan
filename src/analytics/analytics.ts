@@ -24,6 +24,13 @@ export function logKlikkKnapp(tekst: string) {
     });
 }
 
+export function logLenkeKlikket(tekst: string) {
+    return logAnalyticsEvent({
+        name: 'navigere',
+        data: { tekst: tekst },
+    });
+}
+
 export function logAccordionAapnet(accordion: string) {
     return logAnalyticsEvent({
         name: 'accordion åpnet',

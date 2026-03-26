@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { BodyShort, Button, Heading, Label, List, Select } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, Label, List, Select, Box } from '@navikt/ds-react';
 import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
     journalfør,
     selectForhaandsvisningOpprettet,
-    selectForhaandsvisningStatus,
+    selectForhaandsvisningStatus, selectForhaandsvisningUuidCachetPdf,
     selectJournalføringstatus,
-    selectSistJournalfort,
+    selectSistJournalfort
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routing/useRoutes';
@@ -25,20 +25,21 @@ const Sidebar: FunctionComponent = () => {
     const sistJournalfort = useSelector(selectSistJournalfort);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
     const journalføringsStatus = useSelector(selectJournalføringstatus);
+    const uuidCachetPdf = useSelector(selectForhaandsvisningUuidCachetPdf);
     const henterForhaandsvisning = [Status.PENDING, Status.RELOADING].includes(forhaandsvisningStatus);
     const journalfører = [Status.PENDING, Status.RELOADING].includes(journalføringsStatus);
     const { hovedsideRoute } = useRoutes();
     const navigate = useNavigate();
-    const { aktivEnhet: journalførendeEnhet } = useFnrOgEnhetContext();
+    const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
 
-    if (!journalførendeEnhet || !oppfolgingsperiodeId) {
+    if (!journalførendeEnhetId || !oppfolgingsperiodeId) {
         throw new Error('Kan ikke arkivere når aktiv enhet ikke er valgt');
     }
 
     const sendTilArkiv = () => {
         logKlikkKnapp('Journalfør aktivitetsplan');
-        if (forhaandsvisningOpprettet) {
-            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhet, oppfolgingsperiodeId }));
+        if (forhaandsvisningOpprettet && uuidCachetPdf) {
+            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhetId, oppfolgingsperiodeId, uuidCachetPdf }));
         }
     };
 
@@ -67,7 +68,7 @@ const Sidebar: FunctionComponent = () => {
             style={{ maxHeight: 'calc(100dvh - 160px)' }}
         >
             <ReactRouterLink
-                className="text-text-action underline hover:no-underline"
+                className="text-ax-text-accent-subtle underline hover:no-underline"
                 to={hovedsideRoute()}
                 tabIndex={0}
             >
@@ -75,10 +76,10 @@ const Sidebar: FunctionComponent = () => {
             </ReactRouterLink>
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
-                <List as="ul" title="Dette er ikke inkludert i journalføringen:" size="small">
-                    <List.Item>Aktiviteter og dialog tilknyttet KVP</List.Item>
-                    <List.Item>Samtalereferat som ikke er delt med bruker</List.Item>
-                </List>
+                <div><Heading as="h3" size="xsmall">Dette er ikke inkludert i journalføringen:</Heading><Box marginBlock="space-12" asChild><List data-aksel-migrated-v8 as="ul" size="small">
+                            <List.Item>Aktiviteter og dialog tilknyttet KVP</List.Item>
+                            <List.Item>Samtalereferat som ikke er delt med bruker</List.Item>
+                        </List></Box></div>
                 <Select
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}
