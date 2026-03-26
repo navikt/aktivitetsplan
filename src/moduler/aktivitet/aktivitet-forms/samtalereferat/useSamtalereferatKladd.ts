@@ -17,7 +17,7 @@ interface KladdInnslag {
     tidspunkt: number;
 }
 
-const localeStorageKeyPrefix = "samtalereferatKladd"
+const localeStorageKeyPrefix = 'samtalereferatKladd';
 
 export const slettGamleSamtalereferatKladder = () => {
     const nå = Date.now();
@@ -29,7 +29,7 @@ export const slettGamleSamtalereferatKladder = () => {
         if (kladdInnslag) {
             try {
                 const parsedKladdInnslag: KladdInnslag = JSON.parse(kladdInnslag);
-                const harUtlopt = (nå - åtteTimerMillis) > parsedKladdInnslag.tidspunkt;
+                const harUtlopt = nå - åtteTimerMillis > parsedKladdInnslag.tidspunkt;
                 if (harUtlopt) {
                     localStorage.removeItem(key);
                 }
@@ -37,31 +37,51 @@ export const slettGamleSamtalereferatKladder = () => {
                 localStorage.removeItem(key);
             }
         }
-    })
-}
+    });
+};
 
-export const useSamtalereferatKladd = (oppfolgingsperiodeId: string | null, aktivitetId?: string) => {
+export const useSamtalereferatKladd = ({
+    oppfolgingsperiodeId,
+    aktivitetId,
+}:
+    | {
+          oppfolgingsperiodeId: string;
+          aktivitetId?: undefined;
+      }
+    | {
+          oppfolgingsperiodeId?: undefined;
+          aktivitetId: string;
+      }) => {
     const debouncedDelay = 500;
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-    const localStorageKey = aktivitetId ? `${localeStorageKeyPrefix}-${aktivitetId}` : `${localeStorageKeyPrefix}-${oppfolgingsperiodeId}`;
 
-    const lagreSamtalereferatKladd = useCallback((samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {
-        if (!oppfolgingsperiodeId) return;
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = setTimeout(() => {
-            const kladdInnslag = {samtalereferat, tidspunkt: Date.now()}
-            localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
-        }, debouncedDelay);
-    }, [localStorageKey]);
+    const localStorageKey = aktivitetId
+        ? `${localeStorageKeyPrefix}-${aktivitetId}`
+        : `${localeStorageKeyPrefix}-${oppfolgingsperiodeId}`;
 
-    const lagreSamtalereferatKladdLagretAktivitet = useCallback((referatKladd: string) => {
-        if (!oppfolgingsperiodeId) return;
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = setTimeout(() => {
-            const kladdInnslag = {samtalereferat: referatKladd, tidspunkt: Date.now()}
-            localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
-        }, debouncedDelay);
-    }, [localStorageKey]);
+    const lagreSamtalereferatKladd = useCallback(
+        (samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {
+            if (!oppfolgingsperiodeId) return;
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+                const kladdInnslag = { samtalereferat, tidspunkt: Date.now() };
+                localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
+            }, debouncedDelay);
+        },
+        [localStorageKey],
+    );
+
+    const lagreSamtalereferatKladdLagretAktivitet = useCallback(
+        (referatKladd: string) => {
+            if (!oppfolgingsperiodeId) return;
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+                const kladdInnslag = { samtalereferat: referatKladd, tidspunkt: Date.now() };
+                localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
+            }, debouncedDelay);
+        },
+        [localStorageKey],
+    );
 
     const hentSamtaleReferatKladd = (): SamtalereferatKladdNyttAktivitetskort | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
@@ -71,7 +91,7 @@ export const useSamtalereferatKladd = (oppfolgingsperiodeId: string | null, akti
         } else {
             return null;
         }
-    }
+    };
 
     const hentSamtaleReferatKladdLagretAktivitet = (): string | null => {
         const kladdInnslag = localStorage.getItem(localStorageKey);
@@ -80,11 +100,17 @@ export const useSamtalereferatKladd = (oppfolgingsperiodeId: string | null, akti
         } else {
             return null;
         }
-    }
+    };
 
     const slettSamtaleReferatKladd = () => {
         localStorage.removeItem(localStorageKey);
-    }
+    };
 
-    return { lagreSamtalereferatKladd, lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladd, slettSamtaleReferatKladd, hentSamtaleReferatKladdLagretAktivitet};
+    return {
+        lagreSamtalereferatKladd,
+        lagreSamtalereferatKladdLagretAktivitet,
+        hentSamtaleReferatKladd,
+        slettSamtaleReferatKladd,
+        hentSamtaleReferatKladdLagretAktivitet,
+    };
 };

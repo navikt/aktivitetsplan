@@ -45,7 +45,7 @@ const OppdaterReferatForm = (props: Props) => {
         lagreSamtalereferatKladdLagretAktivitet,
         hentSamtaleReferatKladdLagretAktivitet,
         slettSamtaleReferatKladd,
-    } = useSamtalereferatKladd(aktivitet.id);
+    } = useSamtalereferatKladd({ aktivitetId: aktivitet.id });
     const kladd = useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
 
     const {
