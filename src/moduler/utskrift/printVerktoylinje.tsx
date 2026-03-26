@@ -148,7 +148,7 @@ function PrintVerktoylinje({
                     </div>
                 </div>
             </FormProvider>
-            <div className="print:hidden mb-8">
+            <div className="print:hidden mt-4 mb-8">
                 <VisValgtFilter />
             </div>
         </>
