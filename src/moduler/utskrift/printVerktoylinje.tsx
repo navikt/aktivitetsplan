@@ -76,12 +76,14 @@ function PrintVerktoylinje({
     }, [inkluderDialogerValue]);
 
     useEffect(() => {
-        if (fraDatoValue && tilDatoValue) {
+        if (fraDatoValue && tilDatoValue && fraDatoValue instanceof Date && tilDatoValue instanceof Date) {
             setValgtDatoRange({fra: fraDatoValue.toISOString(), til: tilDatoValue.toISOString()});
-        } else {
-            setValgtDatoRange(undefined)
         }
     }, [fraDatoValue, tilDatoValue]);
+
+    const nullstillValgtDatoRange = () => {
+        setValgtDatoRange(undefined);
+    }
 
     console.log("OPpfolgingsperiode", valgtOppfolgingsperiode);
 
@@ -137,10 +139,13 @@ function PrintVerktoylinje({
                     <Checkbox {...register('inkluderDialoger')}>
                         Inkluder dialoger
                     </Checkbox>
-                    <DateRangePicker
-                        from={{ name: 'fraDato', required: false, defaultValue: defaultValues.fraDato, minDate: dateOrUndefined(valgtOppfolgingsperiode?.start) }}
-                        to={{ name: 'tilDato', required: false, defaultValue: defaultValues.tilDato, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
-                    />
+                    <div className="flex items-end gap-4">
+                        <DateRangePicker
+                            from={{ name: 'fraDato', required: false, defaultValue: defaultValues.fraDato, minDate: dateOrUndefined(valgtOppfolgingsperiode?.start) }}
+                            to={{ name: 'tilDato', required: false, defaultValue: defaultValues.tilDato, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
+                        />
+                        <Button variant="tertiary" onClick={() => nullstillValgtDatoRange}>Nullstill</Button>
+                    </div>
                 </div>
             </FormProvider>
             <div className="print:hidden mb-8">
