@@ -60,7 +60,6 @@ function getSteps(kanHaPrintValg?: boolean): string[] {
 
 const AktivitetsplanPrint = () => {
     const kvpPerioder = useSelector(selectKvpPeriodeForValgteOppfolging);
-    const erManuell = useSelector(selectErBrukerManuell);
     const { hovedsideRoute } = useRoutes();
     const filterState = useSelector(selectFilterSlice);
     const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
@@ -118,12 +117,6 @@ const AktivitetsplanPrint = () => {
     }, [filterState, inkluderDialoger, valgtDatoRange]);
 
     const next = () => setStepIndex(stepIndex + 1);
-
-    const printMeldingSubmit = (formValues: PrintFormValues) => {
-        setPrintMelding(formValues.beskrivelse);
-        next();
-        return Promise.resolve().then(() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, formValues.beskrivelse));
-    };
 
     const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
         setUtskriftform(formValues.utskritPlanType);
