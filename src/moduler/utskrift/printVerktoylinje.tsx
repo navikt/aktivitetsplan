@@ -35,7 +35,7 @@ interface Props {
     pdfMåOppdateresEtterFilterendring: boolean;
     inkluderDialoger: boolean;
     setInkluderDialoger: (inkluderDialoger: boolean) => void;
-    setValgtDatoRange: (datoPeriode: DatoPeriode) => void;
+    setValgtDatoRange: (datoPeriode: DatoPeriode | undefined) => void;
 }
 
 function PrintVerktoylinje({
@@ -78,6 +78,8 @@ function PrintVerktoylinje({
     useEffect(() => {
         if (fraDatoValue && tilDatoValue) {
             setValgtDatoRange({fra: fraDatoValue.toISOString(), til: tilDatoValue.toISOString()});
+        } else {
+            setValgtDatoRange(undefined)
         }
     }, [fraDatoValue, tilDatoValue]);
 
