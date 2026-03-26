@@ -135,7 +135,7 @@ function PrintVerktoylinje({
                 </div>
             </div>
             <FormProvider {...formHandlers}>
-                <div>
+                <div className="flex gap-y-4 flex-col">
                     <Checkbox {...register('inkluderDialoger')}>
                         Inkluder dialoger
                     </Checkbox>
