@@ -60,6 +60,15 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
 
+    if (ikkeDigitalOppfolging) {
+        return (
+            <>
+                <AktiverDigitalOppfolging />
+                {props.children}
+            </>
+        );
+    }
+
     if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
         return (
             <>
@@ -73,15 +82,6 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return (
             <>
                 <UtdatertKontaktinformasjonAdvarsel utdatertIKRR={utdatertIKRR} erVeileder={erVeileder} />
-                {props.children}
-            </>
-        );
-    }
-
-    if (ikkeDigitalOppfolging) {
-        return (
-            <>
-                <AktiverDigitalOppfolging />
                 {props.children}
             </>
         );
