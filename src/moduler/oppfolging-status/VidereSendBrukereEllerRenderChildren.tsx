@@ -10,6 +10,7 @@ import {
     selectErBrukerManuell,
     selectErRegisrertIKRR,
     selectErUnderOppfolging,
+    selectKanVarsles,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
     selectReservasjonKRR,
@@ -19,6 +20,7 @@ import { Status } from '../../createGenericSlice';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
 import { selectIdentitetId } from '../identitet/identitet-selector';
 import { IkkeRegistrertIKRRAdvarsel } from './IkkeRegistrertIKRRAdvarsel';
+import { UtdatertKontaktinformasjonAdvarsel } from './UtdatertKontaktinformasjonAdvarsel';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
@@ -30,6 +32,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const manuell = useSelector(selectErBrukerManuell);
     const reservasjonKRR = useSelector(selectReservasjonKRR);
     const erRegistrertIKRR = useSelector(selectErRegisrertIKRR);
+    const kanVarsles = useSelector(selectKanVarsles);
     const servicegruppe = useSelector(selectServicegruppe);
     const aktorId = useSelector(selectAktorId);
     const ident = useSelector(selectIdentitetId);
@@ -38,6 +41,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const erVeileder = useErVeileder();
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
+    const utdatertIKRR = !kanVarsles
 
     useEffect(() => {
         if (erVeileder && servicegruppe) {
@@ -56,19 +60,28 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
 
-    if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
-        return (
-            <>
-                <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeileder={erVeileder} />
-                {erVeileder ? props.children : null}
-            </>
-        );
-    }
-
     if (ikkeDigitalOppfolging) {
         return (
             <>
                 <AktiverDigitalOppfolging />
+                {props.children}
+            </>
+        );
+    }
+
+    if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
+        return (
+            <>
+                <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeileder={erVeileder} />
+                {props.children}
+            </>
+        );
+    }
+
+    if (utdatertIKRR && oppfolgingsStatus === Status.OK) {
+        return (
+            <>
+                <UtdatertKontaktinformasjonAdvarsel utdatertIKRR={utdatertIKRR} erVeileder={erVeileder} />
                 {props.children}
             </>
         );

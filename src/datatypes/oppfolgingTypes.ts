@@ -6,7 +6,7 @@ export interface Me {
 
 export interface OppfolgingStatus {
     // fnr: string;
-    // aktorId: string;
+    aktorId: string;
     // veilederId: string | null;
     reservasjonKRR: boolean; // Flyttes - tilgjengelig
     manuell: boolean; // Flyttes - tilgjengelig
