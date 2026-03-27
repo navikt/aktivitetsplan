@@ -18,7 +18,6 @@ import {
     selectValgtPeriode,
 } from '../moduler/oppfolging-status/oppfolging-selector';
 import { ER_INTERN_FLATE } from '../constant';
-import { useSelector } from 'react-redux';
 
 export enum ReadWriteMode {
     READ = 'READ',
@@ -62,7 +61,7 @@ const oppdaterSkriveLeseTilgang = (
     const erUnderOppfolging = selectErUnderOppfolging(state);
     const reservertMotDigitalKommunikasjonIKrr = selectReservasjonKRR(state);
     const registrertIKrr = selectErRegisrertIKRR(state);
-    const kanVarsles = useSelector(selectKanVarsles);
+    const kanVarsles = selectKanVarsles(state);
     const erBrukerManuell = selectErBrukerManuell(state);
     const erVeileder = ER_INTERN_FLATE;
     const utdatertIKRR = !kanVarsles
