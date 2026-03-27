@@ -77,9 +77,7 @@ function PrintVerktoylinje({
 
     useEffect(() => {
         if (fraDatoValue && tilDatoValue && fraDatoValue instanceof Date && tilDatoValue instanceof Date) {
-            const tilDatoInclusive = new Date(tilDatoValue);
-            tilDatoInclusive.setDate(tilDatoInclusive.getDate() + 1);
-            setValgtDatoRange({fra: fraDatoValue.toISOString(), til: tilDatoInclusive.toISOString()});
+            setValgtDatoRange({fra: fraDatoValue.toISOString(), til: tilDatoValue.toISOString()});
         }
     }, [fraDatoValue, tilDatoValue]);
 
