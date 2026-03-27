@@ -17,7 +17,6 @@ import {
     selectReservasjonKRR,
     selectValgtPeriode,
 } from '../moduler/oppfolging-status/oppfolging-selector';
-import { selectErBruker } from '../moduler/identitet/identitet-selector';
 import { ER_INTERN_FLATE } from '../constant';
 import { useSelector } from 'react-redux';
 

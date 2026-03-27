@@ -138,9 +138,9 @@ describe('Videresend brukere eller render children', () => {
     describe('Brukere:', () => {
         it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
             const store = gitt.hentStatus.ikkeRegistrertIKrr();
-            const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
+            const { getByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() => getByText('Vi har ikke din kontaktinformasjon'));
-            expect(queryByText(aktivitetTittel)).toBeFalsy();
+            getByText(aktivitetTittel);
         });
         it('skal vise varsel når bruker har reservert seg mot digital kommunikasjon i KRR', async () => {
             const store = gitt.hentStatus.reserverIKrr();
