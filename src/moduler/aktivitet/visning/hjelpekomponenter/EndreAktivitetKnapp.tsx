@@ -10,11 +10,11 @@ interface Props {
     id: string;
     tillatEndring: boolean;
     laster: boolean;
-    underOppfolging: boolean;
+    readOnly: boolean;
 }
 
 const EndreAktivitetKnapp = (props: Props) => {
-    const { id, tillatEndring, laster, underOppfolging } = props;
+    const { id, tillatEndring, laster, readOnly } = props;
 
     const navigate = useNavigate();
     const { endreAktivitetRoute } = useRoutes();
@@ -30,7 +30,7 @@ const EndreAktivitetKnapp = (props: Props) => {
 
     return (
         <Button
-            disabled={laster || !underOppfolging}
+            disabled={laster || readOnly}
             onClick={goToEndre}
             variant="secondary"
             icon={<PencilIcon aria-hidden fontSize="1.5rem" />}

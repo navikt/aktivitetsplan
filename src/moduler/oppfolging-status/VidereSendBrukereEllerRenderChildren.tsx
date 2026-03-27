@@ -64,11 +64,12 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
             </>
         );
     }
+
     if (ikkeDigitalOppfolging) {
         return (
             <>
                 <AktiverDigitalOppfolging />
-                {erVeileder ? props.children : null}
+                {props.children}
             </>
         );
     }

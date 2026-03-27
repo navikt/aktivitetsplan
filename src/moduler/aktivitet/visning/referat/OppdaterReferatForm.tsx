@@ -41,9 +41,12 @@ const OppdaterReferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
     const erReferatPublisert = aktivitet.erReferatPublisert;
-    const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId)
-    const { lagreSamtalereferatKladdLagretAktivitet, hentSamtaleReferatKladdLagretAktivitet, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
-    const kladd =  useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
+    const {
+        lagreSamtalereferatKladdLagretAktivitet,
+        hentSamtaleReferatKladdLagretAktivitet,
+        slettSamtaleReferatKladd,
+    } = useSamtalereferatKladd({ aktivitetId: aktivitet.id });
+    const kladd = useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
 
     const {
         watch,

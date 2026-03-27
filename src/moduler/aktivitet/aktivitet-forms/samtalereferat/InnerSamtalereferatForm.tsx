@@ -54,7 +54,9 @@ const InnerSamtalereferatForm = (props: Props) => {
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
     const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId);
-    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd} = useSamtalereferatKladd(oppfolgingsperiodeId);
+    const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd } = useSamtalereferatKladd({
+        oppfolgingsperiodeId: oppfolgingsperiodeId!!,
+    });
     const kladd = useMemo(() => hentSamtaleReferatKladd(), []);
 
     const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
@@ -85,7 +87,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     const kanalValue = watch('kanal');
 
     useEffect(() => {
-        lagreSamtalereferatKladd({tittel: tittelValue, referat: referatValue, fraDato: datoValue, kanal: kanalValue});
+        lagreSamtalereferatKladd({ tittel: tittelValue, referat: referatValue, fraDato: datoValue, kanal: kanalValue });
     }, [tittelValue, referatValue, datoValue, kanalValue]);
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
