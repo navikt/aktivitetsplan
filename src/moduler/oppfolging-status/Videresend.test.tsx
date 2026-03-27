@@ -128,6 +128,12 @@ describe('Videresend brukere eller render children', () => {
             await waitFor(() => getByText(aktivitetTittel));
             getByText(aktivitetTittel);
         });
+        it('skal vise varsel når bruker er utdatert i KRR', async () => {
+            const store = gitt.hentStatus.utdatertIKrr();
+            const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+            await waitFor(() => getByText('Brukerens kontaktinformasjon i KRR er utdatert'));
+            getByText(aktivitetTittel);
+        });
     });
     describe('Brukere:', () => {
         it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
@@ -148,6 +154,12 @@ describe('Videresend brukere eller render children', () => {
             await waitFor(() =>
                 getByText('Du har ikke digital oppfølging fra Nav. Du har derfor ikke en digital aktivitetsplan.'),
             );
+            getByText(aktivitetTittel);
+        });
+        it('skal vise varsel når bruker er utdatert i KRR', async () => {
+            const store = gitt.hentStatus.utdatertIKrr();
+            const { getByText } = render(<WrappedHovedside store={store} />);
+            await waitFor(() => getByText('Kontaktinformasjonen din er utdatert'));
             getByText(aktivitetTittel);
         });
     });
