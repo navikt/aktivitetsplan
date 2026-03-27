@@ -60,7 +60,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
         return (
             <>
                 <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeileder={erVeileder} />
-                {erVeileder ? props.children : null}
+                {props.children}
             </>
         );
     }
