@@ -10,6 +10,8 @@ import AktivitetinformasjonVisning from './hjelpekomponenter/Aktivitetinformasjo
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/ReferatContainer';
+import { useSelector } from 'react-redux';
+import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -21,6 +23,7 @@ const Aktivitetvisning = (props: Props) => {
     const { aktivitet, tillatEndring, laster } = props;
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
     const visBegrunnelse = !erArenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
+    const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
 
     return (
         <div className=" space-y-8">
@@ -30,7 +33,7 @@ const Aktivitetvisning = (props: Props) => {
             ) : null}
             <AktivitetinformasjonVisning valgtAktivitet={aktivitet} />
             {/* TODO strategy pattern w/ slots? */}
-            {aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE ? (
+            {(aktivitet.type === VeilarbAktivitetType.STILLING_FRA_NAV_TYPE && !readOnly) ? (
                 <DeleCvContainer aktivitet={aktivitet} />
             ) : null}
             <ActionRad aktivitet={aktivitet} tillatEndring={tillatEndring} laster={laster} />

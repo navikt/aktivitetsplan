@@ -8,13 +8,13 @@ import { StillingAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useErVeileder } from '../../../../Provider';
 import { DirtyContext } from '../../../context/dirty-context';
-import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { kanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
 import StillingEtikett from '../../etikett/StillingEtikett';
 import EndreLinje from '../endre-linje/EndreLinje';
 import StillingEtikettForm, { StillingEtikettFormValues } from './StillingEtikettForm';
+import { ReadWriteMode, selectReadWriteMode } from '../../../../utils/readOrWriteModeSlice';
 
 interface Props {
     aktivitet: StillingAktivitet;
@@ -26,7 +26,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
 
     const lasterAktivitetData = useSelector(selectLasterAktivitetData, shallowEqual);
     const kanIkkeEndreAktivitet = !kanEndreAktivitetEtikett(aktivitet, erVeileder);
-    const erIkkeUnderOppfolging = !useSelector(selectErUnderOppfolging);
+    const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
 
     const [open, setIsOpen] = useState(false);
     const dispatch = useAppDispatch();
@@ -52,7 +52,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
         return lagreEtikett(formValues);
     };
 
-    const disableEtikettEndringer = lasterAktivitetData || kanIkkeEndreAktivitet || erIkkeUnderOppfolging;
+    const disableEtikettEndringer = lasterAktivitetData || kanIkkeEndreAktivitet || readOnly;
 
     const { setFormIsDirty } = useContext(DirtyContext);
     const form = <StillingEtikettForm disabled={disableEtikettEndringer} aktivitet={aktivitet} onSubmit={onSubmit} />;

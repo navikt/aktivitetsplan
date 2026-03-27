@@ -5,26 +5,27 @@ export interface Me {
 }
 
 export interface OppfolgingStatus {
-    fnr: string;
-    aktorId: string;
-    veilederId: string | null;
-    reservasjonKRR: boolean;
-    kanVarsles: boolean;
-    manuell: boolean;
-    underOppfolging: boolean;
-    underKvp: boolean;
-    kanStarteOppfolging: boolean;
-    oppfolgingUtgang: string | null;
-    oppfolgingsPerioder: Oppfolgingsperiode[];
-    harSkriveTilgang: boolean;
-    inaktivIArena: boolean | null;
-    kanReaktiveres: boolean;
-    inaktiveringsdato: string;
-    erSykmeldtMedArbeidsgiver: boolean;
-    servicegruppe: string;
-    formidlingsgruppe: string;
-    rettighetsgruppe: string;
-    registrertKRR: boolean;
+    // fnr: string;
+    // aktorId: string;
+    // veilederId: string | null;
+    reservasjonKRR: boolean; // Flyttes - tilgjengelig
+    manuell: boolean; // Flyttes - tilgjengelig
+    kanVarsles: boolean; // Bør flyttes - tilgjengelig
+    registrertKRR: boolean; // Bør flyttes - tilgjengelig
+    underOppfolging: boolean; // Tilgjengelig på graphql
+    underKvp: boolean; // Bruker flyttes - brukerstatus
+    // kanStarteOppfolging: boolean;
+    // oppfolgingUtgang: string | null;
+    oppfolgingsPerioder: Oppfolgingsperiode[]; // Tilgjengelig på graphql
+
+    inaktivIArena: boolean | null; // Brukers Arena-status
+    kanReaktiveres: boolean; // Brukers Arena-status
+    inaktiveringsdato: string; // Brukers Arena-status
+    servicegruppe: string; // Brukers Arena-status
+
+    // erSykmeldtMedArbeidsgiver: boolean;
+    // formidlingsgruppe: string;
+    // rettighetsgruppe: string;
 }
 
 export interface Oppfolgingsperiode {

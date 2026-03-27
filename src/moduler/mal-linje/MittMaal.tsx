@@ -13,31 +13,24 @@ import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMa
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
-import {
-    selectErUnderOppfolging,
-    selectHarSkriveTilgang,
-    selectViserHistoriskPeriode,
-} from '../oppfolging-status/oppfolging-selector';
 import MaalIkon from './Aktivitetsplan_maal.svg?react';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import MalContent from './MalContent';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 
 function MittMaal() {
     const avhengigheter = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
+    const readOnly = useSelector(selectReadWriteMode, shallowEqual) == ReadWriteMode.READ;
 
-    const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
-    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
-    const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
-
-    const disabled = !underOppfolging || viserHistoriskPeriode || !harSkriveTilgang;
+    const disabled = readOnly;
     const nyEndring =
         erNyEndringIMal(
             malData,
             useSelector(selectLestAktivitetsplan) as any,
             useSelector(selectIdentitetData) as any,
-        ) && harSkriveTilgang;
+        ) && readOnly;
 
     const noeHarFeilet = avhengigheter === 'ERROR';
     const { mal: malPromise, oppfolging: oppfolgingPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
