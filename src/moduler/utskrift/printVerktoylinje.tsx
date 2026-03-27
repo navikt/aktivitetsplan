@@ -51,13 +51,13 @@ function PrintVerktoylinje({
                                setValgtDatoRange
                            }: Props) {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
-    const valgtOppfolgingsperiode = useSelector(selectValgtPeriode); // TODO: Fiks, alltid undefined nå
+    const valgtOppfolgingsperiode = useSelector(selectValgtPeriode);
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
 
     const defaultValues = {
         inkluderDialoger: inkluderDialoger,
-            fraDato: undefined,
-            tilDato: undefined
+            fraDato: valgtOppfolgingsperiode?.start,
+            tilDato: valgtOppfolgingsperiode?.slutt
     };
 
     const formHandlers = useForm<PrintVerktoylinjeFormValues>({
@@ -141,8 +141,8 @@ function PrintVerktoylinje({
                     </Checkbox>
                     <div className="flex items-end gap-4">
                         <DateRangePicker
-                            from={{ name: 'fraDato', required: false, defaultValue: defaultValues.fraDato, minDate: dateOrUndefined(valgtOppfolgingsperiode?.start) }}
-                            to={{ name: 'tilDato', required: false, defaultValue: defaultValues.tilDato, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
+                            from={{ name: 'fraDato', required: false, minDate: dateOrUndefined(defaultValues?.fraDato) }}
+                            to={{ name: 'tilDato', required: false, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
                             onReset={nullstillValgtDatoRange}
                         />
                     </div>

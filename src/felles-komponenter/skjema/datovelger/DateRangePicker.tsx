@@ -64,6 +64,8 @@ const DateRangePicker = ({ from, to, disabledDays, onReset }: Props) => {
     const { datepickerProps, toInputProps, fromInputProps, reset, setSelected } = useRangeDatepicker({
         defaultSelected: { from: from.defaultValue, to: to.defaultValue },
         disabled: disabledDays,
+        fromDate: from.minDate,
+        toDate: to.maxDate,
         onValidate: (validation) => {
             setRangeValidation(validation);
             validateRemoveErrors(validation);
@@ -128,7 +130,6 @@ const DateRangePicker = ({ from, to, disabledDays, onReset }: Props) => {
                         ref={(ref) => {
                             fromField.ref(ref);
                         }}
-                        min={from.minDate?.getTime()}
                     />
                     <DatePicker.Input
                         error={toState.error?.message}
@@ -141,7 +142,6 @@ const DateRangePicker = ({ from, to, disabledDays, onReset }: Props) => {
                         ref={(ref) => {
                             toField.ref(ref);
                         }}
-                        max={to.maxDate?.getTime()}
                     />
                     {onReset && <Button variant="tertiary" onClick={() => resetValues()}>Nullstill</Button> }
                 </div>
