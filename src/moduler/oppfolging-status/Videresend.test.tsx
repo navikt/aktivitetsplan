@@ -144,11 +144,11 @@ describe('Videresend brukere eller render children', () => {
         });
         it('skal vise dårlig feilmelding når bruker er manuell', async () => {
             const store = gitt.hentStatus.manuell();
-            const { getByText, queryByText } = render(<WrappedHovedside store={store} />);
+            const { getByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() =>
                 getByText('Du har ikke digital oppfølging fra Nav. Du har derfor ikke en digital aktivitetsplan.'),
             );
-            expect(queryByText(aktivitetTittel)).toBeFalsy();
+            getByText(aktivitetTittel);
         });
     });
 });
