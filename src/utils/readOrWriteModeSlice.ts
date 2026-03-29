@@ -11,11 +11,12 @@ import { velgPeriode } from '../moduler/filtrering/filter/valgt-periode-slice';
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 import {
     selectErBrukerManuell,
+    selectErRegisrertIKRR,
     selectErUnderOppfolging,
+    selectKanVarsles,
     selectReservasjonKRR,
     selectValgtPeriode,
 } from '../moduler/oppfolging-status/oppfolging-selector';
-import { selectErBruker } from '../moduler/identitet/identitet-selector';
 import { ER_INTERN_FLATE } from '../constant';
 
 export enum ReadWriteMode {
@@ -59,10 +60,13 @@ const oppdaterSkriveLeseTilgang = (
     const valgtPeriode = selectValgtPeriode(state);
     const erUnderOppfolging = selectErUnderOppfolging(state);
     const reservertMotDigitalKommunikasjonIKrr = selectReservasjonKRR(state);
+    const registrertIKrr = selectErRegisrertIKRR(state);
+    const kanVarsles = selectKanVarsles(state);
     const erBrukerManuell = selectErBrukerManuell(state);
     const erVeileder = ER_INTERN_FLATE;
+    const utdatertIKRR = !kanVarsles
 
-    const harSkriveTilgang = erVeileder || (!reservertMotDigitalKommunikasjonIKrr && !erBrukerManuell);
+    const harSkriveTilgang = erVeileder || (!reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
 
     if (harSkriveTilgang && erUnderOppfolging && valgtPeriode && !valgtPeriode.slutt) {
         listenerApi.dispatch(setWriteMode());
