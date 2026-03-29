@@ -16,6 +16,7 @@ import DateRangePicker from '../../felles-komponenter/skjema/datovelger/DateRang
 import { selectValgtPeriode } from '../oppfolging-status/oppfolging-selector';
 import { dateOrUndefined } from '../aktivitet/aktivitet-forms/ijobb/AktivitetIjobbForm';
 import { DatoPeriode } from '../journalforing/journalforingFilter';
+import { toLocalISODateString } from '../../utils/dateUtils';
 
 const schema = z.object({
     inkluderDialoger: z.boolean(),
@@ -77,7 +78,7 @@ function PrintVerktoylinje({
 
     useEffect(() => {
         if (fraDatoValue && tilDatoValue && fraDatoValue instanceof Date && tilDatoValue instanceof Date) {
-            setValgtDatoRange({fra: fraDatoValue.toISOString(), til: tilDatoValue.toISOString()});
+            setValgtDatoRange({fra: toLocalISODateString(fraDatoValue), til: toLocalISODateString(tilDatoValue)});
         }
     }, [fraDatoValue, tilDatoValue]);
 
