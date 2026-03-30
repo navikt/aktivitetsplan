@@ -7,6 +7,7 @@ import { KvpPeriode } from '../../datatypes/oppfolgingTypes';
 export interface ArkivFilter {
     inkluderHistorikk: boolean;
     inkluderDialoger: boolean;
+    datoPeriode?: DatoPeriode,
     kvpUtvalgskriterie: KvpUtvalgskriterie;
     aktivitetAvtaltMedNavFilter: AvtaltFilterType[];
     stillingsstatusFilter: EtikettFilterType[];
@@ -26,6 +27,11 @@ export enum KvpUtvalgskriterieAlternativ {
     KUN_KVP_AKTIVITETER = "KUN_KVP_AKTIVITETER"
 }
 
+export interface DatoPeriode {
+    fra: string;
+    til: string;
+}
+
 export const defaultFilter = (erVeileder: boolean): ArkivFilter => {
     return {
         inkluderHistorikk: false,
@@ -39,10 +45,11 @@ export const defaultFilter = (erVeileder: boolean): ArkivFilter => {
         aktivitetTypeFilter: [],
     }
 }
-export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk: boolean, kvpUtvalgskriterie: KvpUtvalgskriterie, inkluderDialoger: boolean): ArkivFilter => {
+export const mapTilJournalforingFilter = (filter: FilterState, inkluderHistorikk: boolean, kvpUtvalgskriterie: KvpUtvalgskriterie, inkluderDialoger: boolean, datoPeriode?: DatoPeriode): ArkivFilter => {
     return {
         inkluderHistorikk: inkluderHistorikk,
         inkluderDialoger: inkluderDialoger,
+        datoPeriode: datoPeriode,
         kvpUtvalgskriterie: kvpUtvalgskriterie,
         aktivitetAvtaltMedNavFilter: [
             filter.aktivitetAvtaltMedNav.AVTALT_MED_NAV && 'AVTALT_MED_NAV',

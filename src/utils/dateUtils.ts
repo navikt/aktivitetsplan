@@ -20,6 +20,13 @@ export const erGyldigISODato = (isoDato: string) => {
     return !!(isoDato && isValid(parseISO(isoDato)));
 };
 
+export const toLocalISODateString = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
 function formatter(dato: string | null | Date | undefined, format: string) {
     if (dato) {
         const datoVerdi = typeof dato === 'string' ? parseISO(dato) : dato;

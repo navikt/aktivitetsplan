@@ -13,7 +13,6 @@ import { selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
 import {
-    selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
@@ -33,11 +32,12 @@ import {
 import { createBlob, PdfViewer } from '../journalforing/PdfViewer';
 import { selectFilterSlice } from '../filtrering/filter/filter-selector';
 import {
+    DatoPeriode,
     defaultFilter,
     KvpUtvalgskriterie,
     KvpUtvalgskriterieAlternativ,
     lagKvpUtvalgskriterie,
-    mapTilJournalforingFilter,
+    mapTilJournalforingFilter
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
@@ -59,7 +59,6 @@ function getSteps(kanHaPrintValg?: boolean): string[] {
 
 const AktivitetsplanPrint = () => {
     const kvpPerioder = useSelector(selectKvpPeriodeForValgteOppfolging);
-    const erManuell = useSelector(selectErBrukerManuell);
     const { hovedsideRoute } = useRoutes();
     const filterState = useSelector(selectFilterSlice);
     const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
@@ -70,12 +69,12 @@ const AktivitetsplanPrint = () => {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
     const [stepIndex, setStepIndex] = useState(0);
-    const [printMelding, setPrintMelding] = useState('');
     const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
     const [pdfMåOppdateresEtterFilterendring, setPdfMåOppdateresEtterFilterendring] = useState(false);
     const erVeileder = useErVeileder();
     const [filterBruktTilForhaandsvisning, setFilterBruktTilForhaandsvisning] = useState(defaultFilter(erVeileder));
     const [inkluderDialoger, setInkluderDialoger] = useState(true);
+    const [valgtDatoRange, setValgtDatoRange] = useState<DatoPeriode | undefined>();
 
     if (!oppfolgingsperiodeId) {
         throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
@@ -109,19 +108,13 @@ const AktivitetsplanPrint = () => {
 
     useEffect(() => {
         const filterBrukt = filterErAktivt(filterState);
-        const nyttArkivFilter = mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger);
+        const nyttArkivFilter = mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger, valgtDatoRange);
         const filterEndretSidenForhaandsvisning =
             JSON.stringify(filterBruktTilForhaandsvisning) !== JSON.stringify(nyttArkivFilter);
         setPdfMåOppdateresEtterFilterendring(filterBrukt || filterEndretSidenForhaandsvisning);
-    }, [filterState, inkluderDialoger]);
+    }, [filterState, inkluderDialoger, valgtDatoRange]);
 
     const next = () => setStepIndex(stepIndex + 1);
-
-    const printMeldingSubmit = (formValues: PrintFormValues) => {
-        setPrintMelding(formValues.beskrivelse);
-        next();
-        return Promise.resolve().then(() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, formValues.beskrivelse));
-    };
 
     const velgPlanSubmit = (formValues: VelgPlanUtskriftFormValues) => {
         setUtskriftform(formValues.utskritPlanType);
@@ -141,12 +134,16 @@ const AktivitetsplanPrint = () => {
 
     const goBack = () => navigate(-1);
 
-    const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
+    const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie) => {
+
+        console.log("DatoPeriode", valgtDatoRange);
+
         const arkivFilter = mapTilJournalforingFilter(
             filterState,
             false,
             nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
             inkluderDialoger,
+            valgtDatoRange
         );
 
         dispatch(
@@ -154,8 +151,6 @@ const AktivitetsplanPrint = () => {
                 oppfolgingsperiodeId,
                 filter: arkivFilter,
                 journalførendeEnhetId: journalførendeEnhetId ? journalførendeEnhetId : '',
-                tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
-                uuidCachetPdf,
             }),
         );
         setFilterBruktTilForhaandsvisning(arkivFilter);
@@ -195,9 +190,8 @@ const AktivitetsplanPrint = () => {
                     forhaandsvisningOpprettet,
                     journalførendeEnhetId,
                     oppfolgingsperiodeId,
-                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger),
+                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger, valgtDatoRange),
                     uuidCachetPdf,
-                    tekstTilBruker: printMelding,
                 }),
             );
         }
@@ -212,13 +206,14 @@ const AktivitetsplanPrint = () => {
                 <PrintVerktoylinje
                     tilbakeRoute={hovedsideRoute()}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, printMelding)}
+                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie)}
                     skrivUt={skrivUt}
                     kanSendeTilBruker={kanSendeTilBruker}
                     sendTilBruker={sendTilBruker}
                     pdfMåOppdateresEtterFilterendring={pdfMåOppdateresEtterFilterendring}
                     inkluderDialoger={inkluderDialoger}
                     setInkluderDialoger={setInkluderDialoger}
+                    setValgtDatoRange={setValgtDatoRange}
                 />
                 <StatusErrorBoundry
                     statuser={[sendTilBrukerStatus]}
@@ -255,7 +250,6 @@ export const aktivitetsplanPrintLoader =
                 oppfolgingsperiodeId,
                 filter: defaultFilter(erVeileder),
                 journalførendeEnhetId: aktivEnhet ? aktivEnhet : '',
-                tekstTilBruker: '',
             }),
         );
         return defer({

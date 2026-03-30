@@ -1,7 +1,10 @@
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import { z } from 'zod';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
@@ -9,7 +12,19 @@ import { logKlikkKnapp, logValgtFilter } from '../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
-import { selectAktiviterForAktuellePerioden } from '../aktivitet/aktivitetlisteSelector';
+import DateRangePicker from '../../felles-komponenter/skjema/datovelger/DateRangePicker';
+import { selectValgtPeriode } from '../oppfolging-status/oppfolging-selector';
+import { dateOrUndefined } from '../aktivitet/aktivitet-forms/ijobb/AktivitetIjobbForm';
+import { DatoPeriode } from '../journalforing/journalforingFilter';
+import { toLocalISODateString } from '../../utils/dateUtils';
+
+const schema = z.object({
+    inkluderDialoger: z.boolean(),
+    fraDato: z.date().optional(),
+    tilDato: z.date().optional(),
+});
+
+export type PrintVerktoylinjeFormValues = z.infer<typeof schema>;
 
 interface Props {
     tilbakeRoute?: string;
@@ -21,6 +36,7 @@ interface Props {
     pdfMåOppdateresEtterFilterendring: boolean;
     inkluderDialoger: boolean;
     setInkluderDialoger: (inkluderDialoger: boolean) => void;
+    setValgtDatoRange: (datoPeriode: DatoPeriode | undefined) => void;
 }
 
 function PrintVerktoylinje({
@@ -32,12 +48,48 @@ function PrintVerktoylinje({
                                sendTilBruker,
                                pdfMåOppdateresEtterFilterendring,
                                inkluderDialoger,
-                               setInkluderDialoger
+                               setInkluderDialoger,
+                               setValgtDatoRange
                            }: Props) {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
+    const valgtOppfolgingsperiode = useSelector(selectValgtPeriode);
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
 
-    const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
+    const defaultValues = {
+        inkluderDialoger: inkluderDialoger,
+            fraDato: valgtOppfolgingsperiode?.start,
+            tilDato: valgtOppfolgingsperiode?.slutt
+    };
+
+    const formHandlers = useForm<PrintVerktoylinjeFormValues>({
+        defaultValues: defaultValues,
+        resolver: zodResolver(schema),
+    });
+
+    const { register, watch } = formHandlers;
+
+    const inkluderDialogerValue = watch('inkluderDialoger');
+    const fraDatoValue = watch('fraDato');
+    const tilDatoValue = watch('tilDato');
+
+    useEffect(() => {
+        setInkluderDialoger(inkluderDialogerValue);
+    }, [inkluderDialogerValue]);
+
+    useEffect(() => {
+        if (fraDatoValue && tilDatoValue && fraDatoValue instanceof Date && tilDatoValue instanceof Date) {
+            setValgtDatoRange({fra: toLocalISODateString(fraDatoValue), til: toLocalISODateString(tilDatoValue)});
+        }
+    }, [fraDatoValue, tilDatoValue]);
+
+    const logValgteFiltre = () => {
+        logValgtFilter(inkluderDialogerValue ? "Inkluder dialoger" : "Ekskluder dialoger");
+        logValgtFilter(fraDatoValue && tilDatoValue ? "Filtrert på dato" : "Ingen datofilter");
+    }
+
+    const nullstillValgtDatoRange = () => {
+        setValgtDatoRange(undefined);
+    }
 
     return (
         <>
@@ -66,9 +118,7 @@ function PrintVerktoylinje({
                                 skrivUt();
                                 loggEvent(TRYK_PRINT);
                                 logKlikkKnapp('Skriv ut');
-                                logValgtFilter(
-                                    inkluderDialoger ? "Inkluder dialoger" : "Ekskluder dialoger"
-                                );
+                                logValgteFiltre();
                             }}
                             disabled={pdfMåOppdateresEtterFilterendring}
                         >
@@ -79,19 +129,26 @@ function PrintVerktoylinje({
                         <Button icon={<EnvelopeOpenIcon />} onClick={() => {
                             sendTilBruker();
                             logKlikkKnapp('Journalfør og send til bruker');
-                            logValgtFilter(
-                                inkluderDialoger ? "Inkluder dialoger" : "Ekskluder dialoger"
-                            );
+                            logValgteFiltre();
                         }} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til
                             bruker</Button>}
                 </div>
             </div>
-            <div>
-                <Checkbox checked={inkluderDialoger} onClick={() => setInkluderDialoger(!inkluderDialoger)} >
-                    Inkluder dialoger
-                </Checkbox>
-            </div>
-            <div className="print:hidden mb-8">
+            <FormProvider {...formHandlers}>
+                <div className="flex gap-y-4 flex-col">
+                    <Checkbox {...register('inkluderDialoger')}>
+                        Inkluder dialoger
+                    </Checkbox>
+                    <div className="flex items-end gap-4">
+                        <DateRangePicker
+                            from={{ name: 'fraDato', required: false, minDate: dateOrUndefined(defaultValues?.fraDato) }}
+                            to={{ name: 'tilDato', required: false, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
+                            onReset={nullstillValgtDatoRange}
+                        />
+                    </div>
+                </div>
+            </FormProvider>
+            <div className="print:hidden mt-4 mb-8">
                 <VisValgtFilter />
             </div>
         </>
