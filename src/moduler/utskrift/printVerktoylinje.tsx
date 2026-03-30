@@ -82,11 +82,14 @@ function PrintVerktoylinje({
         }
     }, [fraDatoValue, tilDatoValue]);
 
+    const logValgteFiltre = () => {
+        logValgtFilter(inkluderDialogerValue ? "Inkluder dialoger" : "Ekskluder dialoger");
+        logValgtFilter(fraDatoValue && tilDatoValue ? "Filtrert på dato" : "Ingen datofilter");
+    }
+
     const nullstillValgtDatoRange = () => {
         setValgtDatoRange(undefined);
     }
-
-    console.log("OPpfolgingsperiode", valgtOppfolgingsperiode);
 
     return (
         <>
@@ -115,9 +118,7 @@ function PrintVerktoylinje({
                                 skrivUt();
                                 loggEvent(TRYK_PRINT);
                                 logKlikkKnapp('Skriv ut');
-                                logValgtFilter(
-                                    inkluderDialogerValue ? "Inkluder dialoger" : "Ekskluder dialoger"
-                                );
+                                logValgteFiltre();
                             }}
                             disabled={pdfMåOppdateresEtterFilterendring}
                         >
@@ -128,9 +129,7 @@ function PrintVerktoylinje({
                         <Button icon={<EnvelopeOpenIcon />} onClick={() => {
                             sendTilBruker();
                             logKlikkKnapp('Journalfør og send til bruker');
-                            logValgtFilter(
-                                inkluderDialogerValue ? "Inkluder dialoger" : "Ekskluder dialoger"
-                            );
+                            logValgteFiltre();
                         }} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til
                             bruker</Button>}
                 </div>
