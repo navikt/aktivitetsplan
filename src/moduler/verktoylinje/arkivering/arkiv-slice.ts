@@ -130,14 +130,12 @@ export const hentPdfTilForhaandsvisningSendTilBruker = createAsyncThunk(
                oppfolgingsperiodeId,
                filter,
                journalførendeEnhetId,
-               tekstTilBruker
            }: {
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
         journalførendeEnhetId: string;
-        tekstTilBruker: string;
     }) => {
-        return await Api.genererPdfTilForhaandsvisningSendTilBruker(oppfolgingsperiodeId, filter, journalførendeEnhetId, tekstTilBruker);
+        return await Api.genererPdfTilForhaandsvisningSendTilBruker(oppfolgingsperiodeId, filter, journalførendeEnhetId);
     },
 );
 
@@ -149,7 +147,6 @@ export const journalforOgSendTilBruker = createAsyncThunk(
                journalførendeEnhetId,
                oppfolgingsperiodeId,
                filter,
-               tekstTilBruker,
                uuidCachetPdf,
            }: {
         forhaandsvisningOpprettet: string;
@@ -157,9 +154,8 @@ export const journalforOgSendTilBruker = createAsyncThunk(
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
         uuidCachetPdf: string | undefined;
-        tekstTilBruker?: string;
     }) => {
-        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhetId, filter, uuidCachetPdf, tekstTilBruker);
+        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhetId, filter, uuidCachetPdf);
     },
 )
 

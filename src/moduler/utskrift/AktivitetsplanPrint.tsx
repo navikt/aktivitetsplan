@@ -70,7 +70,6 @@ const AktivitetsplanPrint = () => {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningSendTilBrukerStatus);
     const [stepIndex, setStepIndex] = useState(0);
-    const [printMelding, setPrintMelding] = useState('');
     const [utskriftform, setUtskriftform] = useState('aktivitetsplan');
     const [pdfMåOppdateresEtterFilterendring, setPdfMåOppdateresEtterFilterendring] = useState(false);
     const erVeileder = useErVeileder();
@@ -136,7 +135,7 @@ const AktivitetsplanPrint = () => {
 
     const goBack = () => navigate(-1);
 
-    const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie, nyPrintMelding?: string) => {
+    const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie) => {
 
         console.log("DatoPeriode", valgtDatoRange);
 
@@ -153,8 +152,6 @@ const AktivitetsplanPrint = () => {
                 oppfolgingsperiodeId,
                 filter: arkivFilter,
                 journalførendeEnhetId: journalførendeEnhetId ? journalførendeEnhetId : '',
-                tekstTilBruker: nyPrintMelding ? nyPrintMelding : printMelding,
-                uuidCachetPdf,
             }),
         );
         setFilterBruktTilForhaandsvisning(arkivFilter);
@@ -196,7 +193,6 @@ const AktivitetsplanPrint = () => {
                     oppfolgingsperiodeId,
                     filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger, valgtDatoRange),
                     uuidCachetPdf,
-                    tekstTilBruker: printMelding,
                 }),
             );
         }
@@ -211,7 +207,7 @@ const AktivitetsplanPrint = () => {
                 <PrintVerktoylinje
                     tilbakeRoute={hovedsideRoute()}
                     kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie, printMelding)}
+                    oppdaterForhaandsvistPdf={() => oppdaterForhaandsvistPdf(kvpUtvalgskriterie)}
                     skrivUt={skrivUt}
                     kanSendeTilBruker={kanSendeTilBruker}
                     sendTilBruker={sendTilBruker}
@@ -255,7 +251,6 @@ export const aktivitetsplanPrintLoader =
                 oppfolgingsperiodeId,
                 filter: defaultFilter(erVeileder),
                 journalførendeEnhetId: aktivEnhet ? aktivEnhet : '',
-                tekstTilBruker: '',
             }),
         );
         return defer({
