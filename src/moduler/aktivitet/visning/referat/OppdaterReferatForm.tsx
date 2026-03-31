@@ -16,7 +16,7 @@ import { DirtyContext } from '../../../context/dirty-context';
 import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-selector';
 import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, utenHistorikk } from '../../aktivitet-actions';
-import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
+import { useHilsenVeilederTekst } from '../../aktivitet-forms/samtalereferat/useHilsenVeilederTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
@@ -37,7 +37,7 @@ interface Props {
 const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
     const [open, setOpen] = useState(true);
-    const startTekst = useReferatStartTekst();
+    const startTekst = useHilsenVeilederTekst();
     const dispatch = useAppDispatch();
     const aktivitetsStatus = useSelector(selectAktivitetStatus);
     const erReferatPublisert = aktivitet.erReferatPublisert;

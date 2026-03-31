@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 
 import { selectVeilederNavn } from '../../../veileder/veileder-selector';
 
-export const useReferatStartTekst = () => {
+export const useHilsenVeilederTekst = () => {
     const veilederNavn = useSelector(selectVeilederNavn);
 
     if (!veilederNavn) {
