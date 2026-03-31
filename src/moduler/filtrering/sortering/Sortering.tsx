@@ -34,7 +34,7 @@ const KolonneSortering = ({ status }: Props) => {
             <Button
                 as={Dropdown.Toggle}
                 variant="tertiary-neutral"
-                size="small"
+                size="xsmall"
                 icon={<ArrowsUpDownIcon title="Sorteringsvalg" />}
             />
             <Dropdown.Menu>
