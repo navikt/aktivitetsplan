@@ -74,6 +74,9 @@ export function compareAktivitet(a: AlleAktiviteter, b: AlleAktiviteter, sorteri
     if (felt === Sorteringsfelt.AKTIVITET_DATO) {
         aDato = a.fraDato ?? a.tilDato;
         bDato = b.fraDato ?? b.tilDato;
+    } else if (felt === Sorteringsfelt.OPPRETTET_DATO) {
+        aDato = a.opprettetDato;
+        bDato = b.opprettetDato;
     } else {
         aDato = isArenaAktivitet(a) ? a.fraDato : a.endretDato;
         bDato = isArenaAktivitet(b) ? b.fraDato : b.endretDato;

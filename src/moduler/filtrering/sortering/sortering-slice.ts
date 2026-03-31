@@ -3,6 +3,7 @@ import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 
 export enum Sorteringsfelt {
     ENDRET_DATO = 'ENDRET_DATO',
+    OPPRETTET_DATO = 'OPPRETTET_DATO',
     AKTIVITET_DATO = 'AKTIVITET_DATO',
 }
 

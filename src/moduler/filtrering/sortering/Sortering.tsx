@@ -45,8 +45,9 @@ const KolonneSortering = ({ status }: Props) => {
                         value={sortering.felt}
                         onChange={(val) => handleFeltChange(val as Sorteringsfelt)}
                     >
+                        <Radio value={Sorteringsfelt.AKTIVITET_DATO}>Startdato for aktivitet</Radio>
+                        <Radio value={Sorteringsfelt.OPPRETTET_DATO}>Opprettet tidspunkt</Radio>
                         <Radio value={Sorteringsfelt.ENDRET_DATO}>Endret tidspunkt</Radio>
-                        <Radio value={Sorteringsfelt.AKTIVITET_DATO}>Dato for aktivitet</Radio>
                     </RadioGroup>
                     <RadioGroup
                         legend="Rekkefølge"
