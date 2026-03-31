@@ -1,5 +1,5 @@
 import { Dropdown, Button, Radio, RadioGroup } from '@navikt/ds-react';
-import { MenuElipsisVerticalIcon } from '@navikt/aksel-icons';
+import { ArrowsUpDownIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -35,7 +35,7 @@ const KolonneSortering = ({ status }: Props) => {
                 as={Dropdown.Toggle}
                 variant="tertiary-neutral"
                 size="small"
-                icon={<MenuElipsisVerticalIcon title="Sorteringsvalg" />}
+                icon={<ArrowsUpDownIcon title="Sorteringsvalg" />}
             />
             <Dropdown.Menu>
                 <div className="flex flex-col gap-y-4">
