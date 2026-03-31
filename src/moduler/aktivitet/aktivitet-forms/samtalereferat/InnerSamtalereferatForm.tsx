@@ -11,7 +11,7 @@ import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelg
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
-import { useReferatStartTekst } from './useReferatStartTekst';
+import { useHilsenVeilederTekst } from './useHilsenVeilederTekst';
 import { TryggTekstBakFeatureToggle } from '../tryggtekst/TryggTekst';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
@@ -50,7 +50,7 @@ interface Props {
 const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
     const [open, setOpen] = useState(true);
-    const startTekst = useReferatStartTekst();
+    const startTekst = useHilsenVeilederTekst();
     const nyAktivitet = !aktivitet;
     const dispatch = useAppDispatch();
     const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId);

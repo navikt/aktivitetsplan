@@ -16,37 +16,40 @@ import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
 import { endOfDay, subDays } from 'date-fns';
+import { useHilsenVeilederTekst } from '../samtalereferat/useHilsenVeilederTekst';
 
-const schema = z.object({
-    tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
-    dato: z
-        .date({
-            required_error: 'Dato må fylles ut',
-            invalid_type_error: 'Ikke en gyldig dato',
-        })
-        .min(endOfDay(subDays(new Date(), 1)), 'Dato kan ikke være tilbake i tid'),
-    klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
-    varighet: z.number({ invalid_type_error: 'Du må velge varighet' }), // Blir NaN på default value
-    kanal: z.nativeEnum(Kanal, {
-        errorMap: (issue) => {
-            switch (issue.code) {
-                case 'invalid_enum_value':
-                    return { message: 'Du må velge møteform' };
-                default:
-                    return { message: 'Noe har gått galt' };
+const schema = (startTekst: string) =>
+    z.object({
+        tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
+        dato: z
+            .date({
+                required_error: 'Dato må fylles ut',
+                invalid_type_error: 'Ikke en gyldig dato'
+            })
+            .min(endOfDay(subDays(new Date(), 1)), 'Dato kan ikke være tilbake i tid'),
+        klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
+        varighet: z.number({ invalid_type_error: 'Du må velge varighet' }), // Blir NaN på default value
+        kanal: z.nativeEnum(Kanal, {
+            errorMap: (issue) => {
+                switch (issue.code) {
+                    case 'invalid_enum_value':
+                        return { message: 'Du må velge møteform' };
+                    default:
+                        return { message: 'Noe har gått galt' };
+                }
             }
-        },
-    }),
-    adresse: z
-        .string()
-        .min(1, 'Du må fylle ut møtested eller annen praktisk informasjon')
-        .max(255, 'Du må korte ned teksten til 255 tegn'),
-    beskrivelse: z
-        .string()
-        .min(1, 'Du må fylle ut hensikten med møtet')
-        .max(5000, 'Du må korte ned teksten til 5000 tegn'),
-    forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
-});
+        }),
+        adresse: z
+            .string()
+            .min(1, 'Du må fylle ut møtested eller annen praktisk informasjon')
+            .max(255, 'Du må korte ned teksten til 255 tegn'),
+        beskrivelse: z
+            .string()
+            .min(1, 'Du må fylle ut hensikten med møtet')
+            .max(5000, 'Du må korte ned teksten til 5000 tegn')
+            .refine((val) => val.replace(startTekst, '').trim().length > 0, 'Du må fylle ut hensikten med møtet'),
+        forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional()
+    });
 
 const varighet = [
     { minutter: 15, tekst: '15 minutter' },
@@ -65,14 +68,14 @@ const varighet = [
     { minutter: 360, tekst: '6 timer' },
     { minutter: 390, tekst: '6 timer, 30 minutter' },
     { minutter: 420, tekst: '7 timer' },
-    { minutter: 450, tekst: '7 timer, 30 minutter' },
+    { minutter: 450, tekst: '7 timer, 30 minutter' }
 ];
 
-export type MoteAktivitetFormValues = z.infer<typeof schema>;
+export type MoteAktivitetFormValues = z.infer<ReturnType<typeof schema>>;
 
 interface Props {
     onSubmit: (
-        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean },
+        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean }
     ) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MoteAktivitet;
@@ -80,6 +83,7 @@ interface Props {
 
 const MoteAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
+    const startTekst = useHilsenVeilederTekst();
 
     const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
@@ -90,22 +94,22 @@ const MoteAktivitetForm = (props: Props) => {
         varighet: moteTid?.varighet,
         kanal: aktivitet?.kanal,
         adresse: aktivitet?.adresse,
-        beskrivelse: aktivitet?.beskrivelse,
+        beskrivelse: aktivitet?.beskrivelse || startTekst,
         forberedelser: aktivitet?.forberedelser ?? undefined,
-        dato: coerceToUndefined(aktivitet?.fraDato),
+        dato: coerceToUndefined(aktivitet?.fraDato)
     };
     const avtalt = aktivitet?.avtalt || false;
 
     const formHandlers = useForm<MoteAktivitetFormValues>({
         defaultValues,
-        resolver: zodResolver(schema),
-        shouldFocusError: false,
+        resolver: zodResolver(schema(startTekst)),
+        shouldFocusError: false
     });
     const {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty, isSubmitting },
+        formState: { errors, isDirty, isSubmitting }
     } = formHandlers;
 
     if (dirtyRef) {
@@ -126,7 +130,7 @@ const MoteAktivitetForm = (props: Props) => {
                     ...rest,
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
-                    avtalt,
+                    avtalt
                 });
             })}
         >
@@ -136,7 +140,6 @@ const MoteAktivitetForm = (props: Props) => {
                     <HuskVarsleBruker avtalt={avtalt} endre={!!aktivitet} />
 
                     <TextField
-                        disabled={avtalt}
                         label="Tema for møtet (obligatorisk)"
                         id={'tittel'}
                         {...register('tittel')}
@@ -186,7 +189,6 @@ const MoteAktivitetForm = (props: Props) => {
                         error={errors.adresse && errors.adresse.message}
                     />
                     <Textarea
-                        disabled={avtalt}
                         label="Hensikt med møtet (obligatorisk)"
                         maxLength={5000}
                         {...register('beskrivelse')}
@@ -194,7 +196,6 @@ const MoteAktivitetForm = (props: Props) => {
                         value={beskrivelseValue}
                     />
                     <Textarea
-                        disabled={avtalt}
                         label="Forberedelser til møtet (valgfri)"
                         maxLength={500}
                         {...register('forberedelser')}
