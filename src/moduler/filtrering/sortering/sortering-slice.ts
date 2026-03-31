@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 
 export enum Sorteringsfelt {
     ENDRET_DATO = 'ENDRET_DATO',
@@ -15,7 +16,11 @@ export interface SorteringState {
     rekkefolge: Sorteringsrekkefolge;
 }
 
-const initialState: SorteringState = {
+export type KolonneSorteringState = Partial<Record<AktivitetStatus, SorteringState>>;
+
+const initialState: KolonneSorteringState = {};
+
+export const defaultSortering: SorteringState = {
     felt: Sorteringsfelt.ENDRET_DATO,
     rekkefolge: Sorteringsrekkefolge.DESC,
 };
@@ -24,13 +29,15 @@ const sorteringSlice = createSlice({
     name: 'sortering',
     initialState,
     reducers: {
-        setSortering: (state, action: PayloadAction<SorteringState>) => {
-            state.felt = action.payload.felt;
-            state.rekkefolge = action.payload.rekkefolge;
+        setSorteringForKolonne: (
+            state,
+            action: PayloadAction<{ status: AktivitetStatus; sortering: SorteringState }>,
+        ) => {
+            state[action.payload.status] = action.payload.sortering;
         },
     },
 });
 
-export const { setSortering } = sorteringSlice.actions;
+export const { setSorteringForKolonne } = sorteringSlice.actions;
 
 export default sorteringSlice.reducer;

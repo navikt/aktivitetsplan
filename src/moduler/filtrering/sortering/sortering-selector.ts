@@ -1,5 +1,10 @@
 import { RootState } from '../../../store';
-import { SorteringState } from './sortering-slice';
+import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
+import { defaultSortering, KolonneSorteringState, SorteringState } from './sortering-slice';
 
-export const selectSortering = (state: RootState): SorteringState => state.data.sortering;
+export const selectKolonneSortering = (state: RootState): KolonneSorteringState => state.data.sortering;
 
+export const selectSorteringForKolonne =
+    (status: AktivitetStatus) =>
+    (state: RootState): SorteringState =>
+        state.data.sortering[status] ?? defaultSortering;

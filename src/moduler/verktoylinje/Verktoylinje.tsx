@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Filter from '../filtrering/Filter';
-import Sortering from '../filtrering/sortering/Sortering';
 import PeriodeFilter from '../filtrering/filter/PeriodeFilter';
 import VisValgtFilter from '../filtrering/VisValgtFilter';
 import LeggTilNyttAktivitetsKort from '../aktivitet/ny-aktivitet/LeggTilNyttAktivitetsKort';
@@ -18,7 +17,6 @@ const Verktoylinje = () => {
                 <div className="flex gap-4 items-start flex-col sm:flex-row w-full">
                     <LeggTilNyttAktivitetsKort />
                     {harAktivitet && <Filter />}
-                    {harAktivitet && <Sortering />}
                 </div>
                 <PeriodeFilter />
             </div>
