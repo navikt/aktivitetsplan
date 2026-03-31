@@ -18,6 +18,7 @@ import veilederReducer from './moduler/veileder/veileder-slice';
 import { arkivReducer } from './moduler/verktoylinje/arkivering/arkiv-slice';
 import { innsynsrettReducer } from './moduler/aktivitet/innsynsrett/innsynsrett-slice';
 import valgtPeriodeReducer from './moduler/filtrering/filter/valgt-periode-slice';
+import sorteringReducer from './moduler/filtrering/sortering/sortering-slice';
 import { tryggTekstReducer } from './moduler/aktivitet/aktivitet-forms/tryggtekst/tryggtekst-slice';
 import readOrWriteModeReducer from './utils/readOrWriteModeSlice';
 
@@ -39,6 +40,7 @@ const reducer = {
         errors: errorReducer,
         innsynsrett: innsynsrettReducer,
         valgtPeriode: valgtPeriodeReducer,
+        sortering: sorteringReducer,
         tryggTekst: tryggTekstReducer,
     }),
     view: combineReducers({

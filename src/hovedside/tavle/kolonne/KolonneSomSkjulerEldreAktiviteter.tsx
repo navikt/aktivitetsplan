@@ -5,6 +5,7 @@ import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTy
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { sorterAktiviteter, splitIEldreOgNyereAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
+import { selectSortering } from '../../../moduler/filtrering/sortering/sortering-selector';
 import DropTargetKolonne from './DropTargetKolonne';
 import KolonneHeader from './KolonneHeader';
 import SkjulEldreAktiviteterFraKolonne from './SkjulEldreAktiviteterFraKolonne';
@@ -15,8 +16,9 @@ interface Props {
 
 const KolonneSomSkjulerEldreAktiviteter = ({ status }: Props) => {
     const aktiviteter = useSelector(selectAktivitetListe, shallowEqual);
+    const sortering = useSelector(selectSortering);
 
-    const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
+    const sorterteAktiviter = sorterAktiviteter(aktiviteter, status, sortering);
 
     const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(sorterteAktiviter);
 

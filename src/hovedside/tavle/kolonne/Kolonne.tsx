@@ -5,6 +5,7 @@ import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { sorterAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
+import { selectSortering } from '../../../moduler/filtrering/sortering/sortering-selector';
 import DropTargetKolonne from './DropTargetKolonne';
 import KolonneHeader from './KolonneHeader';
 
@@ -14,7 +15,8 @@ interface Props {
 
 const Kolonne = ({ status }: Props) => {
     const aktiviteter = useSelector(selectAktivitetListe, shallowEqual);
-    const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
+    const sortering = useSelector(selectSortering);
+    const sorterteAktiviter = sorterAktiviteter(aktiviteter, status, sortering);
     const aktivitetsListe = sorterteAktiviter.map((aktivitet) => (
         <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
     ));

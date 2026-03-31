@@ -25,6 +25,7 @@ import {
 } from '../../datatypes/internAktivitetTypes';
 import { Lest } from '../../datatypes/lestTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
+import { Sorteringsfelt, Sorteringsrekkefolge, SorteringState } from '../filtrering/sortering/sortering-slice';
 
 interface MoteTid {
     dato: Date;
@@ -65,10 +66,21 @@ function sammenlignDato(a?: string, b?: string): number {
     return b.localeCompare(a);
 }
 
-export function compareAktivitet(a: AlleAktiviteter, b: AlleAktiviteter): number {
-    const aDato = isArenaAktivitet(a) ? a.fraDato : a.endretDato;
-    const bDato = isArenaAktivitet(b) ? b.fraDato : b.endretDato;
-    return sammenlignDato(aDato, bDato);
+export function compareAktivitet(a: AlleAktiviteter, b: AlleAktiviteter, sortering?: SorteringState): number {
+    const felt = sortering?.felt ?? Sorteringsfelt.ENDRET_DATO;
+    let aDato: string | undefined;
+    let bDato: string | undefined;
+
+    if (felt === Sorteringsfelt.AKTIVITET_DATO) {
+        aDato = a.fraDato ?? a.tilDato;
+        bDato = b.fraDato ?? b.tilDato;
+    } else {
+        aDato = isArenaAktivitet(a) ? a.fraDato : a.endretDato;
+        bDato = isArenaAktivitet(b) ? b.fraDato : b.endretDato;
+    }
+
+    const result = sammenlignDato(aDato, bDato);
+    return sortering?.rekkefolge === Sorteringsrekkefolge.ASC ? -result : result;
 }
 
 export function delCvikkeSvartSkalVises(aktivitet: StillingFraNavAktivitet): boolean {
@@ -248,6 +260,7 @@ export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, a
 export function sorterAktiviteter(
     aktiviteter: (AlleAktiviteter & { nesteStatus?: string })[],
     status: AktivitetStatus,
+    sortering?: SorteringState,
 ): AlleAktiviteter[] {
     return aktiviteter
         .filter((a) => {
@@ -257,7 +270,7 @@ export function sorterAktiviteter(
             }
             return a.status === status;
         })
-        .sort(compareAktivitet);
+        .sort((a, b) => compareAktivitet(a, b, sortering));
 }
 
 export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
