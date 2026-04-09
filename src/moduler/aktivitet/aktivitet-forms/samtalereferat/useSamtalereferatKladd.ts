@@ -61,7 +61,6 @@ export const useSamtalereferatKladd = ({
 
     const lagreSamtalereferatKladd = useCallback(
         (samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {
-            if (!oppfolgingsperiodeId) return;
             clearTimeout(timeoutRef.current);
             timeoutRef.current = setTimeout(() => {
                 const kladdInnslag = { samtalereferat, tidspunkt: Date.now() };
@@ -73,7 +72,6 @@ export const useSamtalereferatKladd = ({
 
     const lagreSamtalereferatKladdLagretAktivitet = useCallback(
         (referatKladd: string) => {
-            if (!oppfolgingsperiodeId) return;
             clearTimeout(timeoutRef.current);
             timeoutRef.current = setTimeout(() => {
                 const kladdInnslag = { samtalereferat: referatKladd, tidspunkt: Date.now() };
