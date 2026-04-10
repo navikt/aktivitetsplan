@@ -73,6 +73,10 @@ const varighet = [
 
 export type MoteAktivitetFormValues = z.infer<ReturnType<typeof schema>>;
 
+export type MoteAktivitetSubmitValues = Omit<MoteAktivitetFormValues, 'klokkeslett' | 'dato'> & {
+    fraDato: Date;
+};
+
 interface Props {
     onSubmit: (
         data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean }

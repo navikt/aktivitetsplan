@@ -1,4 +1,4 @@
-import { AnalyticsEvent } from './analytics-taxonomy-events';
+import { AnalyticsEvent, FeltEndret } from './analytics-taxonomy-events';
 import { initAnalytics, queueOrTrackEvent } from './initAnalytics';
 import { TextCheckerResult } from '@navikt/dab-spraksjekk/dist/library';
 
@@ -43,6 +43,13 @@ export function logValgtFilter(filterValgt: string) {
         name: 'filtervalg',
         data: { filternavn: filterValgt },
     });
+}
+
+export function logEndringAvtaltMote(feltEndret: FeltEndret[]) {
+    return logAnalyticsEvent({
+        name: 'detaljer endret',
+        data: { feltEndret: feltEndret}
+    })
 }
 
 export function logToggleSpraksjekkToggle(enabled: boolean) {

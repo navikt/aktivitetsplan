@@ -1,5 +1,15 @@
 import { TextCheckerAnalyticsAnalysis } from './analytics';
 
+export enum FeltEndret {
+    TITTEL = 'tittel',
+    DATO = 'dato',
+    KLOKKESLETT = 'klokkeslett',
+    VARIGHET = 'varighet',
+    KANAL = 'kanal',
+    ADRESSE = 'adresse',
+    BESKRIVELSE = 'beskrivelse',
+    FORBEREDELSER = 'forberedelser',
+}
 export type AnalyticsEvent =
     | {
           name: 'referat lagret';
@@ -9,6 +19,7 @@ export type AnalyticsEvent =
               spraksjekkEnabled: boolean;
           };
       }
+      | { name: 'detaljer endret'; data: {feltEndret: FeltEndret[]}}
     | { name: 'toggle'; data: { text: string; enabled: boolean } }
     | { name: 'dyplenking'; data: { text: string } }
     | { name: 'knapp klikket'; data: { tekst: string } }
