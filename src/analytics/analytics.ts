@@ -48,7 +48,7 @@ export function logValgtFilter(filterValgt: string) {
 export function logEndringAvtaltMote(feltEndret: FeltEndret[]) {
     return logAnalyticsEvent({
         name: 'detaljer endret',
-        data: { feltEndret: feltEndret.join(',') }
+        data: { feltEndret: feltEndret}
     })
 }
 

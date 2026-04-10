@@ -19,7 +19,7 @@ export type AnalyticsEvent =
               spraksjekkEnabled: boolean;
           };
       }
-      | { name: 'detaljer endret'; data: { feltEndret: string } }
+      | { name: 'detaljer endret'; data: {feltEndret: FeltEndret[]}}
     | { name: 'toggle'; data: { text: string; enabled: boolean } }
     | { name: 'dyplenking'; data: { text: string } }
     | { name: 'knapp klikket'; data: { tekst: string } }
