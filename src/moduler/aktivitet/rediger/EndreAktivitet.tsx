@@ -41,7 +41,6 @@ import EgenAktivitetForm, { EgenAktivitetFormValues } from '../aktivitet-forms/e
 import IJobbAktivitetForm, { IJobbAktivitetFormValues } from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
 import MoteAktivitetForm, {
     MoteAktivitetFormValues,
-    MoteAktivitetSubmitValues
 } from '../aktivitet-forms/mote/MoteAktivitetForm';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/SamtalereferatForm';
 import SokeavtaleAktivitetForm, {
@@ -54,6 +53,7 @@ import {
     selecteEndreAktivitetFeilmeldinger,
 } from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
+import { beregnKlokkeslettVarighet } from '../aktivitet-util';
 import { logEndringAvtaltMote, logModalLukket } from '../../../analytics/analytics';
 import { FeltEndret } from '../../../analytics/analytics-taxonomy-events';
 
@@ -63,7 +63,6 @@ export type AktivitetFormValues =
     | SokeavtaleAktivitetFormValues
     | MedisinskBehandlingFormValues
     | MoteAktivitetFormValues
-    | MoteAktivitetSubmitValues
     | { status: string; avtalt: boolean }
     | IJobbAktivitetFormValues;
 
@@ -128,18 +127,10 @@ function EndreAktivitet() {
         if (!valgtAktivitet) return Promise.resolve();
         if (valgtAktivitet.type === MOTE_TYPE && valgtAktivitet.avtalt) {
             const moteAktivitet = valgtAktivitet as MoteAktivitet;
-            const moteForm = aktivitet as MoteAktivitetSubmitValues;
+            const moteForm = aktivitet as MoteAktivitetFormValues;
 
             const str = (val: unknown) => (val == null ? '' : String(val).trim());
-            const minsSinceFraDato = (tilDato: unknown, fraDato: unknown) => {
-                const til = typeof tilDato === 'string' ? Date.parse(tilDato) : NaN;
-                const fra = typeof fraDato === 'string' ? Date.parse(fraDato) : NaN;
-                return !isNaN(til) && !isNaN(fra) ? Math.round((til - fra) / 60000) : 0;
-            };
-            const toMin = (val: unknown) => {
-                const ms = val instanceof Date ? val.getTime() : typeof val === 'string' ? Date.parse(val) : NaN;
-                return isNaN(ms) ? NaN : Math.floor(ms / 60000);
-            };
+            const origMoteTid = beregnKlokkeslettVarighet(moteAktivitet);
 
             const felter: [FeltEndret, () => boolean][] = [
                 [FeltEndret.TITTEL, () => str(moteForm.tittel) !== str(moteAktivitet.tittel)],
@@ -147,8 +138,9 @@ function EndreAktivitet() {
                 [FeltEndret.BESKRIVELSE, () => str(moteForm.beskrivelse) !== str(moteAktivitet.beskrivelse)],
                 [FeltEndret.FORBEREDELSER, () => str(moteForm.forberedelser) !== str(moteAktivitet.forberedelser)],
                 [FeltEndret.KANAL, () => str(moteForm.kanal) !== str(moteAktivitet.kanal)],
-                [FeltEndret.VARIGHET, () => (Number(moteForm.varighet) || 0) !== minsSinceFraDato(moteAktivitet.tilDato, moteAktivitet.fraDato)],
-                [FeltEndret.DATO, () => { const f = toMin(moteForm.fraDato), o = toMin(moteAktivitet.fraDato); return isNaN(f) && isNaN(o) ? false : f !== o; }],
+                [FeltEndret.VARIGHET, () => (Number(moteForm.varighet) || 0) !== (origMoteTid?.varighet ?? 0)],
+                [FeltEndret.DATO, () => str(moteForm.dato) !== str(origMoteTid?.dato)],
+                [FeltEndret.KLOKKESLETT, () => str(moteForm.klokkeslett).replace('.', ':') !== str(origMoteTid?.klokkeslett).replace('.', ':')],
             ];
 
             const endredeFelter = felter.filter(([, erEndret]) => erEndret()).map(([felt]) => felt);

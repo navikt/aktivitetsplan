@@ -73,13 +73,9 @@ const varighet = [
 
 export type MoteAktivitetFormValues = z.infer<ReturnType<typeof schema>>;
 
-export type MoteAktivitetSubmitValues = Omit<MoteAktivitetFormValues, 'klokkeslett' | 'dato'> & {
-    fraDato: Date;
-};
-
 interface Props {
     onSubmit: (
-        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean }
+        data: MoteAktivitetFormValues & { status: string | undefined; avtalt: boolean }
     ) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MoteAktivitet;
@@ -128,10 +124,8 @@ const MoteAktivitetForm = (props: Props) => {
             autoComplete="off"
             noValidate
             onSubmit={handleSubmit((data) => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { klokkeslett, ...rest } = data;
                 return onSubmit({
-                    ...rest,
+                    ...data,
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt
