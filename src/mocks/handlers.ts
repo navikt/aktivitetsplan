@@ -195,7 +195,8 @@ export const handlers = [
     http.post('/tryggtekst/proxy/completion', sjekkTryggTekst),
 
     // Umami tracking
-    http.post('https://umami.nav.no/api/send', () => new HttpResponse()),
+    http.post('https://reops-event-proxy.nav.no/*', () => new HttpResponse()),
+    http.post('https://reops-event-proxy.ekstern.dev.nav.no/*', () => new HttpResponse()),
 
     // Skyra - noe dekorator tracking greier
     http.post('https://ingest.staging.skyra.no/response', () => new HttpResponse()),
