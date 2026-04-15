@@ -1,5 +1,5 @@
 import { isFulfilled } from '@reduxjs/toolkit';
-import { format, startOfDay } from 'date-fns';
+import { format } from 'date-fns';
 import React, { MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -128,11 +128,11 @@ function EndreAktivitet() {
         if (!valgtAktivitet) return Promise.resolve();
         if (valgtAktivitet.type === MOTE_TYPE && valgtAktivitet.avtalt) {
             const moteAktivitet = valgtAktivitet as MoteAktivitet;
-            const moteForm = aktivitet as Record<string, unknown>;
+            const moteForm = aktivitet as Omit<MoteAktivitetFormValues, 'klokkeslett'> & { fraDato?: string };
 
-            const str = (val: unknown) => (val == null ? '' : String(val).trim());
+            const str = (val: string | number | null | undefined) => (val == null ? '' : String(val).trim());
             const origMoteTid = beregnKlokkeslettVarighet(moteAktivitet);
-            const nyFraDato = moteForm.fraDato ? new Date(String(moteForm.fraDato)) : undefined;
+            const nyFraDato = typeof moteForm.fraDato === 'string' ? new Date(moteForm.fraDato) : undefined;
 
             const felter: [FeltEndret, () => boolean][] = [
                 [FeltEndret.TITTEL, () => str(moteForm.tittel) !== str(moteAktivitet.tittel)],
@@ -141,7 +141,7 @@ function EndreAktivitet() {
                 [FeltEndret.FORBEREDELSER, () => str(moteForm.forberedelser) !== str(moteAktivitet.forberedelser)],
                 [FeltEndret.KANAL, () => str(moteForm.kanal) !== str(moteAktivitet.kanal)],
                 [FeltEndret.VARIGHET, () => (Number(moteForm.varighet) || 0) !== (origMoteTid?.varighet ?? 0)],
-                [FeltEndret.DATO, () => str(nyFraDato && startOfDay(nyFraDato)) !== str(origMoteTid?.dato)],
+                [FeltEndret.DATO, () => nyFraDato?.toDateString() !== origMoteTid?.dato?.toDateString()],
                 [FeltEndret.KLOKKESLETT, () => (nyFraDato ? format(nyFraDato, 'HH:mm') : '') !== (origMoteTid?.klokkeslett?.replace('.', ':') ?? '')],
             ];
 
