@@ -75,7 +75,7 @@ export type MoteAktivitetFormValues = z.infer<ReturnType<typeof schema>>;
 
 interface Props {
     onSubmit: (
-        data: MoteAktivitetFormValues & { status: string | undefined; avtalt: boolean }
+        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean }
     ) => Promise<void>;
     dirtyRef: MutableRefObject<boolean>;
     aktivitet?: MoteAktivitet;
@@ -124,8 +124,10 @@ const MoteAktivitetForm = (props: Props) => {
             autoComplete="off"
             noValidate
             onSubmit={handleSubmit((data) => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { klokkeslett, ...rest } = data;
                 return onSubmit({
-                    ...data,
+                    ...rest,
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt
