@@ -1,4 +1,5 @@
 import { isFulfilled } from '@reduxjs/toolkit';
+import { format, startOfDay } from 'date-fns';
 import React, { MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -127,10 +128,11 @@ function EndreAktivitet() {
         if (!valgtAktivitet) return Promise.resolve();
         if (valgtAktivitet.type === MOTE_TYPE && valgtAktivitet.avtalt) {
             const moteAktivitet = valgtAktivitet as MoteAktivitet;
-            const moteForm = aktivitet as MoteAktivitetFormValues;
+            const moteForm = aktivitet as Record<string, unknown>;
 
             const str = (val: unknown) => (val == null ? '' : String(val).trim());
             const origMoteTid = beregnKlokkeslettVarighet(moteAktivitet);
+            const nyFraDato = moteForm.fraDato ? new Date(String(moteForm.fraDato)) : undefined;
 
             const felter: [FeltEndret, () => boolean][] = [
                 [FeltEndret.TITTEL, () => str(moteForm.tittel) !== str(moteAktivitet.tittel)],
@@ -139,8 +141,8 @@ function EndreAktivitet() {
                 [FeltEndret.FORBEREDELSER, () => str(moteForm.forberedelser) !== str(moteAktivitet.forberedelser)],
                 [FeltEndret.KANAL, () => str(moteForm.kanal) !== str(moteAktivitet.kanal)],
                 [FeltEndret.VARIGHET, () => (Number(moteForm.varighet) || 0) !== (origMoteTid?.varighet ?? 0)],
-                [FeltEndret.DATO, () => str(moteForm.dato) !== str(origMoteTid?.dato)],
-                [FeltEndret.KLOKKESLETT, () => str(moteForm.klokkeslett).replace('.', ':') !== str(origMoteTid?.klokkeslett).replace('.', ':')],
+                [FeltEndret.DATO, () => str(nyFraDato && startOfDay(nyFraDato)) !== str(origMoteTid?.dato)],
+                [FeltEndret.KLOKKESLETT, () => (nyFraDato ? format(nyFraDato, 'HH:mm') : '') !== (origMoteTid?.klokkeslett?.replace('.', ':') ?? '')],
             ];
 
             const endredeFelter = felter.filter(([, erEndret]) => erEndret()).map(([felt]) => felt);
