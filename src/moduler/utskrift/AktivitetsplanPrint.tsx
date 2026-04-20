@@ -42,6 +42,7 @@ import {
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
 import { filterErAktivt } from '../filtrering/filter/filter-utils';
+import { velgPeriode } from '../filtrering/filter/valgt-periode-slice';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_UTSKRIFT = 'UTSKRIFT';
@@ -90,10 +91,14 @@ const AktivitetsplanPrint = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        if (oppfolgingsperiodeId) {
+            dispatch(velgPeriode(oppfolgingsperiodeId));
+        }
         dispatch(hentMal());
         dispatch(hentMalListe());
         loggEvent(PRINT_MODAL_OPEN);
-    }, []);
+    }, [oppfolgingsperiodeId]);
+
 
     const [kvpUtvalgskriterie, setKvpUtvalgskriterie] = useState<KvpUtvalgskriterie>({
         alternativ: erVeileder
