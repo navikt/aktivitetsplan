@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 
 /// <reference types="vitest" />
 import react from '@vitejs/plugin-react-swc';
-import { visualizer } from 'rollup-plugin-visualizer';
+
 import { defineConfig, loadEnv, normalizePath } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
@@ -34,9 +34,6 @@ export default defineConfig(({ mode }) => {
             react(),
             svgr(),
             tailwindcss(),
-            visualizer({
-                filename: 'bundle-stats.html',
-            }),
             viteStaticCopy({
                 targets: [
                     { src: cMapsDir, dest: '' },
