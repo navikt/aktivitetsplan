@@ -60,6 +60,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     STUDIESPESIALISERING: 'Studiespesialisering',
     FAG_OG_YRKESOPPLAERING: 'Fag- og yrkesopplæring',
     HOYERE_YRKESFAGLIG_UTDANNING: 'Høyere yrkesfaglig utdanning',
+    TILPASSET_JOBBSTOTTE: 'Tilpasset jobbstøtte',
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
