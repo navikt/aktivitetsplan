@@ -1,26 +1,27 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { useErVeileder } from '../../../../Provider';
 import { selectPubliserReferatFeil } from '../../../feilmelding/feil-selector';
 import Feilmelding from '../../../feilmelding/Feilmelding';
+import { selectAktivitetStatus } from '../../aktivitet-selector';
+import { Status } from '../../../../createGenericSlice';
 
 interface Props {
     referat: string;
     erAktivAktivitet: boolean;
     dispatchPubliserReferat: () => void;
-    publiserer: boolean;
     erReferatPublisert: boolean;
     startOppdaterReferat: () => void;
 }
 
 const ReferatVisning = (props: Props) => {
+    const publiserer = useSelector(selectAktivitetStatus) === (Status.PENDING || Status.RELOADING);
     const erVeileder = useErVeileder();
-    const { erAktivAktivitet, referat, dispatchPubliserReferat, publiserer, erReferatPublisert, startOppdaterReferat } =
-        props;
+    const { erAktivAktivitet, referat, dispatchPubliserReferat, erReferatPublisert, startOppdaterReferat } = props;
 
     const feil = useSelector(selectPubliserReferatFeil);
 
