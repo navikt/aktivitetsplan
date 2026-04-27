@@ -1,4 +1,4 @@
-import { Alert, Button, Heading } from '@navikt/ds-react';
+import { Alert, Button, Heading, InfoCard } from '@navikt/ds-react';
 import React from 'react';
 
 import { Oppgave, OppgaveLenke } from '../../../../datatypes/eksternAktivitetTypes';
@@ -9,16 +9,20 @@ interface Props {
 }
 
 const customAlertStripe = (oppgave: Oppgave) => (
-    <Alert variant="info">
-        <Heading spacing size="small" level="3">
-            {oppgave.tekst}
-        </Heading>
+    <InfoCard data-color="info">
+        <InfoCard.Header>
+            <InfoCard.Title>
+                {oppgave.tekst}
+            </InfoCard.Title>
+        </InfoCard.Header>
+       <InfoCard.Content className="flex flex-col">
         {oppgave.subtekst}
 
         <Button variant={'primary'} as="a" href={oppgave.url} className="flex w-fit mt-4">
             {oppgave.knapptekst || 'Gå videre'}
         </Button>
-    </Alert>
+       </InfoCard.Content>
+    </InfoCard>
 );
 
 const OppgaveBoks = ({ oppgave }: Props) => {
