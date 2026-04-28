@@ -1,0 +1,106 @@
+{
+  "_Radio-BYmr-3F7.js": {
+    "file": "assets/Radio-BYmr-3F7.js",
+    "name": "Radio",
+    "imports": [
+      "_localStorage-aYIUPvoh.js",
+      "index.html"
+    ]
+  },
+  "_internAktivitetTypes-B32s79tt.js": {
+    "file": "assets/internAktivitetTypes-B32s79tt.js",
+    "name": "internAktivitetTypes"
+  },
+  "_localStorage-aYIUPvoh.js": {
+    "file": "assets/localStorage-aYIUPvoh.js",
+    "name": "localStorage"
+  },
+  "_routerConfig-C8pOHmS1.css": {
+    "file": "assets/routerConfig-C8pOHmS1.css",
+    "src": "_routerConfig-C8pOHmS1.css"
+  },
+  "_routerConfig-M1IL4TKY.js": {
+    "file": "assets/routerConfig-M1IL4TKY.js",
+    "name": "routerConfig",
+    "imports": [
+      "_localStorage-aYIUPvoh.js",
+      "index.html",
+      "_Radio-BYmr-3F7.js",
+      "_internAktivitetTypes-B32s79tt.js"
+    ],
+    "css": [
+      "assets/routerConfig-C8pOHmS1.css"
+    ]
+  },
+  "_src-DeuQw6af.css": {
+    "file": "assets/src-DeuQw6af.css",
+    "src": "_src-DeuQw6af.css"
+  },
+  "index.html": {
+    "file": "assets/index-Bjcd1zJa.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_localStorage-aYIUPvoh.js"
+    ],
+    "dynamicImports": [
+      "src/webcomponentWrapper.tsx",
+      "src/rootWrapper.tsx",
+      "src/mocks/index.ts",
+      "src/mocks/demo/DemoBanner.tsx"
+    ]
+  },
+  "src/mocks/demo/DemoBanner.tsx": {
+    "file": "assets/DemoBanner-CBI_2Vmo.js",
+    "name": "DemoBanner",
+    "src": "src/mocks/demo/DemoBanner.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_localStorage-aYIUPvoh.js",
+      "index.html",
+      "_Radio-BYmr-3F7.js"
+    ],
+    "css": [
+      "assets/DemoBanner-CXljoHyl.css",
+      "assets/src-DeuQw6af.css"
+    ]
+  },
+  "src/mocks/index.ts": {
+    "file": "assets/mocks-B7Pe9gD2.js",
+    "name": "mocks",
+    "src": "src/mocks/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_localStorage-aYIUPvoh.js",
+      "index.html",
+      "_internAktivitetTypes-B32s79tt.js"
+    ]
+  },
+  "src/rootWrapper.tsx": {
+    "file": "assets/rootWrapper-X8e1NvSx.js",
+    "name": "rootWrapper",
+    "src": "src/rootWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_localStorage-aYIUPvoh.js",
+      "index.html",
+      "_routerConfig-M1IL4TKY.js"
+    ],
+    "css": [
+      "assets/src-DeuQw6af.css"
+    ]
+  },
+  "src/webcomponentWrapper.tsx": {
+    "file": "assets/webcomponentWrapper-iSzOVaCg.js",
+    "name": "webcomponentWrapper",
+    "src": "src/webcomponentWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_localStorage-aYIUPvoh.js",
+      "index.html",
+      "_routerConfig-M1IL4TKY.js",
+      "_Radio-BYmr-3F7.js"
+    ]
+  }
+}
