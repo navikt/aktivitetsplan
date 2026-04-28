@@ -4,7 +4,7 @@ export const AKTIVITETSPLAN_ROOT_NODE_ID = 'aktivitetsplan-app';
 
 export const ARBEIDSRETTET_DIALOG_URL = import.meta.env.VITE_ARBEIDSRETTET_DIALOG_URL;
 export const STILLING_FRA_NAV_BASE_URL = import.meta.env.VITE_STILLING_FRA_NAV_BASE_URL;
-export const ARBEIDSSOKERREGISTRERING_URL = import.meta.env.VITE_ARBEIDSSOKERREGISTRERING_URL;
+export const REGISTRERINGSINFORMASJON_URL = import.meta.env.VITE_REGISTRERINGSINFORMASJON_URL;
 export const MINSIDE_URL = import.meta.env.VITE_MINSIDE_URL;
 
 export const USE_HASH_ROUTER = import.meta.env.VITE_USE_HASH_ROUTER === 'true';
