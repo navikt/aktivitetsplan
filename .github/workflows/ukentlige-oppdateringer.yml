@@ -1,0 +1,47 @@
+name: Ukentlige oppdateringer
+
+on:
+  schedule:
+    - cron: '0 7 * * 1' # Hver mandag kl. 07:00 UTC
+  workflow_dispatch:     # Kan også kjøres manuelt fra Actions-fanen
+
+# Hindrer parallelle kjøringer — unngår duplikat-issues
+concurrency:
+  group: ukentlige-oppdateringer
+  cancel-in-progress: false
+
+jobs:
+  opprett-issue:
+    name: Opprett oppdaterings-issue
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read  # Nødvendig for actions/checkout
+      issues: write   # Nødvendig for gh issue create
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Sørg for at 'dependencies'-label finnes
+        run: |
+          gh label create "dependencies" \
+            --color "0075ca" \
+            --description "Dependency updates" 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Opprett issue og tildel Copilot
+        run: |
+          WEEK=$(date +%V)
+          YEAR=$(date +%Y)
+
+          gh issue create \
+            --title "Ukentlige oppdateringer uke ${WEEK} (${YEAR})" \
+            --body-file .github/prompts/oppdateringer.prompt.md \
+            --assignee "@copilot" \
+            --label "dependencies"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
