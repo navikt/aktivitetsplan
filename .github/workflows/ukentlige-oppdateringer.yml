@@ -2,7 +2,7 @@ name: Ukentlige oppdateringer
 
 on:
   schedule:
-    - cron: '0 7 * * 1' # Hver mandag kl. 07:00 UTC
+    - cron: '0 10 * * 1' # Hver mandag kl. 10:00 UTC (etter at Dependabot har kjørt kl. 07:00)
   workflow_dispatch:     # Kan også kjøres manuelt fra Actions-fanen
 
 # Hindrer parallelle kjøringer — unngår duplikat-issues
