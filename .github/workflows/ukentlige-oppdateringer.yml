@@ -16,14 +16,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: read  # Nødvendig for actions/checkout
-      issues: write   # Nødvendig for gh issue create
+      contents: write        # Nødvendig for å slette gamle branches
+      issues: write          # Nødvendig for gh issue create
+      pull-requests: write   # Nødvendig for å lukke gamle PRer
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           persist-credentials: false
+
+      - name: Lukk gammel oppdaterings-PR om den finnes
+        run: |
+          OLD_PRS=$(gh pr list \
+            --state open \
+            --json number,title \
+            --jq '.[] | select(.title | test("Ukentlige oppdateringer uke")) | .number')
+
+          for PR_NUM in $OLD_PRS; do
+            echo "Lukker gammel PR #${PR_NUM}"
+            gh pr close "$PR_NUM" \
+              --comment "Lukkes automatisk — ny ukentlig oppdatering starter nå." \
+              --delete-branch || true
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Sørg for at 'dependencies'-label finnes
         run: |
