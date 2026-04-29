@@ -1,0 +1,64 @@
+name: Ukentlige oppdateringer
+
+on:
+  schedule:
+    - cron: '0 10 * * 1' # Hver mandag kl. 10:00 UTC (etter at Dependabot har kjørt kl. 07:00)
+  workflow_dispatch:     # Kan også kjøres manuelt fra Actions-fanen
+
+# Hindrer parallelle kjøringer — unngår duplikat-issues
+concurrency:
+  group: ukentlige-oppdateringer
+  cancel-in-progress: false
+
+jobs:
+  opprett-issue:
+    name: Opprett oppdaterings-issue
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write        # Nødvendig for å slette gamle branches
+      issues: write          # Nødvendig for gh issue create
+      pull-requests: write   # Nødvendig for å lukke gamle PRer
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Lukk gammel oppdaterings-PR om den finnes
+        run: |
+          OLD_PRS=$(gh pr list \
+            --state open \
+            --json number,title \
+            --jq '.[] | select(.title | test("Ukentlige oppdateringer uke")) | .number')
+
+          for PR_NUM in $OLD_PRS; do
+            echo "Lukker gammel PR #${PR_NUM}"
+            gh pr close "$PR_NUM" \
+              --comment "Lukkes automatisk — ny ukentlig oppdatering starter nå." \
+              --delete-branch || true
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sørg for at 'dependencies'-label finnes
+        run: |
+          gh label create "dependencies" \
+            --color "0075ca" \
+            --description "Dependency updates" 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Opprett issue og tildel Copilot
+        run: |
+          WEEK=$(date +%V)
+          YEAR=$(date +%Y)
+
+          gh issue create \
+            --title "Ukentlige oppdateringer uke ${WEEK} (${YEAR})" \
+            --body-file .github/prompts/oppdateringer.prompt.md \
+            --assignee "@copilot" \
+            --label "dependencies"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
