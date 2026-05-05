@@ -2,7 +2,7 @@ import { isFulfilled } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
 import React, { MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import {
     BEHANDLING_AKTIVITET_TYPE,
@@ -14,7 +14,7 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import { Status } from '../../../createGenericSlice';
-import { isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import {
     EgenAktivitet,
     IJobbAktivitet,
@@ -123,6 +123,14 @@ function EndreAktivitet() {
     const lagrer = useSelector((state: RootState) => selectAktivitetStatus(state)) !== Status.OK;
 
     const { aktivitetRoute, hovedsideRoute } = useRoutes();
+
+    const erAvsluttet =
+        valgtAktivitet?.status === AktivitetStatus.FULLFOERT ||
+        valgtAktivitet?.status === AktivitetStatus.AVBRUTT;
+
+    if (valgtAktivitet && erAvsluttet) {
+        return <Navigate to={aktivitetRoute(valgtAktivitet.id)} replace />;
+    }
 
     function oppdater(aktivitet: AktivitetFormValues): Promise<void> {
         if (!valgtAktivitet) return Promise.resolve();
