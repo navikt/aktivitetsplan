@@ -1,0 +1,40 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    team: dab
+  name: aktivitetsplan-alerts
+  namespace: dab
+spec:
+  groups:
+    - name: aktivitetsplan-alerts
+      rules:
+        - alert: HighErrorLogRate
+          expr: |
+            (
+              sum(loki:service:loglevel:count1m{service_name="aktivitetsplan", detected_level="error"})
+              /
+              sum(loki:service:loglevel:count1m{service_name="aktivitetsplan"})
+            ) > 0.05
+          for: 5m
+          annotations:
+            summary: "High log error rate detected"
+            consequence: "Users may be experiencing errors when using the application."
+            action: "Check logs for error messages and investigate affected services."
+            message: "Service {{ $labels.service_name }} has {{ $value | humanizePercentage }} error logs over the last 10 minutes."
+            runbook_url: "https://github.com/navikt/my-app-runbook/blob/main/HighErrorLogRate.md"
+          labels:
+            severity: warning
+            namespace: dab
+        - alert: app-down
+          expr: |
+            kube_deployment_status_replicas_available{deployment=~"aktivitetsplan", namespace="pto"} == 0
+          for: 2m
+          annotations:
+            summary: "Aktivitetsplan (frontend, ekstern) er nede 😱"
+            consequence: "Users cannot access the application."
+            action: "Check deployment status and pod logs in the pto namespace."
+            message: "Deployment {{ $labels.deployment }} has 0 available replicas for the last 2 minutes."
+          labels:
+            severity: critical
+            namespace: dab

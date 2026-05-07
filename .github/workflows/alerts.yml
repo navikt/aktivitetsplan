@@ -1,0 +1,42 @@
+name: Deploy alerts
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'alerts/alerts.yml'
+      - '.github/workflows/alerts.yml'
+
+concurrency:
+  group: deploy_alerts
+  cancel-in-progress: true
+
+jobs:
+  apply-alerts-dev:
+    name: Apply alerts til dev
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: deploy alerts to dev
+        uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: alerts/alerts.yml
+
+  apply-alerts-prod:
+    name: Apply alerts til prod
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: deploy alerts to prod
+        uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: alerts/alerts.yml
