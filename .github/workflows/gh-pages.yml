@@ -27,7 +27,7 @@ jobs:
               run: pnpm run build:gh-pages
             - name: Deploy
               if: success()
-              uses: crazy-max/ghaction-github-pages@v2
+              uses: crazy-max/ghaction-github-pages@v5
               with:
                   jekyll: false
                   build_dir: build
