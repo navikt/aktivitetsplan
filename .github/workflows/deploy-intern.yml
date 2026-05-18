@@ -23,7 +23,7 @@ jobs:
       id-token: 'write'
       packages: 'write'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Install pnpm - setup node - install deps
         uses: ./.github/actions/setup-pnpm
         with:
