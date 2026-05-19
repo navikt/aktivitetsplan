@@ -2,13 +2,14 @@ import { execSync } from 'child_process';
 import { createRequire } from 'node:module';
 
 /// <reference types="vitest" />
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 
 import { defineConfig, loadEnv, normalizePath } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 import * as path from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
+import tailwindShadowDOM from 'vite-plugin-tailwind-shadowdom';
 
 const require = createRequire(import.meta.url);
 const cMapsDir = normalizePath(path.join(path.dirname(require.resolve('pdfjs-dist/package.json')), 'cmaps'));
@@ -34,6 +35,7 @@ export default defineConfig(({ mode }) => {
             react(),
             svgr(),
             tailwindcss(),
+            tailwindShadowDOM(),
             viteStaticCopy({
                 targets: [
                     { src: cMapsDir, dest: '' },
