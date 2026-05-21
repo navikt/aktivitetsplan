@@ -1,20 +1,15 @@
-import { Heading, Modal } from '@navikt/ds-react';
+import { Heading, Modal, Provider as AkselProvider } from '@navikt/ds-react';
 import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
 
-// CSS is imported twice when in demo mode to support switching between web-components and normal render
-import '../../tailwind.css';
-import '@navikt/ds-css';
-import '../../index.less';
-// Importerer her for å unngå stygt error i konsollen,
-// Denne css-en er bare brukt i veielder-flaten og må importeres på en spesiell måte i web-components
-// som gjør at react-pdf ikke skjønner at det funker
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
+import baseCss from '../../base.css?inline';
+import lessCss from '../../index.less?inline';
+import demoIkonCss from './DemoIkon.less?inline';
 
 import DemoDashboard from './DemoDashboard';
 import DemoIkon from './DemoIkon';
 
-const DemoBanner = () => {
+const DemoBannerInner = () => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -38,5 +33,39 @@ const DemoBanner = () => {
         </div>
     );
 };
+
+const ELEMENT_TAG = 'demo-banner-wc';
+
+class DemoBannerElement extends HTMLElement {
+    connectedCallback() {
+        const appRoot = document.createElement('div');
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        shadowRoot.appendChild(appRoot);
+
+        const styleElem = document.createElement('style');
+        styleElem.innerHTML = baseCss + lessCss + demoIkonCss;
+        shadowRoot.appendChild(styleElem);
+
+        createRoot(appRoot).render(
+            <AkselProvider rootElement={appRoot}>
+                <DemoBannerInner />
+            </AkselProvider>,
+        );
+    }
+}
+
+if (!customElements.get(ELEMENT_TAG)) {
+    customElements.define(ELEMENT_TAG, DemoBannerElement);
+}
+
+declare module 'react' {
+    namespace JSX {
+        interface IntrinsicElements {
+            'demo-banner-wc': HTMLAttributes<HTMLElement>;
+        }
+    }
+}
+
+const DemoBanner = () => <demo-banner-wc />;
 
 export default DemoBanner;

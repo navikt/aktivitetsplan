@@ -1,0 +1,4 @@
+/* Avoid naming file index.css since index.less is compiled to index.css */
+@import 'tailwindcss';
+@import "@navikt/ds-css" layer(components);
+@config '../tailwind.config.cjs';
