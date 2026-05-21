@@ -1,6 +1,3 @@
-import './tailwind.css';
-import '@navikt/ds-css';
-
 import './index.less';
 
 import * as Sentry from '@sentry/react';
