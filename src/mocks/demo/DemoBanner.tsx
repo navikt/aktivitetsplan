@@ -5,8 +5,6 @@ import { createRoot } from 'react-dom/client';
 import baseCss from '../../base.css?inline';
 import lessCss from '../../index.less?inline';
 import demoIkonCss from './DemoIkon.less?inline';
-import pdfCssAnnotationCss from 'react-pdf/dist/Page/AnnotationLayer.css?inline';
-import pdfCssTextCss from 'react-pdf/dist/Page/TextLayer.css?inline';
 
 import DemoDashboard from './DemoDashboard';
 import DemoIkon from './DemoIkon';
@@ -45,7 +43,7 @@ class DemoBannerElement extends HTMLElement {
         shadowRoot.appendChild(appRoot);
 
         const styleElem = document.createElement('style');
-        styleElem.innerHTML = baseCss + lessCss + demoIkonCss + pdfCssAnnotationCss + pdfCssTextCss;
+        styleElem.innerHTML = baseCss + lessCss + demoIkonCss;
         shadowRoot.appendChild(styleElem);
 
         createRoot(appRoot).render(
