@@ -1,3 +1,4 @@
+import './base.css';
 import './index.less';
 
 import * as Sentry from '@sentry/react';

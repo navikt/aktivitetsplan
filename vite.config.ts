@@ -35,7 +35,7 @@ export default defineConfig(({ mode }) => {
             react(),
             svgr(),
             tailwindcss(),
-            // tailwindShadowDOM(),
+            tailwindShadowDOM(),
             viteStaticCopy({
                 targets: [
                     { src: cMapsDir, dest: '' },

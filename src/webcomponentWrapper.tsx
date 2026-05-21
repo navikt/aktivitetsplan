@@ -1,84 +1,81 @@
-import dsStyles from '@navikt/ds-css/dist/index.css?inline';
 import React from 'react';
 import { Provider as AkselProvider } from '@navikt/ds-react';
 
 import App from './app';
+import baseCss from './base.css?inline';
 import lessCss from './index.less?inline';
 import { LocalStorageElement, settSessionStorage } from './mocks/demo/localStorage';
 import modulesCss from './moduler/aktivitet/aktivitet-kort/Aktivitetskort.module.less?inline';
 import Provider from './Provider';
-import tailwindCss from './tailwind.css?inline';
 import pdfCssAnnotationCss from 'react-pdf/dist/Page/AnnotationLayer.css?inline';
 import pdfCssTextCss from 'react-pdf/dist/Page/TextLayer.css?inline';
 import { createRoot, Root } from 'react-dom/client';
 import {
-  clearReduxCache,
-  getPreloadedStateFromSessionStorage,
-  RootState,
-  saveReduxStateToSessionStorage,
+    clearReduxCache,
+    getPreloadedStateFromSessionStorage,
+    RootState,
+    saveReduxStateToSessionStorage,
 } from './store';
 import { createRouterWithWrapper } from './routing/routerConfig';
-import {
-    slettGamleSamtalereferatKladder
-} from './moduler/aktivitet/aktivitet-forms/samtalereferat/useSamtalereferatKladd';
+import { slettGamleSamtalereferatKladder } from './moduler/aktivitet/aktivitet-forms/samtalereferat/useSamtalereferatKladd';
 
 // Clear redux-cache from session storage on page load to make sure new data is fetched
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
 
 export class DabAktivitetsplan extends HTMLElement {
-  setFnr?: (fnr: string) => void;
-  root: Root | undefined;
+    setFnr?: (fnr: string) => void;
+    root: Root | undefined;
 
-  disconnectedCallback() {
-    saveReduxStateToSessionStorage();
-    this.root?.unmount();
-  }
-
-  connectedCallback() {
-    // This will be app entry point, need to be outside modal-mount node
-    const appRoot = document.createElement('div');
-    appRoot.id = 'aktivitetsplan-root';
-    const shadowRoot = this.attachShadow({ mode: 'closed' });
-    shadowRoot.appendChild(appRoot);
-
-    // Load styles under this shadowDom-node, not root element
-    const styleElem = document.createElement('style');
-    styleElem.innerHTML = tailwindCss + dsStyles + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
-    shadowRoot.appendChild(styleElem);
-
-    const fnr = this.getAttribute('data-fnr') ?? undefined;
-    const aktivEnhet = this.getAttribute('data-aktivEnhet') ?? undefined;
-    let preloadedState: RootState | undefined = undefined;
-    if (fnr) {
-      settSessionStorage(LocalStorageElement.FNR, fnr);
-      preloadedState = getPreloadedStateFromSessionStorage(fnr);
+    disconnectedCallback() {
+        saveReduxStateToSessionStorage();
+        this.root?.unmount();
     }
-    slettGamleSamtalereferatKladder();
-    this.root = createRoot(appRoot);
-    this.root.render(
-      <AkselProvider rootElement={appRoot}>
-        <Provider
-          preloadedState={preloadedState}
-          key={fnr}
-          fnr={fnr}
-          setFnrRef={(setFnr) => (this.setFnr = setFnr)}
-          aktivEnhet={aktivEnhet}
-        >
-          <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
-        </Provider>
-      </AkselProvider>,
-    );
-  }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'data-fnr' && this.setFnr) {
-      settSessionStorage(LocalStorageElement.FNR, newValue);
-      this.setFnr(newValue);
+    connectedCallback() {
+        // This will be app entry point, need to be outside modal-mount node
+        const appRoot = document.createElement('div');
+        appRoot.id = 'aktivitetsplan-root';
+        const shadowRoot = this.attachShadow({ mode: 'closed' });
+        shadowRoot.appendChild(appRoot);
+
+        // Load styles under this shadowDom-node, not root element
+        const styleElem = document.createElement('style');
+        styleElem.innerHTML = baseCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
+        shadowRoot.appendChild(styleElem);
+
+        const fnr = this.getAttribute('data-fnr') ?? undefined;
+        const aktivEnhet = this.getAttribute('data-aktivEnhet') ?? undefined;
+        let preloadedState: RootState | undefined = undefined;
+        if (fnr) {
+            settSessionStorage(LocalStorageElement.FNR, fnr);
+            preloadedState = getPreloadedStateFromSessionStorage(fnr);
+        }
+        slettGamleSamtalereferatKladder();
+        this.root = createRoot(appRoot);
+        this.root.render(
+            <AkselProvider rootElement={appRoot}>
+                <Provider
+                    preloadedState={preloadedState}
+                    key={fnr}
+                    fnr={fnr}
+                    setFnrRef={(setFnr) => (this.setFnr = setFnr)}
+                    aktivEnhet={aktivEnhet}
+                >
+                    <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
+                </Provider>
+            </AkselProvider>,
+        );
     }
-  }
 
-  static get observedAttributes() {
-    return ['data-fnr', 'data-aktivEnhet'];
-  }
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        if (name === 'data-fnr' && this.setFnr) {
+            settSessionStorage(LocalStorageElement.FNR, newValue);
+            this.setFnr(newValue);
+        }
+    }
+
+    static get observedAttributes() {
+        return ['data-fnr', 'data-aktivEnhet'];
+    }
 }
