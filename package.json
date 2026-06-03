@@ -47,7 +47,7 @@
     "react-modal": "^3.16.3",
     "react-pdf": "^10.3.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^6.30.3",
+    "react-router-dom": "^6.30.4",
     "rebound": "^0.1.0",
     "redux": "^5.0.1",
     "source-map-explorer": "^2.5.3",
