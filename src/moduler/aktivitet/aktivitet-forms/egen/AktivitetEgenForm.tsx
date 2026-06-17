@@ -11,7 +11,7 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
-import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
+import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
 
 const schema = z
     .object({
@@ -116,7 +116,6 @@ const EgenAktivitetForm = (props: Props) => {
     }
 
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
-    const fraDato = watch('fraDato');
 
     useEffect(() => {
         const newDefaultValues = getDefaultValues(aktivitet, template);
@@ -157,26 +156,10 @@ const EgenAktivitetForm = (props: Props) => {
                         {...register('tittel')}
                         error={errors.tittel && errors.tittel.message}
                     />
-                    <div className="flex flex-row gap-4">
-                        <ControlledDatePicker
-                            field={{
-                                label: 'Fra dato (obligatorisk)',
-                                name: 'fraDato',
-                                required: true,
-                                defaultValue: defaultValues?.fraDato,
-                            }}
-                        />
-                        <ControlledDatePicker
-                            field={{
-                                label: 'Til dato (obligatorisk)',
-                                name: 'tilDato',
-                                required: true,
-                                defaultValue: defaultValues?.tilDato,
-                            }}
-                            disabledDays={fraDato ? [{ before: fraDato }] : []}
-                        />
-                    </div>
-
+                    <DateRangePicker
+                        from={{ name: 'fraDato', required: true, defaultValue: defaultValues.fraDato }}
+                        to={{ name: 'tilDato', required: true, defaultValue: defaultValues.tilDato }}
+                    />
                     <TextField
                         disabled={avtalt}
                         label="Mål med aktiviteten (valgfri)"

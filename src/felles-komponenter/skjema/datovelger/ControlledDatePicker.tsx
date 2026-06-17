@@ -1,6 +1,6 @@
 import { DatePicker } from '@navikt/ds-react';
 import { format, isValid } from 'date-fns';
-import React, { ChangeEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { preventCloseOnInsideClick, useOutsideClick } from './common';
@@ -22,7 +22,7 @@ const ControlledDatePicker = ({
     const closePopover = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closePopover);
 
-    const { trigger: triggerFormValidation, control, setValue, clearErrors, watch, resetField } = useFormContext();
+    const { trigger: triggerFormValidation, control, setValue, clearErrors, watch } = useFormContext();
     const {
         field,
         fieldState: { error },
@@ -34,12 +34,6 @@ const ControlledDatePicker = ({
     const fieldValue = watch(name);
 
     const [displayValue, setDisplayValue] = useState<string>(defaultValue ? format(defaultValue, 'dd.M.y') : '');
-
-    useEffect(() => {
-        resetField(name);
-        setValue(name, defaultValue);
-        setDisplayValue(defaultValue ? format(defaultValue, 'dd.M.y') : '');
-    }, [defaultValue]);
 
     const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const day = parseDate(event.target.value, new Date(), 'date', true);
