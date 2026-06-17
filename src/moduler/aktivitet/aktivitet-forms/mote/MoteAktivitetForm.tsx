@@ -16,6 +16,7 @@ import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
 import { endOfDay, subDays } from 'date-fns';
 import { useHilsenVeilederTekst } from '../samtalereferat/useHilsenVeilederTekst';
+import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 
 const schema = (startTekst: string) =>
     z.object({
@@ -150,8 +151,7 @@ const MoteAktivitetForm = (props: Props) => {
                     <div className="flex sm:flex-row flex-col gap-4">
                         <ControlledDatePicker
                             disabledDays={[{ before: new Date() }]}
-                            field={{ name: 'dato', required: true, defaultValue: fraDato }}
-                        />
+                            field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}                        />
                         <TextField
                             label="Klokkeslett (obligatorisk)"
                             {...register('klokkeslett')}
