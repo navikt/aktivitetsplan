@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Select, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -11,7 +11,6 @@ import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelg
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
-import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
@@ -87,6 +86,8 @@ const MoteAktivitetForm = (props: Props) => {
 
     const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
+    const fraDato = useMemo(() => coerceToUndefined(aktivitet?.fraDato), [aktivitet?.fraDato]);
+
     const defaultValues: Partial<MoteAktivitetFormValues> = {
         tittel: aktivitet?.tittel,
         klokkeslett: moteTid?.klokkeslett?.replace('.', ':'),
@@ -96,7 +97,7 @@ const MoteAktivitetForm = (props: Props) => {
         adresse: aktivitet?.adresse,
         beskrivelse: aktivitet?.beskrivelse || startTekst,
         forberedelser: aktivitet?.forberedelser ?? undefined,
-        dato: coerceToUndefined(aktivitet?.fraDato)
+        dato: fraDato
     };
     const avtalt = aktivitet?.avtalt || false;
 
@@ -149,7 +150,7 @@ const MoteAktivitetForm = (props: Props) => {
                     <div className="flex sm:flex-row flex-col gap-4">
                         <ControlledDatePicker
                             disabledDays={[{ before: new Date() }]}
-                            field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                            field={{ name: 'dato', required: true, defaultValue: fraDato }}
                         />
                         <TextField
                             label="Klokkeslett (obligatorisk)"
