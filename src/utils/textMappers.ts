@@ -40,7 +40,8 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     FIREARIG_LONNSTILSKUDD: 'Fireårig lønnstilskudd for unge',
     SOMMERJOBB: 'Sommerjobb',
     ARBEIDSTRENING: 'Arbeidstrening',
-    VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: 'Varig tilrettelagt arbeid i ordinær virksomhet',
+    VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: 'Varig tilrettelagt arbeid i ordinær virksomhet', //"gammel versjon" fra team tiltak
+    VARIG_TILRETTELAGT_ARBEID_ORDINAER: 'Varig tilrettelagt arbeid i ordinær virksomhet(ny forskrift)', //Ny versjon fra komet av den over
     MENTOR: 'Mentor',
     INDOPPFAG: 'Oppfølging',
     ARBFORB: 'Arbeidsforberedende trening',
