@@ -20,7 +20,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: deploy alerts to dev
         uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1
         env:
@@ -34,7 +34,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: deploy alerts to prod
         uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1
         env:
