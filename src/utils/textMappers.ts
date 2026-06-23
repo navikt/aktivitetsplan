@@ -10,6 +10,7 @@ import {
 import { ArenaEtikett } from '../datatypes/arenaAktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 
+
 export const getAktivitetType = (aktivitet: AlleAktiviteter): string => {
     if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
         return aktivitetTypeMap[aktivitet.eksternAktivitet.type];
