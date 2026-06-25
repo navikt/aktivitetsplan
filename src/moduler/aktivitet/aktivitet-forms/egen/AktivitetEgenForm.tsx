@@ -11,7 +11,7 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
-import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
+import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 
 const schema = z
     .object({
@@ -115,6 +115,7 @@ const EgenAktivitetForm = (props: Props) => {
         dirtyRef.current = isDirty;
     }
 
+    const fraDato = watch('fraDato');
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
     useEffect(() => {
@@ -156,10 +157,25 @@ const EgenAktivitetForm = (props: Props) => {
                         {...register('tittel')}
                         error={errors.tittel && errors.tittel.message}
                     />
-                    <DateRangePicker
-                        from={{ name: 'fraDato', required: true, defaultValue: defaultValues.fraDato }}
-                        to={{ name: 'tilDato', required: true, defaultValue: defaultValues.tilDato }}
-                    />
+                    <div className="flex flex-row gap-4">
+                        <ControlledDatePicker
+                            field={{
+                                label: 'Fra dato (obligatorisk)',
+                                name: 'fraDato',
+                                required: true,
+                                defaultValue: defaultValues?.fraDato,
+                            }}
+                        />
+                        <ControlledDatePicker
+                            field={{
+                                label: 'Til dato (obligatorisk)',
+                                name: 'tilDato',
+                                required: true,
+                                defaultValue: defaultValues?.tilDato,
+                            }}
+                            disabledDays={fraDato ? [{ before: fraDato }] : []}
+                        />
+                    </div>
                     <TextField
                         disabled={avtalt}
                         label="Mål med aktiviteten (valgfri)"
