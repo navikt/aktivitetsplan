@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
-import React, { MutableRefObject } from 'react';
+import React, { RefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -51,7 +51,7 @@ export type MedisinskBehandlingFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: MedisinskBehandlingFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: MedisinskBehandlingAktivitet;
 }
 
@@ -60,16 +60,21 @@ const medisinskZodResolver = zodResolver(schema);
 const MedisinskBehandlingForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const defaultValues: Partial<MedisinskBehandlingFormValues> = {
-        tittel: aktivitet?.tittel || 'Medisinsk behandling',
-        behandlingType: aktivitet?.behandlingType || '',
-        behandlingSted: aktivitet?.behandlingSted || '',
-        fraDato: dateOrUndefined(aktivitet?.fraDato),
-        tilDato: dateOrUndefined(aktivitet?.tilDato),
-        effekt: aktivitet?.effekt || '',
-        beskrivelse: aktivitet?.beskrivelse || '',
-        behandlingOppfolging: aktivitet?.behandlingOppfolging || '',
-    };
+    /* Bruker useMemo fordi dateOrUndefined lager en ny verdi hver render så datepicker kan tro at defaultValue
+    endrer seg mellom renders selvom det er samme dato */
+    const defaultValues: Partial<MedisinskBehandlingFormValues> = useMemo(
+        () => ({
+            tittel: aktivitet?.tittel || 'Medisinsk behandling',
+            behandlingType: aktivitet?.behandlingType || '',
+            behandlingSted: aktivitet?.behandlingSted || '',
+            fraDato: dateOrUndefined(aktivitet?.fraDato),
+            tilDato: dateOrUndefined(aktivitet?.tilDato),
+            effekt: aktivitet?.effekt || '',
+            beskrivelse: aktivitet?.beskrivelse || '',
+            behandlingOppfolging: aktivitet?.behandlingOppfolging || '',
+        }),
+        [aktivitet],
+    );
     const avtalt = aktivitet?.avtalt || false;
 
     const formHandlers = useForm<MedisinskBehandlingFormValues>({

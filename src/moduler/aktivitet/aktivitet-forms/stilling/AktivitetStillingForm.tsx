@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea } from '@navikt/ds-react';
 import { startOfDay } from 'date-fns';
-import React, { MutableRefObject } from 'react';
+import React, { RefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -28,23 +28,26 @@ export type StillingAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: StillingAktivitetFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: StillingAktivitet;
 }
 
 const StillingAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
 
-    const defaultValues: StillingAktivitetFormValues = {
-        tittel: aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(aktivitet?.fraDato) ?? startOfDay(new Date()),
-        tilDato: dateOrUndefined(aktivitet?.tilDato),
-        beskrivelse: aktivitet?.beskrivelse || '',
-        arbeidssted: aktivitet?.arbeidssted || '',
-        arbeidsgiver: aktivitet?.arbeidsgiver || '',
-        kontaktperson: aktivitet?.kontaktperson || '',
-        lenke: aktivitet?.lenke || '',
-    };
+    const defaultValues: StillingAktivitetFormValues = useMemo(
+        () => ({
+            tittel: aktivitet?.tittel || '',
+            fraDato: dateOrUndefined(aktivitet?.fraDato) ?? startOfDay(new Date()),
+            tilDato: dateOrUndefined(aktivitet?.tilDato),
+            beskrivelse: aktivitet?.beskrivelse || '',
+            arbeidssted: aktivitet?.arbeidssted || '',
+            arbeidsgiver: aktivitet?.arbeidsgiver || '',
+            kontaktperson: aktivitet?.kontaktperson || '',
+            lenke: aktivitet?.lenke || '',
+        }),
+        [aktivitet],
+    );
     const avtalt = aktivitet?.avtalt || false;
 
     const formHandlers = useForm<StillingAktivitetFormValues>({
@@ -70,7 +73,7 @@ const StillingAktivitetForm = (props: Props) => {
             <FormProvider {...formHandlers}>
                 <div className="space-y-8">
                     <AktivitetFormHeader aktivitetstype={VeilarbAktivitetType.STILLING_AKTIVITET_TYPE} />
-                    <InnsynsrettInfo/>
+                    <InnsynsrettInfo />
                     <TextField
                         disabled={avtalt}
                         label="Stillingstittel (obligatorisk)"
