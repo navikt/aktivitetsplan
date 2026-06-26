@@ -1,11 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
-import React, { MutableRefObject, useEffect, useMemo, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { DateRange } from '../../../../felles-komponenter/skjema/datovelger/common';
 import MaybeAvtaltDateRangePicker from '../../../../felles-komponenter/skjema/datovelger/MaybeAvtaltDateRangePicker';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
@@ -54,7 +53,7 @@ export type SokeavtaleAktivitetFormValues = z.infer<typeof SokeAvtaleFormValues>
 
 interface Props {
     onSubmit: (values: SokeavtaleAktivitetFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: SokeavtaleAktivitet;
 }
 
@@ -116,7 +115,6 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         register,
         handleSubmit,
         watch,
-        setValue,
         reset,
         formState: { errors: formStateErrors, isDirty, isSubmitting },
     } = formHandlers;
