@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
 import { Button, Select, Switch, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useEffect, useMemo, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
@@ -43,7 +43,7 @@ interface Props {
             erReferatPublisert?: boolean;
         },
     ) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: SamtalereferatAktivitet;
 }
 
@@ -59,12 +59,16 @@ const InnerSamtalereferatForm = (props: Props) => {
     });
     const kladd = useMemo(() => hentSamtaleReferatKladd(), []);
 
-    const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
-        tittel: kladd?.tittel || aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(kladd?.fraDato) || dateOrUndefined(aktivitet?.fraDato),
-        kanal: kladd?.kanal || aktivitet?.kanal || Kanal.TELEFON,
-        referat: kladd?.referat || aktivitet?.referat || startTekst,
-    };
+    const defaultValues: Partial<SamtalereferatAktivitetFormValues> = useMemo(
+        () => ({
+            tittel: kladd?.tittel || aktivitet?.tittel || '',
+            fraDato: dateOrUndefined(kladd?.fraDato) || dateOrUndefined(aktivitet?.fraDato),
+            kanal: kladd?.kanal || aktivitet?.kanal || Kanal.TELEFON,
+            referat: kladd?.referat || aktivitet?.referat || startTekst,
+        }),
+        [kladd, aktivitet],
+    );
+
     const formHandlers = useForm<SamtalereferatAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
