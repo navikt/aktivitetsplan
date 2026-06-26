@@ -1,6 +1,6 @@
 import { DatePicker } from '@navikt/ds-react';
 import { format, isValid } from 'date-fns';
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { preventCloseOnInsideClick, useOutsideClick } from './common';
@@ -34,6 +34,12 @@ const ControlledDatePicker = ({
     const fieldValue = watch(name);
 
     const [displayValue, setDisplayValue] = useState<string>(defaultValue ? format(defaultValue, 'dd.M.y') : '');
+
+    /* Når man bytter mal i Egenaktivitet-skjemaet skal datoer fylles ut automatisk (defaultValue settes på nytt) */
+    useEffect(() => {
+        setValue(name, defaultValue);
+        setDisplayValue(defaultValue ? format(defaultValue, 'dd.M.y') : '');
+    }, [defaultValue]);
 
     const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const day = parseDate(event.target.value, new Date(), 'date', true);
