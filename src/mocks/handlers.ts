@@ -224,7 +224,7 @@ export const handlers = [
                         expire_at: addHours(new Date(), 1).toISOString(),
                         refreshed_at: new Date().toISOString(),
                         expire_in_seconds: 3597,
-                        next_auto_refresh_in_seconds: -1,
+                        next_auto_refresh_in_seconds: 10000,
                         refresh_cooldown: true,
                         refresh_cooldown_seconds: 57,
                     },
