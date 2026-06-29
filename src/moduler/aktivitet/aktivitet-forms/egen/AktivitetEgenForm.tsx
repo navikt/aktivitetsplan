@@ -160,6 +160,7 @@ const EgenAktivitetForm = (props: Props) => {
                     <div className="flex flex-row gap-4">
                         <ControlledDatePicker
                             field={{
+                                disabled: avtalt,
                                 label: 'Fra dato (obligatorisk)',
                                 name: 'fraDato',
                                 required: true,
