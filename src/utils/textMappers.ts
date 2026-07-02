@@ -10,6 +10,7 @@ import {
 import { ArenaEtikett } from '../datatypes/arenaAktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 
+
 export const getAktivitetType = (aktivitet: AlleAktiviteter): string => {
     if (aktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE) {
         return aktivitetTypeMap[aktivitet.eksternAktivitet.type];
@@ -41,7 +42,7 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     SOMMERJOBB: 'Sommerjobb',
     ARBEIDSTRENING: 'Arbeidstrening',
     VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET: 'Varig tilrettelagt arbeid i ordinær virksomhet', //"gammel versjon" fra team tiltak
-    VARIG_TILRETTELAGT_ARBEID_ORDINAER: 'Varig tilrettelagt arbeid i ordinær virksomhet(ny forskrift)', //Ny versjon fra komet av den over
+    TILRETTELAGT_ARBEID_ORDINAER: 'Tilrettelagt arbeid i ordinær virksomhet',
     MENTOR: 'Mentor',
     INDOPPFAG: 'Oppfølging',
     ARBFORB: 'Arbeidsforberedende trening',
@@ -61,7 +62,6 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     STUDIESPESIALISERING: 'Studiespesialisering',
     FAG_OG_YRKESOPPLAERING: 'Fag- og yrkesopplæring',
     HOYERE_YRKESFAGLIG_UTDANNING: 'Høyere yrkesfaglig utdanning',
-    TILPASSET_JOBBSTOTTE: 'Tilpasset jobbstøtte',
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {

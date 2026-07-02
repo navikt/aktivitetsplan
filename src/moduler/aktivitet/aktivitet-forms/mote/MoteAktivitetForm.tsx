@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 import { Select, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject } from 'react';
+import React, { RefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -11,7 +11,6 @@ import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelg
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../AktivitetFormHeader';
 import CustomErrorSummary from '../CustomErrorSummary';
-import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
@@ -24,7 +23,7 @@ const schema = (startTekst: string) =>
         dato: z
             .date({
                 required_error: 'Dato må fylles ut',
-                invalid_type_error: 'Ikke en gyldig dato'
+                invalid_type_error: 'Ikke en gyldig dato',
             })
             .min(endOfDay(subDays(new Date(), 1)), 'Dato kan ikke være tilbake i tid'),
         klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
@@ -37,7 +36,7 @@ const schema = (startTekst: string) =>
                     default:
                         return { message: 'Noe har gått galt' };
                 }
-            }
+            },
         }),
         adresse: z
             .string()
@@ -48,7 +47,7 @@ const schema = (startTekst: string) =>
             .min(1, 'Du må fylle ut hensikten med møtet')
             .max(5000, 'Du må korte ned teksten til 5000 tegn')
             .refine((val) => val.replace(startTekst, '').trim().length > 0, 'Du må fylle ut hensikten med møtet'),
-        forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional()
+        forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
     });
 
 const varighet = [
@@ -68,16 +67,16 @@ const varighet = [
     { minutter: 360, tekst: '6 timer' },
     { minutter: 390, tekst: '6 timer, 30 minutter' },
     { minutter: 420, tekst: '7 timer' },
-    { minutter: 450, tekst: '7 timer, 30 minutter' }
+    { minutter: 450, tekst: '7 timer, 30 minutter' },
 ];
 
 export type MoteAktivitetFormValues = z.infer<ReturnType<typeof schema>>;
 
 interface Props {
     onSubmit: (
-        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean }
+        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean },
     ) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: MoteAktivitet;
 }
 
@@ -87,29 +86,34 @@ const MoteAktivitetForm = (props: Props) => {
 
     const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
-    const defaultValues: Partial<MoteAktivitetFormValues> = {
-        tittel: aktivitet?.tittel,
-        klokkeslett: moteTid?.klokkeslett?.replace('.', ':'),
-        // Keep field as string since input natively returns string
-        varighet: moteTid?.varighet,
-        kanal: aktivitet?.kanal,
-        adresse: aktivitet?.adresse,
-        beskrivelse: aktivitet?.beskrivelse || startTekst,
-        forberedelser: aktivitet?.forberedelser ?? undefined,
-        dato: coerceToUndefined(aktivitet?.fraDato)
-    };
+    /* Bruker useMemo fordi dateOrUndefined lager en ny verdi hver render så datepicker kan tro at defaultValue
+    endrer seg mellom renders selvom det er samme dato */
+    const defaultValues: Partial<MoteAktivitetFormValues> = useMemo(
+        () => ({
+            tittel: aktivitet?.tittel,
+            klokkeslett: moteTid?.klokkeslett?.replace('.', ':'),
+            // Keep field as string since input natively returns string
+            varighet: moteTid?.varighet,
+            kanal: aktivitet?.kanal,
+            adresse: aktivitet?.adresse,
+            beskrivelse: aktivitet?.beskrivelse || startTekst,
+            forberedelser: aktivitet?.forberedelser ?? undefined,
+            dato: coerceToUndefined(aktivitet?.fraDato),
+        }),
+        [aktivitet],
+    );
     const avtalt = aktivitet?.avtalt || false;
 
     const formHandlers = useForm<MoteAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema(startTekst)),
-        shouldFocusError: false
+        shouldFocusError: false,
     });
     const {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isDirty, isSubmitting }
+        formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
 
     if (dirtyRef) {
@@ -130,7 +134,7 @@ const MoteAktivitetForm = (props: Props) => {
                     ...rest,
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
-                    avtalt
+                    avtalt,
                 });
             })}
         >
@@ -149,7 +153,7 @@ const MoteAktivitetForm = (props: Props) => {
                     <div className="flex sm:flex-row flex-col gap-4">
                         <ControlledDatePicker
                             disabledDays={[{ before: new Date() }]}
-                            field={{ name: 'dato', required: true, defaultValue: dateOrUndefined(aktivitet?.fraDato) }}
+                            field={{ name: 'dato', required: true, defaultValue: defaultValues?.dato }}
                         />
                         <TextField
                             label="Klokkeslett (obligatorisk)"
