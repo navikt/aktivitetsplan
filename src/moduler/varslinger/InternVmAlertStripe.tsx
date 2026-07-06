@@ -15,6 +15,18 @@ const saveDismissed = () => {
     window.localStorage.setItem(VM_ALERT_DISMISSED_KEY, 'true');
 };
 
+const NorwegianFlagIcon = () => {
+    return (
+        <svg aria-hidden viewBox="0 0 22 16" className="h-4 w-5 rounded-sm shrink-0">
+            <rect width="22" height="16" fill="#EF2B2D" />
+            <rect x="6" width="4" height="16" fill="#FFFFFF" />
+            <rect y="6" width="22" height="4" fill="#FFFFFF" />
+            <rect x="7" width="2" height="16" fill="#002868" />
+            <rect y="7" width="22" height="2" fill="#002868" />
+        </svg>
+    );
+};
+
 export const formatCountdown = (remainingMs: number): string => {
     const totalSeconds = Math.floor(remainingMs / 1000);
 
@@ -79,7 +91,10 @@ const InternVmAlertStripe = () => {
     return (
         <GlobalAlert status="announcement" centered={false}>
             <GlobalAlert.Header>
-                <GlobalAlert.Title>Norge er videre i VM! 🇳🇴</GlobalAlert.Title>
+                <GlobalAlert.Title className="flex items-center gap-2">
+                    Norge er videre i VM!
+                    <NorwegianFlagIcon />
+                </GlobalAlert.Title>
                 <GlobalAlert.CloseButton onClick={handleDismiss} />
             </GlobalAlert.Header>
             <GlobalAlert.Content>Kvartfinalen mot England starter om {countdownText}.</GlobalAlert.Content>
