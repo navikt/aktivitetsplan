@@ -39,7 +39,7 @@ jobs:
           destination: /${{ inputs.bucket }}/
           no_cache_paths: ${{ inputs.bucket }}/build/index.html
       - name: Create sentry release
-        uses: getsentry/action-release@v1
+        uses: getsentry/action-release@v3
         if: inputs.bucket == 'aktivitetsplan-prod'
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
