@@ -107,7 +107,7 @@
     "jsdom": "^28.1.0",
     "less": "^4.6.7",
     "lint-staged": "^15.5.2",
-    "msw": "^2.12.14",
+    "msw": "^2.15.0",
     "postcss": "8.5.14",
     "prettier": "^3.9.4",
     "prettier-plugin-import-sort": "0.0.7",
