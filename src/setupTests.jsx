@@ -32,13 +32,9 @@ const ensureMemoryStorage = (storageName) => {
 ensureMemoryStorage('localStorage');
 ensureMemoryStorage('sessionStorage');
 
-// Ensure localStorage is available globally for async operations (e.g., setTimeout callbacks)
-if (typeof global.localStorage === 'undefined') {
-    global.localStorage = window.localStorage;
-}
-if (typeof global.sessionStorage === 'undefined') {
-    global.sessionStorage = window.sessionStorage;
-}
+afterEach(() => {
+    vi.clearAllTimers();
+});
 
 import.meta.env.VITE_API_URL_BASE = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 
