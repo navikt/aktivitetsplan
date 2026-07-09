@@ -9,7 +9,7 @@ import reducer from '../../../reducer';
 import { aktivitetAdapter, oppfolgingsdperiodeAdapter } from '../aktivitet-slice';
 import { defaultAktivPeriode, emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { Status } from '../../../createGenericSlice';
-import { mockOppfolging } from '../../../mocks/data/oppfolging';
+import { oppfolgingGraphql } from '../../../mocks/data/oppfolging';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../../mocks/handlers';
 import { lagNyAktivitet } from '../aktivitet-actions';
@@ -33,7 +33,7 @@ const initialStore = {
         },
         oppfolging: {
             status: Status.OK,
-            data: mockOppfolging,
+            data: oppfolgingGraphql,
         },
     },
 } as unknown as RootState;

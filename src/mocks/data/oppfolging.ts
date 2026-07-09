@@ -50,7 +50,7 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
     },
 ];
 
-const oppfolgingGraphql: OppfolgingStatusResponse = {
+export const oppfolgingGraphql: OppfolgingStatusResponse = {
     brukerStatus: {
         arena: {
             inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',

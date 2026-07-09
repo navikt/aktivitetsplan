@@ -14,10 +14,6 @@ export function selectErBruker(state: RootState) {
     return selectIdentitetData(state).erBruker;
 }
 
-export function selectIdentitetId(state: RootState) {
-    return selectIdentitetData(state).id;
-}
-
 export function selectIdentitetStatus(state: RootState) {
     return selectIdentitetSlice(state).status;
 }

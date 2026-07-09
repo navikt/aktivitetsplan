@@ -7,7 +7,7 @@ export const fetchIdentitet = (): Promise<Me> =>
     fetchToJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/me`, {}, 'fetchIdentitet');
 
 // Ikke synlid for veileder
-export const settDigital = (fnr: string | undefined): Promise<OppfolgingStatus> =>
+export const settDigital = (fnr: string | undefined): Promise<void> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/settDigital`, fnr ? { fnr } : undefined, 'settDigital');
 
 export const fetchMal = (fnr: string | undefined): Promise<Mal> =>

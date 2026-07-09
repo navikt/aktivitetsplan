@@ -227,7 +227,6 @@ describe('PeriodeFilter.tsx', () => {
             await waitFor(() => getByText(veilarbAktivitet.tittel));
         });
         it('hvis bare lukkede perioder skal aktiviteter i nyeste periode vises', async () => {
-            console.log(endaGamlerePeriode);
             const store = gitt.aktiviteterIBareLukkedePerioder();
             const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText(gammelVeilarbAktivitet.tittel));

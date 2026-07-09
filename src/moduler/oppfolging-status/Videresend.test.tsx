@@ -7,16 +7,16 @@ import { mockfnr } from '../../mocks/utils';
 import React from 'react';
 import { afterAll, beforeAll, describe, expect } from 'vitest';
 import { Status } from '../../createGenericSlice';
-import { mockOppfolging } from '../../mocks/data/oppfolging';
-import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
+import { oppfolgingGraphql } from '../../mocks/data/oppfolging';
 import { RootState } from '../../store';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../mocks/handlers';
 import { mockTestAktiviteter } from '../../mocks/aktivitet';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { MinimalPeriode } from './oppfolging-selector';
+import { OppfolgingStatusResponse } from '../../api/veilarboppfolging';
 
-const defaultOppfolging = mockOppfolging;
+const defaultOppfolging = oppfolgingGraphql;
 const aktivitetTittel = 'Videresend aktivitet';
 const periode: MinimalPeriode = {
     id: 1,
@@ -30,7 +30,7 @@ const aktivitet: VeilarbAktivitet = {
 };
 const stateMedAktiviteter = aktiviteterState({ aktiviteter: [aktivitet], oppfolgingsPerioder: [periode] });
 
-const storeMedOppfolging = (oppfolging: OppfolgingStatus = defaultOppfolging): RootState => {
+const storeMedOppfolging = (oppfolging: OppfolgingStatusResponse = defaultOppfolging): RootState => {
     return {
         ...initialLoadedEmptyState,
         data: {
@@ -56,10 +56,17 @@ const gitt = {
             return lagStore(
                 storeMedOppfolging({
                     ...defaultOppfolging,
-                    kanVarsles: false,
-                    registrertKRR: true,
-                    reservasjonKRR: false,
-                    manuell: false,
+                    brukerStatus: {
+                        ...defaultOppfolging.brukerStatus,
+                        manuell: {
+                            erManuell: false,
+                        },
+                        krr: {
+                            registrertIKrr: true,
+                            reservertIKrr: false,
+                            kanVarsles: false,
+                        },
+                    },
                 }),
             );
         },
@@ -67,10 +74,17 @@ const gitt = {
             return lagStore(
                 storeMedOppfolging({
                     ...defaultOppfolging,
-                    kanVarsles: true,
-                    registrertKRR: false,
-                    reservasjonKRR: false,
-                    manuell: false,
+                    brukerStatus: {
+                        ...defaultOppfolging.brukerStatus,
+                        manuell: {
+                            erManuell: false,
+                        },
+                        krr: {
+                            registrertIKrr: false,
+                            reservertIKrr: false,
+                            kanVarsles: true,
+                        },
+                    },
                 }),
             );
         },
@@ -78,10 +92,17 @@ const gitt = {
             return lagStore(
                 storeMedOppfolging({
                     ...defaultOppfolging,
-                    kanVarsles: true,
-                    registrertKRR: true,
-                    reservasjonKRR: true,
-                    manuell: false,
+                    brukerStatus: {
+                        ...defaultOppfolging.brukerStatus,
+                        manuell: {
+                            erManuell: false,
+                        },
+                        krr: {
+                            registrertIKrr: true,
+                            reservertIKrr: true,
+                            kanVarsles: true,
+                        },
+                    },
                 }),
             );
         },
@@ -89,10 +110,17 @@ const gitt = {
             return lagStore(
                 storeMedOppfolging({
                     ...defaultOppfolging,
-                    kanVarsles: true,
-                    registrertKRR: true,
-                    reservasjonKRR: false,
-                    manuell: true,
+                    brukerStatus: {
+                        ...defaultOppfolging.brukerStatus,
+                        manuell: {
+                            erManuell: true,
+                        },
+                        krr: {
+                            registrertIKrr: true,
+                            reservertIKrr: false,
+                            kanVarsles: true,
+                        },
+                    },
                 }),
             );
         },

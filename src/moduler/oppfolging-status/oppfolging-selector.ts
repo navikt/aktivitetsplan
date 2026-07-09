@@ -23,7 +23,7 @@ export const selectReservasjonKRR = (state: RootState) =>
 export const selectKanVarsles = (state: RootState) =>
     selectOppfolgingData(state)?.brukerStatus?.krr?.kanVarsles || false;
 export const selectErRegisrertIKRR = (state: RootState) =>
-    selectOppfolgingData(state)?.brukerStatus?.krr?.registrertIKrr || true;
+    selectOppfolgingData(state)?.brukerStatus?.krr?.registrertIKrr;
 
 export const selectOppfolgingsPerioderMedKvpPerioder = createSelector(selectOppfolgingData, (oppfolgingsStatus) => {
     return oppfolgingsStatus?.oppfolgingsperioder || [];
