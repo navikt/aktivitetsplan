@@ -10,7 +10,6 @@ interface KvpPeriode {
 
 interface OppfolgingsPeriode {
     id: OppfolgingsPeriodeId;
-    startTidspunkt: string;
     sluttTidspunkt: string | undefined | null;
     kvpPerioder: KvpPeriode[];
 }
@@ -54,6 +53,14 @@ const oppfolgingStatusQuery = `
         },
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
+        }
+        oppfolgingsPerioder {
+            id
+            sluttTidspunkt
+            kvpPerioder {
+                startTidspunkt
+                sluttTidspunkt
+            }
         }
     }
 `;
