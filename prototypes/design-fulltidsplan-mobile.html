@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aktivitetsplan - Fulltidsplan (Mobil)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .touch-target { min-height: 44px; min-width: 44px; }
+        .card-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .activity-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+        .activity-card.work::before { background-color: #f97316; }
+        .activity-card.education::before { background-color: #22c55e; }
+        .activity-card.meeting::before { background-color: #3b82f6; }
+        .activity-card.personal::before { background-color: #a855f7; }
+        .activity-card.support::before { background-color: #eab308; }
+        .activity-card.group::before { background-color: #ec4899; }
+
+        .day-tab {
+            transition: all 0.2s;
+            scroll-snap-align: start;
+        }
+        .day-tab.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .day-scroll {
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .timeline-now {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .program-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .swipe-indicator {
+            animation: swipe 2s ease-in-out infinite;
+        }
+        @keyframes swipe {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-8px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-20">
+
+    <!-- Header -->
+    <header class="bg-[#262626] text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="flex items-center justify-between mb-2">
+            <button class="p-2 -ml-2 touch-target" onclick="history.back()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <h1 class="text-lg font-semibold">Fulltidsplan</h1>
+            <button class="p-2 -mr-2 touch-target">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="px-2 py-1 bg-purple-600 text-xs rounded-full program-pulse">
+                👥 Ungdomsprogrammet
+            </span>
+            <span class="text-xs text-gray-300">• Uke 7, 2026</span>
+        </div>
+    </header>
+
+    <!-- Program info -->
+    <div class="bg-purple-50 border-b border-purple-200 p-3">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center text-white flex-shrink-0">
+                👥
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="font-semibold text-sm text-purple-900">Ungdomsprogrammet</div>
+                <div class="text-xs text-purple-700">37,5 timer/uke forventet</div>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg p-2 flex items-center justify-between">
+            <div class="text-xs">
+                <span class="text-gray-500">Denne uke:</span>
+                <span class="font-semibold text-gray-900 ml-1">32,5 / 37,5 timer</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="w-16 bg-gray-200 rounded-full h-1.5">
+                    <div class="bg-orange-500 h-1.5 rounded-full" style="width: 87%"></div>
+                </div>
+                <span class="text-xs text-orange-600 font-medium">87%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pågående tiltak banner -->
+    <div class="bg-orange-50 border-b border-orange-200 p-3">
+        <div class="flex items-center gap-2">
+            <span class="text-orange-600">💼</span>
+            <div class="flex-1 min-w-0">
+                <div class="font-medium text-sm text-orange-900">Lønnstilskudd - Bakeri AS</div>
+                <div class="text-xs text-orange-700">20 timer/uke planlagt</div>
+            </div>
+            <button class="px-2 py-1 text-xs bg-white border border-orange-300 rounded touch-target">
+                Se
+            </button>
+        </div>
+    </div>
+
+    <!-- Uke-navigasjon -->
+    <div class="bg-white border-b p-3 sticky top-[104px] z-40">
+        <div class="flex items-center justify-between mb-2">
+            <button class="p-1 rounded touch-target">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <span class="text-sm font-medium">10. feb - 16. feb 2026</span>
+            <button class="p-1 rounded touch-target">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Dag-tabs (scrollbar) -->
+        <div class="flex gap-1 overflow-x-auto day-scroll pb-1 -mx-3 px-3">
+            <button onclick="showDay('mon')" class="day-tab flex-shrink-0 px-4 py-2 rounded-lg bg-gray-100 text-sm" data-day="mon">
+                <div class="text-xs text-gray-500">Man</div>
+                <div class="font-semibold">10</div>
+                <div class="text-xs text-gray-500">0t</div>
+            </button>
+            <button onclick="showDay('tue')" class="day-tab active flex-shrink-0 px-4 py-2 rounded-lg text-sm" data-day="tue">
+                <div class="text-xs">Tir</div>
+                <div class="font-semibold">11</div>
+                <div class="text-xs">6,5t</div>
+            </button>
+            <button onclick="showDay('wed')" class="day-tab flex-shrink-0 px-4 py-2 rounded-lg bg-gray-100 text-sm" data-day="wed">
+                <div class="text-xs text-gray-500">Ons</div>
+                <div class="font-semibold">12</div>
+                <div class="text-xs text-green-600">8t</div>
+            </button>
+            <button onclick="showDay('thu')" class="day-tab flex-shrink-0 px-4 py-2 rounded-lg bg-gray-100 text-sm" data-day="thu">
+                <div class="text-xs text-gray-500">Tor</div>
+                <div class="font-semibold">13</div>
+                <div class="text-xs text-gray-500">7,5t</div>
+            </button>
+            <button onclick="showDay('fri')" class="day-tab flex-shrink-0 px-4 py-2 rounded-lg bg-gray-100 text-sm" data-day="fri">
+                <div class="text-xs text-gray-500">Fre</div>
+                <div class="font-semibold">14</div>
+                <div class="text-xs text-orange-600">3t</div>
+            </button>
+            <button onclick="showDay('sat')" class="day-tab flex-shrink-0 px-4 py-2 rounded-lg bg-gray-50 text-sm opacity-50" data-day="sat">
+                <div class="text-xs text-gray-400">Lør</div>
+                <div class="font-semibold text-gray-400">15</div>
+                <div class="text-xs text-gray-400">-</div>
+            </button>
+            <button onclick="showDay('sun')" class="day-tab flex-shrink-0 px-4 py-2 rounded-lg bg-gray-50 text-sm opacity-50" data-day="sun">
+                <div class="text-xs text-gray-400">Søn</div>
+                <div class="font-semibold text-gray-400">16</div>
+                <div class="text-xs text-gray-400">-</div>
+            </button>
+        </div>
+
+        <!-- Swipe hint -->
+        <div class="flex items-center justify-center gap-1 mt-2 text-xs text-gray-400">
+            <svg class="w-4 h-4 swipe-indicator" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+            </svg>
+            <span>Sveip for å se andre dager</span>
+        </div>
+    </div>
+
+    <!-- Dag-visning: Tirsdag (i dag) -->
+    <div id="day-tue" class="day-content">
+        <!-- Tidmarkør "nå" -->
+        <div class="timeline-now bg-red-50 border-y border-red-200 px-4 py-2 flex items-center gap-2">
+            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+            <span class="text-sm font-medium text-red-700">Klokken er nå 10:30</span>
+        </div>
+
+        <!-- Aktiviteter kronologisk -->
+        <div class="p-4 space-y-3">
+            <!-- 08:00 - Oppstartmøte -->
+            <div class="activity-card meeting bg-white rounded-lg card-shadow p-3 pl-5">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-sm text-gray-900">Oppstartmøte NAV</div>
+                        <div class="text-xs text-gray-500 mt-1">⏰ 08:00 - 09:00 • 1 time</div>
+                    </div>
+                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full flex-shrink-0">
+                        ✓ Fullført
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-gray-500">
+                    <span>📍 NAV Kontor</span>
+                    <span>•</span>
+                    <span>👤 Ola Hansen</span>
+                </div>
+                <button class="mt-2 text-xs text-blue-600 font-medium">Se detaljer →</button>
+            </div>
+
+            <!-- 10:00 - CV-kurs (pågår) -->
+            <div class="activity-card education bg-white rounded-lg card-shadow p-3 pl-5 border-2 border-green-300">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-sm text-gray-900">CV-kurs (online)</div>
+                        <div class="text-xs text-gray-500 mt-1">⏰ 10:00 - 12:00 • 2 timer</div>
+                    </div>
+                    <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full flex-shrink-0 animate-pulse">
+                        ▶ Pågår
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-gray-500">
+                    <span>🌐 Online via Zoom</span>
+                </div>
+                <div class="mt-2 flex gap-2">
+                    <button class="flex-1 py-2 bg-green-500 text-white text-xs rounded-lg font-medium touch-target">
+                        Åpne lenke
+                    </button>
+                    <button class="px-3 py-2 bg-gray-100 text-gray-700 text-xs rounded-lg touch-target">
+                        Detaljer
+                    </button>
+                </div>
+            </div>
+
+            <!-- 13:00 - Jobbsøking -->
+            <div class="activity-card personal bg-white rounded-lg card-shadow p-3 pl-5">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-sm text-gray-900">Jobbsøking (egen tid)</div>
+                        <div class="text-xs text-gray-500 mt-1">⏰ 13:00 - 15:00 • 2 timer</div>
+                    </div>
+                    <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
+                        Planlagt
+                    </span>
+                </div>
+                <div class="text-xs text-gray-600 mt-2">
+                    <strong>Mål:</strong> Søke på minst 3 stillinger
+                </div>
+                <button class="mt-2 w-full py-2 bg-purple-50 border border-purple-200 text-purple-700 text-xs rounded-lg font-medium touch-target">
+                    Start aktivitet
+                </button>
+            </div>
+
+            <!-- 15:00 - Leksehjelp -->
+            <div class="activity-card support bg-white rounded-lg card-shadow p-3 pl-5">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-sm text-gray-900">Leksehjelp</div>
+                        <div class="text-xs text-gray-500 mt-1">⏰ 15:00 - 17:00 • 2 timer</div>
+                    </div>
+                    <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full flex-shrink-0">
+                        Planlagt
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-gray-500">
+                    <span>📍 Biblioteket</span>
+                </div>
+            </div>
+
+            <!-- Tom tid-blokk -->
+            <button onclick="openAddActivity('17:00')" class="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-400 hover:border-blue-400 hover:text-blue-600 touch-target">
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    <span class="text-sm">Legg til aktivitet</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- Dagoppsummering -->
+        <div class="mx-4 mb-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="font-semibold text-sm text-blue-900">Oppsummering tirsdag</h3>
+                <span class="text-2xl">📊</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                    <div class="text-xs text-blue-700">Totalt</div>
+                    <div class="font-semibold text-blue-900">6,5 / 7,5 timer</div>
+                </div>
+                <div>
+                    <div class="text-xs text-blue-700">Fullført</div>
+                    <div class="font-semibold text-blue-900">1 av 4 aktiviteter</div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="w-full bg-blue-200 rounded-full h-1.5">
+                    <div class="bg-blue-500 h-1.5 rounded-full" style="width: 87%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Andre dager (skjult) -->
+    <div id="day-mon" class="day-content hidden">
+        <div class="p-4">
+            <div class="bg-gray-100 rounded-lg p-8 text-center">
+                <span class="text-4xl mb-2 block">📅</span>
+                <p class="text-gray-600">Ingen aktiviteter planlagt for mandag</p>
+                <button class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium touch-target">
+                    + Legg til aktivitet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="day-wed" class="day-content hidden">
+        <div class="p-4 space-y-3">
+            <div class="activity-card work bg-white rounded-lg card-shadow p-3 pl-5">
+                <div class="font-semibold text-sm">Arbeid - Bakeri AS</div>
+                <div class="text-xs text-gray-500 mt-1">⏰ 09:00 - 13:00 • 4 timer</div>
+            </div>
+            <div class="activity-card education bg-white rounded-lg card-shadow p-3 pl-5">
+                <div class="font-semibold text-sm">Videregående skole</div>
+                <div class="text-xs text-gray-500 mt-1">⏰ 14:00 - 16:00 • 2 timer</div>
+            </div>
+            <div class="activity-card group bg-white rounded-lg card-shadow p-3 pl-5">
+                <div class="font-semibold text-sm">Gruppemøte ungdom</div>
+                <div class="text-xs text-gray-500 mt-1">⏰ 16:00 - 17:30 • 1,5 timer</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ukeoppsummering (sticky bottom før nav) -->
+    <div class="fixed bottom-16 left-0 right-0 bg-white border-t shadow-lg z-30">
+        <button onclick="toggleWeekSummary()" class="w-full p-3 flex items-center justify-between touch-target">
+            <div class="flex items-center gap-2">
+                <span class="text-lg">📊</span>
+                <span class="font-semibold text-sm">Ukeoppsummering</span>
+            </div>
+            <svg id="summary-chevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+        </button>
+
+        <div id="week-summary" class="hidden border-t p-4 space-y-3 max-h-64 overflow-y-auto">
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600">Timer denne uke</span>
+                <span class="font-semibold">32,5 / 37,5</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-orange-500 h-2 rounded-full" style="width: 87%"></div>
+            </div>
+
+            <div class="pt-2 border-t">
+                <div class="text-xs font-semibold text-gray-700 mb-2">Aktivitetstyper</div>
+                <div class="space-y-2 text-sm">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-orange-500 rounded"></div>
+                            <span class="text-gray-700">Arbeid</span>
+                        </div>
+                        <span class="font-medium">20t</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-green-500 rounded"></div>
+                            <span class="text-gray-700">Utdanning</span>
+                        </div>
+                        <span class="font-medium">8t</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-purple-500 rounded"></div>
+                            <span class="text-gray-700">Jobbsøking</span>
+                        </div>
+                        <span class="font-medium">4,5t</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t z-40">
+        <div class="flex justify-around py-2">
+            <button class="flex flex-col items-center p-2 text-gray-500 touch-target">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="text-xs mt-1">Oversikt</span>
+            </button>
+            <button class="flex flex-col items-center p-2 text-blue-600 touch-target">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-xs mt-1 font-medium">Fulltidsplan</span>
+            </button>
+            <button class="flex flex-col items-center p-2 text-gray-500 touch-target relative">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+                <span class="absolute top-1 right-4 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span class="text-xs mt-1">Dialog</span>
+            </button>
+            <button class="flex flex-col items-center p-2 text-gray-500 touch-target">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="text-xs mt-1">Profil</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Design-notater modal -->
+    <div class="fixed bottom-20 right-4 z-40">
+        <button onclick="toggleNotes()" class="w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center touch-target">
+            ?
+        </button>
+    </div>
+
+    <div id="notes-modal" class="fixed inset-0 bg-black/50 z-50 hidden" onclick="toggleNotes()">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4"></div>
+            <h2 class="font-bold text-lg mb-3">📱 Mobil Fulltidsplan</h2>
+
+            <div class="space-y-3 text-sm">
+                <div class="p-3 bg-purple-50 rounded-lg">
+                    <h3 class="font-semibold text-purple-900">For hvem</h3>
+                    <p class="text-purple-700 mt-1">Brukere på ungdomsprogram, KVP, eller andre fulltidsprogrammer som krever daglig planlegging.</p>
+                </div>
+
+                <div class="p-3 bg-blue-50 rounded-lg">
+                    <h3 class="font-semibold text-blue-900">Mobiloptimalisering</h3>
+                    <ul class="text-blue-700 mt-1 list-disc list-inside space-y-1">
+                        <li>Én dag av gangen (swipe mellom dager)</li>
+                        <li>Kronologisk visning av aktiviteter</li>
+                        <li>Tydelig "nå"-markør</li>
+                        <li>Touch-vennlige kort (44px+)</li>
+                        <li>Quick actions direkte på kort</li>
+                    </ul>
+                </div>
+
+                <div class="p-3 bg-green-50 rounded-lg">
+                    <h3 class="font-semibold text-green-900">Hovedfunksjoner</h3>
+                    <ul class="text-green-700 mt-1 list-disc list-inside space-y-1">
+                        <li>Dag-tabs med timevisning</li>
+                        <li>Fargekoding per aktivitetstype</li>
+                        <li>Status: Fullført, Pågår, Planlagt</li>
+                        <li>Ukeoppsummering (sticky bottom)</li>
+                        <li>Program-info øverst</li>
+                        <li>Integrasjon med tiltak</li>
+                    </ul>
+                </div>
+
+                <div class="p-3 bg-orange-50 rounded-lg">
+                    <h3 class="font-semibold text-orange-900">Forskjell fra desktop</h3>
+                    <p class="text-orange-700 mt-1">Desktop viser hele uken samtidig med time-slots. Mobil fokuserer på én dag av gangen for å unngå horisontal scrolling og for bedre oversikt på liten skjerm.</p>
+                </div>
+            </div>
+
+            <button onclick="toggleNotes()" class="w-full mt-4 py-3 bg-gray-100 rounded-lg font-medium touch-target">
+                Lukk
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showDay(day) {
+            // Skjul alle dager
+            document.querySelectorAll('.day-content').forEach(d => d.classList.add('hidden'));
+            // Vis valgt dag
+            document.getElementById('day-' + day)?.classList.remove('hidden');
+
+            // Oppdater tabs
+            document.querySelectorAll('.day-tab').forEach(t => {
+                t.classList.remove('active');
+                t.classList.add('bg-gray-100');
+            });
+            const activeTab = document.querySelector(`[data-day="${day}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.classList.remove('bg-gray-100');
+            }
+        }
+
+        function toggleWeekSummary() {
+            const summary = document.getElementById('week-summary');
+            const chevron = document.getElementById('summary-chevron');
+            summary.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function toggleNotes() {
+            document.getElementById('notes-modal').classList.toggle('hidden');
+        }
+
+        function openAddActivity(time) {
+            alert('Åpne modal for å legge til ny aktivitet kl ' + time);
+            // Her ville vi implementert en modal for å legge til aktivitet
+        }
+
+        // Swipe-funksjonalitet for dag-bytte
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+            const activeDay = document.querySelector('.day-tab.active')?.dataset.day;
+            const currentIndex = days.indexOf(activeDay);
+
+            if (touchEndX < touchStartX - 50 && currentIndex < days.length - 1) {
+                // Swipe venstre -> neste dag
+                showDay(days[currentIndex + 1]);
+            }
+
+            if (touchEndX > touchStartX + 50 && currentIndex > 0) {
+                // Swipe høyre -> forrige dag
+                showDay(days[currentIndex - 1]);
+            }
+        }
+    </script>
+</body>
+</html>

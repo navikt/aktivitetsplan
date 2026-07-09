@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Design Alternativer (Desktop)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Wireframe stil - gråtoner og bokser */
+        .wireframe-box {
+            border: 2px solid #666;
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        .wireframe-header {
+            border: 2px solid #333;
+            background: #e0e0e0;
+            padding: 16px;
+            font-weight: bold;
+        }
+        .wireframe-text {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 8px;
+            margin: 4px 0;
+        }
+        .wireframe-button {
+            border: 2px solid #666;
+            background: #d0d0d0;
+            padding: 8px 16px;
+            display: inline-block;
+            cursor: pointer;
+            margin: 4px;
+        }
+        .wireframe-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #999;
+            display: inline-block;
+            background: #e0e0e0;
+        }
+        .wireframe-circle {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #666;
+            border-radius: 50%;
+            display: inline-block;
+            background: #d0d0d0;
+            text-align: center;
+            line-height: 28px;
+        }
+        .wireframe-line {
+            border-top: 2px dashed #999;
+            margin: 16px 0;
+        }
+        .wireframe-progress {
+            border: 2px solid #666;
+            height: 20px;
+            background: white;
+            position: relative;
+            margin: 8px 0;
+        }
+        .wireframe-progress-fill {
+            background: repeating-linear-gradient(
+                45deg,
+                #ccc,
+                #ccc 10px,
+                #bbb 10px,
+                #bbb 20px
+            );
+            height: 100%;
+        }
+        .grid { display: grid; gap: 16px; }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+        .flex { display: flex; gap: 8px; align-items: center; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+        .tab-nav {
+            background: #e0e0e0;
+            border-bottom: 2px solid #666;
+            padding: 8px;
+        }
+        .tab {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 2px solid #999;
+            background: white;
+            margin-right: 4px;
+            cursor: pointer;
+        }
+        .tab.active {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
+        .hidden { display: none; }
+
+        .annotation {
+            background: #ffffcc;
+            border-left: 4px solid #ff9800;
+            padding: 8px;
+            margin: 8px 0;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 32px;
+            margin: 8px 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #666;
+            border-radius: 50%;
+            background: white;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 13px;
+            top: 24px;
+            width: 2px;
+            height: calc(100% - 16px);
+            background: #ccc;
+        }
+        .timeline-item:last-child::after { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="wireframe-header">
+        <div class="container">
+            <div class="flex-between">
+                <div>
+                    <div style="font-size: 20px;">AKTIVITETSPLAN - WIREFRAMES</div>
+                    <div style="font-size: 12px; margin-top: 4px;">Desktop Design Alternativer</div>
+                </div>
+                <div class="wireframe-button">[Meny]</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <div class="container">
+            <span class="tab active" onclick="showWireframe('v1')">V1: Milepæl</span>
+            <span class="tab" onclick="showWireframe('v2')">V2: Fremdrift</span>
+            <span class="tab" onclick="showWireframe('v3')">V3: Dashboard</span>
+            <span class="tab" onclick="showWireframe('v4')">V4: Kombinert</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- V1: Milepæl + Delmål -->
+        <div id="wireframe-v1" class="wireframe-content">
+            <div class="annotation">
+                📐 WIREFRAME V1: Milepæl + Delmål - Fokus på delmål-struktur og tidslinje
+            </div>
+
+            <!-- Hovedmål -->
+            <div class="wireframe-box" style="text-align: center; padding: 24px; border: 3px solid #333;">
+                <div style="font-size: 10px; text-transform: uppercase; color: #666;">HOVEDMÅL</div>
+                <div style="font-size: 18px; font-weight: bold; margin: 8px 0;">🎯 [Målbeskrivelse]</div>
+                <div style="font-size: 12px; color: #666;">Forventet: [Dato]</div>
+            </div>
+
+            <!-- Pågående langtidstiltak -->
+            <div class="wireframe-box" style="border-left: 6px solid #666;">
+                <div class="flex-between">
+                    <div class="flex">
+                        <div class="wireframe-circle">⏱️</div>
+                        <div>
+                            <div style="font-weight: bold;">[Tiltak Navn]</div>
+                            <div style="font-size: 12px; color: #666;">[Bedrift] • [Dato]</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 12px;">Mnd X/Y</div>
+                        <div class="wireframe-progress" style="width: 120px; height: 12px; margin-top: 4px;">
+                            <div class="wireframe-progress-fill" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                    <div class="wireframe-icon">[💬]</div>
+                </div>
+            </div>
+
+            <!-- Delmål-navigasjon -->
+            <div class="flex" style="margin: 16px 0; overflow-x: auto;">
+                <div class="wireframe-button" style="border: 3px solid #333;">✓ Delmål 1</div>
+                <div class="wireframe-button" style="border: 3px solid #333; background: #333; color: white;">→ Delmål 2</div>
+                <div class="wireframe-button">Delmål 3</div>
+            </div>
+
+            <!-- Aktivt delmål -->
+            <div class="wireframe-box" style="border: 3px solid #666;">
+                <div class="flex" style="margin-bottom: 12px;">
+                    <div class="wireframe-circle" style="background: #333; color: white;">2</div>
+                    <div style="font-weight: bold; font-size: 16px;">[Delmål 2 Navn]</div>
+                </div>
+                <div class="wireframe-text" style="margin-bottom: 16px;">
+                    [Beskrivelse av delmål]
+                </div>
+
+                <!-- Tidslinje -->
+                <div class="timeline-item">
+                    <div class="wireframe-box" style="background: #f9f9f9;">
+                        <div class="flex-between">
+                            <div>
+                                <div class="wireframe-text" style="display: inline-block; padding: 4px 8px; font-size: 10px;">FULLFØRT</div>
+                                <div style="font-weight: bold; margin: 4px 0;">[Aktivitet 1]</div>
+                                <div style="font-size: 12px; color: #666;">[Beskrivelse]</div>
+                            </div>
+                            <div style="font-size: 12px; color: #666;">[Dato]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="wireframe-box" style="background: white; border: 3px solid #333;">
+                        <div class="flex-between">
+                            <div>
+                                <div class="wireframe-text" style="display: inline-block; padding: 4px 8px; font-size: 10px; background: #333; color: white;">PÅGÅR</div>
+                                <div style="font-weight: bold; margin: 4px 0;">[Aktivitet 2]</div>
+                                <div style="font-size: 12px; color: #666;">[Beskrivelse]</div>
+                                <div class="wireframe-progress" style="width: 100px; height: 8px; margin-top: 4px;">
+                                    <div class="wireframe-progress-fill" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                            <div class="wireframe-icon">[💬]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="wireframe-box" style="opacity: 0.6;">
+                        <div class="flex-between">
+                            <div>
+                                <div class="wireframe-text" style="display: inline-block; padding: 4px 8px; font-size: 10px;">PLANLAGT</div>
+                                <div style="font-weight: bold; margin: 4px 0;">[Aktivitet 3]</div>
+                            </div>
+                            <div style="font-size: 12px; color: #666;">[Dato]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="wireframe-box" style="opacity: 0.5; border-style: dashed;">
+                        <div class="flex">
+                            <div style="font-size: 20px;">🏁</div>
+                            <div>
+                                <div style="font-weight: bold;">Delmål 2 fullført</div>
+                                <div style="font-size: 12px;">[Kriterie]</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fullførte delmål (kollapset) -->
+            <div class="wireframe-box" style="margin-top: 16px;">
+                <div class="flex-between">
+                    <div class="flex">
+                        <div class="wireframe-circle">✓</div>
+                        <div>Delmål 1: [Navn] (fullført)</div>
+                    </div>
+                    <div>[▼]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- V2: Fremdrift + Dialog -->
+        <div id="wireframe-v2" class="wireframe-content hidden">
+            <div class="annotation">
+                📐 WIREFRAME V2: Fremdrift + Dialog - Dialog integrert med aktiviteter
+            </div>
+
+            <div class="grid grid-3">
+                <!-- Venstre: Aktivitetsliste (2/3) -->
+                <div style="grid-column: span 2;">
+                    <!-- Fremdriftsindikator -->
+                    <div class="wireframe-box">
+                        <div class="flex-between" style="margin-bottom: 8px;">
+                            <span>Fremdrift mot hovedmål</span>
+                            <span style="font-size: 12px;">Delmål 2 av 3</span>
+                        </div>
+                        <div class="flex-between">
+                            <div class="wireframe-circle">✓</div>
+                            <div style="flex: 1; border-top: 2px solid #333; margin: 0 8px;"></div>
+                            <div class="wireframe-circle" style="background: #333; color: white;">2</div>
+                            <div style="flex: 1; border-top: 2px dashed #999; margin: 0 8px;"></div>
+                            <div class="wireframe-circle" style="opacity: 0.5;">3</div>
+                            <div style="flex: 1; border-top: 2px dashed #999; margin: 0 8px;"></div>
+                            <div class="wireframe-circle" style="opacity: 0.5;">🎯</div>
+                        </div>
+                    </div>
+
+                    <!-- Langtidstiltak -->
+                    <div class="wireframe-box" style="border-left: 6px solid #666;">
+                        <div class="flex-between">
+                            <div class="flex">
+                                <span>⏱️</span>
+                                <div>
+                                    <div style="font-weight: bold;">[Tiltak]</div>
+                                    <div style="font-size: 12px;">Mnd X/Y</div>
+                                </div>
+                            </div>
+                            <div class="wireframe-icon">[💬 2]</div>
+                        </div>
+                    </div>
+
+                    <!-- Aktiviteter -->
+                    <div class="wireframe-box" style="border-left: 4px solid #333;">
+                        <div class="flex-between">
+                            <div>
+                                <div class="wireframe-text" style="display: inline-block; padding: 4px 8px; font-size: 10px;">PÅGÅR</div>
+                                <div style="font-weight: bold; margin: 4px 0;">[Aktivitet Navn]</div>
+                                <div class="wireframe-progress" style="width: 80px; height: 8px;">
+                                    <div class="wireframe-progress-fill" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <span style="font-size: 12px;">[X dager]</span>
+                                <div class="wireframe-icon">[💬]</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wireframe-box">
+                        <div class="flex-between">
+                            <div>
+                                <div class="wireframe-text" style="display: inline-block; padding: 4px 8px; font-size: 10px;">PLANLAGT</div>
+                                <div style="font-weight: bold; margin: 4px 0;">[Aktivitet Navn]</div>
+                            </div>
+                            <span style="font-size: 12px;">[Dato]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Høyre: Dialog (1/3) -->
+                <div>
+                    <div class="wireframe-box">
+                        <div style="font-weight: bold; margin-bottom: 12px;">💬 Dialog</div>
+                        <div class="wireframe-text" style="margin-bottom: 8px; font-size: 12px;">
+                            [Aktivitet]: X uleste
+                        </div>
+
+                        <!-- Dialog-meldinger -->
+                        <div style="margin: 12px 0;">
+                            <div class="wireframe-box" style="background: #f5f5f5; margin: 8px 0;">
+                                <div style="font-size: 10px; color: #666;">VEILEDER</div>
+                                <div class="wireframe-text" style="margin: 4px 0;">
+                                    [Melding fra veileder...]
+                                </div>
+                                <div style="font-size: 10px; color: #666;">Dato tid</div>
+                            </div>
+
+                            <div class="wireframe-box" style="background: #f9f9f9; margin: 8px 0; margin-left: 24px;">
+                                <div style="font-size: 10px; color: #666;">DEG</div>
+                                <div class="wireframe-text" style="margin: 4px 0;">
+                                    [Ditt svar...]
+                                </div>
+                                <div style="font-size: 10px; color: #666;">Dato tid</div>
+                            </div>
+
+                            <div class="wireframe-box" style="background: #f5f5f5; margin: 8px 0;">
+                                <div style="font-size: 10px; color: #666;">VEILEDER</div>
+                                <div class="wireframe-text" style="margin: 4px 0;">
+                                    [Forslag med handlingsknapp]
+                                </div>
+                                <div class="flex" style="margin-top: 8px;">
+                                    <div class="wireframe-button" style="flex: 1; background: #333; color: white;">Ja</div>
+                                    <div class="wireframe-button" style="flex: 1;">Nei</div>
+                                </div>
+                                <div style="font-size: 10px; color: #666; margin-top: 4px;">Dato tid</div>
+                            </div>
+                        </div>
+
+                        <!-- Skriv melding -->
+                        <div class="wireframe-line"></div>
+                        <div class="flex">
+                            <div class="wireframe-text" style="flex: 1;">[Skriv melding...]</div>
+                            <div class="wireframe-button">[Send]</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- V3: Dashboard -->
+        <div id="wireframe-v3" class="wireframe-content hidden">
+            <div class="annotation">
+                📐 WIREFRAME V3: Dashboard - KPI-fokusert oversikt
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-4" style="margin-bottom: 16px;">
+                <div class="wireframe-box">
+                    <div class="flex-between">
+                        <div>
+                            <div style="font-size: 28px; font-weight: bold;">X/Y</div>
+                            <div style="font-size: 12px;">Delmål fullført</div>
+                        </div>
+                        <div class="wireframe-circle" style="width: 48px; height: 48px; line-height: 44px; font-size: 20px;">✓</div>
+                    </div>
+                </div>
+
+                <div class="wireframe-box">
+                    <div class="flex-between">
+                        <div>
+                            <div style="font-size: 28px; font-weight: bold;">X</div>
+                            <div style="font-size: 12px;">Pågående</div>
+                        </div>
+                        <div class="wireframe-circle" style="width: 48px; height: 48px; line-height: 44px; font-size: 20px;">⚡</div>
+                    </div>
+                </div>
+
+                <div class="wireframe-box">
+                    <div class="flex-between">
+                        <div>
+                            <div style="font-size: 28px; font-weight: bold;">X</div>
+                            <div style="font-size: 12px;">Uleste</div>
+                        </div>
+                        <div class="wireframe-circle" style="width: 48px; height: 48px; line-height: 44px; font-size: 20px; position: relative;">
+                            💬
+                            <span style="position: absolute; top: -4px; right: -4px; width: 12px; height: 12px; background: #666; border-radius: 50%;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wireframe-box">
+                    <div style="font-size: 12px; margin-bottom: 4px;">Tid til mål</div>
+                    <div style="font-size: 24px; font-weight: bold;">X mnd</div>
+                    <div class="wireframe-progress" style="height: 12px; margin-top: 8px;">
+                        <div class="wireframe-progress-fill" style="width: 25%;"></div>
+                    </div>
+                    <div style="font-size: 10px; margin-top: 4px;">X% brukt</div>
+                </div>
+            </div>
+
+            <div class="grid grid-3">
+                <!-- Langtidstiltak -->
+                <div class="wireframe-box">
+                    <div style="font-weight: bold; margin-bottom: 12px;">⏱️ Pågående tiltak</div>
+                    <div class="wireframe-box" style="border-left: 4px solid #666;">
+                        <div class="flex-between" style="margin-bottom: 8px;">
+                            <div style="font-weight: bold;">[Tiltak]</div>
+                            <span style="font-size: 12px;">Mnd X/Y</span>
+                        </div>
+                        <div style="font-size: 12px; margin-bottom: 8px;">[Bedrift] • [Periode]</div>
+                        <div class="wireframe-progress" style="height: 8px;">
+                            <div class="wireframe-progress-fill" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kommende hendelser -->
+                <div class="wireframe-box">
+                    <div style="font-weight: bold; margin-bottom: 12px;">📅 Kommende hendelser</div>
+                    <div class="wireframe-box" style="border-left: 4px solid #333; margin-bottom: 8px;">
+                        <div class="flex-between">
+                            <div>
+                                <div style="font-weight: bold;">[Aktivitet]</div>
+                                <div style="font-size: 12px;">[Neste frist/dato]</div>
+                            </div>
+                            <span style="font-size: 12px;">[X dager]</span>
+                        </div>
+                    </div>
+                    <div class="wireframe-box">
+                        <div class="flex-between">
+                            <div>
+                                <div style="font-weight: bold;">[Aktivitet]</div>
+                                <div style="font-size: 12px;">[Dato tid]</div>
+                            </div>
+                            <span style="font-size: 12px;">[X dager]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hovedmål -->
+                <div class="wireframe-box">
+                    <div style="font-weight: bold; margin-bottom: 12px;">🎯 Hovedmål</div>
+                    <div class="wireframe-box" style="border: 2px solid #666;">
+                        <div style="font-weight: bold; margin-bottom: 4px;">[Målbeskrivelse]</div>
+                        <div style="font-size: 12px; margin-bottom: 8px;">Forventet: [Dato]</div>
+                        <div class="flex-between">
+                            <div class="wireframe-circle">✓</div>
+                            <div style="flex: 1; height: 4px; background: #333; margin: 0 4px;"></div>
+                            <div class="wireframe-circle" style="background: #333; color: white;">2</div>
+                            <div style="flex: 1; height: 2px; background: #ccc; margin: 0 4px;"></div>
+                            <div class="wireframe-circle" style="opacity: 0.5;">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- V4: Kombinert -->
+        <div id="wireframe-v4" class="wireframe-content hidden">
+            <div class="annotation">
+                📐 WIREFRAME V4: Kombinert - Best of all worlds (anbefalt)
+            </div>
+
+            <!-- Hovedmål med fremdrift -->
+            <div class="wireframe-box" style="border: 3px solid #333;">
+                <div style="text-align: center; padding: 16px;">
+                    <div style="font-size: 10px; text-transform: uppercase;">HOVEDMÅL</div>
+                    <div style="font-size: 18px; font-weight: bold; margin: 8px 0;">🎯 [Målbeskrivelse]</div>
+                    <div class="flex-between" style="margin-top: 12px;">
+                        <span style="font-size: 12px;">Delmål 2: [Navn]</span>
+                        <span style="font-size: 12px;">33%</span>
+                    </div>
+                    <div class="flex-between" style="margin-top: 8px;">
+                        <div class="wireframe-circle">✓</div>
+                        <div style="flex: 1; height: 8px; background: #333; margin: 0 4px;"></div>
+                        <div class="wireframe-circle" style="background: #333; color: white; border: 3px solid #666;">2</div>
+                        <div style="flex: 1; height: 4px; background: #ccc; margin: 0 4px;"></div>
+                        <div class="wireframe-circle" style="opacity: 0.5;">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="flex" style="margin: 16px 0; gap: 12px;">
+                <div class="wireframe-box" style="flex: 1; border-left: 4px solid #666;">
+                    <div style="font-size: 12px;">Uleste</div>
+                    <div style="font-weight: bold;">X meldinger</div>
+                </div>
+                <div class="wireframe-box" style="flex: 1; border-left: 4px solid #666;">
+                    <div style="font-size: 12px;">Pågår</div>
+                    <div style="font-weight: bold;">X aktiviteter</div>
+                </div>
+                <div class="wireframe-box" style="flex: 1; border-left: 4px solid #666;">
+                    <div style="font-size: 12px;">Tid igjen</div>
+                    <div style="font-weight: bold;">X mnd</div>
+                </div>
+            </div>
+
+            <!-- Langtidstiltak (ekspanderbar) -->
+            <div class="wireframe-box" style="border-left: 6px solid #666;">
+                <div class="flex-between">
+                    <div class="flex">
+                        <div class="wireframe-circle">💼</div>
+                        <div>
+                            <div style="font-weight: bold;">[Tiltak Navn]</div>
+                            <div style="font-size: 12px;">[Bedrift] • Mnd X/Y</div>
+                        </div>
+                    </div>
+                    <div>[▼]</div>
+                </div>
+                <div class="wireframe-progress" style="height: 8px; margin-top: 8px;">
+                    <div class="wireframe-progress-fill" style="width: 20%;"></div>
+                </div>
+
+                <!-- Dialog preview (kollapset) -->
+                <div class="wireframe-box" style="margin-top: 12px; background: #f9f9f9; border-left: 3px solid #999;">
+                    <div style="font-size: 10px; margin-bottom: 4px;">VEILEDER</div>
+                    <div class="wireframe-text" style="font-size: 12px;">
+                        [Melding preview...]
+                    </div>
+                    <div class="wireframe-button" style="margin-top: 8px; width: 100%; text-align: center;">
+                        Se dialog →
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aktiviteter under delmål -->
+            <div class="wireframe-box" style="margin-top: 16px;">
+                <div class="flex" style="margin-bottom: 12px;">
+                    <div class="wireframe-circle" style="background: #333; color: white;">2</div>
+                    <div style="font-weight: bold;">Aktiviteter i delmål 2</div>
+                </div>
+
+                <!-- Pågående med dialog -->
+                <div class="wireframe-box" style="border-left: 4px solid #333; margin-bottom: 8px;">
+                    <div class="flex-between">
+                        <div>
+                            <div class="wireframe-text" style="display: inline-block; padding: 4px 8px; font-size: 10px; background: #333; color: white;">PÅGÅR</div>
+                            <div style="font-weight: bold; margin: 4px 0;">[Aktivitet]</div>
+                            <div class="wireframe-progress" style="width: 80px; height: 8px;">
+                                <div class="wireframe-progress-fill" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                        <div class="wireframe-icon" style="position: relative;">
+                            [💬]
+                            <span style="position: absolute; top: -4px; right: -4px; width: 12px; height: 12px; background: #666; border-radius: 50%;"></span>
+                        </div>
+                    </div>
+
+                    <!-- Dialog med handlingsknapper -->
+                    <div class="wireframe-box" style="margin-top: 12px; background: #f5f5f5;">
+                        <div style="font-size: 10px; margin-bottom: 4px;">VEILEDER</div>
+                        <div class="wireframe-text" style="font-size: 12px; margin-bottom: 8px;">
+                            [Forslag/spørsmål fra veileder]
+                        </div>
+                        <div class="flex" style="gap: 8px;">
+                            <div class="wireframe-button" style="flex: 1; background: #333; color: white; text-align: center;">
+                                ✓ Ja
+                            </div>
+                            <div class="wireframe-button" style="flex: 1; text-align: center;">
+                                Nei
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Planlagt -->
+                <div class="wireframe-box">
+                    <div class="flex-between">
+                        <div>
+                            <div class="wireframe-text" style="display: inline-block; padding: 4px 8px; font-size: 10px;">PLANLAGT</div>
+                            <div style="font-weight: bold; margin: 4px 0;">[Aktivitet]</div>
+                        </div>
+                        <span style="font-size: 12px;">[X dager]</span>
+                    </div>
+                </div>
+
+                <!-- Milepæl -->
+                <div class="wireframe-box" style="border-style: dashed; opacity: 0.6;">
+                    <div class="flex">
+                        <span style="font-size: 20px;">🏁</span>
+                        <div>
+                            <div style="font-weight: bold;">Delmål 2 fullført</div>
+                            <div style="font-size: 12px;">[Kriterie]</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info box -->
+        <div class="wireframe-box" style="margin-top: 24px; border: 3px solid #ff9800; background: #fff3e0;">
+            <div style="font-weight: bold; margin-bottom: 8px;">ℹ️ Om Wireframes</div>
+            <div style="font-size: 14px; line-height: 1.6;">
+                <p>Wireframes er low-fidelity prototyper som fokuserer på:</p>
+                <ul style="margin: 8px 0; padding-left: 20px;">
+                    <li>Layout og struktur</li>
+                    <li>Innholdshierarki</li>
+                    <li>Navigasjon og flyt</li>
+                    <li>Funksjonelle elementer</li>
+                </ul>
+                <p>Farger, bilder og detaljert styling kommer i senere faser.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showWireframe(variant) {
+            // Hide all
+            document.querySelectorAll('.wireframe-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            // Show selected
+            document.getElementById('wireframe-' + variant).classList.remove('hidden');
+
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
