@@ -21,7 +21,6 @@ export const AKTIVITET_GRAPHQL_BASE_URL = stripPrependingSlash(BASE_URL) + '/vei
 export const DIALOG_GRAPHQL_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbdialog/graphql';
 export const OPPFOLGING_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarboppfolging/api';
 export const VEILARBLEST_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarblest/api';
-export const PERSON_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbperson/api';
 export const VEILEDER_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbveileder/api';
 export const MODIA_CONTEXT_BASE_URL = stripPrependingSlash(BASE_URL) + '/modiacontextholder/api';
 

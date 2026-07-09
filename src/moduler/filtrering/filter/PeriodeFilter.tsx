@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { selectSorterteOppfolgingsperioder } from '../../oppfolging-status/oppfolging-selector';
 import { selectValgtPeriodeId, velgPeriode } from './valgt-periode-slice';
+import { OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
 
 const PeriodeFilter = () => {
     const perioder = useSelector(selectSorterteOppfolgingsperioder);
@@ -30,7 +31,7 @@ const PeriodeFilter = () => {
     // Alt annet - vis dropdown
 
     const onPeriodeChange: ChangeEventHandler<HTMLSelectElement> = (val) => {
-        const selectedPeriodeId = val.target.value;
+        const selectedPeriodeId = val.target.value as OppfolgingsPeriodeId;
         dispatch(velgPeriode(selectedPeriodeId));
     };
 

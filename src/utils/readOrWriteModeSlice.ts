@@ -30,10 +30,10 @@ const readOrWriteModeSlice = createSlice({
         mode: ReadWriteMode.READ,
     },
     reducers: {
-        setWriteMode(state, action: PayloadAction) {
+        setWriteMode(state, _: PayloadAction) {
             state.mode = ReadWriteMode.WRITE;
         },
-        setReadMode(state, action: PayloadAction) {
+        setReadMode(state, _: PayloadAction) {
             state.mode = ReadWriteMode.READ;
         },
     },
@@ -64,9 +64,10 @@ const oppdaterSkriveLeseTilgang = (
     const kanVarsles = selectKanVarsles(state);
     const erBrukerManuell = selectErBrukerManuell(state);
     const erVeileder = ER_INTERN_FLATE;
-    const utdatertIKRR = !kanVarsles
+    const utdatertIKRR = !kanVarsles;
 
-    const harSkriveTilgang = erVeileder || (!reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
+    const harSkriveTilgang =
+        erVeileder || (!reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
 
     if (harSkriveTilgang && erUnderOppfolging && valgtPeriode && !valgtPeriode.slutt) {
         listenerApi.dispatch(setWriteMode());

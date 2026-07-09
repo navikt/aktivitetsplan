@@ -5,11 +5,12 @@ import {
     erIkkeRegistrertIKRR,
     erKRRBruker,
     erManuellBruker,
-    erPrivatBruker,
+    erIkkeUnderOppfolging,
     ingenOppfPerioder,
     kanIkkeVarsles,
 } from '../demo/localStorage';
 import { mockfnr } from '../utils';
+import { OppfolgingStatusResponse } from '../../api/veilarboppfolging';
 
 const oppfolgingsperioder: Oppfolgingsperiode[] = [
     {
@@ -49,13 +50,43 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
     },
 ];
 
+const oppfolgingGraphql: OppfolgingStatusResponse = {
+    brukerStatus: {
+        arena: {
+            inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
+            kanReaktiveres: false,
+        },
+        krr: {
+            reservertIKrr: erKRRBruker(),
+            registrertIKrr: !erIkkeRegistrertIKRR(),
+            kanVarsles: !kanIkkeVarsles(),
+        },
+        manuell: {
+            erManuell: erManuellBruker(),
+        },
+    },
+    oppfolging: {
+        erUnderOppfolging: !erIkkeUnderOppfolging(),
+    },
+    oppfolgingsperioder: oppfolgingsperioder.map((periode) => ({
+        id: periode.uuid,
+        startTidspunkt: periode.startDato,
+        sluttTidspunkt: periode.sluttDato,
+        kvpPerioder:
+            periode.kvpPerioder?.map((kvpPeriode) => ({
+                startTidspunkt: kvpPeriode.opprettetDato,
+                sluttTidspunkt: kvpPeriode.avsluttetDato,
+            })) || [],
+    })),
+};
+
 const oppfolging = {
     fnr: mockfnr,
     aktorId: '1234567988888',
     veilederId: null,
     reservasjonKRR: erKRRBruker(),
     manuell: erManuellBruker(),
-    underOppfolging: !erPrivatBruker(),
+    underOppfolging: !erIkkeUnderOppfolging(),
     underKvp: false,
     kanStarteOppfolging: false,
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfolgingsperioder,
@@ -73,8 +104,8 @@ const oppfolging = {
 
 export const mockOppfolging = oppfolging;
 
-export const getOppfolging = (request: StrictRequest<DefaultBodyType>) => {
-    return { ...oppfolging, fnr: new URL(request.url).searchParams.get('fnr') ?? undefined };
+export const getOppfolging = (_: StrictRequest<DefaultBodyType>) => {
+    return { ...oppfolgingGraphql };
 };
 
 export function settDigital() {

@@ -10,9 +10,6 @@ export const fetchIdentitet = (): Promise<Me> =>
 export const settDigital = (fnr: string | undefined): Promise<OppfolgingStatus> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/settDigital`, fnr ? { fnr } : undefined, 'settDigital');
 
-export const fetchOppfolging = (fnr: string | undefined): Promise<OppfolgingStatus> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/hent-status`, fnr ? { fnr } : undefined, 'fetchOppfolging');
-
 export const fetchMal = (fnr: string | undefined): Promise<Mal> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/hent-maal`, fnr ? { fnr } : undefined, 'fetchMal');
 

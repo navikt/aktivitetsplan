@@ -1,5 +1,5 @@
 export enum LocalStorageElement {
-    PRIVAT_BRUKER = 'privatbruker',
+    IKKE_UNDER_OPPFOLGING = 'privatbruker',
     MANUELL_BRUKER = 'manuellbruker',
     KRR_BRUKER = 'krrbruker',
     GAMMEL_ESKALERT_BRUKER = 'eskalertbruker_gammel',
@@ -51,7 +51,7 @@ const erSkrudAv = (localStorageElement: LocalStorageElement) => hentFraLocalStor
 
 export const erEksternBruker = () => erSatt(LocalStorageElement.EKSTERN_BRUKER);
 
-export const erPrivatBruker = () => erSatt(LocalStorageElement.PRIVAT_BRUKER);
+export const erIkkeUnderOppfolging = () => erSatt(LocalStorageElement.IKKE_UNDER_OPPFOLGING);
 
 export const erManuellBruker = () => erSatt(LocalStorageElement.MANUELL_BRUKER);
 
@@ -73,8 +73,6 @@ export const visArenaAktiviteter = () => erSatt(LocalStorageElement.ARENA_AKTIVI
 
 export const visEksterneAktiviteter = () => erSatt(LocalStorageElement.EKSTERNE_AKTIVITETER);
 
-export const visDialoger = () => erSatt(LocalStorageElement.TEST_DIALOGER);
-
 export const erUnder18 = () => erSatt(LocalStorageElement.UNDER18);
 
 export const kanIkkeVarsles = () => erSatt(LocalStorageElement.KAN_IKKE_VARSLES);
@@ -86,8 +84,7 @@ export const oppfFeilet = () => erSatt(LocalStorageElement.OPPF_FEILET);
 export const dialogFeilet = () => erSatt(LocalStorageElement.DIALOG_FEILET);
 
 export const aktivitetFeilet = () => {
-    if (erSatt(LocalStorageElement.AKTIVITET_FEILET)) return true;
-    return false;
+    return erSatt(LocalStorageElement.AKTIVITET_FEILET);
 };
 
 export const arenaFeilet = () => erSatt(LocalStorageElement.ARENA_FEILET);

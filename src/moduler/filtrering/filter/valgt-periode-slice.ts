@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
+import { OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
 
 const valgtPeriodeSlice = createSlice({
     name: 'valgtPeriodeSlice',
-    initialState: { valgtPeriodeId: null as string | null },
+    initialState: { valgtPeriodeId: null as OppfolgingsPeriodeId | null },
     reducers: {
-        velgPeriode: (state, action: PayloadAction<string>) => {
+        velgPeriode: (state, action: PayloadAction<OppfolgingsPeriodeId>) => {
             state.valgtPeriodeId = action.payload;
         },
     },

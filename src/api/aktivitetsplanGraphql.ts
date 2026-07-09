@@ -4,6 +4,7 @@ import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localS
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 import { Historikk } from '../datatypes/Historikk';
+import { AktivitetsId, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 
 const allAktivitetFields = `
     id,
@@ -173,7 +174,7 @@ const aktivitetQueryBody = (aktivitetId: string) => ({
 });
 
 interface OppfolgingsPerioder {
-    id: string;
+    id: OppfolgingsPeriodeId;
     aktiviteter: VeilarbAktivitet[];
     start: string;
     slutt: string | undefined;
@@ -197,7 +198,7 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
 };
 
-export const hentAktivitetGraphql = (aktivitetId: string) => {
+export const hentAktivitetGraphql = (aktivitetId: AktivitetsId) => {
     return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
         ...DEFAULT_CONFIG,
         method: 'POST',
@@ -211,14 +212,18 @@ export const hentAktivitetGraphql = (aktivitetId: string) => {
         .then(toJson)
         .then(
             sjekkGraphqlFeil<{
-                aktivitet: VeilarbAktivitet & { historikk: Historikk; id: string; oppfolgingsperiodeId: string };
+                aktivitet: VeilarbAktivitet & {
+                    historikk: Historikk;
+                    id: AktivitetsId;
+                    oppfolgingsperiodeId: OppfolgingsPeriodeId;
+                };
                 eier: { fnr: string };
             }>,
         )
         .then((it) => ({
             ...it,
             data: {
-                aktivitet: { ...it.data.aktivitet, id: aktivitetId },
+                aktivitet: { ...it.data.aktivitet, id: aktivitetId as AktivitetsId },
                 eier: { fnr: it.data.eier.fnr },
             },
         }));

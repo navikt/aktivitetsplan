@@ -1,3 +1,5 @@
+import { OppfolgingsPeriodeId } from './brandedTypes';
+
 export interface Me {
     erBruker: boolean;
     erVeileder: boolean;
@@ -29,7 +31,7 @@ export interface OppfolgingStatus {
 }
 
 export interface Oppfolgingsperiode {
-    uuid: string;
+    uuid: OppfolgingsPeriodeId;
     aktorId: string;
     veileder?: string | null;
     sluttDato?: string | null;

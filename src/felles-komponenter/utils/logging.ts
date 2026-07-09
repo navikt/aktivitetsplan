@@ -88,20 +88,20 @@ export function logTimeToAktivitestavlePaint(erVeileder: boolean) {
     }
 }
 
-export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boolean, ident: string, aktorId?: string) {
+export function loggAntalVeiledere(underOppfolging: boolean, ident: string, aktorId?: string) {
     const fields = {
         underOppfolging,
         veileder: hash(ident),
         bruker: hash(aktorId),
     };
-    loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
+    loggEvent(ANTALL_VEILEDERE, fields);
 }
 
-export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
+export function loggingAntallBrukere(underOppfolging: boolean, aktorId: string) {
     if (!underOppfolging) {
-        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, { servicegruppe });
+        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {});
     } else {
-        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) }, { servicegruppe });
+        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) });
     }
 }
 

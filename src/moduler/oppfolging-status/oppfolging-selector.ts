@@ -4,6 +4,7 @@ import { compareDesc } from 'date-fns';
 import { RootState } from '../../store';
 import { selectAktiviteterSlice, selectAllOppfolgingsperioder } from '../aktivitet/aktivitet-slice';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
+import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 export function selectOppfolgingSlice(state: RootState) {
     return state.data.oppfolging;
@@ -17,16 +18,15 @@ export function selectOppfolgingStatus(state: RootState) {
     return selectOppfolgingSlice(state).status;
 }
 
-export const selectReservasjonKRR = (state: RootState) => selectOppfolgingData(state)?.reservasjonKRR;
-export const selectKanVarsles = (state: RootState) => selectOppfolgingData(state)?.kanVarsles || false;
-export const selectErRegisrertIKRR = (state: RootState) => selectOppfolgingData(state)?.registrertKRR || false;
-
-export function selectServicegruppe(state: RootState) {
-    return selectOppfolgingData(state)?.servicegruppe;
-}
+export const selectReservasjonKRR = (state: RootState) =>
+    selectOppfolgingData(state)?.brukerStatus?.krr?.reservertIKrr || false;
+export const selectKanVarsles = (state: RootState) =>
+    selectOppfolgingData(state)?.brukerStatus?.krr?.kanVarsles || false;
+export const selectErRegisrertIKRR = (state: RootState) =>
+    selectOppfolgingData(state)?.brukerStatus?.krr?.registrertIKrr || true;
 
 export const selectOppfolgingsPerioderMedKvpPerioder = createSelector(selectOppfolgingData, (oppfolgingsStatus) => {
-    return oppfolgingsStatus?.oppfolgingsPerioder || [];
+    return oppfolgingsStatus?.oppfolgingsperioder || [];
 });
 
 export function selectAktivOppfolgingsperiode(state: RootState) {
@@ -34,7 +34,7 @@ export function selectAktivOppfolgingsperiode(state: RootState) {
 }
 
 export interface MinimalPeriode {
-    id: string;
+    id: OppfolgingsPeriodeId;
     start: string;
     slutt: string | null | undefined;
 }
@@ -50,10 +50,9 @@ export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] =
 );
 
 export const selectSorterteOppfolgingsperioder = createSelector(selectOppfolgingsPerioder, (perioder) => {
-    const sortertePerioder = Array.from(perioder).sort((a, b) => {
+    return Array.from(perioder).sort((a, b) => {
         return compareDesc(a.start, b.start);
     });
-    return sortertePerioder;
 });
 
 // TODO refaktorer, må fikse typer oppfolgingsperioder-typene i hele appen
@@ -61,7 +60,7 @@ export function selectKvpPeriodeForValgteOppfolging(state: RootState) {
     const valgtOppfolgingId = selectValgtPeriodeId(state);
     const perioderMedKvpPerioder = selectOppfolgingsPerioderMedKvpPerioder(state);
     const oppfolging = perioderMedKvpPerioder.find(
-        (periodeMedKvpPerioder) => periodeMedKvpPerioder.uuid === valgtOppfolgingId,
+        (periodeMedKvpPerioder) => periodeMedKvpPerioder.id === valgtOppfolgingId,
     );
     return oppfolging && oppfolging.kvpPerioder;
 }
@@ -89,25 +88,24 @@ export const selectViserAktivPeriode: (state: RootState) => boolean = createSele
 );
 
 export function selectErUnderOppfolging(state: RootState): boolean {
-    return selectOppfolgingData(state)?.underOppfolging || false;
+    return selectOppfolgingData(state)?.oppfolging?.erUnderOppfolging || false;
 }
 
 export function selectErBrukerManuell(state: RootState) {
-    return selectOppfolgingData(state)?.manuell;
-}
-
-export function selectAktorId(state: RootState) {
-    return selectOppfolgingData(state)?.aktorId;
+    return selectOppfolgingData(state)?.brukerStatus?.manuell?.erManuell || false;
 }
 
 export function selectErUnderKvp(state: RootState) {
-    return selectOppfolgingData(state)?.underKvp;
+    const nåværendeKvpPeriode = selectOppfolgingData(state)
+        ?.oppfolgingsperioder?.find((it) => !it.sluttTidspunkt)
+        ?.kvpPerioder?.find((kvpPeriode) => !kvpPeriode.sluttTidspunkt);
+    return !!nåværendeKvpPeriode;
 }
 
 export function selectKanReaktiveres(state: RootState) {
-    return selectOppfolgingData(state)?.kanReaktiveres;
+    return selectOppfolgingData(state)?.brukerStatus?.arena?.kanReaktiveres;
 }
 
 export function selectInaktiveringsDato(state: RootState) {
-    return selectOppfolgingData(state)?.inaktiveringsdato;
+    return selectOppfolgingData(state)?.brukerStatus?.arena?.inaktiveringsdato;
 }

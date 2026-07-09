@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/AktiverDigitalOppfolging';
 import HarIkkeAktivitetsplan from './HarIkkeAktivitetsplan';
 import { useSelector } from 'react-redux';
 import {
-    selectAktorId,
     selectErBrukerManuell,
     selectErRegisrertIKRR,
     selectErUnderOppfolging,
@@ -14,11 +12,9 @@ import {
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
     selectReservasjonKRR,
-    selectServicegruppe,
 } from './oppfolging-selector';
 import { Status } from '../../createGenericSlice';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
-import { selectIdentitetId } from '../identitet/identitet-selector';
 import { IkkeRegistrertIKRRAdvarsel } from './IkkeRegistrertIKRRAdvarsel';
 import { UtdatertKontaktinformasjonAdvarsel } from './UtdatertKontaktinformasjonAdvarsel';
 
@@ -33,23 +29,12 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const reservasjonKRR = useSelector(selectReservasjonKRR);
     const erRegistrertIKRR = useSelector(selectErRegisrertIKRR);
     const kanVarsles = useSelector(selectKanVarsles);
-    const servicegruppe = useSelector(selectServicegruppe);
-    const aktorId = useSelector(selectAktorId);
-    const ident = useSelector(selectIdentitetId);
 
     const oppfolgingsStatus = useSelector(selectOppfolgingStatus);
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const erVeileder = useErVeileder();
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
-    const utdatertIKRR = !kanVarsles
-
-    useEffect(() => {
-        if (erVeileder && servicegruppe) {
-            loggAntalVeiledere(servicegruppe, underOppfolging, ident, aktorId);
-        } else if (servicegruppe && aktorId) {
-            loggingAntallBrukere(servicegruppe, underOppfolging, aktorId);
-        }
-    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);
+    const utdatertIKRR = !kanVarsles;
 
     if (
         oppfolgingsStatus === Status.OK &&

@@ -5,6 +5,7 @@ import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunks } from './initialPageLoadThunk';
 import { hentAktivitet } from '../moduler/aktivitet/aktivitet-actions';
 import { erArenaId, hentArenaAktiviteter } from '../moduler/aktivitet/arena-aktiviteter-slice';
+import { AktivitetsId } from '../datatypes/brandedTypes';
 
 export const initialPageLoader =
     (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
@@ -48,7 +49,7 @@ export const aktivitetsVisningLoader =
         if (!params.id) return {};
         const arenaId = erArenaId(params.id);
         return defer({
-            aktivitet: arenaId ? dispatch(hentArenaAktiviteter()) : dispatch(hentAktivitet(params.id)),
+            aktivitet: arenaId ? dispatch(hentArenaAktiviteter()) : dispatch(hentAktivitet(params.id as AktivitetsId)),
         });
     };
 
