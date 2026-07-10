@@ -46,7 +46,18 @@ const lagStore = (initialStore: RootState) => {
 };
 
 const gitt = {
-    tomAktivOppfolgingsPeriode: () => lagStore(initialStore),
+    // Preserves the active oppfolgingsperiode (required by NyAktivitetForm) but with no activities and Status.OK
+    tomAktivOppfolgingsPeriode: () =>
+        lagStore({
+            ...initialStore,
+            data: {
+                ...initialStore.data,
+                aktiviteter: oppfolgingsdperiodeAdapter.setOne(
+                    oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK }),
+                    { ...defaultAktivPeriode, aktiviteter: aktivitetAdapter.getInitialState() },
+                ),
+            },
+        }),
 };
 
 const server = setupServer(...handlers);
@@ -65,21 +76,34 @@ describe('ny aktivitet', () => {
 
     it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
         const store = gitt.tomAktivOppfolgingsPeriode();
-        const { getByText, getByLabelText, getByRole } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+        const routerRef: { current: any } = { current: undefined };
+        const { getByText, getByLabelText, getByRole, findByText, findByRole } = render(
+            <WrappedHovedside fnr={mockfnr} store={store} routerRef={routerRef} />,
+        );
         const leggTilKnapp = await waitFor(() => getByRole('button', { name: /Legg til aktivitet/i }));
         await waitFor(() => {
             expect(leggTilKnapp).not.toBeDisabled();
         });
-        fireEvent.click(leggTilKnapp);
+        await act(() => fireEvent.click(leggTilKnapp));
 
-        await act(() => fireEvent.click(getByText('Samtalereferat')));
+        const samtaleReferatMenyValg = getByRole('button', { name: /Samtalereferat/i });
+        await act(() => fireEvent.click(samtaleReferatMenyValg));
+
+        await waitFor(() => {
+            expect(routerRef.current?.state.location.pathname).toBe('/aktivitetsplan/aktivitet/ny/samtalereferat');
+        });
+
+        await findByText(/Her finner du referat fra en samtale du har hatt med Nav/);
         const tittel = 'Hei';
-        fireEvent.change(getByLabelText('Tema for samtalen (obligatorisk)'), {
-            target: { value: tittel },
-        });
-        fireEvent.change(getByLabelText('Dato (obligatorisk)'), {
-            target: { value: '01.12.24' },
-        });
+
+        const temaFelt = getByLabelText('Tema for samtalen (obligatorisk)');
+        expect(temaFelt).toBeInTheDocument();
+        fireEvent.change(temaFelt, { target: { value: tittel } });
+
+        const datoInput = getByLabelText('Dato (obligatorisk)');
+        expect(datoInput).toBeInTheDocument();
+        await act(() => fireEvent.change(datoInput, { target: { value: '01.12.24' } }));
+
         await act(() => fireEvent.click(getByText('Lagre utkast')));
         expect((lagNyAktivitet as unknown as Mock).mock.calls).toHaveLength(1);
         const callPayload = (lagNyAktivitet as unknown as Mock).mock.calls[0][0];
