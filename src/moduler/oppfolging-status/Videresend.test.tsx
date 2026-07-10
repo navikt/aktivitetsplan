@@ -15,11 +15,12 @@ import { mockTestAktiviteter } from '../../mocks/aktivitet';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { MinimalPeriode } from './oppfolging-selector';
 import { OppfolgingStatusResponse } from '../../api/veilarboppfolging';
+import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 const defaultOppfolging = oppfolgingGraphql;
 const aktivitetTittel = 'Videresend aktivitet';
 const periode: MinimalPeriode = {
-    id: 1,
+    id: '1' as OppfolgingsPeriodeId,
     start: new Date().toISOString(),
     slutt: undefined,
 };
