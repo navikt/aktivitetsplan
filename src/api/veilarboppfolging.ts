@@ -1,6 +1,6 @@
 import { postAsJson } from './utils';
 import { OPPFOLGING_BASE_URL } from '../environment';
-import { GraphqlResponse } from './graphql/graphqlResult';
+import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 import { OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 
 interface KvpPeriode {
@@ -73,4 +73,6 @@ const query = (fnr: string | undefined) => ({
 });
 
 export const fetchOppfolging = (fnr: string | undefined): Promise<GraphqlResponse<OppfolgingStatusResponse>> =>
-    postAsJson(`${OPPFOLGING_BASE_URL}/graphql`, query(fnr), 'fetchOppfolging');
+    postAsJson(`${OPPFOLGING_BASE_URL}/graphql`, query(fnr), 'fetchOppfolging')
+        .then(sjekkGraphqlFeil<{ data: OppfolgingStatusResponse }>)
+        .then((it) => it.data);
