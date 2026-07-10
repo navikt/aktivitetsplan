@@ -40,25 +40,25 @@ interface Props {
 }
 
 function PrintVerktoylinje({
-                               tilbakeRoute,
-                               kanSkriveUt,
-                               oppdaterForhaandsvistPdf,
-                               skrivUt,
-                               kanSendeTilBruker,
-                               sendTilBruker,
-                               pdfMåOppdateresEtterFilterendring,
-                               inkluderDialoger,
-                               setInkluderDialoger,
-                               setValgtDatoRange
-                           }: Props) {
+    tilbakeRoute,
+    kanSkriveUt,
+    oppdaterForhaandsvistPdf,
+    skrivUt,
+    kanSendeTilBruker,
+    sendTilBruker,
+    pdfMåOppdateresEtterFilterendring,
+    inkluderDialoger,
+    setInkluderDialoger,
+    setValgtDatoRange,
+}: Props) {
     const sendTilBrukerStatus = useSelector(selectSendTilBrukerStatus);
     const valgtOppfolgingsperiode = useSelector(selectValgtPeriode);
     const senderTilBruker = [Status.PENDING, Status.RELOADING].includes(sendTilBrukerStatus);
 
     const defaultValues = {
         inkluderDialoger: inkluderDialoger,
-            fraDato: valgtOppfolgingsperiode?.start,
-            tilDato: valgtOppfolgingsperiode?.slutt
+        fraDato: valgtOppfolgingsperiode?.start ? new Date(valgtOppfolgingsperiode.start) : undefined,
+        tilDato: valgtOppfolgingsperiode?.slutt ? new Date(valgtOppfolgingsperiode.slutt) : undefined,
     };
 
     const formHandlers = useForm<PrintVerktoylinjeFormValues>({
@@ -78,18 +78,18 @@ function PrintVerktoylinje({
 
     useEffect(() => {
         if (fraDatoValue && tilDatoValue && fraDatoValue instanceof Date && tilDatoValue instanceof Date) {
-            setValgtDatoRange({fra: toLocalISODateString(fraDatoValue), til: toLocalISODateString(tilDatoValue)});
+            setValgtDatoRange({ fra: toLocalISODateString(fraDatoValue), til: toLocalISODateString(tilDatoValue) });
         }
     }, [fraDatoValue, tilDatoValue]);
 
     const logValgteFiltre = () => {
-        logValgtFilter(inkluderDialogerValue ? "Inkluder dialoger" : "Ekskluder dialoger");
-        logValgtFilter(fraDatoValue && tilDatoValue ? "Filtrert på dato" : "Ingen datofilter");
-    }
+        logValgtFilter(inkluderDialogerValue ? 'Inkluder dialoger' : 'Ekskluder dialoger');
+        logValgtFilter(fraDatoValue && tilDatoValue ? 'Filtrert på dato' : 'Ingen datofilter');
+    };
 
     const nullstillValgtDatoRange = () => {
         setValgtDatoRange(undefined);
-    }
+    };
 
     return (
         <>
@@ -106,10 +106,12 @@ function PrintVerktoylinje({
                         Tilbake
                     </ReactRouterLink>
                 ) : null}
-                    <div className="self-start flex flex-row gap-4 items-center">
-                        <Filter /><Button icon={<ArrowCirclepathIcon />} onClick={oppdaterForhaandsvistPdf}>Oppdater
-                        visning</Button>
-                    </div>
+                <div className="self-start flex flex-row gap-4 items-center">
+                    <Filter />
+                    <Button icon={<ArrowCirclepathIcon />} onClick={oppdaterForhaandsvistPdf}>
+                        Oppdater visning
+                    </Button>
+                </div>
                 <div className="self-start flex flex-row items-center gap-4">
                     {kanSkriveUt ? (
                         <Button
@@ -125,24 +127,37 @@ function PrintVerktoylinje({
                             Skriv ut
                         </Button>
                     ) : null}
-                    {kanSendeTilBruker &&
-                        <Button icon={<EnvelopeOpenIcon />} onClick={() => {
-                            sendTilBruker();
-                            logKlikkKnapp('Journalfør og send til bruker');
-                            logValgteFiltre();
-                        }} loading={senderTilBruker} disabled={pdfMåOppdateresEtterFilterendring}>Journalfør og send til
-                            bruker</Button>}
+                    {kanSendeTilBruker && (
+                        <Button
+                            icon={<EnvelopeOpenIcon />}
+                            onClick={() => {
+                                sendTilBruker();
+                                logKlikkKnapp('Journalfør og send til bruker');
+                                logValgteFiltre();
+                            }}
+                            loading={senderTilBruker}
+                            disabled={pdfMåOppdateresEtterFilterendring}
+                        >
+                            Journalfør og send til bruker
+                        </Button>
+                    )}
                 </div>
             </div>
             <FormProvider {...formHandlers}>
                 <div className="flex gap-y-4 flex-col">
-                    <Checkbox {...register('inkluderDialoger')}>
-                        Inkluder dialoger
-                    </Checkbox>
+                    <Checkbox {...register('inkluderDialoger')}>Inkluder dialoger</Checkbox>
                     <div className="flex items-end gap-4">
                         <DateRangePicker
-                            from={{ name: 'fraDato', required: false, minDate: dateOrUndefined(defaultValues?.fraDato) }}
-                            to={{ name: 'tilDato', required: false, maxDate: dateOrUndefined(valgtOppfolgingsperiode?.slutt) }}
+                            from={{
+                                name: 'fraDato',
+                                required: false,
+                                minDate: defaultValues?.fraDato,
+                            }}
+                            to={{
+                                name: 'tilDato',
+                                required: false,
+                                maxDate: defaultValues?.tilDato,
+                            }}
                             onReset={nullstillValgtDatoRange}
                         />
                     </div>
