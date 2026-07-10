@@ -7,7 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../../reducer';
 import { mockfnr } from '../../mocks/utils';
 import { enEgenAktivitet } from '../../mocks/fixtures/egenAktivitet';
-import { mockOppfolging } from '../../mocks/data/oppfolging';
+import { aktivPeriodeId, defaultMockOppfolgingsPerioder } from '../../mocks/data/oppfolging';
 import { erHistorisk } from '../../datatypes/oppfolgingTypes';
 import dialoger from '../../mocks/data/dialog';
 import { aktiviteterData } from '../../mocks/aktivitet';
@@ -15,16 +15,16 @@ import { handlersWithGraphqlOverride } from '../../testUtils/restMockUtils';
 import { mockLoadedStore } from '../../testUtils/storeMockUtils';
 
 const aktivitetIdErSomErMocket = aktiviteterData.aktiviteter.map((it) => it.id);
-const currentOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0].uuid;
+const currentOppfolgingsperiode = defaultMockOppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0].id;
 const aktivitetMedDialog = enEgenAktivitet({
     id: aktivitetIdErSomErMocket[0],
     tittel: 'Aktivitet med dialog',
-    oppfolgingsperiodeId: currentOppfolgingsperiode,
+    oppfolgingsperiodeId: aktivPeriodeId,
 });
 const aktivitetUtenDialog = enEgenAktivitet({
     id: aktivitetIdErSomErMocket[1],
     tittel: 'Aktivitet uten dialog',
-    oppfolgingsperiodeId: currentOppfolgingsperiode,
+    oppfolgingsperiodeId: aktivPeriodeId,
 });
 const testAktiviteter = [aktivitetMedDialog, aktivitetUtenDialog];
 const testDialoger = [{ ...dialoger[0], aktivitetId: aktivitetIdErSomErMocket[0] }];
@@ -42,7 +42,7 @@ const server = setupServer(
 /* Ikke nødvendig men bare for å gjøre tester raksere */
 const store = configureStore({
     reducer,
-    preloadedState: mockLoadedStore({ aktiviteter: testAktiviteter }),
+    preloadedState: mockLoadedStore({ aktiviteter: testAktiviteter, arenaAktiviteter: [] }),
 });
 
 describe('Send melding knapp (Dialog lenker)', () => {
@@ -66,7 +66,7 @@ describe('Send melding knapp (Dialog lenker)', () => {
         it('should use /:dialogId when there is dialog on aktivitet', async () => {
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => {
-                getByText('Aktivitet med dialog');
+                getByText(aktivitetMedDialog.tittel);
             });
             await act(() => fireEvent.click(getByText('Aktivitet med dialog')));
             await act(() => fireEvent.click(getByText('Send en melding')));

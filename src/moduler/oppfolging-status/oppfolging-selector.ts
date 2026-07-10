@@ -38,6 +38,7 @@ export interface MinimalPeriode {
     start: string;
     slutt: string | null | undefined;
 }
+
 export const selectOppfolgingsPerioder: (store: RootState) => MinimalPeriode[] = createSelector(
     selectAktiviteterSlice,
     (state) => {
@@ -55,12 +56,9 @@ export const selectSorterteOppfolgingsperioder = createSelector(selectOppfolging
     });
 });
 
-// TODO refaktorer, må fikse typer oppfolgingsperioder-typene i hele appen
 export function selectKvpPeriodeForValgteOppfolging(state: RootState) {
     const valgtOppfolgingId = selectValgtPeriodeId(state);
     const perioderMedKvpPerioder = selectOppfolgingsPerioderMedKvpPerioder(state);
-    console.log({ perioderMedKvpPerioder });
-    console.log({ valgtOppfolgingId });
     const oppfolging = perioderMedKvpPerioder.find(
         (periodeMedKvpPerioder) => periodeMedKvpPerioder.id == valgtOppfolgingId,
     );

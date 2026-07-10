@@ -5,10 +5,10 @@ import { OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 
 interface KvpPeriode {
     startTidspunkt: string;
-    sluttTidspunkt: string | undefined | null;
+    sluttTidspunkt: string | undefined;
 }
 
-interface OppfolgingsPeriode {
+export interface OppfolgingsPeriode {
     id: OppfolgingsPeriodeId;
     sluttTidspunkt: string | undefined | null;
     kvpPerioder: KvpPeriode[];

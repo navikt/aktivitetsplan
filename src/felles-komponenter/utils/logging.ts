@@ -1,7 +1,5 @@
 import { AktivitetStatus, AktivitetType } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
-import { Lest } from '../../datatypes/lestTypes';
-import { Oppfolgingsperiode } from '../../datatypes/oppfolgingTypes';
 import { AKTIVITET_BASE_URL, Env, getEnv } from '../../environment';
 import { hash } from './hash';
 
@@ -163,45 +161,4 @@ export function loggMittMalLagre(veileder: boolean) {
 
 export function loggStillingFraNavStillingslenkeKlikk(veileder: boolean) {
     loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, { erVeileder: veileder });
-}
-
-function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
-    const tilD = tilDato ? new Date(tilDato).getTime() : new Date().getTime();
-    return Math.ceil(Math.abs(new Date(fraDato).getTime() - tilD) / (1000 * 3600 * 24));
-}
-
-function loggTidBruktFraRegistrert(fraDato: number | string) {
-    loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-        tidBruktFraRegistrert: tidBruktFra(fraDato),
-    });
-}
-
-export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Lest[], perioder: Oppfolgingsperiode[]) {
-    const periode = perioder.find((p) => p.sluttDato === null);
-    if (periode) {
-        // Tid brukt fra registrert til aktivitetsplanen
-        if (lest.length === 0) {
-            const startDatoPaaOppfolging = periode.startDato;
-            const tidVeilarbLestBleLansert = new Date('2019-02-01').getTime();
-            const tidStartOppfolging = new Date(startDatoPaaOppfolging).getTime();
-            if (tidVeilarbLestBleLansert < tidStartOppfolging) {
-                loggTidBruktFraRegistrert(startDatoPaaOppfolging);
-            }
-        }
-        // Tid brukt mellom gangene i aktivitetsplanen
-        if (lest.length !== 0) {
-            const lestAktivitetsplan = lest.find((a) => a.ressurs === 'aktivitetsplan');
-            if (lestAktivitetsplan) {
-                const startDato = new Date(periode.startDato).getTime();
-                const tidspunkt = new Date(lestAktivitetsplan.tidspunkt).getTime();
-                if (startDato < tidspunkt) {
-                    loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-                        tidMellomGangene: tidBruktFra(tidspunkt),
-                    });
-                } else {
-                    loggTidBruktFraRegistrert(startDato);
-                }
-            }
-        }
-    }
 }

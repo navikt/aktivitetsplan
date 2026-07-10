@@ -39,7 +39,7 @@ function makeTestAktiviteter<T>(
     valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter,
 ) {
     const currentOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0]
-        .uuid;
+        .id;
     const testAktiviteter = filterValues.map((filterValue) => {
         id += 1;
         return {

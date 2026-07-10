@@ -6,6 +6,7 @@ import { RootState } from '../store';
 import { Status } from '../createGenericSlice';
 import { ArenaAktivitet } from '../datatypes/arenaAktivitetTypes';
 import { arenaMockAktiviteter } from '../mocks/data/arena';
+import { OppfolgingStatusResponse } from '../api/veilarboppfolging';
 
 export const mockLoadedStore = ({
     aktiviteter,
@@ -16,7 +17,7 @@ export const mockLoadedStore = ({
     aktiviteter?: VeilarbAktivitet[];
     arenaAktiviteter?: ArenaAktivitet[];
     dialoger?: Dialog[];
-    oppfolging?: OppfolgingStatus;
+    oppfolging?: OppfolgingStatusResponse;
 }): RootState => {
     const arenaAktiviteter = arenaAktiviteterInput || arenaMockAktiviteter;
     const preloadedStore: RootState = {

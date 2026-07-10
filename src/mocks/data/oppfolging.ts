@@ -1,6 +1,6 @@
 import { DefaultBodyType, StrictRequest } from 'msw';
 
-import { Oppfolgingsperiode, OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
+import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import {
     erIkkeRegistrertIKRR,
     erKRRBruker,
@@ -10,17 +10,15 @@ import {
     kanIkkeVarsles,
 } from '../demo/localStorage';
 import { mockfnr } from '../utils';
-import { OppfolgingStatusResponse } from '../../api/veilarboppfolging';
+import { OppfolgingsPeriode, OppfolgingStatusResponse } from '../../api/veilarboppfolging';
 import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
-const oppfolgingsperioder: Oppfolgingsperiode[] = [
+export const aktivPeriodeId = 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId;
+export const defaultMockOppfolgingsPerioder: (OppfolgingsPeriode & { startTidspunkt: string })[] = [
     {
-        uuid: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
-        aktorId: '1234567988888',
-        veileder: null,
-        startDato: '2017-01-30T10:46:10.971+01:00',
-        sluttDato: '2017-12-31T10:46:10.971+01:00',
-        begrunnelse: null,
+        id: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
+        startTidspunkt: '2017-01-30T10:46:10.971+01:00',
+        sluttTidspunkt: '2017-12-31T10:46:10.971+01:00',
         kvpPerioder: [
             {
                 startTidspunkt: '2017-01-30T10:46:10.971+01:00',
@@ -33,21 +31,21 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
         ],
     },
     {
-        uuid: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
-        aktorId: '1234567988888',
-        veileder: null,
-        startDato: '2016-01-30T10:46:10.971+01:00',
-        sluttDato: '2016-12-31T10:46:10.971+01:00',
-        begrunnelse: null,
+        id: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
+        startTidspunkt: '2016-01-30T10:46:10.971+01:00',
+        sluttTidspunkt: '2016-12-31T10:46:10.971+01:00',
         kvpPerioder: [],
     },
     {
-        uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
-        aktorId: '1234567988888',
-        veileder: null,
-        startDato: '2018-01-31T10:46:10.971+01:00',
-        sluttDato: undefined,
-        begrunnelse: null,
+        id: aktivPeriodeId,
+        startTidspunkt: '2018-01-31T10:46:10.971+01:00',
+        sluttTidspunkt: undefined,
+        kvpPerioder: [],
+    },
+    {
+        id: aktivPeriodeId,
+        startTidspunkt: '2018-01-31T10:46:10.971+01:00',
+        sluttTidspunkt: undefined,
     },
 ];
 
@@ -69,10 +67,10 @@ export const oppfolgingGraphql: OppfolgingStatusResponse = {
     oppfolging: {
         erUnderOppfolging: !erIkkeUnderOppfolging(),
     },
-    oppfolgingsPerioder: oppfolgingsperioder.map((periode) => ({
-        id: periode.uuid,
-        startTidspunkt: periode.startDato,
-        sluttTidspunkt: periode.sluttDato,
+    oppfolgingsPerioder: defaultMockOppfolgingsPerioder.map((periode) => ({
+        id: periode.id,
+        startTidspunkt: periode.startTidspunkt,
+        sluttTidspunkt: periode.sluttTidspunkt,
         kvpPerioder:
             periode.kvpPerioder?.map((kvpPeriode) => ({
                 startTidspunkt: kvpPeriode.startTidspunkt,
@@ -90,7 +88,7 @@ const oppfolging = {
     underOppfolging: !erIkkeUnderOppfolging(),
     underKvp: false,
     kanStarteOppfolging: false,
-    oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfolgingsperioder,
+    oppfolgingsPerioder: ingenOppfPerioder() ? [] : defaultMockOppfolgingsPerioder,
     kanReaktiveres: false,
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
@@ -103,7 +101,7 @@ const oppfolging = {
     rettighetsgruppe: 'IYT',
 } as OppfolgingStatus;
 
-export const mockOppfolging = oppfolging;
+export const mockOppfolging = { ...oppfolgingGraphql };
 
 export const getOppfolging = (_: StrictRequest<DefaultBodyType>) => {
     return { data: oppfolgingGraphql, errors: undefined };

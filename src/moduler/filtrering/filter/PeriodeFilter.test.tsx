@@ -6,40 +6,43 @@ import { configureStore, EntityId, EntityState } from '@reduxjs/toolkit';
 import reducer from '../../../reducer';
 import { mockTestAktiviteter } from '../../../mocks/aktivitet';
 import { Status } from '../../../createGenericSlice';
-import { mockOppfolging } from '../../../mocks/data/oppfolging';
+import { defaultMockOppfolgingsPerioder, mockOppfolging } from '../../../mocks/data/oppfolging';
 import { RootState } from '../../../store';
 import userEvent from '@testing-library/user-event';
 import { setupServer } from 'msw/node';
 import { aktivitestplanResponse, handlers } from '../../../mocks/handlers';
 import { datoErIPeriode } from './filter-utils';
 import { expect } from 'vitest';
-import { erHistorisk, HistoriskOppfolgingsperiode, OppfolgingStatus } from '../../../datatypes/oppfolgingTypes';
+import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { aktiviteterState, emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
 import { http } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
 import { PeriodeEntityState } from '../../aktivitet/aktivitet-slice';
 import { compareDesc } from 'date-fns';
+import { OppfolgingStatusResponse } from '../../../api/veilarboppfolging';
+import { AktivitetsId, OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
 
-const perioder = mockOppfolging.oppfolgingsPerioder.toSorted((a, b) => {
-    return compareDesc(a.startDato, b.startDato);
+const perioder = defaultMockOppfolgingsPerioder.toSorted((a, b) => {
+    return compareDesc(a.startTidspunkt, b.startTidspunkt);
 });
 const gjeldendeOppfolgingsperiode = perioder.find((it) => !erHistorisk(it))!!; // NOSONAR
-const gammelOppfolgingsperiode = perioder.find((it) => erHistorisk(it)) as HistoriskOppfolgingsperiode;
-const endaGamlerePeriode = perioder[2];
+const gamlePerioder = perioder.filter((it) => erHistorisk(it));
+const gammelOppfolgingsperiode = gamlePerioder[0] as HistoriskOppfolgingsperiode;
+const endaGamlerePeriode = gamlePerioder[1] as HistoriskOppfolgingsperiode;
 
 const arenaAktivitet = {
     ...arenaMockAktiviteter[0],
     tittel: 'Arenaaktivitet',
     id: 'ARENATA11',
-    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode?.uuid,
+    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode?.id,
 };
 const gammelArenaAktivitet = {
     ...arenaMockAktiviteter[0],
     tittel: 'Gammel Arenaaktivitet',
     id: 'ARENATA22',
     opprettetDato: '2017-02-30T10:46:10.971+01:00', // I gammel oppfølgingsperiode
-    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
+    oppfolgingsperiodeId: gammelOppfolgingsperiode.id,
 };
 // Start nyeste periode '2018-01-31T10:46:10.971+01:00',
 const arenaAktivitetUtenforPeriode = {
@@ -57,27 +60,22 @@ const arenaAktivitetForOppfolging = {
 const veilarbAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Veilarbaktivitet',
-    id: '1',
-    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode.uuid,
+    id: '1' as AktivitetsId,
+    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode.id,
 };
 const gammelVeilarbAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Gammel Veilarbaktivitet',
-    id: '2',
-    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
+    id: '2' as AktivitetsId,
+    oppfolgingsperiodeId: gammelOppfolgingsperiode.id,
 };
 const endaGamlereAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Enda gamlere Veilarbaktivitet',
-    id: '4',
-    oppfolgingsperiodeId: endaGamlerePeriode.uuid,
+    id: '4' as AktivitetsId,
+    oppfolgingsperiodeId: endaGamlerePeriode.id,
 };
-type Mockargs = [
-    EntityState<PeriodeEntityState, EntityId> & {
-        status: Status;
-    },
-    OppfolgingStatus,
-];
+type Mockargs = [EntityState<PeriodeEntityState, OppfolgingsPeriodeId>, OppfolgingStatusResponse];
 const aktiviteterIBareLukkedePerioder = (): Mockargs => {
     const oppfolgingsPerioder = [gammelOppfolgingsperiode, endaGamlerePeriode];
     return [
@@ -97,7 +95,10 @@ const aktiviteterÅpenOgLukketPeriode = (): Mockargs => {
     ];
 };
 
-const initialStore = (aktiviteter: EntityState<PeriodeEntityState>, oppfolgingsData: OppfolgingStatus) =>
+const initialStore = (
+    aktiviteter: EntityState<PeriodeEntityState, OppfolgingsPeriodeId>,
+    oppfolgingsData: OppfolgingStatusResponse,
+) =>
     ({
         data: {
             ...emptyHalfLoadedVeilederState.data,
@@ -205,7 +206,7 @@ describe('PeriodeFilter.tsx', () => {
     describe('datoErIPeriode-filter', () => {
         const gammelOpprettetDato = gammelArenaAktivitet.opprettetDato;
         const currentOpprettetDato = arenaAktivitet.opprettetDato;
-        const gammelPeriodeSlutt = gammelOppfolgingsperiode.sluttDato;
+        const gammelPeriodeSlutt = gammelOppfolgingsperiode.sluttTidspunkt;
         it('nåværende periode - gammel aktivitet skal ikke vises', () => {
             expect(datoErIPeriode(gammelOpprettetDato, null, gammelPeriodeSlutt)).toBeFalsy();
         });

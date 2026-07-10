@@ -58,7 +58,6 @@ function getSteps(kanHaPrintValg?: boolean): string[] {
 
 const AktivitetsplanPrint = () => {
     const kvpPerioder = useSelector(selectKvpPeriodeForValgteOppfolging);
-    console.log('kvpperioder.length', kvpPerioder?.length);
     const { hovedsideRoute } = useRoutes();
     const filterState = useSelector(selectFilterSlice);
     const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: OppfolgingsPeriodeId }>();
@@ -77,7 +76,7 @@ const AktivitetsplanPrint = () => {
     const [valgtDatoRange, setValgtDatoRange] = useState<DatoPeriode | undefined>();
 
     if (!oppfolgingsperiodeId) {
-        throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
+        throw new Error('Kan ikke hente forhåndsvisning når oppfolgingsperiode ikke er valgt');
     }
 
     const avhengigheter = [
