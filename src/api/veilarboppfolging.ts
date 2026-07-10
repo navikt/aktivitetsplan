@@ -54,7 +54,7 @@ const oppfolgingStatusQuery = `
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
         }
-        oppfolgingsPerioder {
+        oppfolgingsPerioder(fnr: $fnr) {
             id
             sluttTidspunkt
             kvpPerioder {
