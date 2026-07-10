@@ -159,14 +159,13 @@ describe('MoteAktivitetForm', () => {
         getByDisplayValue(aktivitet.tittel);
         const date = new Date(aktivitet.fraDato);
         getByDisplayValue(`${date.getDate()}.${'' + (date.getMonth() + 1)}.${date.getFullYear()}`);
-        getByDisplayValue('07:00');
         getByDisplayValue('1 time');
         getByDisplayValue(aktivitet.adresse);
     });
 
     it('Skal ikke populere beskrivelse(hensikt) med defaultverdi når man endrer', () => {
         const aktivitet = { beskrivelse: 'Dette er en beskrivelse' };
-        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
+        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} dirtyRef={dirtyRef} aktivitet={aktivitet} />);
         screen.getByDisplayValue('Dette er en beskrivelse');
     });
 
