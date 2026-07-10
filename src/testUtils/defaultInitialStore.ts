@@ -62,7 +62,7 @@ export const aktiviteterState = ({
     oppfolgingsPerioder,
 }: {
     aktiviteter?: VeilarbAktivitet[];
-    oppfolgingsPerioder: (MinimalPeriode | OppfolgingsPeriode)[];
+    oppfolgingsPerioder: (MinimalPeriode | (OppfolgingsPeriode & { startTidspunkt: string }))[];
 }) => {
     const state = oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK });
     const minimalePerioder = oppfolgingsPerioder.map(toMinimalPeriode);
@@ -72,7 +72,7 @@ export const aktiviteterState = ({
             id: periode.id,
             aktiviteter: aktivitetAdapter.upsertMany(
                 periodeState.aktiviteter,
-                aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.id),
+                (aktiviteter || []).filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.id),
             ),
             start: periode.start,
             slutt: periode.slutt,

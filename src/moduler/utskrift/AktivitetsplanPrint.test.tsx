@@ -67,7 +67,7 @@ const lagStore = (initialStore: RootState) => {
     });
 };
 
-const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
+const AktivitetsvisningModalWrapped = (props: { store: any }) => (
     <div id={'app'}>
         <MemoryRouter initialEntries={[`/utskrift/${aktivPeriodeId}`]}>
             <Routes>

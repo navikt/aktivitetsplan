@@ -1,15 +1,15 @@
 import { pdfjs, Document, Page } from 'react-pdf';
 import pdfjsWorkerUrl from 'react-pdf/dist/pdf.worker.entry?worker&url';
-// import { PDFWorker } from 'pdfjs-dist?worker&url';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { Status } from '../../createGenericSlice';
+import type { OnDocumentLoadSuccess } from 'react-pdf/dist/shared/types';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(pdfjsWorkerUrl, import.meta.url).toString();
 
 interface PdfProps {
-    pdf: Blob;
+    pdf: string | undefined;
     visSuksessmelding: boolean;
     suksessmelding: string;
     forhaandsvisningStatus: Status;
@@ -34,8 +34,8 @@ export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvis
     const [numPages, setNumPages] = useState(0);
     const [visAlert, setVisAlert] = useState(true);
 
-    const onDocumentLoadSuccess = useCallback(
-        ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
+    const onDocumentLoadSuccess: OnDocumentLoadSuccess = useCallback(
+        ({ numPages: nextNumPages }): void => {
             setNumPages(nextNumPages);
         },
         [pdf],
