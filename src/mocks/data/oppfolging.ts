@@ -69,7 +69,7 @@ export const oppfolgingGraphql: OppfolgingStatusResponse = {
     oppfolging: {
         erUnderOppfolging: !erIkkeUnderOppfolging(),
     },
-    oppfolgingsperioder: oppfolgingsperioder.map((periode) => ({
+    oppfolgingsPerioder: oppfolgingsperioder.map((periode) => ({
         id: periode.uuid,
         startTidspunkt: periode.startDato,
         sluttTidspunkt: periode.sluttDato,

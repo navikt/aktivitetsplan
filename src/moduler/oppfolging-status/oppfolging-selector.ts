@@ -26,7 +26,7 @@ export const selectErRegisrertIKRR = (state: RootState) =>
     selectOppfolgingData(state)?.brukerStatus?.krr?.registrertIKrr;
 
 export const selectOppfolgingsPerioderMedKvpPerioder = createSelector(selectOppfolgingData, (oppfolgingsStatus) => {
-    return oppfolgingsStatus?.oppfolgingsperioder || [];
+    return oppfolgingsStatus?.oppfolgingsPerioder || [];
 });
 
 export function selectAktivOppfolgingsperiode(state: RootState) {
@@ -99,7 +99,7 @@ export function selectErBrukerManuell(state: RootState) {
 
 export function selectErUnderKvp(state: RootState) {
     const nåværendeKvpPeriode = selectOppfolgingData(state)
-        ?.oppfolgingsperioder?.find((it) => !it.sluttTidspunkt)
+        ?.oppfolgingsPerioder?.find((it) => !it.sluttTidspunkt)
         ?.kvpPerioder?.find((kvpPeriode) => !kvpPeriode.sluttTidspunkt);
     return !!nåværendeKvpPeriode;
 }

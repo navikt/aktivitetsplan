@@ -29,7 +29,7 @@ export interface OppfolgingStatusResponse {
             kanReaktiveres: boolean;
         };
     };
-    oppfolgingsperioder: OppfolgingsPeriode[];
+    oppfolgingsPerioder: OppfolgingsPeriode[];
     oppfolging: {
         erUnderOppfolging: boolean;
     };
