@@ -11,10 +11,11 @@ import {
 } from '../demo/localStorage';
 import { mockfnr } from '../utils';
 import { OppfolgingStatusResponse } from '../../api/veilarboppfolging';
+import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 const oppfolgingsperioder: Oppfolgingsperiode[] = [
     {
-        uuid: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
+        uuid: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2017-01-30T10:46:10.971+01:00',
@@ -32,7 +33,7 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
         ],
     },
     {
-        uuid: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
+        uuid: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2016-01-30T10:46:10.971+01:00',
@@ -41,7 +42,7 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
         kvpPerioder: [],
     },
     {
-        uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+        uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2018-01-31T10:46:10.971+01:00',
