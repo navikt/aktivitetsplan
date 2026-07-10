@@ -50,8 +50,8 @@ export type HistoriskOppfolgingsperiode = Omit<Oppfolgingsperiode, 'sluttDato'> 
 };
 
 export interface KvpPeriode {
-    opprettetDato: string;
-    avsluttetDato?: string;
+    startTidspunkt: string;
+    sluttTidspunkt?: string;
 }
 
 export interface Mal {

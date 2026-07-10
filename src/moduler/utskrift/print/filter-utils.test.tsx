@@ -6,8 +6,8 @@ import { FellesTransaksjonsTyper } from '../../../datatypes/transaksjonstyperTyp
 import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
 
 const kvpPeriode: KvpPeriode = {
-    opprettetDato: '2019-07-01T10:41:50.761983+02:00',
-    avsluttetDato: '2019-07-29T10:41:50.761983+02:00',
+    startTidspunkt: '2019-07-01T10:41:50.761983+02:00',
+    sluttTidspunkt: '2019-07-29T10:41:50.761983+02:00',
 };
 
 const aktivitetIKvp: EgenAktivitet = {
@@ -125,7 +125,7 @@ describe('filtrerAktiviteter', () => {
         const kvpPerioder = [kvpPeriode];
         const resultat = filtrerAktiviteter('aktivitetsplan', kvpPerioder, undefined, aktiviteter);
         const riktigeaktiviteter = resultat?.filter(
-            (d) => d.id === aktivitetForKvp.id || d.id === aktivitetEtterKvp.id
+            (d) => d.id === aktivitetForKvp.id || d.id === aktivitetEtterKvp.id,
         );
 
         expect(resultat).toHaveLength(2);

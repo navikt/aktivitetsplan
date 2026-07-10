@@ -6,11 +6,11 @@ import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 
 function aktivitetIKvpPeriode(aktivitet: AlleAktiviteter, kvpPeriode: KvpPeriode) {
     const aktivitetDato = new Date(aktivitet.opprettetDato);
-    const kvpFraDato = new Date(kvpPeriode.opprettetDato);
+    const kvpFraDato = new Date(kvpPeriode.startTidspunkt);
 
     return (
         isAfter(aktivitetDato, kvpFraDato) &&
-        (!kvpPeriode.avsluttetDato || isBefore(aktivitetDato, new Date(kvpPeriode.avsluttetDato)))
+        (!kvpPeriode.sluttTidspunkt || isBefore(aktivitetDato, new Date(kvpPeriode.sluttTidspunkt)))
     );
 }
 
@@ -22,7 +22,7 @@ export function filtrerAktiviteter(
     utskriftType: string | undefined,
     kvpPerioder: KvpPeriode[] | undefined,
     valgtKvpPeriode: KvpPeriode | undefined,
-    aktiviteter: AlleAktiviteter[] | undefined
+    aktiviteter: AlleAktiviteter[] | undefined,
 ): AlleAktiviteter[] | undefined {
     if (!aktiviteter) {
         return;
@@ -41,14 +41,14 @@ export function filtrerAktiviteter(
 
 function dialogIKvpPeriode(dialog: Dialog, periode: KvpPeriode): boolean {
     const dialogSisteDato = new Date(dialog.sisteDato);
-    const kvpStart = new Date(periode.opprettetDato);
+    const kvpStart = new Date(periode.startTidspunkt);
     const dialogOpprettet = new Date(dialog.opprettetDato);
 
     if (isBefore(dialogSisteDato, kvpStart)) {
         return false;
     }
 
-    return !periode.avsluttetDato || isBefore(dialogOpprettet, new Date(periode.avsluttetDato));
+    return !periode.sluttTidspunkt || isBefore(dialogOpprettet, new Date(periode.sluttTidspunkt));
 }
 
 function dialogUtenforKvp(dialog: Dialog, kvpPerioder: KvpPeriode[]) {
@@ -59,7 +59,7 @@ export function filtrerDialoger(
     utskriftType: string | undefined,
     kvpPerioder: KvpPeriode[] | undefined,
     valgtKvpPeriode: KvpPeriode | undefined,
-    dialoger: Dialog[] | undefined
+    dialoger: Dialog[] | undefined,
 ): Dialog[] | undefined {
     if (!dialoger || !utskriftType) {
         return undefined;

@@ -59,8 +59,10 @@ export const selectSorterteOppfolgingsperioder = createSelector(selectOppfolging
 export function selectKvpPeriodeForValgteOppfolging(state: RootState) {
     const valgtOppfolgingId = selectValgtPeriodeId(state);
     const perioderMedKvpPerioder = selectOppfolgingsPerioderMedKvpPerioder(state);
+    console.log({ perioderMedKvpPerioder });
+    console.log({ valgtOppfolgingId });
     const oppfolging = perioderMedKvpPerioder.find(
-        (periodeMedKvpPerioder) => periodeMedKvpPerioder.id === valgtOppfolgingId,
+        (periodeMedKvpPerioder) => periodeMedKvpPerioder.id == valgtOppfolgingId,
     );
     return oppfolging && oppfolging.kvpPerioder;
 }

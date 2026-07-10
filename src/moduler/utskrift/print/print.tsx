@@ -48,14 +48,14 @@ function Print(props: Props) {
     const erKvpUtskrift =
         utskriftPlanType !== undefined && utskriftPlanType !== 'helePlanen' && utskriftPlanType !== 'aktivitetsplan';
 
-    const valgtKvpPeriode = kvpPerioder && kvpPerioder.find((periode) => periode.opprettetDato === utskriftPlanType);
+    const valgtKvpPeriode = kvpPerioder && kvpPerioder.find((periode) => periode.startTidspunkt === utskriftPlanType);
 
     const filtrerteAktiviteter = filtrerAktiviteter(utskriftPlanType, kvpPerioder, valgtKvpPeriode, aktiviteter);
 
     const filtrerteDialoger = filtrerDialoger(utskriftPlanType, kvpPerioder, valgtKvpPeriode, dialoger);
 
-    const kvpPeriodeFra = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.opprettetDato) : undefined;
-    const kvpPeriodeTil = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.avsluttetDato) : undefined;
+    const kvpPeriodeFra = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.startTidspunkt) : undefined;
+    const kvpPeriodeTil = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.sluttTidspunkt) : undefined;
 
     const navLogoPng = new URL(logoPngImagePath, import.meta.url).href;
 

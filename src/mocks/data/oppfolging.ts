@@ -23,12 +23,12 @@ const oppfolgingsperioder: Oppfolgingsperiode[] = [
         begrunnelse: null,
         kvpPerioder: [
             {
-                opprettetDato: '2017-01-30T10:46:10.971+01:00',
-                avsluttetDato: '2017-06-01T10:46:10.971+01:00',
+                startTidspunkt: '2017-01-30T10:46:10.971+01:00',
+                sluttTidspunkt: '2017-06-01T10:46:10.971+01:00',
             },
             {
-                opprettetDato: '2017-06-30T10:46:10.971+01:00',
-                avsluttetDato: '2017-12-01T10:46:10.971+01:00',
+                startTidspunkt: '2017-06-30T10:46:10.971+01:00',
+                sluttTidspunkt: '2017-12-01T10:46:10.971+01:00',
             },
         ],
     },
@@ -75,8 +75,8 @@ export const oppfolgingGraphql: OppfolgingStatusResponse = {
         sluttTidspunkt: periode.sluttDato,
         kvpPerioder:
             periode.kvpPerioder?.map((kvpPeriode) => ({
-                startTidspunkt: kvpPeriode.opprettetDato,
-                sluttTidspunkt: kvpPeriode.avsluttetDato,
+                startTidspunkt: kvpPeriode.startTidspunkt,
+                sluttTidspunkt: kvpPeriode.sluttTidspunkt,
             })) || [],
     })),
 };
@@ -106,7 +106,7 @@ const oppfolging = {
 export const mockOppfolging = oppfolging;
 
 export const getOppfolging = (_: StrictRequest<DefaultBodyType>) => {
-    return { ...oppfolgingGraphql };
+    return { data: oppfolgingGraphql, errors: undefined };
 };
 
 export function settDigital() {
