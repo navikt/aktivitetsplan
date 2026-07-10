@@ -13,7 +13,7 @@
     "build:prod-intern": "vite build --mode=prod-intern --base=https://cdn.nav.no/dab/aktivitetsplan-prod-intern/build/",
     "build": "cross-env VITE_USE_HASH_ROUTER=true vite build --mode=dev",
     "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/aktivitetsplan/",
-    "test": "vitest",
+    "test": "NODE_OPTIONS=--no-webstorage vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
