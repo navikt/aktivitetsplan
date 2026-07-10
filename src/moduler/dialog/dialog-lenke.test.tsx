@@ -42,7 +42,7 @@ const server = setupServer(
 /* Ikke nødvendig men bare for å gjøre tester raksere */
 const store = configureStore({
     reducer,
-    preloadedState: mockLoadedStore({ aktiviteter: testAktiviteter, dialoger: testDialoger }),
+    preloadedState: mockLoadedStore({ aktiviteter: testAktiviteter }),
 });
 
 describe('Send melding knapp (Dialog lenker)', () => {

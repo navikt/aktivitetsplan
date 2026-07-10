@@ -1,7 +1,7 @@
 /* Provide both redux-store and "in-memory" router for all sub-components to render correctly */
 import React from 'react';
 import { arenaMockAktiviteter } from '../../../mocks/data/arena';
-import { render, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import { configureStore, EntityId, EntityState } from '@reduxjs/toolkit';
 import reducer from '../../../reducer';
 import { mockTestAktiviteter } from '../../../mocks/aktivitet';
@@ -189,7 +189,7 @@ describe('PeriodeFilter.tsx', () => {
         });
         it('skal ikke vise aktivitet endret før siste oppfølginsperiode men etter tidligere oppfølgingsperiode i siste oppfølgingsperode', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
-            const { queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+            const { queryByText } = await act(() => render(<WrappedHovedside fnr={mockfnr} store={store} />));
             expect(queryByText(arenaAktivitetUtenforPeriode.tittel)).toBeFalsy();
         });
         it('skal ikke vise aktivitet endret før oppfølging i noen av periodene', async () => {
