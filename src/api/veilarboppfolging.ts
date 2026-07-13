@@ -112,7 +112,10 @@ export const fetchOppfolging = (fnr: string | undefined): Promise<GraphqlRespons
             const data = it.data;
             const validationResult = schema.safeParse(data);
             if (!validationResult.success) {
-                console.warn('Veilarboppfolging graphql validation failed: ', validationResult.error.issues);
+                console.warn(
+                    'Veilarboppfolging graphql validation failed: ',
+                    JSON.stringify(validationResult.error.issues),
+                );
             }
             return it.data;
         });
