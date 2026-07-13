@@ -110,6 +110,8 @@ export const gitt = (store: RootState = defaultStore) => ({
         medKvpAktivPeriode: () => gitt(withOppfolging(store, oppfolgingMockSlice.medKvpAktivPeriode(defaultStore))),
     },
     aktiviteter: {
+        medAktivitet: (aktiviteter: VeilarbAktivitet) =>
+            gitt(withAktiviteter(store, [aktiviteter], [aktivVeilarbOppfolgingMockPeriode])),
         medAktiviteter: (aktiviteter: VeilarbAktivitet[]) =>
             gitt(withAktiviteter(store, aktiviteter, [aktivVeilarbOppfolgingMockPeriode])),
     },
