@@ -47,8 +47,8 @@ const schema = z.object({
             registrertIKrr: z.boolean(),
         }),
         arena: z.object({
-            inaktiveringsdato: z.string().optional(),
-            kanReaktiveres: z.boolean().nullable(),
+            inaktiveringsdato: z.string().optional().nullable(),
+            kanReaktiveres: z.boolean().optional().nullable(),
         }),
     }),
     oppfolgingsPerioder: z.array(
@@ -112,7 +112,7 @@ export const fetchOppfolging = (fnr: string | undefined): Promise<GraphqlRespons
             const data = it.data;
             const validationResult = schema.safeParse(data);
             if (!validationResult.success) {
-                console.log('Veilarboppfolging graphql validation failed: ', validationResult.error.issues);
+                console.warn('Veilarboppfolging graphql validation failed: ', validationResult.error.issues);
             }
             return it.data;
         });
