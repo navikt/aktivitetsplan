@@ -20,5 +20,5 @@ export const lagreMal = (mal: string, fnr: string | undefined): Promise<Mal> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal`, { maalInnhold: { maal: mal }, fnr }, 'lagreMal');
 
 export const doLesAktivitetsplan = (fnr: string) => {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/v3/veileder/lest-aktivitetsplan`, { fnr }, {}, 'doLesAktivitetsplan');
+    return postAsJson(`${OPPFOLGING_BASE_URL}/v3/veileder/lest-aktivitetsplan`, { fnr }, 'doLesAktivitetsplan');
 };
