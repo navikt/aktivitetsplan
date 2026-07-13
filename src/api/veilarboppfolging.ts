@@ -27,7 +27,7 @@ export interface OppfolgingStatusResponse {
         };
         arena: {
             inaktiveringsdato: string | undefined;
-            kanReaktiveres: boolean;
+            kanReaktiveres: boolean | undefined;
         };
     };
     oppfolgingsPerioder: OppfolgingsPeriode[];
@@ -48,7 +48,7 @@ const schema = z.object({
         }),
         arena: z.object({
             inaktiveringsdato: z.string().nullable(),
-            kanReaktiveres: z.boolean(),
+            kanReaktiveres: z.boolean().nullable(),
         }),
     }),
     oppfolgingsPerioder: z.array(
