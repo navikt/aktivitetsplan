@@ -47,18 +47,18 @@ const schema = z.object({
             registrertIKrr: z.boolean(),
         }),
         arena: z.object({
-            inaktiveringsdato: z.string().nullable(),
-            kanReaktiveres: z.boolean().nullable(),
+            inaktiveringsdato: z.string().optional(),
+            kanReaktiveres: z.boolean().optional(),
         }),
     }),
     oppfolgingsPerioder: z.array(
         z.object({
             id: z.string(),
-            sluttTidspunkt: z.string().nullable(),
+            sluttTidspunkt: z.string().optional(),
             kvpPerioder: z.array(
                 z.object({
                     startTidspunkt: z.string(),
-                    sluttTidspunkt: z.string().nullable(),
+                    sluttTidspunkt: z.string().optional(),
                 }),
             ),
         }),
