@@ -2,6 +2,7 @@ import { postAsJson } from './utils';
 import { OPPFOLGING_BASE_URL } from '../environment';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 import { OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
+import * as z from 'zod';
 
 interface KvpPeriode {
     startTidspunkt: string;
@@ -34,6 +35,38 @@ export interface OppfolgingStatusResponse {
         erUnderOppfolging: boolean;
     };
 }
+
+const schema = z.object({
+    brukerStatus: z.object({
+        manuell: z.object({
+            erManuell: z.boolean(),
+        }),
+        krr: z.object({
+            reservertIKrr: z.boolean(),
+            kanVarsles: z.boolean(),
+            registrertIKrr: z.boolean(),
+        }),
+        arena: z.object({
+            inaktiveringsdato: z.string().nullable(),
+            kanReaktiveres: z.boolean(),
+        }),
+    }),
+    oppfolgingsPerioder: z.array(
+        z.object({
+            id: z.string(),
+            sluttTidspunkt: z.string().nullable(),
+            kvpPerioder: z.array(
+                z.object({
+                    startTidspunkt: z.string(),
+                    sluttTidspunkt: z.string().nullable(),
+                }),
+            ),
+        }),
+    ),
+    oppfolging: z.object({
+        erUnderOppfolging: z.boolean(),
+    }),
+});
 
 const oppfolgingStatusQuery = `
     query($fnr: String!) {
@@ -75,4 +108,11 @@ const query = (fnr: string | undefined) => ({
 export const fetchOppfolging = (fnr: string | undefined): Promise<GraphqlResponse<OppfolgingStatusResponse>> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/graphql`, query(fnr), 'fetchOppfolging')
         .then(sjekkGraphqlFeil<{ data: OppfolgingStatusResponse }>)
-        .then((it) => it.data);
+        .then((it) => {
+            const data = it.data;
+            const validationResult = schema.safeParse(data);
+            if (!validationResult.success) {
+                console.log('Veilarboppfolging graphql validation failed: ', validationResult.error.issues);
+            }
+            return it.data;
+        });
