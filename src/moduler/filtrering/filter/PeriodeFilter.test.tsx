@@ -1,45 +1,41 @@
-/* Provide both redux-store and "in-memory" router for all sub-components to render correctly */
 import React from 'react';
 import { arenaMockAktiviteter } from '../../../mocks/data/arena';
-import { render, waitFor } from '@testing-library/react';
-import { configureStore, EntityId, EntityState } from '@reduxjs/toolkit';
-import reducer from '../../../reducer';
+import { act, render, waitFor } from '@testing-library/react';
 import { mockTestAktiviteter } from '../../../mocks/aktivitet';
-import { Status } from '../../../createGenericSlice';
-import { mockOppfolging } from '../../../mocks/data/oppfolging';
-import { RootState } from '../../../store';
+import { defaultMockOppfolgingsPerioder } from '../../../mocks/data/oppfolging';
 import userEvent from '@testing-library/user-event';
-import { setupServer } from 'msw/node';
-import { aktivitestplanResponse, handlers } from '../../../mocks/handlers';
 import { datoErIPeriode } from './filter-utils';
 import { expect } from 'vitest';
-import { erHistorisk, HistoriskOppfolgingsperiode, OppfolgingStatus } from '../../../datatypes/oppfolgingTypes';
+import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
-import { aktiviteterState, emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
-import { http } from 'msw';
-import { failOrGrahpqlResponse, mockfnr } from '../../../mocks/utils';
-import { PeriodeEntityState } from '../../aktivitet/aktivitet-slice';
+import { mockfnr } from '../../../mocks/utils';
 import { compareDesc } from 'date-fns';
+import { OppfolgingsPeriode } from '../../../api/veilarboppfolging';
+import { AktivitetsId } from '../../../datatypes/brandedTypes';
+import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
+import { gitt as storeBuilder } from '../../../testUtils/store/mockStoreBuilder';
+import { ArenaAktivitet } from '../../../datatypes/arenaAktivitetTypes';
 
-const perioder = mockOppfolging.oppfolgingsPerioder.toSorted((a, b) => {
-    return compareDesc(a.startDato, b.startDato);
+const perioder = defaultMockOppfolgingsPerioder.toSorted((a, b) => {
+    return compareDesc(a.startTidspunkt, b.startTidspunkt);
 });
 const gjeldendeOppfolgingsperiode = perioder.find((it) => !erHistorisk(it))!!; // NOSONAR
-const gammelOppfolgingsperiode = perioder.find((it) => erHistorisk(it)) as HistoriskOppfolgingsperiode;
-const endaGamlerePeriode = perioder[2];
+const gamlePerioder = perioder.filter((it) => erHistorisk(it));
+const gammelOppfolgingsperiode = gamlePerioder[0] as HistoriskOppfolgingsperiode & { startTidspunkt: string };
+const endaGamlerePeriode = gamlePerioder[1] as HistoriskOppfolgingsperiode & { startTidspunkt: string };
 
 const arenaAktivitet = {
     ...arenaMockAktiviteter[0],
     tittel: 'Arenaaktivitet',
     id: 'ARENATA11',
-    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode?.uuid,
+    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode?.id,
 };
 const gammelArenaAktivitet = {
     ...arenaMockAktiviteter[0],
     tittel: 'Gammel Arenaaktivitet',
     id: 'ARENATA22',
     opprettetDato: '2017-02-30T10:46:10.971+01:00', // I gammel oppfølgingsperiode
-    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
+    oppfolgingsperiodeId: gammelOppfolgingsperiode.id,
 };
 // Start nyeste periode '2018-01-31T10:46:10.971+01:00',
 const arenaAktivitetUtenforPeriode = {
@@ -57,104 +53,58 @@ const arenaAktivitetForOppfolging = {
 const veilarbAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Veilarbaktivitet',
-    id: '1',
-    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode.uuid,
+    id: '1' as AktivitetsId,
+    oppfolgingsperiodeId: gjeldendeOppfolgingsperiode.id,
 };
 const gammelVeilarbAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Gammel Veilarbaktivitet',
-    id: '2',
-    oppfolgingsperiodeId: gammelOppfolgingsperiode.uuid,
+    id: '2' as AktivitetsId,
+    oppfolgingsperiodeId: gammelOppfolgingsperiode.id,
 };
 const endaGamlereAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: 'Enda gamlere Veilarbaktivitet',
-    id: '4',
-    oppfolgingsperiodeId: endaGamlerePeriode.uuid,
+    id: '4' as AktivitetsId,
+    oppfolgingsperiodeId: endaGamlerePeriode.id,
 };
-type Mockargs = [
-    EntityState<PeriodeEntityState, EntityId> & {
-        status: Status;
-    },
-    OppfolgingStatus,
-];
+type Mockargs = {
+    aktiviteter: VeilarbAktivitet[];
+    perioder: (OppfolgingsPeriode & { startTidspunkt: string })[];
+    arenaAktiviteter: ArenaAktivitet[];
+};
 const aktiviteterIBareLukkedePerioder = (): Mockargs => {
     const oppfolgingsPerioder = [gammelOppfolgingsperiode, endaGamlerePeriode];
-    return [
-        aktiviteterState({
-            aktiviteter: [endaGamlereAktivitet, gammelVeilarbAktivitet],
-            oppfolgingsPerioder,
-        }),
-        { ...mockOppfolging, oppfolgingsPerioder },
-    ];
+    return {
+        aktiviteter: [endaGamlereAktivitet, gammelVeilarbAktivitet],
+        perioder: oppfolgingsPerioder,
+        arenaAktiviteter: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
+    };
 };
 
 const aktiviteterÅpenOgLukketPeriode = (): Mockargs => {
     const oppfolgingsPerioder = [gjeldendeOppfolgingsperiode, gammelOppfolgingsperiode];
-    return [
-        aktiviteterState({ aktiviteter: [veilarbAktivitet, gammelVeilarbAktivitet], oppfolgingsPerioder }),
-        { ...mockOppfolging, oppfolgingsPerioder },
-    ];
+    return {
+        aktiviteter: [veilarbAktivitet, gammelVeilarbAktivitet],
+        perioder: oppfolgingsPerioder,
+        arenaAktiviteter: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
+    };
 };
-
-const initialStore = (aktiviteter: EntityState<PeriodeEntityState>, oppfolgingsData: OppfolgingStatus) =>
-    ({
-        data: {
-            ...emptyHalfLoadedVeilederState.data,
-            aktiviteter,
-            arenaAktiviteter: {
-                status: Status.OK,
-                data: [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
-            },
-            oppfolging: {
-                status: Status.OK,
-                data: mockOppfolging,
-            },
-        },
-    }) as unknown as RootState;
-
-const lagStore = (initialStore: RootState) =>
-    configureStore({
-        reducer,
-        preloadedState: initialStore,
-    });
 
 const gitt = {
-    aktiviteterÅpenOgLukketPeriode: () => lagStore(initialStore(...aktiviteterÅpenOgLukketPeriode())),
-    aktiviteterIBareLukkedePerioder: () => lagStore(initialStore(...aktiviteterIBareLukkedePerioder())),
+    aktiviteterÅpenOgLukketPeriode: () =>
+        storeBuilder()
+            .aktivteterOgPerioder({ ...aktiviteterÅpenOgLukketPeriode() })
+            .createStore(),
+    aktiviteterIBareLukkedePerioder: () =>
+        storeBuilder()
+            .aktivteterOgPerioder({ ...aktiviteterIBareLukkedePerioder() })
+            .createStore(),
 };
-
-// Overstyr lesing av aktiviteter i denne testen
-const server = setupServer(
-    http.post(
-        '/veilarbaktivitet/graphql',
-        failOrGrahpqlResponse(
-            () => false,
-            () => aktivitestplanResponse({ aktiviteter: [veilarbAktivitet, gammelVeilarbAktivitet] }),
-        ),
-    ),
-    http.get(
-        '/veilarbaktivitet/api/arena/tiltak',
-        failOrGrahpqlResponse(
-            () => false,
-            () => [arenaAktivitet, gammelArenaAktivitet, arenaAktivitetUtenforPeriode],
-        ),
-    ),
-    ...handlers,
-);
 
 const gammelPeriodeDropdownTekst = '30. Jan 2017 - 31. Dec 2017';
 
 describe('PeriodeFilter.tsx', () => {
-    // Start server before all tests
-    beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-
-    //  Close server after all tests
-    afterAll(() => server.close());
-
-    // Reset handlers after each test `important for test isolation`
-    afterEach(() => server.resetHandlers());
-
     describe('Veilarbaktivitet filtrering', () => {
         it('skal vise veilarb-aktivitet i nåværende periode (første i listen)', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
@@ -189,7 +139,7 @@ describe('PeriodeFilter.tsx', () => {
         });
         it('skal ikke vise aktivitet endret før siste oppfølginsperiode men etter tidligere oppfølgingsperiode i siste oppfølgingsperode', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();
-            const { queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+            const { queryByText } = await act(() => render(<WrappedHovedside fnr={mockfnr} store={store} />));
             expect(queryByText(arenaAktivitetUtenforPeriode.tittel)).toBeFalsy();
         });
         it('skal ikke vise aktivitet endret før oppfølging i noen av periodene', async () => {
@@ -205,7 +155,7 @@ describe('PeriodeFilter.tsx', () => {
     describe('datoErIPeriode-filter', () => {
         const gammelOpprettetDato = gammelArenaAktivitet.opprettetDato;
         const currentOpprettetDato = arenaAktivitet.opprettetDato;
-        const gammelPeriodeSlutt = gammelOppfolgingsperiode.sluttDato;
+        const gammelPeriodeSlutt = gammelOppfolgingsperiode.sluttTidspunkt;
         it('nåværende periode - gammel aktivitet skal ikke vises', () => {
             expect(datoErIPeriode(gammelOpprettetDato, null, gammelPeriodeSlutt)).toBeFalsy();
         });
@@ -227,7 +177,6 @@ describe('PeriodeFilter.tsx', () => {
             await waitFor(() => getByText(veilarbAktivitet.tittel));
         });
         it('hvis bare lukkede perioder skal aktiviteter i nyeste periode vises', async () => {
-            console.log(endaGamlerePeriode);
             const store = gitt.aktiviteterIBareLukkedePerioder();
             const { getByText, queryByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText(gammelVeilarbAktivitet.tittel));

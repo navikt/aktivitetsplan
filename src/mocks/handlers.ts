@@ -23,7 +23,7 @@ import { features } from './data/feature';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { me } from './data/me';
-import getOppfolging, { mockOppfolging, settDigital } from './data/oppfolging';
+import getOppfolging, { defaultMockOppfolgingsPerioder, mockOppfolging, settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
 import { veilederMe } from './data/Veileder';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
@@ -56,6 +56,7 @@ export const handlers = [
     // veilarboppfolging
     http.get('/veilarboppfolging/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
     http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
+    http.post('/veilarboppfolging/api/graphql', failOrGetResponse(getOppfFeiler, getOppfolging)),
     http.post('/veilarboppfolging/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
     http.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
     http.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
@@ -101,6 +102,10 @@ export const handlers = [
                 await new Promise((resolve) => {
                     setTimeout(resolve, 2000);
                 });
+                if (!aktivitet)
+                    throw new Error(
+                        `Aktivitet med id ${aktivitetId} ble ikke funnnet når test skulle svare på graphql kall`,
+                    );
                 return aktivitetResponse(aktivitet);
             } else {
                 return aktivitestplanResponse(); // Default aktiviteter
@@ -262,11 +267,11 @@ export const aktivitestplanResponse = (
 ): AktivitetsplanResponse => {
     return {
         data: {
-            perioder: mockOppfolging.oppfolgingsPerioder.map((periode) => ({
-                id: periode.uuid,
-                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.uuid),
-                start: periode.startDato,
-                slutt: periode.sluttDato ?? undefined,
+            perioder: defaultMockOppfolgingsPerioder.map((periode) => ({
+                id: periode.id,
+                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.id),
+                start: periode.startTidspunkt,
+                slutt: periode.sluttTidspunkt ?? undefined,
             })),
         },
     };

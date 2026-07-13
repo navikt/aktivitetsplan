@@ -12,15 +12,15 @@ import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
-    selectArenaAktivitetEtiketterFilter
+    selectArenaAktivitetEtiketterFilter,
 } from './filter-selector';
 import { FilterState } from './filter-slice';
 
 export const filterErAktivt = (filter: FilterState): boolean =>
-        erAktivtFilter(filter.aktivitetEtiketter) ||
-        erAktivtFilter(filter.aktivitetTyper) ||
-        erAktivtFilter(filter.arenaAktivitetEtiketter) ||
-        erAktivtFilter(filter.aktivitetAvtaltMedNav);
+    erAktivtFilter(filter.aktivitetEtiketter) ||
+    erAktivtFilter(filter.aktivitetTyper) ||
+    erAktivtFilter(filter.arenaAktivitetEtiketter) ||
+    erAktivtFilter(filter.aktivitetAvtaltMedNav);
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
@@ -40,15 +40,15 @@ const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, date
 
 export function datoErIPeriode(
     dato: string,
-    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode | null,
+    valgtHistoriskPeriode?: (HistoriskOppfolgingsperiode & { startTidspunkt: string }) | null,
     sistePeriodeSluttDato?: string,
 ) {
     const datoDate = new Date(dato);
 
     if (valgtHistoriskPeriode) {
         const intervall = {
-            start: new Date(valgtHistoriskPeriode.startDato),
-            end: new Date(valgtHistoriskPeriode.sluttDato),
+            start: new Date(valgtHistoriskPeriode.startTidspunkt),
+            end: new Date(valgtHistoriskPeriode.sluttTidspunkt),
         };
 
         return isWithinInterval(datoDate, intervall);

@@ -2,7 +2,7 @@ import React from 'react';
 import { describe } from 'vitest';
 import { WrappedHovedside } from '../testUtils/WrappedHovedside';
 import { act, render } from '@testing-library/react';
-import { emptyHalfLoadedVeilederState } from '../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../testUtils/store/defaultInitialStore';
 import { setupServer } from 'msw/node';
 import { http } from 'msw';
 import { failOrGrahpqlResponse, mockfnr } from '../mocks/utils';

@@ -1,53 +1,84 @@
 import { DefaultBodyType, StrictRequest } from 'msw';
 
-import { Oppfolgingsperiode, OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
+import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import {
     erIkkeRegistrertIKRR,
     erKRRBruker,
     erManuellBruker,
-    erPrivatBruker,
+    erIkkeUnderOppfolging,
     ingenOppfPerioder,
     kanIkkeVarsles,
 } from '../demo/localStorage';
 import { mockfnr } from '../utils';
+import { OppfolgingsPeriode, OppfolgingStatusResponse } from '../../api/veilarboppfolging';
+import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
-const oppfolgingsperioder: Oppfolgingsperiode[] = [
+export const aktivPeriodeId = 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId;
+export const defaultMockOppfolgingsPerioder: (OppfolgingsPeriode & { startTidspunkt: string })[] = [
     {
-        uuid: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
-        aktorId: '1234567988888',
-        veileder: null,
-        startDato: '2017-01-30T10:46:10.971+01:00',
-        sluttDato: '2017-12-31T10:46:10.971+01:00',
-        begrunnelse: null,
+        id: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
+        startTidspunkt: '2017-01-30T10:46:10.971+01:00',
+        sluttTidspunkt: '2017-12-31T10:46:10.971+01:00',
         kvpPerioder: [
             {
-                opprettetDato: '2017-01-30T10:46:10.971+01:00',
-                avsluttetDato: '2017-06-01T10:46:10.971+01:00',
+                startTidspunkt: '2017-01-30T10:46:10.971+01:00',
+                sluttTidspunkt: '2017-06-01T10:46:10.971+01:00',
             },
             {
-                opprettetDato: '2017-06-30T10:46:10.971+01:00',
-                avsluttetDato: '2017-12-01T10:46:10.971+01:00',
+                startTidspunkt: '2017-06-30T10:46:10.971+01:00',
+                sluttTidspunkt: '2017-12-01T10:46:10.971+01:00',
             },
         ],
     },
     {
-        uuid: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
-        aktorId: '1234567988888',
-        veileder: null,
-        startDato: '2016-01-30T10:46:10.971+01:00',
-        sluttDato: '2016-12-31T10:46:10.971+01:00',
-        begrunnelse: null,
+        id: 'a3aa11a1-1aa1-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
+        startTidspunkt: '2016-01-30T10:46:10.971+01:00',
+        sluttTidspunkt: '2016-12-31T10:46:10.971+01:00',
         kvpPerioder: [],
     },
     {
-        uuid: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
-        aktorId: '1234567988888',
-        veileder: null,
-        startDato: '2018-01-31T10:46:10.971+01:00',
-        sluttDato: undefined,
-        begrunnelse: null,
+        id: aktivPeriodeId,
+        startTidspunkt: '2018-01-31T10:46:10.971+01:00',
+        sluttTidspunkt: undefined,
+        kvpPerioder: [],
+    },
+    {
+        id: aktivPeriodeId,
+        startTidspunkt: '2018-01-31T10:46:10.971+01:00',
+        sluttTidspunkt: undefined,
+        kvpPerioder: [],
     },
 ];
+
+export const oppfolgingGraphql: OppfolgingStatusResponse = {
+    brukerStatus: {
+        arena: {
+            inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
+            kanReaktiveres: false,
+        },
+        krr: {
+            reservertIKrr: erKRRBruker(),
+            registrertIKrr: !erIkkeRegistrertIKRR(),
+            kanVarsles: !kanIkkeVarsles(),
+        },
+        manuell: {
+            erManuell: erManuellBruker(),
+        },
+    },
+    oppfolging: {
+        erUnderOppfolging: !erIkkeUnderOppfolging(),
+    },
+    oppfolgingsPerioder: defaultMockOppfolgingsPerioder.map((periode) => ({
+        id: periode.id,
+        startTidspunkt: periode.startTidspunkt,
+        sluttTidspunkt: periode.sluttTidspunkt,
+        kvpPerioder:
+            periode.kvpPerioder?.map((kvpPeriode) => ({
+                startTidspunkt: kvpPeriode.startTidspunkt,
+                sluttTidspunkt: kvpPeriode.sluttTidspunkt,
+            })) || [],
+    })),
+};
 
 const oppfolging = {
     fnr: mockfnr,
@@ -55,10 +86,10 @@ const oppfolging = {
     veilederId: null,
     reservasjonKRR: erKRRBruker(),
     manuell: erManuellBruker(),
-    underOppfolging: !erPrivatBruker(),
+    underOppfolging: !erIkkeUnderOppfolging(),
     underKvp: false,
     kanStarteOppfolging: false,
-    oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfolgingsperioder,
+    oppfolgingsPerioder: ingenOppfPerioder() ? [] : defaultMockOppfolgingsPerioder,
     kanReaktiveres: false,
     servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
@@ -71,10 +102,10 @@ const oppfolging = {
     rettighetsgruppe: 'IYT',
 } as OppfolgingStatus;
 
-export const mockOppfolging = oppfolging;
+export const mockOppfolging = { ...oppfolgingGraphql };
 
-export const getOppfolging = (request: StrictRequest<DefaultBodyType>) => {
-    return { ...oppfolging, fnr: new URL(request.url).searchParams.get('fnr') ?? undefined };
+export const getOppfolging = (_: StrictRequest<DefaultBodyType>) => {
+    return { data: oppfolgingGraphql, errors: undefined };
 };
 
 export function settDigital() {

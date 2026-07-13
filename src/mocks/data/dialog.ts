@@ -1,19 +1,15 @@
-import {  ulesteDialoger } from '../demo/localStorage';
+import { ulesteDialoger } from '../demo/localStorage';
 import { Dialog } from '../../datatypes/dialogTypes';
 
 const dialoger: Dialog[] = [
     {
         id: '1',
+        oppfolgingsperiode: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         aktivitetId: '1',
         overskrift: 'NOT USED',
         sisteDato: '2018-01-28T12:48:56.097+01:00',
         opprettetDato: '2018-02-27T12:48:56.081+01:00',
-        historisk: false,
         lest: !ulesteDialoger(),
-        venterPaSvar: false,
-        ferdigBehandlet: false,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
         henvendelser: [
             {
                 id: '1',
@@ -38,16 +34,12 @@ const dialoger: Dialog[] = [
     },
     {
         id: '3',
+        oppfolgingsperiode: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         aktivitetId: '141439',
         overskrift: 'NOT USED',
         sisteDato: '2018-11-21T13:13:20.685+01:00',
         opprettetDato: '2018-11-21T13:13:20.663+01:00',
-        historisk: false,
         lest: !ulesteDialoger(),
-        venterPaSvar: false,
-        ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
         henvendelser: [
             {
                 id: '4',
@@ -63,16 +55,12 @@ const dialoger: Dialog[] = [
     },
     {
         id: '2',
-        aktivitetId: null,
+        oppfolgingsperiode: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+        aktivitetId: undefined,
         overskrift: 'Du har fått et varsel fra Nav',
         sisteDato: '2018-02-01T11:52:20.615+01:00',
         opprettetDato: '2018-02-01T11:52:20.535+01:00',
-        historisk: false,
         lest: !ulesteDialoger(),
-        venterPaSvar: true,
-        ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
         henvendelser: [
             {
                 id: '3',
@@ -88,22 +76,18 @@ const dialoger: Dialog[] = [
     },
     {
         id: '4',
-        aktivitetId: null,
+        oppfolgingsperiode: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+        aktivitetId: undefined,
         overskrift: 'Automatiske dialoger',
         sisteDato: '2018-01-28T12:48:56.097+01:00',
         opprettetDato: '2018-02-27T12:48:56.081+01:00',
-        historisk: false,
         lest: !ulesteDialoger(),
-        venterPaSvar: false,
-        ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: '2018-02-27T12:48:57.097+01:00',
-        erLestAvBruker: true,
         henvendelser: [
             {
                 id: '4',
                 dialogId: '4',
                 avsender: 'VEILEDER',
-                avsenderId: null,
+                avsenderId: undefined,
                 sendt: '2018-02-27T12:48:56.097+01:00',
                 lest: !ulesteDialoger(),
                 tekst:
@@ -115,7 +99,7 @@ const dialoger: Dialog[] = [
                 id: '5',
                 dialogId: '4',
                 avsender: 'VEILEDER',
-                avsenderId: null,
+                avsenderId: undefined,
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: !ulesteDialoger(),
                 tekst:
@@ -131,7 +115,7 @@ const dialoger: Dialog[] = [
                 id: '6',
                 dialogId: '4',
                 avsender: 'VEILEDER',
-                avsenderId: null,
+                avsenderId: undefined,
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: !ulesteDialoger(),
                 tekst:
@@ -148,16 +132,12 @@ const dialoger: Dialog[] = [
     },
     {
         id: '2',
+        oppfolgingsperiode: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
         aktivitetId: '10',
         overskrift: 'Du har fått et varsel fra Nav',
         sisteDato: '2017-02-17T12:52:20.615+01:00',
         opprettetDato: '2017-02-17T11:52:20.535+01:00',
-        historisk: false,
         lest: !ulesteDialoger(),
-        venterPaSvar: true,
-        ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
         henvendelser: [
             {
                 id: '3',

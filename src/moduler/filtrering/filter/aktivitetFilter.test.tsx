@@ -23,7 +23,7 @@ import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
 import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
-import { emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../../../testUtils/store/defaultInitialStore';
 import { http } from 'msw';
 import { failOrGrahpqlResponse } from '../../../mocks/utils';
 
@@ -39,7 +39,7 @@ function makeTestAktiviteter<T>(
     valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter,
 ) {
     const currentOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0]
-        .uuid;
+        .id;
     const testAktiviteter = filterValues.map((filterValue) => {
         id += 1;
         return {

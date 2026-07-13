@@ -9,7 +9,7 @@ const hurtigfilterType = [
         name: 'Ny bruker - Standard innsats',
         avskrudd: [
             LocalStorageElement.INGEN_OPPF_PERIODER,
-            LocalStorageElement.PRIVAT_BRUKER,
+            LocalStorageElement.IKKE_UNDER_OPPFOLGING,
             LocalStorageElement.MANUELL_BRUKER,
             LocalStorageElement.ARENA_AKTIVITETER,
             LocalStorageElement.TEST_AKTIVITETER,

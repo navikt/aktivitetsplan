@@ -19,24 +19,25 @@ import {
 import { RootState } from '../../store';
 import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
 import { loggDyplenkingTilAnnenBruker } from '../../analytics/analytics';
+import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 type PerioderMedAktiviteter = {
-    id: string;
+    id: OppfolgingsPeriodeId;
     aktiviteter: VeilarbAktivitet[];
 };
 
 export interface PeriodeEntityState {
-    id: string;
-    aktiviteter: EntityState<VeilarbAktivitet>;
+    id: OppfolgingsPeriodeId;
+    aktiviteter: EntityState<VeilarbAktivitet, AktivitetsId>;
     start: string;
     slutt: string | undefined | null;
 }
 
-export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet>({
-    selectId: (model) => model.id,
+export const aktivitetAdapter = createEntityAdapter<VeilarbAktivitet, AktivitetsId>({
+    selectId: (model: VeilarbAktivitet) => model.id,
 });
-export const oppfolgingsdperiodeAdapter = createEntityAdapter<PeriodeEntityState>({
-    selectId: (model) => model.id,
+export const oppfolgingsdperiodeAdapter = createEntityAdapter<PeriodeEntityState, OppfolgingsPeriodeId>({
+    selectId: (model: PeriodeEntityState) => model.id,
 });
 
 export const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOppfolgingsperioder } =
@@ -44,7 +45,7 @@ export const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOpp
 const { selectById: selectAktivitetById, selectAll: selectAlleAktiviter } = aktivitetAdapter.getSelectors();
 
 export const selectAktiviteterSlice = (state: RootState): AktivitetState => state.data.aktiviteter;
-export const selectAktivitet = (state: RootState, aktivitetId: string): VeilarbAktivitet | undefined => {
+export const selectAktivitet = (state: RootState, aktivitetId: AktivitetsId): VeilarbAktivitet | undefined => {
     const perioder = selectAllOppfolgingsperioder(selectAktiviteterSlice(state));
     return perioder
         .map((periode) => selectAktivitetById(periode.aktiviteter, aktivitetId))
@@ -89,7 +90,10 @@ function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbA
 }
 
 // Exported only for testing setup
-export const getOrCreatePeriode = (state: typeof initialState, oppfolgingsperiodeId: string): PeriodeEntityState => {
+export const getOrCreatePeriode = (
+    state: typeof initialState,
+    oppfolgingsperiodeId: OppfolgingsPeriodeId,
+): PeriodeEntityState => {
     return (
         selectOppfolgingsperiodeById(state, oppfolgingsperiodeId) || {
             // Hvis ingen oppfølgingsperiode funnet, opprett en ny

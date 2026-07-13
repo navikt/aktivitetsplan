@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, expect } from 'vitest';
 import { fireEvent, render } from '@testing-library/react';
-import { emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../../../testUtils/store/defaultInitialStore';
 import { WrappedComponent } from '../../../testUtils/WrappedHovedside';
 import EndreAktivitet from './EndreAktivitet';
 import { configureStore } from '@reduxjs/toolkit';

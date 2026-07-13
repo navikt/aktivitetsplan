@@ -1,0 +1,165 @@
+type Query {
+    oppfolgingsEnhet(fnr: String): OppfolgingsEnhetsInfo
+    oppfolging(fnr: String): OppfolgingDto
+    brukerStatus(fnr: String!): BrukerStatusDto
+    oppfolgingsPerioder(fnr: String!): [Oppfolgingsperiode]
+    veilederTilgang(fnr: String!): VeilederTilgang
+    gjeldendeOppfolgingsperiode: Oppfolgingsperiode
+    utmeldingskandidatTag(fnr: String!): UtmeldingskandidatTag
+}
+
+type VeilederTilgang {
+    harTilgang: Boolean! @deprecated(reason: "Erstattet av harVeilederLeseTilgangTIlBruker som er mer beskrivende")
+    harVeilederLeseTilgangTilBruker: Boolean!
+    harVeilederLeseTilgangTilBrukersKontorsperre: Boolean
+    harVeilederTilgangFlytteBrukerTilEgetKontor: Boolean!
+    tilgang: TilgangResultat
+    harAktiveTiltaksdeltakelserVedFlyttingTilEgetKontor: Boolean
+}
+
+enum UtmeldingskandidatTag {
+    ARBEIDSSOKERPERIODE_AVSLUTTET_IKKE_LEVERT_MELDEKORT,
+    ARBEIDSSOKERPERIODE_AVSLUTTET_SVARTE_NEI_I_BEKREFTELSE,
+    ARBEIDSSOKERPERIODE_AVSLUTTET_ANNET,
+}
+
+# Svaret på Evaluerering av Policy-en som heter NavAnsattTilgangTilEksternBruker i POAO-Tilgang
+# Kan kjøres på både lese og skrive tilgang (modia-oppfolging vs modia generell) men er foreløpig bare brukt til lesetilgang
+enum TilgangResultat {
+    HAR_TILGANG,
+    IKKE_TILGANG_FORTROLIG_ADRESSE,
+    IKKE_TILGANG_STRENGT_FORTROLIG_ADRESSE,
+    IKKE_TILGANG_EGNE_ANSATTE,
+    IKKE_TILGANG_ENHET,
+    IKKE_TILGANG_MODIA
+}
+
+type OppfolgingsEnhetsInfo {
+    enhet: EnhetDto,
+}
+
+type EnhetDto {
+    id: String!
+    navn: String!
+    kilde: Kilde!
+}
+
+enum Kilde {
+    ARENA
+    NORG
+}
+
+enum KanStarteOppfolging {
+    JA
+    JA_MED_MANUELL_GODKJENNING_PGA_UNDER_18
+    JA_MED_MANUELL_GODKJENNING_PGA_IKKE_BOSATT
+    JA_MED_MANUELL_GODKJENNING_PGA_IKKE_BOSATT_UNDER_18
+    JA_MED_MANUELL_GODKJENNING_PGA_DNUMMER_IKKE_EOS
+    JA_MED_MANUELL_GODKJENNING_PGA_DNUMMER_IKKE_EOS_UNDER_18
+    ALLEREDE_UNDER_OPPFOLGING
+    ALLEREDE_UNDER_OPPFOLGING_MEN_INAKTIVERT
+    ALLEREDE_UNDER_OPPFOLGING_MEN_INAKTIVERT_MEN_KREVER_MANUELL_GODKJENNING_PGA_IKKE_BOSATT
+    ALLEREDE_UNDER_OPPFOLGING_MEN_INAKTIVERT_MEN_KREVER_MANUELL_GODKJENNING_PGA_DNUMMER_IKKE_EOS
+    IKKE_TILGANG_FORTROLIG_ADRESSE
+    IKKE_TILGANG_STRENGT_FORTROLIG_ADRESSE
+    IKKE_TILGANG_EGNE_ANSATTE
+    IKKE_TILGANG_ENHET
+    IKKE_TILGANG_MODIA
+    DOD
+    IKKE_LOVLIG_OPPHOLD
+    UKJENT_STATUS_FOLKEREGISTERET
+    INGEN_STATUS_FOLKEREGISTERET
+}
+
+enum KanStarteOppfolgingEkstern {
+    JA
+    JA_MED_MANUELL_GODKJENNING_PGA_UNDER_18
+    JA_MED_MANUELL_GODKJENNING_PGA_IKKE_BOSATT
+    JA_MED_MANUELL_GODKJENNING_PGA_DNUMMER_IKKE_EOS
+    ALLEREDE_UNDER_OPPFOLGING
+    DOD
+    IKKE_LOVLIG_OPPHOLD
+    UKJENT_STATUS_FOLKEREGISTERET
+    INGEN_STATUS_FOLKEREGISTERET
+}
+
+type OppfolgingDto {
+    erUnderOppfolging: Boolean
+    kanStarteOppfolging: KanStarteOppfolging
+    kanStarteOppfolgingEkstern: KanStarteOppfolgingEkstern
+}
+
+type VeilederTilordningDto {
+    veilederIdent: String
+}
+
+type KrrStatusDto {
+    reservertIKrr: Boolean!
+    kanVarsles: Boolean!
+    registrertIKrr: Boolean!
+}
+
+type KontorSperre {
+    kontorId: String!
+}
+
+type BrukerStatusDto {
+    manuell: BrukerStatusManuellDto
+    erKontorsperret: Boolean!
+    kontorSperre: KontorSperre
+    krr: KrrStatusDto
+    arena: BrukerStatusArenaDto
+    veilederTilordning: VeilederTilordningDto
+    harAktiveTiltaksdeltakelser: Boolean!
+}
+
+type BrukerStatusArenaDto {
+    inaktivIArena: Boolean!
+    kanReaktiveres: Boolean
+    inaktiveringsdato: String
+    kvalifiseringsgruppe: String
+    formidlingsgruppe: String
+}
+
+type BrukerStatusManuellDto {
+    erManuell: Boolean
+    opprettetTidspunkt: String
+    begrunnelse: String
+    endretAvType: String
+    endretAvIdent: String
+}
+
+enum OppfolgingStartetBegrunnelse {
+    ARBEIDSSOKER_REGISTRERING
+
+    # Oppfølging startet på grunn av melding fra arbeidssøkerregisteret.
+    # startet_av_type vil indikere om det var bruker, veileder eller system som utførte registreringen */
+    ARENA_SYNC_ARBS
+
+    # Oppfølging startet av at bruker fikk formidlingsgruppe ARBS i Arena
+    # (dette skal normalt ikke skje lenger,
+    # siden vi reagerer direkte på arbeidssøkerregistreringen)
+    ARENA_SYNC_IARBS
+
+    # For brukere med fomidlingsgruppe IARBS i Arena,
+    # vil oppfølging startes enten når de får en innsatsgruppe
+    # (i praksis når 14a vedtak ble gjort i Arena - dette gjøres ikke lenger etter ny vedtaksløsning ble lansert)
+    # eller at de får servicegruppe VURDU (sykemeldt uten arbeidsgiver)
+    # eller servicegruppe OPPFI (helserelatert arbeidsrettet oppfølging i Nav)
+    REAKTIVERT_OPPFOLGING
+    MANUELL_REGISTRERING_VEILEDER
+}
+
+type Oppfolgingsperiode {
+    startTidspunkt: String!
+    sluttTidspunkt: String
+    id: String!
+    startetBegrunnelse: OppfolgingStartetBegrunnelse
+    avsluttetAv: String,
+    kvpPerioder: [KvpPeriode]
+}
+
+type KvpPeriode {
+    startTidspunkt: String!
+    sluttTidspunkt: String
+}

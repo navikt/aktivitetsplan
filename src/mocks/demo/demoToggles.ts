@@ -3,15 +3,17 @@ import {
     arenaFeilet,
     dialogFeilet,
     erEskalertBruker,
-    erEskalertBrukerGammel, erIkkeRegistrertIKRR,
+    erEskalertBrukerGammel,
+    erIkkeRegistrertIKRR,
     erKRRBruker,
     erManuellBruker,
-    erPrivatBruker,
+    erIkkeUnderOppfolging,
     erUnder18,
     forhaandsvisningFeiler,
     ikkeLoggetInnNivaa4,
     ingenOppfPerioder,
-    journalforingFeiler, kanIkkeVarsles,
+    journalforingFeiler,
+    kanIkkeVarsles,
     LocalStorageElement,
     maalFeilet,
     nivaa4Feilet,
@@ -21,7 +23,8 @@ import {
     visArenaAktiviteter,
     visAutomatiskeAktiviteter,
     visTestAktiviteter,
-    visEksterneAktiviteter, sendTilBrukerFeiler
+    visEksterneAktiviteter,
+    sendTilBrukerFeiler,
 } from './localStorage';
 
 export const brukertype = {
@@ -44,8 +47,8 @@ export const radios = [
 export const features = [
     {
         label: 'Ikke under oppfølging',
-        id: LocalStorageElement.PRIVAT_BRUKER,
-        checked: erPrivatBruker,
+        id: LocalStorageElement.IKKE_UNDER_OPPFOLGING,
+        checked: erIkkeUnderOppfolging,
     },
     {
         label: 'Manuell',
@@ -95,7 +98,7 @@ export const features = [
     {
         label: 'Ikke registrert i KRR',
         id: LocalStorageElement.ER_IKKE_REGISTRERT_I_KRR,
-        checked : erIkkeRegistrertIKRR,
+        checked: erIkkeRegistrertIKRR,
     },
 ];
 export const aktivitetTilstand = [

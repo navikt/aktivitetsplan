@@ -20,6 +20,7 @@ declare global {
 
 const env = getEnv();
 export const initAnalytics = () => {
+    if (env == Env.Test) return;
     if (env == Env.Local) {
         trackingFunction = (eventName, eventData) => {
             console.log('[AnalyticsEvent]', eventName, eventData);

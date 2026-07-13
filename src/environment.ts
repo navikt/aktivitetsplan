@@ -21,19 +21,21 @@ export const AKTIVITET_GRAPHQL_BASE_URL = stripPrependingSlash(BASE_URL) + '/vei
 export const DIALOG_GRAPHQL_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbdialog/graphql';
 export const OPPFOLGING_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarboppfolging/api';
 export const VEILARBLEST_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarblest/api';
-export const PERSON_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbperson/api';
 export const VEILEDER_BASE_URL = stripPrependingSlash(BASE_URL) + '/veilarbveileder/api';
 export const MODIA_CONTEXT_BASE_URL = stripPrependingSlash(BASE_URL) + '/modiacontextholder/api';
 
 export enum Env {
     Local = 'local',
+    Test = 'test',
     Dev = 'dev',
     Prod = 'prod',
 }
 
+const isVitest = import.meta.env.VITEST;
 export const getEnv = (): string => {
     const { hostname } = window.location;
     if (hostname.includes('dev.nav.no')) return Env.Dev;
     if (hostname.includes('nav.no')) return Env.Prod;
+    if (isVitest) return Env.Test;
     return Env.Local;
 };

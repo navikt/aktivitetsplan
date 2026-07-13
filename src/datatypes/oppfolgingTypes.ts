@@ -1,3 +1,6 @@
+import { OppfolgingsPeriodeId } from './brandedTypes';
+import { OppfolgingsPeriode } from '../api/veilarboppfolging';
+
 export interface Me {
     erBruker: boolean;
     erVeileder: boolean;
@@ -16,7 +19,7 @@ export interface OppfolgingStatus {
     underKvp: boolean; // Bruker flyttes - brukerstatus
     // kanStarteOppfolging: boolean;
     // oppfolgingUtgang: string | null;
-    oppfolgingsPerioder: Oppfolgingsperiode[]; // Tilgjengelig på graphql
+    oppfolgingsPerioder: OppfolgingsperiodeGammel[]; // Tilgjengelig på graphql
 
     inaktivIArena: boolean | null; // Brukers Arena-status
     kanReaktiveres: boolean; // Brukers Arena-status
@@ -28,8 +31,8 @@ export interface OppfolgingStatus {
     // rettighetsgruppe: string;
 }
 
-export interface Oppfolgingsperiode {
-    uuid: string;
+export interface OppfolgingsperiodeGammel {
+    uuid: OppfolgingsPeriodeId;
     aktorId: string;
     veileder?: string | null;
     sluttDato?: string | null;
@@ -39,17 +42,17 @@ export interface Oppfolgingsperiode {
 }
 
 export const erHistorisk = (
-    oppfolginsPeriode: Oppfolgingsperiode,
+    oppfolginsPeriode: OppfolgingsPeriode,
 ): oppfolginsPeriode is HistoriskOppfolgingsperiode => {
-    return !!oppfolginsPeriode.sluttDato;
+    return !!oppfolginsPeriode.sluttTidspunkt;
 };
-export type HistoriskOppfolgingsperiode = Omit<Oppfolgingsperiode, 'sluttDato'> & {
-    sluttDato: string;
+export type HistoriskOppfolgingsperiode = Omit<OppfolgingsPeriode, 'sluttTidspunkt'> & {
+    sluttTidspunkt: string;
 };
 
 export interface KvpPeriode {
-    opprettetDato: string;
-    avsluttetDato?: string;
+    startTidspunkt: string;
+    sluttTidspunkt: string | undefined;
 }
 
 export interface Mal {

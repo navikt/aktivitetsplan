@@ -6,6 +6,7 @@ import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes'
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { hentAktiviteterGraphql, hentAktivitetGraphql } from '../../api/aktivitetsplanGraphql';
 import { Historikk } from '../../datatypes/Historikk';
+import { AktivitetsId } from '../../datatypes/brandedTypes';
 
 export const utenHistorikk = <Aktivitet extends VeilarbAktivitet>(aktivitet: Aktivitet) => {
     const { historikk, ...aktivitetUtenHistorikk } = aktivitet as Aktivitet & { historikk: Historikk };
@@ -16,7 +17,7 @@ export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => 
     return await hentAktiviteterGraphql();
 });
 
-export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: string) => {
+export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: AktivitetsId) => {
     return await hentAktivitetGraphql(aktivitetId);
 });
 

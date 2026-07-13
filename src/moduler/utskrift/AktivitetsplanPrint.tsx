@@ -12,10 +12,7 @@ import { selectDialogStatus } from '../dialog/dialog-selector';
 import { selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { hentMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
-import {
-    selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus,
-} from '../oppfolging-status/oppfolging-selector';
+import { selectKvpPeriodeForValgteOppfolging, selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import PrintVerktoylinje from './printVerktoylinje';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
@@ -37,12 +34,13 @@ import {
     KvpUtvalgskriterie,
     KvpUtvalgskriterieAlternativ,
     lagKvpUtvalgskriterie,
-    mapTilJournalforingFilter
+    mapTilJournalforingFilter,
 } from '../journalforing/journalforingFilter';
 import { Status } from '../../createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
 import { filterErAktivt } from '../filtrering/filter/filter-utils';
 import { velgPeriode } from '../filtrering/filter/valgt-periode-slice';
+import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_UTSKRIFT = 'UTSKRIFT';
@@ -62,7 +60,7 @@ const AktivitetsplanPrint = () => {
     const kvpPerioder = useSelector(selectKvpPeriodeForValgteOppfolging);
     const { hovedsideRoute } = useRoutes();
     const filterState = useSelector(selectFilterSlice);
-    const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: string }>();
+    const { oppfolgingsperiodeId } = useParams<{ oppfolgingsperiodeId: OppfolgingsPeriodeId }>();
     const pdf = useSelector(selectPdfForhaandsvisningSendTilBruker);
     const { aktivEnhet: journalførendeEnhetId } = useFnrOgEnhetContext();
     const forhaandsvisningOpprettet = useSelector(selectForhaandsvisningSendTilBrukerOpprettet);
@@ -78,7 +76,7 @@ const AktivitetsplanPrint = () => {
     const [valgtDatoRange, setValgtDatoRange] = useState<DatoPeriode | undefined>();
 
     if (!oppfolgingsperiodeId) {
-        throw new Error('Kan ikke hente forhåndsvisning når aktiv enhet ikke er valgt');
+        throw new Error('Kan ikke hente forhåndsvisning når oppfolgingsperiode ikke er valgt');
     }
 
     const avhengigheter = [
@@ -99,7 +97,6 @@ const AktivitetsplanPrint = () => {
         loggEvent(PRINT_MODAL_OPEN);
     }, [oppfolgingsperiodeId]);
 
-
     const [kvpUtvalgskriterie, setKvpUtvalgskriterie] = useState<KvpUtvalgskriterie>({
         alternativ: erVeileder
             ? KvpUtvalgskriterieAlternativ.EKSKLUDER_KVP_AKTIVITETER
@@ -113,7 +110,13 @@ const AktivitetsplanPrint = () => {
 
     useEffect(() => {
         const filterBrukt = filterErAktivt(filterState);
-        const nyttArkivFilter = mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger, valgtDatoRange);
+        const nyttArkivFilter = mapTilJournalforingFilter(
+            filterState,
+            false,
+            kvpUtvalgskriterie,
+            inkluderDialoger,
+            valgtDatoRange,
+        );
         const filterEndretSidenForhaandsvisning =
             JSON.stringify(filterBruktTilForhaandsvisning) !== JSON.stringify(nyttArkivFilter);
         setPdfMåOppdateresEtterFilterendring(filterBrukt || filterEndretSidenForhaandsvisning);
@@ -140,15 +143,12 @@ const AktivitetsplanPrint = () => {
     const goBack = () => navigate(-1);
 
     const oppdaterForhaandsvistPdf = (nyKvpUtvalgskriterie?: KvpUtvalgskriterie) => {
-
-        console.log("DatoPeriode", valgtDatoRange);
-
         const arkivFilter = mapTilJournalforingFilter(
             filterState,
             false,
             nyKvpUtvalgskriterie ? nyKvpUtvalgskriterie : kvpUtvalgskriterie,
             inkluderDialoger,
-            valgtDatoRange
+            valgtDatoRange,
         );
 
         dispatch(
@@ -195,7 +195,13 @@ const AktivitetsplanPrint = () => {
                     forhaandsvisningOpprettet,
                     journalførendeEnhetId,
                     oppfolgingsperiodeId,
-                    filter: mapTilJournalforingFilter(filterState, false, kvpUtvalgskriterie, inkluderDialoger, valgtDatoRange),
+                    filter: mapTilJournalforingFilter(
+                        filterState,
+                        false,
+                        kvpUtvalgskriterie,
+                        inkluderDialoger,
+                        valgtDatoRange,
+                    ),
                     uuidCachetPdf,
                 }),
             );

@@ -2,6 +2,7 @@
 
 import { Entries } from './types/entries';
 
+declare module '*.less';
 declare module '*.module.less';
 
 declare module '*.png';
