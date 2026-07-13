@@ -19,13 +19,6 @@ export const fetchMalListe = (fnr: string | undefined): Promise<Mal[]> =>
 export const lagreMal = (mal: string, fnr: string | undefined): Promise<Mal> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/maal`, { maalInnhold: { maal: mal }, fnr }, 'lagreMal');
 
-export const fetchHarFlereAktorId = (fnr: string | undefined): Promise<boolean> =>
-    postAsJson(
-        `${OPPFOLGING_BASE_URL}/v3/oppfolging/harFlereAktorIderMedOppfolging`,
-        fnr ? { fnr } : undefined,
-        'fetchHarFlereAktorId',
-    );
-
 export const doLesAktivitetsplan = (fnr: string) => {
     return postAsJson(`${OPPFOLGING_BASE_URL}/v3/veileder/lest-aktivitetsplan`, { fnr }, {}, 'doLesAktivitetsplan');
 };

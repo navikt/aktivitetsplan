@@ -77,14 +77,14 @@ vi.mock('./felles-komponenter/utils/logging', async (importOriginal) => {
 /* Mock fetchHarFlereAktorId,
    its run on-mount and has no side-effects visible for this app
    so it cant be tested
-*/
+
 vi.mock('./api/oppfolgingAPI', async (importOriginal) => {
     const actual = await importOriginal();
     return {
         ...actual,
         fetchHarFlereAktorId: vi.fn(() => Promise.resolve()),
     };
-});
+});*/
 
 // Add this to your jest setup file
 global.DOMMatrix = class DOMMatrix {

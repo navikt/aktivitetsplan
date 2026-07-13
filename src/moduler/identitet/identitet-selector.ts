@@ -11,7 +11,7 @@ export function selectIdentitetData(state: RootState) {
 }
 
 export function selectErBruker(state: RootState) {
-    return selectIdentitetData(state).erBruker;
+    return selectIdentitetData(state)?.erBruker;
 }
 
 export function selectIdentitetStatus(state: RootState) {
