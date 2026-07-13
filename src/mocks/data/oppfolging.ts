@@ -46,6 +46,7 @@ export const defaultMockOppfolgingsPerioder: (OppfolgingsPeriode & { startTidspu
         id: aktivPeriodeId,
         startTidspunkt: '2018-01-31T10:46:10.971+01:00',
         sluttTidspunkt: undefined,
+        kvpPerioder: [],
     },
 ];
 

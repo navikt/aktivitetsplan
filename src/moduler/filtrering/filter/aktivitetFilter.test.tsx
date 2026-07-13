@@ -23,7 +23,7 @@ import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
 import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
-import { emptyHalfLoadedVeilederState } from '../../../testUtils/defaultInitialStore';
+import { emptyHalfLoadedVeilederState } from '../../../testUtils/store/defaultInitialStore';
 import { http } from 'msw';
 import { failOrGrahpqlResponse } from '../../../mocks/utils';
 

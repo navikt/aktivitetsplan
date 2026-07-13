@@ -25,7 +25,7 @@ export interface OppfolgingStatusResponse {
             registrertIKrr: boolean;
         };
         arena: {
-            inaktiveringsdato: string;
+            inaktiveringsdato: string | undefined;
             kanReaktiveres: boolean;
         };
     };

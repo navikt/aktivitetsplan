@@ -1,14 +1,18 @@
-import { Status } from '../createGenericSlice';
-import { defaultMockOppfolgingsPerioder, mockOppfolging } from '../mocks/data/oppfolging';
-import { aktivitetAdapter, getOrCreatePeriode, oppfolgingsdperiodeAdapter } from '../moduler/aktivitet/aktivitet-slice';
+import { Status } from '../../createGenericSlice';
+import { defaultMockOppfolgingsPerioder, mockOppfolging } from '../../mocks/data/oppfolging';
+import {
+    aktivitetAdapter,
+    getOrCreatePeriode,
+    oppfolgingsdperiodeAdapter,
+} from '../../moduler/aktivitet/aktivitet-slice';
 import { compareDesc } from 'date-fns';
-import { MinimalPeriode } from '../moduler/oppfolging-status/oppfolging-selector';
-import { RootState } from '../store';
-import { aktivitestplanResponse } from '../mocks/handlers';
-import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
-import { VeilederInfo } from '../datatypes/types';
-import { Mal } from '../datatypes/oppfolgingTypes';
-import { OppfolgingsPeriode } from '../api/veilarboppfolging';
+import { MinimalPeriode } from '../../moduler/oppfolging-status/oppfolging-selector';
+import { RootState } from '../../store';
+import { aktivitestplanResponse } from '../../mocks/handlers';
+import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
+import { VeilederInfo } from '../../datatypes/types';
+import { Mal } from '../../datatypes/oppfolgingTypes';
+import { OppfolgingsPeriode } from '../../api/veilarboppfolging';
 
 const veilederIdentitet = {
     id: 'Z123456',
@@ -16,7 +20,7 @@ const veilederIdentitet = {
     erBruker: false,
 };
 
-const aktivVeilarbOppfolgingMockPeriode = defaultMockOppfolgingsPerioder.toSorted((a, b) => {
+export const aktivVeilarbOppfolgingMockPeriode = defaultMockOppfolgingsPerioder.toSorted((a, b) => {
     return compareDesc(a.sluttTidspunkt || new Date().toISOString(), b.sluttTidspunkt || new Date().toISOString());
 })[0];
 
@@ -43,45 +47,7 @@ export const initialLoadedAktiviteterState = ({ aktiviteter }: { aktiviteter?: V
     return oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
 };
 
-const toMinimalPeriode = (
-    periode: MinimalPeriode | (OppfolgingsPeriode & { startTidspunkt: string }),
-): MinimalPeriode => {
-    if ('sluttTidspunkt' in periode) {
-        return {
-            id: periode.id,
-            start: periode.startTidspunkt,
-            slutt: periode.sluttTidspunkt,
-        };
-    } else {
-        return periode;
-    }
-};
-
-export const aktiviteterState = ({
-    aktiviteter,
-    oppfolgingsPerioder,
-}: {
-    aktiviteter?: VeilarbAktivitet[];
-    oppfolgingsPerioder: (MinimalPeriode | (OppfolgingsPeriode & { startTidspunkt: string }))[];
-}) => {
-    const state = oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK });
-    const minimalePerioder = oppfolgingsPerioder.map(toMinimalPeriode);
-    const oppfolgingsperioder = minimalePerioder.map((periode) => {
-        const periodeState = getOrCreatePeriode(state, periode.id);
-        return {
-            id: periode.id,
-            aktiviteter: aktivitetAdapter.upsertMany(
-                periodeState.aktiviteter,
-                (aktiviteter || []).filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.id),
-            ),
-            start: periode.start,
-            slutt: periode.slutt,
-        };
-    });
-    return oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
-};
-
-export const emptyHalfLoadedVeilederState: RootState = {
+export const emptyHalfLoadedVeilederState = {
     data: {
         aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({
             status: Status.NOT_STARTED,
@@ -100,9 +66,9 @@ export const emptyHalfLoadedVeilederState: RootState = {
         },
     },
     view: {},
-};
+} as unknown as RootState;
 
-export const initialLoadedEmptyState: RootState = {
+export const initialLoadedEmptyState = {
     data: {
         aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({
             status: Status.OK,
@@ -137,4 +103,4 @@ export const initialLoadedEmptyState: RootState = {
             data: [],
         },
     },
-};
+} as unknown as RootState;

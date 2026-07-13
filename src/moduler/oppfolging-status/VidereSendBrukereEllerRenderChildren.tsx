@@ -27,14 +27,14 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     const oppfolgingsPerioder = useSelector(selectOppfolgingsPerioder);
     const manuell = useSelector(selectErBrukerManuell);
     const reservasjonKRR = useSelector(selectReservasjonKRR);
-    const erRegistrertIKRR = useSelector(selectErRegisrertIKRR);
+    const erRegistrertIKRR = useSelector(selectErRegisrertIKRR); //|| throw new Error("LOL");
     const kanVarsles = useSelector(selectKanVarsles);
 
     const oppfolgingsStatus = useSelector(selectOppfolgingStatus);
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const erVeileder = useErVeileder();
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
-    const utdatertIKRR = !kanVarsles;
+    const utdatertIKRR = !kanVarsles && erRegistrertIKRR;
 
     if (
         oppfolgingsStatus === Status.OK &&
