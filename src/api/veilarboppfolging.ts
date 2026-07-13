@@ -54,11 +54,11 @@ const schema = z.object({
     oppfolgingsPerioder: z.array(
         z.object({
             id: z.string(),
-            sluttTidspunkt: z.string().optional(),
+            sluttTidspunkt: z.string().optional().nullable(),
             kvpPerioder: z.array(
                 z.object({
                     startTidspunkt: z.string(),
-                    sluttTidspunkt: z.string().optional(),
+                    sluttTidspunkt: z.string().optional().nullable(),
                 }),
             ),
         }),
