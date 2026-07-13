@@ -48,7 +48,7 @@ const schema = z.object({
         }),
         arena: z.object({
             inaktiveringsdato: z.string().optional(),
-            kanReaktiveres: z.boolean().optional(),
+            kanReaktiveres: z.boolean().nullable(),
         }),
     }),
     oppfolgingsPerioder: z.array(
