@@ -101,7 +101,7 @@ const oppfolgingStatusQuery = `
 const query = (fnr: string | undefined) => ({
     query: oppfolgingStatusQuery,
     variables: {
-        fnr,
+        fnr: fnr || '',
     },
 });
 
