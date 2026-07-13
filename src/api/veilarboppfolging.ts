@@ -39,7 +39,7 @@ export interface OppfolgingStatusResponse {
 const schema = z.object({
     brukerStatus: z.object({
         manuell: z.object({
-            erManuell: z.boolean(),
+            erManuell: z.boolean().nullable(),
         }),
         krr: z.object({
             reservertIKrr: z.boolean(),
