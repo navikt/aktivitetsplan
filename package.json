@@ -14,7 +14,7 @@
     "build": "cross-env VITE_USE_HASH_ROUTER=true vite build --mode=dev",
     "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/aktivitetsplan/",
     "test": "NODE_OPTIONS=--no-webstorage vitest",
-    "coverage": "vitest run --coverage",
+    "coverage": "NODE_OPTIONS=--no-webstorage vitest run --coverage",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "format-all": "prettier --write 'src/'",
