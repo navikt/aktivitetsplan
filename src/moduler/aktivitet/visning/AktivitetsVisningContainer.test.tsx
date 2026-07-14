@@ -46,7 +46,7 @@ const AktivitetsVisningContainerWrapper = ({
     return (
         <ErVeilederContext value={erVeileder}>
             <Provider store={store}>
-                <RouterProvider router={routing}></RouterProvider>
+                <RouterProvider future={{ v7_startTransition: true }} router={routing}></RouterProvider>
             </Provider>
         </ErVeilederContext>
     );
