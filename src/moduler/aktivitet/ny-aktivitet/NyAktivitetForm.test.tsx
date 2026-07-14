@@ -1,16 +1,16 @@
-import { beforeAll, describe, expect, Mock } from 'vitest';
+import { describe, expect, Mock } from 'vitest';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
+import { WrappedComponent, WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { mockfnr } from '../../../mocks/utils';
 import React from 'react';
 import { defaultAktivPeriode } from '../../../testUtils/store/defaultInitialStore';
-// import { setupServer } from 'msw/node';
-// import { handlers } from '../../../mocks/handlers';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import { gitt } from '../../../testUtils/store/mockStoreBuilder';
 import { DialogResponse } from '../../../api/dialogGraphql';
 import { aktivitetingress } from '../visning/aktivitetingress/AktivitetIngress';
-import { hentInnsynsrett } from '../../../api/aktivitetAPI';
+import NyAktivitetForm from './NyAktivitetForm';
+import { Route, Routes } from 'react-router-dom';
+import { nyAktivitetRoute } from '../../../routing/useRoutes';
 
 // const server = setupServer(...handlers);
 
@@ -40,13 +40,21 @@ describe('ny aktivitet', () => {
 
     // Reset handlers after each test `important for test isolation`
     // afterEach(() => server.resetHandlers());
+    it('Skal finne "ny aktivitet" knapp på start-siden', async () => {
+        const store = gitt().createStore();
+        const { getByRole, getAllByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+        const leggTilKnapp = await waitFor(() => getByRole('button', { name: /Legg til aktivitet/i }));
+        await waitFor(() => {
+            expect(leggTilKnapp).not.toBeDisabled();
+        });
+        act(() => leggTilKnapp.click());
+        expect(getAllByText(/Samtalereferat|Avtale om å søke jobber/i)).toHaveLength(2);
+    });
 
-    it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
+    it('Skal kunne velge ny aktivitet type på start-siden og bli sendt til ny aktivitet-form', async () => {
         const store = gitt().createStore();
         const routerRef: { current: any } = { current: undefined };
-        const { getByText, getByLabelText, getByRole, findByText, queryByText } = render(
-            <WrappedHovedside fnr={mockfnr} store={store} routerRef={routerRef} />,
-        );
+        const { getByRole } = render(<WrappedHovedside fnr={mockfnr} store={store} routerRef={routerRef} />);
         const leggTilKnapp = await waitFor(() => getByRole('button', { name: /Legg til aktivitet/i }));
         await waitFor(() => {
             expect(leggTilKnapp).not.toBeDisabled();
@@ -58,6 +66,17 @@ describe('ny aktivitet', () => {
         await waitFor(() => {
             expect(routerRef.current?.state.location.pathname).toBe('/aktivitetsplan/aktivitet/ny/samtalereferat');
         });
+    });
+
+    it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
+        const store = gitt().createStore();
+        const { getByText, getByLabelText, getByRole, findByText, queryByText } = render(
+            <WrappedComponent initialEntries={[`${nyAktivitetRoute(false)}/samtalereferat`]} store={store}>
+                <Routes>
+                    <Route path={`${nyAktivitetRoute(false)}/*`} element={<NyAktivitetForm />} />
+                </Routes>
+            </WrappedComponent>,
+        );
 
         await waitFor(() => {
             expect(getByText(aktivitetingress.SAMTALEREFERAT)).toBeInTheDocument();
