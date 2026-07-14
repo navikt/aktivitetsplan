@@ -3,7 +3,7 @@ import { useErVeileder } from '../Provider';
 const basename = '/aktivitetsplan';
 const aktivitetRoute = (aktivitetId: string, erVeileder: boolean) =>
     `${erVeileder ? basename : ''}/aktivitet/vis/${aktivitetId}`;
-const nyAktivitetRoute = (erVeileder: boolean) => `${erVeileder ? basename : ''}/aktivitet/ny`;
+export const nyAktivitetRoute = (erVeileder: boolean) => `${erVeileder ? basename : ''}/aktivitet/ny`;
 export const endreAktivitetRoute = (aktivitetId: string, erVeileder: boolean) =>
     `${erVeileder ? basename : ''}/aktivitet/endre/${aktivitetId}`;
 const fullforAktivitetRoute = (aktivitetId: string, erVeileder: boolean) =>

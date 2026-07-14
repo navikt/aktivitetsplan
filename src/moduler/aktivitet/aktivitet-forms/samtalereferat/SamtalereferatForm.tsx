@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useState } from 'react';
+import React, { RefObject, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Status } from '../../../../createGenericSlice';
@@ -8,7 +8,7 @@ import InnerSamtalereferatForm from './InnerSamtalereferatForm';
 
 interface Props {
     onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: SamtalereferatAktivitet;
 }
 
@@ -22,14 +22,13 @@ const SamtalereferatForm = (props: Props) => {
                 setIgnorePending(true);
             }
         }, 400);
-        return clearTimeout(timer);
+        return () => clearTimeout(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (status === Status.PENDING && !ignorePending) {
         return null;
     }
-
     return <InnerSamtalereferatForm {...props} />;
 };
 

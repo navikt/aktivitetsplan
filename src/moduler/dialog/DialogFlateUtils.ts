@@ -18,8 +18,9 @@ export const byttTilDialogFlate = ({
     dialogId?: string;
 }) => {
     event.preventDefault();
-    window.history.pushState('', 'Dialog', getDialogLenke({ erVeileder: true, aktivitetId, dialogId }));
-    window.dispatchEvent(
+    const dialogLenke = getDialogLenke({ erVeileder: true, aktivitetId, dialogId });
+    globalThis.history.pushState('', 'Dialog', dialogLenke);
+    globalThis.dispatchEvent(
         new CustomEvent<DialogEventDetails>('visDialog', {
             detail: {
                 dialogId: dialogId,
