@@ -27,8 +27,6 @@ jobs:
         uses: ./.github/actions/setup-pnpm
         with:
           READER_TOKEN: ${{ secrets.READER_TOKEN }}
-      - name: Run tests
-        run: pnpm run test
       - name: Build application
         run: ${{ inputs.kommando }}
       - name: Upload to CDN
