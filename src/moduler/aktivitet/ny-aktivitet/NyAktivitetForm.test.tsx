@@ -10,6 +10,7 @@ import { lagNyAktivitet } from '../aktivitet-actions';
 import { gitt } from '../../../testUtils/store/mockStoreBuilder';
 import { DialogResponse } from '../../../api/dialogGraphql';
 import { aktivitetingress } from '../visning/aktivitetingress/AktivitetIngress';
+import { hentInnsynsrett } from '../../../api/aktivitetAPI';
 
 // const server = setupServer(...handlers);
 
@@ -24,6 +25,10 @@ vi.mock('../../../api/dialogGraphql', () => ({
             },
             errors: undefined,
         }),
+}));
+
+vi.mock('../../../api/aktivitetAPI', () => ({
+    hentInnsynsrett: (): Promise<any> => Promise.resolve({ foresatteHarInnsynsrett: true }),
 }));
 
 describe('ny aktivitet', () => {
