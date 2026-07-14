@@ -1,10 +1,8 @@
 import { setupServer } from 'msw/node';
 import { describe, expect } from 'vitest';
-import { act, fireEvent, render, waitFor, screen } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { WrappedHovedside } from '../../testUtils/WrappedHovedside';
 import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
-import reducer from '../../reducer';
 import { mockfnr } from '../../mocks/utils';
 import { enEgenAktivitet } from '../../mocks/fixtures/egenAktivitet';
 import { aktivPeriodeId, defaultMockOppfolgingsPerioder } from '../../mocks/data/oppfolging';
@@ -12,11 +10,9 @@ import { erHistorisk } from '../../datatypes/oppfolgingTypes';
 import dialoger from '../../mocks/data/dialog';
 import { aktiviteterData } from '../../mocks/aktivitet';
 import { handlersWithGraphqlOverride } from '../../testUtils/restMockUtils';
-import { mockLoadedStore } from '../../testUtils/storeMockUtils';
 import { gitt } from '../../testUtils/store/mockStoreBuilder';
 
 const aktivitetIdErSomErMocket = aktiviteterData.aktiviteter.map((it) => it.id);
-const currentOppfolgingsperiode = defaultMockOppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0].id;
 const aktivitetMedDialog = enEgenAktivitet({
     id: aktivitetIdErSomErMocket[0],
     tittel: 'Aktivitet med dialog',
