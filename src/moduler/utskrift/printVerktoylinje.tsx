@@ -14,7 +14,6 @@ import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slic
 import { Status } from '../../createGenericSlice';
 import DateRangePicker from '../../felles-komponenter/skjema/datovelger/DateRangePicker';
 import { selectValgtPeriode } from '../oppfolging-status/oppfolging-selector';
-import { dateOrUndefined } from '../aktivitet/aktivitet-forms/ijobb/AktivitetIjobbForm';
 import { DatoPeriode } from '../journalforing/journalforingFilter';
 import { toLocalISODateString } from '../../utils/dateUtils';
 

@@ -1,4 +1,4 @@
-import { Mal, Me, OppfolgingStatus } from '../datatypes/oppfolgingTypes';
+import { Mal, Me } from '../datatypes/oppfolgingTypes';
 import { OPPFOLGING_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson } from './utils';
 

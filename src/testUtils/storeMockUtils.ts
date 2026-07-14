@@ -1,6 +1,5 @@
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { Dialog } from '../datatypes/dialogTypes';
-import { OppfolgingStatus } from '../datatypes/oppfolgingTypes';
 import { emptyHalfLoadedVeilederState, initialLoadedAktiviteterState } from './store/defaultInitialStore';
 import { RootState } from '../store';
 import { Status } from '../createGenericSlice';

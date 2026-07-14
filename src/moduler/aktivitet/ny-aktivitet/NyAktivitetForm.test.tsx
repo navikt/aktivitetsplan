@@ -4,24 +4,24 @@ import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { mockfnr } from '../../../mocks/utils';
 import React from 'react';
 import { defaultAktivPeriode } from '../../../testUtils/store/defaultInitialStore';
-import { setupServer } from 'msw/node';
-import { handlers } from '../../../mocks/handlers';
+// import { setupServer } from 'msw/node';
+// import { handlers } from '../../../mocks/handlers';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import { gitt } from '../../../testUtils/store/mockStoreBuilder';
 
-const server = setupServer(...handlers);
+// const server = setupServer(...handlers);
 
 vi.mock('../aktivitet-actions', { spy: true });
 
 describe('ny aktivitet', () => {
     // Start server before all tests
-    beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+    // beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
     //  Close server after all tests
-    afterAll(() => server.close());
+    // afterAll(() => server.close());
 
     // Reset handlers after each test `important for test isolation`
-    afterEach(() => server.resetHandlers());
+    // afterEach(() => server.resetHandlers());
 
     it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
         const store = gitt().createStore();

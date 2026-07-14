@@ -12,7 +12,6 @@ import { aktivitestplanResponse } from '../../mocks/handlers';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { VeilederInfo } from '../../datatypes/types';
 import { Mal } from '../../datatypes/oppfolgingTypes';
-import { OppfolgingsPeriode } from '../../api/veilarboppfolging';
 
 const veilederIdentitet = {
     id: 'Z123456',

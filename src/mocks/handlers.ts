@@ -23,7 +23,7 @@ import { features } from './data/feature';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { me } from './data/me';
-import getOppfolging, { defaultMockOppfolgingsPerioder, mockOppfolging, settDigital } from './data/oppfolging';
+import getOppfolging, { defaultMockOppfolgingsPerioder, settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
 import { veilederMe } from './data/Veileder';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
