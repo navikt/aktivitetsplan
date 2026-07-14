@@ -3,7 +3,7 @@ import {
     hentPdfTilForhaandsvisning,
     selectForhaandsvisningStatus,
     selectJournalføringstatus,
-    selectPdfForhaandsvisning
+    selectPdfForhaandsvisning,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
 import { defer, LoaderFunctionArgs } from 'react-router-dom';
@@ -29,11 +29,17 @@ export const JournalforingPage = () => {
         <div className="flex flex-col grow">
             <section className="flex md:flex-row flex-col relative">
                 <Sidebar />
-                <StatusErrorBoundry statuser={[forhaandsvisningStatus, journalførtStatus]}
-                                    errorMessage="Noe gikk galt med journalføringen">
+                <StatusErrorBoundry
+                    statuser={[forhaandsvisningStatus, journalførtStatus]}
+                    errorMessage="Noe gikk galt med journalføringen"
+                >
                     <div className="h-full grow bg-ax-bg-neutral-soft max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
-                        <PdfViewer pdf={blob} visSuksessmelding={visSuksessmelding}
-                                   suksessmelding={'Aktivitetsplanen ble journalført.'} forhaandsvisningStatus={forhaandsvisningStatus} />
+                        <PdfViewer
+                            pdf={blob}
+                            visSuksessmelding={visSuksessmelding}
+                            suksessmelding={'Aktivitetsplanen ble journalført.'}
+                            forhaandsvisningStatus={forhaandsvisningStatus}
+                        />
                     </div>
                 </StatusErrorBoundry>
             </section>
@@ -42,23 +48,23 @@ export const JournalforingPage = () => {
 };
 
 export const arkivLoader =
-    (dispatch: Dispatch, aktivEnhet: string) =>
-        ({
-             params: { oppfolgingsperiodeId }
-         }: LoaderFunctionArgs<{
-            oppfolgingsperiodeId: string;
-            aktivEnhet: string;
-        }>) => {
-            if (!oppfolgingsperiodeId) {
-                throw Error('path param is not set, this should never happen');
-            }
-            const forhaandsvisning = dispatch(
-                hentPdfTilForhaandsvisning({
-                    oppfolgingsperiodeId,
-                    journalførendeEnhetId: aktivEnhet
-                })
-            );
-            return defer({
-                forhaandsvisning
-            });
-        };
+    (dispatch: Dispatch, aktivEnhet: string | undefined) =>
+    ({
+        params: { oppfolgingsperiodeId },
+    }: LoaderFunctionArgs<{
+        oppfolgingsperiodeId: string;
+        aktivEnhet: string | undefined;
+    }>) => {
+        if (!oppfolgingsperiodeId) {
+            throw Error('path param is not set, this should never happen');
+        }
+        const forhaandsvisning = dispatch(
+            hentPdfTilForhaandsvisning({
+                oppfolgingsperiodeId,
+                journalførendeEnhetId: aktivEnhet,
+            }),
+        );
+        return defer({
+            forhaandsvisning,
+        });
+    };

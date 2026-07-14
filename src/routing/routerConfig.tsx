@@ -1,15 +1,5 @@
-import {
-    createBrowserRouter,
-    createHashRouter,
-    Navigate,
-    Outlet,
-    RouteObject,
-    useLocation,
-    useParams,
-} from 'react-router-dom';
-import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
-import React, { useEffect } from 'react';
-import { fjernDismissableErrors } from '../moduler/feilmelding/feil-slice';
+import { createBrowserRouter, createHashRouter, Navigate, RouteObject, useParams } from 'react-router-dom';
+import React from 'react';
 import { Dispatch } from '../store';
 import Hovedside from '../hovedside/Hovedside';
 import { aktivitetsVisningLoader, initialPageLoader, malLoader } from './loaders';
@@ -34,32 +24,31 @@ const RedirectToAktivitetWithoutFnr = () => {
     return <Navigate replace to={`${erVeileder ? '/' + baseName : ''}/aktivitet/vis/` + params.id} />;
 };
 
-export const ErrorCleanerOnRouteChange = () => {
-    const location = useLocation();
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(fjernDismissableErrors());
-    }, [location]);
-    return <Outlet />;
-};
-
 // Sentry need to wrap createBrowserRouter to understand routes
 export const createRouterWithWrapper =
     (wrapper?: typeof createBrowserRouter) =>
-    (dispatch: Dispatch, isVeileder: boolean, aktivEnhet: string): ReturnType<typeof createBrowserRouter> => {
+    (
+        dispatch: Dispatch,
+        isVeileder: boolean,
+        aktivEnhet: string | undefined,
+    ): ReturnType<typeof createBrowserRouter> => {
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
             return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
         }
         return wrapper
-            ? wrapper(routingConfig(dispatch, isVeileder, aktivEnhet))
-            : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
+            ? wrapper(routingConfig(dispatch, isVeileder, aktivEnhet), {
+                  future: { v7_relativeSplatPath: true },
+              })
+            : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet), {
+                  future: { v7_relativeSplatPath: true },
+              });
     };
 
-export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet: string) => RouteObject[] = (
-    dispatch,
-    isVeileder,
-    aktivEnhet,
-) => [
+export const routingConfig: (
+    dispatch: Dispatch,
+    isVeileder: boolean,
+    aktivEnhet: string | undefined,
+) => RouteObject[] = (dispatch, isVeileder, aktivEnhet) => [
     {
         path: isVeileder ? `/${baseName}` : '/',
         element: <BasePage />, // Dont reload essential data on every page navigation
