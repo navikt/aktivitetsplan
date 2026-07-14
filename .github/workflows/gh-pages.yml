@@ -21,8 +21,6 @@ jobs:
               uses: ./.github/actions/setup-pnpm
               with:
                 READER_TOKEN: ${{ secrets.READER_TOKEN }}
-            - name: MSW init
-              run: npx msw init ./public
             - name: Build
               run: pnpm run build:gh-pages
             - name: Deploy
