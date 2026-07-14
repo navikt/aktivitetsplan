@@ -16,7 +16,6 @@ const SamtalereferatForm = (props: Props) => {
     const status = useSelector(selectVeilederStatus);
     const [ignorePending, setIgnorePending] = useState(false);
 
-    /*
     useEffect(() => {
         const timer = setTimeout(() => {
             if (status === Status.PENDING) {
@@ -26,7 +25,6 @@ const SamtalereferatForm = (props: Props) => {
         return () => clearTimeout(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-     */
 
     if (status === Status.PENDING && !ignorePending) {
         return null;
