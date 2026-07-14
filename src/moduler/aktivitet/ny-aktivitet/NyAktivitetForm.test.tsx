@@ -32,14 +32,6 @@ vi.mock('../../../api/aktivitetAPI', () => ({
 }));
 
 describe('ny aktivitet', () => {
-    // Start server before all tests
-    // beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-
-    //  Close server after all tests
-    // afterAll(() => server.close());
-
-    // Reset handlers after each test `important for test isolation`
-    // afterEach(() => server.resetHandlers());
     it('Skal finne "ny aktivitet" knapp på start-siden', async () => {
         const store = gitt().createStore();
         const { getByRole, getAllByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
