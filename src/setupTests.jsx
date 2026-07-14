@@ -74,6 +74,21 @@ vi.mock('./felles-komponenter/utils/logging', async (importOriginal) => {
     };
 });
 
+// import { pdfjs, Document, Page } from 'react-pdf';
+// import pdfjsWorkerUrl from 'react-pdf/dist/pdf.worker.entry?worker&url';
+
+vi.mock('react-pdf', () => {
+    return {
+        pdfjs: {
+            GlobalWorkerOptions: {
+                workerSrc: '',
+            },
+        },
+        Document: () => null,
+        Page: () => null,
+    };
+});
+
 /* Mock fetchHarFlereAktorId,
    its run on-mount and has no side-effects visible for this app
    so it cant be tested
