@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 /// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
 
-import { defineConfig, loadEnv, normalizePath } from 'vite';
+import { defineConfig, loadEnv, normalizePath, UserConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 import * as path from 'node:path';
@@ -47,6 +47,7 @@ export default defineConfig(({ mode }) => {
             port: 3000,
         },
         test: {
+            testTimeout: 2000,
             coverage: {
                 reporter: 'lcov',
             },
@@ -54,5 +55,5 @@ export default defineConfig(({ mode }) => {
             globals: true,
             setupFiles: ['./src/setupTests.jsx'],
         },
-    };
+    } as UserConfig;
 });

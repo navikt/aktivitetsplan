@@ -8,10 +8,23 @@ import { defaultAktivPeriode } from '../../../testUtils/store/defaultInitialStor
 // import { handlers } from '../../../mocks/handlers';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import { gitt } from '../../../testUtils/store/mockStoreBuilder';
+import { DialogResponse } from '../../../api/dialogGraphql';
+import { aktivitetingress } from '../visning/aktivitetingress/AktivitetIngress';
 
 // const server = setupServer(...handlers);
 
 vi.mock('../aktivitet-actions', { spy: true });
+
+vi.mock('../../../api/dialogGraphql', () => ({
+    hentDialogerGraphql: (): Promise<DialogResponse> =>
+        Promise.resolve({
+            data: {
+                dialoger: [],
+                stansVarsel: undefined,
+            },
+            errors: undefined,
+        }),
+}));
 
 describe('ny aktivitet', () => {
     // Start server before all tests
@@ -25,7 +38,6 @@ describe('ny aktivitet', () => {
 
     it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
         const store = gitt().createStore();
-        // const store = gitt.tomAktivOppfolgingsPeriode();
         const routerRef: { current: any } = { current: undefined };
         const { getByText, getByLabelText, getByRole, findByText, queryByText } = render(
             <WrappedHovedside fnr={mockfnr} store={store} routerRef={routerRef} />,
@@ -34,16 +46,17 @@ describe('ny aktivitet', () => {
         await waitFor(() => {
             expect(leggTilKnapp).not.toBeDisabled();
         });
-        await act(() => fireEvent.click(leggTilKnapp));
+        act(() => leggTilKnapp.click());
 
         const samtaleReferatMenyValg = getByRole('button', { name: /Samtalereferat/i });
-        await act(() => fireEvent.click(samtaleReferatMenyValg));
-
+        fireEvent.click(samtaleReferatMenyValg);
         await waitFor(() => {
             expect(routerRef.current?.state.location.pathname).toBe('/aktivitetsplan/aktivitet/ny/samtalereferat');
         });
 
-        await findByText(/Her finner du referat fra en samtale du har hatt med Nav/);
+        await waitFor(() => {
+            expect(getByText(aktivitetingress.SAMTALEREFERAT)).toBeInTheDocument();
+        });
         const tittel = 'Hei';
 
         const temaFelt = getByLabelText('Tema for samtalen (obligatorisk)');

@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node';
-import { describe } from 'vitest';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { describe, expect } from 'vitest';
+import { act, fireEvent, render, waitFor, screen } from '@testing-library/react';
 import { WrappedHovedside } from '../../testUtils/WrappedHovedside';
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
@@ -13,6 +13,7 @@ import dialoger from '../../mocks/data/dialog';
 import { aktiviteterData } from '../../mocks/aktivitet';
 import { handlersWithGraphqlOverride } from '../../testUtils/restMockUtils';
 import { mockLoadedStore } from '../../testUtils/storeMockUtils';
+import { gitt } from '../../testUtils/store/mockStoreBuilder';
 
 const aktivitetIdErSomErMocket = aktiviteterData.aktiviteter.map((it) => it.id);
 const currentOppfolgingsperiode = defaultMockOppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0].id;
@@ -39,18 +40,11 @@ const server = setupServer(
     }),
 );
 
-/* Ikke nødvendig men bare for å gjøre tester raksere */
-const store = configureStore({
-    reducer,
-    preloadedState: mockLoadedStore({ aktiviteter: testAktiviteter, arenaAktiviteter: [] }),
-});
+const store = gitt().aktiviteter.medAktiviteter(testAktiviteter).createStore();
 
 describe('Send melding knapp (Dialog lenker)', () => {
-    let pushStateMock = vi.fn();
     // Start server before all tests
     beforeAll(() => {
-        Object.defineProperty(window, 'navigation', { value: vi.fn() });
-        Object.defineProperty(window.history, 'pushState', { value: pushStateMock });
         server.listen({ onUnhandledRequest: 'error' });
     });
     //  Close server after all tests
@@ -59,52 +53,60 @@ describe('Send melding knapp (Dialog lenker)', () => {
     // Reset handlers after each test `important for test isolation`
     afterEach(() => {
         server.resetHandlers();
-        pushStateMock.mockReset();
     });
 
     describe('Veiledere:', () => {
         it('should use /:dialogId when there is dialog on aktivitet', async () => {
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+
             await waitFor(() => {
                 getByText(aktivitetMedDialog.tittel);
             });
-            await act(() => fireEvent.click(getByText('Aktivitet med dialog')));
-            await act(() => fireEvent.click(getByText('Send en melding')));
-            expect(pushStateMock).toHaveBeenCalledWith('', 'Dialog', `/dialog/${testDialoger[0].id}`);
+            await act(() => fireEvent.click(getByText(aktivitetMedDialog.tittel)));
+
+            const sendMeldingButton = getByText('Send en melding').parentElement;
+            expect(sendMeldingButton).toHaveAttribute('href', `/dialog/${testDialoger[0].id}`);
         });
 
         it('should use /ny when no dialog on aktivitet', async () => {
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
-            await waitFor(() => getByText('Aktivitet uten dialog'));
-            await act(() => fireEvent.click(getByText('Aktivitet uten dialog')));
+
+            await waitFor(() => getByText(aktivitetUtenDialog.tittel));
+            await act(() => fireEvent.click(getByText(aktivitetUtenDialog.tittel)));
             await waitFor(() => getByText('Endre på aktiviteten'));
-            await act(() => fireEvent.click(getByText('Send en melding')));
-            expect(pushStateMock).toHaveBeenCalledWith(
-                '',
-                'Dialog',
-                `/dialog/ny?aktivitetId=${aktivitetUtenDialog.id}`,
-            );
+
+            const sendMeldingButton = getByText('Send en melding').parentElement;
+            expect(sendMeldingButton).toHaveAttribute('href', `/dialog/ny?aktivitetId=${aktivitetUtenDialog.id}`);
         });
     });
 
     describe('Brukere:', () => {
         it('should not navigate when there is dialog on aktivitet', async () => {
             const { getByText } = render(<WrappedHovedside fnr={undefined} store={store} />);
+
             await waitFor(() => {
                 getByText('Aktivitet med dialog');
             });
             await act(() => fireEvent.click(getByText('Aktivitet med dialog')));
-            await act(() => fireEvent.click(getByText('Send en melding')));
-            expect(pushStateMock).not.toHaveBeenCalled();
+
+            const sendMeldingButton = getByText('Send en melding').parentElement;
+            expect(sendMeldingButton).toHaveAttribute(
+                'href',
+                `https://pto.dev.nav.no/arbeid/dialog/${testDialoger[0].id}`,
+            );
         });
 
         it('should not navigate when no dialog on aktivitet', async () => {
             const { getByText } = render(<WrappedHovedside fnr={undefined} store={store} />);
-            await waitFor(() => getByText('Aktivitet uten dialog'));
-            await act(() => fireEvent.click(getByText('Aktivitet uten dialog')));
+            await waitFor(() => getByText(aktivitetUtenDialog.tittel));
+            await act(() => fireEvent.click(getByText(aktivitetUtenDialog.tittel)));
             await waitFor(() => getByText('Endre på aktiviteten'));
-            await act(() => fireEvent.click(getByText('Send en melding')));
-            expect(pushStateMock).not.toHaveBeenCalled();
+
+            const sendMeldingButton = getByText('Send en melding').parentElement;
+            expect(sendMeldingButton).toHaveAttribute(
+                'href',
+                `https://pto.dev.nav.no/arbeid/dialog/ny?aktivitetId=${aktivitetUtenDialog.id}`,
+            );
         });
     });
 });

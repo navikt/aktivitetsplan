@@ -4,10 +4,9 @@ import React, { ReactElement } from 'react';
 import { AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import CustomBodyLong from '../hjelpekomponenter/CustomBodyLong';
 
-const aktivitetingress: Record<AktivitetType, string | ReactElement | undefined> = {
+export const aktivitetingress = {
     BEHANDLING: (
         <div className="mt-4 space-y-4">
-
             <BodyShort>
                 Her kan du legge inn medisinsk behandling som påvirker muligheten din til å jobbe eller være på kurs og
                 tiltak.

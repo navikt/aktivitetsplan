@@ -34,6 +34,7 @@ function MittMaal() {
 
     const noeHarFeilet = avhengigheter === 'ERROR';
     const { mal: malPromise, oppfolging: oppfolgingPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
+
     if (noeHarFeilet) return <Alert variant={'error'}>Kunne ikke hente mål</Alert>;
     return (
         <>

@@ -74,7 +74,8 @@ const LeggTilNyttAktivitetsKort = () => {
                                 {item.groupedItems.map((subItem) => (
                                     <Dropdown.Menu.GroupedList.Item
                                         key={subItem.tittle}
-                                        onClick={() => navigate(subItem.link)}
+                                        /* After enabling react-router startTrasition flag this is needed to avoid re-render loops in tests */
+                                        onClick={() => navigate(subItem.link, { flushSync: true })}
                                         className="text-ax-text-neutral"
                                     >
                                         {subItem.tittle}

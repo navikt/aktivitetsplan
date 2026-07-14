@@ -40,7 +40,7 @@ const MemoryRouteProvider = ({ routerRef }: { routerRef?: RefObject<MemoryRouter
     // Stable router instance — recreating it on every render would reset navigation state
     const router = useMemo(
         () =>
-            createMemoryRouter(routingConfig(dispatch, erVeileder), {
+            createMemoryRouter(routingConfig(dispatch, erVeileder, '2121'), {
                 initialEntries: ['/'],
                 initialIndex: 0,
             }),
@@ -50,7 +50,7 @@ const MemoryRouteProvider = ({ routerRef }: { routerRef?: RefObject<MemoryRouter
     if (routerRef) {
         routerRef.current = router;
     }
-    return <RouterProvider future={{ v7_startTransition: false }} router={router} />;
+    return <RouterProvider future={{ v7_startTransition: true }} router={router} />;
 };
 
 type Entry = string | Partial<Location>;
@@ -66,7 +66,9 @@ export const WrappedComponent = ({
 }) => {
     return (
         <Provider store={store}>
-            <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
+            <MemoryRouter future={{ v7_startTransition: true }} initialEntries={initialEntries}>
+                {children}
+            </MemoryRouter>
         </Provider>
     );
 };
