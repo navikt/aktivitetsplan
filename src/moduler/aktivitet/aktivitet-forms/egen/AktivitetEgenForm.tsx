@@ -12,6 +12,7 @@ import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
+import { useErVeileder } from '../../../../Provider';
 
 const schema = z
     .object({
@@ -90,6 +91,7 @@ const getDefaultValues = (
 
 const EgenAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
+    const erVeileder = useErVeileder();
 
     const [template, setTemplate] = useState<EgenaktivitetTemplate>('ingen');
     const defaultValues = useMemo(() => {
@@ -136,7 +138,7 @@ const EgenAktivitetForm = (props: Props) => {
                     <InnsynsrettInfo />
                     {
                         /* Ikke tillat bruk av template når man endrer en aktivitet */
-                        aktivitet ? null : (
+                        aktivitet || !erVeileder ? null : (
                             <Select
                                 id="malverk"
                                 name={'malverk'}
