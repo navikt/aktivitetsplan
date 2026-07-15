@@ -22,7 +22,6 @@ jobs:
       kommando: pnpm run build:dev-ekstern
       bucket: aktivitetsplan-dev-ekstern
     secrets:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
 
   dev-intern:
@@ -42,7 +41,6 @@ jobs:
       kommando: pnpm run build:prod-ekstern
       bucket: aktivitetsplan-prod-ekstern
     secrets:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       READER_TOKEN: ${{ secrets.READER_TOKEN }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 

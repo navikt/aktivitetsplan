@@ -20,7 +20,7 @@ const standardFontsDir = normalizePath(
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd());
     // Make sure release is set client-side, automatic release tagging did not work
-    process.env.VITE_SENTRY_RELEASE = execSync('git rev-parse HEAD').toString().trim();
+    process.env.VITE_RELEASE = execSync('git rev-parse HEAD').toString().trim();
 
     return {
         worker: {

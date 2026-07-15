@@ -7,11 +7,10 @@ import React from 'react';
 import App from './app';
 import { hash } from './felles-komponenter/utils/hash';
 import Provider from './Provider';
-import { sentryCreateBrowserRouter } from './sentry';
 import { createRoot } from 'react-dom/client';
 import { createRouterWithWrapper } from './routing/routerConfig';
 
-const createRoutesForUser = createRouterWithWrapper(sentryCreateBrowserRouter);
+const createRoutesForUser = createRouterWithWrapper();
 
 export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
     const rootElement = createRoot(appElement || document.getElementById('root')!);
