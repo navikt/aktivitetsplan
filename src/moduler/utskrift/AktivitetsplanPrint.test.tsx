@@ -10,10 +10,7 @@ import { gitt } from '../../testUtils/store/mockStoreBuilder';
 
 const AktivitetsvisningModalWrapped = (props: { store: any }) => (
     <div id={'app'}>
-        <MemoryRouter
-            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-            initialEntries={[`/utskrift/${aktivPeriodeId}`]}
-        >
+        <MemoryRouter initialEntries={[`/utskrift/${aktivPeriodeId}`]}>
             <Routes>
                 <Route
                     path={`/utskrift/:oppfolgingsperiodeId`}

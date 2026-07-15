@@ -33,11 +33,7 @@ export const createRouterWithWrapper =
         aktivEnhet: string | undefined,
     ): ReturnType<typeof createBrowserRouter> => {
         const future = {
-            v7_relativeSplatPath: true,
-            v7_fetcherPersist: true,
-            v7_normalizeFormMethod: true,
-            v7_partialHydration: true,
-            v7_skipActionErrorRevalidation: true,
+            v8_middleware: true,
         };
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
             return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });
