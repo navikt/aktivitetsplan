@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { Status } from '../../../createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
@@ -58,14 +59,15 @@ const Aktivitetskort = (props: Props) => {
     const ariaLabel = `${getAktivitetType(aktivitet)}: ${aktivitet.tittel}`;
 
     return (
-        <LinkAsDiv
-            id={prefixAktivtetskortId(aktivitet)}
+        <Link
+            key={id}
+            id={`/${prefixAktivtetskortId(aktivitet)}`}
             className={classNames('rounded-md bg-ax-bg-default', styles.aktivitetskort, className, {
                 [styles.sistVist]: aktivitetBleVistSist,
                 'border border-ax-border-neutral': !aktivitetBleVistSist,
             })}
             to={aktivitetRoute(id)}
-            ariaLabel={ariaLabel}
+            aria-label={ariaLabel}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
         >
             <article>
@@ -78,7 +80,7 @@ const Aktivitetskort = (props: Props) => {
                 ) : null}
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
-        </LinkAsDiv>
+        </Link>
     );
 };
 

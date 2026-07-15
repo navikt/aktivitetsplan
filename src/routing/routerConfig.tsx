@@ -33,11 +33,11 @@ export const createRouterWithWrapper =
         aktivEnhet: string | undefined,
     ): ReturnType<typeof createBrowserRouter> => {
         const future = {
-            v7_relativeSplatPath: true,
-            v7_fetcherPersist: true,
-            v7_normalizeFormMethod: true,
-            v7_partialHydration: true,
-            v7_skipActionErrorRevalidation: true,
+            v7_relativeSplatPath: false,
+            v7_fetcherPersist: false,
+            v7_normalizeFormMethod: false,
+            v7_partialHydration: false,
+            v7_skipActionErrorRevalidation: false,
         };
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
             return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });
@@ -54,7 +54,7 @@ export const routingConfig: (
 ) => RouteObject[] = (dispatch, isVeileder, aktivEnhet) => [
     {
         path: isVeileder ? `/${baseName}` : '/',
-        element: <BasePage />, // Dont reload essential data on every page navigation
+        element: <BasePage />, // Don't reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
         id: 'root',
         children: [
