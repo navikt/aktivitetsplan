@@ -1,7 +1,7 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 
 import { Status } from '../../../createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';

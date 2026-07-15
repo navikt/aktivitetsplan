@@ -3,7 +3,7 @@ import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router';
 import { z } from 'zod';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 import Filter from '../filtrering/Filter';

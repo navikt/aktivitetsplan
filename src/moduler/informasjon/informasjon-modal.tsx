@@ -15,7 +15,7 @@ import { OkonomiskStotte } from './okonomiskStottePanel';
 import { RettigheterPanel } from './rettigheterPanel';
 import { DialogPanel } from './dialogPanel';
 import IntroduksjonVideo from './Video/IntroduksjonVideo';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useRoutes } from '../../routing/useRoutes';
 import { InnsynsrettPanel } from './innsynsrettPanel';
 

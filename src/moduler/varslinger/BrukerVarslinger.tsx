@@ -10,7 +10,7 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import AdvarselMedDialogLenke from './AdvarselMedDialogLenke';
 import AdvarselMedLenkeVarsling from './AdvarselMedLenkeVarsling';
-import { Await, useRouteLoaderData } from 'react-router-dom';
+import { Await, useRouteLoaderData } from 'react-router';
 import { InitialPageLoadResult } from '../../routing/loaders';
 
 const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string => {

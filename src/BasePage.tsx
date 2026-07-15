@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 import OppfolgingStatus from './moduler/oppfolging-status/OppfolgingStatus';
 
 export const BasePage = () => {

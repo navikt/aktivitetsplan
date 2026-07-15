@@ -1,4 +1,4 @@
-import { createBrowserRouter, createHashRouter, Navigate, RouteObject, useParams } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, Navigate, RouteObject, useParams } from 'react-router';
 import React from 'react';
 import { Dispatch } from '../store';
 import Hovedside from '../hovedside/Hovedside';
@@ -33,11 +33,11 @@ export const createRouterWithWrapper =
         aktivEnhet: string | undefined,
     ): ReturnType<typeof createBrowserRouter> => {
         const future = {
-            v7_relativeSplatPath: false,
-            v7_fetcherPersist: false,
-            v7_normalizeFormMethod: false,
-            v7_partialHydration: false,
-            v7_skipActionErrorRevalidation: false,
+            v7_relativeSplatPath: true,
+            v7_fetcherPersist: true,
+            v7_normalizeFormMethod: true,
+            v7_partialHydration: true,
+            v7_skipActionErrorRevalidation: true,
         };
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
             return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });

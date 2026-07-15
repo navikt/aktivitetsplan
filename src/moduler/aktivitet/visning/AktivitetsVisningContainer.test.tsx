@@ -4,7 +4,7 @@ import { describe, it } from 'vitest';
 import { gitt } from '../../../testUtils/store/mockStoreBuilder';
 import { Provider } from 'react-redux';
 import { RootState } from '../../../store';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router';
 import { ErVeilederContext } from '../../../Provider';
 import { EnhancedStore } from '@reduxjs/toolkit/src/configureStore';
 import { MoteAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';

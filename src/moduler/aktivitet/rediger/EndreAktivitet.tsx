@@ -2,7 +2,7 @@ import { isFulfilled } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
 import React, { MutableRefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
 import {
     BEHANDLING_AKTIVITET_TYPE,
@@ -40,9 +40,7 @@ import MedisinskBehandlingForm, {
 } from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm, { EgenAktivitetFormValues } from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm, { IJobbAktivitetFormValues } from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
-import MoteAktivitetForm, {
-    MoteAktivitetFormValues,
-} from '../aktivitet-forms/mote/MoteAktivitetForm';
+import MoteAktivitetForm, { MoteAktivitetFormValues } from '../aktivitet-forms/mote/MoteAktivitetForm';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/SamtalereferatForm';
 import SokeavtaleAktivitetForm, {
     SokeavtaleAktivitetFormValues,
@@ -125,8 +123,7 @@ function EndreAktivitet() {
     const { aktivitetRoute, hovedsideRoute } = useRoutes();
 
     const erAvsluttet =
-        valgtAktivitet?.status === AktivitetStatus.FULLFOERT ||
-        valgtAktivitet?.status === AktivitetStatus.AVBRUTT;
+        valgtAktivitet?.status === AktivitetStatus.FULLFOERT || valgtAktivitet?.status === AktivitetStatus.AVBRUTT;
 
     if (valgtAktivitet && erAvsluttet) {
         return <Navigate to={aktivitetRoute(valgtAktivitet.id)} replace />;
@@ -150,12 +147,17 @@ function EndreAktivitet() {
                 [FeltEndret.KANAL, () => str(moteForm.kanal) !== str(moteAktivitet.kanal)],
                 [FeltEndret.VARIGHET, () => (Number(moteForm.varighet) || 0) !== (origMoteTid?.varighet ?? 0)],
                 [FeltEndret.DATO, () => nyFraDato?.toDateString() !== origMoteTid?.dato?.toDateString()],
-                [FeltEndret.KLOKKESLETT, () => (nyFraDato ? format(nyFraDato, 'HH:mm') : '') !== (origMoteTid?.klokkeslett?.replace('.', ':') ?? '')],
+                [
+                    FeltEndret.KLOKKESLETT,
+                    () =>
+                        (nyFraDato ? format(nyFraDato, 'HH:mm') : '') !==
+                        (origMoteTid?.klokkeslett?.replace('.', ':') ?? ''),
+                ],
             ];
 
             const endredeFelter = felter.filter(([, erEndret]) => erEndret()).map(([felt]) => felt);
             if (endredeFelter.length > 0) {
-                logEndringAvtaltMote(endredeFelter)
+                logEndringAvtaltMote(endredeFelter);
             }
         }
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);

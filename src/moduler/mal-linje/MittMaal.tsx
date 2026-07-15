@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { Suspense } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Await, useRouteLoaderData } from 'react-router-dom';
+import { Await, useRouteLoaderData } from 'react-router';
 
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';

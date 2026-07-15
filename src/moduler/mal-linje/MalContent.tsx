@@ -1,5 +1,5 @@
 import { useErVeileder } from '../../Provider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useRoutes } from '../../routing/useRoutes';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { logKlikkKnapp } from '../../analytics/analytics';

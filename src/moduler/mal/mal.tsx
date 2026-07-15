@@ -1,7 +1,7 @@
 import { ReadMore } from '@navikt/ds-react';
 import React, { useRef } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import { useRoutes } from '../../routing/useRoutes';

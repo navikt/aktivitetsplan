@@ -6,7 +6,7 @@ import {
     selectPdfForhaandsvisning,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { defer, LoaderFunctionArgs } from 'react-router-dom';
+import { LoaderFunctionArgs } from 'react-router';
 import { Dispatch } from '../../store';
 import Sidebar from './Sidebar';
 import { createBlob, PdfViewer } from './PdfViewer';
@@ -64,7 +64,7 @@ export const arkivLoader =
                 journalførendeEnhetId: aktivEnhet,
             }),
         );
-        return defer({
+        return {
             forhaandsvisning,
-        });
+        };
     };

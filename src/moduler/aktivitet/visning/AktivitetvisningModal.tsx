@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';

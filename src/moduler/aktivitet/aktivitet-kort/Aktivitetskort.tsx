@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { Status } from '../../../createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
