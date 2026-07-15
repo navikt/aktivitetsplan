@@ -41,11 +41,13 @@ const toMinimalPeriode = (
 export const aktiviteterState = ({
     aktiviteter,
     oppfolgingsPerioder,
+    status,
 }: {
     aktiviteter?: VeilarbAktivitet[];
     oppfolgingsPerioder: (MinimalPeriode | (OppfolgingsPeriode & { startTidspunkt: string }))[];
+    status?: Status;
 }) => {
-    const state = oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK });
+    const state = oppfolgingsdperiodeAdapter.getInitialState({ status: status || Status.OK });
     if (oppfolgingsPerioder.length == 0 && (aktiviteter || []).length != 0)
         throw new Error('Feil i test-mock oppsett: Kan ikke ha aktiviteter uten å ha oppfølgingsperioder');
     const minimalePerioder = (oppfolgingsPerioder || []).map(toMinimalPeriode);
