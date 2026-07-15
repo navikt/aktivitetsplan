@@ -32,15 +32,12 @@ export const createRouterWithWrapper =
         isVeileder: boolean,
         aktivEnhet: string | undefined,
     ): ReturnType<typeof createBrowserRouter> => {
-        const future = {
-            v8_middleware: true,
-        };
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
-            return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });
+            return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
         }
         return wrapper
-            ? wrapper(routingConfig(dispatch, isVeileder, aktivEnhet), { future })
-            : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });
+            ? wrapper(routingConfig(dispatch, isVeileder, aktivEnhet))
+            : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
     };
 
 export const routingConfig: (
