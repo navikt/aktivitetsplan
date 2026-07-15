@@ -90,6 +90,7 @@ const withAktiviteter = (
     store: RootState,
     aktiviteter: VeilarbAktivitet[],
     perioder: (OppfolgingsPeriode & { startTidspunkt: string })[],
+    status: Status = Status.OK,
 ): RootState => ({
     ...store,
     data: {
@@ -97,6 +98,7 @@ const withAktiviteter = (
         aktiviteter: aktiviteterState({
             aktiviteter,
             oppfolgingsPerioder: perioder,
+            status,
         }),
     },
 });
@@ -110,6 +112,7 @@ export const gitt = (store: RootState = defaultStore) => ({
         medKvpAktivPeriode: () => gitt(withOppfolging(store, oppfolgingMockSlice.medKvpAktivPeriode(defaultStore))),
     },
     aktiviteter: {
+        aktiviteterNotLoaded: () => gitt(withAktiviteter(store, [], [], Status.NOT_STARTED)),
         medAktivitet: (aktiviteter: VeilarbAktivitet) =>
             gitt(withAktiviteter(store, [aktiviteter], [aktivVeilarbOppfolgingMockPeriode])),
         medAktiviteter: (aktiviteter: VeilarbAktivitet[]) =>

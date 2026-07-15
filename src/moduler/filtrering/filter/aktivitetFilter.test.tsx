@@ -15,17 +15,12 @@ import {
     VeilarbAktivitet,
     VeilarbAktivitetType,
 } from '../../../datatypes/internAktivitetTypes';
-import { aktiviteterData, wrapAktivitet } from '../../../mocks/aktivitet';
-import { mockOppfolging } from '../../../mocks/data/oppfolging';
+import { wrapAktivitet } from '../../../mocks/aktivitet';
 import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
-import { aktivitestplanResponse, handlers } from '../../../mocks/handlers';
-import reducer from '../../../reducer';
 import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
-import { erHistorisk } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
-import { emptyHalfLoadedVeilederState } from '../../../testUtils/store/defaultInitialStore';
-import { http } from 'msw';
-import { failOrGrahpqlResponse } from '../../../mocks/utils';
+import { aktivVeilarbOppfolgingMockPeriode } from '../../../testUtils/store/defaultInitialStore';
+import { gitt } from '../../../testUtils/store/mockStoreBuilder';
 
 let id = 12012;
 const exampleAktivitet = wrapAktivitet({
@@ -33,58 +28,34 @@ const exampleAktivitet = wrapAktivitet({
     arbeidsgiver: 'Arbeidsgiver',
     status: AktivitetStatus.GJENNOMFOERT,
 });
+
+const currentOppfolgingsperiode = aktivVeilarbOppfolgingMockPeriode;
+
 function makeTestAktiviteter<T>(
-    store: Store,
     filterValues: T[],
     valueSetter: (aktivitet: AlleAktiviteter, value: T) => AlleAktiviteter,
 ) {
-    const currentOppfolgingsperiode = mockOppfolging.oppfolgingsPerioder.filter((periode) => !erHistorisk(periode))[0]
-        .id;
     const testAktiviteter = filterValues.map((filterValue) => {
         id += 1;
         return {
             ...valueSetter(exampleAktivitet, filterValue),
             id,
             tittel: `Aktivitet: ${filterValue}`,
-            oppfolgingsperiodeId: currentOppfolgingsperiode,
+            oppfolgingsperiodeId: currentOppfolgingsperiode.id,
         };
     }) as unknown as VeilarbAktivitet[];
-    filterTestData = testAktiviteter;
-    return testAktiviteter.map(({ tittel, type }) => ({ tittel, type }));
+    return testAktiviteter;
 }
 
-let filterTestData = aktiviteterData.aktiviteter;
-const server = setupServer(
-    http.post(
-        '/veilarbaktivitet/graphql',
-        failOrGrahpqlResponse(
-            () => false,
-            () => {
-                return aktivitestplanResponse({ aktiviteter: filterTestData });
-            },
-        ),
-    ),
-    ...handlers,
-);
-
 describe('aktivitets-filter', () => {
-    // Start server before all tests
-    beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-
-    //  Close server after all tests
-    afterAll(() => server.close());
-
-    // Reset handlers after each test `important for test isolation`
-    afterEach(() => server.resetHandlers());
-
     it('should filter avtalt med nav', async () => {
-        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
-        makeTestAktiviteter(store, [true, false], (aktivitet, value) => {
+        const aktiviteter = makeTestAktiviteter([true, false], (aktivitet, value) => {
             return {
                 ...aktivitet,
                 avtalt: value,
             };
         });
+        const store = gitt().aktiviteter.medAktiviteter(aktiviteter).createStore();
         const { getByLabelText, getByText, queryByText, getByRole } = render(<WrappedHovedside store={store} />);
 
         await waitFor(() =>
@@ -109,8 +80,7 @@ describe('aktivitets-filter', () => {
             VeilarbAktivitetType.MOTE_TYPE,
             VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         ];
-        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
-        const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(store, aktivitetTyper, (aktivitet, value) => {
+        const aktiviteter = makeTestAktiviteter<VeilarbAktivitetType>(aktivitetTyper, (aktivitet, value) => {
             return {
                 ...aktivitet,
                 type: value,
@@ -122,6 +92,7 @@ describe('aktivitets-filter', () => {
                 | VeilarbAktivitetType.MOTE_TYPE
                 | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
         }[];
+        const store = gitt().aktiviteter.medAktiviteter(aktiviteter).createStore();
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         for await (const { tittel, type } of aktiviteter) {
             await waitFor(() => getByRole('button', { name: 'Filtrer' }));
@@ -142,12 +113,11 @@ describe('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling fra Nav)', async () => {
-        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
         const statuser: StillingFraNavSoknadsstatus[] = [
             StillingFraNavSoknadsstatus.AVSLAG,
             StillingFraNavSoknadsstatus.VENTER,
         ];
-        makeTestAktiviteter(store, statuser, (aktivitet, value) => {
+        const aktiviteter = makeTestAktiviteter(statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,
                 stillingFraNavData: {
@@ -156,6 +126,7 @@ describe('aktivitets-filter', () => {
                 },
             };
         });
+        const store = gitt().aktiviteter.medAktiviteter(aktiviteter).createStore();
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         await waitFor(() => getByText(`Aktivitet: VENTER`));
         getByText(`Aktivitet: AVSLAG`);
@@ -170,15 +141,15 @@ describe('aktivitets-filter', () => {
     });
 
     it('Should filter based on etiketter (stilling)', async () => {
-        const store = configureStore({ reducer, preloadedState: emptyHalfLoadedVeilederState as any });
         const statuser: StillingStatus[] = [StillingStatus.INNKALT_TIL_INTERVJU, StillingStatus.SOKNAD_SENDT];
-        makeTestAktiviteter(store, statuser, (aktivitet, value) => {
+        const aktiviteter = makeTestAktiviteter(statuser, (aktivitet, value) => {
             return {
                 ...aktivitet,
                 etikett: value,
                 type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
             } as AlleAktiviteter;
         });
+        const store = gitt().aktiviteter.medAktiviteter(aktiviteter).createStore();
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         await waitFor(() => getByText(`Aktivitet: INNKALT_TIL_INTERVJU`));
         getByText(`Aktivitet: SOKNAD_SENDT`);

@@ -24,7 +24,7 @@ function App({
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>
             <div className="aktivitetsplan-wrapper w-full">
-                <RouterProvider future={{ v7_startTransition: true }} router={routes} />
+                <RouterProvider router={routes} />
             </div>
             <UpdateEventHandler />
         </div>

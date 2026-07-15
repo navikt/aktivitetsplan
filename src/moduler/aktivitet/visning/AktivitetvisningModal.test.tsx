@@ -12,7 +12,7 @@ import AktivitetvisningModal from './AktivitetvisningModal';
 
 const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
     <div id={'app'}>
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <MemoryRouter>
             <Provider store={props.store}>
                 <AktivitetvisningModal avhengigheter={[]}>
                     <div />

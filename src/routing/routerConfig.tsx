@@ -33,19 +33,12 @@ export const createRouterWithWrapper =
         isVeileder: boolean,
         aktivEnhet: string | undefined,
     ): ReturnType<typeof createBrowserRouter> => {
-        const future = {
-            v7_relativeSplatPath: true,
-            v7_fetcherPersist: true,
-            v7_normalizeFormMethod: true,
-            v7_partialHydration: true,
-            v7_skipActionErrorRevalidation: true,
-        };
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
-            return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });
+            return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
         }
         return wrapper
-            ? wrapper(routingConfig(dispatch, isVeileder, aktivEnhet), { future })
-            : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });
+            ? wrapper(routingConfig(dispatch, isVeileder, aktivEnhet))
+            : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
     };
 
 const OnlyNavigasjonsLinjeSkeleton = () => {

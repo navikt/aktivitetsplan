@@ -35,13 +35,6 @@ const routing = createMemoryRouter(
     ],
     {
         initialEntries: [`/${aktivitetId}`],
-        future: {
-            v7_relativeSplatPath: true,
-            v7_fetcherPersist: true,
-            v7_normalizeFormMethod: true,
-            v7_partialHydration: true,
-            v7_skipActionErrorRevalidation: true,
-        },
     },
 );
 
@@ -55,7 +48,7 @@ const AktivitetsVisningContainerWrapper = ({
     return (
         <ErVeilederContext value={erVeileder}>
             <Provider store={store}>
-                <RouterProvider future={{ v7_startTransition: true }} router={routing}></RouterProvider>
+                <RouterProvider router={routing}></RouterProvider>
             </Provider>
         </ErVeilederContext>
     );

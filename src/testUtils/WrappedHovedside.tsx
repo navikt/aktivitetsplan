@@ -43,13 +43,6 @@ const MemoryRouteProvider = ({ routerRef }: { routerRef?: RefObject<MemoryRouter
             createMemoryRouter(routingConfig(dispatch, erVeileder, '2121'), {
                 initialEntries: ['/'],
                 initialIndex: 0,
-                future: {
-                    v7_relativeSplatPath: true,
-                    v7_fetcherPersist: true,
-                    v7_normalizeFormMethod: true,
-                    v7_partialHydration: true,
-                    v7_skipActionErrorRevalidation: true,
-                },
             }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [],
@@ -57,7 +50,7 @@ const MemoryRouteProvider = ({ routerRef }: { routerRef?: RefObject<MemoryRouter
     if (routerRef) {
         routerRef.current = router;
     }
-    return <RouterProvider future={{ v7_startTransition: true }} router={router} />;
+    return <RouterProvider router={router} />;
 };
 
 type Entry = string | Partial<Location>;
@@ -73,12 +66,7 @@ export const WrappedComponent = ({
 }) => {
     return (
         <Provider store={store}>
-            <MemoryRouter
-                future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-                initialEntries={initialEntries}
-            >
-                {children}
-            </MemoryRouter>
+            <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
         </Provider>
     );
 };
