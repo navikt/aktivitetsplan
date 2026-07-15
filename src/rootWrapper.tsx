@@ -1,5 +1,6 @@
 import './base.css';
 import './index.less';
+import './apmInit';
 
 import * as Sentry from '@sentry/react';
 import React from 'react';
