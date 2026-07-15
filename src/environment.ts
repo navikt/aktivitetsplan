@@ -27,8 +27,8 @@ export const MODIA_CONTEXT_BASE_URL = stripPrependingSlash(BASE_URL) + '/modiaco
 export enum Env {
     Local = 'local',
     Test = 'test',
-    Dev = 'dev',
-    Prod = 'prod',
+    Dev = 'dev-gcp',
+    Prod = 'prod-gcp',
 }
 
 const isVitest = import.meta.env.VITEST;
