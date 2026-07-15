@@ -20,10 +20,10 @@ interface ArkivState {
         | undefined;
     forhaandsvisningSendTilBruker:
         | {
-        pdf: string;
-        forhaandsvisningOpprettet: string;
-        uuidCachetPdf: string | undefined;
-    }
+              pdf: string;
+              forhaandsvisningOpprettet: string;
+              uuidCachetPdf: string | undefined;
+          }
         | undefined;
 }
 
@@ -31,7 +31,7 @@ const arkivSlice = createSlice({
     name: 'arkiv',
     initialState: {
         forhaandsvisningStatus: Status.NOT_STARTED,
-        forhaandsvisningSendTilBrukerStatus: Status.NOT_STARTED
+        forhaandsvisningSendTilBrukerStatus: Status.NOT_STARTED,
     } as ArkivState,
     reducers: {},
     extraReducers: (builder) => {
@@ -91,7 +91,7 @@ export const journalfør = createAsyncThunk(
         forhaandsvisningOpprettet,
         journalførendeEnhetId,
         oppfolgingsperiodeId,
-        uuidCachetPdf
+        uuidCachetPdf,
     }: {
         forhaandsvisningOpprettet: string;
         journalførendeEnhetId: string;
@@ -102,7 +102,7 @@ export const journalfør = createAsyncThunk(
             oppfolgingsperiodeId,
             forhaandsvisningOpprettet,
             journalførendeEnhetId,
-            uuidCachetPdf
+            uuidCachetPdf,
         );
     },
 );
@@ -118,7 +118,7 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
         journalførendeEnhetId,
     }: {
         oppfolgingsperiodeId: string;
-        journalførendeEnhetId: string;
+        journalførendeEnhetId: string | undefined;
     }) => {
         return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, journalførendeEnhetId);
     },
@@ -127,37 +127,46 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
 export const hentPdfTilForhaandsvisningSendTilBruker = createAsyncThunk(
     `${arkivSlice.name}/forhaandsvisning-send-til-bruker`,
     async ({
-               oppfolgingsperiodeId,
-               filter,
-               journalførendeEnhetId,
-           }: {
+        oppfolgingsperiodeId,
+        filter,
+        journalførendeEnhetId,
+    }: {
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
         journalførendeEnhetId: string;
     }) => {
-        return await Api.genererPdfTilForhaandsvisningSendTilBruker(oppfolgingsperiodeId, filter, journalførendeEnhetId);
+        return await Api.genererPdfTilForhaandsvisningSendTilBruker(
+            oppfolgingsperiodeId,
+            filter,
+            journalførendeEnhetId,
+        );
     },
 );
-
 
 export const journalforOgSendTilBruker = createAsyncThunk(
     `${arkivSlice.name}/send-til-bruker`,
     async ({
-               forhaandsvisningOpprettet,
-               journalførendeEnhetId,
-               oppfolgingsperiodeId,
-               filter,
-               uuidCachetPdf,
-           }: {
+        forhaandsvisningOpprettet,
+        journalførendeEnhetId,
+        oppfolgingsperiodeId,
+        filter,
+        uuidCachetPdf,
+    }: {
         forhaandsvisningOpprettet: string;
         journalførendeEnhetId: string;
         oppfolgingsperiodeId: string;
         filter: ArkivFilter;
         uuidCachetPdf: string | undefined;
     }) => {
-        return await Api.journalforOgSendTilBruker(oppfolgingsperiodeId, forhaandsvisningOpprettet, journalførendeEnhetId, filter, uuidCachetPdf);
+        return await Api.journalforOgSendTilBruker(
+            oppfolgingsperiodeId,
+            forhaandsvisningOpprettet,
+            journalførendeEnhetId,
+            filter,
+            uuidCachetPdf,
+        );
     },
-)
+);
 
 export function selectSendTilBrukerStatus(state: RootState) {
     return state.data.arkiv.sendTilBrukerStatus;
@@ -194,7 +203,6 @@ export function selectForhaandsvisningUuidCachetPdf(state: RootState) {
 export function selectForhaandsvisningSendTilBrukerUuidCachetPdf(state: RootState) {
     return state.data.arkiv?.forhaandsvisningSendTilBruker?.uuidCachetPdf;
 }
-
 
 export function selectSistJournalfort(state: RootState) {
     return state.data.arkiv?.forhaandsvisning?.sistJournalført;
