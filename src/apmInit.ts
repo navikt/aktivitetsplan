@@ -13,6 +13,7 @@ init({
         /^Uventet feil fra dekoratøren: NotFoundError: The object can not be found here. \[object Object]$/,
         /^The object can not be found here.$/,
     ],
+    tracing: true,
     sessionReplay: { enabled: false },
     screenshotOnError: false,
 });
