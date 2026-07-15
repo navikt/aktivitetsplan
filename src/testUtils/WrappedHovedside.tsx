@@ -50,7 +50,7 @@ const MemoryRouteProvider = ({ routerRef }: { routerRef?: RefObject<MemoryRouter
     if (routerRef) {
         routerRef.current = router;
     }
-    return <RouterProvider future={{ v7_startTransition: true, v7_relativeSplatPath: true }} router={router} />;
+    return <RouterProvider future={{ v7_startTransition: true }} router={router} />;
 };
 
 type Entry = string | Partial<Location>;
@@ -66,10 +66,7 @@ export const WrappedComponent = ({
 }) => {
     return (
         <Provider store={store}>
-            <MemoryRouter
-                future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-                initialEntries={initialEntries}
-            >
+            <MemoryRouter future={{ v7_startTransition: true }} initialEntries={initialEntries}>
                 {children}
             </MemoryRouter>
         </Provider>
