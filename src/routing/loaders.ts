@@ -1,5 +1,5 @@
 import { Dispatch } from '../store';
-import { LoaderFunction, useRouteLoaderData } from 'react-router-dom';
+import { LoaderFunction, useRouteLoaderData } from 'react-router';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunks } from './initialPageLoadThunk';

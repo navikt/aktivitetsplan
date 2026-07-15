@@ -1,5 +1,6 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
 
 import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';

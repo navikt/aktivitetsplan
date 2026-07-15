@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { EndringsLinje } from './EndringsLinje';
 import { selectAktivitetHistorikk } from '../../aktivitet-selector';
-import { Await, useParams } from 'react-router-dom';
+import { Await, useParams } from 'react-router';
 import { useAktivitetsVisningLoaderData } from '../../../../routing/loaders';
 
 const MAX_SIZE = 10;

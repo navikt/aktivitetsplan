@@ -3,7 +3,7 @@ import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 import reducer from '../../../reducer';
 import { hentDialoger } from '../../dialog/dialog-slice';

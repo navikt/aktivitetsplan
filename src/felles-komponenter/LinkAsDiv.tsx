@@ -1,5 +1,5 @@
 import React, { CSSProperties, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 interface Props {
     to: string;

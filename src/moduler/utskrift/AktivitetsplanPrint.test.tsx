@@ -1,5 +1,5 @@
 import { describe, expect } from 'vitest';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router';
 import { Provider } from 'react-redux';
 import React from 'react';
 import AktivitetsplanPrint from './AktivitetsplanPrint';

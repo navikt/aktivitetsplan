@@ -1,7 +1,7 @@
 import { PayloadAction, isFulfilled } from '@reduxjs/toolkit';
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Routes, useMatch, useNavigate } from 'react-router-dom';
+import { Route, Routes, useMatch, useNavigate } from 'react-router';
 
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';

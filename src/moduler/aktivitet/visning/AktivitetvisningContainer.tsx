@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router';
 
 import { Status } from '../../../createGenericSlice';
 import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';

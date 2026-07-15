@@ -15,7 +15,7 @@ import {
     useLocation,
     useNavigationType,
     createBrowserRouter,
-} from 'react-router-dom';
+} from 'react-router';
 import { Env, getEnv } from './environment';
 import { HttpError } from './api/utils';
 

@@ -1,6 +1,6 @@
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router';
 import React, { RefObject, useMemo } from 'react';
 import { Location } from '@remix-run/router/history';
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';

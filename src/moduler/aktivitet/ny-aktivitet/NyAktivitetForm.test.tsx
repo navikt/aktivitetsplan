@@ -9,7 +9,7 @@ import { gitt } from '../../../testUtils/store/mockStoreBuilder';
 import { DialogResponse } from '../../../api/dialogGraphql';
 import { aktivitetingress } from '../visning/aktivitetingress/AktivitetIngress';
 import NyAktivitetForm from './NyAktivitetForm';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 import { nyAktivitetRoute } from '../../../routing/useRoutes';
 
 // const server = setupServer(...handlers);

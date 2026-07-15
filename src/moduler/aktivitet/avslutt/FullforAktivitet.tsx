@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { Status } from '../../../createGenericSlice';

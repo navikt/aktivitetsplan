@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { BodyShort, Button, Heading, Label, List, Select, Box } from '@navikt/ds-react';
-import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate, useParams } from 'react-router';
 import {
     journalfør,
     selectForhaandsvisningOpprettet,
-    selectForhaandsvisningStatus, selectForhaandsvisningUuidCachetPdf,
+    selectForhaandsvisningStatus,
+    selectForhaandsvisningUuidCachetPdf,
     selectJournalføringstatus,
-    selectSistJournalfort
+    selectSistJournalfort,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { Status } from '../../createGenericSlice';
 import { useRoutes } from '../../routing/useRoutes';
@@ -39,7 +40,9 @@ const Sidebar: FunctionComponent = () => {
     const sendTilArkiv = () => {
         logKlikkKnapp('Journalfør aktivitetsplan');
         if (forhaandsvisningOpprettet && uuidCachetPdf) {
-            dispatch(journalfør({ forhaandsvisningOpprettet, journalførendeEnhetId, oppfolgingsperiodeId, uuidCachetPdf }));
+            dispatch(
+                journalfør({ forhaandsvisningOpprettet, journalførendeEnhetId, oppfolgingsperiodeId, uuidCachetPdf }),
+            );
         }
     };
 
@@ -76,10 +79,17 @@ const Sidebar: FunctionComponent = () => {
             </ReactRouterLink>
             <Heading size="large">Journalføring</Heading>
             <div className="print:border-none space-y-8 flex flex-col pb-4">
-                <div><Heading as="h3" size="xsmall">Dette er ikke inkludert i journalføringen:</Heading><Box marginBlock="space-12" asChild><List data-aksel-migrated-v8 as="ul" size="small">
+                <div>
+                    <Heading as="h3" size="xsmall">
+                        Dette er ikke inkludert i journalføringen:
+                    </Heading>
+                    <Box marginBlock="space-12" asChild>
+                        <List data-aksel-migrated-v8 as="ul" size="small">
                             <List.Item>Aktiviteter og dialog tilknyttet KVP</List.Item>
                             <List.Item>Samtalereferat som ikke er delt med bruker</List.Item>
-                        </List></Box></div>
+                        </List>
+                    </Box>
+                </div>
                 <Select
                     label="Oppfølgingsperiode"
                     onChange={onEndretOppfolgingsperiode}

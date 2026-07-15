@@ -2,7 +2,7 @@ import { Heading, Link } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router';
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';

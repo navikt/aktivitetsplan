@@ -22,7 +22,7 @@ import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreA
 import Tavle from './Tavle';
 import { Tavleadvarsel } from './Tavleadvarsel';
 import { erDroppbar } from './tavleUtils';
-import { Await, useRouteLoaderData } from 'react-router-dom';
+import { Await, useRouteLoaderData } from 'react-router';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
 import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
