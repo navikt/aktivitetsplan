@@ -15,6 +15,7 @@ import Mal from '../moduler/mal/mal';
 import { arkivLoader, JournalforingPage } from '../moduler/journalforing/JournalforingPage';
 import { BasePage } from '../BasePage';
 import { useErVeileder } from '../Provider';
+import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 
 const baseName = 'aktivitetsplan';
 
@@ -43,6 +44,18 @@ export const createRouterWithWrapper =
             : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet), { future });
     };
 
+const OnlyNavigasjonsLinjeSkeleton = () => {
+    return (
+        <main id="main" className="hovedside">
+            <div className="flex items-center flex-col w-full h-full">
+                <div className="container flex flex-col gap-y-6">
+                    <Navigasjonslinje />
+                </div>
+            </div>
+        </main>
+    );
+};
+
 export const routingConfig: (
     dispatch: Dispatch,
     isVeileder: boolean,
@@ -53,6 +66,7 @@ export const routingConfig: (
         element: <BasePage />, // Don't reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
         id: 'root',
+        HydrateFallback: OnlyNavigasjonsLinjeSkeleton,
         children: [
             {
                 path: '',
