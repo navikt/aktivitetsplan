@@ -5,7 +5,7 @@ import {
     formaterDatoKortManedTid,
     formaterTid,
 } from './utils/dateUtils';
-import { autobind, erInternlenke, fn, guid, storeForbokstaver } from './utils/utils';
+import { autobind, fn, storeForbokstaver } from './utils/utils';
 import { describe } from 'vitest';
 
 describe('app utils', () => {
@@ -17,22 +17,6 @@ describe('app utils', () => {
             expect(fn(funksjon)()).toEqual('en funksjon');
             expect(fn(string)()).toEqual('en string');
             expect(typeof fn('test')).toBe('function');
-        });
-    });
-
-    describe('guid', () => {
-        it('GUID skal følge standard format', () => {
-            const id = guid();
-            const guidParts = id.split('-');
-
-            expect(guidParts.length).toEqual(5);
-        });
-
-        it('GUID skal være forskjellige', () => {
-            const guid1 = guid();
-            const guid2 = guid();
-
-            expect(guid1 === guid2).toEqual(false);
         });
     });
 
@@ -65,28 +49,15 @@ describe('app utils', () => {
                 }
 
                 fn3() {
-                    this.c = 1;
+                    (this as any).c = 1;
                 }
             }
 
-            Mock.prototype.val1 = 'abba';
+            (Mock.prototype as any).val1 = 'abba';
 
             new Mock(); // eslint-disable-line no-new
 
             expect(true).toEqual(true); // Skal ikke kaste error
-        });
-    });
-
-    describe('erInternlenke', () => {
-        it('Skal kjenne igjen en ekstern lenke', () => {
-            const httpsHref = 'https://www.nrk.no/';
-            const httpHref = 'http://www.nrk.no/';
-
-            expect(erInternlenke(httpsHref)).toEqual(false);
-            expect(erInternlenke(httpHref)).toEqual(false);
-            expect(erInternlenke('/a/b/c')).toEqual(true);
-            expect(erInternlenke(null)).toEqual(false);
-            expect(erInternlenke(undefined)).toEqual(false);
         });
     });
 

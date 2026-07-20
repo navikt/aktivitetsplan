@@ -2,9 +2,8 @@ import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Store } from 'redux';
 
-import { AktivitetStatus, StillingFraNavSoknadsstatus, StillingStatus } from '../../../datatypes/aktivitetTypes';
+import { StillingFraNavSoknadsstatus, StillingStatus } from '../../../datatypes/aktivitetTypes';
 import { ArenaEtikett } from '../../../datatypes/arenaAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';

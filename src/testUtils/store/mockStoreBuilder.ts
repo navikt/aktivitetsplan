@@ -12,6 +12,12 @@ import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { OppfolgingsPeriode } from '../../api/veilarboppfolging';
 import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
 import { withArenaAktiviteter } from './arenaAktiviteterMock';
+import {
+    AktivitetFilterType,
+    ArenaEtikettFilterType,
+    AvtaltFilterType,
+    EtikettFilterType,
+} from '../../moduler/filtrering/filter/FilterVisning';
 
 const defaultStore: RootState = {
     view: {
@@ -62,19 +68,50 @@ const defaultStore: RootState = {
         valgtPeriode: {
             valgtPeriodeId: null,
         },
-        arkiv: {},
-        errors: {},
-        eskaleringsvarsel: {},
-        feature: {},
-        filter: {
-            aktivitetTyper: {},
-            aktivitetAvtaltMedNav: {},
-            aktivitetEtiketter: {},
-            arenaAktivitetEtiketter: {},
+        arkiv: {
+            forhaandsvisning: undefined,
+            forhaandsvisningSendTilBruker: undefined,
+            forhaandsvisningSendTilBrukerStatus: Status.NOT_STARTED,
+            journalføringStatus: Status.NOT_STARTED,
+            sendTilBrukerStatus: Status.NOT_STARTED,
+            forhaandsvisningStatus: Status.NOT_STARTED,
         },
-        innsynsrett: {},
-        malListe: {},
-        tryggTekst: {},
+        errors: {},
+        eskaleringsvarsel: {
+            data: undefined,
+        },
+        feature: {
+            status: Status.OK,
+            data: {
+                'aktivitetsplan.journalforing': true,
+                'aktivitetsplan.tryggtekst': true,
+            },
+        },
+        filter: {
+            aktivitetTyper: {} as AktivitetFilterType,
+            aktivitetAvtaltMedNav: {} as AvtaltFilterType,
+            aktivitetEtiketter: {} as EtikettFilterType,
+            arenaAktivitetEtiketter: {} as ArenaEtikettFilterType,
+        },
+        innsynsrett: {
+            status: Status.OK,
+            data: {
+                foresatteHarInnsynsrett: true,
+                status: Status.OK,
+            },
+        },
+        malListe: {
+            status: Status.OK,
+            data: [],
+        },
+        tryggTekst: {
+            status: Status.OK,
+            data: {
+                feilmedling: '',
+                kategorier: [],
+                tryggTekstReferatId: undefined,
+            },
+        },
     },
 };
 

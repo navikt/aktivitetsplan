@@ -11,6 +11,9 @@ import {
 } from '../../utils/textMappers';
 import { selectFilterSlice } from './filter/filter-selector';
 import {
+    FilterStateEntry,
+    FilterStateEntryKey,
+    filterTypes,
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
     toggleAktivitetsType,
@@ -22,45 +25,50 @@ import {
     AvtaltFilterType,
     EtikettFilterType,
 } from './filter/FilterVisning';
-import FiltreringLabel from './filteringslabel/FiltreringLabel';
+import FiltreringLabelChip from './filteringslabel/FiltreringLabelChip';
 
 const VisValgtFilter = () => {
     const filterSlice = useSelector(selectFilterSlice);
 
     const dispatch = useAppDispatch();
 
-    const doToggleAktivitetsEtikett = (aktivitetsEtikett: string) =>
+    const doToggleAktivitetsEtikett = (aktivitetsEtikett: keyof EtikettFilterType) =>
         dispatch(toggleAktivitetsEtikett(aktivitetsEtikett));
-    const doToggleArenaAktivitetsEtikett = (arenaEtikett: string) =>
+    const doToggleArenaAktivitetsEtikett = (arenaEtikett: keyof ArenaEtikettFilterType) =>
         dispatch(toggleArenaAktivitetsEtikett(arenaEtikett));
-    const doToggleAktivitetsType = (aktivitetsType: string) => dispatch(toggleAktivitetsType(aktivitetsType));
-    const doToggleAktivitetAvtaltMedNav = (aktivitetsStatus: string) =>
+    const doToggleAktivitetsType = (aktivitetsType: keyof AktivitetFilterType) =>
+        dispatch(toggleAktivitetsType(aktivitetsType));
+    const doToggleAktivitetAvtaltMedNav = (aktivitetsStatus: keyof AvtaltFilterType) =>
         dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus));
 
-    const setFilterValues = (filterType: string, filterVerdi: string) => {
-        switch (filterType) {
+    const setFilterValues = <T extends FilterStateEntryKey>(entry: T) => {
+        switch (entry.category) {
             case 'aktivitetTyper':
+                const aktivitetType = entry.keyActiveOnFilterCategory;
                 return {
-                    tekst: aktivitetTypeMap[filterVerdi as keyof AktivitetFilterType],
-                    func: doToggleAktivitetsType,
+                    filterLabel: aktivitetTypeMap[aktivitetType],
+                    toggleFilter: () => doToggleAktivitetsType(aktivitetType),
                 };
             case 'aktivitetEtiketter':
+                const aktivitetsEtikett = entry.keyActiveOnFilterCategory;
                 return {
-                    tekst: stillingOgStillingFraNavEtikettMapper[filterVerdi as keyof EtikettFilterType],
-                    func: doToggleAktivitetsEtikett,
+                    filterLabel: stillingOgStillingFraNavEtikettMapper[aktivitetsEtikett],
+                    toggleFilter: () => doToggleAktivitetsEtikett(aktivitetsEtikett),
                 };
             case 'arenaAktivitetEtiketter':
+                const arenaAktivitetsEtikett = entry.keyActiveOnFilterCategory;
                 return {
-                    tekst: tiltakOgEksternAktivitetEtikettMapper[filterVerdi as keyof ArenaEtikettFilterType],
-                    func: doToggleArenaAktivitetsEtikett,
+                    filterLabel: tiltakOgEksternAktivitetEtikettMapper[arenaAktivitetsEtikett],
+                    toggleFilter: () => doToggleArenaAktivitetsEtikett(arenaAktivitetsEtikett),
                 };
             case 'aktivitetAvtaltMedNav':
+                const aktivitetAvtaltMedNav = entry.keyActiveOnFilterCategory;
                 return {
-                    tekst: avtaltMapper[filterVerdi as keyof AvtaltFilterType],
-                    func: doToggleAktivitetAvtaltMedNav,
+                    filterLabel: avtaltMapper[aktivitetAvtaltMedNav],
+                    toggleFilter: () => doToggleAktivitetAvtaltMedNav(aktivitetAvtaltMedNav),
                 };
             default:
-                return filterType;
+                throw Error('Ukjent filter');
         }
     };
 
@@ -73,30 +81,41 @@ const VisValgtFilter = () => {
         <div className="flex flex-wrap flex-col">
             <Label className="mb-2">Valgte filter</Label>
             <Chips>
-                {Object.entries(filterSlice as Record<string, Record<string, string> | null>).map(
-                    ([filterCategoryKey, activeFiltersMap]) => {
-                        if (activeFiltersMap === null) return null;
+                {filterTypes.map((filterType) => {
+                    const activeFiltersMap = filterSlice[filterType];
+                    if (activeFiltersMap === null) return null;
 
-                        return Object.entries(activeFiltersMap)
-                            .filter(([_, isFilterEnabled]) => isFilterEnabled)
-                            .map(([activeFilterKey, _]) => {
-                                const filterValues = setFilterValues(filterCategoryKey, activeFilterKey);
-                                if (typeof filterValues === 'string') return null;
-                                return (
-                                    <FiltreringLabel
-                                        key={activeFilterKey}
-                                        label={filterValues.tekst}
-                                        slettFilter={() => {
-                                            filterValues.func(activeFilterKey);
-                                        }}
-                                    />
-                                );
-                            });
-                    },
-                )}
+                    return getActiveFilterValues({
+                        category: filterType,
+                        subFilter: activeFiltersMap,
+                    } as FilterStateEntry).map((activeFilter) => {
+                        const filterValues = setFilterValues(activeFilter);
+                        if (typeof filterValues === 'string') return null;
+                        const { toggleFilter, filterLabel } = filterValues;
+                        return (
+                            <FiltreringLabelChip
+                                key={activeFilter.keyActiveOnFilterCategory}
+                                label={filterLabel}
+                                slettFilter={toggleFilter}
+                            />
+                        );
+                    });
+                })}
             </Chips>
         </div>
     ) : null;
+};
+
+const getActiveFilterValues = ({ category, subFilter }: FilterStateEntry): FilterStateEntryKey[] => {
+    const filterCategory = category;
+    const activeFiltersMap = subFilter;
+    const keysActiveOnFilterCategory = Object.entries(activeFiltersMap).filter(
+        ([_, isFilterEnabled]) => isFilterEnabled,
+    );
+    return keysActiveOnFilterCategory.map(([key]) => ({
+        category: filterCategory,
+        keyActiveOnFilterCategory: key as keyof typeof activeFiltersMap,
+    }));
 };
 
 export default VisValgtFilter;

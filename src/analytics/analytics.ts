@@ -1,6 +1,7 @@
 import { AnalyticsEvent, FeltEndret } from './analytics-taxonomy-events';
 import { initAnalytics, queueOrTrackEvent } from './initAnalytics';
-import { TextCheckerResult } from '@navikt/dab-spraksjekk/dist/library';
+// @ts-ignore
+import type { TextCheckerResult } from '@navikt/dab-spraksjekk/dist/library';
 
 initAnalytics();
 const logEvent = queueOrTrackEvent;
@@ -48,8 +49,8 @@ export function logValgtFilter(filterValgt: string) {
 export function logEndringAvtaltMote(feltEndret: FeltEndret[]) {
     return logAnalyticsEvent({
         name: 'detaljer endret',
-        data: { feltEndret: feltEndret}
-    })
+        data: { feltEndret: feltEndret },
+    });
 }
 
 export function logToggleSpraksjekkToggle(enabled: boolean) {

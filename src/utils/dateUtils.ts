@@ -14,9 +14,7 @@ import {
 } from 'date-fns';
 import nb from 'date-fns/locale/nb';
 
-export const todayIsoString = () => endOfToday().toISOString();
-
-export const erGyldigISODato = (isoDato: string) => {
+export const erGyldigISODato = (isoDato: string | undefined | null) => {
     return !!(isoDato && isValid(parseISO(isoDato)));
 };
 
@@ -43,11 +41,11 @@ export function formaterDatoKortManed(dato: string | Date | undefined | null) {
     return formatter(dato, 'PP');
 }
 
-export function formaterDatoKortManedTid(dato: string | Date) {
+export function formaterDatoKortManedTid(dato: string | Date | undefined | null) {
     return formatter(dato, "PP 'kl' HH.mm");
 }
 
-export function formaterTid(dato: string | Date) {
+export function formaterTid(dato: string | undefined | null | Date) {
     return formatter(dato, 'HH.mm');
 }
 
@@ -83,9 +81,9 @@ export function formaterDatoEllerTidSiden(dato: string | undefined) {
 
 export const msSince = (date: string) => differenceInMilliseconds(new Date(), parseISO(date));
 
-const oneIfPresent = (x: string | undefined) => (x ? 1 : 0);
+const oneIfPresent = (x: string | undefined | null) => (x ? 1 : 0);
 
-export function datoComparator(a: string, b: string) {
+export function datoComparator(a: string | null | undefined, b: string | null | undefined) {
     if (a == null || b == null) {
         return oneIfPresent(a) - oneIfPresent(b);
     }
