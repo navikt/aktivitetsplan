@@ -106,16 +106,25 @@ const VisValgtFilter = () => {
     ) : null;
 };
 
-const getActiveFilterValues = ({ category, subFilter }: FilterStateEntry): FilterStateEntryKey[] => {
-    const filterCategory = category;
-    const activeFiltersMap = subFilter;
-    const keysActiveOnFilterCategory = Object.entries(activeFiltersMap).filter(
-        ([_, isFilterEnabled]) => isFilterEnabled,
-    );
-    return keysActiveOnFilterCategory.map(([key]) => ({
-        category: filterCategory,
-        keyActiveOnFilterCategory: key as keyof typeof activeFiltersMap,
-    }));
+const getActiveFilterValues = (entry: FilterStateEntry): FilterStateEntryKey[] => {
+    switch (entry.category) {
+        case 'aktivitetTyper':
+            return (Object.entries(entry.subFilter) as [keyof AktivitetFilterType, boolean][])
+                .filter(([_, isFilterEnabled]) => isFilterEnabled)
+                .map(([key]) => ({ category: 'aktivitetTyper' as const, keyActiveOnFilterCategory: key }));
+        case 'aktivitetEtiketter':
+            return (Object.entries(entry.subFilter) as [keyof EtikettFilterType, boolean][])
+                .filter(([_, isFilterEnabled]) => isFilterEnabled)
+                .map(([key]) => ({ category: 'aktivitetEtiketter' as const, keyActiveOnFilterCategory: key }));
+        case 'arenaAktivitetEtiketter':
+            return (Object.entries(entry.subFilter) as [keyof ArenaEtikettFilterType, boolean][])
+                .filter(([_, isFilterEnabled]) => isFilterEnabled)
+                .map(([key]) => ({ category: 'arenaAktivitetEtiketter' as const, keyActiveOnFilterCategory: key }));
+        case 'aktivitetAvtaltMedNav':
+            return (Object.entries(entry.subFilter) as [keyof AvtaltFilterType, boolean][])
+                .filter(([_, isFilterEnabled]) => isFilterEnabled)
+                .map(([key]) => ({ category: 'aktivitetAvtaltMedNav' as const, keyActiveOnFilterCategory: key }));
+    }
 };
 
 export default VisValgtFilter;
