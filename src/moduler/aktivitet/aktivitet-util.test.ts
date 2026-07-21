@@ -18,7 +18,6 @@ import {
 } from './aktivitet-util';
 import { kanEndreAktivitetDetaljer } from './aktivitetlisteSelector';
 import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
-import { formaterDatoEllerTidSiden } from '../../utils/dateUtils';
 import { expect } from 'vitest';
 
 /* eslint-env mocha */
@@ -33,7 +32,7 @@ describe('aktivitet-util', () => {
         expect(fraTil.fraDato).toEqual('2017-08-01T13:00:00.000Z');
         expect(fraTil.tilDato).toEqual('2017-08-01T13:15:00.000Z');
 
-        expect(beregnFraTil({} as never)).toEqual({});
+        expect(beregnFraTil({} as never)).toEqual({ fraDato: '', tilDato: '' });
     });
 
     it('beregnKlokkeslettVarighet', () => {

@@ -110,7 +110,7 @@ describe('MoteAktivitetForm', () => {
         render(
             <ReduxProvider store={store}>
                 <MoteAktivitetForm
-                    onSubmit={() => new Promise(() => null)}
+                    onSubmit={() => Promise.resolve()}
                     dirtyRef={dirtyRef}
                     aktivitet={aktivitet as any}
                 />
@@ -130,11 +130,7 @@ describe('MoteAktivitetForm', () => {
             erAvtalt: false,
         };
         const { getByText } = mountWithIntl(
-            <MoteAktivitetForm
-                onSubmit={() => new Promise(() => null)}
-                dirtyRef={dirtyRef}
-                aktivitet={aktivitet as any}
-            />,
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet as any} />,
         );
 
         await act(async () => {
@@ -191,7 +187,7 @@ describe('MoteAktivitetForm', () => {
             varighet: 30,
         };
 
-        const onFormSumbitMock: Mock = vi.fn();
+        const onFormSumbitMock: Mock = vi.fn(() => Promise.resolve());
         const { getByText, queryByText, getByLabelText, getByRole } = mountWithIntl(
             <MoteAktivitetForm onSubmit={onFormSumbitMock} dirtyRef={dirtyRef} />,
         );
@@ -216,7 +212,7 @@ describe('MoteAktivitetForm', () => {
     });
 
     it('Skal selekte riktig varighet', async () => {
-        const mock: Mock = vi.fn();
+        const mock: Mock = vi.fn(() => Promise.resolve());
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} dirtyRef={dirtyRef} />);
 
         fillForm();
