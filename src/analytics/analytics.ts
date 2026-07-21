@@ -1,7 +1,6 @@
 import { AnalyticsEvent, FeltEndret } from './analytics-taxonomy-events';
 import { initAnalytics, queueOrTrackEvent } from './initAnalytics';
-// @ts-ignore
-import type { TextCheckerResult } from '@navikt/dab-spraksjekk/dist/library';
+import type { TextCheckerResult } from '@navikt/dab-spraksjekk';
 
 initAnalytics();
 const logEvent = queueOrTrackEvent;
