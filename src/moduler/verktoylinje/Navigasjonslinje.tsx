@@ -26,7 +26,7 @@ function Navigasjonslinje() {
         const doHentDialog = () => dispatch(hentDialoger());
 
         if (!erVeileder) {
-            let interval: NodeJS.Timeout;
+            let interval: ReturnType<typeof setInterval>;
 
             const pollForChanges = () =>
                 fetchSistOppdatert()

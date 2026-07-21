@@ -1,7 +1,7 @@
 import { selectPersonopplusningSjekk } from './tryggtekst-selector';
 import { useSelector } from 'react-redux';
 import { BodyLong, BodyShort, ExpansionCard, Heading, List, Loader, Box, Button } from '@navikt/ds-react';
-import { Status } from '../../../../createGenericSlice';
+import { Status } from '../../../../store/createGenericSlice';
 import { sjekkForPersonopplysninger, nullstillTryggTekst } from './tryggtekst-slice';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useEffect, useRef, useState } from 'react';
@@ -22,7 +22,7 @@ const TryggTekst = ({ value }: { value: string }) => {
     useEffect(() => {
         const prevAktivitetId = prevAktivitetIdRef.current;
         if (prevAktivitetId && prevAktivitetId !== aktivitetId) {
-            dispatch(nullstillTryggTekst());
+            dispatch(nullstillTryggTekst(undefined));
             setLastCheckedValue(null);
         }
         prevAktivitetIdRef.current = aktivitetId;

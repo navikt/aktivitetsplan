@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
-import { RootState } from '../../store';
 import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import { hentDialoger } from './dialog-slice';
 import { SerializedError } from '../../api/utils';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
+import { RootState } from '../../store/rootReducer';
 
 const selectDialogerSlice = (state: RootState) => state.data.dialog;
 

@@ -1,7 +1,9 @@
 import { BodyLong, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-interface Props {}
+interface Props {
+    children?: React.ReactNode;
+}
 interface State {
     hasError: boolean;
     errorMessage?: string;

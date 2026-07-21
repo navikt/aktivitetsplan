@@ -9,7 +9,7 @@ import {
     selectJournalføringstatus,
     selectSistJournalfort,
 } from '../verktoylinje/arkivering/arkiv-slice';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { useRoutes } from '../../routing/useRoutes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { useSelector } from 'react-redux';

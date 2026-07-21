@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import * as Api from '../../../api/aktivitetAPI';
-import { Status } from '../../../createGenericSlice';
-import { RootState } from '../../../store';
+import { Status } from '../../../store/createGenericSlice';
+import { RootState } from '../../../store/rootReducer';
 import { ArkivFilter } from '../../journalforing/journalforingFilter';
 
 interface ArkivState {
@@ -118,7 +118,7 @@ export const hentPdfTilForhaandsvisning = createAsyncThunk(
         journalførendeEnhetId,
     }: {
         oppfolgingsperiodeId: string;
-        journalførendeEnhetId: string | undefined;
+        journalførendeEnhetId: string;
     }) => {
         return await Api.genererPdfTilForhaandsvisning(oppfolgingsperiodeId, journalførendeEnhetId);
     },

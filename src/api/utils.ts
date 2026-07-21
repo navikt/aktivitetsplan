@@ -1,4 +1,4 @@
-import { Status } from '../createGenericSlice';
+import { Status } from '../store/createGenericSlice';
 
 /* eslint-env browser */
 

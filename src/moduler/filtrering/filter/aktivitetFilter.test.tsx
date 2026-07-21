@@ -1,8 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
 import { fireEvent, render, waitFor } from '@testing-library/react';
-import { setupServer } from 'msw/node';
 import React from 'react';
-import { Store } from 'redux';
 
 import {
     AktivitetStatus,
@@ -17,7 +14,7 @@ import {
 } from '../../../datatypes/internAktivitetTypes';
 import { wrapAktivitet } from '../../../mocks/aktivitet';
 import { enStillingFraNavAktivitet } from '../../../mocks/fixtures/stillingFraNavFixtures';
-import { aktivitetTypeMap, stillingsEtikettMapper } from '../../../utils/textMappers';
+import { aktivitetTypeMap, AlleAktivitetTyper, stillingsEtikettMapper } from '../../../utils/textMappers';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { aktivVeilarbOppfolgingMockPeriode } from '../../../testUtils/store/defaultInitialStore';
 import { gitt } from '../../../testUtils/store/mockStoreBuilder';
@@ -85,19 +82,13 @@ describe('aktivitets-filter', () => {
                 ...aktivitet,
                 type: value,
             } as AlleAktiviteter;
-        }) as {
-            tittel: string;
-            type:
-                | VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE
-                | VeilarbAktivitetType.MOTE_TYPE
-                | VeilarbAktivitetType.STILLING_AKTIVITET_TYPE;
-        }[];
+        });
         const store = gitt().aktiviteter.medAktiviteter(aktiviteter).createStore();
         const { getByText, queryByText, queryAllByText, getByRole } = render(<WrappedHovedside store={store} />);
         for await (const { tittel, type } of aktiviteter) {
             await waitFor(() => getByRole('button', { name: 'Filtrer' }));
             fireEvent.click(getByRole('button', { name: 'Filtrer' }));
-            fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
+            fireEvent.click(queryAllByText(aktivitetTypeMap[type as AlleAktivitetTyper])[0]);
             await waitFor(() => getByText(tittel));
             // Sjekk at ingen andre aktiviteter vises
             aktivitetTyper
@@ -106,7 +97,7 @@ describe('aktivitets-filter', () => {
                     expect(queryByText(`Aktivitet: ${typeSomIkkeSkalFinnes}`)).toBeNull();
                 });
             // Turn filter off
-            fireEvent.click(queryAllByText(aktivitetTypeMap[type])[0]);
+            fireEvent.click(queryAllByText(aktivitetTypeMap[type as AlleAktivitetTyper])[0]);
             // Close filter
             fireEvent.click(getByText('Filtrer'));
         }

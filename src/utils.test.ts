@@ -28,11 +28,11 @@ describe('app utils', () => {
                 }
 
                 fn1() {
-                    this.a = 1;
+                    (this as any).a = 1;
                 }
 
                 fn2() {
-                    this.b = 1;
+                    (this as any).b = 1;
                 }
             }
 

@@ -1,7 +1,7 @@
 import { OppfolgingsPeriode, OppfolgingStatusResponse } from '../../api/veilarboppfolging';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { aktivVeilarbOppfolgingMockPeriode } from './defaultInitialStore';
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 
 const defaultOppfolgingData: OppfolgingStatusResponse = {
     oppfolging: {

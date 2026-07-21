@@ -1,9 +1,8 @@
 import { defaultOppfolging, oppfolgingMockSlice, OppfolgingSliceState } from './oppfolgingMockSlice';
-import { RootState } from '../../store';
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from '../../reducer';
+import rootReducer, { RootState } from '../../store/rootReducer';
 import { aktiviteterState } from './aktiviteterMockSlice';
-import { GenericState, Status } from '../../createGenericSlice';
+import { GenericState, Status } from '../../store/createGenericSlice';
 import { VeilederInfo } from '../../datatypes/types';
 import { Mal } from '../../datatypes/oppfolgingTypes';
 import { ReadWriteMode } from '../../utils/readOrWriteModeSlice';
@@ -183,6 +182,6 @@ export const gitt = (store: RootState = defaultStore) => ({
 
 const lagStore = (initialStore: RootState) =>
     configureStore({
-        reducer,
+        reducer: rootReducer,
         preloadedState: initialStore,
     });

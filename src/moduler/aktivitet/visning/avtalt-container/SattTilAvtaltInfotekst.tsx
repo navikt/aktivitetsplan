@@ -28,15 +28,14 @@ const getText = (
     return 'Noe er feil, kontakt brukerstøtte';
 };
 
-interface Props {
+interface SattTilAvtaltInfotekstProps {
     mindreEnnSyvDagerTil: boolean;
     harTilDato: boolean;
     forhaandsorienteringstype: ForhaandsorienteringType;
-    manglerDatoer: boolean;
 }
 
 //Senere: Husk å slette tekstfil sett-avtalt-bekreftelse
-const SattTilAvtaltInfotekst = (props: Props) => {
+const SattTilAvtaltInfotekst = (props: SattTilAvtaltInfotekstProps) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
     const { mindreEnnSyvDagerTil, harTilDato, forhaandsorienteringstype } = props;

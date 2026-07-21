@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
-import { Status } from '../../../createGenericSlice';
+import { Status } from '../../../store/createGenericSlice';
 import { AktivitetStatus, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { useRoutes } from '../../../routing/useRoutes';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseForm from './BegrunnelseForm';
@@ -29,7 +29,7 @@ const FullforAktivitet = () => {
     const lagrer = useSelector((state: RootState) => selectAktivitetListeStatus(state)) !== Status.OK;
 
     const dispatch = useAppDispatch();
-    const doAvsluttOppfolging = (aktivitet: VeilarbAktivitet, begrunnelse: string | null) =>
+    const doAvsluttOppfolging = (aktivitet: VeilarbAktivitet, begrunnelse: string) =>
         dispatch(fullforAktivitet(aktivitet, begrunnelse));
 
     const navigate = useNavigate();
@@ -53,14 +53,18 @@ const FullforAktivitet = () => {
     const advarsel = (
         <VisAdvarsel
             onSubmit={() => {
-                valgtAktivitet && doAvsluttOppfolging(valgtAktivitet, null);
+                valgtAktivitet && doAvsluttOppfolging(valgtAktivitet, '');
                 navigate(hovedsideRoute());
             }}
         />
     );
 
     return (
-        <Modal onClose={() => navigate(hovedsideRoute(), { replace: true })} heading="Fullfør aktivitet">
+        <Modal
+            lukkPåKlikkUtenfor={false}
+            onClose={() => navigate(hovedsideRoute(), { replace: true })}
+            heading="Fullfør aktivitet"
+        >
             <ReferatIkkePubliserAdvarsel aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.FULLFOERT}>
                 {valgtAktivitet.avtalt &&
                 valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&

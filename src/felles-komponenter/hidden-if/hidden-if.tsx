@@ -1,11 +1,8 @@
-import PT, { ReactComponentLike } from 'prop-types';
-import React, { ReactElement } from 'react';
-
-import { fn } from '../../utils/utils';
+import React from 'react';
 
 const HiddenIf =
     (tag: 'div' | 'span' | 'section' | 'button') =>
-    ({ hidden, children, ...rest }: { children: ReactElement; hidden: boolean | (() => boolean) }) => {
+    ({ hidden, children, ...rest }: { children: React.ReactNode; hidden: boolean | (() => boolean); [key: string]: unknown }) => {
         const isHidden = typeof hidden === 'function' ? hidden() : hidden;
         if (!isHidden) {
             return React.createElement(tag, { ...rest }, children);
@@ -13,11 +10,11 @@ const HiddenIf =
         return null;
     };
 
-export default function hiddenIfHOC(WrappingComponent: ReactComponentLike) {
-    return ({ hidden, children, ...rest }: { children: ReactElement; hidden: boolean | (() => boolean) }) => {
+export default function hiddenIfHOC<P extends object>(WrappingComponent: React.ComponentType<P>) {
+    return ({ hidden, children, ...rest }: P & { children?: React.ReactNode; hidden: boolean | (() => boolean) }) => {
         const isHidden = typeof hidden === 'function' ? hidden() : hidden;
         if (!isHidden) {
-            return <WrappingComponent {...rest}>{children}</WrappingComponent>;
+            return <WrappingComponent {...(rest as unknown as P)}>{children}</WrappingComponent>;
         }
         return null;
     };

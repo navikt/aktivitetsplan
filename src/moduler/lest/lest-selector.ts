@@ -1,4 +1,4 @@
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 
 function selectLestSlice(state: RootState) {
     return state.data.lest;
@@ -9,7 +9,7 @@ function selectLestData(state: RootState) {
 }
 
 function selectLestRessurs(state: RootState, ressurs: string) {
-    return selectLestData(state).filter((lest) => lest.ressurs === ressurs)[0];
+    return selectLestData(state)?.find((lest) => lest.ressurs === ressurs);
 }
 
 export function selectLestInformasjon(state: RootState) {

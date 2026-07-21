@@ -6,7 +6,7 @@ import { AKTIVITETSPLAN_ROOT_NODE_ID } from './constant';
 import useAppDispatch from './felles-komponenter/hooks/useAppDispatch';
 import { UpdateEventHandler } from './utils/UpdateHandler';
 import { useErVeileder, useFnrOgEnhetContext } from './Provider';
-import { Dispatch } from './store';
+import { Dispatch } from './store/store';
 
 function App({
     createRoutesForUser,

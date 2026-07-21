@@ -1,6 +1,8 @@
 import { AktivitetStatus, Kanal } from '../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../datatypes/transaksjonstyperTypes';
+import { AktivitetsId } from '../datatypes/brandedTypes';
+import { aktivPeriodeId } from './data/oppfolging';
 
 let id = 1002;
 let versjon = 1002;
@@ -10,7 +12,8 @@ export function etSamtalereferat({ tittel }: { tittel: string }): Samtalereferat
     versjon += 1000;
 
     return {
-        id: `${id}`,
+        oppfolgingsperiodeId: aktivPeriodeId,
+        id: `${id}` as AktivitetsId,
         versjon: `${versjon}`,
         tittel,
         referat:

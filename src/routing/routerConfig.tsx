@@ -1,6 +1,6 @@
 import { createBrowserRouter, createHashRouter, Navigate, RouteObject, useParams } from 'react-router';
 import React from 'react';
-import { Dispatch } from '../store';
+import { Dispatch } from '../store/store';
 import Hovedside from '../hovedside/Hovedside';
 import { aktivitetsVisningLoader, initialPageLoader, malLoader } from './loaders';
 import LeggTilNyttAktivitetsKort from '../moduler/aktivitet/ny-aktivitet/LeggTilNyttAktivitetsKort';

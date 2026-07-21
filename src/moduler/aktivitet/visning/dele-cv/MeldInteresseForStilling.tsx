@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, BodyShort, Button, Heading, Radio, RadioGroup, ReadMore } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { endOfToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
@@ -33,13 +33,14 @@ type KanDeles = {
     avtaltDato: string;
 };
 
-const dateErrorMap = {
+const dateErrorMap: Record<string, string> = {
     invalid_type: 'Du må fylle ut datoen for når du var i dialog med brukeren',
     invalid_date: 'Ikke en gyldig dato',
 };
+
 const getDateErrorMessage: ZodErrorMap = (issue) => {
     return {
-        message: dateErrorMap[issue.code],
+        message: dateErrorMap[issue.code] || `Noe gikk galt: ${issue.message}`,
     };
 };
 

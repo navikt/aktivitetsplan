@@ -16,6 +16,7 @@ const DemoBannerInner = () => {
         <div>
             <DemoIkon onClick={() => setOpen(true)} />
             <Modal
+                aria-label={'Demo modal'}
                 closeOnBackdropClick={true}
                 open={open}
                 onClose={() => {

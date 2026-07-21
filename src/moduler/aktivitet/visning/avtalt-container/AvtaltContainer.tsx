@@ -65,7 +65,7 @@ const AvtaltContainer = (props: Props) => {
         return <SattTilAvtaltVisning forhaandsorienteringstype={forhandsorienteringType} aktivitet={aktivitet} />;
     }
 
-    return <ForhaandsorienteringsVisningsLinje aktivitet={aktivitet} erBruker={erBruker} />;
+    return <ForhaandsorienteringsVisningsLinje aktivitet={aktivitet} erBruker={erBruker ?? false} />;
 };
 
 export default AvtaltContainer;

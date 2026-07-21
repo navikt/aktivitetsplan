@@ -17,7 +17,6 @@ import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import Aktivitetsdetaljer from '../detaljer/Aktivitetsdetaljer';
 import EksterneEtiketter from '../../etikett/EksterneEtikett';
-import { aktivitet } from '../../../../proptypes';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (

@@ -13,7 +13,7 @@ import {
     selectOppfolgingStatus,
     selectReservasjonKRR,
 } from './oppfolging-selector';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
 import { IkkeRegistrertIKRRAdvarsel } from './IkkeRegistrertIKRRAdvarsel';
 import { UtdatertKontaktinformasjonAdvarsel } from './UtdatertKontaktinformasjonAdvarsel';
@@ -57,7 +57,7 @@ const VidereSendBrukereEllerRenderChildren = (props: VidereSendBrukereEllerRende
     if (!erRegistrertIKRR && oppfolgingsStatus === Status.OK) {
         return (
             <>
-                <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR} erVeileder={erVeileder} />
+                <IkkeRegistrertIKRRAdvarsel erRegistrertIKRR={erRegistrertIKRR ?? false} erVeileder={erVeileder} />
                 {props.children}
             </>
         );

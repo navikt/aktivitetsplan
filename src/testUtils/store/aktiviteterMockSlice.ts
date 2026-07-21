@@ -9,7 +9,7 @@ import {
     getOrCreatePeriode,
     oppfolgingsdperiodeAdapter,
 } from '../../moduler/aktivitet/aktivitet-slice';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 
 const defaultOppfolging = oppfolgingGraphql;
 const aktivitetTittel = 'Videresend aktivitet';

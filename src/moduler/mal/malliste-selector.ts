@@ -1,5 +1,5 @@
-import { RootState } from '../../store';
 import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
+import { RootState } from '../../store/rootReducer';
 
 function selectMalListeSlice(state: RootState) {
     return state.data.malListe;

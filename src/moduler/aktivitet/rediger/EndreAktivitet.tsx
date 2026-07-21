@@ -1,6 +1,5 @@
 import { isFulfilled } from '@reduxjs/toolkit';
-import { format } from 'date-fns';
-import React, { MutableRefObject, useRef } from 'react';
+import React, { RefObject, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router';
 
@@ -13,7 +12,7 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
-import { Status } from '../../../createGenericSlice';
+import { Status } from '../../../store/createGenericSlice';
 import { AktivitetStatus, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import {
     EgenAktivitet,
@@ -31,7 +30,6 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../../routing/useRoutes';
-import { RootState } from '../../../store';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import Feilmelding from '../../feilmelding/Feilmelding';
 import { oppdaterAktivitet } from '../aktivitet-actions';
@@ -40,7 +38,9 @@ import MedisinskBehandlingForm, {
 } from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm, { EgenAktivitetFormValues } from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm, { IJobbAktivitetFormValues } from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
-import MoteAktivitetForm, { MoteAktivitetFormValues } from '../aktivitet-forms/mote/MoteAktivitetForm';
+import MoteAktivitetForm, {
+    MoteAktivitetFormValuesOuter as MoteAktivitetFormValues,
+} from '../aktivitet-forms/mote/MoteAktivitetForm';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/SamtalereferatForm';
 import SokeavtaleAktivitetForm, {
     SokeavtaleAktivitetFormValues,
@@ -55,6 +55,7 @@ import { selectAktivitetMedId } from '../aktivitetlisteSelector';
 import { beregnKlokkeslettVarighet } from '../aktivitet-util';
 import { logEndringAvtaltMote, logModalLukket } from '../../../analytics/analytics';
 import { FeltEndret } from '../../../analytics/analytics-taxonomy-events';
+import { RootState } from '../../../store/rootReducer';
 
 export type AktivitetFormValues =
     | StillingAktivitetFormValues
@@ -69,7 +70,7 @@ interface FormProps<T extends VeilarbAktivitet> {
     aktivitet: T;
     onSubmit: (aktivitet: AktivitetFormValues) => Promise<void>;
     endre: boolean;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     lagrer: boolean;
 }
 
@@ -131,35 +132,6 @@ function EndreAktivitet() {
 
     function oppdater(aktivitet: AktivitetFormValues): Promise<void> {
         if (!valgtAktivitet) return Promise.resolve();
-        if (valgtAktivitet.type === MOTE_TYPE && valgtAktivitet.avtalt) {
-            const moteAktivitet = valgtAktivitet as MoteAktivitet;
-            const moteForm = aktivitet as Omit<MoteAktivitetFormValues, 'klokkeslett'> & { fraDato?: string };
-
-            const str = (val: string | number | null | undefined) => (val == null ? '' : String(val).trim());
-            const origMoteTid = beregnKlokkeslettVarighet(moteAktivitet);
-            const nyFraDato = typeof moteForm.fraDato === 'string' ? new Date(moteForm.fraDato) : undefined;
-
-            const felter: [FeltEndret, () => boolean][] = [
-                [FeltEndret.TITTEL, () => str(moteForm.tittel) !== str(moteAktivitet.tittel)],
-                [FeltEndret.ADRESSE, () => str(moteForm.adresse) !== str(moteAktivitet.adresse)],
-                [FeltEndret.BESKRIVELSE, () => str(moteForm.beskrivelse) !== str(moteAktivitet.beskrivelse)],
-                [FeltEndret.FORBEREDELSER, () => str(moteForm.forberedelser) !== str(moteAktivitet.forberedelser)],
-                [FeltEndret.KANAL, () => str(moteForm.kanal) !== str(moteAktivitet.kanal)],
-                [FeltEndret.VARIGHET, () => (Number(moteForm.varighet) || 0) !== (origMoteTid?.varighet ?? 0)],
-                [FeltEndret.DATO, () => nyFraDato?.toDateString() !== origMoteTid?.dato?.toDateString()],
-                [
-                    FeltEndret.KLOKKESLETT,
-                    () =>
-                        (nyFraDato ? format(nyFraDato, 'HH:mm') : '') !==
-                        (origMoteTid?.klokkeslett?.replace('.', ':') ?? ''),
-                ],
-            ];
-
-            const endredeFelter = felter.filter(([, erEndret]) => erEndret()).map(([felt]) => felt);
-            if (endredeFelter.length > 0) {
-                logEndringAvtaltMote(endredeFelter);
-            }
-        }
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet } as VeilarbAktivitet;
         return doOppdaterAktivitet(oppdatertAktivitet).then((action) => {

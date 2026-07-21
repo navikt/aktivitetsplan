@@ -1,7 +1,5 @@
 import { Resolver, ResolverResult } from 'react-hook-form';
-import { ResolverOptions } from 'react-hook-form/dist/types/resolvers';
-
-export function avtaltResolver<FormValues extends object>(
+import { ResolverOptions } from 'react-hook-form';export function avtaltResolver<FormValues extends object>(
     avtalt: boolean,
     validatedFields: (keyof FormValues)[],
     resolver: Resolver<FormValues>
@@ -14,9 +12,9 @@ export function avtaltResolver<FormValues extends object>(
         const result = await resolver(values, context, options);
         if (!avtalt) return result;
 
-        const newErrors = Object.entries(result.errors)
+        const newErrors = Object.entries(result.errors as Record<string, unknown>)
             .filter(([fieldKey, _]) => validatedFields.includes(fieldKey as keyof FormValues))
-            .reduce((values, [key, val]) => ({ ...values, [key]: val }), {});
+            .reduce((acc, [key, val]) => ({ ...acc, [key]: val }), {});
         const newValues = Object.keys(newErrors).length > 0 ? {} : values;
 
         return {

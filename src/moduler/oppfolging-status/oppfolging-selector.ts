@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { compareDesc } from 'date-fns';
 
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 import { selectAktiviteterSlice, selectAllOppfolgingsperioder } from '../aktivitet/aktivitet-slice';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';

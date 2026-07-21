@@ -3,7 +3,7 @@ import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link } from 'react-router';
 
-import { Status } from '../../../createGenericSlice';
+import { Status } from '../../../store/createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
@@ -50,6 +50,8 @@ const Aktivitetskort = (props: Props) => {
     const harEndringerIAktivitet =
         lestStatus === Status.OK &&
         isVeilarbAktivitet(aktivitet) &&
+        !!lest &&
+        !!me &&
         erNyEndringIAktivitet(aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
 

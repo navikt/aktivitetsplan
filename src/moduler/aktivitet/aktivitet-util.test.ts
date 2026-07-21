@@ -24,7 +24,7 @@ import { expect } from 'vitest';
 /* eslint-env mocha */
 
 describe('aktivitet-util', () => {
-    it.skip('beregnFraTil', () => {
+    it('beregnFraTil', () => {
         const fraTil = beregnFraTil({
             dato: new Date('2017-08-01T00:00:00.000+02:00'),
             klokkeslett: '15:00',
@@ -36,7 +36,7 @@ describe('aktivitet-util', () => {
         expect(beregnFraTil({} as never)).toEqual({});
     });
 
-    it.skip('beregnKlokkeslettVarighet', () => {
+    it('beregnKlokkeslettVarighet', () => {
         const klokkeslettVarighet = beregnKlokkeslettVarighet({
             fraDato: '2017-08-01T04:00:00.000+02:00',
             tilDato: '2017-08-01T06:15:00.000+02:00',
@@ -48,7 +48,7 @@ describe('aktivitet-util', () => {
         expect(beregnKlokkeslettVarighet({} as never)).toBeUndefined();
     });
 
-    it.skip('beregnFraTil + beregnKlokkeslettVarighet', () => {
+    it('beregnFraTil + beregnKlokkeslettVarighet', () => {
         const fraDato = '2017-08-01T04:00:00.000Z';
         const tilDato = '2017-08-01T06:15:00.000Z';
 
@@ -62,11 +62,11 @@ describe('aktivitet-util', () => {
         expect(fraTil.tilDato).toEqual(tilDato);
     });
 
-    it.skip('formatterVarighet', () => {
-        expect(formatterVarighet(90)).toEqual('01:30');
+    it('formatterVarighet', () => {
+        expect(formatterVarighet(90)).toEqual('1 time, 30 minutter');
     });
 
-    it.skip('formatterKlokkeslett', () => {
+    it('formatterKlokkeslett', () => {
         expect(formatterKlokkeslett('1:15')).toEqual('01:15');
         expect(formatterKlokkeslett('115')).toEqual(undefined);
     });

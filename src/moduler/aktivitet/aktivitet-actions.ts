@@ -68,8 +68,8 @@ export function flyttAktivitetMedBegrunnelse(
     return flyttAktivitet({ aktivitet: nyAktivitet, status });
 }
 
-export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string) {
-    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
+export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string | undefined) {
+    const nyAktivitet: VeilarbAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet({ aktivitet: nyAktivitet, status: AktivitetStatus.AVBRUTT });
 }
 

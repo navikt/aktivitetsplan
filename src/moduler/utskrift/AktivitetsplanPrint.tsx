@@ -1,7 +1,7 @@
 import { Modal } from '@navikt/ds-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { LoaderFunctionArgs, useNavigate, useParams } from 'react-router';
+import { LoaderFunction, LoaderFunctionArgs, useNavigate, useParams } from 'react-router';
 
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
@@ -16,7 +16,7 @@ import { selectKvpPeriodeForValgteOppfolging, selectOppfolgingStatus } from '../
 import PrintVerktoylinje from './printVerktoylinje';
 import VelgPlanUtskriftForm, { VelgPlanUtskriftFormValues } from './velgPlan/VelgPlanUtskriftForm';
 import { useRoutes } from '../../routing/useRoutes';
-import { Dispatch } from '../../store';
+import { Dispatch } from '../../store/store';
 import {
     hentPdfTilForhaandsvisningSendTilBruker,
     journalforOgSendTilBruker,
@@ -36,7 +36,7 @@ import {
     lagKvpUtvalgskriterie,
     mapTilJournalforingFilter,
 } from '../journalforing/journalforingFilter';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { StatusErrorBoundry } from '../journalforing/StatusErrorBoundry';
 import { filterErAktivt } from '../filtrering/filter/filter-utils';
 import { velgPeriode } from '../filtrering/filter/valgt-periode-slice';
@@ -246,13 +246,8 @@ const AktivitetsplanPrint = () => {
 };
 
 export const aktivitetsplanPrintLoader =
-    (dispatch: Dispatch, erVeileder: boolean, aktivEnhet: string) =>
-    ({
-        params: { oppfolgingsperiodeId },
-    }: LoaderFunctionArgs<{
-        oppfolgingsperiodeId: string;
-        aktivEnhet: string;
-    }>) => {
+    (dispatch: Dispatch, erVeileder: boolean, aktivEnhet: string | undefined): LoaderFunction =>
+    ({ params: { oppfolgingsperiodeId } }) => {
         if (!oppfolgingsperiodeId) {
             throw Error('path param is not set, this should never happen');
         }

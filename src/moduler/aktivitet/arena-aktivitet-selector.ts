@@ -1,9 +1,9 @@
-import { Status } from '../../createGenericSlice';
-import { RootState } from '../../store';
+import { Status } from '../../store/createGenericSlice';
 import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import { hentArenaAktiviteter } from './arena-aktiviteter-slice';
 import { createSelector } from '@reduxjs/toolkit';
 import { SerializedError } from '../../api/utils';
+import { RootState } from '../../store/rootReducer';
 
 export const selectArenaAktiviteterSlice = (state: RootState) => state.data.arenaAktiviteter;
 

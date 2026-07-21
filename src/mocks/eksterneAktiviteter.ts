@@ -1,12 +1,14 @@
 import { addDays, subDays } from 'date-fns';
 
 import { AktivitetStatus } from '../datatypes/aktivitetTypes';
-import { EksternAktivitetType, VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
+import { AlleAktiviteter } from '../datatypes/aktivitetTypes';
+import { ForhaandsorienteringType } from '../datatypes/forhaandsorienteringTypes';
 import { wrapAktivitet } from './aktivitet';
 import { visEksterneAktiviteter } from './demo/localStorage';
 import { enEksternAktivitet } from './fixtures/eksternAktivitetFixtures';
+import { EksternAktivitet, EksternAktivitetType } from '../datatypes/internAktivitetTypes';
 
-export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
+export const eksterneAktiviteter: EksternAktivitet[] = !visEksterneAktiviteter()
     ? []
     : [
           wrapAktivitet({
@@ -23,7 +25,10 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                           { label: 'Deltakelse', verdi: '95.6%' },
                           { label: 'Antall dager per uke', verdi: '5' },
                       ],
-                      etiketter: [{ kode: 'SOKT_INN' }, { kode: 'AVSLAG' }],
+                      etiketter: [
+                          { kode: 'SOKT_INN', tekst: null, sentiment: null },
+                          { kode: 'AVSLAG', tekst: null, sentiment: null },
+                      ],
                   },
               }),
               fraDato: undefined,
@@ -56,7 +61,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                           { label: 'Deltakelse', verdi: '95.6%' },
                           { label: 'Antall dager per uke', verdi: '5' },
                       ],
-                      etiketter: [{ kode: 'SOKT_INN' }],
+                      etiketter: [{ kode: 'SOKT_INN', tekst: null, sentiment: null }],
                   },
               }),
               fraDato: subDays(new Date(), 2).toISOString(),
@@ -95,24 +100,24 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   },
               }),
           }),
-        wrapAktivitet({
-                      ...enEksternAktivitet({
-                          tittel: 'Arbeidstrening hos Biggen Blues og Bensin',
-                          status: AktivitetStatus.GJENNOMFOERT,
-                          avtalt: true,
-                          beskrivelse: 'Pumpeoperatør',
-                          eksternAktivitet: {
-                              type: EksternAktivitetType.ARBEIDSTRENING,
-                              oppgave: undefined,
-                              handlinger: undefined,
-                              detaljer: [
-                                  { label: 'Arbeidsgiver', verdi: 'Biggen Blues og Bensin' },
-                                  { label: 'Stillingsprosent', verdi: '100%' },
-                              ],
-                              etiketter: undefined,
-                          },
-                      }),
-                  }),
+          wrapAktivitet({
+              ...enEksternAktivitet({
+                  tittel: 'Arbeidstrening hos Biggen Blues og Bensin',
+                  status: AktivitetStatus.GJENNOMFOERT,
+                  avtalt: true,
+                  beskrivelse: 'Pumpeoperatør',
+                  eksternAktivitet: {
+                      type: EksternAktivitetType.ARBEIDSTRENING,
+                      oppgave: undefined,
+                      handlinger: undefined,
+                      detaljer: [
+                          { label: 'Arbeidsgiver', verdi: 'Biggen Blues og Bensin' },
+                          { label: 'Stillingsprosent', verdi: '100%' },
+                      ],
+                      etiketter: undefined,
+                  },
+              }),
+          }),
           wrapAktivitet({
               ...enEksternAktivitet({
                   tittel: 'Oppfølging hos Biggen',
@@ -156,7 +161,7 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   },
               }),
               forhaandsorientering: {
-                  type: 'SEND_FORHAANDSORIENTERING',
+                  type: ForhaandsorienteringType.SEND_STANDARD,
                   tekst: 'Det er viktig at du gjennomfører denne aktiviteten med Nav. Gjør du ikke det, kan det medføre at stønaden du mottar fra Nav bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
               },
           }),
@@ -201,76 +206,76 @@ export const eksterneAktiviteter: VeilarbAktivitet[] = !visEksterneAktiviteter()
                   },
               }),
           }),
-        wrapAktivitet({
-                      ...enEksternAktivitet({
-                          tittel: 'Rekrutteringstreff hos Biggen',
-                          status: AktivitetStatus.PLANLAGT,
-                          avtalt: false,
-                          beskrivelse:
-                              'Velkommen til jobmesse hos Biggen. Her vil du møte flere arbeidsgivere som er på jakt etter nye medarbeidere. Du vil også få mulighet til å delta på workshops og få tips til hvordan du kan skrive en god CV og forberede deg til jobbintervju.',
-                          eksternAktivitet: {
-                              type: EksternAktivitetType.REKRUTTERINGSTREFF,
-                              handlinger: [
-                                  {
-                                      tekst: 'Gå til arrangementet for å bekrefte om du kommer eller ikke',
-                                      subtekst: 'Du _må_ ikke',
-                                      url: 'https://www.nav.no/',
-                                      lenkeType: 'FELLES',
-                                  },
-                                  {
-                                      tekst: 'Bekreft om bruker planlegger å delta',
-                                      subtekst: undefined,
-                                      url: 'https://www.nav.no/',
-                                      lenkeType: 'INTERN',
-                                  },
-                              ],
-                              detaljer: [
-                                  { label: 'Tid', verdi: '10.januar 2026' },
-                                  { label: 'Sted', verdi: 'Verkstedveien 20, Lillestrøm' },
-                              ],
-                              etiketter: [{ tekst: 'Venter på svar', sentiment: 'POSITIVE' }],
+          wrapAktivitet({
+              ...enEksternAktivitet({
+                  tittel: 'Rekrutteringstreff hos Biggen',
+                  status: AktivitetStatus.PLANLAGT,
+                  avtalt: false,
+                  beskrivelse:
+                      'Velkommen til jobmesse hos Biggen. Her vil du møte flere arbeidsgivere som er på jakt etter nye medarbeidere. Du vil også få mulighet til å delta på workshops og få tips til hvordan du kan skrive en god CV og forberede deg til jobbintervju.',
+                  eksternAktivitet: {
+                      type: EksternAktivitetType.REKRUTTERINGSTREFF,
+                      handlinger: [
+                          {
+                              tekst: 'Gå til arrangementet for å bekrefte om du kommer eller ikke',
+                              subtekst: 'Du _må_ ikke',
+                              url: 'https://www.nav.no/',
+                              lenkeType: 'FELLES',
                           },
-                      }),
-                  }),
-        wrapAktivitet({
-            ...enEksternAktivitet({
-                tittel: 'Alfheim ordinære virksomhet',
-                status: AktivitetStatus.GJENNOMFOERT,
-                avtalt: true,
-                beskrivelse:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce blandit sollicitudin odio, nec eleifend nibh pulvinar ac. Donec sed sem.',
-                eksternAktivitet: {
-                    type: EksternAktivitetType.VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET,
-                    oppgave: {
-                        ekstern: {
-                            tekst: 'Du må godkjenne avtalen',
-                            subtekst:
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet justo sit amet turpis eleifend bibendum nec ac ipsum. Mauris et hendrerit justo. Nulla varius tristique magna at pellentesque.',
-                            url: 'https://www.nav.no/',
-                            knapptekst: 'Lorem ipsum',
-                        },
-                        intern: undefined,
-                    },
-                    handlinger: [
-                        {
-                            tekst: 'Gå til avtalen',
-                            subtekst: 'Avtale undertekst blah blah',
-                            url: 'https://www.nav.no/',
-                            lenkeType: 'FELLES',
-                        },
-                        {
-                            tekst: 'Denne handlingen kan kun veiledere se',
-                            subtekst: undefined,
-                            url: 'https://www.nav.no/',
-                            lenkeType: 'INTERN',
-                        },
-                    ],
-                    detaljer: [
-                        { label: 'Arbeidsmiljø', verdi: 'mixed' },
-                        { label: 'Arbeidssted', verdi: 'verksted' },
-                    ],
-                    etiketter: undefined,
-                },
-            }),
-        }),
+                          {
+                              tekst: 'Bekreft om bruker planlegger å delta',
+                              subtekst: undefined,
+                              url: 'https://www.nav.no/',
+                              lenkeType: 'INTERN',
+                          },
+                      ],
+                      detaljer: [
+                          { label: 'Tid', verdi: '10.januar 2026' },
+                          { label: 'Sted', verdi: 'Verkstedveien 20, Lillestrøm' },
+                      ],
+                      etiketter: [{ kode: 'VENTER_PAA_SVAR', tekst: 'Venter på svar', sentiment: 'POSITIVE' }],
+                  },
+              }),
+          }),
+          wrapAktivitet({
+              ...enEksternAktivitet({
+                  tittel: 'Alfheim ordinære virksomhet',
+                  status: AktivitetStatus.GJENNOMFOERT,
+                  avtalt: true,
+                  beskrivelse:
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce blandit sollicitudin odio, nec eleifend nibh pulvinar ac. Donec sed sem.',
+                  eksternAktivitet: {
+                      type: EksternAktivitetType.VARIG_TILRETTELAGT_ARBEID_I_ORDINAER_VIRKSOMHET,
+                      oppgave: {
+                          ekstern: {
+                              tekst: 'Du må godkjenne avtalen',
+                              subtekst:
+                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet justo sit amet turpis eleifend bibendum nec ac ipsum. Mauris et hendrerit justo. Nulla varius tristique magna at pellentesque.',
+                              url: 'https://www.nav.no/',
+                              knapptekst: 'Lorem ipsum',
+                          },
+                          intern: undefined,
+                      },
+                      handlinger: [
+                          {
+                              tekst: 'Gå til avtalen',
+                              subtekst: 'Avtale undertekst blah blah',
+                              url: 'https://www.nav.no/',
+                              lenkeType: 'FELLES',
+                          },
+                          {
+                              tekst: 'Denne handlingen kan kun veiledere se',
+                              subtekst: undefined,
+                              url: 'https://www.nav.no/',
+                              lenkeType: 'INTERN',
+                          },
+                      ],
+                      detaljer: [
+                          { label: 'Arbeidsmiljø', verdi: 'mixed' },
+                          { label: 'Arbeidssted', verdi: 'verksted' },
+                      ],
+                      etiketter: undefined,
+                  },
+              }),
+          }),
       ];

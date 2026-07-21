@@ -8,7 +8,7 @@ import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
 interface Props {
     aktivitet: AlleAktiviteter;
     nyStatus: AktivitetStatus;
-    children: JSX.Element | null;
+    children: React.ReactNode | null;
 }
 
 const getManglerPubliseringTekst = (aktivitet: SamtalereferatAktivitet | MoteAktivitet): string => {
@@ -21,14 +21,19 @@ const getManglerPubliseringTekst = (aktivitet: SamtalereferatAktivitet | MoteAkt
 };
 
 const ReferatIkkePubliserAdvarsel = ({ aktivitet, nyStatus, children }: Props) => {
-    if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
+    const erPubliserbar =
+        aktivitet.type == VeilarbAktivitetType.MOTE_TYPE || aktivitet.type == VeilarbAktivitetType.SAMTALEREFERAT_TYPE;
+    const skalViseIkkePubliserAdvarsel =
+        aktivitet && erPubliserbar ? manglerPubliseringAvSamtaleReferat(aktivitet, AktivitetStatus.AVBRUTT) : false;
+    if (erPubliserbar && skalViseIkkePubliserAdvarsel) {
         return (
             <Alert variant="error" inline>
                 {getManglerPubliseringTekst(aktivitet)}
             </Alert>
         );
+    } else {
+        return children;
     }
-    return children;
 };
 
 export default ReferatIkkePubliserAdvarsel;

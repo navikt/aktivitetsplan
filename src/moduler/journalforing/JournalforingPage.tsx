@@ -6,12 +6,12 @@ import {
     selectPdfForhaandsvisning,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { LoaderFunctionArgs } from 'react-router';
-import { Dispatch } from '../../store';
+import { LoaderFunction, LoaderFunctionArgs } from 'react-router';
+import { Dispatch } from '../../store/store';
 import Sidebar from './Sidebar';
 import { createBlob, PdfViewer } from './PdfViewer';
 import { StatusErrorBoundry } from './StatusErrorBoundry';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 
 export const JournalforingPage = () => {
     const pdf = useSelector(selectPdfForhaandsvisning);
@@ -48,15 +48,13 @@ export const JournalforingPage = () => {
 };
 
 export const arkivLoader =
-    (dispatch: Dispatch, aktivEnhet: string | undefined) =>
-    ({
-        params: { oppfolgingsperiodeId },
-    }: LoaderFunctionArgs<{
-        oppfolgingsperiodeId: string;
-        aktivEnhet: string | undefined;
-    }>) => {
+    (dispatch: Dispatch, aktivEnhet: string | undefined): LoaderFunction =>
+    ({ params: { oppfolgingsperiodeId } }) => {
         if (!oppfolgingsperiodeId) {
             throw Error('path param is not set, this should never happen');
+        }
+        if (!aktivEnhet) {
+            throw Error('trenger journalførende enhet for å forhåndsvise');
         }
         const forhaandsvisning = dispatch(
             hentPdfTilForhaandsvisning({

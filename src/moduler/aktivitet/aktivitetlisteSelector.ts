@@ -4,7 +4,7 @@ import { aggregerStatus } from '../../api/utils';
 import { BEHANDLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_FRA_NAV_TYPE } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 import { aktivitetMatchesFilters } from '../filtrering/filter/filter-utils';
 import { selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';

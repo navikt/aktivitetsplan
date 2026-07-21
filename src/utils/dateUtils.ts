@@ -12,7 +12,7 @@ import {
     startOfDay,
     subDays,
 } from 'date-fns';
-import nb from 'date-fns/locale/nb';
+import { nb } from 'date-fns/locale/nb';
 
 export const erGyldigISODato = (isoDato: string | undefined | null) => {
     return !!(isoDato && isValid(parseISO(isoDato)));

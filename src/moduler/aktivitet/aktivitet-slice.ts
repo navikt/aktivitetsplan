@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice, EntityState, isAnyOf, createSelector } from '@reduxjs/toolkit';
 
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';
 import {
@@ -16,10 +16,10 @@ import {
     publiserReferat,
     settAktivitetTilAvtalt,
 } from './aktivitet-actions';
-import { RootState } from '../../store';
 import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
 import { loggDyplenkingTilAnnenBruker } from '../../analytics/analytics';
 import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
+import { RootState } from '../../store/rootReducer';
 
 type PerioderMedAktiviteter = {
     id: OppfolgingsPeriodeId;

@@ -11,7 +11,10 @@ import {
 } from '../datatypes/aktivitetTypes';
 import {
     CvKanDelesData,
+    EgenAktivitet,
+    MedisinskBehandlingAktivitet,
     MoteAktivitet,
+    SokeavtaleAktivitet,
     StillingAktivitet,
     StillingFraNavAktivitet,
     VeilarbAktivitet,
@@ -38,6 +41,7 @@ import { enLestForhaandsorientering, enUlestForhaandsorientering } from './forha
 import { etSamtalereferat } from './samtalereferatFixtures';
 import { enSokeAktivitet } from './sokeAktivitetFixtures';
 import { rndId } from './utils';
+import { AktivitetsId, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 
 const eksternBruker = erEksternBruker();
 const bruker: BrukerType = eksternBruker ? 'BRUKER' : 'NAV';
@@ -84,7 +88,7 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         tittel: 'Kassert av Nav',
         beskrivelse: 'Kassert av Nav',
         lenke: 'www.nav.no',
-        type: 'EGEN',
+        type: VeilarbAktivitetType.EGEN_AKTIVITET_TYPE,
         status: AktivitetStatus.AVBRUTT,
         fraDato: '2020-01-01T12:00:00+01:00',
         tilDato: '2020-12-01T12:00:00+01:00',
@@ -93,19 +97,18 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         endretAv: 'Z123456',
         avtalt: true,
         endretAvType: 'NAV',
-        transaksjonsType: 'KASSERT',
+        transaksjonsType: FellesTransaksjonsTyper.KASSERT,
         hensikt: 'Kassert av Nav',
         oppfolging: 'Kassert av Nav',
-        erReferatPublisert: false,
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
-    }),
+    } as EgenAktivitet),
     wrapAktivitet({
         id: '6871',
         versjon: '9389',
         tittel: 'Beste møtet ever',
         beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
-        lenke: null,
-        type: 'MOTE',
+        lenke: undefined,
+        type: VeilarbAktivitetType.MOTE_TYPE,
         status: AktivitetStatus.PLANLAGT,
         fraDato: '2030-08-21T08:00:00+02:00',
         tilDato: '2030-08-21T12:15:00+02:00',
@@ -113,38 +116,23 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         endretDato: '2018-08-21T11:57:57.636+02:00',
         endretAv: 'z990207',
         historisk: false,
-        avsluttetKommentar: null,
+        avsluttetKommentar: undefined,
         avtalt: false,
         endretAvType: 'NAV',
-        transaksjonsType: 'OPPRETTET',
-        etikett: null,
-        kontaktperson: null,
-        arbeidsgiver: null,
-        arbeidssted: null,
-        stillingsTittel: null,
-        hensikt: null,
-        oppfolging: null,
-        antallStillingerSokes: null,
-        avtaleOppfolging: null,
-        jobbStatus: null,
-        ansettelsesforhold: null,
-        arbeidstid: null,
-        behandlingType: null,
-        behandlingSted: null,
-        effekt: null,
-        behandlingOppfolging: null,
+        transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+        etikett: undefined,
         kanal: Kanal.TELEFON,
         adresse: 'Ditt nærmeste Nav kontor',
         erReferatPublisert: false,
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
-    }),
+    } as MoteAktivitet),
     wrapAktivitet({
         id: '10',
         versjon: '200',
         tittel: 'Gamelt Beste møtet ever',
         beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
-        lenke: null,
-        type: 'MOTE',
+        lenke: undefined,
+        type: VeilarbAktivitetType.MOTE_TYPE,
         status: AktivitetStatus.PLANLAGT,
         fraDato: '2017-02-16T00:00:00+01:00',
         tilDato: '2017-02-16T00:00:00+02:00',
@@ -152,34 +140,19 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         endretDato: '2017-02-16T00:00:00+01:00',
         endretAv: 'z990207',
         historisk: true,
-        avsluttetKommentar: null,
+        avsluttetKommentar: undefined,
         avtalt: true,
         endretAvType: 'NAV',
-        transaksjonsType: 'BLE_HISTORISK',
-        etikett: null,
-        kontaktperson: null,
-        arbeidsgiver: null,
-        arbeidssted: null,
-        stillingsTittel: null,
-        hensikt: null,
-        oppfolging: null,
-        antallStillingerSokes: null,
-        avtaleOppfolging: null,
-        jobbStatus: null,
-        ansettelsesforhold: null,
-        arbeidstid: null,
-        behandlingType: null,
-        behandlingSted: null,
-        effekt: null,
-        behandlingOppfolging: null,
+        transaksjonsType: FellesTransaksjonsTyper.BLE_HISTORISK,
+        etikett: undefined,
         kanal: Kanal.TELEFON,
         erReferatPublisert: false,
         oppfolgingsperiodeId: 'a1aa11a1-1aa1-4e02-8cc2-d44ef605fa33',
-    }),
+    } as MoteAktivitet),
     wrapAktivitet({
         ...enSokeAktivitet({ tittel: 'Denne har en ulest forhåndsorientering' }),
         forhaandsorientering: enUlestForhaandsorientering,
-    }),
+    } as SokeavtaleAktivitet),
     wrapAktivitet({
         ...enSokeAktivitet({ tittel: 'Gi aldri opp! Kjemp hvis du kan.' }),
         beskrivelse:
@@ -213,7 +186,7 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         opprettetDato: subDays(new Date(), 3).toISOString(),
         endretDato: subDays(new Date(), 3).toISOString(),
         historisk: false,
-        transaksjonsType: 'OPPRETTET',
+        transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         stillingFraNavData: {
             ...enStillingFraNavData,
             svarfrist: addDays(new Date(), 3).toISOString(),
@@ -227,7 +200,7 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         opprettetDato: etTidspunkt(2020),
         endretDato: etTidspunkt(2018),
         historisk: false,
-        transaksjonsType: 'OPPRETTET',
+        transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         stillingFraNavData: {
             ...enStillingFraNavData,
             svarfrist: etTidspunkt(2021),
@@ -278,8 +251,8 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         tittel: 'Medisinsk behandling',
         beskrivelse:
             'CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager. CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager.',
-        lenke: null,
-        type: 'BEHANDLING',
+        lenke: undefined,
+        type: VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE,
         status: AktivitetStatus.PLANLAGT,
         fraDato: '2022-09-13T14:13:49.000+02:00',
         tilDato: '2022-09-14T14:13:58.000+02:00',
@@ -287,36 +260,17 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         endretDato: '2022-09-13T12:16:08.593Z',
         endretAv: 'BRUKER',
         historisk: false,
-        avsluttetKommentar: null,
+        avsluttetKommentar: undefined,
         avtalt: true,
         endretAvType: 'BRUKER',
-        transaksjonsType: 'OPPRETTET',
-        etikett: null,
-        kontaktperson: null,
-        arbeidsgiver: null,
-        arbeidssted: null,
-        stillingsTittel: null,
-        hensikt: null,
-        oppfolging: null,
-        antallStillingerSokes: null,
-        antallStillingerIUken: null,
-        avtaleOppfolging: null,
-        jobbStatus: null,
-        ansettelsesforhold: null,
-        arbeidstid: null,
+        transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+        etikett: undefined,
         behandlingType: 'Bandasje',
         behandlingSted: 'Skyehuset',
         effekt: 'Legge gips på bruddstedet',
-        behandlingOppfolging: null,
-        adresse: null,
-        forberedelser: null,
-        kanal: null,
-        referat: null,
-        erReferatPublisert: false,
-        forhaandsorientering: null,
-        stillingFraNavData: null,
-        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
-    }),
+        behandlingOppfolging: 'Følg opp',
+        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
+    } as MedisinskBehandlingAktivitet),
 ];
 const testAktiviteter: VeilarbAktivitet[] = !visTestAktiviteter() ? [] : mockTestAktiviteter;
 
@@ -324,7 +278,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
     ? []
     : [
           {
-              id: '141438',
+              id: '141438' as AktivitetsId,
               versjon: '199743',
               tittel: 'Se mulighetene i arbeidsmarkedet',
               beskrivelse:
@@ -345,10 +299,10 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
               etikett: undefined,
               hensikt: 'Bli bedre kjent med arbeidsmarkedet',
               oppfolging: undefined,
-              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
           },
           {
-              id: '141439',
+              id: '141439' as AktivitetsId,
               versjon: '199744',
               tittel: 'Oppdater CV-en og jobbprofilen',
               beskrivelse:
@@ -369,10 +323,10 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
               etikett: undefined,
               hensikt: 'Bli synlig for arbeidsgivere',
               oppfolging: undefined,
-              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
           },
           {
-              id: '141440',
+              id: '141440' as AktivitetsId,
               versjon: '199745',
               tittel: 'Jobbsøkertips',
               beskrivelse:
@@ -393,7 +347,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
               etikett: undefined,
               hensikt: 'Få råd og tips når du søker jobber',
               oppfolging: undefined,
-              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+              oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
           },
       ];
 const ekstraVersjoner = !visTestAktiviteter()
@@ -408,7 +362,7 @@ const ekstraVersjoner = !visTestAktiviteter()
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
               status: AktivitetStatus.PLANLAGT,
-              transaksjonsType: 'DEL_CV_SVART',
+              transaksjonsType: StillingFraNavTransaksjonsType.DEL_CV_SVART,
               stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles },
           }),
       ];
@@ -503,20 +457,19 @@ export const getAktivitetVersjoner = (_: StrictRequest<DefaultBodyType>, params:
     return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
 };
 
-export const opprettAktivitet = async (req: StrictRequest<object>) => {
+export const opprettAktivitet = async (req: StrictRequest<VeilarbAktivitet>) => {
     const body = await req.json();
 
     const nyAktivitet = wrapAktivitet({
+        ...body,
         id: rndId(),
         opprettetDato: new Date().toISOString(),
         endretAvType: bruker,
         endretDato: new Date().toISOString(),
         endretAv: bruker,
         versjon: '1',
-        erLestAvBruker: eksternBruker,
         transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
-        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
-        ...body,
+        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
     });
     aktiviteter.push(nyAktivitet);
     const nyAktivitetKlone = wrapAktivitet(nyAktivitet);
@@ -625,9 +578,9 @@ export const oppdaterCVKanDelesSvar = async (req: StrictRequest<CvKanDelesData>)
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterStillingFraNavSoknadsstatus = async (req: RestRequest) => {
-    const aktivitetId = req.url.searchParams.get('aktivitetId');
-    const body = await req.json();
+export const oppdaterStillingFraNavSoknadsstatus = async (req: StrictRequest<DefaultBodyType>) => {
+    const aktivitetId = new URL(req.url).searchParams.get('aktivitetId');
+    const body = (await req.json()) as { soknadsstatus: StillingFraNavSoknadsstatus };
 
     const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
@@ -640,8 +593,8 @@ export const oppdaterStillingFraNavSoknadsstatus = async (req: RestRequest) => {
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId as string, nyeAktivitetAttributter);
 };
 
-export const oppdaterLestFho = async (req: StrictRequest<VeilarbAktivitet>) => {
-    const body = await req.json();
+export const oppdaterLestFho = async (req: StrictRequest<DefaultBodyType>) => {
+    const body = (await req.json()) as { aktivitetId: string };
     const { aktivitetId } = body;
 
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId) as VeilarbAktivitet;

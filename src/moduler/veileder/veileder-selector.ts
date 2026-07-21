@@ -1,6 +1,6 @@
-import { GenericState } from '../../createGenericSlice';
+import { GenericState } from '../../store/createGenericSlice';
 import { VeilederInfo } from '../../datatypes/types';
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 
 const selectVeilederSlice = (state: RootState): GenericState<VeilederInfo> => state.data.veileder;
 const selectVeilederData = (state: RootState) => selectVeilederSlice(state).data;

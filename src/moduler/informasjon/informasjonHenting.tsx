@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router';
 
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { useRoutes } from '../../routing/useRoutes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon, selectLestStatus } from '../lest/lest-selector';

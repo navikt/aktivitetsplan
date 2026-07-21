@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/aktivitetAPI';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { ArenaAktivitet } from '../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { UpdateTypes, windowEvent } from '../../utils/UpdateHandler';

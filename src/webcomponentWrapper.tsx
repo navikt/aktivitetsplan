@@ -10,14 +10,14 @@ import Provider from './Provider';
 import pdfCssAnnotationCss from 'react-pdf/dist/Page/AnnotationLayer.css?inline';
 import pdfCssTextCss from 'react-pdf/dist/Page/TextLayer.css?inline';
 import { createRoot, Root } from 'react-dom/client';
+import { createRouterWithWrapper } from './routing/routerConfig';
+import { slettGamleSamtalereferatKladder } from './moduler/aktivitet/aktivitet-forms/samtalereferat/useSamtalereferatKladd';
+import type { RootState } from './store/rootReducer';
 import {
     clearReduxCache,
     getPreloadedStateFromSessionStorage,
-    RootState,
     saveReduxStateToSessionStorage,
-} from './store';
-import { createRouterWithWrapper } from './routing/routerConfig';
-import { slettGamleSamtalereferatKladder } from './moduler/aktivitet/aktivitet-forms/samtalereferat/useSamtalereferatKladd';
+} from './store/sessionStorageStoreCache';
 
 // Clear redux-cache from session storage on page load to make sure new data is fetched
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate

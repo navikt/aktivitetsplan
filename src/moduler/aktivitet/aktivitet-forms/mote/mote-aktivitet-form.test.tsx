@@ -17,11 +17,13 @@ import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import { MOTE_TYPE } from '../../../../constant';
-import reducer from '../../../../reducer';
+import rootReducer from '../../../../store/rootReducer';
 import MoteAktivitetForm from './MoteAktivitetForm';
-import { expect } from 'vitest';
+import { expect, Mock } from 'vitest';
 import { Kanal } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingStatusResponse } from '../../../../api/veilarboppfolging';
+import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 
 const initialState: any = {
     data: {
@@ -37,7 +39,7 @@ const initialState: any = {
 };
 
 const dirtyRef = { current: false };
-const store = configureStore({ reducer, preloadedState: initialState as any });
+const store = configureStore({ reducer: rootReducer, preloadedState: initialState as any });
 
 function mountWithIntl(node: any): RenderResult {
     return render(<ReduxProvider store={store}>{node}</ReduxProvider>);
@@ -145,15 +147,15 @@ describe('MoteAktivitetForm', () => {
 
     it('Skal populere felter når aktivitet er satt', () => {
         const aktivitet = {
+            ...enMoteAktivitet(),
             tittel: 'Dette er en test',
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
-            type: MOTE_TYPE,
             adresse: 'Slottet',
         };
         const { getByDisplayValue } = mountWithIntl(
-            <MoteAktivitetForm onSubmit={() => null} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
         );
 
         getByDisplayValue(aktivitet.tittel);
@@ -164,8 +166,13 @@ describe('MoteAktivitetForm', () => {
     });
 
     it('Skal ikke populere beskrivelse(hensikt) med defaultverdi når man endrer', () => {
-        const aktivitet = { beskrivelse: 'Dette er en beskrivelse' };
-        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} dirtyRef={dirtyRef} aktivitet={aktivitet} />);
+        const aktivitet = {
+            ...enMoteAktivitet(),
+            beskrivelse: 'Dette er en beskrivelse',
+        };
+        mountWithIntl(
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+        );
         screen.getByDisplayValue('Dette er en beskrivelse');
     });
 
@@ -184,7 +191,7 @@ describe('MoteAktivitetForm', () => {
             varighet: 30,
         };
 
-        const onFormSumbitMock = vi.fn();
+        const onFormSumbitMock: Mock = vi.fn();
         const { getByText, queryByText, getByLabelText, getByRole } = mountWithIntl(
             <MoteAktivitetForm onSubmit={onFormSumbitMock} dirtyRef={dirtyRef} />,
         );
@@ -202,14 +209,14 @@ describe('MoteAktivitetForm', () => {
 
         expect(queryByText('For å gå videre må du rette opp følgende:')).not.toBeInTheDocument();
         expect(onFormSumbitMock).toHaveBeenCalled();
-        const lastcall = onFormSumbitMock.mock.lastCall[0] as any;
+        const lastcall = onFormSumbitMock.mock.lastCall!![0];
         const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
         expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
         expect(lastcall).toEqual(expect.objectContaining(expectedResult));
     });
 
     it('Skal selekte riktig varighet', async () => {
-        const mock = vi.fn();
+        const mock: Mock = vi.fn();
         mountWithIntl(<MoteAktivitetForm onSubmit={mock} dirtyRef={dirtyRef} />);
 
         fillForm();
@@ -219,7 +226,7 @@ describe('MoteAktivitetForm', () => {
             fireEvent.click(screen.getByText('Lagre'));
         });
 
-        const lastcall = mock.mock.lastCall[0];
+        const lastcall = mock.mock.lastCall!![0];
         const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
         expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
 
@@ -242,15 +249,18 @@ describe('MoteAktivitetForm', () => {
 
     it('Skal ikke være disablede felter ved endring av avtalt aktivitet', () => {
         const aktivitet = {
+            ...enMoteAktivitet(),
             tittel: 'Dette er en test',
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
             adresse: 'Slottet',
-            type: MOTE_TYPE,
+            type: VeilarbAktivitetType.MOTE_TYPE as const,
             avtalt: true,
         };
-        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} dirtyRef={dirtyRef} aktivitet={aktivitet} />);
+        mountWithIntl(
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+        );
 
         expect(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)').disabled).not.toBeTruthy();
         expect(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)').disabled).not.toBeTruthy();

@@ -7,11 +7,11 @@ import { preventCloseOnInsideClick, useOutsideClick } from './common';
 import { FieldSettings } from './DateRangePicker';
 import { isValidDate } from '../../../utils/dateUtils';
 import { parseDate } from '../../../utils/dateParser';
-import { DatePickerDefaultProps } from '@navikt/ds-react/src/date/datepicker/DatePicker.types';
+import { Matcher } from './Matcher';
 
 interface Props {
     field: FieldSettings;
-    disabledDays?: DatePickerDefaultProps['disabled'];
+    disabledDays?: Matcher[] | undefined;
 }
 
 const ControlledDatePicker = ({

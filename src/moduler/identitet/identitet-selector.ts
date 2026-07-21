@@ -1,6 +1,6 @@
-import { GenericState } from '../../createGenericSlice';
+import { GenericState } from '../../store/createGenericSlice';
 import { Me } from '../../datatypes/oppfolgingTypes';
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 
 function selectIdentitetSlice(state: RootState): GenericState<Me> {
     return state.data.identitet;

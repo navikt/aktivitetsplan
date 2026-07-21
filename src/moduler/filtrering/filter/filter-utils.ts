@@ -3,7 +3,7 @@ import { isBefore, isWithinInterval } from 'date-fns';
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 import { selectValgtPeriode } from '../../oppfolging-status/oppfolging-selector';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './TiltakstatusFilter';

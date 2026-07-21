@@ -22,7 +22,7 @@ import {
 } from './filter-slice';
 import FilterCheckbox from './FilterCheckbox';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 
 export type AvtaltFilterType = Record<keyof typeof avtaltMapper, boolean>;
 

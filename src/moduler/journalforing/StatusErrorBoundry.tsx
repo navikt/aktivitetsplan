@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react';
 import { ReactElement, useEffect, useState } from 'react';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 
 interface Props {
     statuser: Status[];
