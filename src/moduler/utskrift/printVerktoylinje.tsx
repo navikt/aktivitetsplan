@@ -1,4 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowCirclepathIcon, EnvelopeOpenIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
@@ -11,7 +11,7 @@ import VisValgtFilter from '../filtrering/VisValgtFilter';
 import { logKlikkKnapp, logValgtFilter } from '../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectSendTilBrukerStatus } from '../verktoylinje/arkivering/arkiv-slice';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import DateRangePicker from '../../felles-komponenter/skjema/datovelger/DateRangePicker';
 import { selectValgtPeriode } from '../oppfolging-status/oppfolging-selector';
 import { DatoPeriode } from '../journalforing/journalforingFilter';

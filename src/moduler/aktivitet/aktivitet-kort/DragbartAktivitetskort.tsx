@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { RefObject } from 'react';
 import { DragSourceMonitor, useDrag } from 'react-dnd';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
@@ -33,7 +33,7 @@ function DragbartAktivitetskort(props: Props) {
     const className = classNames(collectedProps.isDragging && styles.drag, styles.flyttbar);
 
     return (
-        <div ref={drag}>
+        <div ref={drag as unknown as RefObject<HTMLDivElement>}>
             <Aktivitetskort aktivitet={aktivitet} className={className} />
         </div>
     );

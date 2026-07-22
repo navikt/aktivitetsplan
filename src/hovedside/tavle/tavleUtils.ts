@@ -12,14 +12,14 @@ export function erDroppbar(
     const erEksternAktivitet = type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
     const historisk = !erArenaAktivitet ? aktivitet.historisk : false;
     const erFerdig = [AktivitetStatus.FULLFOERT, AktivitetStatus.AVBRUTT].includes(status);
-    const brukerKanOppdater = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
+    const brukerKanOppdatere = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
     return (
         !erReadMode &&
         !nesteStatus &&
         !historisk &&
         !erFerdig &&
         !erArenaAktivitet &&
-        !brukerKanOppdater &&
+        !brukerKanOppdatere &&
         !erEksternAktivitet
     );
 }

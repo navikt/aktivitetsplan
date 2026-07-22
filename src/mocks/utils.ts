@@ -1,10 +1,11 @@
 import { DefaultBodyType, delay as _delay, HttpResponse, HttpResponseResolver, PathParams, StrictRequest } from 'msw';
+import { AktivitetsId } from '../datatypes/brandedTypes';
 
 export const mockfnr = '12345678910';
 export const mockAktivEnhet = '0909';
 
-export const rndId = (): string => {
-    return `${Math.floor(Math.random() * 100000000)}`;
+export const rndId = (): AktivitetsId => {
+    return `${Math.floor(Math.random() * 100000000)}` as AktivitetsId;
 };
 
 export const delayed = (ms: any, handler: any) => {
@@ -31,7 +32,7 @@ export const failOrGetResponse = <T extends DefaultBodyType = DefaultBodyType>(
     failFn: () => boolean,
     successFn: (req: StrictRequest<T>, params: PathParams) => (object | undefined) | Promise<object | undefined>,
     delay?: number | undefined,
-    successResponseCode?: number
+    successResponseCode?: number,
 ): HttpResponseResolver<PathParams, T, T> => {
     return (async ({ request, params }): Promise<Response> => {
         if (failFn()) {
@@ -39,7 +40,7 @@ export const failOrGetResponse = <T extends DefaultBodyType = DefaultBodyType>(
         }
         if (delay) await _delay(delay);
         const result = await successFn(request, params);
-        return new Response(JSON.stringify(result), {status: successResponseCode ? successResponseCode : 200});
+        return new Response(JSON.stringify(result), { status: successResponseCode ? successResponseCode : 200 });
     }) as HttpResponseResolver<PathParams, T, T>;
 };
 

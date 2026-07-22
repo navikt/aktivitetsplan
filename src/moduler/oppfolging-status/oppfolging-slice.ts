@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/oppfolgingAPI';
-import createGenericSlice, { Status } from '../../createGenericSlice';
+import createGenericSlice, { Status } from '../../store/createGenericSlice';
 import { hentFraSessionStorage, LocalStorageElement } from '../../mocks/demo/localStorage';
 import { fetchOppfolging, OppfolgingStatusResponse } from '../../api/veilarboppfolging';
 

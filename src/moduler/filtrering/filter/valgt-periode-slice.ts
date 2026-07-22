@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 import { OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
 
 const valgtPeriodeSlice = createSlice({

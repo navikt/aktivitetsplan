@@ -1,4 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
 import React, { RefObject, useEffect, useMemo, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
@@ -17,8 +17,8 @@ const numberErrorMessage = {
 };
 
 enum Template {
-    'SØKEAVTALE' = 'SOKEAVTALE',
-    'INGEN' = 'INGEN',
+    SØKEAVTALE = 'SOKEAVTALE',
+    INGEN = 'INGEN',
 }
 
 const commonFields = {
@@ -137,8 +137,8 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
         reset(getDefaultValues(aktivitet, template));
     }, [template]);
 
-    const onTemplateChange = (event) => {
-        setTemplate(event.target.value);
+    const onTemplateChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        setTemplate(event.target.value as Template);
     };
 
     return (

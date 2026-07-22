@@ -9,6 +9,34 @@ export interface FilterState {
     aktivitetAvtaltMedNav: AvtaltFilterType;
 }
 
+export const filterTypes = [
+    'aktivitetTyper',
+    'aktivitetEtiketter',
+    'arenaAktivitetEtiketter',
+    'aktivitetAvtaltMedNav',
+] as const;
+
+export type FilterStateEntry =
+    | { category: 'aktivitetTyper'; subFilter: AktivitetFilterType }
+    | { category: 'aktivitetEtiketter'; subFilter: EtikettFilterType }
+    | { category: 'arenaAktivitetEtiketter'; subFilter: ArenaEtikettFilterType }
+    | { category: 'aktivitetAvtaltMedNav'; subFilter: AvtaltFilterType };
+
+export type FilterStateEntryKey =
+    | { category: 'aktivitetTyper'; keyActiveOnFilterCategory: keyof AktivitetFilterType }
+    | {
+          category: 'aktivitetEtiketter';
+          keyActiveOnFilterCategory: keyof EtikettFilterType;
+      }
+    | {
+          category: 'arenaAktivitetEtiketter';
+          keyActiveOnFilterCategory: keyof ArenaEtikettFilterType;
+      }
+    | {
+          category: 'aktivitetAvtaltMedNav';
+          keyActiveOnFilterCategory: keyof AvtaltFilterType;
+      };
+
 const initialState: FilterState = {
     aktivitetTyper: {
         ARENA_TILTAK: false,

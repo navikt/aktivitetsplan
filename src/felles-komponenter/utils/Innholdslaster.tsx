@@ -2,7 +2,7 @@ import { Loader } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 
 function asArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];
@@ -59,13 +59,7 @@ const Innholdslaster = (props: InnholdslasterProps) => {
         : alleLastet(statuser) || (minstEn && minstEnErOK(statuser)) || (visChildrenVedFeil && noenHarFeil(statuser));
 
     if (visChildren) {
-        if (typeof children === 'function') {
-            return children(avhengigheter, rest);
-        }
-        if (Array.isArray(children)) {
-            return children;
-        }
-        return children;
+        return <>{children}</>;
     }
 
     if (noenHarFeil(statuser)) return null;

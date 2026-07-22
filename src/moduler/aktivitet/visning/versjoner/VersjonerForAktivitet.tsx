@@ -2,6 +2,7 @@ import { ReadMore, Skeleton } from '@navikt/ds-react';
 import React, { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 
+import { AktivitetsId } from '../../../../datatypes/brandedTypes';
 import { EndringsLinje } from './EndringsLinje';
 import { selectAktivitetHistorikk } from '../../aktivitet-selector';
 import { Await, useParams } from 'react-router';
@@ -10,7 +11,7 @@ import { useAktivitetsVisningLoaderData } from '../../../../routing/loaders';
 const MAX_SIZE = 10;
 
 const VersjonerForAktivitet = () => {
-    const aktivitetId = useParams<{ id: string }>().id!!;
+    const aktivitetId = useParams<{ id: string }>().id as AktivitetsId;
     const historikk = useSelector((state) => selectAktivitetHistorikk(state, aktivitetId)) || { endringer: [] };
     const versjonerInnslag = historikk.endringer
         .slice(0, MAX_SIZE)

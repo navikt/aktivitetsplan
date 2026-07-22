@@ -27,7 +27,7 @@ const InnholdsWrapper = (props: ChildProps) => {
             </CustomBodyLong>
         );
     } else if (typeof children !== 'string') {
-        return children as JSX.Element;
+        return children as React.ReactElement;
     } else {
         return <BodyShort>{children}</BodyShort>;
     }

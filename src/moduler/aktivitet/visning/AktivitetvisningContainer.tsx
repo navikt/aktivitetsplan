@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 
-import { Status } from '../../../createGenericSlice';
+import { Status } from '../../../store/createGenericSlice';
 import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { useErVeileder } from '../../../Provider';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 import { DirtyProvider } from '../../context/dirty-context';
 import { selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';

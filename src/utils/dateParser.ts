@@ -1,6 +1,6 @@
 import { Locale, isBefore, parse, sub } from 'date-fns';
 import { isValidDate } from './dateUtils';
-import nb from 'date-fns/locale/nb';
+import { nb } from 'date-fns/locale/nb';
 
 // har kopiert denne fra aksel da den ikke lenger er tilgjengelig etter v. 6
 

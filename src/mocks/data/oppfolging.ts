@@ -100,7 +100,7 @@ const oppfolging = {
     inaktivIArena: null,
     oppfolgingUtgang: null,
     rettighetsgruppe: 'IYT',
-} as OppfolgingStatus;
+} as unknown as OppfolgingStatus;
 
 export const mockOppfolging = { ...oppfolgingGraphql };
 

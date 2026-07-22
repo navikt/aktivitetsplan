@@ -1,4 +1,4 @@
-import { RestRequest } from 'msw';
+import { DefaultBodyType, StrictRequest } from 'msw';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
 import { erEksternBruker, ingenMal } from '../demo/localStorage';
@@ -29,8 +29,8 @@ export function sisteMal() {
     return maler[maler.length - 1];
 }
 
-export async function opprettMal(req: RestRequest) {
-    const body = await req.json();
+export async function opprettMal(req: StrictRequest<DefaultBodyType>) {
+    const body = (await req.json()) as { maalInnhold: { maal: string } };
 
     const nyMal = {
         mal: body.maalInnhold.maal,

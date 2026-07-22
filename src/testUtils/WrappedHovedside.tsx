@@ -1,8 +1,8 @@
-import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { EnhancedStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router';
 import React, { RefObject, useMemo } from 'react';
-import { Location } from '@remix-run/router/history';
+import { Location } from 'react-router';
 import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
 import { routingConfig } from '../routing/routerConfig';
 import { ErVeilederContext, FnrOgEnhetContext, useErVeileder } from '../Provider';
@@ -17,7 +17,7 @@ export const WrappedHovedside = ({
     enhetId,
     routerRef,
 }: {
-    store: ToolkitStore;
+    store: EnhancedStore;
     fnr?: string | undefined;
     enhetId?: string | undefined;
     /** Optional ref to access the router instance for route assertions in tests */
@@ -60,7 +60,7 @@ export const WrappedComponent = ({
     children,
     initialEntries,
 }: {
-    store: ToolkitStore;
+    store: EnhancedStore;
     children: React.ReactNode;
     initialEntries: Entry[];
 }) => {

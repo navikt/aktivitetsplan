@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
-import { Status } from '../../../../createGenericSlice';
+import { Status } from '../../../../store/createGenericSlice';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';

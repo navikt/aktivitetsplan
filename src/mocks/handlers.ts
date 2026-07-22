@@ -87,7 +87,7 @@ export const handlers = [
     ),
 
     // veilarbaktivitet
-    http.post('/veilarbaktivitet/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
+    http.post('/veilarbaktivitet/api/logger/event', (_) => new Response(null, { status: 200 })),
     http.get(
         '/veilarbaktivitet/api/aktivitet',
         failOrGetResponse(getAktivitetFeiler, () => aktiviteterData),

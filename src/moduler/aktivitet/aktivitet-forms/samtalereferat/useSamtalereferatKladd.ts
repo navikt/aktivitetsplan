@@ -53,7 +53,7 @@ export const useSamtalereferatKladd = ({
           aktivitetId: string;
       }) => {
     const debouncedDelay = 500;
-    const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
     const localStorageKey = aktivitetId
         ? `${localeStorageKeyPrefix}-${aktivitetId}`

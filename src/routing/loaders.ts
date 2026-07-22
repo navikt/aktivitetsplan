@@ -1,4 +1,4 @@
-import { Dispatch } from '../store';
+import { Dispatch } from '../store/store';
 import { LoaderFunction, useRouteLoaderData } from 'react-router';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { hentMalListe } from '../moduler/mal/malliste-slice';

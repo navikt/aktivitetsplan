@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { hentDialogerGraphql } from '../../api/dialogGraphql';
 import { setForhaandsVarselOmStans } from '../varslinger/eskaleringsvarsel-slice';

@@ -8,9 +8,8 @@ import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
 import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
-import { Status } from '../../../../createGenericSlice';
+import { Status } from '../../../../store/createGenericSlice';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
-import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-selector';
@@ -21,7 +20,6 @@ import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
-import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -136,14 +134,11 @@ const OppdaterReferatForm = (props: Props) => {
             </>
             <Feilmelding feilmeldinger={feil} />
             <div className="flex gap-4">
-                <HiddenIfHovedknapp
-                    loading={oppdaterer}
-                    disabled={oppdaterer}
-                    hidden={erReferatPublisert}
-                    onClick={updateAndPubliser}
-                >
-                    Del med bruker
-                </HiddenIfHovedknapp>
+                {erReferatPublisert ? null : (
+                    <Button loading={oppdaterer} disabled={oppdaterer} onClick={updateAndPubliser}>
+                        Del med bruker
+                    </Button>
+                )}
 
                 <Button
                     variant={erReferatPublisert ? 'primary' : 'secondary'}

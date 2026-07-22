@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { EnhancedStore } from '@reduxjs/toolkit';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
-import reducer from '../../../reducer';
+import rootReducer from '../../../store/rootReducer';
 import { hentDialoger } from '../../dialog/dialog-slice';
 import { getErrorText } from '../../feilmelding/Feilmelding';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
-const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
+const AktivitetsvisningModalWrapped = (props: { store: EnhancedStore }) => (
     <div id={'app'}>
         <MemoryRouter>
             <Provider store={props.store}>
@@ -24,13 +24,13 @@ const AktivitetsvisningModalWrapped = (props: { store: ToolkitStore }) => (
 
 describe('<AktivitetvisningModal/>', () => {
     it('Skal ikke vise feilmelding dersom dialog ikke feiler', () => {
-        const store = configureStore({ reducer });
+        const store = configureStore({ reducer: rootReducer });
         const { queryByText } = render(<AktivitetsvisningModalWrapped store={store} />);
         expect(queryByText(getErrorText([{ type: hentDialoger.rejected.type }]))).toBeFalsy();
     });
 
     it('Skal vise feilmelding dersom dialog feiler', () => {
-        const store = configureStore({ reducer });
+        const store = configureStore({ reducer: rootReducer });
         store.dispatch(hentDialoger.rejected({ name: 'asd', message: 'asds' }, 'asd'));
         const { getByText } = render(<AktivitetsvisningModalWrapped store={store} />);
         getByText(getErrorText([{ type: hentDialoger.rejected.type }]));

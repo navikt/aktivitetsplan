@@ -1,4 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { RefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -14,8 +14,10 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
-import { endOfDay, subDays } from 'date-fns';
+import { endOfDay, format, subDays } from 'date-fns';
 import { useHilsenVeilederTekst } from '../samtalereferat/useHilsenVeilederTekst';
+import { FeltEndret } from '../../../../analytics/analytics-taxonomy-events';
+import { logEndringAvtaltMote } from '../../../../analytics/analytics';
 
 const schema = (startTekst: string) =>
     z.object({
@@ -70,12 +72,22 @@ const varighet = [
     { minutter: 450, tekst: '7 timer, 30 minutter' },
 ];
 
-export type MoteAktivitetFormValues = z.infer<ReturnType<typeof schema>>;
+export type MoteAktivitetFormValuesInner = z.infer<ReturnType<typeof schema>>;
+
+export type MoteAktivitetFormValuesOuter = {
+    tittel: string;
+    kanal: Kanal;
+    beskrivelse: string;
+    forberedelser?: string | undefined;
+    adresse: string;
+    fraDato: string;
+    tilDato: string;
+    status: string | undefined;
+    avtalt: boolean;
+};
 
 interface Props {
-    onSubmit: (
-        data: Omit<MoteAktivitetFormValues, 'klokkeslett'> & { status: string | undefined; avtalt: boolean },
-    ) => Promise<void>;
+    onSubmit: (data: MoteAktivitetFormValuesOuter) => Promise<void>;
     dirtyRef: RefObject<boolean>;
     aktivitet?: MoteAktivitet;
 }
@@ -88,7 +100,7 @@ const MoteAktivitetForm = (props: Props) => {
 
     /* Bruker useMemo fordi dateOrUndefined lager en ny verdi hver render så datepicker kan tro at defaultValue
     endrer seg mellom renders selvom det er samme dato */
-    const defaultValues: Partial<MoteAktivitetFormValues> = useMemo(
+    const defaultValues: Partial<MoteAktivitetFormValuesInner> = useMemo(
         () => ({
             tittel: aktivitet?.tittel,
             klokkeslett: moteTid?.klokkeslett?.replace('.', ':'),
@@ -104,7 +116,7 @@ const MoteAktivitetForm = (props: Props) => {
     );
     const avtalt = aktivitet?.avtalt || false;
 
-    const formHandlers = useForm<MoteAktivitetFormValues>({
+    const formHandlers = useForm<MoteAktivitetFormValuesInner>({
         defaultValues,
         resolver: zodResolver(schema(startTekst)),
         shouldFocusError: false,
@@ -130,12 +142,13 @@ const MoteAktivitetForm = (props: Props) => {
             onSubmit={handleSubmit((data) => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { klokkeslett, ...rest } = data;
-                return onSubmit({
+                const dto: MoteAktivitetFormValuesOuter = {
                     ...rest,
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt,
-                });
+                };
+                return onSubmit(dto).then(() => loggEndringer(aktivitet, { ...dto, varighet: data.varighet }));
             })}
         >
             <FormProvider {...formHandlers}>
@@ -212,6 +225,36 @@ const MoteAktivitetForm = (props: Props) => {
             </FormProvider>
         </form>
     );
+};
+
+const loggEndringer = (
+    aktivitet: MoteAktivitet | undefined,
+    moteForm: MoteAktivitetFormValuesOuter & { varighet: number },
+) => {
+    if (!aktivitet || !aktivitet.avtalt) return;
+
+    const str = (val: string | number | null | undefined) => (val == null ? '' : String(val).trim());
+    const origMoteTid = beregnKlokkeslettVarighet(aktivitet);
+    const nyFraDato = typeof moteForm.fraDato === 'string' ? new Date(moteForm.fraDato) : undefined;
+
+    const felter: [FeltEndret, () => boolean][] = [
+        [FeltEndret.TITTEL, () => str(moteForm.tittel) !== str(aktivitet.tittel)],
+        [FeltEndret.ADRESSE, () => str(moteForm.adresse) !== str(aktivitet.adresse)],
+        [FeltEndret.BESKRIVELSE, () => str(moteForm.beskrivelse) !== str(aktivitet.beskrivelse)],
+        [FeltEndret.FORBEREDELSER, () => str(moteForm.forberedelser) !== str(aktivitet.forberedelser)],
+        [FeltEndret.KANAL, () => str(moteForm.kanal) !== str(aktivitet.kanal)],
+        [FeltEndret.VARIGHET, () => (Number(moteForm.varighet) || 0) !== (origMoteTid?.varighet ?? 0)],
+        [FeltEndret.DATO, () => nyFraDato?.toDateString() !== origMoteTid?.dato?.toDateString()],
+        [
+            FeltEndret.KLOKKESLETT,
+            () => (nyFraDato ? format(nyFraDato, 'HH:mm') : '') !== (origMoteTid?.klokkeslett?.replace('.', ':') ?? ''),
+        ],
+    ];
+
+    const endredeFelter = felter.filter(([, erEndret]) => erEndret()).map(([felt]) => felt);
+    if (endredeFelter.length > 0) {
+        logEndringAvtaltMote(endredeFelter);
+    }
 };
 
 export default MoteAktivitetForm;

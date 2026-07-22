@@ -1,10 +1,10 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
-import { Status } from '../../../createGenericSlice';
-import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { Status } from '../../../store/createGenericSlice';
+import { AktivitetStatus, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { useRoutes } from '../../../routing/useRoutes';
@@ -14,7 +14,7 @@ import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetli
 import BegrunnelseForm from './BegrunnelseForm';
 import ReferatIkkePubliserAdvarsel from './ReferatIkkePubliserAdvarsel';
 import VisAdvarsel from './vis-advarsel';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 
 const headerTekst = 'Avbrutt aktivitet';
 const beskrivelseLabel =
@@ -27,45 +27,48 @@ const AvbrytAktivitet = () => {
         aktivitetId ? selectAktivitetMedId(state, aktivitetId) : undefined,
     );
     const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
-
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
     const dispatch = useAppDispatch();
-
-    const lagreBegrunnelse = (aktivitet: AlleAktiviteter, begrunnelseTekst: string | null) =>
-        dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst));
-
+    const erVeilarbAktivitet = valgtAktivitet && isVeilarbAktivitet(valgtAktivitet);
     const lagrer = aktivitetListeStatus !== Status.OK;
 
-    const begrunnelse = valgtAktivitet ? (
+    if (!erVeilarbAktivitet) return <Navigate to={hovedsideRoute()} replace />;
+
+    const maaBegrunnes =
+        valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.AVBRUTT, valgtAktivitet.type);
+    const lagreBegrunnelse = (begrunnelseTekst: string | undefined) =>
+        dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst));
+
+    const begrunnelseForm = valgtAktivitet ? (
         <BegrunnelseForm
             headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
             onSubmit={async (beskrivelseForm) => {
-                lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
+                lagreBegrunnelse(beskrivelseForm.begrunnelse);
                 navigate(hovedsideRoute());
             }}
         />
     ) : null;
-
     const advarsel = valgtAktivitet ? (
         <VisAdvarsel
             onSubmit={() => {
-                lagreBegrunnelse(valgtAktivitet, null);
+                lagreBegrunnelse(undefined);
                 navigate(hovedsideRoute());
             }}
         />
     ) : null;
 
-    const maaBegrunnes =
-        valgtAktivitet && trengerBegrunnelse(valgtAktivitet.avtalt, AktivitetStatus.AVBRUTT, valgtAktivitet.type);
-
     return (
-        <Modal onClose={() => navigate(hovedsideRoute(), { replace: true })} heading={'Avbryt aktivitet'}>
+        <Modal
+            lukkPåKlikkUtenfor={false}
+            onClose={() => navigate(hovedsideRoute(), { replace: true })}
+            heading={'Avbryt aktivitet'}
+        >
             {valgtAktivitet ? (
                 <ReferatIkkePubliserAdvarsel aktivitet={valgtAktivitet} nyStatus={AktivitetStatus.AVBRUTT}>
-                    {maaBegrunnes ? begrunnelse : advarsel}
+                    {maaBegrunnes ? begrunnelseForm : advarsel}
                 </ReferatIkkePubliserAdvarsel>
             ) : (
                 <Loader />

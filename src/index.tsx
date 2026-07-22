@@ -1,5 +1,5 @@
 import { setDefaultOptions } from 'date-fns';
-import nn from 'date-fns/locale/nn';
+import { nn } from 'date-fns/locale/nn';
 import React from 'react';
 
 import { ER_INTERN_FLATE, USE_MOCK } from './constant';
@@ -37,7 +37,7 @@ if (USE_MOCK) {
     Promise.all([import('./mocks'), import('./mocks/demo/DemoBanner')]).then(
         ([{ default: startWorker }, { default: DemoBanner }]) => {
             startWorker().then(() => {
-                const demoRoot = createRoot(document.getElementById('demo'));
+                const demoRoot = createRoot(document.getElementById('demo')!);
                 demoRoot.render(<DemoBanner />);
                 renderApp();
             });

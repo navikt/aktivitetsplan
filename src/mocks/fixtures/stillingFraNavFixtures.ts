@@ -5,6 +5,7 @@ import {
     VeilarbAktivitetType,
 } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
+import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 let id = 1000;
 let versjon = 5000000;
@@ -24,7 +25,7 @@ export const navAnsatt1 = {
 export const navAnsatt2 = {
     navn: 'Sykfest Strutle',
     tittel: 'Nav-ansatt',
-    mobil: null,
+    mobil: '',
 };
 
 export const enStillingFraNavAktivitet = ({
@@ -50,13 +51,13 @@ export const enStillingFraNavAktivitet = ({
         forhaandsorientering: undefined,
         tilDato: '',
         versjon: `${versjon}`,
-        id: `${id}`,
+        id: `${id}` as AktivitetsId,
         tittel,
         type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE,
         status: AktivitetStatus.GJENNOMFOERT,
         fraDato: date?.toISOString(),
         opprettetDato: opprettet.toISOString(),
-        endretDato: endretDate?.toISOString(),
+        endretDato: endretDate?.toISOString() ?? new Date().toISOString(),
         endretAv: 'z990207',
         historisk: false,
         endretAvType: 'NAV',
@@ -65,14 +66,15 @@ export const enStillingFraNavAktivitet = ({
             ...enStillingFraNavData,
             soknadsstatus: StillingFraNavSoknadsstatus.VENTER,
         },
-        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
     };
 };
 export const jaCvKanDeles = {
     kanDeles: true,
-    endretTidspunkt: new Date().toISOString(),
+    endretTidspunkt: new Date(),
+    avtaltDato: new Date(),
     endretAv: 'V123',
-    endretAvType: 'BRUKER',
+    endretAvType: 'BRUKER' as const,
 };
 export const enStillingFraNavData: StillingFraNavAktivitetData = {
     cvKanDelesData: undefined,

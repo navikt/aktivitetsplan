@@ -1,14 +1,14 @@
-import createGenericSlice from '../../../../createGenericSlice';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import createGenericSlice, { Status } from '../../../../store/createGenericSlice';
+import { createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import postSjekkForPersonopplysninger from '../../../../api/tryggTekstAPI';
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/rootReducer';
 
 const tryggTekstSlice = createGenericSlice<PersonopplysningerSjekkResultat>({
     name: 'trykkTekst',
     reducers: {
-        nullstillTryggTekst: () => {
-            return { status: 'NOT_STARTED' as const, data: undefined };
-        }
+        nullstillTryggTekst: (state) => {
+            return { status: Status.NOT_STARTED, data: undefined };
+        },
     },
 });
 

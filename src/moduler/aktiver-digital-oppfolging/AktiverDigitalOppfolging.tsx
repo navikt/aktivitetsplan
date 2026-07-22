@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Status } from '../../createGenericSlice';
-import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
+import { Status } from '../../store/createGenericSlice';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import { settDigital } from '../oppfolging-status/oppfolging-slice';
 import AktiverDigitalOppfolgingVarsel from './AktiverDigitalOppfolgingVarsel';
+import { Button } from '@navikt/ds-react';
 
 const AktiverDigitalOppfolging = () => {
     const oppfolgingStatus = useSelector(selectOppfolgingStatus);
@@ -23,13 +23,11 @@ const AktiverDigitalOppfolging = () => {
                 reservertIKRR={reservertKrr || false}
                 settDigitalFeilet={settOppfolgingFeilet}
             />
-            <HiddenIfHovedknapp
-                disabled={lasterOppfolging}
-                hidden={reservertKrr}
-                onClick={() => dispatch(settDigital())}
-            >
-                Endre til digital oppfølging
-            </HiddenIfHovedknapp>
+            {!reservertKrr ? (
+                <Button loading={lasterOppfolging} disabled={lasterOppfolging} onClick={() => dispatch(settDigital())}>
+                    Endre til digital oppfølging
+                </Button>
+            ) : null}
         </div>
     );
 };

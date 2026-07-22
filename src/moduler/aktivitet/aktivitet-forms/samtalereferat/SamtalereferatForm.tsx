@@ -1,7 +1,7 @@
 import React, { RefObject, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Status } from '../../../../createGenericSlice';
+import { Status } from '../../../../store/createGenericSlice';
 import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { selectVeilederStatus } from '../../../veileder/veileder-selector';
 import InnerSamtalereferatForm from './InnerSamtalereferatForm';

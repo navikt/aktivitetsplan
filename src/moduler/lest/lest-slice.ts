@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/lestAPI';
-import createGenericSlice, { GenericState, Status } from '../../createGenericSlice';
+import createGenericSlice, { GenericState, Status } from '../../store/createGenericSlice';
 import { Lest } from '../../datatypes/lestTypes';
 
 const lestSlice = createGenericSlice({

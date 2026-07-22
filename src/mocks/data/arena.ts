@@ -1,5 +1,5 @@
 import { addDays, subDays } from 'date-fns';
-import { RestRequest } from 'msw';
+import { DefaultBodyType, StrictRequest } from 'msw';
 
 import { ArenaAktivitet, ArenaEtikett } from '../../datatypes/arenaAktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
@@ -306,23 +306,23 @@ export const arenaMockAktiviteter = [
 
 export const arena = !visArenaAktiviteter() ? [] : arenaMockAktiviteter;
 
-export const oppdaterArenaaktivitet = async (req: RestRequest) => {
-    const arenaaktivitetId = req.url.searchParams.get('arenaaktivitetId');
-    const body = await req.json();
+export const oppdaterArenaaktivitet = async (req: StrictRequest<DefaultBodyType>) => {
+    const arenaaktivitetId = new URL(req.url).searchParams.get('arenaaktivitetId');
+    const body = (await req.json()) as { type: string; tekst: string };
 
     const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === arenaaktivitetId) as ArenaAktivitet;
 
     aktivitet.forhaandsorientering = {
         // ...body,
-        type: body.type,
+        type: body.type as import('../../datatypes/forhaandsorienteringTypes').ForhaandsorienteringType,
         tekst: body.tekst,
     };
 
     return aktivitet;
 };
 
-export const oppdaterLestFhoArenaaktivitet = (req: RestRequest) => {
-    const aktivitetId = req.url.searchParams.get('aktivitetId');
+export const oppdaterLestFhoArenaaktivitet = (req: StrictRequest<DefaultBodyType>) => {
+    const aktivitetId = new URL(req.url).searchParams.get('aktivitetId');
 
     const lestAktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === aktivitetId) as ArenaAktivitet;
 

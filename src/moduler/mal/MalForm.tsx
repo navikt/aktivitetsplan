@@ -1,7 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
-import React, { MutableRefObject, useLayoutEffect, useRef } from 'react';
+import React, { RefObject, useLayoutEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
@@ -20,7 +20,7 @@ type MalFormValues = z.infer<typeof schema>;
 
 interface Props {
     mal?: string;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     handleComplete: () => void;
 }
 

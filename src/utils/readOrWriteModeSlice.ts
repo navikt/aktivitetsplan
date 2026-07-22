@@ -1,12 +1,5 @@
-import {
-    createListenerMiddleware,
-    createSelector,
-    createSlice,
-    ListenerEffectAPI,
-    PayloadAction,
-    ThunkDispatch,
-} from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { createListenerMiddleware, createSelector, createSlice, PayloadAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from '../store/rootReducer';
 import { velgPeriode } from '../moduler/filtrering/filter/valgt-periode-slice';
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 import {
@@ -54,7 +47,7 @@ export const readWriteModeMiddleware = createListenerMiddleware();
 
 const oppdaterSkriveLeseTilgang = (
     action: any,
-    listenerApi: ListenerEffectAPI<RootState, ThunkDispatch<any, any, any>>,
+    listenerApi: { getState: () => RootState; dispatch: ThunkDispatch<any, any, any> },
 ) => {
     const state = listenerApi.getState();
     const valgtPeriode = selectValgtPeriode(state);
@@ -79,13 +72,13 @@ const oppdaterSkriveLeseTilgang = (
 // If user and not reserved in KRR, set write mode
 readWriteModeMiddleware.startListening({
     actionCreator: hentOppfolging.fulfilled,
-    effect: oppdaterSkriveLeseTilgang,
+    effect: oppdaterSkriveLeseTilgang as any,
 });
 
 // If closed periode selected, set read mode
 readWriteModeMiddleware.startListening({
     actionCreator: velgPeriode,
-    effect: oppdaterSkriveLeseTilgang,
+    effect: oppdaterSkriveLeseTilgang as any,
 });
 
 export default readOrWriteModeSlice.reducer;

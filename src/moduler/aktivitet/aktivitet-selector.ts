@@ -1,6 +1,6 @@
 import { SerializedError } from '../../api/utils';
-import { Status } from '../../createGenericSlice';
-import { RootState } from '../../store';
+import { Status } from '../../store/createGenericSlice';
+import { RootState } from '../../store/rootReducer';
 import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import {
     flyttAktivitet,
@@ -41,7 +41,7 @@ export const selecteEndreAktivitetFeilmeldinger: (state: RootState) => Serialize
 );
 
 export const selectAktivitetHistorikk = createSelector(
-    [selectAktivitet, (_, aktivitetId: string | undefined) => aktivitetId],
+    [selectAktivitet, (_, aktivitetId: import('../../datatypes/brandedTypes').AktivitetsId | undefined) => aktivitetId],
     (aktivitet, aktivitetId) => {
         if (!aktivitetId) return undefined;
         return (aktivitet as { historikk?: Historikk }).historikk;

@@ -1,4 +1,4 @@
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { defaultMockOppfolgingsPerioder, mockOppfolging } from '../../mocks/data/oppfolging';
 import {
     aktivitetAdapter,
@@ -7,7 +7,7 @@ import {
 } from '../../moduler/aktivitet/aktivitet-slice';
 import { compareDesc } from 'date-fns';
 import { MinimalPeriode } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 import { aktivitestplanResponse } from '../../mocks/handlers';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import { VeilederInfo } from '../../datatypes/types';

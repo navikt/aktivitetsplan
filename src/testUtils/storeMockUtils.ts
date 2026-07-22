@@ -1,8 +1,8 @@
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { Dialog } from '../datatypes/dialogTypes';
 import { emptyHalfLoadedVeilederState, initialLoadedAktiviteterState } from './store/defaultInitialStore';
-import { RootState } from '../store';
-import { Status } from '../createGenericSlice';
+import { RootState } from '../store/rootReducer';
+import { Status } from '../store/createGenericSlice';
 import { ArenaAktivitet } from '../datatypes/arenaAktivitetTypes';
 import { arenaMockAktiviteter } from '../mocks/data/arena';
 import { OppfolgingStatusResponse } from '../api/veilarboppfolging';

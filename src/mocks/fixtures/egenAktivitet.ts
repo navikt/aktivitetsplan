@@ -1,16 +1,17 @@
-import { EgenAktivitet, MoteAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
-import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
+import { EgenAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { addDays, subDays } from 'date-fns';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
+import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 export const enEgenAktivitet = ({
     id,
     tittel,
     oppfolgingsperiodeId,
 }: {
-    id: string;
+    id: AktivitetsId;
     tittel: string;
-    oppfolgingsperiodeId: string;
+    oppfolgingsperiodeId: OppfolgingsPeriodeId;
 }): EgenAktivitet => {
     return {
         id,

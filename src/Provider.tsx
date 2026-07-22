@@ -5,7 +5,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { ER_INTERN_FLATE } from './constant';
 import FeatureToggle from './moduler/feature/FeatureToggle';
-import createStore, { RootState } from './store';
+import createStore from './store/store';
+import { RootState } from './store/rootReducer';
 
 interface Props {
     children: React.ReactNode;

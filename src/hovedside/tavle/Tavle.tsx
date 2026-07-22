@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import React, { ReactElement, useRef, useState } from 'react';
 
 import SprettendeScrollbars from './sprettende-scrollbars';
+import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 
 const KOLONNEBREDDE = 325;
 const KOLONNEMARGIN = 10;
 
 interface Props {
-    children: ReactElement[];
+    children: ReactElement<{ status: AktivitetStatus }>[];
     dragging: boolean;
 }
 

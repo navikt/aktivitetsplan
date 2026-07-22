@@ -71,7 +71,7 @@ function Print(props: Props) {
                 </div>
                 <div>
                     <HiddenIfDiv hidden={!erVeileder}>{enhetsNavn}</HiddenIfDiv>
-                    Dato: {formaterDatoKortManed(Date.now())}
+                    Dato: {formaterDatoKortManed(new Date())}
                     <HiddenIfDiv hidden={!fodselsnummer}>
                         Fødselsnummer:
                         {` ${fodselsnummer}`}

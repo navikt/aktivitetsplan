@@ -4,16 +4,16 @@ import { useDrop } from 'react-dnd';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
-import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { useRoutes } from '../../../routing/useRoutes';
 import { erDroppbar } from '../tavleUtils';
 import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';
+import { useErVeileder } from '../../../Provider';
 
 interface Props {
     status: AktivitetStatus;
@@ -31,15 +31,15 @@ function DropTargetKolonne({ status, children }: Props) {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const erBruker = useSelector(selectErBruker, shallowEqual);
+    const erVeileder = useErVeileder();
     const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
     const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
     const { avbrytAktivitetRoute, fullforAktivitetRoute } = useRoutes();
 
-    const [collectedProps, drop] = useDrop({
+    const [collectedProps, dropRef] = useDrop({
         accept: DROP_TYPE,
-        canDrop: ({ aktivitet }: DragItem<AlleAktiviteter>) =>
-            status !== aktivitet.status && erDroppbar(aktivitet, erBruker, readOnly),
+        canDrop: ({ aktivitet }: DragItem<VeilarbAktivitet>) =>
+            status !== aktivitet.status && erDroppbar(aktivitet, !erVeileder, readOnly),
         drop: ({ aktivitet }: DragItem<VeilarbAktivitet>) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === AktivitetStatus.FULLFOERT) {
@@ -60,7 +60,8 @@ function DropTargetKolonne({ status, children }: Props) {
     const isOverAndCanDrop = collectedProps.canDrop && collectedProps.isOver;
 
     return (
-        <div ref={drop} className="z-50 h-full">
+        // @ts-ignore
+        <div ref={dropRef} className="z-50 h-full">
             <div
                 className={classNames(
                     'bg-ax-bg-neutral-soft border-t border-ax-border-neutral-subtle rounded-none p-4 sm:p-4 lg:p-2 m-0 sm:border-t-0 sm:rounded-md aktivitetstavle__kolonne',

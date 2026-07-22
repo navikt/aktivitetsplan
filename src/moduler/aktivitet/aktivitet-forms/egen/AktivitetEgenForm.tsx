@@ -1,7 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
 import { addDays, isAfter, startOfDay } from 'date-fns';
-import React, { ChangeEventHandler, MutableRefObject, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, RefObject, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -47,7 +47,7 @@ export type EgenAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: EgenAktivitetFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: EgenAktivitet;
 }
 

@@ -3,7 +3,7 @@ import { Button, Dropdown } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { Status } from '../../../createGenericSlice';
+import { Status } from '../../../store/createGenericSlice';
 import { useErVeileder } from '../../../Provider';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { useRoutes } from '../../../routing/useRoutes';
