@@ -4,8 +4,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import CustomErrorSummary from '../aktivitet-forms/CustomErrorSummary';
-
 const schema = z.object({
     begrunnelse: z.string().min(1, 'Du må fylle ut begrunnelse').max(255, 'Du må korte ned teksten til 255 tegn'),
 });

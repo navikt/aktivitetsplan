@@ -19,7 +19,7 @@ class ErrorBoundry extends React.Component<Props, State> {
         return { hasError: true, errorMessage: error };
     }
 
-    componentDidCatch(error: any, errorInfo: any) {
+    componentDidCatch(_error: any, _errorInfo: any) {
         // You can also log the error to an error reporting service
         // logErrorToMyService(error, errorInfo);
     }

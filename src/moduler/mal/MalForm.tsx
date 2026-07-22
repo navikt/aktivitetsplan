@@ -49,7 +49,7 @@ const MalForm = (props: Props) => {
             handleComplete();
         }
         const elem = document.querySelector('.aktivitet-modal') as HTMLDivElement;
-        elem && elem?.focus();
+        elem?.focus();
         return Promise.resolve();
     };
 

@@ -13,7 +13,6 @@ import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp, logLenkeKlikket } from '../../analytics/analytics';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
-import { useMediaQuery } from '../../utils/use-media-query';
 import { useToggle } from '../feature/feature';
 
 function Navigasjonslinje() {

@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup, Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import Hurtigfilter from './Hurtigfilter';

@@ -53,7 +53,9 @@ const FullforAktivitet = () => {
     const advarsel = (
         <VisAdvarsel
             onSubmit={() => {
-                valgtAktivitet && doAvsluttOppfolging(valgtAktivitet, '');
+                if (valgtAktivitet) {
+                    doAvsluttOppfolging(valgtAktivitet, '');
+                }
                 navigate(hovedsideRoute());
             }}
         />

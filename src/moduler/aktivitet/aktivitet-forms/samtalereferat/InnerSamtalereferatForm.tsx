@@ -55,7 +55,7 @@ const InnerSamtalereferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId);
     const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd } = useSamtalereferatKladd({
-        oppfolgingsperiodeId: oppfolgingsperiodeId!!,
+        oppfolgingsperiodeId: oppfolgingsperiodeId!,
     });
     const kladd = useMemo(() => hentSamtaleReferatKladd(), []);
 

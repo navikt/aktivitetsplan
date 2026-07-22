@@ -49,7 +49,6 @@ const Innholdslaster = (props: InnholdslasterProps) => {
         minstEn = false,
         visChildrenVedFeil = false,
         alleOK = false,
-        ...rest
     } = props;
 
     const statuser = toStatus(avhengigheter);

@@ -10,11 +10,10 @@ const KOLONNEMARGIN = 10;
 
 interface Props {
     children: ReactElement<{ status: AktivitetStatus }>[];
-    dragging: boolean;
 }
 
 const Tavle = (props: Props) => {
-    const { children, dragging } = props;
+    const { children } = props;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickIndex, setClickIndex] = useState(0);

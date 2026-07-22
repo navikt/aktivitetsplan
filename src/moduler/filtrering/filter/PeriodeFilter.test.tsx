@@ -19,7 +19,7 @@ import { ArenaAktivitet } from '../../../datatypes/arenaAktivitetTypes';
 const perioder = defaultMockOppfolgingsPerioder.toSorted((a, b) => {
     return compareDesc(a.startTidspunkt, b.startTidspunkt);
 });
-const gjeldendeOppfolgingsperiode = perioder.find((it) => !erHistorisk(it))!!; // NOSONAR
+const gjeldendeOppfolgingsperiode = perioder.find((it) => !erHistorisk(it))!; // NOSONAR
 const gamlePerioder = perioder.filter((it) => erHistorisk(it));
 const gammelOppfolgingsperiode = gamlePerioder[0] as HistoriskOppfolgingsperiode & { startTidspunkt: string };
 const endaGamlerePeriode = gamlePerioder[1] as HistoriskOppfolgingsperiode & { startTidspunkt: string };

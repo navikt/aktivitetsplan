@@ -8,9 +8,7 @@ import VarslingInfo from '../VarslingInfo';
 import { ForhaandsorienteringDialogFormValues } from './AvtaltForm';
 import { useFormContext } from 'react-hook-form';
 
-interface Props {}
-
-const ForhaandsorienteringsMelding = (props: Props) => {
+const ForhaandsorienteringsMelding = () => {
     const {
         setValue,
         register,

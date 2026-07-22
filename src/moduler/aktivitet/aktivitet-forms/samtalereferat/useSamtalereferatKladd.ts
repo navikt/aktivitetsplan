@@ -34,6 +34,7 @@ export const slettGamleSamtalereferatKladder = () => {
                     localStorage.removeItem(key);
                 }
             } catch (error) {
+                console.warn('Kunne ikke sette gamle samtalereferatkladder', error);
                 localStorage.removeItem(key);
             }
         }

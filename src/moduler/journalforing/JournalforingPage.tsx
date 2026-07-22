@@ -6,7 +6,7 @@ import {
     selectPdfForhaandsvisning,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { LoaderFunction, LoaderFunctionArgs } from 'react-router';
+import { LoaderFunction } from 'react-router';
 import { Dispatch } from '../../store/store';
 import Sidebar from './Sidebar';
 import { createBlob, PdfViewer } from './PdfViewer';

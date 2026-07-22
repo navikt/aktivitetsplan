@@ -4,7 +4,6 @@ import pdfjsWorkerUrl from 'react-pdf/dist/pdf.worker.entry?worker&url';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, BodyShort, Loader } from '@navikt/ds-react';
 import { Status } from '../../store/createGenericSlice';
-import type { PDFDocumentProxy } from 'pdfjs-dist';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(pdfjsWorkerUrl, import.meta.url).toString();
 
@@ -79,7 +78,7 @@ export const PdfViewer = ({ pdf, visSuksessmelding, suksessmelding, forhaandsvis
                     file={pdf}
                     loading=""
                 >
-                    {Array.from(new Array(numPages), (el, index) => (
+                    {Array.from({ length: numPages }, (_el, index) => (
                         <Page
                             key={`page_${index + 1}`}
                             pageNumber={index + 1}

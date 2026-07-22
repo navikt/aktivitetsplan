@@ -62,7 +62,7 @@ const hasNoOverlap = (a: string[], b: string[]): boolean => {
 
 const activeFilters = (filterMap: Record<string, true | false>): string[] =>
     Object.entries(filterMap)
-        .filter(([key, value]) => value)
+        .filter(([_key, value]) => value)
         .map(([key, _]) => key);
 
 const getTiltakstatusEtiketter = (aktivitet: AlleAktiviteter) => {

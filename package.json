@@ -15,7 +15,8 @@
     "build:gh-pages": "VITE_USE_HASH_ROUTER=true vite build --mode=dev-ekstern --base=/aktivitetsplan/",
     "test": "NODE_OPTIONS=--no-webstorage vitest",
     "coverage": "NODE_OPTIONS=--no-webstorage vitest run --coverage",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "oxlint",
+    "lint-fix": "oxlint --fix",
     "typecheck": "tsc --noEmit",
     "format-all": "prettier --write 'src/'",
     "lint-staged": "lint-staged",
@@ -91,21 +92,17 @@
     "@types/react-collapse": "^5.0.4",
     "@types/react-dom": "^19.1.0",
     "@types/react-modal": "^3.16.3",
-    "@typescript-eslint/eslint-plugin": "^8.63.0",
-    "@typescript-eslint/parser": "^8.63.0",
     "@vitest/coverage-v8": "^4.1.10",
     "autoprefixer": "^10.5.2",
-    "cross-env": "^7.0.3",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-vitest": "^0.5.4",
+    "cross-env": "^10.1.0",
+    "globals": "^17.7.0",
     "husky": "^9.1.7",
     "import-sort-style-module": "^6.0.0",
     "jsdom": "^28.1.0",
     "less": "^4.6.7",
-    "lint-staged": "^15.5.2",
+    "lint-staged": "^17.1.1",
     "msw": "^2.15.0",
+    "oxlint": "^1.74.0",
     "postcss": "8.5.14",
     "prettier": "^3.9.4",
     "prettier-plugin-import-sort": "0.0.7",
@@ -126,5 +123,5 @@
   "msw": {
     "workerDirectory": "public"
   },
-  "packageManager": "pnpm@11.15.0+sha512.266f8957a30d2be6e9468e5e66bcdedd35a794175f71b067ba8504d686cce1d0c0f429b33c323c3c569ad4891e667574a49ff71d1b89a22cc66f13c65818c578"
+  "packageManager": "pnpm@11.15.1+sha512.81350b07e53c9538a02f1f2303b4290fa2d7be04e56e2a970c4cc4b417dc761de196edabd49d55c7dc9580db81007c44143e4e3d7e462b3000d23c255122d065"
 }

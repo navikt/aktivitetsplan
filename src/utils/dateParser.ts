@@ -33,7 +33,7 @@ export const parseDate = (date: string, today: Date, type: 'date' | 'month', all
             }
         }
 
-        for (const format of [...ALLOWED_FORMATS.map((x) => x.replace('yyyy', 'yy'))]) {
+        for (const format of ALLOWED_FORMATS.map((x) => x.replace('yyyy', 'yy'))) {
             parsed = parse(date, format, today, { locale });
             if (isValidDate(parsed) && isTwoDigitYear(date, today, locale, ALLOWED_FORMATS)) {
                 const convertedDate = assignCenturyToDate(date, format, today, locale);

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 export const DirtyContext = React.createContext({
     isDirty: false,
-    setFormIsDirty: (name: string, dirty: boolean) => {},
+    setFormIsDirty: (_name: string, _dirty: boolean) => {},
 });
 
 function isFormsDirty(forms: { [key: string]: boolean | undefined }) {
@@ -25,7 +25,7 @@ export function DirtyProvider(props: Children) {
                 return newForm;
             });
         },
-        [setDirtyForms, setIsDirty]
+        [setDirtyForms, setIsDirty],
     );
 
     const value = useMemo(() => ({ isDirty, setFormIsDirty }), [isDirty, setFormIsDirty]);

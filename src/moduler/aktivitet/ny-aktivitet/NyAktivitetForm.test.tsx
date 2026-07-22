@@ -62,7 +62,7 @@ describe('ny aktivitet', () => {
 
     it('Skal poste ny aktivitet til backend med riktig oppfolgingsperiode-id', async () => {
         const store = gitt().createStore();
-        const { getByText, getByLabelText, getByRole, findByText, queryByText } = render(
+        const { getByText, getByLabelText, queryByText } = render(
             <WrappedComponent initialEntries={[`${nyAktivitetRoute(false)}/samtalereferat`]} store={store}>
                 <Routes>
                     <Route path={`${nyAktivitetRoute(false)}/*`} element={<NyAktivitetForm />} />

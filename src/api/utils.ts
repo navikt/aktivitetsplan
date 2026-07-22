@@ -32,7 +32,7 @@ export interface SerializedError {
 const getPath = (response: Response) => {
     try {
         return new URL(response.url).pathname;
-    } catch (e) {
+    } catch {
         return response.url;
     }
 };
@@ -123,14 +123,12 @@ function methodToJson(
     operation?: string,
 ) {
     // prettier-ignore
-    return fetchToJson(url, {
-        ...{
-            method,
-            headers: defaultHeaders,
-            body: Object.keys(data).length === 0 ? undefined : JSON.stringify(data)
-        },
-        ...config
-    }, operation);
+    return fetchToJson(url, ({
+	method,
+	headers: defaultHeaders,
+	body: Object.keys(data).length === 0 ? undefined : JSON.stringify(data),
+	...config
+}), operation);
 }
 
 export function postAsJson(url: string, data = {}, operation?: string) {

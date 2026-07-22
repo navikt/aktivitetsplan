@@ -3,7 +3,7 @@ const removeHostPartOfUrl = (fullUrl: string) => {
     if (fullUrl.length < 2) return fullUrl;
     const pathParts = fullUrl.replace('https://', '').replace('http://', '').split('/');
     if (pathParts.length === 1) return '/';
-    return [...pathParts.slice(1)].join('/');
+    return pathParts.slice(1).join('/');
 };
 
 export const BASE_URL = removeHostPartOfUrl(import.meta.env.VITE_API_URL_BASE ?? '/');

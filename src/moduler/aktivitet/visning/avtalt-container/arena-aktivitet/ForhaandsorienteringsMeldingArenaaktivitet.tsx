@@ -10,7 +10,7 @@ import { ForhaandsorienteringFormValues } from '../aktivitet/Forhaandsorienterin
 
 interface Props {}
 
-const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
+const ForhaandsorienteringsMeldingArenaaktivitet = (_props: Props) => {
     const {
         setValue,
         register,
@@ -21,10 +21,12 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     const avtaltText119 = watch('avtaltText119');
     const forhaandsorienteringType = watch('forhaandsorienteringType');
 
-    const onChangeForhaandsorientering = (forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9) => {
+    const onChangeForhaandsorientering = (
+        forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD | ForhaandsorienteringType.SEND_PARAGRAF_11_9,
+    ) => {
         if (!forhaandsorienteringType) return;
         setValue('forhaandsorienteringType', forhaandsorienteringType);
-    }
+    };
 
     return (
         <div className="space-y-8 my-4">
@@ -35,12 +37,8 @@ const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
                 disabled={isSubmitting}
                 className="mt-4"
             >
-                <Radio value={ForhaandsorienteringType.SEND_STANDARD}>
-                    Forhåndsorientering (standard melding)
-                </Radio>
-                <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
-                    Forhåndsorientering for §11-9 (AAP)
-                </Radio>
+                <Radio value={ForhaandsorienteringType.SEND_STANDARD}>Forhåndsorientering (standard melding)</Radio>
+                <Radio value={ForhaandsorienteringType.SEND_PARAGRAF_11_9}>Forhåndsorientering for §11-9 (AAP)</Radio>
             </RadioGroup>
             <VisibleIfDiv visible={forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD}>
                 <Label>Teksten som blir lagt til aktiviteten</Label>

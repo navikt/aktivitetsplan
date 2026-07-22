@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 /// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
 
-import { defineConfig, loadEnv, normalizePath, UserConfig } from 'vite';
+import { defineConfig, normalizePath, UserConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 import * as path from 'node:path';
@@ -17,8 +17,10 @@ const standardFontsDir = normalizePath(
     path.join(path.dirname(require.resolve('pdfjs-dist/package.json')), 'standard_fonts'),
 );
 
-export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, process.cwd());
+export default defineConfig((
+    // { mode }
+) => {
+    // const env = loadEnv(mode, process.cwd());
     // Make sure release is set client-side, automatic release tagging did not work
     process.env.VITE_RELEASE = execSync('git rev-parse HEAD').toString().trim();
 

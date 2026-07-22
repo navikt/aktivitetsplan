@@ -27,7 +27,7 @@ const dialogSlice = createSlice({
             state.status = Status.OK;
             state.sistOppdatert = new Date().toISOString();
         });
-        builder.addCase(hentDialoger.rejected, (state, action) => {
+        builder.addCase(hentDialoger.rejected, (state, _action) => {
             state.status = Status.ERROR;
         });
     },

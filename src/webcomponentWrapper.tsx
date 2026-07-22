@@ -25,6 +25,7 @@ clearReduxCache();
 
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
+    setAktivEnhet?: (enhet: string) => void;
     root: Root | undefined;
 
     disconnectedCallback() {
@@ -60,6 +61,7 @@ export class DabAktivitetsplan extends HTMLElement {
                     key={fnr}
                     fnr={fnr}
                     setFnrRef={(setFnr) => (this.setFnr = setFnr)}
+                    setAktivEnhetRef={(setEnhet) => (this.setAktivEnhet = setEnhet)}
                     aktivEnhet={aktivEnhet}
                 >
                     <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
@@ -72,6 +74,10 @@ export class DabAktivitetsplan extends HTMLElement {
         if (name === 'data-fnr' && this.setFnr) {
             settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setFnr(newValue);
+        }
+        if (name === 'data-aktivEnhet' && this.setAktivEnhet) {
+            settSessionStorage(LocalStorageElement.FNR, newValue);
+            this.setAktivEnhet(newValue);
         }
     }
 
