@@ -54,7 +54,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     };
 
     const onClickLestKnapp = () => {
-        onMarkerSomLest && onMarkerSomLest();
+        onMarkerSomLest();
         setErEkspandert(false);
     };
 

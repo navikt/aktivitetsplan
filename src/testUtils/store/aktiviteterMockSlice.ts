@@ -1,4 +1,3 @@
-import { oppfolgingGraphql } from '../../mocks/data/oppfolging';
 import { MinimalPeriode } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
@@ -11,7 +10,6 @@ import {
 } from '../../moduler/aktivitet/aktivitet-slice';
 import { Status } from '../../store/createGenericSlice';
 
-const defaultOppfolging = oppfolgingGraphql;
 const aktivitetTittel = 'Videresend aktivitet';
 const periode: MinimalPeriode = {
     id: '1' as OppfolgingsPeriodeId,

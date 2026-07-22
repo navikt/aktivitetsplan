@@ -33,7 +33,6 @@ const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD = 'tilltakSpesialTi
 
 const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
 const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
-const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
 const STILLING_FRA_NAV_AAPNE_STILLINGSLENKE = 'aktivitetsplan.stillingfranav.stillingslenke.klikk';
 

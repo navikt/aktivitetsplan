@@ -13,7 +13,6 @@ import { enEgenAktivitet } from '../../../mocks/fixtures/egenAktivitet';
 import { enMoteAktivitet } from '../../../mocks/fixtures/moteAktivitetFixtures';
 import { AktivitetsId, OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
 import AvbrytAktivitet from './AvbrytAktivitet';
-import { avbrytAktivitet } from '../aktivitet-actions';
 import { oppdaterAktivitetStatus } from '../../../api/aktivitetAPI';
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 

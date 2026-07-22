@@ -20,7 +20,7 @@ const getManglerPubliseringTekst = (aktivitet: SamtalereferatAktivitet | MoteAkt
     }
 };
 
-const ReferatIkkePubliserAdvarsel = ({ aktivitet, nyStatus, children }: Props) => {
+const ReferatIkkePubliserAdvarsel = ({ aktivitet, children }: Props) => {
     const erPubliserbar =
         aktivitet.type == VeilarbAktivitetType.MOTE_TYPE || aktivitet.type == VeilarbAktivitetType.SAMTALEREFERAT_TYPE;
     const skalViseIkkePubliserAdvarsel =

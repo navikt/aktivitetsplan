@@ -1,5 +1,5 @@
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
+import { AktivitetsId } from '../datatypes/brandedTypes';
 import { FellesTransaksjonsTyper } from '../datatypes/transaksjonstyperTypes';
 import { AktivitetStatus } from '../datatypes/aktivitetTypes';
 import { aktivPeriodeId } from './data/oppfolging';

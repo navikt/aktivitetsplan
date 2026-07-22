@@ -1,4 +1,4 @@
-import { combineReducers, compose } from 'redux';
+import { combineReducers } from 'redux';
 
 import dragAndDropSlice from '../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import aktiviteterReducer from '../moduler/aktivitet/aktivitet-slice';

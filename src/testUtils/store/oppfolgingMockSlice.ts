@@ -36,16 +36,16 @@ export const oppfolgingMockSlice = {
     medPerioder: (state: RootState, perioder: OppfolgingsPeriode[]) => ({
         status: Status.OK,
         data: {
-            ...state.data.oppfolging.data!!,
+            ...state.data.oppfolging.data!,
             oppfolgingsPerioder: perioder,
         },
     }),
     utdatertIKrr: (state: RootState) => ({
         status: Status.OK,
         data: {
-            ...state.data.oppfolging.data!!,
+            ...state.data.oppfolging.data!,
             brukerStatus: {
-                ...state.data.oppfolging.data!!.brukerStatus,
+                ...state.data.oppfolging.data!.brukerStatus,
                 manuell: {
                     erManuell: false,
                 },
@@ -61,9 +61,9 @@ export const oppfolgingMockSlice = {
         return {
             status: Status.OK,
             data: {
-                ...state.data.oppfolging.data!!,
+                ...state.data.oppfolging.data!,
                 brukerStatus: {
-                    ...state.data.oppfolging.data!!.brukerStatus,
+                    ...state.data.oppfolging.data!.brukerStatus,
                     manuell: {
                         erManuell: false,
                     },
@@ -80,9 +80,9 @@ export const oppfolgingMockSlice = {
         return {
             status: Status.OK,
             data: {
-                ...state.data.oppfolging.data!!,
+                ...state.data.oppfolging.data!,
                 brukerStatus: {
-                    ...state.data.oppfolging.data!!.brukerStatus,
+                    ...state.data.oppfolging.data!.brukerStatus,
                     manuell: {
                         erManuell: false,
                     },
@@ -99,9 +99,9 @@ export const oppfolgingMockSlice = {
         return {
             status: Status.OK,
             data: {
-                ...state.data.oppfolging.data!!,
+                ...state.data.oppfolging.data!,
                 brukerStatus: {
-                    ...state.data.oppfolging.data!!.brukerStatus,
+                    ...state.data.oppfolging.data!.brukerStatus,
                     manuell: {
                         erManuell: true,
                     },
@@ -117,7 +117,7 @@ export const oppfolgingMockSlice = {
     medKvpAktivPeriode: (state: RootState) => ({
         status: Status.OK,
         data: {
-            ...state.data.oppfolging.data!!,
+            ...state.data.oppfolging.data!,
             oppfolgingsPerioder: [
                 {
                     ...aktivVeilarbOppfolgingMockPeriode,

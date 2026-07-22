@@ -52,9 +52,7 @@ import {
     selecteEndreAktivitetFeilmeldinger,
 } from '../aktivitet-selector';
 import { selectAktivitetMedId } from '../aktivitetlisteSelector';
-import { beregnKlokkeslettVarighet } from '../aktivitet-util';
-import { logEndringAvtaltMote, logModalLukket } from '../../../analytics/analytics';
-import { FeltEndret } from '../../../analytics/analytics-taxonomy-events';
+import { logModalLukket } from '../../../analytics/analytics';
 import { RootState } from '../../../store/rootReducer';
 
 export type AktivitetFormValues =

@@ -101,16 +101,16 @@ global.DOMMatrix = class DOMMatrix {
         }
     }
 
-    multiply(other) {
+    multiply(_other) {
         return this;
     }
-    translate(x, y) {
+    translate(_x, _y) {
         return this;
     }
-    scale(scaleX, scaleY) {
+    scale(_scaleX, _scaleY) {
         return this;
     }
-    rotate(angle) {
+    rotate(_angle) {
         return this;
     }
     inverse() {

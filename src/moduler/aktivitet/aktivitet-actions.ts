@@ -9,7 +9,7 @@ import { Historikk } from '../../datatypes/Historikk';
 import { AktivitetsId } from '../../datatypes/brandedTypes';
 
 export const utenHistorikk = <Aktivitet extends VeilarbAktivitet>(aktivitet: Aktivitet) => {
-    const { historikk, ...aktivitetUtenHistorikk } = aktivitet as Aktivitet & { historikk: Historikk };
+    const { historikk: _, ...aktivitetUtenHistorikk } = aktivitet as Aktivitet & { historikk: Historikk };
     return aktivitetUtenHistorikk as unknown as Aktivitet;
 };
 

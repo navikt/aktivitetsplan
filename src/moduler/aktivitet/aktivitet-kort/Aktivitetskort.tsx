@@ -7,7 +7,6 @@ import { Status } from '../../../store/createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
-import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { useRoutes } from '../../../routing/useRoutes';
 import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';

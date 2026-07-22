@@ -205,7 +205,7 @@ describe('MoteAktivitetForm', () => {
 
         expect(queryByText('For å gå videre må du rette opp følgende:')).not.toBeInTheDocument();
         expect(onFormSumbitMock).toHaveBeenCalled();
-        const lastcall = onFormSumbitMock.mock.lastCall!![0];
+        const lastcall = onFormSumbitMock.mock.lastCall![0];
         const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
         expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
         expect(lastcall).toEqual(expect.objectContaining(expectedResult));
@@ -222,7 +222,7 @@ describe('MoteAktivitetForm', () => {
             fireEvent.click(screen.getByText('Lagre'));
         });
 
-        const lastcall = mock.mock.lastCall!![0];
+        const lastcall = mock.mock.lastCall![0];
         const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
         expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
 

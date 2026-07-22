@@ -94,7 +94,7 @@ const Aktivitetstavle = () => {
                         erVeileder={erVeileder}
                     />
                     <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
-                    <Tavle dragging={dragging}>
+                    <Tavle>
                         <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
                         <Kolonne status={AktivitetStatus.PLANLAGT} />
                         <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
@@ -111,7 +111,7 @@ const Aktivitetstavle = () => {
 const TavleFallback = () => {
     return (
         <div className="flex m-auto w-full mt-8 flex-col">
-            <Tavle dragging={false}>
+            <Tavle>
                 <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
                 <Kolonne status={AktivitetStatus.PLANLAGT} />
                 <Kolonne status={AktivitetStatus.GJENNOMFOERT} />

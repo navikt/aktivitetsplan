@@ -58,7 +58,7 @@ describe('Aktivitetsvisning', () => {
     it('skal vise beskrivelse til møte-aktivitet', () => {
         const store = gitt().aktiviteter.medAktivitet(aktivitet).createStore();
         const { getByText } = render(<AktivitetsVisningContainerWrapper store={store} erVeileder={true} />);
-        getByText(aktivitet.beskrivelse!!);
+        getByText(aktivitet.beskrivelse!);
     });
 
     it('skal advarsel på avtalt-med-nav form når bruker er under KVP', async () => {

@@ -27,9 +27,7 @@ const initialState = {
 
 // Fail on graphql endpoint
 const server = setupServer(
-    ...[
-        // If handlers on same route are declared twice the first one is used
-        http.post(
+    http.post(
             '/veilarbaktivitet/graphql',
             failOrGrahpqlResponse(
                 () => true,
@@ -39,7 +37,6 @@ const server = setupServer(
             ),
         ),
         ...handlers,
-    ],
 );
 
 describe('Hovedside.tsx', () => {

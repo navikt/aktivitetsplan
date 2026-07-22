@@ -1,4 +1,4 @@
-import { parse, parseISO, subMonths } from 'date-fns';
+import { subMonths } from 'date-fns';
 
 import { ArenaAktivitet, ArenaAktivitetType } from '../../datatypes/arenaAktivitetTypes';
 import {

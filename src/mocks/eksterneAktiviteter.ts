@@ -1,7 +1,6 @@
 import { addDays, subDays } from 'date-fns';
 
 import { AktivitetStatus } from '../datatypes/aktivitetTypes';
-import { AlleAktiviteter } from '../datatypes/aktivitetTypes';
 import { ForhaandsorienteringType } from '../datatypes/forhaandsorienteringTypes';
 import { wrapAktivitet } from './aktivitet';
 import { visEksterneAktiviteter } from './demo/localStorage';

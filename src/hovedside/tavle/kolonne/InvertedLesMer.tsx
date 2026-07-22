@@ -17,9 +17,9 @@ export const InvertedLestMer = (props: Props) => {
     const [vis, setVis] = useState(false);
     const toggle = () => {
         if (vis) {
-            props.onClose && props.onClose();
+            props?.onClose?.();
         } else {
-            props.onOpen && props.onOpen();
+            props?.onOpen?.();
         }
         setVis(!vis);
     };
