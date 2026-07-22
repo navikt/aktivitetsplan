@@ -16,6 +16,7 @@ export const enStillingAktivitet = ({ tittel }: { tittel: string }): StillingAkt
         tittel: `${tittel}`,
         beskrivelse: 'Ærlig arbeid',
         lenke: 'www.nav.no',
+        arbeidsgiver: 'Arbeidsgiver for stillingsaktivitet',
         type: VeilarbAktivitetType.STILLING_AKTIVITET_TYPE,
         status: AktivitetStatus.PLANLAGT,
         fraDato: '2018-01-24T12:00:00+01:00',
