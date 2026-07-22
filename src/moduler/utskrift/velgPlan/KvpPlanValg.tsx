@@ -3,7 +3,7 @@ import React from 'react';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import { formaterDatoKortManed } from '../../../utils/dateUtils';
-import UtskriftValg from './utskriftValg';
+import UtskriftValg from './UtskriftValg';
 
 interface Props {
     kvpPerioder?: KvpPeriode[];
