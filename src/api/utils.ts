@@ -118,7 +118,7 @@ type HttpMethod = 'post' | 'put' | 'get' | 'patch';
 function methodToJson(
     method: HttpMethod,
     url: string,
-    data: Record<any, any>,
+    data: Record<string, any> | undefined,
     config: RequestInit,
     operation?: string,
 ) {
@@ -126,15 +126,19 @@ function methodToJson(
     return fetchToJson(url, ({
 	method,
 	headers: defaultHeaders,
-	body: Object.keys(data).length === 0 ? undefined : JSON.stringify(data),
+	body: data && Object.keys(data).length !== 0 ? JSON.stringify(data) : undefined,
 	...config
 }), operation);
 }
 
-export function postAsJson(url: string, data = {}, operation?: string) {
+export function postAsJson(url: string, data: Record<string, any> = {}, operation?: string) {
     return methodToJson('post', url, data, {}, operation);
 }
 
-export function putAsJson(url: string, data = {}, operation?: string) {
+export function putAsJson(url: string, data: Record<string, any> = {}, operation?: string) {
     return methodToJson('put', url, data, {}, operation);
+}
+
+export function getAsJson(url: string, operation: string) {
+    return methodToJson('get', url, undefined, {}, operation);
 }

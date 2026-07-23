@@ -1,10 +1,9 @@
 import { Mal, Me } from '../datatypes/oppfolgingTypes';
 import { OPPFOLGING_BASE_URL } from '../environment';
-import { fetchToJson, postAsJson } from './utils';
+import { getAsJson, postAsJson } from './utils';
 
 // OK, denne trenger ikke fnr
-export const fetchIdentitet = (): Promise<Me> =>
-    fetchToJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/me`, {}, 'fetchIdentitet');
+export const fetchIdentitet = (): Promise<Me> => getAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/me`, 'fetchIdentitet');
 
 // Ikke synlid for veileder
 export const settDigital = (fnr: string | undefined): Promise<void> =>
