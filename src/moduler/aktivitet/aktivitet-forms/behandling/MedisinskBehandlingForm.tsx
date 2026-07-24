@@ -80,7 +80,7 @@ const MedisinskBehandlingForm = (props: Props) => {
     const formHandlers = useForm<MedisinskBehandlingFormValues>({
         defaultValues,
         resolver: avtaltResolver(avtalt, ['tilDato'], medisinskZodResolver),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,

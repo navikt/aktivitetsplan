@@ -32,7 +32,7 @@ const BegrunnelseForm = (props: Props) => {
     } = useForm<BegrunnelseFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
 
     const begrunnelseValue = watch('begrunnelse'); // for <Textarea /> character-count to work

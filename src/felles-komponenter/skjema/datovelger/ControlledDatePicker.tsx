@@ -22,7 +22,13 @@ const ControlledDatePicker = ({
     const closePopover = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closePopover);
 
-    const { trigger: triggerFormValidation, control, setValue, clearErrors, watch } = useFormContext();
+    const {
+        trigger: triggerFormValidation,
+        control,
+        setValue,
+        clearErrors,
+        watch,
+    } = useFormContext<{ [name: string]: Date | undefined }>();
     const {
         field,
         fieldState: { error },
@@ -49,7 +55,7 @@ const ControlledDatePicker = ({
             if (event.target.value === '') {
                 setValue(name, undefined);
             } else {
-                setValue(name, event.target.value);
+                setValue(name, new Date('Invalid date'));
             }
         }
         setDisplayValue(event.target.value);
@@ -71,7 +77,9 @@ const ControlledDatePicker = ({
     const onBlur = () => {
         field.onBlur();
         triggerFormValidation(name);
-        if (!isValid(fieldValue) || fieldValue === '') return;
+        if (!isValid(fieldValue) || fieldValue === undefined) return;
+        const parsed = parseDate(displayValue, new Date(), 'date', true);
+        if (!isValid(parsed)) return;
         setDisplayValue(format(fieldValue, 'dd.M.y'));
     };
     const togglePopover = () => {

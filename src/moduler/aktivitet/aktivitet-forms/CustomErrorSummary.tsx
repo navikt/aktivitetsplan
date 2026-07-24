@@ -1,5 +1,5 @@
 import { ErrorSummary } from '@navikt/ds-react';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { FieldErrors, FieldValues } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -12,10 +12,6 @@ const CustomErrorSummary = <T extends FieldValues>(props: Props<T>) => {
     const { heading, errors } = props;
 
     const errorRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        errorRef?.current?.focus();
-    }, [errors]);
 
     if (Object.keys(errors).length === 0) {
         return null;

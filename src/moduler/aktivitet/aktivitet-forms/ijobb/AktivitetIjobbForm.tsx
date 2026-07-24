@@ -70,7 +70,7 @@ const IJobbAktivitetForm = (props: Props) => {
     const methods = useForm<IJobbAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,

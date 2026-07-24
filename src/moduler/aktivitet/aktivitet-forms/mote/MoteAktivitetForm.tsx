@@ -119,7 +119,7 @@ const MoteAktivitetForm = (props: Props) => {
     const formHandlers = useForm<MoteAktivitetFormValuesInner>({
         defaultValues,
         resolver: zodResolver(schema(startTekst)),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,

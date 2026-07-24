@@ -109,7 +109,7 @@ const SokeAvtaleAktivitetForm = (props: Props) => {
     const formHandlers = useForm<SokeavtaleAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(SokeAvtaleFormValues),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,
