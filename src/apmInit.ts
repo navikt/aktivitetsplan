@@ -10,8 +10,9 @@ init({
     ignoreErrors: [
         /Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.$/,
         // The above seems to not be working :(
-        /The node to be removed is not a child of this node.$/,
-        /Failed to fetch content for main-menu$/,
+        /The node to be removed is not a child of this node\.$/,
+        /Failed to fetch content for main-menu/,
+        /Callback error while fetching value for key privatperson_nb/,
         /^NotFoundError: The object can not be found here.$/,
         /Failed to fetch auth data\./,
     ],
