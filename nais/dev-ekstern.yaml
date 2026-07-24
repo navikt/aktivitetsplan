@@ -92,7 +92,6 @@ spec:
             },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
-            { "fromPath": "/veilarbvedtakinfo", "toUrl": "https://veilarbvedtakinfo.dev-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "dev-fss" } },
             {
                       "fromPath": "/veilarblest",
                       "toUrl": "http://veilarblest.dab.svc.cluster.local",
