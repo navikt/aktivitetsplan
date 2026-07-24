@@ -18,6 +18,7 @@ import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from './useSamtalereferatKladd';
 import { useSelector } from 'react-redux';
 import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
+import { isDate } from 'date-fns';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
@@ -94,7 +95,7 @@ const InnerSamtalereferatForm = (props: Props) => {
         lagreSamtalereferatKladd({
             tittel: tittelValue,
             referat: referatValue,
-            fraDato: datoValue?.toISOString(),
+            fraDato: isDate(datoValue) ? datoValue.toISOString() : datoValue,
             kanal: kanalValue,
         });
     }, [tittelValue, referatValue, datoValue, kanalValue]);
