@@ -53,7 +53,7 @@ const StillingAktivitetForm = (props: Props) => {
     const formHandlers = useForm<StillingAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,

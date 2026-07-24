@@ -103,7 +103,7 @@ const EgenAktivitetForm = (props: Props) => {
     const formHandlers = useForm<EgenAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,
