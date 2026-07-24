@@ -55,9 +55,6 @@ spec:
           namespace: poao
         - application: nav-dekoratoren
           namespace: personbruker
-  gcp:
-    buckets:
-      - name: aktivitetsplan-dev
   env:
     - name: JSON_CONFIG
       # CSP for dekoratoren er hentet fra https://www.nav.no/dekoratoren/api/csp
