@@ -56,11 +56,6 @@ spec:
           namespace: poao
         - application: nav-dekoratoren
           namespace: personbruker
-  gcp:
-    buckets:
-      - name: aktivitetsplan-prod
-  envFrom:
-    - configmap: pto-config
   env:
     - name: JSON_CONFIG
       # CSP for dekoratoren er hentet fra https://www.nav.no/dekoratoren/api/csp
@@ -97,7 +92,6 @@ spec:
           },
           "fallbackStrategy": "SERVE_INDEX_HTML",
           "proxies": [
-            { "fromPath": "/veilarbvedtakinfo", "toUrl": "https://veilarbvedtakinfo.prod-fss-pub.nais.io", "preserveFromPath": true, "toApp": {"name": "veilarbvedtakinfo", "namespace": "pto", "cluster": "prod-fss" } },
             {
               "fromPath": "/veilarblest",
               "toUrl": "http://veilarblest.dab.svc.cluster.local",
