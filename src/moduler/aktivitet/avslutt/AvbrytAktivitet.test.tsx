@@ -15,6 +15,8 @@ import { AktivitetsId, OppfolgingsPeriodeId } from '../../../datatypes/brandedTy
 import AvbrytAktivitet from './AvbrytAktivitet';
 import { oppdaterAktivitetStatus } from '../../../api/aktivitetAPI';
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
+import FullforAktivitet from './FullforAktivitet';
+import { SamtalereferatAktivitet } from '../../../datatypes/internAktivitetTypes';
 
 vi.mock('../../../api/aktivitetAPI', { spy: true });
 
@@ -27,16 +29,29 @@ const ikkeAvtaltAktivitet = enEgenAktivitet({
     oppfolgingsperiodeId: periodeId,
 });
 const avtaltAktivitet = { ...ikkeAvtaltAktivitet, avtalt: true };
-const moteAktivitet = { ...enMoteAktivitet(), id: aktivitetId, oppfolgingsperiodeId: periodeId };
-const samtalereferatAktivitet = {
+const ikkePublisertMoteAktivitet = {
+    ...enMoteAktivitet(),
+    id: aktivitetId,
+    oppfolgingsperiodeId: periodeId,
+    erReferatPublisert: false,
+};
+const publisertMoteAktivitet = {
+    ...ikkePublisertMoteAktivitet,
+    erReferatPublisert: true,
+};
+const ikkePublisertSamtalereferatAktivitet = {
     ...enMoteAktivitet(),
     id: aktivitetId,
     oppfolgingsperiodeId: periodeId,
     type: 'SAMTALEREFERAT' as const,
     erReferatPublisert: false,
+} as SamtalereferatAktivitet;
+const publisertSamtaleReferatAktivitet = {
+    ...ikkePublisertSamtalereferatAktivitet,
+    erReferatPublisert: true,
 };
 
-const lagRouter = (id: string = aktivitetId) =>
+const lagAvbrytRouter = (id: string = aktivitetId) =>
     createMemoryRouter(
         [
             { path: '/', element: <div>Hjemside</div> },
@@ -45,8 +60,28 @@ const lagRouter = (id: string = aktivitetId) =>
         { initialEntries: [`/${id}`] },
     );
 
+const lagFullførRouter = (id: string = aktivitetId) =>
+    createMemoryRouter(
+        [
+            { path: '/', element: <div>Hjemside</div> },
+            { path: '/:id', element: <FullforAktivitet />, loader: () => ({}) },
+        ],
+        { initialEntries: [`/${id}`] },
+    );
+
+const renderFullførAktivitet = (store: EnhancedStore<RootState>, erVeileder = false) => {
+    const router = lagFullførRouter();
+    return render(
+        <ErVeilederContext value={erVeileder}>
+            <ReduxProvider store={store}>
+                <RouterProvider router={router} />
+            </ReduxProvider>
+        </ErVeilederContext>,
+    );
+};
+
 const renderAvbrytAktivitet = (store: EnhancedStore<RootState>, erVeileder = false) => {
-    const router = lagRouter();
+    const router = lagAvbrytRouter();
     return render(
         <ErVeilederContext value={erVeileder}>
             <ReduxProvider store={store}>
@@ -79,10 +114,64 @@ describe('AvbrytAktivitet', () => {
         await findByText(/Skriv en kort begrunnelse/);
     });
 
-    it('skal vise BegrunnelseForm for møte-aktivitet (krever begrunnelse ved avbrudd)', async () => {
-        const store = gitt().aktiviteter.medAktivitet(moteAktivitet).createStore();
-        const { findByLabelText } = renderAvbrytAktivitet(store);
-        await findByLabelText('Begrunnelse');
+    describe('Avbryt mote', () => {
+        it('skal kreve begrunnelse og ikke blokkere avbrytelse av ikke publiserte møte-aktiviteter', async () => {
+            const store = gitt().aktiviteter.medAktivitet(ikkePublisertMoteAktivitet).createStore();
+            const { findByLabelText } = renderAvbrytAktivitet(store);
+            await findByLabelText('Begrunnelse');
+        });
+
+        it('skal kreve begrunnelse for publiserte møte-aktiviteter', async () => {
+            const store = gitt().aktiviteter.medAktivitet(publisertMoteAktivitet).createStore();
+            const { findByLabelText } = renderAvbrytAktivitet(store);
+            await findByLabelText('Begrunnelse');
+        });
+    });
+
+    describe('Fullfør møte', () => {
+        it('skal blokkere fullføring av ikke publisert møte-aktivitet', async () => {
+            const store = gitt().aktiviteter.medAktivitet(ikkePublisertMoteAktivitet).createStore();
+            const { findByText } = renderFullførAktivitet(store);
+            await findByText('Du må dele referatet med brukeren før du kan sette aktiviteten til fullført');
+        });
+
+        it('skal ikke kreve begrunnelse og ikke blokkere fullføring av for publisert møte-aktivitet', async () => {
+            const store = gitt().aktiviteter.medAktivitet(publisertMoteAktivitet).createStore();
+            const { findByText } = renderFullførAktivitet(store);
+            await findByText('Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.');
+        });
+    });
+
+    describe('Avbryt samtalereferat', () => {
+        it('skal blokkere avbrytelse av ikke publiserte samtalereferat-aktiviteter', async () => {
+            const store = gitt().aktiviteter.medAktivitet(ikkePublisertSamtalereferatAktivitet).createStore();
+            const { findByText } = renderAvbrytAktivitet(store);
+            await findByText(
+                'Du må dele referatet med brukeren før du kan sette aktiviteten til fullført eller avbrutt',
+            );
+        });
+
+        it('skal ikke kreve bergrunnelse for publiserte samtalereferat-aktiviteter', async () => {
+            const store = gitt().aktiviteter.medAktivitet(publisertSamtaleReferatAktivitet).createStore();
+            const { findByText } = renderAvbrytAktivitet(store);
+            await findByText('Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.');
+        });
+    });
+
+    describe('Fullfør samtalereferat', () => {
+        it('skal blokkere fullføring av ikke publisert møte-aktivitet', async () => {
+            const store = gitt().aktiviteter.medAktivitet(ikkePublisertSamtalereferatAktivitet).createStore();
+            const { findByText } = renderFullførAktivitet(store);
+            await findByText(
+                'Du må dele referatet med brukeren før du kan sette aktiviteten til fullført eller avbrutt',
+            );
+        });
+
+        it('skal ikke kreve begrunnelse og ikke blokkere fullføring av for publisert møte-aktivitet', async () => {
+            const store = gitt().aktiviteter.medAktivitet(publisertSamtaleReferatAktivitet).createStore();
+            const { findByText } = renderFullførAktivitet(store);
+            await findByText('Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.');
+        });
     });
 
     it('skal navigere til hjemside når aktivitet ikke finnes i store', async () => {
@@ -145,13 +234,5 @@ describe('AvbrytAktivitet', () => {
         });
 
         await findByText('Du må fylle ut begrunnelse');
-    });
-
-    it('skal vise advarsel om upublisert referat for samtalereferat', async () => {
-        const store = gitt()
-            .aktiviteter.medAktivitet(samtalereferatAktivitet as any)
-            .createStore();
-        const { findByText } = renderAvbrytAktivitet(store);
-        await findByText(/Du må dele referatet med brukeren før du kan sette aktiviteten til fullført eller avbrutt/);
     });
 });
