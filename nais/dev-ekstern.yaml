@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: aktivitetsplan
-  namespace: pto
+  namespace: dab
   labels:
-    team: pto
+    team: dab
 spec:
   image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2026.07.08_13.04-322d75e7b179
   port: 8080
@@ -41,7 +41,8 @@ spec:
       enabled: true
       runtime: nodejs
   ingresses:
-    - https://aktivitetsplan.ekstern.dev.nav.no
+    # - https://aktivitetsplan.ekstern.dev.nav.no
+    # Comment in when inbound is setup and migrate_namespace action is ready
   accessPolicy:
     outbound:
       rules:

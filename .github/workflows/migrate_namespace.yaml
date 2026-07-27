@@ -1,0 +1,113 @@
+name: Migrate namespace
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # 06:00 CEST (UTC+2) / 05:00 CET (UTC+1)
+  workflow_dispatch:
+
+concurrency:
+  group: migrate_namespace
+  cancel-in-progress: false
+
+jobs:
+  fjern-dev-ingress:
+    name: Fjern ingress fra pto namespace i dev
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Deploy dev-ekstern-old
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais/dev-ekstern-old.yaml
+      - name: Slack Notification (deploy failure)
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - deploy av dev-ekstern-old feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Migrate namespace workflow feilet på dev-ekstern-old'
+
+  fjern-prod-ingress:
+    name: Fjern ingress fra pto namespace i prod
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Deploy prod-ekstern-old
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: nais/prod-ekstern-old.yaml
+      - name: Slack Notification (deploy failure)
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - deploy av prod-ekstern-old feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Migrate namespace workflow feilet på prod-ekstern-old'
+
+  deploy-dev-ekstern:
+    name: Legg til ingress i dab namespace i dev
+    needs: [fjern-dev-ingress]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Deploy dev-ekstern
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais/dev-ekstern.yaml
+      - name: Slack Notification (deploy failure)
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - deploy av dev-ekstern feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Migrate namespace workflow feilet på dev-ekstern'
+
+  deploy-prod-ekstern:
+    name: Legg til ingress i dab namesapce i prod
+    needs: [fjern-prod-ingress]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Deploy prod-ekstern
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: nais/prod-ekstern.yaml
+      - name: Slack Notification (deploy failure)
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - deploy av prod-ekstern feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Migrate namespace workflow feilet på prod-ekstern'
