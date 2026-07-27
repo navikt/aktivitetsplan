@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: aktivitetsplan
-  namespace: pto
+  namespace: {{namespace}}
   labels:
-    team: pto
+    team: {{team}}
 spec:
   image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2026.07.08_13.04-322d75e7b179
   port: 8080
@@ -34,8 +34,12 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: nodejs
+  {{#if ingresses}}
   ingresses:
-    - https://aktivitetsplan.nav.no
+  {{#each ingresses as |url|}}
+    - {{url}}
+  {{/each}}
+  {{/if}}
   resources:
     limits:
       cpu: "3"

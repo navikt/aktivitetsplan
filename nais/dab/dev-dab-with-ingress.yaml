@@ -1,0 +1,4 @@
+namespace: dab
+team: dab
+ingresses:
+  - https://aktivitetsplan.ekstern.dev.nav.no
