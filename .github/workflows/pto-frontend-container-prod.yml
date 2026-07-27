@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/pto-frontend-container-prod.yml'
       - 'nais/prod-ekstern.yaml'
+  workflow_dispatch:
 
 concurrency:
   group: pto_frontend_container_prod
@@ -16,6 +17,7 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       id-token: write
     steps:
       - uses: actions/checkout@v7

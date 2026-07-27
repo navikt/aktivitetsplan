@@ -4,6 +4,16 @@ on:
   schedule:
     - cron: '0 4 * * *' # 06:00 CEST (UTC+2) / 05:00 CET (UTC+1)
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Which environment to migrate'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - both
+          - dev-only
+          - prod-only
 
 concurrency:
   group: migrate_namespace
@@ -12,6 +22,7 @@ concurrency:
 jobs:
   fjern-dev-ingress:
     name: Fjern ingress fra pto namespace i dev
+    if: ${{ !inputs.environment || inputs.environment == 'both' || inputs.environment == 'dev-only' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -38,6 +49,7 @@ jobs:
 
   fjern-prod-ingress:
     name: Fjern ingress fra pto namespace i prod
+    if: ${{ !inputs.environment || inputs.environment == 'both' || inputs.environment == 'prod-only' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
