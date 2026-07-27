@@ -24,6 +24,7 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
+          VARS: nais/dab/prod-dab-without-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@v2

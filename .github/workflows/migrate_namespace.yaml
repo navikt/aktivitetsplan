@@ -24,7 +24,7 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
-          VARS: nais/dev-pto-remove-ingress.yaml
+          VARS: nais/pto/dev-pto-remove-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -50,7 +50,7 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
-          VARS: nais/prod-pto-remove-ingress.yaml
+          VARS: nais/pto/prod-pto-remove-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -77,7 +77,7 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
-          VARS: nais/dev-dab.yaml
+          VARS: nais/dab/dev-dab-with-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -90,7 +90,7 @@ jobs:
           SLACK_MESSAGE: 'Migrate namespace workflow feilet på dev-ekstern'
 
   deploy-prod-ekstern:
-    name: Legg til ingress i dab namesapce i prod
+    name: Legg til ingress i dab namespace i prod
     needs: [fjern-prod-ingress]
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -104,7 +104,7 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
-          VARS: nais/prod-dab.yaml
+          VARS: nais/dab/prod-dab-with-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -132,7 +132,7 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
-          VARS: nais/dev-pto-fallback.yaml
+          VARS: nais/pto/dev-pto-fallback.yaml
       - name: Slack Notification (rollback success)
         if: success()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -170,7 +170,7 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
-          VARS: nais/prod-pto-fallback.yaml
+          VARS: nais/pto/prod-pto-fallback.yaml
       - name: Slack Notification (rollback success)
         if: success()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0

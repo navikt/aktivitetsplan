@@ -25,3 +25,4 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
+          VARS: nais/dab/dev-dab-without-ingress.yaml
