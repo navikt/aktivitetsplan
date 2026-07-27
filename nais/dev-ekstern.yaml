@@ -42,7 +42,7 @@ spec:
       runtime: nodejs
   ingresses:
     # - https://aktivitetsplan.ekstern.dev.nav.no
-    # Comment in when inbound is setup and migrate_namespace action is ready
+    # Comment in when app is deployed at least once and migrate_namespace action is ready
   accessPolicy:
     outbound:
       rules:

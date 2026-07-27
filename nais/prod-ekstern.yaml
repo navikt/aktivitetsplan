@@ -36,6 +36,7 @@ spec:
       runtime: nodejs
   ingresses:
     # - https://aktivitetsplan.nav.no
+    # Comment in when app is deployed at least once and migrate_namespace action is ready
   resources:
     limits:
       cpu: "3"
