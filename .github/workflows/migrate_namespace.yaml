@@ -18,9 +18,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Deploy dev-ekstern-old
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern-old.yaml
@@ -43,9 +43,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Deploy prod-ekstern-old
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern-old.yaml
@@ -69,9 +69,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Deploy dev-ekstern
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
@@ -95,9 +95,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Deploy prod-ekstern
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
