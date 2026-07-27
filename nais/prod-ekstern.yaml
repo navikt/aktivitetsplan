@@ -19,7 +19,7 @@ spec:
     max: 4
     cpuThresholdPercentage: 50
   idporten:
-    enabled: true
+    enabled: {{#if ingresses.length }}true{{else}}false{{/if}}
     sidecar:
       enabled: true
       autoLogin: true
