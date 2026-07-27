@@ -20,11 +20,11 @@ const getManglerPubliseringTekst = (aktivitet: SamtalereferatAktivitet | MoteAkt
     }
 };
 
-const ReferatIkkePubliserAdvarsel = ({ aktivitet, children }: Props) => {
+const ReferatIkkePubliserAdvarsel = ({ aktivitet, children, nyStatus }: Props) => {
     const erPubliserbar =
         aktivitet.type == VeilarbAktivitetType.MOTE_TYPE || aktivitet.type == VeilarbAktivitetType.SAMTALEREFERAT_TYPE;
     const skalViseIkkePubliserAdvarsel =
-        aktivitet && erPubliserbar ? manglerPubliseringAvSamtaleReferat(aktivitet, AktivitetStatus.AVBRUTT) : false;
+        aktivitet && erPubliserbar ? manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus) : false;
     if (erPubliserbar && skalViseIkkePubliserAdvarsel) {
         return (
             <Alert variant="error" inline>
