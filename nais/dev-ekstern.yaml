@@ -26,7 +26,7 @@ spec:
       cpu: 250m
       memory: 256Mi
   idporten:
-    enabled: {{#if ingresses.length }}true{{else}}false{{/if}}
+    enabled: {{#if ingresses}}true{{else}}false{{/if}}
     sidecar:
       enabled: true
       autoLogin: true
