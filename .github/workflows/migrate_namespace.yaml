@@ -23,7 +23,8 @@ jobs:
         uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
         env:
           CLUSTER: dev-gcp
-          RESOURCE: nais/dev-ekstern-old.yaml
+          RESOURCE: nais/dev-ekstern.yaml
+          VARS: nais/dev-pto-remove-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -48,7 +49,8 @@ jobs:
         uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
         env:
           CLUSTER: prod-gcp
-          RESOURCE: nais/prod-ekstern-old.yaml
+          RESOURCE: nais/prod-ekstern.yaml
+          VARS: nais/prod-pto-remove-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -75,6 +77,7 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
+          VARS: nais/dev-dab.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -101,6 +104,7 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
+          VARS: nais/prod-dab.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
@@ -111,3 +115,79 @@ jobs:
           SLACK_TITLE: 'Aktivitetsplan: migrate namespace - deploy av prod-ekstern feilet'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: 'Migrate namespace workflow feilet på prod-ekstern'
+
+  rollback-dev-ekstern:
+    name: Rollback - gjenopprett ingress i pto namespace i dev
+    needs: [fjern-dev-ingress, deploy-dev-ekstern]
+    if: ${{ always() && needs.fjern-dev-ingress.result == 'success' && needs.deploy-dev-ekstern.result == 'failure' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Rollback til pto namespace i dev
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais/dev-ekstern.yaml
+          VARS: nais/dev-pto-fallback.yaml
+      - name: Slack Notification (rollback success)
+        if: success()
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
+        env:
+          SLACK_COLOR: warning
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - rullet tilbake til pto namespace i dev'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Deploy til dab feilet. App er gjenopprettet i pto namespace i dev'
+      - name: Slack Notification (rollback failure)
+        if: failure()
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - rollback til pto namespace i dev feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Migrate namespace rollback feilet for dev - manuell handling nødvendig'
+
+  rollback-prod-ekstern:
+    name: Rollback - gjenopprett ingress i pto namespace i prod
+    needs: [fjern-prod-ingress, deploy-prod-ekstern]
+    if: ${{ always() && needs.fjern-prod-ingress.result == 'success' && needs.deploy-prod-ekstern.result == 'failure' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Rollback til pto namespace i prod
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: nais/prod-ekstern.yaml
+          VARS: nais/prod-pto-fallback.yaml
+      - name: Slack Notification (rollback success)
+        if: success()
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
+        env:
+          SLACK_COLOR: warning
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - rullet tilbake til pto namespace i prod'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Deploy til dab feilet. App er gjenopprettet i pto namespace i prod'
+      - name: Slack Notification (rollback failure)
+        if: failure()
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
+        env:
+          SLACK_COLOR: danger
+          SLACK_USERNAME: Github Actions
+          SLACK_ICON: https://github.com/github.png?size=48
+          SLACK_TITLE: 'Aktivitetsplan: migrate namespace - rollback til pto namespace i prod feilet'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: 'Migrate namespace rollback feilet for prod - manuell handling nødvendig'
