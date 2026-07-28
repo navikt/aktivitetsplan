@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: pto_frontend_container_dev
+  group: dab_frontend_container_dev
   cancel-in-progress: true
 
 jobs:
@@ -26,4 +26,3 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
-          VARS: nais/dab/dev-dab-without-ingress.yaml

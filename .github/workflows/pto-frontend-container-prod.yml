@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: pto_frontend_container_prod
+  group: dab_frontend_container_prod
   cancel-in-progress: true
 
 jobs:
@@ -26,7 +26,6 @@ jobs:
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
-          VARS: nais/dab/prod-dab-without-ingress.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
         uses: rtCamp/action-slack-notify@v2
