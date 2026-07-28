@@ -1,4 +1,0 @@
-namespace: pto
-team: pto
-ingresses:
-  - https://aktivitetsplan.ekstern.dev.nav.no

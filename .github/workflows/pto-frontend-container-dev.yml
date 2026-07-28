@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: pto_frontend_container_dev
+  group: dab_frontend_container_dev
   cancel-in-progress: true
 
 jobs:
@@ -20,10 +20,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7
       - name: deploy gcp dev ekstern
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb # ratchet:nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais/dev-ekstern.yaml
-          VARS: nais/dab/dev-dab-without-ingress.yaml
