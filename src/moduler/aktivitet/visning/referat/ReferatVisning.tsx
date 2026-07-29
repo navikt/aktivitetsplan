@@ -30,6 +30,11 @@ const ReferatVisning = (props: Props) => {
                 Samtalereferat
             </Heading>
             <EkspanderbartTekstomrade tekst={referat} antallTegn={275} />
+            {!erAktivAktivitet && !erReferatPublisert ? (
+                <Button hidden={erReferatPublisert} onClick={dispatchPubliserReferat} loading={publiserer}>
+                    Del med bruker
+                </Button>
+            ) : null}
             <HiddenIfDiv hidden={!erVeileder || !erAktivAktivitet} className="flex flex-col mt-8 space-y-4">
                 {erReferatPublisert ? (
                     <Alert variant="success" inline>
