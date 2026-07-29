@@ -28,12 +28,12 @@ spec:
             namespace: dab
         - alert: app-down
           expr: |
-            kube_deployment_status_replicas_available{deployment=~"aktivitetsplan", namespace="pto"} == 0
+            kube_deployment_status_replicas_available{deployment=~"aktivitetsplan", namespace="dab"} == 0
           for: 2m
           annotations:
             summary: "Aktivitetsplan (frontend, ekstern) er nede 😱"
             consequence: "Users cannot access the application."
-            action: "Check deployment status and pod logs in the pto namespace."
+            action: "Check deployment status and pod logs in the dab namespace."
             message: "Deployment {{ $labels.deployment }} has 0 available replicas for the last 2 minutes."
           labels:
             severity: critical
