@@ -25,15 +25,23 @@ clearReduxCache();
 
 type Theme = 'dark' | 'light';
 
-const resolveHostTheme = (hostElement: HTMLElement): Theme | undefined => {
-    const themed = hostElement.closest('.dark, .light, [data-theme="dark"], [data-theme="light"]');
-    if (!themed) return undefined;
+const readTheme = (element: Element | null): Theme | undefined => {
+    if (!element) return undefined;
 
-    const dataTheme = themed.getAttribute('data-theme');
+    const dataTheme = element.getAttribute('data-theme');
     if (dataTheme === 'dark' || dataTheme === 'light') return dataTheme;
-    if (themed.classList.contains('dark')) return 'dark';
-    if (themed.classList.contains('light')) return 'light';
+    if (element.classList.contains('dark')) return 'dark';
+    if (element.classList.contains('light')) return 'light';
     return undefined;
+};
+
+const resolveHostTheme = (hostElement: HTMLElement): Theme | undefined => {
+    const akselThemeRoot = hostElement.closest('.aksel-theme, [data-theme="dark"], [data-theme="light"]');
+    const akselTheme = readTheme(akselThemeRoot);
+    if (akselTheme) return akselTheme;
+
+    const themed = hostElement.closest('.dark, .light');
+    return readTheme(themed) ?? readTheme(document.body) ?? readTheme(document.documentElement);
 };
 
 export class DabAktivitetsplan extends HTMLElement {
