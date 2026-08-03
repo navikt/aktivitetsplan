@@ -27,6 +27,20 @@ export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     setAktivEnhet?: (enhet: string) => void;
     root: Root | undefined;
+    appRoot?: HTMLDivElement;
+
+    // I shadow DOM setter ds-css sine light-tokens på :host, så hostens .dark
+    // slår ikke inn automatisk. Vi må speile temaet inn på et element i shadow-treet.
+    private applyTheme = () => {
+        if (!this.appRoot) return;
+        const theme = this.getAttribute('theme');
+        this.appRoot.classList.remove('dark', 'light');
+        this.appRoot.removeAttribute('data-theme');
+        if (theme === 'dark' || theme === 'light') {
+            this.appRoot.classList.add(theme);
+            this.appRoot.setAttribute('data-theme', theme);
+        }
+    };
 
     disconnectedCallback() {
         saveReduxStateToSessionStorage();
@@ -37,6 +51,7 @@ export class DabAktivitetsplan extends HTMLElement {
         // This will be app entry point, need to be outside modal-mount node
         const appRoot = document.createElement('div');
         appRoot.id = 'aktivitetsplan-root';
+        this.appRoot = appRoot;
         const shadowRoot = this.attachShadow({ mode: 'closed' });
         shadowRoot.appendChild(appRoot);
 
@@ -53,6 +68,7 @@ export class DabAktivitetsplan extends HTMLElement {
             preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         slettGamleSamtalereferatKladder();
+        this.applyTheme();
         this.root = createRoot(appRoot);
         this.root.render(
             <AkselProvider rootElement={appRoot}>
@@ -79,9 +95,12 @@ export class DabAktivitetsplan extends HTMLElement {
             settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setAktivEnhet(newValue);
         }
+        if (name === 'theme' && oldValue !== newValue) {
+            this.applyTheme();
+        }
     }
 
     static get observedAttributes() {
-        return ['data-fnr', 'data-aktivEnhet'];
+        return ['data-fnr', 'data-aktivEnhet', 'theme'];
     }
 }
