@@ -23,26 +23,43 @@ import {
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
 
+type Theme = 'dark' | 'light';
+
+const resolveHostTheme = (hostElement: HTMLElement): Theme | undefined => {
+    const themed = hostElement.closest('.dark, .light, [data-theme="dark"], [data-theme="light"]');
+    if (!themed) return undefined;
+
+    const dataTheme = themed.getAttribute('data-theme');
+    if (dataTheme === 'dark' || dataTheme === 'light') return dataTheme;
+    if (themed.classList.contains('dark')) return 'dark';
+    if (themed.classList.contains('light')) return 'light';
+    return undefined;
+};
+
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     setAktivEnhet?: (enhet: string) => void;
     root: Root | undefined;
     appRoot?: HTMLDivElement;
+    themeObserver?: MutationObserver;
+    theme?: Theme;
 
-    // I shadow DOM setter ds-css sine light-tokens på :host, så hostens .dark
-    // slår ikke inn automatisk. Vi må speile temaet inn på et element i shadow-treet.
-    private applyTheme = () => {
+    private syncTheme = () => {
         if (!this.appRoot) return;
-        const theme = this.getAttribute('theme');
+        const nextTheme = resolveHostTheme(this);
+        if (nextTheme === this.theme) return;
+
+        this.theme = nextTheme;
         this.appRoot.classList.remove('dark', 'light');
         this.appRoot.removeAttribute('data-theme');
-        if (theme === 'dark' || theme === 'light') {
-            this.appRoot.classList.add(theme);
-            this.appRoot.setAttribute('data-theme', theme);
+        if (nextTheme) {
+            this.appRoot.classList.add(nextTheme);
+            this.appRoot.setAttribute('data-theme', nextTheme);
         }
     };
 
     disconnectedCallback() {
+        this.themeObserver?.disconnect();
         saveReduxStateToSessionStorage();
         this.root?.unmount();
     }
@@ -68,7 +85,16 @@ export class DabAktivitetsplan extends HTMLElement {
             preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         slettGamleSamtalereferatKladder();
-        this.applyTheme();
+        this.syncTheme();
+
+        // Følg med når hosten toggler tema (typisk klasse/attributt-endring høyt i treet)
+        this.themeObserver = new MutationObserver(this.syncTheme);
+        this.themeObserver.observe(document.documentElement, {
+            attributes: true,
+            subtree: true,
+            attributeFilter: ['class', 'data-theme'],
+        });
+
         this.root = createRoot(appRoot);
         this.root.render(
             <AkselProvider rootElement={appRoot}>
@@ -95,12 +121,9 @@ export class DabAktivitetsplan extends HTMLElement {
             settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setAktivEnhet(newValue);
         }
-        if (name === 'theme' && oldValue !== newValue) {
-            this.applyTheme();
-        }
     }
 
     static get observedAttributes() {
-        return ['data-fnr', 'data-aktivEnhet', 'theme'];
+        return ['data-fnr', 'data-aktivEnhet'];
     }
 }
