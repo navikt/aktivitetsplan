@@ -61,6 +61,7 @@ export class DabAktivitetsplan extends HTMLElement {
         this.appRoot.classList.remove('dark', 'light');
         this.appRoot.removeAttribute('data-theme');
         if (nextTheme) {
+            this.appRoot.classList.add('aksel-theme');
             this.appRoot.classList.add(nextTheme);
             this.appRoot.setAttribute('data-theme', nextTheme);
         }
@@ -76,6 +77,8 @@ export class DabAktivitetsplan extends HTMLElement {
         // This will be app entry point, need to be outside modal-mount node
         const appRoot = document.createElement('div');
         appRoot.id = 'aktivitetsplan-root';
+        appRoot.classList.add('aksel-theme');
+        appRoot.setAttribute('data-color', 'accent');
         this.appRoot = appRoot;
         const shadowRoot = this.attachShadow({ mode: 'closed' });
         shadowRoot.appendChild(appRoot);

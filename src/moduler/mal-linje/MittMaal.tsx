@@ -52,7 +52,7 @@ function MittMaal() {
                     <div>
                         <div className="flex mb-2 items-center">
                             <NotifikasjonMarkering visible={nyEndring} />
-                            <Heading level="2" size="medium" className={'flex'}>
+                            <Heading level="2" size="medium" className={'flex'} data-color="accent">
                                 Mitt mål
                             </Heading>
                         </div>
