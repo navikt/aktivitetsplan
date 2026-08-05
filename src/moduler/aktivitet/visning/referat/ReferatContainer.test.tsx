@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { describe, it, expect } from 'vitest';
 
@@ -75,6 +75,34 @@ describe('ReferatContainer', () => {
             await findByText('Samtalereferat');
             expect(queryByText('Del med bruker')).toBeNull();
             expect(queryByText('Endre referat')).toBeNull();
+        });
+    });
+
+    describe('', () => {
+        it('"Del endring" knapp skal være disabled hvis referate ikke er endret', async () => {
+            const aktivitet = enSamtalereferatAktivitet({
+                status: AktivitetStatus.GJENNOMFOERT,
+                erReferatPublisert: true,
+            });
+            const { findByText } = renderReferatContainer(aktivitet);
+            const endreReferatKnapp = await findByText('Endre referat');
+            fireEvent.click(endreReferatKnapp);
+            const deleKnapp = await findByText('Del endring');
+            expect(deleKnapp.parentElement).toBeDisabled();
+        });
+
+        it('"Del endring" knapp skal IKKE være disabled hvis referate er endret', async () => {
+            const aktivitet = enSamtalereferatAktivitet({
+                status: AktivitetStatus.GJENNOMFOERT,
+                erReferatPublisert: true,
+            });
+            const { findByText, findByLabelText } = renderReferatContainer(aktivitet);
+            const endreReferatKnapp = await findByText('Endre referat');
+            fireEvent.click(endreReferatKnapp);
+            const samtaleReferatTextArea = await findByLabelText('Samtalereferat');
+            fireEvent.change(samtaleReferatTextArea, { target: { value: 'Ny tekst' } });
+            const deleKnapp = await findByText('Del endring');
+            expect(deleKnapp.parentElement).not.toBeDisabled();
         });
     });
 });

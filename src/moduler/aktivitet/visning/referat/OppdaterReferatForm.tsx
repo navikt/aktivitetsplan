@@ -106,6 +106,7 @@ const OppdaterReferatForm = (props: Props) => {
         lagreSamtalereferatKladdLagretAktivitet(referatValue);
     }, [referatValue]);
 
+    console.log('Isdirty ', isDirty);
     return (
         <form
             onSubmit={handleSubmit((values) => updateReferat(values))}
@@ -143,7 +144,7 @@ const OppdaterReferatForm = (props: Props) => {
                 <Button
                     variant={erReferatPublisert ? 'primary' : 'secondary'}
                     loading={oppdaterer}
-                    disabled={oppdaterer}
+                    disabled={oppdaterer || !isDirty}
                 >
                     {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
                 </Button>
