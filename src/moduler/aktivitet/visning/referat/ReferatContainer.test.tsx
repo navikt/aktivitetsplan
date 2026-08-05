@@ -4,12 +4,13 @@ import { describe, it, expect } from 'vitest';
 
 import { ErVeilederContext } from '../../../../Provider';
 import { AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
-import { SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
+import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import { enSamtalereferatAktivitet } from '../../../../mocks/fixtures/samtalereferatFixtures';
 import { gitt } from '../../../../testUtils/store/mockStoreBuilder';
 import ReferatContainer from './ReferatContainer';
+import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
 
-const renderReferatContainer = (aktivitet: SamtalereferatAktivitet, erVeileder = true) => {
+const renderReferatContainer = (aktivitet: SamtalereferatAktivitet | MoteAktivitet, erVeileder = true) => {
     const store = gitt().createStore();
     return render(
         <ErVeilederContext value={erVeileder}>
@@ -21,6 +22,43 @@ const renderReferatContainer = (aktivitet: SamtalereferatAktivitet, erVeileder =
 };
 
 describe('ReferatContainer', () => {
+    describe('møter og referatboks', () => {
+        it('skal ikke vise referatboks for møter frem i tid', () => {
+            const aktivitet = enMoteAktivitet({
+                status: AktivitetStatus.GJENNOMFOERT,
+                fraDato: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 1 day in the future,
+                tilDato: new Date(Date.now() + 25 * 60 * 60 * 1000).toISOString(), // 1 hour after start
+                erReferatPublisert: false,
+                referat: '',
+            });
+            const { queryByText } = renderReferatContainer(aktivitet);
+            expect(queryByText('Samtalereferat')).not.toBeInTheDocument();
+        });
+
+        it('skal vise referatboks for møter frem i tid som er fullført', () => {
+            const aktivitet = enMoteAktivitet({
+                status: AktivitetStatus.FULLFOERT,
+                fraDato: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 1 day in the future,
+                tilDato: new Date(Date.now() + 25 * 60 * 60 * 1000).toISOString(), // 1 hour after start
+                erReferatPublisert: false,
+            });
+            const { queryByText } = renderReferatContainer(aktivitet);
+            expect(queryByText('Samtalereferat')).toBeInTheDocument();
+        });
+
+        it.skip('skal vise referatboks for møter frem i tid hvis referatet er laget likevel', () => {
+            const aktivitet = enMoteAktivitet({
+                status: AktivitetStatus.GJENNOMFOERT,
+                fraDato: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 1 day in the future,
+                tilDato: new Date(Date.now() + 25 * 60 * 60 * 1000).toISOString(), // 1 hour after start
+                referat: 'det finnes et referat her',
+                erReferatPublisert: false,
+            });
+            const { queryByText } = renderReferatContainer(aktivitet);
+            expect(queryByText('Samtalereferat')).toBeInTheDocument();
+        });
+    });
+
     describe('når aktiviteten er fullført', () => {
         it('skal vise "Del med bruker"-knapp når referatet ikke er delt', async () => {
             const aktivitet = enSamtalereferatAktivitet({
@@ -78,7 +116,7 @@ describe('ReferatContainer', () => {
         });
     });
 
-    describe('', () => {
+    describe('Oppdater referat - isDirty', () => {
         it('"Del endring" knapp skal være disabled hvis referate ikke er endret', async () => {
             const aktivitet = enSamtalereferatAktivitet({
                 status: AktivitetStatus.GJENNOMFOERT,
