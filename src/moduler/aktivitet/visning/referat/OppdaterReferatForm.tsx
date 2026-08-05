@@ -143,7 +143,7 @@ const OppdaterReferatForm = (props: Props) => {
                 <Button
                     variant={erReferatPublisert ? 'primary' : 'secondary'}
                     loading={oppdaterer}
-                    disabled={oppdaterer}
+                    disabled={oppdaterer || !isDirty}
                 >
                     {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
                 </Button>
