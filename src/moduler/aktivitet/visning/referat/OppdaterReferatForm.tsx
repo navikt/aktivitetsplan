@@ -106,7 +106,6 @@ const OppdaterReferatForm = (props: Props) => {
         lagreSamtalereferatKladdLagretAktivitet(referatValue);
     }, [referatValue]);
 
-    console.log('Isdirty ', isDirty);
     return (
         <form
             onSubmit={handleSubmit((values) => updateReferat(values))}
