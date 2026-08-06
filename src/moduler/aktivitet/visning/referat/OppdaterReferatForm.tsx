@@ -44,22 +44,29 @@ const OppdaterReferatForm = (props: Props) => {
         hentSamtaleReferatKladdLagretAktivitet,
         slettSamtaleReferatKladd,
     } = useSamtalereferatKladd({ aktivitetId: aktivitet.id });
-    const kladd = useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
 
     const {
         watch,
+        setValue,
         formState: { isDirty, isSubmitting },
         register,
         handleSubmit,
     } = useForm<ReferatInputProps>({
         resolver: zodResolver(schema),
         defaultValues: {
-            referat: kladd || aktivitet.referat || startTekst,
+            referat: aktivitet.referat || startTekst,
         },
     });
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const { setFormIsDirty } = useContext(DirtyContext);
+
+    useEffect(() => {
+        const kladd = hentSamtaleReferatKladdLagretAktivitet();
+        if (kladd) {
+            setValue('referat', kladd, { shouldDirty: true });
+        }
+    }, []);
 
     useEffect(() => {
         setFormIsDirty('referat', isDirty);
