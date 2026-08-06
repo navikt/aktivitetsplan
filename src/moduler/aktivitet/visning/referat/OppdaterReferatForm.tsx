@@ -16,6 +16,7 @@ import { selectPubliserOgOppdaterReferatFeil } from '../../../feilmelding/feil-s
 import Feilmelding from '../../../feilmelding/Feilmelding';
 import { oppdaterReferat, utenHistorikk } from '../../aktivitet-actions';
 import { useHilsenVeilederTekst } from '../../aktivitet-forms/samtalereferat/useHilsenVeilederTekst';
+import { useKladdDiffHighlight } from '../../aktivitet-forms/samtalereferat/useKladdDiffHighlight';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
@@ -61,12 +62,14 @@ const OppdaterReferatForm = (props: Props) => {
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
-    useEffect(() => {
-        const kladd = hentSamtaleReferatKladdLagretAktivitet();
-        if (kladd) {
-            setValue('referat', kladd, { shouldDirty: true });
-        }
-    }, []);
+    const referatValue = watch('referat');
+
+    const { textareaRef, onTextareaScroll, highlightOverlay } = useKladdDiffHighlight({
+        referatVerdi: referatValue,
+        originaltReferat: aktivitet.referat || startTekst,
+        hentKladd: hentSamtaleReferatKladdLagretAktivitet,
+        settReferat: (kladd) => setValue('referat', kladd, { shouldDirty: true }),
+    });
 
     useEffect(() => {
         setFormIsDirty('referat', isDirty);
@@ -107,25 +110,34 @@ const OppdaterReferatForm = (props: Props) => {
     });
 
     const feil = useSelector(selectPubliserOgOppdaterReferatFeil);
-    const referatValue = watch('referat');
 
     useEffect(() => {
         lagreSamtalereferatKladdLagretAktivitet(referatValue);
     }, [referatValue]);
+
+    const { ref: referatFeltRef, ...referatFeltRest } = register('referat');
 
     return (
         <form
             onSubmit={handleSubmit((values) => updateReferat(values))}
             className="space-y-4 bg-ax-bg-brand-blue-soft p-4 border border-ax-border-brand-blue rounded-md"
         >
-            <Textarea
-                label={`Samtalereferat`}
-                disabled={oppdaterer}
-                maxLength={5000}
-                placeholder="Skriv samtalereferatet her"
-                {...register('referat')}
-                value={referatValue}
-            />
+            <div className="relative">
+                {highlightOverlay}
+                <Textarea
+                    label={`Samtalereferat`}
+                    disabled={oppdaterer}
+                    maxLength={5000}
+                    placeholder="Skriv samtalereferatet her"
+                    {...referatFeltRest}
+                    ref={(node) => {
+                        referatFeltRef(node);
+                        textareaRef(node);
+                    }}
+                    onScroll={onTextareaScroll}
+                    value={referatValue}
+                />
+            </div>
             <>
                 <Switch
                     checked={open}
