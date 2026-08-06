@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
-import { Button, Switch, Textarea } from '@navikt/ds-react';
+import { Button, Switch, Tag, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -44,6 +44,7 @@ const OppdaterReferatForm = (props: Props) => {
         hentSamtaleReferatKladdLagretAktivitet,
         slettSamtaleReferatKladd,
     } = useSamtalereferatKladd({ aktivitetId: aktivitet.id });
+    const [visKladdIndikator, setVisKladdIndikator] = useState(false);
 
     const {
         watch,
@@ -57,6 +58,15 @@ const OppdaterReferatForm = (props: Props) => {
             referat: aktivitet.referat || startTekst,
         },
     });
+
+    useEffect(() => {
+        const kladd = hentSamtaleReferatKladdLagretAktivitet();
+        if (kladd) {
+            setValue('referat', kladd, { shouldDirty: true });
+            setVisKladdIndikator(true);
+        }
+    }, []);
+
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const { setFormIsDirty } = useContext(DirtyContext);
@@ -113,19 +123,37 @@ const OppdaterReferatForm = (props: Props) => {
         lagreSamtalereferatKladdLagretAktivitet(referatValue);
     }, [referatValue]);
 
+    const slettKladd = () => {
+        slettSamtaleReferatKladd();
+        setVisKladdIndikator(false);
+        setValue('referat', aktivitet.referat || startTekst, { shouldDirty: true });
+    };
+
     return (
         <form
             onSubmit={handleSubmit((values) => updateReferat(values))}
             className="space-y-4 bg-ax-bg-brand-blue-soft p-4 border border-ax-border-brand-blue rounded-md"
         >
-            <Textarea
-                label={`Samtalereferat`}
-                disabled={oppdaterer}
-                maxLength={5000}
-                placeholder="Skriv samtalereferatet her"
-                {...register('referat')}
-                value={referatValue}
-            />
+            <div className="relative">
+                <Textarea
+                    label={`Samtalereferat`}
+                    disabled={oppdaterer}
+                    maxLength={5000}
+                    placeholder="Skriv samtalereferatet her"
+                    {...register('referat')}
+                    value={referatValue}
+                />
+                {visKladdIndikator && (
+                    <div className="absolute right-0 -top-1 flex items-center gap-2">
+                        <Tag data-color="warning" variant="outline" size="small">
+                            Kladd
+                        </Tag>
+                        <Button type="button" variant="tertiary" size="small" onClick={slettKladd}>
+                            Slett kladd
+                        </Button>
+                    </div>
+                )}
+            </div>
             <>
                 <Switch
                     checked={open}
