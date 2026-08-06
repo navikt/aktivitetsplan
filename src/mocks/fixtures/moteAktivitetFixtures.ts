@@ -1,11 +1,11 @@
 import { addDays, subDays } from 'date-fns';
 
 import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
-import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import { MoteAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
 import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
-export const enMoteAktivitet = (overrides: Partial<SamtalereferatAktivitet> = {}): MoteAktivitet => {
+export const enMoteAktivitet = (overrides: Partial<MoteAktivitet> = {}): MoteAktivitet => {
     return {
         id: '6871' as AktivitetsId,
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
