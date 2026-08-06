@@ -18,6 +18,19 @@ interface KladdInnslag {
 }
 
 const localeStorageKeyPrefix = 'samtalereferatKladd';
+export const createLocalStorageKey = (
+    args:
+        | {
+              aktivitetId: string;
+          }
+        | {
+              oppfolgingsperiodeId: string;
+          },
+) => {
+    return 'aktivitetId' in args
+        ? `${localeStorageKeyPrefix}-${args.aktivitetId}`
+        : `${localeStorageKeyPrefix}-${args.oppfolgingsperiodeId}`;
+};
 
 export const slettGamleSamtalereferatKladder = () => {
     const nå = Date.now();
@@ -41,24 +54,19 @@ export const slettGamleSamtalereferatKladder = () => {
     });
 };
 
-export const useSamtalereferatKladd = ({
-    oppfolgingsperiodeId,
-    aktivitetId,
-}:
-    | {
-          oppfolgingsperiodeId: string;
-          aktivitetId?: undefined;
-      }
-    | {
-          oppfolgingsperiodeId?: undefined;
-          aktivitetId: string;
-      }) => {
+export const useSamtalereferatKladd = (
+    args:
+        | {
+              oppfolgingsperiodeId: string;
+          }
+        | {
+              aktivitetId: string;
+          },
+) => {
     const debouncedDelay = 500;
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-    const localStorageKey = aktivitetId
-        ? `${localeStorageKeyPrefix}-${aktivitetId}`
-        : `${localeStorageKeyPrefix}-${oppfolgingsperiodeId}`;
+    const localStorageKey = createLocalStorageKey(args);
 
     const lagreSamtalereferatKladd = useCallback(
         (samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {

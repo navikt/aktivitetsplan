@@ -9,6 +9,7 @@ import { enSamtalereferatAktivitet } from '../../../../mocks/fixtures/samtaleref
 import { gitt } from '../../../../testUtils/store/mockStoreBuilder';
 import ReferatContainer from './ReferatContainer';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
+import { createLocalStorageKey } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
 
 const renderReferatContainer = (aktivitet: SamtalereferatAktivitet | MoteAktivitet, erVeileder = true) => {
     const store = gitt().createStore();
@@ -139,6 +140,20 @@ describe('ReferatContainer', () => {
             fireEvent.click(endreReferatKnapp);
             const samtaleReferatTextArea = await findByLabelText('Samtalereferat');
             fireEvent.change(samtaleReferatTextArea, { target: { value: 'Ny tekst' } });
+            const deleKnapp = await findByText('Del endring');
+            expect(deleKnapp.parentElement).not.toBeDisabled();
+        });
+
+        it('"Del endring" knapp skal ikke være disabled hvis referatet ikke er endret men man ser på en kladd', async () => {
+            const aktivitet = enSamtalereferatAktivitet({
+                status: AktivitetStatus.GJENNOMFOERT,
+                erReferatPublisert: true,
+            });
+            const kladdInnslag = { samtalereferat: 'en kladd', tidspunkt: Date.now() };
+            localStorage.setItem(createLocalStorageKey({ aktivitetId: aktivitet.id }), JSON.stringify(kladdInnslag));
+            const { findByText } = renderReferatContainer(aktivitet);
+            const endreReferatKnapp = await findByText('Endre referat');
+            fireEvent.click(endreReferatKnapp);
             const deleKnapp = await findByText('Del endring');
             expect(deleKnapp.parentElement).not.toBeDisabled();
         });
