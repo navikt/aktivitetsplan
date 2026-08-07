@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
-import { BodyShort, Button, InfoCard, Switch, Tag, Textarea } from '@navikt/ds-react';
+import { BodyShort, Button, InfoCard, Switch, Tabs, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
@@ -20,7 +20,8 @@ import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
-import { ArrowsSquarepathIcon, TrashIcon } from '@navikt/aksel-icons';
+import { FloppydiskIcon, PencilIcon } from '@navikt/aksel-icons';
+import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -45,9 +46,7 @@ const OppdaterReferatForm = (props: Props) => {
         hentSamtaleReferatKladdLagretAktivitet,
         slettSamtaleReferatKladd,
     } = useSamtalereferatKladd({ aktivitetId: aktivitet.id });
-    const [visKladdIndikator, setVisKladdIndikator] = useState(false);
-    const kladd = useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
-    const [skalViseKladdAdvarsel, setSkalViseKladdAdvarsel] = useState(!!kladd);
+    const [kladd, setKladd] = useState(hentSamtaleReferatKladdLagretAktivitet());
 
     const {
         watch,
@@ -62,23 +61,9 @@ const OppdaterReferatForm = (props: Props) => {
         },
     });
 
-    useEffect(() => {
-        const kladd = hentSamtaleReferatKladdLagretAktivitet();
-        if (kladd) {
-            setValue('referat', kladd, { shouldDirty: true });
-            setVisKladdIndikator(true);
-        }
-    }, []);
-
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const { setFormIsDirty } = useContext(DirtyContext);
-
-    useEffect(() => {
-        if (kladd) {
-            setValue('referat', kladd, { shouldDirty: true });
-        }
-    }, []);
 
     useEffect(() => {
         setFormIsDirty('referat', isDirty);
@@ -127,22 +112,23 @@ const OppdaterReferatForm = (props: Props) => {
 
     const slettKladd = () => {
         slettSamtaleReferatKladd();
-        setVisKladdIndikator(false);
-        setValue('referat', aktivitet.referat || startTekst, { shouldDirty: true });
+        setKladd(null);
+    };
+
+    const onBeholdKladd = () => {
+        if (!kladd) return;
+        setValue('referat', kladd, { shouldDirty: true });
+        updateReferat({ referat: kladd });
     };
 
     return (
         <div className="relative">
             <Overlay
-                onBehold={() => {
-                    setValue('referat', kladd);
-                    setSkalViseKladdAdvarsel(false);
-                }}
-                onSlett={() => {
-                    slettKladd();
-                    setSkalViseKladdAdvarsel(false);
-                }}
-                skalViseKladdAdvarsel={skalViseKladdAdvarsel}
+                kladd={kladd}
+                referat={referatValue}
+                onBeholdKladd={onBeholdKladd}
+                onBeholdLagret={slettKladd}
+                skalViseKladdAdvarsel={!!kladd}
             >
                 <form
                     onSubmit={handleSubmit((values) => updateReferat(values))}
@@ -157,16 +143,6 @@ const OppdaterReferatForm = (props: Props) => {
                             {...register('referat')}
                             value={referatValue}
                         />
-                        {visKladdIndikator && (
-                            <div className="absolute right-0 -top-1 flex items-center gap-2">
-                                <Tag data-color="warning" variant="outline" size="small">
-                                    Kladd
-                                </Tag>
-                                <Button type="button" variant="tertiary" size="small" onClick={slettKladd}>
-                                    Slett kladd
-                                </Button>
-                            </div>
-                        )}
                     </div>
                     <>
                         <Switch
@@ -215,7 +191,7 @@ const OppdaterReferatForm = (props: Props) => {
     );
 };
 
-const Overlay = ({ children, skalViseKladdAdvarsel, onBehold, onSlett }) => {
+const Overlay = ({ children, skalViseKladdAdvarsel, onBeholdKladd, onBeholdLagret, kladd, referat }) => {
     if (!skalViseKladdAdvarsel) return children;
     return (
         <div>
@@ -226,15 +202,35 @@ const Overlay = ({ children, skalViseKladdAdvarsel, onBehold, onSlett }) => {
                     </InfoCard.Header>
                     <InfoCard.Content className="gap-2">
                         <BodyShort className="mb-4">
-                            Hei vi fant en kladd som ikke ble lagret riktig på dette samtalereferatet. Ønsker du å hente
-                            inn igjen kladden?
+                            Vi fant en kladd som ikke ble lagret riktig på dette samtalereferatet. Ønsker du å beholde
+                            kladden?
                         </BodyShort>
-                        <div className="flex gap-2">
-                            <Button onClick={onBehold} icon={<ArrowsSquarepathIcon />}>
-                                Behold kladd
+                        <Tabs defaultValue="lagret" className="">
+                            <Tabs.List>
+                                <Tabs.Tab icon={<FloppydiskIcon />} label={'Lagret 10:34 igår'} value={'lagret'} />
+                                <Tabs.Tab icon={<PencilIcon />} label={'Kladd kl 11.52 idag'} value={'kladd'} />
+                            </Tabs.List>
+                            <Tabs.Panel value={'lagret'}>
+                                <EkspanderbartTekstomrade
+                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
+                                    tekst={referat}
+                                    antallTegn={200}
+                                />
+                            </Tabs.Panel>
+                            <Tabs.Panel value={'kladd'}>
+                                <EkspanderbartTekstomrade
+                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
+                                    tekst={kladd}
+                                    antallTegn={200}
+                                />
+                            </Tabs.Panel>
+                        </Tabs>
+                        <div className="flex gap-2 mt-4">
+                            <Button onClick={onBeholdLagret} icon={<FloppydiskIcon />}>
+                                Behold lagret
                             </Button>
-                            <Button onClick={onSlett} icon={<TrashIcon />} data-color="danger">
-                                Slett kladd
+                            <Button onClick={onBeholdKladd} icon={<PencilIcon />}>
+                                Behold kladd
                             </Button>
                         </div>
                     </InfoCard.Content>
