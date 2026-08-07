@@ -123,13 +123,7 @@ const OppdaterReferatForm = (props: Props) => {
 
     return (
         <div className="relative">
-            <Overlay
-                kladd={kladd}
-                referat={referatValue}
-                onBeholdKladd={onBeholdKladd}
-                onBeholdLagret={slettKladd}
-                skalViseKladdAdvarsel={!!kladd}
-            >
+            <Overlay kladd={kladd} referat={referatValue} onBeholdKladd={onBeholdKladd} onBeholdLagret={slettKladd}>
                 <form
                     onSubmit={handleSubmit((values) => updateReferat(values))}
                     className="space-y-4 bg-ax-bg-brand-blue-soft p-4 border border-ax-border-brand-blue rounded-md"
@@ -191,8 +185,20 @@ const OppdaterReferatForm = (props: Props) => {
     );
 };
 
-const Overlay = ({ children, skalViseKladdAdvarsel, onBeholdKladd, onBeholdLagret, kladd, referat }) => {
-    if (!skalViseKladdAdvarsel) return children;
+const Overlay = ({
+    children,
+    onBeholdKladd,
+    onBeholdLagret,
+    kladd,
+    referat,
+}: {
+    children: React.ReactElement;
+    onBeholdKladd: () => void;
+    onBeholdLagret: () => void;
+    kladd: string | undefined | null;
+    referat: string;
+}) => {
+    if (!kladd) return children;
     return (
         <div>
             <div className="top-10 absolute z-20 flex flex-col">
