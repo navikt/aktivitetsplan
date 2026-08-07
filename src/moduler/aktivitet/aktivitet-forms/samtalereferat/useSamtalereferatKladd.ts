@@ -100,6 +100,7 @@ export const useSamtalereferatKladd = (
             debounce(timeoutRef, debouncedDelay, () => {
                 const kladdInnslag = { samtalereferat: referatKladd, tidspunkt: Date.now() };
                 localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
+                console.log('Lagret kladd');
             });
         },
         [localStorageKey],
@@ -114,6 +115,7 @@ export const useSamtalereferatKladd = (
     };
 
     const slettSamtaleReferatKladd = () => {
+        clearTimeout(timeoutRef.current);
         localStorage.removeItem(localStorageKey);
     };
 
