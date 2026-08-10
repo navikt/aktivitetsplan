@@ -143,8 +143,24 @@ describe('ReferatContainer', () => {
             const deleKnapp = await findByText('Del endring');
             expect(deleKnapp.parentElement).not.toBeDisabled();
         });
+    });
 
-        it('"Del endring" knapp skal ikke være disabled hvis referatet ikke er endret men man ser på en kladd', async () => {
+    describe('visning av kladd infoboks', () => {
+        it('Skal ikke vise kladd-info boks når man trykker "Endre referat" hvis det ikke finnes en kladd på referatet', async () => {
+            const aktivitet = enSamtalereferatAktivitet({
+                status: AktivitetStatus.GJENNOMFOERT,
+                erReferatPublisert: true,
+            });
+            const { findByText, queryByText } = renderReferatContainer(aktivitet);
+            const endreReferatKnapp = await findByText('Endre referat');
+
+            fireEvent.click(endreReferatKnapp);
+
+            expect(queryByText('Behold kladd')).not.toBeInTheDocument();
+            expect(queryByText('Behold lagret')).not.toBeInTheDocument();
+        });
+
+        it('Skal vise kladd-info boks når man trykker "Endre referat" hvis det finnes en kladd på referatet', async () => {
             const aktivitet = enSamtalereferatAktivitet({
                 status: AktivitetStatus.GJENNOMFOERT,
                 erReferatPublisert: true,
@@ -153,9 +169,23 @@ describe('ReferatContainer', () => {
             localStorage.setItem(createLocalStorageKey({ aktivitetId: aktivitet.id }), JSON.stringify(kladdInnslag));
             const { findByText } = renderReferatContainer(aktivitet);
             const endreReferatKnapp = await findByText('Endre referat');
+
             fireEvent.click(endreReferatKnapp);
-            const deleKnapp = await findByText('Del endring');
-            expect(deleKnapp.parentElement).not.toBeDisabled();
+
+            await findByText('Behold kladd');
+            await findByText('Behold lagret');
+        });
+
+        it('Skal vise kladd-info tag hvis det finnes en kladd på referatet', async () => {
+            const aktivitet = enSamtalereferatAktivitet({
+                status: AktivitetStatus.GJENNOMFOERT,
+                erReferatPublisert: true,
+            });
+            const kladdInnslag = { samtalereferat: 'en kladd', tidspunkt: Date.now() };
+            localStorage.setItem(createLocalStorageKey({ aktivitetId: aktivitet.id }), JSON.stringify(kladdInnslag));
+            const { findByText } = renderReferatContainer(aktivitet);
+
+            await findByText('Referatet inneholder en kladd');
         });
     });
 });

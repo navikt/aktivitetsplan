@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
-import { BodyShort, Button, InfoCard, Switch, Tabs, Textarea } from '@navikt/ds-react';
+import { Button, Switch, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,8 +20,7 @@ import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
-import { FloppydiskIcon, PencilIcon } from '@navikt/aksel-icons';
-import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
+import { KladdOverlay } from './KladdOverlay';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -117,13 +116,20 @@ const OppdaterReferatForm = (props: Props) => {
 
     const onBeholdKladd = () => {
         if (!kladd) return;
-        setValue('referat', kladd, { shouldDirty: true });
-        updateReferat({ referat: kladd });
+        setValue('referat', kladd.samtalereferat, { shouldDirty: true });
+        updateReferat({ referat: kladd.samtalereferat });
     };
 
     return (
         <div className="relative">
-            <Overlay kladd={kladd} referat={referatValue} onBeholdKladd={onBeholdKladd} onBeholdLagret={slettKladd}>
+            <KladdOverlay
+                kladd={
+                    kladd ? { value: kladd.samtalereferat, sistEndret: new Date(kladd.tidspunkt).toISOString() } : null
+                }
+                referat={{ value: referatValue, sistEndret: aktivitet.endretDato }}
+                onBeholdKladd={onBeholdKladd}
+                onBeholdLagret={slettKladd}
+            >
                 <form
                     onSubmit={handleSubmit((values) => updateReferat(values))}
                     className="space-y-4 bg-ax-bg-brand-blue-soft p-4 border border-ax-border-brand-blue rounded-md"
@@ -180,69 +186,7 @@ const OppdaterReferatForm = (props: Props) => {
                         )}
                     </div>
                 </form>
-            </Overlay>
-        </div>
-    );
-};
-
-const Overlay = ({
-    children,
-    onBeholdKladd,
-    onBeholdLagret,
-    kladd,
-    referat,
-}: {
-    children: React.ReactElement;
-    onBeholdKladd: () => void;
-    onBeholdLagret: () => void;
-    kladd: string | undefined | null;
-    referat: string;
-}) => {
-    if (!kladd) return children;
-    return (
-        <div>
-            <div className="top-10 absolute z-20 flex flex-col">
-                <InfoCard>
-                    <InfoCard.Header>
-                        <InfoCard.Title>Kladd funnet</InfoCard.Title>
-                    </InfoCard.Header>
-                    <InfoCard.Content className="gap-2">
-                        <BodyShort className="mb-4">
-                            Vi fant en kladd som ikke ble lagret riktig på dette samtalereferatet. Ønsker du å beholde
-                            kladden?
-                        </BodyShort>
-                        <Tabs defaultValue="lagret" className="">
-                            <Tabs.List>
-                                <Tabs.Tab icon={<FloppydiskIcon />} label={'Lagret 10:34 igår'} value={'lagret'} />
-                                <Tabs.Tab icon={<PencilIcon />} label={'Kladd kl 11.52 idag'} value={'kladd'} />
-                            </Tabs.List>
-                            <Tabs.Panel value={'lagret'}>
-                                <EkspanderbartTekstomrade
-                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
-                                    tekst={referat}
-                                    antallTegn={200}
-                                />
-                            </Tabs.Panel>
-                            <Tabs.Panel value={'kladd'}>
-                                <EkspanderbartTekstomrade
-                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
-                                    tekst={kladd}
-                                    antallTegn={200}
-                                />
-                            </Tabs.Panel>
-                        </Tabs>
-                        <div className="flex gap-2 mt-4">
-                            <Button onClick={onBeholdLagret} icon={<FloppydiskIcon />}>
-                                Behold lagret
-                            </Button>
-                            <Button onClick={onBeholdKladd} icon={<PencilIcon />}>
-                                Behold kladd
-                            </Button>
-                        </div>
-                    </InfoCard.Content>
-                </InfoCard>
-            </div>
-            <div className="blur h-full w-full">{children}</div>
+            </KladdOverlay>
         </div>
     );
 };

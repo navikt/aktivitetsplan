@@ -10,15 +10,6 @@ interface SamtalereferatKladdNyttAktivitetskort {
     referat: string;
 }
 
-interface SamtalereferatLagretAktivitetskort {
-    referat: string;
-}
-
-interface KladdInnslag {
-    samtalereferat: SamtalereferatKladdNyttAktivitetskort | SamtalereferatLagretAktivitetskort;
-    tidspunkt: number;
-}
-
 const localeStorageKeyPrefix = 'samtalereferatKladd';
 export const createLocalStorageKey = (
     args:
@@ -56,7 +47,7 @@ export const slettGamleSamtalereferatKladder = () => {
     });
 };
 
-const kladdSchema = z.object({
+const kladdSchemaIkkeLagretAktivitet = z.object({
     samtalereferat: z.object({
         tittel: z.string().nullable(),
         fraDato: z.string().nullable(),
@@ -70,6 +61,10 @@ const kladdLagretAktivitetSchema = z.object({
     samtalereferat: z.string(),
     tidspunkt: z.number(),
 });
+
+type KladdInnslagLagretAktivitet = z.infer<typeof kladdLagretAktivitetSchema>;
+type KladdInnslagIkkeLagretAktivitet = z.infer<typeof kladdSchemaIkkeLagretAktivitet>;
+type KladdInnslag = KladdInnslagLagretAktivitet | KladdInnslagIkkeLagretAktivitet;
 
 export const useSamtalereferatKladd = (
     args:
@@ -107,11 +102,11 @@ export const useSamtalereferatKladd = (
     );
 
     const hentSamtaleReferatKladd = (): SamtalereferatKladdNyttAktivitetskort | null => {
-        return parseStoredKladd(localStorageKey, kladdSchema)?.samtalereferat || null;
+        return parseStoredKladd(localStorageKey, kladdSchemaIkkeLagretAktivitet)?.samtalereferat || null;
     };
 
-    const hentSamtaleReferatKladdLagretAktivitet = (): string | null => {
-        return parseStoredKladd(localStorageKey, kladdLagretAktivitetSchema)?.samtalereferat || null;
+    const hentSamtaleReferatKladdLagretAktivitet = (): KladdInnslagLagretAktivitet | null => {
+        return parseStoredKladd(localStorageKey, kladdLagretAktivitetSchema) || null;
     };
 
     const slettSamtaleReferatKladd = () => {
