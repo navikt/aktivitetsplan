@@ -45,7 +45,8 @@ const OppdaterReferatForm = (props: Props) => {
         hentSamtaleReferatKladdLagretAktivitet,
         slettSamtaleReferatKladd,
     } = useSamtalereferatKladd({ aktivitetId: aktivitet.id });
-    const [kladd, setKladd] = useState(hentSamtaleReferatKladdLagretAktivitet());
+    const initialReferatValue = aktivitet.referat || startTekst;
+    const [kladd, setKladd] = useState(hentSamtaleReferatKladdLagretAktivitet(initialReferatValue));
 
     const {
         watch,
@@ -55,9 +56,7 @@ const OppdaterReferatForm = (props: Props) => {
         handleSubmit,
     } = useForm<ReferatInputProps>({
         resolver: zodResolver(schema),
-        defaultValues: {
-            referat: aktivitet.referat || startTekst,
-        },
+        defaultValues: { referat: initialReferatValue },
     });
 
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
@@ -116,6 +115,7 @@ const OppdaterReferatForm = (props: Props) => {
 
     const onBeholdKladd = () => {
         if (!kladd) return;
+        setKladd(null);
         setValue('referat', kladd.samtalereferat, { shouldDirty: true });
         updateReferat({ referat: kladd.samtalereferat });
     };

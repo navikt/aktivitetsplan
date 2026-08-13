@@ -105,8 +105,15 @@ export const useSamtalereferatKladd = (
         return parseStoredKladd(localStorageKey, kladdSchemaIkkeLagretAktivitet)?.samtalereferat || null;
     };
 
-    const hentSamtaleReferatKladdLagretAktivitet = (): KladdInnslagLagretAktivitet | null => {
-        return parseStoredKladd(localStorageKey, kladdLagretAktivitetSchema) || null;
+    const hentSamtaleReferatKladdLagretAktivitet = (
+        currentReferatValue: string | null,
+    ): KladdInnslagLagretAktivitet | null => {
+        const kladdValue = parseStoredKladd(localStorageKey, kladdLagretAktivitetSchema) || null;
+        if (kladdValue && kladdValue?.samtalereferat === currentReferatValue) {
+            slettSamtaleReferatKladd();
+            return null;
+        }
+        return kladdValue;
     };
 
     const slettSamtaleReferatKladd = () => {

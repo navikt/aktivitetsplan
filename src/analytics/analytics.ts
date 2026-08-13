@@ -88,6 +88,13 @@ export function loggDyplenkingTilAnnenBruker() {
     return logAnalyticsEvent({ name: 'dyplenking', data: { text: 'Dyplenking til annen bruker' } });
 }
 
+export const loggKladdVist = () => {
+    return logAnalyticsEvent({
+        name: 'kladd vist',
+        data: {},
+    });
+};
+
 type Modify<T, U> = Omit<T, keyof U> & U;
 export type TextCheckerAnalyticsAnalysis = Omit<
     Modify<

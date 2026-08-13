@@ -19,13 +19,14 @@ export type AnalyticsEvent =
               spraksjekkEnabled: boolean;
           };
       }
-      | { name: 'detaljer endret'; data: {feltEndret: FeltEndret[]}}
+    | { name: 'detaljer endret'; data: { feltEndret: FeltEndret[] } }
     | { name: 'toggle'; data: { text: string; enabled: boolean } }
     | { name: 'dyplenking'; data: { text: string } }
     | { name: 'knapp klikket'; data: { tekst: string } }
     | { name: 'navigere'; data: { tekst: string } }
     | { name: 'accordion åpnet'; data: { tekst: string } }
     | { name: 'filtervalg'; data: { filternavn: string } }
+    | { name: 'kladd vist'; data: {} }
     | {
           name: 'modal lukket';
           data: {

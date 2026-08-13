@@ -27,7 +27,7 @@ const ReferatVisning = (props: Props) => {
     const feil = useSelector(selectPubliserReferatFeil);
 
     const { hentSamtaleReferatKladdLagretAktivitet } = useSamtalereferatKladd({ aktivitetId: props.aktivitetId });
-    const kladd = hentSamtaleReferatKladdLagretAktivitet();
+    const kladd = hentSamtaleReferatKladdLagretAktivitet(props.referat);
 
     return (
         <section className="my-4 border-t border-ax-border-neutral pt-8">
