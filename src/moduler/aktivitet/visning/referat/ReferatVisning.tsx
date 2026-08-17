@@ -39,8 +39,7 @@ const ReferatVisning = (props: Props) => {
                     <div className="flex gap-2 items-center mb-4">
                         <Tag data-color="meta-purple">Referatet inneholder en kladd</Tag>
                         <HelpText title="Hvor kommer dette fra?">
-                            Du har en ulagret kladd på dette referatet i nettleseren. Vi har tatt vare på den for deg
-                            😉. Klikk 'Endre referat' for å se den ulagrede endringen.
+                            Du har en ulagret kladd på dette referatet i nettleseren. Vi har tatt vare på den for deg. Klikk 'Endre referat' for å se den ulagrede endringen.
                         </HelpText>
                     </div>
                 ) : null}
