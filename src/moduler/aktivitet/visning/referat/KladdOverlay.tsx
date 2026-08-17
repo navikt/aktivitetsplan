@@ -2,6 +2,8 @@ import { BodyShort, Button, InfoCard, Label } from '@navikt/ds-react';
 import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 import { FloppydiskIcon, PencilIcon } from '@navikt/aksel-icons';
 import { format } from 'date-fns';
+import { useEffect } from 'react';
+import { loggKladdVist } from '../../../../analytics/analytics';
 
 interface ReferatEndring {
     value: string;
@@ -21,7 +23,14 @@ export const KladdOverlay = ({
     kladd: ReferatEndring | undefined | null;
     referat: ReferatEndring;
 }) => {
+    useEffect(() => {
+        if (kladd) {
+            loggKladdVist();
+        }
+    }, []);
+
     if (!kladd) return children;
+
     return (
         <div className="relative">
             <div className="py-20  flex flex-col">
