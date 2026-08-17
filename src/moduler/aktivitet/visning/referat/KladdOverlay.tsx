@@ -1,4 +1,4 @@
-import { BodyShort, Button, InfoCard, Tabs } from '@navikt/ds-react';
+import { BodyShort, Button, InfoCard, Label } from '@navikt/ds-react';
 import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 import { FloppydiskIcon, PencilIcon } from '@navikt/aksel-icons';
 import { format } from 'date-fns';
@@ -34,41 +34,41 @@ export const KladdOverlay = ({
                             Vi fant en kladd som ikke ble lagret riktig på dette samtalereferatet. Ønsker du å beholde
                             kladden?
                         </BodyShort>
-                        <Tabs defaultValue="lagret" className="">
-                            <Tabs.List>
-                                <Tabs.Tab
-                                    icon={<FloppydiskIcon />}
-                                    label={`Lagret ${format(referat.sistEndret, 'd.M H:mm')}`}
-                                    value={'lagret'}
-                                />
-                                <Tabs.Tab
-                                    icon={<PencilIcon />}
-                                    label={`Kladd ${format(kladd?.sistEndret, 'd.M H:mm')}`}
-                                    value={'kladd'}
-                                />
-                            </Tabs.List>
-                            <Tabs.Panel value={'lagret'}>
+                        <div className="flex gap-4">
+                            <div className="flex-1">
+                                <Label className="flex items-center gap-1">
+                                    <FloppydiskIcon aria-hidden />
+                                    {`Lagret ${format(referat.sistEndret, "d.M 'kl' H:mm")}`}
+                                </Label>
                                 <EkspanderbartTekstomrade
                                     className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
                                     tekst={referat.value}
                                     antallTegn={200}
                                 />
-                            </Tabs.Panel>
-                            <Tabs.Panel value={'kladd'}>
+                            </div>
+                            <div className="flex-1">
+                                <Label className="flex items-center gap-1">
+                                    <PencilIcon aria-hidden />
+                                    {`Kladd ${format(kladd?.sistEndret, "d.M 'kl' H:mm")}`}
+                                </Label>
                                 <EkspanderbartTekstomrade
                                     className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
                                     tekst={kladd?.value}
                                     antallTegn={200}
                                 />
-                            </Tabs.Panel>
-                        </Tabs>
+                            </div>
+                        </div>
                         <div className="flex gap-2 mt-4">
-                            <Button onClick={onBeholdLagret} icon={<FloppydiskIcon />}>
-                                Behold lagret
-                            </Button>
-                            <Button onClick={onBeholdKladd} icon={<PencilIcon />}>
-                                Behold kladd
-                            </Button>
+                            <div className="flex-1">
+                                <Button onClick={onBeholdLagret} icon={<FloppydiskIcon />}>
+                                    Behold lagret
+                                </Button>
+                            </div>
+                            <div className="flex-1">
+                                <Button onClick={onBeholdKladd} icon={<PencilIcon />}>
+                                    Behold kladd
+                                </Button>
+                            </div>
                         </div>
                     </InfoCard.Content>
                 </InfoCard>
