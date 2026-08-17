@@ -117,7 +117,12 @@ const OppdaterReferatForm = (props: Props) => {
         if (!kladd) return;
         setKladd(null);
         setValue('referat', kladd.samtalereferat, { shouldDirty: true });
-        updateReferat({ referat: kladd.samtalereferat });
+
+        const aktivitetMedOppdatertReferat = {
+            ...aktivitet,
+            referat: kladd.samtalereferat,
+        };
+        dispatch(oppdaterReferat(aktivitetMedOppdatertReferat));
     };
 
     return (
