@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
 import { Button, Switch, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
@@ -53,6 +53,7 @@ const OppdaterReferatForm = (props: Props) => {
         setValue,
         formState: { isDirty, isSubmitting },
         register,
+        resetDefaultValues,
         handleSubmit,
     } = useForm<ReferatInputProps>({
         resolver: zodResolver(schema),
@@ -105,8 +106,9 @@ const OppdaterReferatForm = (props: Props) => {
     const referatValue = watch('referat');
 
     useEffect(() => {
+        if (kladd) return;
         lagreSamtalereferatKladdLagretAktivitet(referatValue);
-    }, [referatValue]);
+    }, [referatValue, kladd]);
 
     const slettKladd = () => {
         slettSamtaleReferatKladd();
@@ -122,7 +124,11 @@ const OppdaterReferatForm = (props: Props) => {
             ...aktivitet,
             referat: kladd.samtalereferat,
         };
-        dispatch(oppdaterReferat(aktivitetMedOppdatertReferat));
+        dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((action) => {
+            if (isFulfilled(action)) {
+                resetDefaultValues({ referat: kladd.samtalereferat });
+            }
+        });
     };
 
     return (
