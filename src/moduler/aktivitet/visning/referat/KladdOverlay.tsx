@@ -50,7 +50,7 @@ export const KladdOverlay = ({
                                     {`Lagret ${format(referat.sistEndret, "d.M 'kl' H:mm")}`}
                                 </Label>
                                 <EkspanderbartTekstomrade
-                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
+                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl break-all"
                                     tekst={referat.value}
                                     antallTegn={200}
                                 />
@@ -61,7 +61,7 @@ export const KladdOverlay = ({
                                     {`Kladd ${format(kladd?.sistEndret, "d.M 'kl' H:mm")}`}
                                 </Label>
                                 <EkspanderbartTekstomrade
-                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl"
+                                    className="mt-2 bg-ax-bg-neutral-moderate p-3 border-ax-bg-neutral-moderate-pressed border rounded-xl break-all"
                                     tekst={kladd?.value}
                                     antallTegn={200}
                                 />
