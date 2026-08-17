@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
-import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
+import { logKlikkKnapp, logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
 import { Status } from '../../../../store/createGenericSlice';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
@@ -113,6 +113,7 @@ const OppdaterReferatForm = (props: Props) => {
     const slettKladd = () => {
         slettSamtaleReferatKladd();
         setKladd(null);
+        logKlikkKnapp('behold lagret');
     };
 
     const onBeholdKladd = () => {
@@ -129,6 +130,7 @@ const OppdaterReferatForm = (props: Props) => {
                 resetDefaultValues({ referat: kladd.samtalereferat });
             }
         });
+        logKlikkKnapp('behold kladd');
     };
 
     return (
