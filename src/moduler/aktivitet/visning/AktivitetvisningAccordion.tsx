@@ -21,7 +21,7 @@ const getAccordionItems = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
                 <>
                     <OppdaterAktivitetEtikett aktivitet={aktivitet} />
                     <OppdaterAktivitetStatus aktivitet={aktivitet} />
-                    <EndringsLogg />
+                    <EndringsLogg aktivitetsType={aktivitet.type} />
                 </>
             );
         case VeilarbAktivitetType.STILLING_FRA_NAV_TYPE:
@@ -31,7 +31,7 @@ const getAccordionItems = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
                         <OppdaterSoknadsstatus aktivitet={aktivitet} />
                     ) : null}
                     <OppdaterAktivitetStatus aktivitet={aktivitet} />
-                    <EndringsLogg />
+                    <EndringsLogg aktivitetsType={aktivitet.type} />
                 </>
             );
         case VeilarbAktivitetType.BEHANDLING_AKTIVITET_TYPE:
@@ -41,7 +41,7 @@ const getAccordionItems = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
             return (
                 <>
                     <OppdaterAktivitetStatus aktivitet={aktivitet} />
-                    <EndringsLogg />
+                    <EndringsLogg aktivitetsType={aktivitet.type} />
                 </>
             );
         case VeilarbAktivitetType.MOTE_TYPE:
@@ -49,11 +49,11 @@ const getAccordionItems = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
             return (
                 <>
                     {erVeileder ? <OppdaterAktivitetStatus aktivitet={aktivitet} /> : null}
-                    <EndringsLogg />
+                    <EndringsLogg aktivitetsType={aktivitet.type} />
                 </>
             );
         case VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE:
-            return <EndringsLogg />;
+            return <EndringsLogg aktivitetsType={aktivitet.type} />;
         case ArenaAktivitetType.GRUPPEAKTIVITET:
         case ArenaAktivitetType.TILTAKSAKTIVITET:
         case ArenaAktivitetType.UTDANNINGSAKTIVITET:

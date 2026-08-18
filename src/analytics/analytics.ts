@@ -31,10 +31,10 @@ export function logLenkeKlikket(tekst: string) {
     });
 }
 
-export function logAccordionAapnet(accordion: string) {
+export function logAccordionAapnet(accordion: string, aktivitetsType: string | undefined = undefined) {
     return logAnalyticsEvent({
         name: 'accordion åpnet',
-        data: { tekst: accordion },
+        data: { tekst: accordion, aktivitetsType: aktivitetsType },
     });
 }
 

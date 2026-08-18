@@ -24,7 +24,7 @@ export type AnalyticsEvent =
     | { name: 'dyplenking'; data: { text: string } }
     | { name: 'knapp klikket'; data: { tekst: string } }
     | { name: 'navigere'; data: { tekst: string } }
-    | { name: 'accordion åpnet'; data: { tekst: string } }
+    | { name: 'accordion åpnet'; data: { tekst: string; aktivitetsType: string | undefined } }
     | { name: 'filtervalg'; data: { filternavn: string } }
     | { name: 'kladd vist'; data: {} }
     | {
