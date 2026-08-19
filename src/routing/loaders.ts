@@ -6,6 +6,9 @@ import { initialPageLoadThunks } from './initialPageLoadThunk';
 import { hentAktivitet } from '../moduler/aktivitet/aktivitet-actions';
 import { erArenaId, hentArenaAktiviteter } from '../moduler/aktivitet/arena-aktiviteter-slice';
 import { AktivitetsId } from '../datatypes/brandedTypes';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
+import { GraphqlResponse } from '../api/graphql/graphqlResult';
 
 export const initialPageLoader =
     (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
@@ -53,4 +56,6 @@ export const aktivitetsVisningLoader =
     };
 
 export const useAktivitetsVisningLoaderData = () =>
-    useRouteLoaderData('aktivitetsVisning') as { aktivitet: Promise<any> };
+    useRouteLoaderData('aktivitetsVisning') as {
+        aktivitet: Promise<PayloadAction<GraphqlResponse<{ aktivitet: VeilarbAktivitet; eier: { fnr: string } }>>>;
+    };

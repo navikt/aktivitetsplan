@@ -4,7 +4,7 @@ import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localS
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 import { Historikk } from '../datatypes/Historikk';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 
 const allAktivitetFields = `
     id,
@@ -152,6 +152,7 @@ const aktivitetQuery = `
                     tidspunkt,
                     beskrivelseForVeileder,
                     beskrivelseForBruker,
+                    forrigeVersjonsId
                 }
             }
         }
@@ -170,6 +171,14 @@ const aktivitetQueryBody = (aktivitetId: string) => ({
     query: aktivitetQuery,
     variables: {
         aktivitetId,
+    },
+});
+
+const aktivitetsVersjonQueryBody = (aktivitetId: AktivitetsId, versjon: AktivitetsVersjon) => ({
+    query: aktivitetQuery,
+    variables: {
+        aktivitetId,
+        versjon,
     },
 });
 
@@ -227,4 +236,32 @@ export const hentAktivitetGraphql = (aktivitetId: AktivitetsId) => {
                 eier: { fnr: it.data.eier.fnr },
             },
         }));
+};
+
+export const hentAktivitetsVersjonGraphql = (aktivitetId: AktivitetsId, versjon: AktivitetsVersjon) => {
+    return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
+        ...DEFAULT_CONFIG,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Nav-Consumer-Id': 'aktivitetsplan',
+        },
+        body: JSON.stringify(aktivitetsVersjonQueryBody(aktivitetId, versjon)),
+    })
+        .then((response) => sjekkStatuskode(response, 'hentAktivitetVersjonGraphql'))
+        .then(toJson)
+        .then(
+            sjekkGraphqlFeil<{
+                aktivitet: VeilarbAktivitet;
+            }>,
+        )
+        .then((it) => {
+            console.log(it);
+            return {
+                ...it,
+                data: {
+                    aktivitet: { ...it.data.aktivitet, id: aktivitetId as AktivitetsId },
+                },
+            };
+        });
 };

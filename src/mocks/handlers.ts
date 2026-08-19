@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { DefaultBodyType, http, HttpResponse, StrictRequest } from 'msw';
 
 import {
     aktiviteterData,
@@ -96,7 +96,18 @@ export const handlers = [
         failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
             const aktivitetId = body.variables.aktivitetId;
+            const versjon = body.variables.versjon;
             if (aktivitetId) {
+                if (versjon) {
+                    const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
+                    return {
+                        data: {
+                            aktivitet,
+                        },
+                        errors: null,
+                    };
+                }
+
                 const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
                 await new Promise((resolve) => {
                     setTimeout(resolve, 2000);
@@ -293,6 +304,7 @@ export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
                             tidspunkt: now,
                             beskrivelseForVeileder: 'Bruker endret detaljer på aktiviteten',
                             beskrivelseForBruker: 'Du endret detaljer på aktiviteten',
+                            versjon: 1433,
                         },
                         {
                             endretAvType: 'NAV',
@@ -300,6 +312,7 @@ export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
                             tidspunkt: subMinutes(new Date(), 30),
                             beskrivelseForVeileder: 'R121212 merket aktiviteten "Avtalt med Nav"',
                             beskrivelseForBruker: 'Nav merket aktiviteten "Avtalt med Nav"',
+                            versjon: 1432,
                         },
                         {
                             endretAvType: 'BRUKER',
@@ -307,6 +320,7 @@ export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
                             tidspunkt: subDays(new Date(), 2),
                             beskrivelseForVeileder: 'Bruker flyttet aktiviteten fra Planlegger til Forslag',
                             beskrivelseForBruker: 'Du flyttet aktiviteten fra Planlegger til Forslag',
+                            versjon: 1431,
                         },
                     ],
                 },

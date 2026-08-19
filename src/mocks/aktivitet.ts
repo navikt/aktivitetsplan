@@ -453,7 +453,6 @@ export const getAktivitet = (_: StrictRequest<DefaultBodyType>, params: PathPara
 
 export const getAktivitetVersjoner = (_: StrictRequest<DefaultBodyType>, params: PathParams) => {
     const aktivitetId = params.aktivitetId;
-
     return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
 };
 

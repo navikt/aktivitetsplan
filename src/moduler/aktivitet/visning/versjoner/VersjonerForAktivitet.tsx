@@ -7,19 +7,25 @@ import { EndringsLinje } from './EndringsLinje';
 import { selectAktivitetHistorikk } from '../../aktivitet-selector';
 import { Await, useParams } from 'react-router';
 import { useAktivitetsVisningLoaderData } from '../../../../routing/loaders';
+import { VeilarbAktivitet } from '../../../../datatypes/internAktivitetTypes';
 
 const MAX_SIZE = 10;
 
-const VersjonerForAktivitet = () => {
-    const aktivitetId = useParams<{ id: string }>().id as AktivitetsId;
+const VersjonerForAktivitet = ({ aktivitet }: { aktivitet: VeilarbAktivitet }) => {
+    const aktivitetId = aktivitet.id;
     const historikk = useSelector((state) => selectAktivitetHistorikk(state, aktivitetId)) || { endringer: [] };
     const versjonerInnslag = historikk.endringer
         .slice(0, MAX_SIZE)
-        .map((endring) => <EndringsLinje key={endring.tidspunkt} endring={endring} />);
+        .map((endring) => <EndringsLinje aktivitetId={aktivitetId} key={endring.tidspunkt} endring={endring} />);
     const versjonerInnslagUnderAccordion = (
         <ReadMore header="Vis mer">
             {historikk.endringer.slice(MAX_SIZE).map((endring) => (
-                <EndringsLinje key={endring.tidspunkt} endring={endring} />
+                <EndringsLinje
+                    aktivitetsType={aktivitet.type}
+                    aktivitetId={aktivitetId}
+                    key={endring.tidspunkt}
+                    endring={endring}
+                />
             ))}
         </ReadMore>
     );
@@ -36,7 +42,7 @@ const VersjonerForAktivitetWrapper = () => {
     return (
         <Suspense fallback={<EndringsloggFallback />}>
             <Await resolve={aktivitetPromise}>
-                <VersjonerForAktivitet />
+                {(arg) => <VersjonerForAktivitet aktivitet={arg.payload.data.aktivitet} />}
             </Await>
         </Suspense>
     );
