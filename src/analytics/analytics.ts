@@ -31,10 +31,10 @@ export function logLenkeKlikket(tekst: string) {
     });
 }
 
-export function logAccordionAapnet(accordion: string) {
+export function logAccordionAapnet(accordion: string, aktivitetsType: string | undefined = undefined) {
     return logAnalyticsEvent({
         name: 'accordion åpnet',
-        data: { tekst: accordion },
+        data: { tekst: accordion, aktivitetsType: aktivitetsType },
     });
 }
 
@@ -87,6 +87,13 @@ export function logModalLukket({
 export function loggDyplenkingTilAnnenBruker() {
     return logAnalyticsEvent({ name: 'dyplenking', data: { text: 'Dyplenking til annen bruker' } });
 }
+
+export const loggKladdVist = () => {
+    return logAnalyticsEvent({
+        name: 'kladd vist',
+        data: {},
+    });
+};
 
 type Modify<T, U> = Omit<T, keyof U> & U;
 export type TextCheckerAnalyticsAnalysis = Omit<

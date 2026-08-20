@@ -1,5 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { Kanal } from '../../../../datatypes/aktivitetTypes';
+import * as z from 'zod';
+import { ZodSchema } from 'zod';
 
 interface SamtalereferatKladdNyttAktivitetskort {
     tittel: string | null;
@@ -8,16 +10,20 @@ interface SamtalereferatKladdNyttAktivitetskort {
     referat: string;
 }
 
-interface SamtalereferatLagretAktivitetskort {
-    referat: string;
-}
-
-interface KladdInnslag {
-    samtalereferat: SamtalereferatKladdNyttAktivitetskort | SamtalereferatLagretAktivitetskort;
-    tidspunkt: number;
-}
-
 const localeStorageKeyPrefix = 'samtalereferatKladd';
+export const createLocalStorageKey = (
+    args:
+        | {
+              aktivitetId: string;
+          }
+        | {
+              oppfolgingsperiodeId: string;
+          },
+) => {
+    return 'aktivitetId' in args
+        ? `${localeStorageKeyPrefix}-${args.aktivitetId}`
+        : `${localeStorageKeyPrefix}-${args.oppfolgingsperiodeId}`;
+};
 
 export const slettGamleSamtalereferatKladder = () => {
     const nå = Date.now();
@@ -41,67 +47,77 @@ export const slettGamleSamtalereferatKladder = () => {
     });
 };
 
-export const useSamtalereferatKladd = ({
-    oppfolgingsperiodeId,
-    aktivitetId,
-}:
-    | {
-          oppfolgingsperiodeId: string;
-          aktivitetId?: undefined;
-      }
-    | {
-          oppfolgingsperiodeId?: undefined;
-          aktivitetId: string;
-      }) => {
+const kladdSchemaIkkeLagretAktivitet = z.object({
+    samtalereferat: z.object({
+        tittel: z.string().nullable(),
+        fraDato: z.string().nullable(),
+        kanal: z.nativeEnum(Kanal),
+        referat: z.string(),
+    }),
+    tidspunkt: z.number(),
+});
+
+const kladdLagretAktivitetSchema = z.object({
+    samtalereferat: z.string(),
+    tidspunkt: z.number(),
+});
+
+type KladdInnslagLagretAktivitet = z.infer<typeof kladdLagretAktivitetSchema>;
+type KladdInnslagIkkeLagretAktivitet = z.infer<typeof kladdSchemaIkkeLagretAktivitet>;
+type KladdInnslag = KladdInnslagLagretAktivitet | KladdInnslagIkkeLagretAktivitet;
+
+export const useSamtalereferatKladd = (
+    args:
+        | {
+              oppfolgingsperiodeId: string;
+          }
+        | {
+              aktivitetId: string;
+          },
+) => {
     const debouncedDelay = 500;
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-    const localStorageKey = aktivitetId
-        ? `${localeStorageKeyPrefix}-${aktivitetId}`
-        : `${localeStorageKeyPrefix}-${oppfolgingsperiodeId}`;
+    const localStorageKey = createLocalStorageKey(args);
 
     const lagreSamtalereferatKladd = useCallback(
         (samtalereferat: SamtalereferatKladdNyttAktivitetskort) => {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(() => {
+            debounce(timeoutRef, debouncedDelay, () => {
                 const kladdInnslag = { samtalereferat, tidspunkt: Date.now() };
                 localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
-            }, debouncedDelay);
+            });
         },
         [localStorageKey],
     );
 
     const lagreSamtalereferatKladdLagretAktivitet = useCallback(
         (referatKladd: string) => {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(() => {
+            debounce(timeoutRef, debouncedDelay, () => {
                 const kladdInnslag = { samtalereferat: referatKladd, tidspunkt: Date.now() };
                 localStorage.setItem(localStorageKey, JSON.stringify(kladdInnslag));
-            }, debouncedDelay);
+                console.log('Lagret kladd');
+            });
         },
         [localStorageKey],
     );
 
     const hentSamtaleReferatKladd = (): SamtalereferatKladdNyttAktivitetskort | null => {
-        const kladdInnslag = localStorage.getItem(localStorageKey);
-        if (kladdInnslag) {
-            const parsedKladdInnslag: KladdInnslag = JSON.parse(kladdInnslag);
-            return parsedKladdInnslag?.samtalereferat as SamtalereferatKladdNyttAktivitetskort;
-        } else {
-            return null;
-        }
+        return parseStoredKladd(localStorageKey, kladdSchemaIkkeLagretAktivitet)?.samtalereferat || null;
     };
 
-    const hentSamtaleReferatKladdLagretAktivitet = (): string | null => {
-        const kladdInnslag = localStorage.getItem(localStorageKey);
-        if (kladdInnslag) {
-            return JSON.parse(kladdInnslag).samtalereferat;
-        } else {
+    const hentSamtaleReferatKladdLagretAktivitet = (
+        currentReferatValue: string | null,
+    ): KladdInnslagLagretAktivitet | null => {
+        const kladdValue = parseStoredKladd(localStorageKey, kladdLagretAktivitetSchema) || null;
+        if (kladdValue && kladdValue?.samtalereferat === currentReferatValue) {
+            slettSamtaleReferatKladd();
             return null;
         }
+        return kladdValue;
     };
 
     const slettSamtaleReferatKladd = () => {
+        clearTimeout(timeoutRef.current);
         localStorage.removeItem(localStorageKey);
     };
 
@@ -112,4 +128,27 @@ export const useSamtalereferatKladd = ({
         slettSamtaleReferatKladd,
         hentSamtaleReferatKladdLagretAktivitet,
     };
+};
+
+const debounce = (
+    timeoutRef: React.RefObject<ReturnType<typeof setTimeout> | undefined>,
+    debouncedDelay: number,
+    fun: () => void,
+) => {
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(fun, debouncedDelay);
+};
+
+const parseStoredKladd = <T>(localStorageKey: string, schema: ZodSchema<T>) => {
+    const kladdInnslag = localStorage.getItem(localStorageKey);
+    if (kladdInnslag) {
+        const result = schema.safeParse(JSON.parse(kladdInnslag));
+        if (result.success) {
+            return result.data;
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
 };

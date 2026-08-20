@@ -51,6 +51,7 @@ const ReferatContainer = (props: Props) => {
     if (referat) {
         return (
             <ReferatVisning
+                aktivitetId={aktivitet.id}
                 referat={referat}
                 erAktivAktivitet={erAktivAktivitet}
                 dispatchPubliserReferat={() => dispatch(publiserReferat(aktivitet))}
