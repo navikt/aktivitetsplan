@@ -3,14 +3,14 @@ import { subDays } from 'date-fns';
 import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 export const enSamtalereferatAktivitet = (
     overrides: Partial<SamtalereferatAktivitet> = {},
 ): SamtalereferatAktivitet => ({
     id: '1234' as AktivitetsId,
     oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
-    versjon: '1',
+    versjon: '1' as AktivitetsVersjon,
     tittel: 'Samtalereferat',
     type: VeilarbAktivitetType.SAMTALEREFERAT_TYPE,
     status: AktivitetStatus.GJENNOMFOERT,

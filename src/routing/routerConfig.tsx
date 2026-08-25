@@ -87,6 +87,7 @@ export const routingConfig: (
                             {
                                 id: 'aktivitetsVersjonVisning',
                                 path: 'vis/:id/versjon/:versjon',
+                                errorElement: <div>Feil ved lasting av aktivitet i routes</div>,
                                 element: <AktivitetsVersjonVisningContainer />,
                                 loader: aktivitetsVersjonVisningLoader(dispatch),
                             },

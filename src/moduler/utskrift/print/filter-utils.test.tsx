@@ -3,7 +3,7 @@ import { Dialog } from '../../../datatypes/dialogTypes';
 import { EgenAktivitet, VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import { FellesTransaksjonsTyper } from '../../../datatypes/transaksjonstyperTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
 import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
 import { aktivPeriodeId } from '../../../mocks/data/oppfolging';
 
@@ -19,7 +19,7 @@ const aktivitetIKvp: EgenAktivitet = {
     endretAvType: 'BRUKER',
     tittel: '',
     transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
-    versjon: '1',
+    versjon: '1' as AktivitetsVersjon,
     id: 'aktivitetIKvp' as AktivitetsId,
     opprettetDato: '2019-07-01T11:41:50.761983+02:00',
     endretDato: '2022-09-13T12:16:08.593Z',
@@ -35,7 +35,7 @@ const aktivitetIKvpUTC0: EgenAktivitet = {
     endretAvType: 'BRUKER',
     tittel: '',
     transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
-    versjon: '1',
+    versjon: '1' as AktivitetsVersjon,
     id: 'aktivitetIKvpUTC0' as AktivitetsId,
     opprettetDato: '2019-07-01T09:41:50.206+00:00',
     endretDato: '2022-09-13T12:16:08.593Z',
@@ -50,7 +50,7 @@ const aktivitetForKvp: EgenAktivitet = {
     endretAvType: 'BRUKER',
     tittel: '',
     transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
-    versjon: '1',
+    versjon: '1' as AktivitetsVersjon,
     id: 'aktivitetForKvp' as AktivitetsId,
     opprettetDato: '2019-07-01T09:41:50.761983+02:00',
     endretDato: '2022-09-13T12:16:08.593Z',
@@ -65,7 +65,7 @@ const aktivitetEtterKvp: EgenAktivitet = {
     endretAvType: 'BRUKER',
     tittel: '',
     transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
-    versjon: '1',
+    versjon: '1' as AktivitetsVersjon,
     id: 'aktivitetEtterKvp' as AktivitetsId,
     opprettetDato: '2019-07-29T11:41:50.761983+02:00',
     endretDato: '2022-09-13T12:16:08.593Z',

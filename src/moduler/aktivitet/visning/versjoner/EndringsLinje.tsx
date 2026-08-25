@@ -15,13 +15,20 @@ const splittPåEndretAvOgEndringsbeskrivelse = (beskrivelse: string) => {
     return [førsteOrd, beskrivelse.replace(førsteOrd, '')];
 };
 
-const erReferatEndring = (endringsBeskrivelse: string, aktivitetsType: AlleAktivitetTyper) => {
-    if (
-        aktivitetsType == VeilarbAktivitetType.SAMTALEREFERAT_TYPE &&
-        endringsBeskrivelse.includes('aktivitet opprettet')
-    ) {
+const erReferatEndringEllerFørsteVersjonISamtaleReferat = (
+    endringsBeskrivelse: string,
+    aktivitetsType: AlleAktivitetTyper | VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE,
+    erFørsteEndring: boolean,
+    erSisteEndring: boolean,
+) => {
+    if (erSisteEndring) return false;
+    const erReferatAktivitet =
+        aktivitetsType === VeilarbAktivitetType.SAMTALEREFERAT_TYPE ||
+        aktivitetsType === VeilarbAktivitetType.MOTE_TYPE;
+    if (aktivitetsType == VeilarbAktivitetType.SAMTALEREFERAT_TYPE && erFørsteEndring) {
         return true;
     }
+    if (!erReferatAktivitet) return false;
     return endringsBeskrivelse.includes('endret referat') || endringsBeskrivelse.includes('opprettet referat');
 };
 
@@ -30,24 +37,29 @@ export const EndringsLinje = ({
     aktivitetId,
     aktivitetsType,
 }: {
-    endring: Endring;
+    endring: Endring & { erFørsteEndring: boolean; erSisteEndring: boolean };
     aktivitetId: AktivitetsId;
-    aktivitetsType: AlleAktivitetTyper;
+    aktivitetsType: AlleAktivitetTyper | VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
 }) => {
     const erBruker = !useErVeileder();
     const { aktivitetsVersjonRoute } = useRoutes();
 
     const beskrivelse = erBruker ? endring.beskrivelseForBruker : endring.beskrivelseForVeileder;
     const [endretAv, endringsbeskrivelse] = splittPåEndretAvOgEndringsbeskrivelse(beskrivelse);
-    const endringsTypeErReferatEndring = erReferatEndring(endringsbeskrivelse, aktivitetsType);
+    const skalViseLenkeTilTidligereVersjon = erReferatEndringEllerFørsteVersjonISamtaleReferat(
+        endringsbeskrivelse,
+        aktivitetsType,
+        endring.erFørsteEndring,
+        endring.erSisteEndring,
+    );
 
     return (
         <div className="pb-4">
             <b>{endretAv}</b> {endringsbeskrivelse}
             <BodyShort>{formaterDatoEllerTidSiden(endring.tidspunkt)}</BodyShort>
-            {endringsTypeErReferatEndring ? (
-                <Link to={aktivitetsVersjonRoute(aktivitetId, endring.forrigeVersjonsId)}>
-                    <AkselLink>Se tidligere versjon</AkselLink>
+            {skalViseLenkeTilTidligereVersjon ? (
+                <Link to={aktivitetsVersjonRoute(aktivitetId, endring.versjonsId)}>
+                    <AkselLink as={'div'}>Se tidligere versjon</AkselLink>
                 </Link>
             ) : null}
         </div>

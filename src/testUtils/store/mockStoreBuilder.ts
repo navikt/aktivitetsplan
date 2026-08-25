@@ -32,6 +32,9 @@ const defaultStore: RootState = {
         },
     },
     data: {
+        aktivitetVersjon: {
+            aktivitet: undefined,
+        },
         aktiviteter: aktiviteterState({ aktiviteter: [], oppfolgingsPerioder: [aktivVeilarbOppfolgingMockPeriode] }),
         oppfolging: defaultOppfolging,
         arenaAktiviteter: {

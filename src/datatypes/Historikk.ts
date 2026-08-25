@@ -6,7 +6,7 @@ export interface Endring {
     tidspunkt: string;
     beskrivelseForVeileder: string;
     beskrivelseForBruker: string;
-    forrigeVersjonsId: AktivitetsVersjon;
+    versjonsId: AktivitetsVersjon;
 }
 
 export interface Historikk {
