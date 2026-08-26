@@ -1,7 +1,6 @@
 import { format, parseISO } from 'date-fns';
 
 import { AktivitetStatus, Kanal, StillingFraNavSoknadsstatus } from '../datatypes/aktivitetTypes';
-import { AktivitetsVersjon } from '../datatypes/brandedTypes';
 import { Historikk } from '../datatypes/Historikk';
 import {
     MoteAktivitet,
