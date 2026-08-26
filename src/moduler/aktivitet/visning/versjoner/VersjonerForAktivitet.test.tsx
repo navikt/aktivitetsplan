@@ -81,13 +81,13 @@ describe('VersjonerForAktivitet', () => {
     it('skal ikke vise lenke på siste endring selv om det er referatendring', async () => {
         const aktivitet = enSamtalereferatAktivitet({ id: aktivitetId, oppfolgingsperiodeId });
         const endringer = [
-            lagEndring('Nav endret referat', '2' as AktivitetsVersjon, '2026-08-20T12:00:00.000Z'),
-            lagEndring('Nav endret referat', '1' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
+            lagEndring('Nav endret referatet', '2' as AktivitetsVersjon, '2026-08-20T12:00:00.000Z'),
+            lagEndring('Nav endret referatet', '1' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
         ];
 
         await renderVersjoner({ aktivitet, endringer, erBruker: false });
 
-        expect(await screen.findAllByText('Se tidligere versjon')).toHaveLength(1);
+        expect(await screen.findAllByText('Se tidligere versjon av referatet')).toHaveLength(1);
     });
 
     it('skal vise lenke for første versjon av samtalereferat', async () => {
@@ -99,7 +99,7 @@ describe('VersjonerForAktivitet', () => {
 
         await renderVersjoner({ aktivitet, endringer, erBruker: false });
 
-        expect(await screen.findAllByText('Se tidligere versjon')).toHaveLength(1);
+        expect(await screen.findAllByText('Se tidligere versjon av referatet')).toHaveLength(1);
     });
 
     it('skal ikke vise lenke for første versjon av møte', async () => {
@@ -115,7 +115,7 @@ describe('VersjonerForAktivitet', () => {
 
         await renderVersjoner({ aktivitet, endringer, erBruker: false });
 
-        expect(screen.queryByText('Se tidligere versjon')).not.toBeInTheDocument();
+        expect(screen.queryByText('Se tidligere versjon av referatet')).not.toBeInTheDocument();
     });
 
     it('skal bare vise lenke for riktige aktivitetstyper', async () => {
@@ -125,32 +125,32 @@ describe('VersjonerForAktivitet', () => {
             oppfolgingsperiodeId,
         });
         const endringer = [
-            lagEndring('Nav opprettet referat', '2' as AktivitetsVersjon, '2026-08-20T12:00:00.000Z'),
-            lagEndring('Nav endret referat', '1' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
+            lagEndring('Nav opprettet referat', '2' as AktivitetsVersjon, '2026-08-20T12:00:00.200Z'),
+            lagEndring('Nav endret referat', '1' as AktivitetsVersjon, '2026-08-20T11:00:00.100Z'),
         ];
 
         await renderVersjoner({ aktivitet, endringer, erBruker: false });
 
-        expect(screen.queryByText('Se tidligere versjon')).not.toBeInTheDocument();
+        expect(screen.queryByText('Se tidligere versjon av referatet')).not.toBeInTheDocument();
     });
 
-    it('skal ikke vise bruker versjoner som ikke er publisert for bruker', async () => {
+    it('skal IKKE vise bruker versjoner som ikke er publisert for bruker', async () => {
         const aktivitet = enMoteAktivitet({
             id: aktivitetId,
             tittel: 'Møtt',
             oppfolgingsperiodeId,
         });
         const endringer = [
-            lagEndring('Nav endret referat', '5' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav endret referat', '4' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav delte referatet', '3' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav endret referat', '2' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav opprettet mote', '1' as AktivitetsVersjon, '2026-08-20T12:00:00.000Z'),
+            lagEndring('Nav endret referatet', '5' as AktivitetsVersjon, '2026-08-20T11:00:00.300Z'),
+            lagEndring('Nav delte referatet', '4' as AktivitetsVersjon, '2026-08-20T11:00:00.300Z'),
+            lagEndring('Nav endret referatet', '3' as AktivitetsVersjon, '2026-08-20T11:00:00.400Z'),
+            lagEndring('Nav opprettet referat', '2' as AktivitetsVersjon, '2026-08-20T11:00:00.200Z'),
+            lagEndring('Nav opprettet mote', '1' as AktivitetsVersjon, '2026-08-20T12:00:00.100Z'),
         ];
 
         await renderVersjoner({ aktivitet, endringer, erBruker: true });
 
-        const element = await screen.findByText('Se tidligere versjon');
+        const element = await screen.findByText('Se tidligere versjon av referatet');
         expect(element).toBeInTheDocument();
         const link = element.parentElement;
         expect(link!).toHaveProperty('href');
@@ -164,16 +164,16 @@ describe('VersjonerForAktivitet', () => {
             oppfolgingsperiodeId,
         });
         const endringer = [
-            lagEndring('Nav endret referat', '5' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav endret referat', '4' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav delte referatet', '3' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav endret referat', '2' as AktivitetsVersjon, '2026-08-20T11:00:00.000Z'),
-            lagEndring('Nav opprettet mote', '1' as AktivitetsVersjon, '2026-08-20T12:00:00.000Z'),
+            lagEndring('Nav endret referatet', '5' as AktivitetsVersjon, '2026-08-20T11:00:00.500Z'),
+            lagEndring('Nav endret referatet', '4' as AktivitetsVersjon, '2026-08-20T11:00:00.400Z'),
+            lagEndring('Nav delte referatet', '3' as AktivitetsVersjon, '2026-08-20T11:00:00.300Z'),
+            lagEndring('Nav opprettet referat', '2' as AktivitetsVersjon, '2026-08-20T11:00:00.200Z'),
+            lagEndring('Nav opprettet mote', '1' as AktivitetsVersjon, '2026-08-20T12:00:00.100Z'),
         ];
 
         await renderVersjoner({ aktivitet, endringer, erBruker: false });
 
-        const elements = await screen.findAllByText('Se tidligere versjon');
-        expect(elements).toHaveLength(2);
+        const elements = await screen.findAllByText('Se tidligere versjon av referatet');
+        expect(elements).toHaveLength(3);
     });
 });
