@@ -6,7 +6,7 @@ import { Endring } from '../../../../datatypes/Historikk';
 import { useErVeileder } from '../../../../Provider';
 import { Link } from 'react-router';
 import { useRoutes } from '../../../../routing/useRoutes';
-import { AktivitetsId } from '../../../../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon } from '../../../../datatypes/brandedTypes';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { AlleAktivitetTyper } from '../../../../utils/textMappers';
 
@@ -20,6 +20,9 @@ const erReferatEndringEllerFørsteVersjonISamtaleReferat = (
     aktivitetsType: AlleAktivitetTyper | VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE,
     erFørsteEndring: boolean,
     erSisteEndring: boolean,
+    versjonsId: AktivitetsVersjon,
+    referatPublisertVersjon: AktivitetsVersjon | undefined,
+    erBruker: boolean,
 ) => {
     if (erSisteEndring) return false;
     const erReferatAktivitet =
@@ -29,6 +32,13 @@ const erReferatEndringEllerFørsteVersjonISamtaleReferat = (
         return true;
     }
     if (!erReferatAktivitet) return false;
+    if (
+        aktivitetsType === VeilarbAktivitetType.MOTE_TYPE &&
+        erBruker &&
+        // Brukere kan kun se tidligere versjoner fra etter at referatet er publisert
+        (!referatPublisertVersjon || versjonsId < referatPublisertVersjon)
+    )
+        return false;
     return endringsBeskrivelse.includes('endret referat') || endringsBeskrivelse.includes('opprettet referat');
 };
 
@@ -36,10 +46,12 @@ export const EndringsLinje = ({
     endring,
     aktivitetId,
     aktivitetsType,
+    referatPublisertVersjon,
 }: {
     endring: Endring & { erFørsteEndring: boolean; erSisteEndring: boolean };
     aktivitetId: AktivitetsId;
     aktivitetsType: AlleAktivitetTyper | VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
+    referatPublisertVersjon?: AktivitetsVersjon;
 }) => {
     const erBruker = !useErVeileder();
     const { aktivitetsVersjonRoute } = useRoutes();
@@ -51,6 +63,9 @@ export const EndringsLinje = ({
         aktivitetsType,
         endring.erFørsteEndring,
         endring.erSisteEndring,
+        endring.versjonsId,
+        referatPublisertVersjon,
+        erBruker,
     );
 
     return (

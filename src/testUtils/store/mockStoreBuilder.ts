@@ -33,7 +33,8 @@ const defaultStore: RootState = {
     },
     data: {
         aktivitetVersjon: {
-            aktivitet: undefined,
+            data: undefined,
+            status: Status.NOT_STARTED,
         },
         aktiviteter: aktiviteterState({ aktiviteter: [], oppfolgingsPerioder: [aktivVeilarbOppfolgingMockPeriode] }),
         oppfolging: defaultOppfolging,

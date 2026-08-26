@@ -9,8 +9,15 @@ import { useAktivitetsVisningLoaderData } from '../../../../routing/loaders';
 import { selectAktivitet } from '../../aktivitet-slice';
 import { RootState } from '../../../../store/rootReducer';
 import { AktivitetsId } from '../../../../datatypes/brandedTypes';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { Endring } from '../../../../datatypes/Historikk';
 
 const MAX_SIZE = 10;
+
+const hentReferatPubliserVersjon = (aktivitetType: VeilarbAktivitetType, endringer: Endring[]) => {
+    if (aktivitetType !== VeilarbAktivitetType.MOTE_TYPE) return undefined;
+    return endringer.find((it) => it.beskrivelseForBruker.includes('delte referatet'))?.versjonsId;
+};
 
 const VersjonerForAktivitet = () => {
     const { id: aktivitetId } = useParams<{ id: AktivitetsId }>();
@@ -25,6 +32,9 @@ const VersjonerForAktivitet = () => {
             erSisteEndring: index === 0,
         };
     });
+
+    const referatPublisertVersjon = hentReferatPubliserVersjon(aktivitet.type, endringer);
+
     const versjonerInnslag = endringer
         .slice(0, MAX_SIZE)
         .map((endring) => (
@@ -33,6 +43,7 @@ const VersjonerForAktivitet = () => {
                 aktivitetId={aktivitetId}
                 key={endring.tidspunkt}
                 endring={endring}
+                referatPublisertVersjon={referatPublisertVersjon}
             />
         ));
     const versjonerInnslagUnderAccordion = (
@@ -43,6 +54,7 @@ const VersjonerForAktivitet = () => {
                     aktivitetId={aktivitetId}
                     key={endring.tidspunkt}
                     endring={endring}
+                    referatPublisertVersjon={referatPublisertVersjon}
                 />
             ))}
         </ReadMore>
