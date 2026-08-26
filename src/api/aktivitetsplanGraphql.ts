@@ -175,8 +175,8 @@ const aktivitetQuery = `
 `;
 
 const gammeltReferatQuery = `
-    query($aktivitetId: String!) {
-        aktivitet(aktivitetId: $aktivitetId) {
+    query($aktivitetId: String!, $versjon: Int!) {
+        aktivitet(aktivitetId: $aktivitetId, versjon: $versjon) {
             tittel
             id
             referat
