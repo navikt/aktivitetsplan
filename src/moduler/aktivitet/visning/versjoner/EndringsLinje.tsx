@@ -21,6 +21,7 @@ const erReferatEndringEllerFørsteVersjonISamtaleReferat = (
     erFørsteEndring: boolean,
     erSisteEndring: boolean,
     versjonsId: AktivitetsVersjon,
+    /* undefined hvis referatet ikke er publisert */
     referatPublisertVersjon: AktivitetsVersjon | undefined,
     erBruker: boolean,
 ) => {
@@ -39,7 +40,11 @@ const erReferatEndringEllerFørsteVersjonISamtaleReferat = (
         (!referatPublisertVersjon || versjonsId < referatPublisertVersjon)
     )
         return false;
-    return endringsBeskrivelse.includes('endret referat') || endringsBeskrivelse.includes('opprettet referat');
+    return (
+        endringsBeskrivelse.includes('delte referatet') ||
+        endringsBeskrivelse.includes('endret referatet') ||
+        endringsBeskrivelse.includes('opprettet referat')
+    );
 };
 
 export const EndringsLinje = ({
@@ -74,7 +79,7 @@ export const EndringsLinje = ({
             <BodyShort>{formaterDatoEllerTidSiden(endring.tidspunkt)}</BodyShort>
             {skalViseLenkeTilTidligereVersjon ? (
                 <Link to={aktivitetsVersjonRoute(aktivitetId, endring.versjonsId)}>
-                    <AkselLink as={'div'}>Se tidligere versjon</AkselLink>
+                    <AkselLink as={'div'}>Se tidligere versjon av referatet</AkselLink>
                 </Link>
             ) : null}
         </div>
