@@ -1,5 +1,5 @@
 import { Dispatch } from '../store/store';
-import { LoaderFunction, useRouteLoaderData } from 'react-router';
+import { LoaderFunction, LoaderFunctionArgs, useRouteLoaderData } from 'react-router';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunks } from './initialPageLoadThunk';
@@ -46,8 +46,8 @@ export const malLoader = (dispatch: Dispatch) => {
 };
 
 export const aktivitetsVisningLoader =
-    (dispatch: Dispatch): LoaderFunction =>
-    ({ params }) => {
+    (dispatch: Dispatch) =>
+    ({ params }: LoaderFunctionArgs) => {
         if (!params.id) return {};
         const arenaId = erArenaId(params.id);
         return {
