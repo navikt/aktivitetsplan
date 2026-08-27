@@ -649,3 +649,19 @@ export const aktiviteterData = {
 export const versjoner: VeilarbAktivitet[] = aktiviteter
     .concat(ekstraVersjoner)
     .map((aktivitet) => cloneAktivitet(wrapAktivitet(aktivitet)));
+
+// Eldre versjon av "Inneholder et langt referat med lenke" (id=3002) — opprettet uten referat
+versjoner.push(
+    cloneAktivitet(
+        wrapAktivitet({
+            ...etSamtalereferat({ tittel: 'Inneholder et langt referat med lenke' }),
+            id: '3002' as AktivitetsId,
+            versjon: '3001' as AktivitetsVersjon,
+            referat: 'første versjon av referat' as string,
+            erReferatPublisert: false,
+            endretDato: '2020-10-13T09:00:00.000Z',
+            opprettetDato: '2020-10-13T09:00:00.000Z',
+            transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+        }) as VeilarbAktivitet,
+    ),
+);
