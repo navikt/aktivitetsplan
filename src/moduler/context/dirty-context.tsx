@@ -6,7 +6,9 @@ export const DirtyContext = React.createContext({
 });
 
 function isFormsDirty(forms: { [key: string]: boolean | undefined }) {
-    return Object.values(forms).some((value) => value === true);
+    const wasDirty = Object.values(forms).some((value) => value === true);
+    console.log('Was form dirty: ', wasDirty);
+    return wasDirty;
 }
 
 interface Children {
@@ -19,6 +21,7 @@ export function DirtyProvider(props: Children) {
 
     const setFormIsDirty = useCallback(
         (name: string, dirty: boolean) => {
+            console.log(`Set is dirty - ${name}: ${dirty}`);
             setDirtyForms((forms) => {
                 const newForm = { ...forms, [name]: dirty };
                 setIsDirty(isFormsDirty(newForm));

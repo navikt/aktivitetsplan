@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useImperativeHandle } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate, useOutletContext } from 'react-router';
 
 import { AlleAktiviteter, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
-import Modal from '../../../felles-komponenter/modal/Modal';
-import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
+import Innholdslaster, { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { useRoutes } from '../../../routing/useRoutes';
 import { aktivitetStatusMap, getAktivitetType } from '../../../utils/textMappers';
 import { DirtyContext } from '../../context/dirty-context';
@@ -13,6 +12,9 @@ import { selectErBruker } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { skalMarkereForhaandsorienteringSomLest } from './avtalt-container/utilsForhaandsorientering';
+import { ModalRouteHandle, OutletContext } from '../../../routing/ModalRoute';
+import { Heading } from '@navikt/ds-react';
+import Feilmelding from '../../feilmelding/Feilmelding';
 
 const DIALOG_TEKST = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
@@ -29,7 +31,39 @@ const AktivitetvisningModal = (props: Props) => {
     const dirty = useContext(DirtyContext);
     const navigate = useNavigate();
     const { hovedsideRoute } = useRoutes();
-    const tilHovedside = () => navigate(hovedsideRoute());
+
+    const outletContext = useOutletContext<OutletContext>();
+    useImperativeHandle(
+        outletContext.modalHandle,
+        () => {
+            return {
+                getHeading: () => {
+                    return aktivitet?.tittel;
+                },
+                onRequestClose: () => {
+                    console.log(`Close requested - isDirty ${dirty.isDirty}`);
+                    if (dirty.isDirty) {
+                        // Avoid calling focus if not dirty
+                        window.focus();
+                        const userWantToClose = window.confirm(DIALOG_TEKST);
+                        if (userWantToClose) {
+                            console.log('Close rejected because confirm returned false');
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                    if (skalLeses && fho) {
+                        window.alert('Det er en viktig beskjed om ansvaret ditt som du må lese.');
+                        return false;
+                    }
+                    navigate(hovedsideRoute());
+                    return true;
+                },
+            } as ModalRouteHandle;
+        },
+        [aktivitet, dirty],
+    );
 
     const selectFeilMeldinger = (a: AlleAktiviteter) =>
         isArenaAktivitet(a) ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
@@ -43,30 +77,23 @@ const AktivitetvisningModal = (props: Props) => {
     const fho = aktivitet?.forhaandsorientering;
     const skalLeses = skalMarkereForhaandsorienteringSomLest(erBruker ?? false, aktivitet);
 
+    const subHeading = aktivitet
+        ? `${aktivitetStatusMap[aktivitet.status]} / ${getAktivitetType(aktivitet)}`
+        : undefined;
+    const feilmeldinger = alleFeil;
+
     return (
-        <Modal
-            lukkPåKlikkUtenfor={true}
-            onClose={tilHovedside}
-            avhengigheter={avhengigheter}
-            subHeading={
-                aktivitet ? `${aktivitetStatusMap[aktivitet.status]} / ${getAktivitetType(aktivitet)}` : undefined
-            }
-            heading={aktivitet?.tittel || ''}
-            onRequestClose={() => {
-                if (dirty.isDirty && !window.confirm(DIALOG_TEKST)) {
-                    return false;
-                }
-                if (skalLeses && fho) {
-                    window.alert('Det er en viktig beskjed om ansvaret ditt som du må lese.');
-                    return false;
-                }
-                navigate(hovedsideRoute());
-                return true;
-            }}
-            feilmeldinger={alleFeil}
-        >
-            {children}
-        </Modal>
+        <div className="flex flex-col max-w-2xl mx-auto">
+            {subHeading ? (
+                <Heading className="" level="2" size="xsmall">
+                    {subHeading}
+                </Heading>
+            ) : null}
+            {feilmeldinger && <Feilmelding feilmeldinger={feilmeldinger} />}
+            <Innholdslaster className="flex m-auto my-8" minstEn={false} avhengigheter={avhengigheter}>
+                {children}
+            </Innholdslaster>
+        </div>
     );
 };
 
