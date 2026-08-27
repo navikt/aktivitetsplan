@@ -22,7 +22,6 @@ export const aktivitetVersjonSliceReducer = aktivitetVersjonSlice.reducer;
  * Selectors
  * */
 export function selectAktivitetVersjon(state: RootState) {
-    console.log(state.data.aktivitetVersjon.data?.data.aktivitet);
     return state.data.aktivitetVersjon?.data?.data.aktivitet;
 }
 export const selectAktivitetsVersjonLoading = (state: RootState) => {
