@@ -40,7 +40,7 @@ export const AktivitetsVersjonVisningContainer = () => {
                 <Skeleton width={650} />
                 <Skeleton />
                 <Skeleton />
-                <InfoCard data-color={'danger'}>
+                <InfoCard data-color={'info'}>
                     <InfoCard.Header>
                         <InfoCard.Title>Du ser på en tidligere versjon av referatet</InfoCard.Title>
                     </InfoCard.Header>
