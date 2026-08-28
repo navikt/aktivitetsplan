@@ -130,19 +130,19 @@ describe('aktivitet-slice', () => {
 
     describe('hentAktivitet.fulfilled', () => {
         it('skal sette historikk i state', () => {
-            const { historikk, ...baseUtenHistorikk } = baseAktivitet;
+            const { historikk: _, ...baseUtenHistorikk } = baseAktivitet;
             const stateWithoutHistorikk = buildStateWithAktivitet(baseUtenHistorikk);
             expect(
                 stateWithoutHistorikk.entities[periodeId].aktiviteter.entities[aktivitetId].historikk,
             ).toBeUndefined();
             const oppdatertAktivitetFraServer: GraphqlResponse<{
-                aktivitet: AktivitetMedHistorikk;
+                aktivitet: SamtalereferatAktivitet & { historikk: Historikk };
                 eier: { fnr: string };
             }> = {
                 data: {
                     aktivitet: {
                         ...baseUtenHistorikk,
-                        historikk,
+                        historikk: historikk,
                     },
                     eier: { fnr: 'mitt nr' },
                 },

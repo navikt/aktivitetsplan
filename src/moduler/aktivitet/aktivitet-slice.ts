@@ -125,7 +125,7 @@ const oppdaterAktivitetHistorikk = (
         console.warn('Klarte ikke finne periode som inneholdt aktivitet som historikk skulle oppdateres på');
         return state;
     }
-    const { _, periode } = aktivitetInPeriode;
+    const { periode } = aktivitetInPeriode;
     const aktivitetUpdate: Update<VeilarbAktivitet & { historikk: Historikk }, AktivitetsId> = {
         id: aktivitetId,
         changes: { historikk: payload.data.aktivitet.historikk },
