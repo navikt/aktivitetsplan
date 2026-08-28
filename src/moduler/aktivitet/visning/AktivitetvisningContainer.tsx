@@ -7,7 +7,6 @@ import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { useErVeileder } from '../../../Provider';
 import { RootState } from '../../../store/rootReducer';
-import { DirtyProvider } from '../../context/dirty-context';
 import { selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
@@ -63,15 +62,13 @@ const AktivitetvisningContainer = () => {
     }, []);
 
     return (
-        <DirtyProvider>
-            <AktivitetvisningModal aktivitet={valgtAktivitet} avhengigheter={avhengigheter}>
-                {valgtAktivitet ? (
-                    <Aktivitetvisning aktivitet={valgtAktivitet} tillatEndring={tillatEndring} laster={laster} />
-                ) : (
-                    <Navigate replace to={'/'} />
-                )}
-            </AktivitetvisningModal>
-        </DirtyProvider>
+        <AktivitetvisningModal aktivitet={valgtAktivitet} avhengigheter={avhengigheter}>
+            {valgtAktivitet ? (
+                <Aktivitetvisning aktivitet={valgtAktivitet} tillatEndring={tillatEndring} laster={laster} />
+            ) : (
+                <Navigate replace to={'/'} />
+            )}
+        </AktivitetvisningModal>
     );
 };
 

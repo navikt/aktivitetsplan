@@ -15,7 +15,7 @@ import { Link as AkselLink } from '@navikt/ds-react/Link';
 import { selectAktivitetsVisningsAvhengigheter } from '../moduler/aktivitet/visning/AktivitetvisningContainer';
 import { Status } from '../store/createGenericSlice';
 import {
-    canCloseAktivitetVisnings,
+    canCloseAktivitetVisningModal,
     skalBlokkereLukkingAvModalAktivitetsVisningPgaFHO,
 } from '../moduler/aktivitet/visning/AktivitetvisningModal';
 import { DirtyContext, DirtyProvider } from '../moduler/context/dirty-context';
@@ -69,7 +69,7 @@ export const ModalRouteInner = () => {
 
     const closeFuncOrDefault = () => {
         if (matchedRoute === MatchedRoute.AKTIVITETS_VISNINING) {
-            return canCloseAktivitetVisnings(dirty, skalBlokkereLukkingPgaFHO);
+            return canCloseAktivitetVisningModal(dirty, skalBlokkereLukkingPgaFHO);
         } else {
             navigate(hovedsideRoute());
             return true;

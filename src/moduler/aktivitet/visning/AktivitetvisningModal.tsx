@@ -61,7 +61,7 @@ export const skalBlokkereLukkingAvModalAktivitetsVisningPgaFHO = (
     return (fho && skalLeses) || false;
 };
 
-export const canCloseAktivitetVisnings = (dirty: { isDirty: boolean }, skalBlokkereLukking: boolean) => {
+export const canCloseAktivitetVisningModal = (dirty: { isDirty: boolean }, skalBlokkereLukking: boolean) => {
     if (dirty.isDirty) {
         // Avoid calling focus if not dirty
         window.focus();
