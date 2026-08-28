@@ -241,7 +241,7 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
         .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
 };
 
-type AktivitetMedHistorikk = VeilarbAktivitet & {
+export type AktivitetMedHistorikk = VeilarbAktivitet & {
     historikk: Historikk;
     id: AktivitetsId;
     oppfolgingsperiodeId: OppfolgingsPeriodeId;

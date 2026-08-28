@@ -84,8 +84,24 @@ const initialState = oppfolgingsdperiodeAdapter.getInitialState({
 
 export type AktivitetState = typeof initialState;
 
-function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbAktivitet): AktivitetState {
+const findAktivitetInPeriode = (
+    state: AktivitetState,
+    aktivitetId: AktivitetsId,
+): { aktivitet: VeilarbAktivitet; periode: PeriodeEntityState } | undefined => {
+    return selectAllOppfolgingsperioder(state)
+        .map((periode) => ({
+            aktivitet: selectAktivitetById(periode.aktiviteter, aktivitetId),
+            periode,
+        }))
+        .find((match) => match.aktivitet !== undefined);
+};
+
+function nyStateMedOppdatertAktivitet(
+    state: AktivitetState,
+    aktivitet: VeilarbAktivitet & { historikk?: Historikk },
+): AktivitetState {
     const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
+    delete aktivitet.historikk;
     return oppfolgingsdperiodeAdapter.upsertOne(state, {
         id: oppfolgingsperiode.id,
         aktiviteter: aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet),
@@ -101,14 +117,12 @@ const oppdaterAktivitetHistorikk = (
         aktivitet: { historikk: Historikk; id: AktivitetsId };
     }>,
 ) => {
-    const periode = selectAllOppfolgingsperioder(state).find(
-        (periodeState) => selectAktivitetById(periodeState.aktiviteter, aktivitetId) != null,
-    );
-    if (!periode) {
+    const aktivitetInPeriode = findAktivitetInPeriode(state, aktivitetId);
+    if (!aktivitetInPeriode) {
         console.warn('Klarte ikke finne periode som inneholdt aktivitet som historikk skulle oppdateres på');
-        return;
+        return state;
     }
-
+    const { _, periode } = aktivitetInPeriode;
     const aktivitetUpdate: Update<VeilarbAktivitet & { historikk: Historikk }, AktivitetsId> = {
         id: aktivitetId,
         changes: { historikk: payload.data.aktivitet.historikk },
@@ -157,7 +171,7 @@ const aktivitetSlice = createSlice({
             oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
-            const aktivitet = action.payload.data.aktivitet;
+            const aktivitet = action.payload.data.aktivitet as AktivitetMedHistorikk;
             const eier = action.payload.data.eier;
             const aktivitetIDer = selectAllOppfolgingsperioder(state)
                 .map((periode) => selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id))
