@@ -15,7 +15,7 @@ const AktivitetsVersjonVisningContent = ({ aktivitet }: { aktivitet: TidligereRe
     return (
         <>
             <EkspanderbartTekstomrade tekst={aktivitet.referat ?? ''} antallTegn={275} />
-            <InfoCard data-color={'danger'}>
+            <InfoCard data-color={'info'}>
                 <InfoCard.Header>
                     <InfoCard.Title>Du ser på en tidligere versjon av referatet</InfoCard.Title>
                 </InfoCard.Header>
