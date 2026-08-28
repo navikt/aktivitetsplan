@@ -17,7 +17,7 @@ import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectAvhengigheter = createSelector(
+export const selectAktivitetsVisningsAvhengigheter = createSelector(
     selectOppfolgingStatus,
     selectAktivitetStatus,
     (oppfolginsStatus, aktiviteterStatus) => {
@@ -49,7 +49,7 @@ const AktivitetvisningContainer = () => {
     });
 
     const laster = aktivitetDataStatus !== Status.OK;
-    const avhengigheter = useSelector(selectAvhengigheter);
+    const avhengigheter = useSelector(selectAktivitetsVisningsAvhengigheter);
     const tillatEndring = kanEndreAktivitetDetaljer(valgtAktivitet as VeilarbAktivitet, erVeileder);
 
     useEffect(() => {
