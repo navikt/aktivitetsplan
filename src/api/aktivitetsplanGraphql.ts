@@ -276,7 +276,7 @@ export const hentAktivitetsHistorikkGraphql = (aktivitetId: AktivitetsId) => {
     return fetchFromGraphql(JSON.stringify(aktivitetHistorikkQueryBody(aktivitetId)))
         .then((response) => sjekkStatuskode(response, 'hentAktivitetHistorikkGraphql'))
         .then(toJson)
-        .then(sjekkGraphqlFeil<{ aktivitet: { historikk: Historikk } }>);
+        .then(sjekkGraphqlFeil<{ aktivitet: { historikk: Historikk; id: AktivitetsId } }>);
 };
 export const hentAktivitetsVersjonGraphql = (aktivitetId: AktivitetsId, versjon: AktivitetsVersjon) => {
     return fetchFromGraphql(JSON.stringify(gammelReferatQueryBody(aktivitetId, versjon)))

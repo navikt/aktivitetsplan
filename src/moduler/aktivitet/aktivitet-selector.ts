@@ -45,6 +45,6 @@ export const selectAktivitetHistorikk = createSelector(
     [selectAktivitet, (_, aktivitetId: AktivitetsId | undefined) => aktivitetId],
     (aktivitet, aktivitetId) => {
         if (!aktivitetId) return undefined;
-        return (aktivitet as { historikk?: Historikk }).historikk;
+        return aktivitet?.historikk;
     },
 );
