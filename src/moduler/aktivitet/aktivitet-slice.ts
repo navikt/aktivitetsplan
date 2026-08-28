@@ -101,7 +101,10 @@ function nyStateMedOppdatertAktivitet(
     aktivitet: VeilarbAktivitet & { historikk?: Historikk },
 ): AktivitetState {
     const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
-    delete aktivitet.historikk;
+    // Hvis feltet historikk ikke finnes skal det ikke overskrive
+    if (!aktivitet.historikk) {
+        delete aktivitet.historikk;
+    }
     return oppfolgingsdperiodeAdapter.upsertOne(state, {
         id: oppfolgingsperiode.id,
         aktiviteter: aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet),

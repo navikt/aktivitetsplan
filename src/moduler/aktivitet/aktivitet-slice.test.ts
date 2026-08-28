@@ -7,7 +7,7 @@ import aktivitetReducer, {
     oppfolgingsdperiodeAdapter,
     PeriodeEntityState,
 } from './aktivitet-slice';
-import { oppdaterReferat } from './aktivitet-actions';
+import { hentAktivitet, hentAktivitetHistorikk, oppdaterReferat } from './aktivitet-actions';
 import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
@@ -15,6 +15,7 @@ import { Historikk } from '../../datatypes/Historikk';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
 import { EntityState, PayloadAction } from '@reduxjs/toolkit';
 import { Status } from '../../store/createGenericSlice';
+import { GraphqlResponse } from '../../api/graphql/graphqlResult';
 
 const periodeId = 'periode-1' as OppfolgingsPeriodeId;
 const aktivitetId = 'aktivitet-1' as AktivitetsId;
@@ -55,11 +56,11 @@ const baseAktivitet: SamtalereferatAktivitet & { historikk: Historikk } = {
 
 function buildStateWithAktivitet(aktivitet: AktivitetMedHistorikk): AktivitetState {
     const periodeState = getOrCreatePeriode(
-        oppfolgingsdperiodeAdapter.getInitialState({ status: 'OK' as any }),
+        oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK }),
         periodeId,
     );
     const aktiviteter = aktivitetAdapter.upsertOne(periodeState.aktiviteter, aktivitet);
-    return oppfolgingsdperiodeAdapter.upsertOne(oppfolgingsdperiodeAdapter.getInitialState({ status: 'OK' as any }), {
+    return oppfolgingsdperiodeAdapter.upsertOne(oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK }), {
         id: periodeId,
         aktiviteter,
         start: '2024-01-01',
@@ -69,7 +70,15 @@ function buildStateWithAktivitet(aktivitet: AktivitetMedHistorikk): AktivitetSta
 
 const getAktivitetAfterUpdate = (
     state: EntityState<PeriodeEntityState, OppfolgingsPeriodeId> & { status: Status },
-    action: PayloadAction<VeilarbAktivitet>,
+    action: PayloadAction<
+        | VeilarbAktivitet
+        | GraphqlResponse<{
+              aktivitet: {
+                  historikk: Historikk;
+                  id: AktivitetsId;
+              };
+          }>
+    >,
 ) => {
     const newState = aktivitetReducer(state, action);
     const periode = newState.entities[periodeId];
@@ -79,7 +88,7 @@ const getAktivitetAfterUpdate = (
 
 describe('aktivitet-slice', () => {
     describe('oppdaterReferat.fulfilled', () => {
-        it('should not overwrite existing historikk with null when response has historikk: null', () => {
+        it('skal ikke overskrive historikk med null hvis response inneholder historikk: null', () => {
             const stateWithHistorikk = buildStateWithAktivitet(baseAktivitet);
             const oppdatertAktivitetFraServer: SamtalereferatAktivitet & { historikk: null } = {
                 ...baseAktivitet,
@@ -99,7 +108,7 @@ describe('aktivitet-slice', () => {
             expect(aktivitetEtterOppdatering.referat).toBe('Oppdatert referat');
         });
 
-        it('should not overwrite existing historikk with undefined when response omits historikk', () => {
+        it('skal ikke oveskrive historikk med undefined når response ikke har feltet historikk', () => {
             const stateWithHistorikk = buildStateWithAktivitet(baseAktivitet);
             const { historikk: _removed, ...aktivitetUtenHistorikk } = baseAktivitet;
             const oppdatertAktivitetFraServer = {
@@ -116,6 +125,72 @@ describe('aktivitet-slice', () => {
 
             expect(aktivitetEtterOppdatering.historikk).toEqual(historikk);
             expect(aktivitetEtterOppdatering.referat).toBe('Oppdatert referat');
+        });
+    });
+
+    describe('hentAktivitet.fulfilled', () => {
+        it('skal sette historikk i state', () => {
+            const { historikk, ...baseUtenHistorikk } = baseAktivitet;
+            const stateWithoutHistorikk = buildStateWithAktivitet(baseUtenHistorikk);
+            expect(
+                stateWithoutHistorikk.entities[periodeId].aktiviteter.entities[aktivitetId].historikk,
+            ).toBeUndefined();
+            const oppdatertAktivitetFraServer: GraphqlResponse<{
+                aktivitet: AktivitetMedHistorikk;
+                eier: { fnr: string };
+            }> = {
+                data: {
+                    aktivitet: {
+                        ...baseUtenHistorikk,
+                        historikk,
+                    },
+                    eier: { fnr: 'mitt nr' },
+                },
+            };
+            const action = hentAktivitet.fulfilled(oppdatertAktivitetFraServer, '', undefined as any);
+
+            const aktivitetEtterOppdatering = getAktivitetAfterUpdate(
+                stateWithoutHistorikk,
+                action,
+            ) as SamtalereferatAktivitet & {
+                historikk: Historikk;
+            };
+
+            expect(aktivitetEtterOppdatering.historikk).toEqual(historikk);
+        });
+    });
+
+    describe('hentAktivitetHistorikk.fulfilled', () => {
+        it('skal sette historikk i state', () => {
+            const { historikk, ...baseUtenHistorikk } = baseAktivitet;
+            const stateWithoutHistorikk = buildStateWithAktivitet(baseUtenHistorikk);
+            expect(
+                stateWithoutHistorikk.entities[periodeId].aktiviteter.entities[aktivitetId].historikk,
+            ).toBeUndefined();
+            const oppdatertAktivitetFraServer: GraphqlResponse<{
+                aktivitet: {
+                    historikk: Historikk;
+                    id: AktivitetsId;
+                };
+            }> = {
+                data: {
+                    aktivitet: {
+                        historikk,
+                        id: aktivitetId,
+                    },
+                },
+                errors: undefined,
+            };
+            const action = hentAktivitetHistorikk.fulfilled(oppdatertAktivitetFraServer, '', undefined as any);
+
+            const aktivitetEtterOppdatering = getAktivitetAfterUpdate(
+                stateWithoutHistorikk,
+                action,
+            ) as SamtalereferatAktivitet & {
+                historikk: Historikk;
+            };
+
+            expect(aktivitetEtterOppdatering.historikk).toEqual(historikk);
         });
     });
 });
