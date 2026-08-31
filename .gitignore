@@ -13,9 +13,3 @@ dist-ssr
 /build
 bundle-stats.html
 /.npmrc
-
-.github/.nav-pilot-state.json
-.github/agents
-.github/instructions
-.github/prompts
-.github/skills
