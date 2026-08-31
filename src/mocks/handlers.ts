@@ -4,6 +4,8 @@ import {
     aktiviteterData,
     endreReferat,
     getAktivitet,
+    getAktivitetHistorikk,
+    getAktivitetVersjon,
     getAktivitetVersjoner,
     oppdaterAktivitet,
     oppdaterAktivitetStatus,
@@ -42,7 +44,7 @@ import {
 import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
-import { addHours, subDays, subMinutes } from 'date-fns';
+import { addHours } from 'date-fns';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 import { sjekkTryggTekst } from './data/tryggtekst';
 
@@ -96,16 +98,32 @@ export const handlers = [
         failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
             const aktivitetId = body.variables.aktivitetId;
+            const versjon = body.variables.versjon;
             if (aktivitetId) {
+                if (versjon) {
+                    const aktivitet = getAktivitetVersjon(aktivitetId, versjon);
+                    if (!aktivitet) {
+                        throw new Error(
+                            `Aktivitet med id ${aktivitetId} og versjon ${versjon} ble ikke funnet når test skulle svare på graphql kall`,
+                        );
+                    }
+                    return {
+                        data: {
+                            aktivitet,
+                        },
+                        errors: null,
+                    };
+                }
+
                 const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
                 await new Promise((resolve) => {
-                    setTimeout(resolve, 2000);
+                    setTimeout(resolve, 1000);
                 });
                 if (!aktivitet)
                     throw new Error(
                         `Aktivitet med id ${aktivitetId} ble ikke funnnet når test skulle svare på graphql kall`,
                     );
-                return aktivitetResponse(aktivitet);
+                return aktivitetResponse(aktivitetId, aktivitet);
             } else {
                 return aktivitestplanResponse(); // Default aktiviteter
             }
@@ -276,8 +294,7 @@ export const aktivitestplanResponse = (
     };
 };
 
-export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
-    const now = new Date();
+export const aktivitetResponse = (aktivitetId: string, aktivitet: VeilarbAktivitet) => {
     return {
         data: {
             eier: {
@@ -285,31 +302,7 @@ export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
             },
             aktivitet: {
                 ...aktivitet,
-                historikk: {
-                    endringer: [
-                        {
-                            endretAvType: 'BRUKER',
-                            endretAv: '2121212121212',
-                            tidspunkt: now,
-                            beskrivelseForVeileder: 'Bruker endret detaljer på aktiviteten',
-                            beskrivelseForBruker: 'Du endret detaljer på aktiviteten',
-                        },
-                        {
-                            endretAvType: 'NAV',
-                            endretAv: 'R121212',
-                            tidspunkt: subMinutes(new Date(), 30),
-                            beskrivelseForVeileder: 'R121212 merket aktiviteten "Avtalt med Nav"',
-                            beskrivelseForBruker: 'Nav merket aktiviteten "Avtalt med Nav"',
-                        },
-                        {
-                            endretAvType: 'BRUKER',
-                            endretAv: '2121212121212',
-                            tidspunkt: subDays(new Date(), 2),
-                            beskrivelseForVeileder: 'Bruker flyttet aktiviteten fra Planlegger til Forslag',
-                            beskrivelseForBruker: 'Du flyttet aktiviteten fra Planlegger til Forslag',
-                        },
-                    ],
-                },
+                historikk: getAktivitetHistorikk(aktivitetId),
             },
         },
     };

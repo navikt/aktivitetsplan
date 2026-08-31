@@ -10,13 +10,16 @@ import { gitt } from '../../../../testUtils/store/mockStoreBuilder';
 import ReferatContainer from './ReferatContainer';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
 import { createLocalStorageKey } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
+import { DirtyProvider } from '../../../context/dirty-context';
 
 const renderReferatContainer = (aktivitet: SamtalereferatAktivitet | MoteAktivitet, erVeileder = true) => {
     const store = gitt().createStore();
     return render(
         <ErVeilederContext value={erVeileder}>
             <Provider store={store}>
-                <ReferatContainer aktivitet={aktivitet} />
+                <DirtyProvider>
+                    <ReferatContainer aktivitet={aktivitet} />
+                </DirtyProvider>
             </Provider>
         </ErVeilederContext>,
     );
