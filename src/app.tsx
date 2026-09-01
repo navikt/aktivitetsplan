@@ -20,6 +20,7 @@ function App({
     const erVeileder = useErVeileder();
     const dispatch = useAppDispatch();
     const { aktivEnhet } = useFnrOgEnhetContext();
+
     const routes = createRoutesForUser(dispatch, erVeileder, aktivEnhet);
     return (
         <div className="aktivitetsplanfs" id={AKTIVITETSPLAN_ROOT_NODE_ID}>

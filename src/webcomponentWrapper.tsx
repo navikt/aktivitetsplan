@@ -23,12 +23,52 @@ import {
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
 
+type Theme = 'dark' | 'light';
+
+const readTheme = (element: Element | null): Theme | undefined => {
+    if (!element) return undefined;
+
+    const dataTheme = element.getAttribute('data-theme');
+    if (dataTheme === 'dark' || dataTheme === 'light') return dataTheme;
+    if (element.classList.contains('dark')) return 'dark';
+    if (element.classList.contains('light')) return 'light';
+    return undefined;
+};
+
+const resolveHostTheme = (hostElement: HTMLElement): Theme | undefined => {
+    const akselThemeRoot = hostElement.closest('.aksel-theme, [data-theme="dark"], [data-theme="light"]');
+    const akselTheme = readTheme(akselThemeRoot);
+    if (akselTheme) return akselTheme;
+
+    const themed = hostElement.closest('.dark, .light');
+    return readTheme(themed) ?? readTheme(document.body) ?? readTheme(document.documentElement);
+};
+
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     setAktivEnhet?: (enhet: string) => void;
     root: Root | undefined;
+    appRoot?: HTMLDivElement;
+    themeObserver?: MutationObserver;
+    theme?: Theme;
+
+    private syncTheme = () => {
+        if (!this.appRoot) return;
+        const nextTheme = resolveHostTheme(this);
+        if (nextTheme === this.theme) return;
+
+        this.theme = nextTheme;
+        this.appRoot.classList.remove('dark', 'light');
+        this.appRoot.removeAttribute('data-theme');
+        if (nextTheme) {
+            this.appRoot.classList.add('aksel-theme');
+            this.appRoot.classList.add(nextTheme);
+            this.appRoot.setAttribute('data-theme', nextTheme);
+        }
+    };
 
     disconnectedCallback() {
+        this.themeObserver?.disconnect();
         saveReduxStateToSessionStorage();
         this.root?.unmount();
     }
@@ -37,6 +77,9 @@ export class DabAktivitetsplan extends HTMLElement {
         // This will be app entry point, need to be outside modal-mount node
         const appRoot = document.createElement('div');
         appRoot.id = 'aktivitetsplan-root';
+        appRoot.classList.add('aksel-theme');
+        appRoot.setAttribute('data-color', 'accent');
+        this.appRoot = appRoot;
         const shadowRoot = this.attachShadow({ mode: 'closed' });
         shadowRoot.appendChild(appRoot);
 
@@ -53,6 +96,16 @@ export class DabAktivitetsplan extends HTMLElement {
             preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         slettGamleSamtalereferatKladder();
+        this.syncTheme();
+
+        // Følg med når hosten toggler tema (typisk klasse/attributt-endring høyt i treet)
+        this.themeObserver = new MutationObserver(this.syncTheme);
+        this.themeObserver.observe(document.documentElement, {
+            attributes: true,
+            subtree: true,
+            attributeFilter: ['class', 'data-theme'],
+        });
+
         this.root = createRoot(appRoot);
         this.root.render(
             <AkselProvider rootElement={appRoot}>
