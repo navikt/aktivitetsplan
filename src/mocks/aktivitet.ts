@@ -26,6 +26,7 @@ import {
     StillingFraNavTransaksjonsType,
     StillingTransaksjonsType,
 } from '../datatypes/transaksjonstyperTypes';
+import { byggHistorikkFraVersjoner } from './aktivitetHistorikk';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/localStorage';
 import { eksterneAktiviteter } from './eksterneAktiviteter';
 import { enStillingAktivitet } from './fixtures/stillingFixtures';
@@ -41,7 +42,7 @@ import { enLestForhaandsorientering, enUlestForhaandsorientering } from './forha
 import { etSamtalereferat } from './samtalereferatFixtures';
 import { enSokeAktivitet } from './sokeAktivitetFixtures';
 import { rndId } from './utils';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 
 const eksternBruker = erEksternBruker();
 const bruker: BrukerType = eksternBruker ? 'BRUKER' : 'NAV';
@@ -247,7 +248,7 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
     }),
     wrapAktivitet({
         id: '91495701',
-        versjon: '1',
+        versjon: '1' as AktivitetsVersjon,
         tittel: 'Medisinsk behandling',
         beskrivelse:
             'CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager. CaCO3 løses i vann ved oppkok og avkjøles til 25˚C.\nLøsningen appliseres til tøystykker og legges rundt bruddstedet. Beinet holdes i ro til gipsen har stivnet. Dette burde ta en dag, men det er lurt å ta forbehold om at det kan gå flere dager.',
@@ -279,7 +280,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
     : [
           {
               id: '141438' as AktivitetsId,
-              versjon: '199743',
+              versjon: '199743' as AktivitetsVersjon,
               tittel: 'Se mulighetene i arbeidsmarkedet',
               beskrivelse:
                   'Hvilke jobber kan du ta og hvilke bransjer kan du jobbe i? Er jobbene der du bor eller andre steder i landet? Velg geografisk område og bransje og se om jobbene finnes. Hvis du mener denne aktiviteten ikke passer for deg, kan du sette den til avbrutt.',
@@ -303,7 +304,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
           },
           {
               id: '141439' as AktivitetsId,
-              versjon: '199744',
+              versjon: '199744' as AktivitetsVersjon,
               tittel: 'Oppdater CV-en og jobbprofilen',
               beskrivelse:
                   'Når du registrerer CV-en og jobbprofilen din, kan vi følge deg opp på en god måte. Du gjør deg synlig for arbeidsgivere som leter etter nye medarbeidere. Nav samarbeider med mange arbeidsgivere og bemanningsbransjen.',
@@ -327,7 +328,7 @@ const automatiskeAktiviteter: VeilarbAktivitet[] = !visAutomatiskeAktiviteter()
           },
           {
               id: '141440' as AktivitetsId,
-              versjon: '199745',
+              versjon: '199745' as AktivitetsVersjon,
               tittel: 'Jobbsøkertips',
               beskrivelse:
                   'Svar på noen spørsmål om hvordan du søker på jobber. Få råd og tips til søknaden, CV-en, intervjuet og hvordan du finner jobbene.',
@@ -453,8 +454,20 @@ export const getAktivitet = (_: StrictRequest<DefaultBodyType>, params: PathPara
 
 export const getAktivitetVersjoner = (_: StrictRequest<DefaultBodyType>, params: PathParams) => {
     const aktivitetId = params.aktivitetId;
-
     return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
+};
+
+export const getAktivitetVersjon = (aktivitetId: string, versjon: string) => {
+    return versjoner.find((aktivitet) => aktivitet.id === aktivitetId && aktivitet.versjon === versjon);
+};
+
+export const getAktivitetHistorikk = (aktivitetId: string) => {
+    const aktivitetsVersjoner = versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
+    return byggHistorikkFraVersjoner(aktivitetsVersjoner);
+};
+
+const cloneAktivitet = <T extends VeilarbAktivitet>(aktivitet: T): T => {
+    return structuredClone(aktivitet);
 };
 
 export const opprettAktivitet = async (req: StrictRequest<VeilarbAktivitet>) => {
@@ -467,12 +480,12 @@ export const opprettAktivitet = async (req: StrictRequest<VeilarbAktivitet>) => 
         endretAvType: bruker,
         endretDato: new Date().toISOString(),
         endretAv: bruker,
-        versjon: '1',
+        versjon: '1' as AktivitetsVersjon,
         transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
     });
     aktiviteter.push(nyAktivitet);
-    const nyAktivitetKlone = wrapAktivitet(nyAktivitet);
+    const nyAktivitetKlone = cloneAktivitet(wrapAktivitet(nyAktivitet));
     versjoner.push(nyAktivitetKlone);
     return nyAktivitet;
 };
@@ -490,7 +503,7 @@ function doOppdaterInternMockStateOgReturnerNyAktivitet(
     };
 
     // Legg til ny versjon i historikk
-    versjoner.push(nyAktivitet);
+    versjoner.push(cloneAktivitet(nyAktivitet));
     // Overskriv den gamle aktiviteten i aktiviteterData
     Object.assign(gammelAktivitet, nyAktivitet);
 
@@ -501,7 +514,7 @@ function lagNyVersion(aktivitet: VeilarbAktivitet): VeilarbAktivitet {
     return {
         ...aktivitet,
         // versjon er typet som string, men er et løpenummer (egentlig global sekvens for alle aktiviteter), derfor denne hacken.
-        versjon: String(parseInt(aktivitet.versjon) + 1),
+        versjon: String(parseInt(aktivitet.versjon) + 1) as AktivitetsVersjon,
         endretDato: new Date().toISOString(),
         endretAv: bruker,
         endretAvType: bruker,
@@ -635,4 +648,20 @@ export const aktiviteterData = {
 };
 export const versjoner: VeilarbAktivitet[] = aktiviteter
     .concat(ekstraVersjoner)
-    .map((aktivitet) => wrapAktivitet(aktivitet));
+    .map((aktivitet) => cloneAktivitet(wrapAktivitet(aktivitet)));
+
+// Eldre versjon av "Inneholder et langt referat med lenke" (id=3002) — opprettet uten referat
+versjoner.push(
+    cloneAktivitet(
+        wrapAktivitet({
+            ...etSamtalereferat({ tittel: 'Inneholder et langt referat med lenke' }),
+            id: '3002' as AktivitetsId,
+            versjon: '3001' as AktivitetsVersjon,
+            referat: 'første versjon av referat' as string,
+            erReferatPublisert: false,
+            endretDato: '2020-10-13T09:00:00.000Z',
+            opprettetDato: '2020-10-13T09:00:00.000Z',
+            transaksjonsType: FellesTransaksjonsTyper.OPPRETTET,
+        }) as VeilarbAktivitet,
+    ),
+);

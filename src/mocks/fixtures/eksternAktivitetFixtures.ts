@@ -1,7 +1,7 @@
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { EksternAktivitet, EksternAktivitetData, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 let id = 1003;
 let versjon = 4500;
@@ -24,7 +24,7 @@ export const enEksternAktivitet = ({
 
     return {
         id: `${id}` as AktivitetsId,
-        versjon: `${versjon}`,
+        versjon: `${versjon}` as AktivitetsVersjon,
         tittel,
         beskrivelse,
         type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE,

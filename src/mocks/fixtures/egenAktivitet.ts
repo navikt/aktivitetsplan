@@ -2,7 +2,7 @@ import { EgenAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktiv
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { addDays, subDays } from 'date-fns';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 export const enEgenAktivitet = ({
     id,
@@ -15,7 +15,7 @@ export const enEgenAktivitet = ({
 }): EgenAktivitet => {
     return {
         id,
-        versjon: '9389',
+        versjon: '9389' as AktivitetsVersjon,
         tittel,
         oppfolgingsperiodeId,
         beskrivelse: 'Beskrivelse av egenaktiviteten',

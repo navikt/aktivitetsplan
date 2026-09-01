@@ -20,7 +20,10 @@ export const handlersWithGraphqlOverride = ({
                     const body = (await req.json()) as { query: string; variables: Record<string, any> };
                     const aktivitetId = body.variables.aktivitetId;
                     if (aktivitetId) {
-                        return aktivitetResponse(aktiviteter.find((aktivitet) => aktivitet.id == aktivitetId)!);
+                        return aktivitetResponse(
+                            aktivitetId,
+                            aktiviteter.find((aktivitet) => aktivitet.id == aktivitetId)!,
+                        );
                     } else {
                         return aktivitestplanResponse({ aktiviteter });
                     }

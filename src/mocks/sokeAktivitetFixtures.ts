@@ -1,5 +1,5 @@
 import { SokeavtaleAktivitet, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
-import { AktivitetsId } from '../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon } from '../datatypes/brandedTypes';
 import { FellesTransaksjonsTyper } from '../datatypes/transaksjonstyperTypes';
 import { AktivitetStatus } from '../datatypes/aktivitetTypes';
 import { aktivPeriodeId } from './data/oppfolging';
@@ -15,7 +15,7 @@ export function enSokeAktivitet({ tittel }: { tittel: string }): SokeavtaleAktiv
     return {
         oppfolgingsperiodeId: aktivPeriodeId,
         id: `${id}` as AktivitetsId,
-        versjon: `${versjon}`,
+        versjon: `${versjon}` as AktivitetsVersjon,
         tittel,
         beskrivelse:
             'Nav forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb. Legg til hver stilling du søker i aktiviteten «En jobb jeg vil søke på».',

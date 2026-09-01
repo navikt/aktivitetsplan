@@ -5,7 +5,7 @@ import {
     VeilarbAktivitetType,
 } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 let id = 1000;
 let versjon = 5000000;
@@ -50,7 +50,7 @@ export const enStillingFraNavAktivitet = ({
         etikett: undefined,
         forhaandsorientering: undefined,
         tilDato: '',
-        versjon: `${versjon}`,
+        versjon: `${versjon}` as AktivitetsVersjon,
         id: `${id}` as AktivitetsId,
         tittel,
         type: VeilarbAktivitetType.STILLING_FRA_NAV_TYPE,
