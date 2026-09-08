@@ -108,6 +108,7 @@ export const mapTilJournalforingFilter = (
             filter.aktivitetTyper.ENKELAMO && 'ENKELAMO',
             filter.aktivitetTyper.ENKFAGYRKE && 'ENKFAGYRKE',
             filter.aktivitetTyper.HOYEREUTD && 'HOYEREUTD',
+            filter.aktivitetTyper.WORKOP && 'WORKOP'
         ].filter(Boolean) as unknown as AlleAktivitetTyper[],
     };
 };
