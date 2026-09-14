@@ -3,13 +3,13 @@ import { addDays, subDays } from 'date-fns';
 import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
 import { MoteAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 export const enMoteAktivitet = (overrides: Partial<MoteAktivitet> = {}): MoteAktivitet => {
     return {
         id: '6871' as AktivitetsId,
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
-        versjon: '9389',
+        versjon: '9389' as AktivitetsVersjon,
         tittel: 'Beste møtet ever',
         beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
         type: VeilarbAktivitetType.MOTE_TYPE,

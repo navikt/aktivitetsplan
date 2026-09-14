@@ -77,6 +77,7 @@ const initialState: FilterState = {
         STUDIESPESIALISERING: false,
         FAG_OG_YRKESOPPLAERING: false,
         HOYERE_YRKESFAGLIG_UTDANNING: false,
+        WORKOP: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,

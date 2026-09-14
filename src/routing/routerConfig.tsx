@@ -16,6 +16,9 @@ import { arkivLoader, JournalforingPage } from '../moduler/journalforing/Journal
 import { BasePage } from '../BasePage';
 import { useErVeileder } from '../Provider';
 import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
+import { AktivitetsVersjonVisningContainer } from '../moduler/aktivitet/visning/versjoner/AktivitetsVersjonVisningContainer';
+import { aktivitetsVersjonVisningLoader } from '../moduler/aktivitet/visning/versjoner/aktivitet-versjon-slice';
+import { ModalRoute } from './ModalRoute';
 
 const baseName = 'aktivitetsplan';
 
@@ -77,10 +80,22 @@ export const routingConfig: (
                             { path: 'ny', element: <LeggTilNyttAktivitetsKort /> },
                             { path: 'ny/*', element: <NyAktivitetForm /> },
                             {
-                                id: 'aktivitetsVisning',
-                                path: 'vis/:id',
-                                element: <AktivitetvisningContainer />,
-                                loader: aktivitetsVisningLoader(dispatch),
+                                path: 'vis',
+                                element: <ModalRoute />,
+                                children: [
+                                    {
+                                        id: 'aktivitetsVisning',
+                                        path: ':id',
+                                        element: <AktivitetvisningContainer />,
+                                        loader: aktivitetsVisningLoader(dispatch),
+                                    },
+                                    {
+                                        id: 'aktivitetsVersjonVisning',
+                                        path: ':id/versjon/:versjon',
+                                        element: <AktivitetsVersjonVisningContainer />,
+                                        loader: aktivitetsVersjonVisningLoader(dispatch),
+                                    },
+                                ],
                             },
                             { path: 'endre/:id', element: <EndreAktivitet /> },
                             { path: 'avbryt/:id', element: <AvbrytAktivitet /> },
