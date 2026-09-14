@@ -78,6 +78,7 @@ const initialState: FilterState = {
         FAG_OG_YRKESOPPLAERING: false,
         HOYERE_YRKESFAGLIG_UTDANNING: false,
         WORKOP: false,
+        DELE_CV_MED_ARBEIDSGIVER: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,

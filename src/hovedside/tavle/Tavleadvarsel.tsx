@@ -39,6 +39,7 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
                     return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til avtalen for å endre status.';
                 case EksternAktivitetType.REKRUTTERINGSTREFF:
                 case EksternAktivitetType.WORKOP:
+                case EksternAktivitetType.DELE_CV_MED_ARBEIDSGIVER:
                     return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til rekrutteringsbistand for å endre status.'
             }
             return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til det aktuelle fagsystemet for å endre aktiviteten.';
