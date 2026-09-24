@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Aktivitetstype = ({ aktivitet }: Props) => (
-    <Detail as="p" className={styles.type} data-testid={aktivitet.type}>
+    <Detail as="p" className={styles.type} data-testid={aktivitet.type} data-color="subtle">
         {getAktivitetType(aktivitet)}
     </Detail>
 );

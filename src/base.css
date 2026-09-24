@@ -2,3 +2,11 @@
 @import 'tailwindcss';
 @import "@navikt/ds-css" layer(components);
 @config '../tailwind.config.cjs';
+
+/* Mal shadow-root-innholdet med tema-bakgrunn, ellers arves hvit host-bakgrunn (bl.a. i dark mode) */
+#aktivitetsplan-root {
+    background-color: var(--ax-bg-default);
+    color: var(--ax-text-neutral);
+    min-height: 100%;
+}
+

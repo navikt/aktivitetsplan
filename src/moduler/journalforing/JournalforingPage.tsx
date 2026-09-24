@@ -26,8 +26,8 @@ export const JournalforingPage = () => {
     const visSuksessmelding = journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK;
 
     return (
-        <div className="flex flex-col grow">
-            <section className="flex md:flex-row flex-col relative">
+        <div className="flex flex-col grow bg-ax-bg-neutral-soft min-h-screen">
+            <section className="flex md:flex-row flex-col relative min-h-screen">
                 <Sidebar />
                 <StatusErrorBoundry
                     statuser={[forhaandsvisningStatus, journalførtStatus]}
