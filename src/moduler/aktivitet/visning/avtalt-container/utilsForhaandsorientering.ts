@@ -23,6 +23,7 @@ export const AVTALT_TEKST =
     'ber vi deg ta kontakt med veilederen din så snart som mulig.';
 
 export const AVTALT_TEKST_119 = `Ta kontakt med oss så raskt som mulig hvis du ikke kan gjennomføre denne aktiviteten.
+
 Det er viktig fordi hvis du uten rimelig grunn lar være å komme på møter eller ikke gjennomfører fastsatte aktiviteter, så kan vi redusere utbetalingen din med en stønadsdag. Det går frem av folketrygdloven § 11-9 og forskrift om arbeidsavklaringspenger § 4`;
 
 export const skalMarkereForhaandsorienteringSomLest = (erBruker: boolean, aktivitet?: AlleAktiviteter) => {
