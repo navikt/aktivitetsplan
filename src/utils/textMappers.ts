@@ -62,6 +62,8 @@ export const aktivitetTypeMap: Record<AlleAktivitetTyper, string> = {
     STUDIESPESIALISERING: 'Studiespesialisering',
     FAG_OG_YRKESOPPLAERING: 'Fag- og yrkesopplæring',
     HOYERE_YRKESFAGLIG_UTDANNING: 'Høyere yrkesfaglig utdanning',
+    WORKOP: 'Møteplass for arbeidsgivere og unge arbeidssøkere',
+    DELE_CV_MED_ARBEIDSGIVER: 'Stilling fra Nav',
 };
 
 export const aktivitetStatusMap: Record<AktivitetStatus, string> = {
