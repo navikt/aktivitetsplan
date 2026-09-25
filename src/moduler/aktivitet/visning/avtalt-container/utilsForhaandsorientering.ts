@@ -3,7 +3,7 @@ import { ForhaandsorienteringType } from '../../../../datatypes/forhaandsoriente
 import { ForhaandsorienteringDialogFormValues } from './aktivitet/AvtaltForm';
 
 export const getForhaandsorienteringText = (
-    forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues
+    forhaandsorienteringDialogFormValues: ForhaandsorienteringDialogFormValues,
 ) => {
     switch (forhaandsorienteringDialogFormValues.forhaandsorienteringType) {
         case ForhaandsorienteringType.SEND_STANDARD:
@@ -22,10 +22,8 @@ export const AVTALT_TEKST =
     'stønaden du mottar fra Nav bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
     'ber vi deg ta kontakt med veilederen din så snart som mulig.';
 
-export const AVTALT_TEKST_119 =
-    'Du kan få redusert utbetaling av arbeidsavklaringspenger med én stønadsdag hvis du lar være å ' +
-    '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
-    'fram av folketrygdloven § 11-9.';
+export const AVTALT_TEKST_119 = `Ta kontakt med oss så raskt som mulig hvis du ikke kan gjennomføre denne aktiviteten.
+Det er viktig fordi hvis du uten rimelig grunn lar være å komme på møter eller ikke gjennomfører fastsatte aktiviteter, så kan vi redusere utbetalingen din med en stønadsdag. Det går frem av folketrygdloven § 11-9 og forskrift om arbeidsavklaringspenger § 4`;
 
 export const skalMarkereForhaandsorienteringSomLest = (erBruker: boolean, aktivitet?: AlleAktiviteter) => {
     if (aktivitet === undefined) return false;
