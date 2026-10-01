@@ -52,10 +52,6 @@ export const defaultMockOppfolgingsPerioder: (OppfolgingsPeriode & { startTidspu
 
 export const oppfolgingGraphql: OppfolgingStatusResponse = {
     brukerStatus: {
-        arena: {
-            inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
-            kanReaktiveres: false,
-        },
         krr: {
             reservertIKrr: erKRRBruker(),
             registrertIKrr: !erIkkeRegistrertIKRR(),

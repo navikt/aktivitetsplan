@@ -101,11 +101,3 @@ export function selectErUnderKvp(state: RootState) {
         ?.kvpPerioder?.find((kvpPeriode) => !kvpPeriode.sluttTidspunkt);
     return !!nåværendeKvpPeriode;
 }
-
-export function selectKanReaktiveres(state: RootState) {
-    return selectOppfolgingData(state)?.brukerStatus?.arena?.kanReaktiveres;
-}
-
-export function selectInaktiveringsDato(state: RootState) {
-    return selectOppfolgingData(state)?.brukerStatus?.arena?.inaktiveringsdato;
-}

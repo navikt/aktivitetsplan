@@ -25,10 +25,6 @@ export interface OppfolgingStatusResponse {
             kanVarsles: boolean;
             registrertIKrr: boolean;
         };
-        arena: {
-            inaktiveringsdato: string | undefined;
-            kanReaktiveres: boolean | undefined;
-        };
     };
     oppfolgingsPerioder: OppfolgingsPeriode[];
     oppfolging: {
@@ -45,10 +41,6 @@ const schema = z.object({
             reservertIKrr: z.boolean(),
             kanVarsles: z.boolean(),
             registrertIKrr: z.boolean(),
-        }),
-        arena: z.object({
-            inaktiveringsdato: z.string().optional().nullable(),
-            kanReaktiveres: z.boolean().optional().nullable(),
         }),
     }),
     oppfolgingsPerioder: z.array(
@@ -78,10 +70,6 @@ const oppfolgingStatusQuery = `
                 reservertIKrr
                 kanVarsles
                 registrertIKrr
-            }
-            arena {
-                inaktiveringsdato
-                kanReaktiveres
             }
         },
         oppfolging(fnr: $fnr) {

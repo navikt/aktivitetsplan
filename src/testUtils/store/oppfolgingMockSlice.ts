@@ -9,10 +9,6 @@ const defaultOppfolgingData: OppfolgingStatusResponse = {
     },
     oppfolgingsPerioder: [aktivVeilarbOppfolgingMockPeriode],
     brukerStatus: {
-        arena: {
-            inaktiveringsdato: undefined,
-            kanReaktiveres: false,
-        },
         manuell: {
             erManuell: false,
         },
