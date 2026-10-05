@@ -79,7 +79,7 @@
     ]
   },
   "devDependencies": {
-    "@navikt/nav-dekoratoren-moduler": "^3.6.1",
+    "@navikt/nav-dekoratoren-moduler": "^4.5.0",
     "@swc/cli": "^0.8.1",
     "@swc/core": "^1.15.43",
     "@tailwindcss/vite": "^4.3.2",
