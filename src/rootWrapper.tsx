@@ -3,6 +3,7 @@ import './index.less';
 import './apmInit';
 
 import React from 'react';
+import { Provider as AkselProvider } from '@navikt/ds-react';
 
 import App from './app';
 import Provider from './Provider';
@@ -14,8 +15,10 @@ const createRoutesForUser = createRouterWithWrapper();
 export const renderAsReactRoot = (appElement: HTMLElement, props?: { fnr?: string }) => {
     const rootElement = createRoot(appElement || document.getElementById('root')!);
     rootElement.render(
-        <Provider fnr={props?.fnr}>
-            <App createRoutesForUser={createRoutesForUser} key={'1'} />
-        </Provider>,
+        <AkselProvider>
+            <Provider fnr={props?.fnr}>
+                <App createRoutesForUser={createRoutesForUser} key={'1'} />
+            </Provider>
+        </AkselProvider>,
     );
 };
