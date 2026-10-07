@@ -33,7 +33,7 @@ export const JournalforingPage = () => {
     }, [oppfolgingsperioder, oppfolgingsperiodeId]);
 
     if (!brukersOppfolgingsperiodeErIUrl) {
-        navigate(hovedsideRoute(true), { replace: true });
+        void navigate(hovedsideRoute(true), { replace: true });
         return;
     }
 
