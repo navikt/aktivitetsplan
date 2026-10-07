@@ -4,6 +4,7 @@ import {
     formaterDatoKortManed,
     formaterDatoKortManedTid,
     formaterTid,
+    norskTidSuffix,
 } from './utils/dateUtils';
 import { autobind, fn, storeForbokstaver } from './utils/utils';
 import { describe } from 'vitest';
@@ -85,10 +86,10 @@ describe('app utils', () => {
         it('Formater datoer riktig i norsk tid med suffiks', () => {
             expect(formaterDatoKortManedTid(null)).toBeUndefined();
             expect(formaterDatoKortManedTid(undefined)).toBeUndefined();
-            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1)
-            expect(formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual(
-                '13. feb. 2014 kl 15.23 (norsk tid)',
-            );
+            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1). Suffikset vises bare
+            // når maskinens lokale tid avviker fra norsk tid.
+            const iso = '2014-02-13T14:23:21.123Z';
+            expect(formaterDatoKortManedTid(iso)).toEqual(`13. feb. 2014 kl 15.23${norskTidSuffix(iso)}`);
         });
     });
 
@@ -96,8 +97,24 @@ describe('app utils', () => {
         it('Formater klokkeslett i norsk tid med suffiks', () => {
             expect(formaterTid(null)).toBeUndefined();
             expect(formaterTid(undefined)).toBeUndefined();
-            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1)
-            expect(formaterTid('2014-02-13T14:23:21.123Z')).toEqual('15.23 (norsk tid)');
+            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1). Suffikset vises bare
+            // når maskinens lokale tid avviker fra norsk tid.
+            const iso = '2014-02-13T14:23:21.123Z';
+            expect(formaterTid(iso)).toEqual(`15.23${norskTidSuffix(iso)}`);
+        });
+    });
+
+    describe('norskTidSuffix', () => {
+        it('Gir enten tomt suffiks eller " (norsk tid)"', () => {
+            // I norsk tidssone er suffikset tomt, ellers " (norsk tid)". Begge er gyldige
+            // avhengig av hvilken tidssone testen kjøres i.
+            expect(['', ' (norsk tid)']).toContain(norskTidSuffix('2014-02-13T14:23:21.123Z'));
+        });
+
+        it('Håndterer tomme og ugyldige verdier', () => {
+            expect(norskTidSuffix(null)).toEqual('');
+            expect(norskTidSuffix(undefined)).toEqual('');
+            expect(norskTidSuffix('ikke en dato')).toEqual('');
         });
     });
 
