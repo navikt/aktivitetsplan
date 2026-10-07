@@ -177,8 +177,8 @@ export function beregnFraTil(data: MoteTid): FraTil {
         );
         const tilDato = addMinutes(fraDato, varighet);
         return {
-            fraDato: fraDato.toISOString(),
-            tilDato: tilDato.toISOString(),
+            fraDato: new Date(fraDato.getTime()).toISOString(),
+            tilDato: new Date(tilDato.getTime()).toISOString(),
         };
     }
     return {
