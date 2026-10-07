@@ -1,3 +1,4 @@
+import { TZDate } from '@date-fns/tz';
 import {
     addMinutes,
     differenceInMinutes,
@@ -8,8 +9,6 @@ import {
     isValid,
     minutesToHours,
     parseISO,
-    setHours,
-    setMinutes,
     startOfDay,
     subMonths,
 } from 'date-fns';
@@ -25,6 +24,7 @@ import {
 } from '../../datatypes/internAktivitetTypes';
 import { Lest } from '../../datatypes/lestTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
+import { NORSK_TIDSSONE } from '../../utils/dateUtils';
 
 interface MoteTid {
     dato: Date;
@@ -111,8 +111,8 @@ export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasj
 export function beregnKlokkeslettVarighet(aktivitet: { fraDato: string; tilDato: string }): MoteTid | undefined {
     const { fraDato, tilDato } = aktivitet;
     if (fraDato && tilDato) {
-        const fra = new Date(fraDato);
-        const til = new Date(tilDato);
+        const fra = new TZDate(new Date(fraDato), NORSK_TIDSSONE);
+        const til = new TZDate(new Date(tilDato), NORSK_TIDSSONE);
         const varighet = differenceInMinutes(til, fra);
         const klokkeslett = format(fra, 'HH:mm');
         return {
@@ -164,7 +164,17 @@ export function beregnFraTil(data: MoteTid): FraTil {
 
     if (dato && klokkeslett && validKlokkeslett(klokkeslett) && varighet !== undefined && varighet !== null) {
         const { hour, minute } = toHourAndMinutes(klokkeslett);
-        const fraDato = setMinutes(setHours(startOfDay(toDate(dato)), hour), minute);
+        const valgtDato = toDate(dato);
+        const fraDato = new TZDate(
+            valgtDato.getFullYear(),
+            valgtDato.getMonth(),
+            valgtDato.getDate(),
+            hour,
+            minute,
+            0,
+            0,
+            NORSK_TIDSSONE,
+        );
         const tilDato = addMinutes(fraDato, varighet);
         return {
             fraDato: fraDato.toISOString(),

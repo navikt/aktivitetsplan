@@ -23,7 +23,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt key="dato" tittel="Dato" innhold={formaterDatoManed(aktivitet.fraDato)} />
             <Informasjonsfelt
                 key="klokkeslett"
-                tittel="Klokkeslett"
+                tittel="Klokkeslett (norsk tid)"
                 innhold={formatterKlokkeslett(moteTid?.klokkeslett)}
             />
             <Informasjonsfelt key="kanal" tittel="Møteform" innhold={aktivitet.kanal && kanalMap[aktivitet.kanal]} />

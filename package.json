@@ -23,6 +23,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.4.1",
     "@hookform/resolvers": "^3.10.0",
     "@navikt/aksel-icons": "^8.14.0",
     "@nais/apm": "^0.7.3",

@@ -82,22 +82,22 @@ describe('app utils', () => {
     });
 
     describe('formaterDatoKortManedTid', () => {
-        it('Formater datoer riktig', () => {
+        it('Formater datoer riktig i norsk tid med suffiks', () => {
             expect(formaterDatoKortManedTid(null)).toBeUndefined();
             expect(formaterDatoKortManedTid(undefined)).toBeUndefined();
-            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
+            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1)
             expect(formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual(
-                `13. feb. 2014 kl ${zuluDate.getHours()}.${zuluDate.getMinutes()}`,
-            ); // NB zulu-time != paris-time
+                '13. feb. 2014 kl 15.23 (norsk tid)',
+            );
         });
     });
 
     describe('formaterTid', () => {
-        it('Formater datoer riktig', () => {
+        it('Formater klokkeslett i norsk tid med suffiks', () => {
             expect(formaterTid(null)).toBeUndefined();
             expect(formaterTid(undefined)).toBeUndefined();
-            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
-            expect(formaterTid('2014-02-13T14:23:21.123Z')).toEqual(`${zuluDate.getHours()}.${zuluDate.getMinutes()}`); // NB zulu-time != paris-time
+            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1)
+            expect(formaterTid('2014-02-13T14:23:21.123Z')).toEqual('15.23 (norsk tid)');
         });
     });
 
