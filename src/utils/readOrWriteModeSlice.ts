@@ -6,6 +6,7 @@ import {
     selectErBrukerManuell,
     selectErRegisrertIKRR,
     selectErUnderOppfolging,
+    selectHarVeilederTilgangTilBrukerMedKVP,
     selectKanVarsles,
     selectReservasjonKRR,
     selectValgtPeriode,
@@ -58,9 +59,11 @@ const oppdaterSkriveLeseTilgang = (
     const erBrukerManuell = selectErBrukerManuell(state);
     const erVeileder = ER_INTERN_FLATE;
     const utdatertIKRR = !kanVarsles;
+    const veilederHarTilgangTilBrukerSomKanHaKVP = selectHarVeilederTilgangTilBrukerMedKVP(state);
 
+    console.log('veilederHarTilgangTilBrukerSomKanHaKVP', veilederHarTilgangTilBrukerSomKanHaKVP);
     const harSkriveTilgang =
-        erVeileder || (!reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
+        (erVeileder && veilederHarTilgangTilBrukerSomKanHaKVP) || (!erVeileder && !reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
 
     if (harSkriveTilgang && erUnderOppfolging && valgtPeriode && !valgtPeriode.slutt) {
         listenerApi.dispatch(setWriteMode());

@@ -74,6 +74,9 @@ export const oppfolgingGraphql: OppfolgingStatusResponse = {
                 sluttTidspunkt: kvpPeriode.sluttTidspunkt,
             })) || [],
     })),
+    veilederTilgang: {
+        harVeilederLeseTilgangTilBrukersKontorsperre: true,
+    },
 };
 
 const oppfolging = {
