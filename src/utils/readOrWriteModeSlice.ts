@@ -61,7 +61,6 @@ const oppdaterSkriveLeseTilgang = (
     const utdatertIKRR = !kanVarsles;
     const veilederHarTilgangTilBrukerSomKanHaKVP = selectHarVeilederTilgangTilBrukerMedKVP(state);
 
-    console.log('veilederHarTilgangTilBrukerSomKanHaKVP', veilederHarTilgangTilBrukerSomKanHaKVP);
     const harSkriveTilgang =
         (erVeileder && veilederHarTilgangTilBrukerSomKanHaKVP) || (!erVeileder && !reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
 
