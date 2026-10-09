@@ -18,6 +18,9 @@ const defaultOppfolgingData: OppfolgingStatusResponse = {
             kanVarsles: true,
         },
     },
+    veilederTilgang: {
+        harVeilederLeseTilgangTilBrukersKontorsperre: true,
+    },
 };
 
 /* 1 aktiv oppfolgingsperide, alt annet OK */

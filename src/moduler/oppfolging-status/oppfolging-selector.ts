@@ -101,3 +101,7 @@ export function selectErUnderKvp(state: RootState) {
         ?.kvpPerioder?.find((kvpPeriode) => !kvpPeriode.sluttTidspunkt);
     return !!nåværendeKvpPeriode;
 }
+
+export function selectHarVeilederTilgangTilBrukerMedKVP(state: RootState): boolean {
+    return selectOppfolgingData(state)?.veilederTilgang?.harVeilederLeseTilgangTilBrukersKontorsperre || false;
+}
