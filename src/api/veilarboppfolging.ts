@@ -3,6 +3,7 @@ import { OPPFOLGING_BASE_URL } from '../environment';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 import { OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 import * as z from 'zod';
+import { ER_INTERN_FLATE } from '../constant';
 
 interface KvpPeriode {
     startTidspunkt: string;
@@ -30,7 +31,7 @@ export interface OppfolgingStatusResponse {
     oppfolging: {
         erUnderOppfolging: boolean;
     };
-    veilederTilgang: {
+    veilederTilgang?: {
         harVeilederLeseTilgangTilBrukersKontorsperre: boolean;
     };
 }
@@ -61,13 +62,15 @@ const schema = z.object({
     oppfolging: z.object({
         erUnderOppfolging: z.boolean(),
     }),
-    veilederTilgang: z.object({
-        harVeilederLeseTilgangTilBrukersKontorsperre: z.boolean(),
-    }),
+    veilederTilgang: z
+        .object({
+            harVeilederLeseTilgangTilBrukersKontorsperre: z.boolean(),
+        })
+        .optional(),
 });
 
 const oppfolgingStatusQuery = `
-    query($fnr: String!) {
+    query($fnr: String!, $erVeileder: Boolean!) {
         brukerStatus(fnr: $fnr) {
             manuell {
                 erManuell
@@ -89,7 +92,7 @@ const oppfolgingStatusQuery = `
                 sluttTidspunkt
             }
         },
-        veilederTilgang(fnr: $fnr) {
+        veilederTilgang(fnr: $fnr) @include(if: $erVeileder) {
           harVeilederLeseTilgangTilBrukersKontorsperre
         }
     }
@@ -99,6 +102,7 @@ const query = (fnr: string | undefined) => ({
     query: oppfolgingStatusQuery,
     variables: {
         fnr: fnr || '',
+        erVeileder: ER_INTERN_FLATE,
     },
 });
 
