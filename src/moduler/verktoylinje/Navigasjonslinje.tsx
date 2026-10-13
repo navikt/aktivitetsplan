@@ -46,6 +46,9 @@ function Navigasjonslinje() {
     const canPrint = useSelector(selectCanPrint);
 
     const erJournalforingAktiv = useToggle('aktivitetsplan.journalforing');
+    const erAvsluttOppfolgingAktiv = useToggle('aktivitetsplan.avslutt-oppfolging');
+    // TODO: Vis kun lenken hvis bruker faktisk kan avslutte oppfølgingen (krever nytt felt/endepunkt i backend)
+    const kanAvslutteOppfolging = !erVeileder && erAvsluttOppfolgingAktiv;
 
     function handleClick() {
         loggEvent(APNE_OM_TJENESTEN);
@@ -90,7 +93,7 @@ function Navigasjonslinje() {
                           </ReactRouterLink>
                       )
                     : null}
-                {!erVeileder && (
+                {kanAvslutteOppfolging && (
                     <ReactRouterLink
                         to="avslutt-oppfolging"
                         className="text-ax-text-accent-subtle underline hover:no-underline"

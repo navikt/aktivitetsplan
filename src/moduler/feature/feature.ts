@@ -5,7 +5,11 @@ import { useSelector } from 'react-redux';
 import { selectFeatureSlice } from './feature-selector';
 import { Status } from '../../store/createGenericSlice';
 
-const ALL_TOGGLES = ['aktivitetsplan.tryggtekst', 'aktivitetsplan.journalforing'] as const;
+const ALL_TOGGLES = [
+    'aktivitetsplan.tryggtekst',
+    'aktivitetsplan.journalforing',
+    'aktivitetsplan.avslutt-oppfolging',
+] as const;
 
 export type Feature = (typeof ALL_TOGGLES)[number];
 export type Features = Record<Feature, boolean>;
