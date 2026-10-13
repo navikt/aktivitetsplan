@@ -90,6 +90,15 @@ function Navigasjonslinje() {
                           </ReactRouterLink>
                       )
                     : null}
+                {!erVeileder && (
+                    <ReactRouterLink
+                        to="avslutt-oppfolging"
+                        className="text-ax-text-accent-subtle underline hover:no-underline"
+                        onClick={() => logLenkeKlikket('Avslutt arbeidsrettet oppfølging')}
+                    >
+                        Avslutt arbeidsrettet oppfølging
+                    </ReactRouterLink>
+                )}
             </div>
             <Heading level="1" size="xlarge">
                 Aktivitetsplan

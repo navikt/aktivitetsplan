@@ -19,6 +19,7 @@ import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import { AktivitetsVersjonVisningContainer } from '../moduler/aktivitet/visning/versjoner/AktivitetsVersjonVisningContainer';
 import { aktivitetsVersjonVisningLoader } from '../moduler/aktivitet/visning/versjoner/aktivitet-versjon-slice';
 import { ModalRoute } from './ModalRoute';
+import { AvsluttOppfolgingPage } from '../moduler/avslutt-oppfolging/AvsluttOppfolgingPage';
 
 const baseName = 'aktivitetsplan';
 
@@ -114,6 +115,7 @@ export const routingConfig: (
                 loader: arkivLoader(dispatch, aktivEnhet),
                 element: <JournalforingPage />,
             },
+            ...(isVeileder ? [] : [{ path: 'avslutt-oppfolging', element: <AvsluttOppfolgingPage /> }]),
             { path: ':fnr/aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
             { path: 'aktivitet/vis/:id', element: <RedirectToAktivitetWithoutFnr /> },
             { path: '*', element: <Navigate replace to={isVeileder ? `/${baseName}` : '/'} /> },
