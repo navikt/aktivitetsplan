@@ -68,15 +68,15 @@ const LeggTilNyttAktivitetsKort = () => {
                     {menuItemsGroup.map((item, index) => (
                         <React.Fragment key={item.groupTittel}>
                             <Dropdown.Menu.GroupedList>
-                                <Dropdown.Menu.GroupedList.Heading>
+                                <Dropdown.Menu.GroupedList.Heading data-color="accent" >
                                     {item.groupTittel}
                                 </Dropdown.Menu.GroupedList.Heading>
                                 {item.groupedItems.map((subItem) => (
                                     <Dropdown.Menu.GroupedList.Item
+                                         data-color="accent"
                                         key={subItem.tittle}
                                         /* After enabling react-router startTrasition flag this is needed to avoid re-render loops in tests */
                                         onClick={() => navigate(subItem.link)}
-                                        className="text-ax-text-neutral"
                                     >
                                         {subItem.tittle}
                                     </Dropdown.Menu.GroupedList.Item>
