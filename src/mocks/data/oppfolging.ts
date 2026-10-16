@@ -63,6 +63,7 @@ export const oppfolgingGraphql: OppfolgingStatusResponse = {
     },
     oppfolging: {
         erUnderOppfolging: !erIkkeUnderOppfolging(),
+        kanAvslutteOppfolging: true,
     },
     oppfolgingsPerioder: defaultMockOppfolgingsPerioder.map((periode) => ({
         id: periode.id,

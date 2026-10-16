@@ -73,6 +73,9 @@ export const handlers = [
         });
     }),
     http.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
+    http.post('/veilarboppfolging/api/v3/oppfolging/avslutt-egen-oppfolging', () =>
+        new HttpResponse(null, { status: oppfFeilet() ? 500 : 204 }),
+    ),
 
     // veilarbdialog
     http.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel)),

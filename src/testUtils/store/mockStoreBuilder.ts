@@ -88,6 +88,7 @@ const defaultStore: RootState = {
             data: {
                 'aktivitetsplan.journalforing': true,
                 'aktivitetsplan.tryggtekst': true,
+                'aktivitetsplan.avslutt-egen-oppfolging': true,
             },
         },
         filter: {
