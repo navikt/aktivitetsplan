@@ -8,7 +8,7 @@ import { Status } from '../../store/createGenericSlice';
 const ALL_TOGGLES = [
     'aktivitetsplan.tryggtekst',
     'aktivitetsplan.journalforing',
-    'aktivitetsplan.avslutt-oppfolging',
+    'aktivitetsplan.avslutt-egen-oppfolging',
 ] as const;
 
 export type Feature = (typeof ALL_TOGGLES)[number];

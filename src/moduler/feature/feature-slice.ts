@@ -7,7 +7,7 @@ import { Features } from './feature';
 const initialFeatures: Features = {
     'aktivitetsplan.tryggtekst': false,
     'aktivitetsplan.journalforing': false,
-    'aktivitetsplan.avslutt-oppfolging': false,
+    'aktivitetsplan.avslutt-egen-oppfolging': false,
 };
 
 const featureSlice = createGenericSlice({

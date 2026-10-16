@@ -14,6 +14,7 @@ import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp, logLenkeKlikket } from '../../analytics/analytics';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { useToggle } from '../feature/feature';
+import { selectKanAvslutteOppfolging } from '../oppfolging-status/oppfolging-selector';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -46,9 +47,9 @@ function Navigasjonslinje() {
     const canPrint = useSelector(selectCanPrint);
 
     const erJournalforingAktiv = useToggle('aktivitetsplan.journalforing');
-    const erAvsluttOppfolgingAktiv = useToggle('aktivitetsplan.avslutt-oppfolging');
-    // TODO: Vis kun lenken hvis bruker faktisk kan avslutte oppfølgingen (krever nytt felt/endepunkt i backend)
-    const kanAvslutteOppfolging = !erVeileder && erAvsluttOppfolgingAktiv;
+    const erAvsluttOppfolgingAktiv = useToggle('aktivitetsplan.avslutt-egen-oppfolging');
+    const kanAvslutteOppfolging = useSelector(selectKanAvslutteOppfolging);
+    const visAvsluttOppfolgingLenke = !erVeileder && erAvsluttOppfolgingAktiv && kanAvslutteOppfolging;
 
     function handleClick() {
         loggEvent(APNE_OM_TJENESTEN);
@@ -93,7 +94,7 @@ function Navigasjonslinje() {
                           </ReactRouterLink>
                       )
                     : null}
-                {kanAvslutteOppfolging && (
+                {visAvsluttOppfolgingLenke && (
                     <ReactRouterLink
                         to="avslutt-oppfolging"
                         className="text-ax-text-accent-subtle underline hover:no-underline"

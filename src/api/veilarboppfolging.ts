@@ -30,6 +30,7 @@ export interface OppfolgingStatusResponse {
     oppfolgingsPerioder: OppfolgingsPeriode[];
     oppfolging: {
         erUnderOppfolging: boolean;
+        kanAvslutteOppfolging?: boolean | null;
     };
     veilederTilgang?: {
         harVeilederLeseTilgangTilBrukersKontorsperre: boolean;
@@ -61,6 +62,7 @@ const schema = z.object({
     ),
     oppfolging: z.object({
         erUnderOppfolging: z.boolean(),
+        kanAvslutteOppfolging: z.boolean().nullable().optional(),
     }),
     veilederTilgang: z
         .object({
@@ -83,6 +85,7 @@ const oppfolgingStatusQuery = `
         },
         oppfolging(fnr: $fnr) {
             erUnderOppfolging
+            kanAvslutteOppfolging @skip(if: $erVeileder)
         }
         oppfolgingsPerioder(fnr: $fnr) {
             id

@@ -14,6 +14,8 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { avsluttEgenOppfolging } from '../../api/oppfolgingAPI';
+import { HttpError } from '../../api/utils';
 import { logKlikkKnapp } from '../../analytics/analytics';
 import { AvsluttOppfolgingLayout } from './AvsluttOppfolgingLayout';
 import { AvsluttOppfolgingKvittering } from './AvsluttOppfolgingKvittering';
@@ -24,16 +26,12 @@ const schema = z.object({
 });
 type AvsluttOppfolgingFormValues = z.infer<typeof schema>;
 
-// TODO: Erstatt med kall mot veilarboppfolging når endepunktet finnes
-const avsluttOppfolging = (_data: AvsluttOppfolgingFormValues): Promise<void> =>
-    Promise.reject(new Error('Avslutt oppfølging er ikke implementert'));
-
 export const AvsluttOppfolgingPage = () => {
-    const [status, setStatus] = useState<'skjema' | 'vellykket' | 'feilet'>('skjema');
+    const [status, setStatus] = useState<'skjema' | 'vellykket' | 'feilet' | 'kanIkkeAvsluttes'>('skjema');
     const feilmeldingRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (status === 'feilet') feilmeldingRef.current?.focus();
+        if (status === 'feilet' || status === 'kanIkkeAvsluttes') feilmeldingRef.current?.focus();
     }, [status]);
 
     const {
@@ -53,10 +51,16 @@ export const AvsluttOppfolgingPage = () => {
     const onSubmit = async (data: AvsluttOppfolgingFormValues) => {
         setStatus('skjema');
         try {
-            await avsluttOppfolging(data);
+            await avsluttEgenOppfolging(data.begrunnelse);
             setStatus('vellykket');
-        } catch {
-            setStatus('feilet');
+        } catch (error) {
+            if (error instanceof HttpError) {
+                setStatus(error.code === '409' ? 'kanIkkeAvsluttes' : 'feilet');
+            } else if (error instanceof TypeError) {
+                setStatus('feilet');
+            } else {
+                throw error;
+            }
         }
     };
 
@@ -146,9 +150,11 @@ export const AvsluttOppfolgingPage = () => {
                     disabled={isSubmitting}
                     className="max-w-xs"
                 />
-                {status === 'feilet' && (
+                {(status === 'feilet' || status === 'kanIkkeAvsluttes') && (
                     <Alert variant="error" ref={feilmeldingRef} tabIndex={-1}>
-                        Noe gikk galt, og oppfølgingen ble ikke avsluttet. Prøv igjen senere.
+                        {status === 'kanIkkeAvsluttes'
+                            ? 'Oppfølgingen kan ikke avsluttes nå.'
+                            : 'Noe gikk galt, og oppfølgingen ble ikke avsluttet. Prøv igjen senere.'}
                     </Alert>
                 )}
                 <div>
