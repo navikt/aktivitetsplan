@@ -5,11 +5,11 @@ import { mockTestAktiviteter } from '../../../mocks/aktivitet';
 import { defaultMockOppfolgingsPerioder } from '../../../mocks/data/oppfolging';
 import userEvent from '@testing-library/user-event';
 import { datoErIPeriode } from './filter-utils';
-import { expect } from 'vitest';
+import { describe, expect } from 'vitest';
 import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { mockfnr } from '../../../mocks/utils';
-import { compareDesc } from 'date-fns';
+import { compareDesc, format } from 'date-fns';
 import { OppfolgingsPeriode } from '../../../api/veilarboppfolging';
 import { AktivitetsId } from '../../../datatypes/brandedTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
@@ -105,6 +105,34 @@ const gitt = {
 const gammelPeriodeDropdownTekst = '30. Jan 2017 - 31. Dec 2017';
 
 describe('PeriodeFilter.tsx', () => {
+    it('skal vise periodefilter uten å krasje når periodestart kommer fra postgres timestamp med og uten zone id', async () => {
+        const postgresTimestampMedZoneId = '2026-10-19T15:25:42.123456+02:00[Europe/Oslo]';
+        const postgresTimestampUtenZone = '2026-10-20T15:25:42.123456';
+        const historiskPeriodeMedPostgresDato = {
+            ...gammelOppfolgingsperiode,
+            startTidspunkt: postgresTimestampMedZoneId,
+        };
+        const historiskPeriodeUtenZone = {
+            ...endaGamlerePeriode,
+            startTidspunkt: postgresTimestampUtenZone,
+        };
+        const forventetPeriodeTekst = '19. Oct 2026 - 31. Dec 2017';
+        const forventetPeriodeTekstUtenZone = '20. Oct 2026 - 31. Dec 2016';
+
+        const store = storeBuilder()
+            .aktivteterOgPerioder({
+                aktiviteter: [veilarbAktivitet, gammelVeilarbAktivitet],
+                perioder: [gjeldendeOppfolgingsperiode, historiskPeriodeMedPostgresDato, historiskPeriodeUtenZone],
+                arenaAktiviteter: [arenaAktivitet, gammelArenaAktivitet],
+            })
+            .createStore();
+
+        const { getByRole, getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
+        await waitFor(() => getByText('Periode'));
+        getByRole('option', { name: forventetPeriodeTekst });
+        getByRole('option', { name: forventetPeriodeTekstUtenZone });
+    });
+
     describe('Veilarbaktivitet filtrering', () => {
         it('skal vise veilarb-aktivitet i nåværende periode (første i listen)', async () => {
             const store = gitt.aktiviteterÅpenOgLukketPeriode();

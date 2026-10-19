@@ -1,5 +1,5 @@
 import { Select } from '@navikt/ds-react';
-import { format } from 'date-fns';
+import { format, parse, parseISO } from 'date-fns';
 import React, { ChangeEventHandler, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -47,11 +47,11 @@ const PeriodeFilter = () => {
                 onChange={onPeriodeChange}
             >
                 {perioder.map(({ start, slutt, id }) => {
-                    const fraDato = format(new Date(start), 'dd. MMM yyyy');
+                    const fraDato = format(parseISO(start), 'dd. MMM yyyy');
                     const navn =
                         slutt === undefined || slutt === null
                             ? 'Nåværende periode'
-                            : `${fraDato} - ${format(new Date(slutt), 'dd. MMM yyyy')}`;
+                            : `${fraDato} - ${format(parseISO(slutt), 'dd. MMM yyyy')}`;
                     return (
                         <option value={id} key={id}>
                             {navn}
