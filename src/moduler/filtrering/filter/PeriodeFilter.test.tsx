@@ -9,7 +9,7 @@ import { describe, expect } from 'vitest';
 import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { mockfnr } from '../../../mocks/utils';
-import { compareDesc, format } from 'date-fns';
+import { compareDesc } from 'date-fns';
 import { OppfolgingsPeriode } from '../../../api/veilarboppfolging';
 import { AktivitetsId } from '../../../datatypes/brandedTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
@@ -105,6 +105,7 @@ const gitt = {
 const gammelPeriodeDropdownTekst = '30. Jan 2017 - 31. Dec 2017';
 
 describe('PeriodeFilter.tsx', () => {
+    /*  */
     it('skal vise periodefilter uten å krasje når periodestart kommer fra postgres timestamp med og uten zone id', async () => {
         const postgresTimestampMedZoneId = '2026-10-19T15:25:42.123456+02:00[Europe/Oslo]';
         const postgresTimestampUtenZone = '2026-10-20T15:25:42.123456';
