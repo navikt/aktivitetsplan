@@ -1,5 +1,3 @@
-import { DefaultBodyType, StrictRequest } from 'msw';
-
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import {
     erIkkeRegistrertIKRR,
@@ -104,7 +102,7 @@ const oppfolging = {
 
 export const mockOppfolging = { ...oppfolgingGraphql };
 
-export const getOppfolging = (_: StrictRequest<DefaultBodyType>) => {
+export const getOppfolging = () => {
     return { data: oppfolgingGraphql, errors: undefined };
 };
 

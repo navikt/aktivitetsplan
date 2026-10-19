@@ -63,7 +63,7 @@ const hasNoOverlap = (a: string[], b: string[]): boolean => {
 const activeFilters = (filterMap: Record<string, true | false>): string[] =>
     Object.entries(filterMap)
         .filter(([_key, value]) => value)
-        .map(([key, _]) => key);
+        .map(([key]) => key);
 
 const getTiltakstatusEtiketter = (aktivitet: AlleAktiviteter) => {
     if (isArenaAktivitet(aktivitet)) {
@@ -95,8 +95,8 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
     const arenaEtikettFilter = selectArenaAktivitetEtiketterFilter(state);
     if (erAktivtFilter(arenaEtikettFilter)) {
         const aktiveFilters = Object.entries(arenaEtikettFilter)
-            .filter(([_, val]: [string, unknown]) => !!val)
-            .map(([key, _]: [string, unknown]) => key);
+            .filter(([, val]: [string, unknown]) => !!val)
+            .map(([key]: [string, unknown]) => key);
         const etiketter = getTiltakstatusEtiketter(aktivitet);
         if (hasNoOverlap(etiketter, aktiveFilters)) {
             return false;
