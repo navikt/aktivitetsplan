@@ -9,14 +9,6 @@ export const fetchIdentitet = (): Promise<Me> => getAsJson(`${OPPFOLGING_BASE_UR
 export const settDigital = (fnr: string | undefined): Promise<void> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/oppfolging/settDigital`, fnr ? { fnr } : undefined, 'settDigital');
 
-export const avsluttEgenOppfolging = async (begrunnelse: string): Promise<void> => {
-    await postAsJson(
-        `${OPPFOLGING_BASE_URL}/v3/oppfolging/avslutt-egen-oppfolging`,
-        { begrunnelse },
-        'avsluttEgenOppfolging',
-    );
-};
-
 export const fetchMal = (fnr: string | undefined): Promise<Mal> =>
     postAsJson(`${OPPFOLGING_BASE_URL}/v3/hent-maal`, fnr ? { fnr } : undefined, 'fetchMal');
 

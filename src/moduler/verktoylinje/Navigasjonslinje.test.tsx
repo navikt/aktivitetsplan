@@ -2,15 +2,20 @@ import React from 'react';
 import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 import { ErVeilederContext } from '../../Provider';
 import { gitt } from '../../testUtils/store/mockStoreBuilder';
 import { Status } from '../../store/createGenericSlice';
 import { selectKanAvslutteOppfolging } from '../oppfolging-status/oppfolging-selector';
 import Navigasjonslinje from './Navigasjonslinje';
 
-const feature = vi.hoisted(() => ({ aktiv: true }));
+const feature = vi.hoisted(() => {
+    vi.stubEnv('VITE_AVSLUTT_OPPFOLGING_URL', 'https://start-arbeidsoppfolging.ekstern.dev.nav.no/avslutt-oppfolging');
+    return { aktiv: true };
+});
 vi.mock('../feature/feature', () => ({ useToggle: () => feature.aktiv }));
+
+afterAll(() => vi.unstubAllEnvs());
 
 afterEach(() => {
     cleanup();
@@ -47,6 +52,12 @@ describe('lenke til avslutt oppfølging', () => {
             </Provider>,
         );
         expect(!!screen.queryByRole('link', { name: 'Avslutt arbeidsrettet oppfølging' })).toBe(verdi === true);
+        if (verdi === true) {
+            expect(screen.getByRole('link', { name: 'Avslutt arbeidsrettet oppfølging' })).toHaveAttribute(
+                'href',
+                'https://start-arbeidsoppfolging.ekstern.dev.nav.no/avslutt-oppfolging',
+            );
+        }
     });
 
     it.each([

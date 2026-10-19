@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router';
 import { fetchSistOppdatert } from '../../api/dialogAPI';
-import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
+import { ARBEIDSRETTET_DIALOG_URL, AVSLUTT_OPPFOLGING_URL, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
@@ -95,13 +95,12 @@ function Navigasjonslinje() {
                       )
                     : null}
                 {visAvsluttOppfolgingLenke && (
-                    <ReactRouterLink
-                        to="avslutt-oppfolging"
-                        className="text-ax-text-accent-subtle underline hover:no-underline"
+                    <Link
+                        href={AVSLUTT_OPPFOLGING_URL}
                         onClick={() => logLenkeKlikket('Avslutt arbeidsrettet oppfølging')}
                     >
                         Avslutt arbeidsrettet oppfølging
-                    </ReactRouterLink>
+                    </Link>
                 )}
             </div>
             <Heading level="1" size="xlarge">
