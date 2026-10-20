@@ -1,10 +1,13 @@
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const { createRootMock, saveReduxStateToSessionStorageMock } = vi.hoisted(() => ({
+const { createRootMock, saveReduxStateToSessionStorageMock, setFnrFromProviderMock, setAktivEnhetFromProviderMock } =
+    vi.hoisted(() => ({
     createRootMock: vi.fn(),
     saveReduxStateToSessionStorageMock: vi.fn(),
-}));
+        setFnrFromProviderMock: vi.fn(),
+        setAktivEnhetFromProviderMock: vi.fn(),
+    }));
 
 vi.mock('react-dom/client', () => ({
     createRoot: createRootMock,
@@ -19,7 +22,19 @@ vi.mock('./app', () => ({
 }));
 
 vi.mock('./Provider', () => ({
-    default: ({ children }: { children: ReactNode }) => children,
+    default: ({
+        children,
+        setFnrRef,
+        setAktivEnhetRef,
+    }: {
+        children: ReactNode;
+        setFnrRef?: (setFnr: (fnr: string) => void) => void;
+        setAktivEnhetRef?: (setAktivEnhet: (enhet: string) => void) => void;
+    }) => {
+        setFnrRef?.(setFnrFromProviderMock);
+        setAktivEnhetRef?.(setAktivEnhetFromProviderMock);
+        return children;
+    },
 }));
 
 vi.mock('./routing/routerConfig', () => ({
@@ -99,7 +114,7 @@ describe('DabAktivitetsplan lifecycle', () => {
         expect(createRootMock).toHaveBeenCalledTimes(2);
     });
 
-    it('should not re-render root when data-fnr and data-aktivEnhet attributes change', () => {
+    it('should not re-render root when data-fnr and data-aktivenhet attributes change', () => {
         const element = document.createElement(TEST_TAG_NAME) as DabAktivitetsplan;
 
         element.connectedCallback();
@@ -109,9 +124,39 @@ describe('DabAktivitetsplan lifecycle', () => {
         expect(root.render).toHaveBeenCalledTimes(1);
 
         element.setAttribute('data-fnr', '123');
-        element.setAttribute('data-aktivEnhet', '4321');
+        element.setAttribute('data-aktivenhet', '4321');
 
         expect(createRootMock).toHaveBeenCalledTimes(1);
         expect(root.render).toHaveBeenCalledTimes(1);
+    });
+
+    it('should pass fnr and aktivEnhet attributes to Provider on mount', () => {
+        const element = document.createElement(TEST_TAG_NAME) as DabAktivitetsplan;
+        element.setAttribute('data-fnr', '12345678901');
+        element.setAttribute('data-aktivenhet', '9999');
+
+        element.connectedCallback();
+        const root = createRootMock.mock.results[0].value;
+        const renderedTree = root.render.mock.calls[0][0];
+        const providerElement = renderedTree.props.children;
+
+        expect(providerElement.props.fnr).toBe('12345678901');
+        expect(providerElement.props.aktivEnhet).toBe('9999');
+    });
+
+    it('should forward updated fnr and aktivEnhet attribute values after mount', () => {
+        const element = document.createElement(TEST_TAG_NAME) as DabAktivitetsplan;
+
+        element.connectedCallback();
+        const root = createRootMock.mock.results[0].value;
+        const renderedTree = root.render.mock.calls[0][0];
+        const providerElement = renderedTree.props.children;
+        providerElement.type(providerElement.props);
+
+        element.setAttribute('data-fnr', '11111111111');
+        element.setAttribute('data-aktivenhet', '4444');
+
+        expect(setFnrFromProviderMock).toHaveBeenCalledWith('11111111111');
+        expect(setAktivEnhetFromProviderMock).toHaveBeenCalledWith('4444');
     });
 });

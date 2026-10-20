@@ -32,7 +32,7 @@ const renderApp = () => {
 if (USE_MOCK) {
     const webComponentTag = document.createElement('dab-aktivitetsplan');
     webComponentTag.setAttribute('data-fnr', mockfnr);
-    webComponentTag.setAttribute('data-aktivEnhet', mockAktivEnhet);
+    webComponentTag.setAttribute('data-aktivenhet', mockAktivEnhet);
     document.getElementById('mainapp')?.appendChild(webComponentTag);
     Promise.all([import('./mocks'), import('./mocks/demo/DemoBanner')]).then(
         ([{ default: startWorker }, { default: DemoBanner }]) => {

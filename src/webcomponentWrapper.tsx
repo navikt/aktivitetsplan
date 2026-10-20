@@ -23,12 +23,76 @@ import {
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
 
+const FNR_ATTRIBUTE = 'data-fnr';
+const AKTIV_ENHET_ATTRIBUTE = 'data-aktivenhet';
+
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     setAktivEnhet?: (enhet: string) => void;
     root: Root | undefined;
     appRoot: HTMLDivElement | undefined;
-    shadowRootNode: ShadowRoot | undefined;
+
+    private getComponentProps() {
+        return {
+            fnr: this.getAttribute(FNR_ATTRIBUTE) ?? undefined,
+            aktivEnhet: this.getAttribute(AKTIV_ENHET_ATTRIBUTE) ?? undefined,
+        };
+    }
+
+    private getPreloadedState(fnr: string | undefined): RootState | undefined {
+        if (!fnr) {
+            return undefined;
+        }
+        settSessionStorage(LocalStorageElement.FNR, fnr);
+        return getPreloadedStateFromSessionStorage(fnr);
+    }
+
+    private mountReactApp({
+        appRoot,
+        fnr,
+        aktivEnhet,
+        preloadedState,
+    }: {
+        appRoot: HTMLDivElement;
+        fnr: string | undefined;
+        aktivEnhet: string | undefined;
+        preloadedState: RootState | undefined;
+    }) {
+        this.root = createRoot(appRoot);
+        this.root.render(
+            <AkselProvider rootElement={appRoot}>
+                <Provider
+                    preloadedState={preloadedState}
+                    key={fnr}
+                    fnr={fnr}
+                    setFnrRef={(setFnr) => (this.setFnr = setFnr)}
+                    setAktivEnhetRef={(setEnhet) => (this.setAktivEnhet = setEnhet)}
+                    aktivEnhet={aktivEnhet}
+                >
+                    <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
+                </Provider>
+            </AkselProvider>,
+        );
+    }
+
+    private getOrCreateAppRoot() {
+        if (this.appRoot) {
+            return this.appRoot;
+        }
+
+        const appRoot = document.createElement('div');
+        appRoot.id = 'aktivitetsplan-root';
+        const shadowRootNode = this.attachShadow({ mode: 'closed' });
+        shadowRootNode.appendChild(appRoot);
+
+        // Load styles under this shadowDom-node, not root element
+        const styleElem = document.createElement('style');
+        styleElem.innerHTML = baseCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
+        shadowRootNode.appendChild(styleElem);
+
+        this.appRoot = appRoot;
+        return appRoot;
+    }
 
     disconnectedCallback() {
         try {
@@ -46,56 +110,25 @@ export class DabAktivitetsplan extends HTMLElement {
         if (this.root) {
             return;
         }
-        if (!this.appRoot || !this.shadowRootNode) {
-            // This will be app entry point, need to be outside modal-mount node
-            this.appRoot = document.createElement('div');
-            this.appRoot.id = 'aktivitetsplan-root';
-            this.shadowRootNode = this.attachShadow({ mode: 'closed' });
-            this.shadowRootNode.appendChild(this.appRoot);
-
-            // Load styles under this shadowDom-node, not root element
-            const styleElem = document.createElement('style');
-            styleElem.innerHTML = baseCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
-            this.shadowRootNode.appendChild(styleElem);
-        }
-
-        const fnr = this.getAttribute('data-fnr') ?? undefined;
-        const aktivEnhet = this.getAttribute('data-aktivEnhet') ?? undefined;
-        let preloadedState: RootState | undefined = undefined;
-        if (fnr) {
-            settSessionStorage(LocalStorageElement.FNR, fnr);
-            preloadedState = getPreloadedStateFromSessionStorage(fnr);
-        }
+        const appRoot = this.getOrCreateAppRoot();
+        const { fnr, aktivEnhet } = this.getComponentProps();
+        const preloadedState = this.getPreloadedState(fnr);
         slettGamleSamtalereferatKladder();
-        this.root = createRoot(this.appRoot);
-        this.root.render(
-            <AkselProvider rootElement={this.appRoot}>
-                <Provider
-                    preloadedState={preloadedState}
-                    key={fnr}
-                    fnr={fnr}
-                    setFnrRef={(setFnr) => (this.setFnr = setFnr)}
-                    setAktivEnhetRef={(setEnhet) => (this.setAktivEnhet = setEnhet)}
-                    aktivEnhet={aktivEnhet}
-                >
-                    <App createRoutesForUser={createRouterWithWrapper()} key={'1'} />
-                </Provider>
-            </AkselProvider>,
-        );
+        this.mountReactApp({ appRoot, fnr, aktivEnhet, preloadedState });
     }
 
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        if (name === 'data-fnr' && this.setFnr) {
+        if (name === FNR_ATTRIBUTE && this.setFnr) {
             settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setFnr(newValue);
         }
-        if (name === 'data-aktivEnhet' && this.setAktivEnhet) {
+        if (name === AKTIV_ENHET_ATTRIBUTE && this.setAktivEnhet) {
             settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setAktivEnhet(newValue);
         }
     }
 
     static get observedAttributes() {
-        return ['data-fnr', 'data-aktivEnhet'];
+        return [FNR_ATTRIBUTE, AKTIV_ENHET_ATTRIBUTE];
     }
 }
