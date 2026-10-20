@@ -9,7 +9,7 @@ import { describe, expect } from 'vitest';
 import { erHistorisk, HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
 import { WrappedHovedside } from '../../../testUtils/WrappedHovedside';
 import { mockfnr } from '../../../mocks/utils';
-import { compareDesc, format } from 'date-fns';
+import { compareDesc } from 'date-fns';
 import { OppfolgingsPeriode } from '../../../api/veilarboppfolging';
 import { AktivitetsId } from '../../../datatypes/brandedTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';

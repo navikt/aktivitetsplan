@@ -1,5 +1,5 @@
 import { Select } from '@navikt/ds-react';
-import { format, parse, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import React, { ChangeEventHandler, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
