@@ -27,23 +27,33 @@ export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     setAktivEnhet?: (enhet: string) => void;
     root: Root | undefined;
+    appRoot: HTMLDivElement | undefined;
+    shadowRootNode: ShadowRoot | undefined;
 
     disconnectedCallback() {
         saveReduxStateToSessionStorage();
         this.root?.unmount();
+        this.root = undefined;
+        this.setFnr = undefined;
+        this.setAktivEnhet = undefined;
     }
 
     connectedCallback() {
-        // This will be app entry point, need to be outside modal-mount node
-        const appRoot = document.createElement('div');
-        appRoot.id = 'aktivitetsplan-root';
-        const shadowRoot = this.attachShadow({ mode: 'closed' });
-        shadowRoot.appendChild(appRoot);
+        if (this.root) {
+            return;
+        }
+        if (!this.appRoot || !this.shadowRootNode) {
+            // This will be app entry point, need to be outside modal-mount node
+            this.appRoot = document.createElement('div');
+            this.appRoot.id = 'aktivitetsplan-root';
+            this.shadowRootNode = this.attachShadow({ mode: 'closed' });
+            this.shadowRootNode.appendChild(this.appRoot);
 
-        // Load styles under this shadowDom-node, not root element
-        const styleElem = document.createElement('style');
-        styleElem.innerHTML = baseCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
-        shadowRoot.appendChild(styleElem);
+            // Load styles under this shadowDom-node, not root element
+            const styleElem = document.createElement('style');
+            styleElem.innerHTML = baseCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
+            this.shadowRootNode.appendChild(styleElem);
+        }
 
         const fnr = this.getAttribute('data-fnr') ?? undefined;
         const aktivEnhet = this.getAttribute('data-aktivEnhet') ?? undefined;
@@ -53,9 +63,9 @@ export class DabAktivitetsplan extends HTMLElement {
             preloadedState = getPreloadedStateFromSessionStorage(fnr);
         }
         slettGamleSamtalereferatKladder();
-        this.root = createRoot(appRoot);
+        this.root = createRoot(this.appRoot);
         this.root.render(
-            <AkselProvider rootElement={appRoot}>
+            <AkselProvider rootElement={this.appRoot}>
                 <Provider
                     preloadedState={preloadedState}
                     key={fnr}
