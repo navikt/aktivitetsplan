@@ -31,7 +31,11 @@ export class DabAktivitetsplan extends HTMLElement {
     shadowRootNode: ShadowRoot | undefined;
 
     disconnectedCallback() {
-        saveReduxStateToSessionStorage();
+        try {
+            saveReduxStateToSessionStorage();
+        } catch (e) {
+            console.warn(`Failed to save redux state to session storage when unmounting web-component`, e);
+        }
         this.root?.unmount();
         this.root = undefined;
         this.setFnr = undefined;
