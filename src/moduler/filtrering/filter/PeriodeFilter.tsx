@@ -47,7 +47,12 @@ const PeriodeFilter = () => {
                 onChange={onPeriodeChange}
             >
                 {perioder.map(({ start, slutt, id }) => {
-                    const fraDato = format(parseISO(start), 'dd. MMM yyyy');
+                    let fraDato = undefined;
+                    try {
+                        fraDato = format(parseISO(start), 'dd. MMM yyyy');
+                    } catch (error) {
+                        throw Error(`Error parsing date: ${start}`, { cause: error });
+                    }
                     const navn =
                         slutt === undefined || slutt === null
                             ? 'Nåværende periode'
