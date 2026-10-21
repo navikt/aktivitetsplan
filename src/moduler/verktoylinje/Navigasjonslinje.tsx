@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link as ReactRouterLink } from 'react-router';
 import { fetchSistOppdatert } from '../../api/dialogAPI';
-import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
+import { ARBEIDSRETTET_DIALOG_URL, AVSLUTT_OPPFOLGING_URL, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import loggEvent, { APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { useErVeileder } from '../../Provider';
@@ -14,6 +14,7 @@ import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp, logLenkeKlikket } from '../../analytics/analytics';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { useToggle } from '../feature/feature';
+import { selectKanAvslutteOppfolging } from '../oppfolging-status/oppfolging-selector';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -46,6 +47,9 @@ function Navigasjonslinje() {
     const canPrint = useSelector(selectCanPrint);
 
     const erJournalforingAktiv = useToggle('aktivitetsplan.journalforing');
+    const erAvsluttOppfolgingAktiv = useToggle('aktivitetsplan.avslutt-egen-oppfolging');
+    const kanAvslutteOppfolging = useSelector(selectKanAvslutteOppfolging);
+    const visAvsluttOppfolgingLenke = !erVeileder && erAvsluttOppfolgingAktiv && kanAvslutteOppfolging;
 
     function handleClick() {
         loggEvent(APNE_OM_TJENESTEN);
@@ -90,6 +94,14 @@ function Navigasjonslinje() {
                           </ReactRouterLink>
                       )
                     : null}
+                {visAvsluttOppfolgingLenke && (
+                    <Link
+                        href={AVSLUTT_OPPFOLGING_URL}
+                        onClick={() => logLenkeKlikket('Avslutt arbeidsrettet oppfølging')}
+                    >
+                        Avslutt arbeidsrettet oppfølging
+                    </Link>
+                )}
             </div>
             <Heading level="1" size="xlarge">
                 Aktivitetsplan
