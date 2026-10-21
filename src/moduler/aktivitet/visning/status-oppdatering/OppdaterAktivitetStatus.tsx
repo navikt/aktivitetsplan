@@ -36,7 +36,7 @@ const lagreStatusEndringer = (
     }
 
     flyttetAktivitetMetrikk('submit', aktivitet, values.aktivitetstatus);
-    return dispatch(flyttAktivitetMedBegrunnelse(aktivitet, values.aktivitetstatus, values.begrunnelse));
+    return dispatch(flyttAktivitetMedBegrunnelse(aktivitet, values.aktivitetstatus, values.begrunnelse ?? ''));
 };
 
 interface OppdaterAktivitetStatusProps {
@@ -58,7 +58,7 @@ const OppdaterAktivitetStatus = (props: OppdaterAktivitetStatusProps) => {
                 return null;
             }
             setIsOpen(false);
-            document.querySelector('.aktivitet-modal')?.focus();
+            (document.querySelector('.aktivitet-modal') as HTMLElement | null)?.focus();
         });
     };
 

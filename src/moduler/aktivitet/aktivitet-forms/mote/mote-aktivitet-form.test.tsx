@@ -1,25 +1,45 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { RenderResult, fireEvent, render, screen, act } from '@testing-library/react';
+import {
+    RenderResult,
+    fireEvent,
+    render,
+    screen,
+    act,
+    ByRoleMatcher,
+    ByRoleOptions,
+    within,
+    SelectorMatcherOptions,
+    Matcher,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { addDays, addMinutes, differenceInMinutes, subYears } from 'date-fns';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import { MOTE_TYPE } from '../../../../constant';
-import reducer from '../../../../reducer';
+import rootReducer from '../../../../store/rootReducer';
 import MoteAktivitetForm from './MoteAktivitetForm';
-import { expect } from 'vitest';
+import { expect, Mock } from 'vitest';
 import { Kanal } from '../../../../datatypes/aktivitetTypes';
+import { OppfolgingStatusResponse } from '../../../../api/veilarboppfolging';
+import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
+import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 
 const initialState: any = {
     data: {
-        oppfolging: { data: { underOppfolging: true } },
+        oppfolging: {
+            data: {
+                oppfolging: {
+                    erUnderOppfolging: true,
+                },
+            } as Partial<OppfolgingStatusResponse>,
+        },
         aktiviteter: [],
     },
 };
 
 const dirtyRef = { current: false };
-const store = configureStore({ reducer, preloadedState: initialState as any });
+const store = configureStore({ reducer: rootReducer, preloadedState: initialState as any });
 
 function mountWithIntl(node: any): RenderResult {
     return render(<ReduxProvider store={store}>{node}</ReduxProvider>);
@@ -48,20 +68,32 @@ const fillForm = () => {
     });
     fireEvent.change(screen.getByLabelText<HTMLInputElement>('Forberedelser til møtet (valgfri)'));
 };
+
+const getLagreKnapp = (getByRole: (role: ByRoleMatcher, options?: ByRoleOptions | undefined) => HTMLElement) => {
+    return getByRole('button', { name: 'Lagre' });
+};
+const getFormErrorsContainer = (
+    getByText: (id: Matcher, options?: SelectorMatcherOptions | undefined) => HTMLElement,
+) => {
+    const errorBox = getByText('For å gå videre må du rette opp følgende:');
+    return errorBox.parentElement!;
+};
+
 describe('MoteAktivitetForm', () => {
-    it.skip('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', async () => {
+    it('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', async () => {
         const { queryByText, getByText, getByRole } = mountWithIntl(
-            <MoteAktivitetForm onSubmit={() => Promise.resolve()} isDirtyRef={dirtyRef} />,
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />,
         );
         expect(queryByText('For å gå videre må du rette opp følgende')).toBeNull();
+        const lagreKnapp = getLagreKnapp(getByRole);
 
-        fireEvent.click(getByRole('button', { name: 'Lagre' }));
-        getByRole('button', { name: 'Lagre' }).click();
-        getByText('Lagre').click();
-        getByText('For å gå videre må du rette opp følgende:');
-        getByText('Du må fylle ut tema for møtet');
-        getByText('Du må fylle ut møtested eller annen praktisk informasjon');
-        getByText('Du må fylle ut dato for møtet');
+        await act(() => lagreKnapp.click());
+
+        const errorBoxContainer = getFormErrorsContainer(getByText);
+        within(errorBoxContainer).getByText('For å gå videre må du rette opp følgende:');
+        within(errorBoxContainer).getByText('Du må fylle ut tema for møtet');
+        within(errorBoxContainer).getByText('Du må fylle ut møtested eller annen praktisk informasjon');
+        within(errorBoxContainer).getByText('Dato må fylles ut');
     });
     it.skip('Skal ikke vise feil når obligatoriske felter er oppgitt', () => {
         const aktivitet = {
@@ -78,8 +110,8 @@ describe('MoteAktivitetForm', () => {
         render(
             <ReduxProvider store={store}>
                 <MoteAktivitetForm
-                    onSubmit={() => new Promise(() => null)}
-                    isDirtyRef={dirtyRef}
+                    onSubmit={() => Promise.resolve()}
+                    dirtyRef={dirtyRef}
                     aktivitet={aktivitet as any}
                 />
             </ReduxProvider>,
@@ -89,7 +121,7 @@ describe('MoteAktivitetForm', () => {
         expect(screen.queryByText('Feiloppsummering')).toBeNull();
     });
 
-    it.skip('Skal vise feil når dato er tidligere enn i dag', () => {
+    it('Skal vise feil når dato er tidligere enn i dag', async () => {
         const aktivitet = {
             tittel: 'Anakromisme',
             fraDato: subYears(new Date(), 1).toISOString(),
@@ -97,40 +129,46 @@ describe('MoteAktivitetForm', () => {
             adresse: 'Fortiden',
             erAvtalt: false,
         };
-        mountWithIntl(
-            <MoteAktivitetForm
-                onSubmit={() => new Promise(() => null)}
-                isDirtyRef={dirtyRef}
-                aktivitet={aktivitet as any}
-            />,
+        const { getByText } = mountWithIntl(
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet as any} />,
         );
 
-        fireEvent.click(screen.getByText('Lagre'));
-        screen.getByText('Datoen må tidligst være i dag');
+        await act(async () => {
+            fireEvent.click(screen.getByText('Lagre'));
+        });
+
+        const errorBoxContainer = getFormErrorsContainer(getByText);
+        within(errorBoxContainer).getByText('Dato kan ikke være tilbake i tid');
     });
 
-    it.skip('Skal populere felter når aktivitet er satt', () => {
+    it('Skal populere felter når aktivitet er satt', () => {
         const aktivitet = {
+            ...enMoteAktivitet(),
             tittel: 'Dette er en test',
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
-            type: MOTE_TYPE,
             adresse: 'Slottet',
         };
-        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
+        const { getByDisplayValue } = mountWithIntl(
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+        );
 
-        screen.getByDisplayValue(aktivitet.tittel);
+        getByDisplayValue(aktivitet.tittel);
         const date = new Date(aktivitet.fraDato);
-        screen.getByDisplayValue(`${date.getDate()}.${'0' + (date.getMonth() + 1)}.${date.getFullYear()}`);
-        screen.getByDisplayValue('07:00');
-        screen.getByDisplayValue('01:00');
-        screen.getByDisplayValue(aktivitet.adresse);
+        getByDisplayValue(`${date.getDate()}.${'' + (date.getMonth() + 1)}.${date.getFullYear()}`);
+        getByDisplayValue('1 time');
+        getByDisplayValue(aktivitet.adresse);
     });
 
     it('Skal ikke populere beskrivelse(hensikt) med defaultverdi når man endrer', () => {
-        const aktivitet = { beskrivelse: 'Dette er en beskrivelse' };
-        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
+        const aktivitet = {
+            ...enMoteAktivitet(),
+            beskrivelse: 'Dette er en beskrivelse',
+        };
+        mountWithIntl(
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+        );
         screen.getByDisplayValue('Dette er en beskrivelse');
     });
 
@@ -149,26 +187,33 @@ describe('MoteAktivitetForm', () => {
             varighet: 30,
         };
 
-        const mock = vi.fn();
-        mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
+        const onFormSumbitMock: Mock = vi.fn(() => Promise.resolve());
+        const { getByText, queryByText, getByLabelText, getByRole } = mountWithIntl(
+            <MoteAktivitetForm onSubmit={onFormSumbitMock} dirtyRef={dirtyRef} />,
+        );
         fillForm();
-        fireEvent.change(screen.getByLabelText<HTMLInputElement>('Varighet (obligatorisk)'), {
+        fireEvent.change(getByLabelText('Varighet (obligatorisk)'), {
             target: { value: '30' },
         });
+
+        const lagreKnapp = getByRole('button', { name: 'Lagre' });
+        expect(lagreKnapp).not.toBeDisabled();
+
         await act(async () => {
-            fireEvent.click(screen.getByText('Lagre'));
+            fireEvent.click(getByText('Lagre'));
         });
 
-        const lastcall = mock.mock.lastCall[0];
+        expect(queryByText('For å gå videre må du rette opp følgende:')).not.toBeInTheDocument();
+        expect(onFormSumbitMock).toHaveBeenCalled();
+        const lastcall = onFormSumbitMock.mock.lastCall![0];
         const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
         expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
-
         expect(lastcall).toEqual(expect.objectContaining(expectedResult));
     });
 
     it('Skal selekte riktig varighet', async () => {
-        const mock = vi.fn();
-        mountWithIntl(<MoteAktivitetForm onSubmit={mock} isDirtyRef={dirtyRef} />);
+        const mock: Mock = vi.fn(() => Promise.resolve());
+        mountWithIntl(<MoteAktivitetForm onSubmit={mock} dirtyRef={dirtyRef} />);
 
         fillForm();
         await userEvent.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '2 timer, 30 minutter');
@@ -177,7 +222,7 @@ describe('MoteAktivitetForm', () => {
             fireEvent.click(screen.getByText('Lagre'));
         });
 
-        const lastcall = mock.mock.lastCall[0];
+        const lastcall = mock.mock.lastCall![0];
         const { fraDato, tilDato, varighet }: { fraDato: Date; tilDato: Date; varighet: number } = lastcall;
         expect(differenceInMinutes(new Date(tilDato), new Date(fraDato))).toBe(varighet);
 
@@ -200,15 +245,18 @@ describe('MoteAktivitetForm', () => {
 
     it('Skal ikke være disablede felter ved endring av avtalt aktivitet', () => {
         const aktivitet = {
+            ...enMoteAktivitet(),
             tittel: 'Dette er en test',
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
             adresse: 'Slottet',
-            type: MOTE_TYPE,
+            type: VeilarbAktivitetType.MOTE_TYPE as const,
             avtalt: true,
         };
-        mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />);
+        mountWithIntl(
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+        );
 
         expect(screen.getByLabelText<HTMLInputElement>('Tema for møtet (obligatorisk)').disabled).not.toBeTruthy();
         expect(screen.getByLabelText<HTMLInputElement>('Dato (obligatorisk)').disabled).not.toBeTruthy();

@@ -2,7 +2,7 @@ import { Heading, Link } from '@navikt/ds-react';
 import { isAfter } from 'date-fns';
 import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router';
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { ARBEIDSRETTET_DIALOG_URL, MINSIDE_URL } from '../../constant';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
@@ -13,7 +13,6 @@ import { hentDialoger } from '../dialog/dialog-slice';
 import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp, logLenkeKlikket } from '../../analytics/analytics';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
-import { useMediaQuery } from '../../utils/use-media-query';
 import { useToggle } from '../feature/feature';
 
 function Navigasjonslinje() {
@@ -26,7 +25,7 @@ function Navigasjonslinje() {
         const doHentDialog = () => dispatch(hentDialoger());
 
         if (!erVeileder) {
-            let interval: NodeJS.Timeout;
+            let interval: ReturnType<typeof setInterval>;
 
             const pollForChanges = () =>
                 fetchSistOppdatert()

@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router';
 
-import { Status } from '../../../createGenericSlice';
+import { Status } from '../../../store/createGenericSlice';
 import { isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { useErVeileder } from '../../../Provider';
-import { RootState } from '../../../store';
-import { DirtyProvider } from '../../context/dirty-context';
+import { RootState } from '../../../store/rootReducer';
 import { selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { prefixAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
@@ -17,7 +16,7 @@ import Aktivitetvisning from './Aktivitetvisning';
 import AktivitetvisningModal from './AktivitetvisningModal';
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectAvhengigheter = createSelector(
+export const selectAktivitetsVisningsAvhengigheter = createSelector(
     selectOppfolgingStatus,
     selectAktivitetStatus,
     (oppfolginsStatus, aktiviteterStatus) => {
@@ -49,7 +48,7 @@ const AktivitetvisningContainer = () => {
     });
 
     const laster = aktivitetDataStatus !== Status.OK;
-    const avhengigheter = useSelector(selectAvhengigheter);
+    const avhengigheter = useSelector(selectAktivitetsVisningsAvhengigheter);
     const tillatEndring = kanEndreAktivitetDetaljer(valgtAktivitet as VeilarbAktivitet, erVeileder);
 
     useEffect(() => {
@@ -63,15 +62,13 @@ const AktivitetvisningContainer = () => {
     }, []);
 
     return (
-        <DirtyProvider>
-            <AktivitetvisningModal aktivitet={valgtAktivitet} avhengigheter={avhengigheter}>
-                {valgtAktivitet ? (
-                    <Aktivitetvisning aktivitet={valgtAktivitet} tillatEndring={tillatEndring} laster={laster} />
-                ) : (
-                    <Navigate replace to={'/'} />
-                )}
-            </AktivitetvisningModal>
-        </DirtyProvider>
+        <AktivitetvisningModal aktivitet={valgtAktivitet} avhengigheter={avhengigheter}>
+            {valgtAktivitet ? (
+                <Aktivitetvisning aktivitet={valgtAktivitet} tillatEndring={tillatEndring} laster={laster} />
+            ) : (
+                <Navigate replace to={'/'} />
+            )}
+        </AktivitetvisningModal>
     );
 };
 

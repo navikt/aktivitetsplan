@@ -1,6 +1,7 @@
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { EksternAktivitet, EksternAktivitetData, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 
 let id = 1003;
 let versjon = 4500;
@@ -22,8 +23,8 @@ export const enEksternAktivitet = ({
     versjon += 1000;
 
     return {
-        id: `${id}`,
-        versjon: `${versjon}`,
+        id: `${id}` as AktivitetsId,
+        versjon: `${versjon}` as AktivitetsVersjon,
         tittel,
         beskrivelse,
         type: VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE,
@@ -41,6 +42,6 @@ export const enEksternAktivitet = ({
         etikett: undefined,
         forhaandsorientering: undefined,
         eksternAktivitet,
-        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
+        oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33' as OppfolgingsPeriodeId,
     };
 };

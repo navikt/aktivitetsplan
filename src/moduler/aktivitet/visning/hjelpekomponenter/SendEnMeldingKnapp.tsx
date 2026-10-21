@@ -2,7 +2,7 @@ import { ChatElipsisIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { useErVeileder } from '../../../../Provider';

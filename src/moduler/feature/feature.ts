@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { hentFeatures } from './feature-slice';
 import { useSelector } from 'react-redux';
 import { selectFeatureSlice } from './feature-selector';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 
 const ALL_TOGGLES = ['aktivitetsplan.tryggtekst', 'aktivitetsplan.journalforing'] as const;
 

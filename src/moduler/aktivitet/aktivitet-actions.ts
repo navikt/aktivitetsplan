@@ -4,11 +4,16 @@ import * as Api from '../../api/aktivitetAPI';
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 import { Forhaandsorientering } from '../../datatypes/forhaandsorienteringTypes';
 import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
-import { hentAktiviteterGraphql, hentAktivitetGraphql } from '../../api/aktivitetsplanGraphql';
+import {
+    hentAktiviteterGraphql,
+    hentAktivitetGraphql,
+    hentAktivitetsHistorikkGraphql,
+} from '../../api/aktivitetsplanGraphql';
 import { Historikk } from '../../datatypes/Historikk';
+import { AktivitetsId } from '../../datatypes/brandedTypes';
 
 export const utenHistorikk = <Aktivitet extends VeilarbAktivitet>(aktivitet: Aktivitet) => {
-    const { historikk, ...aktivitetUtenHistorikk } = aktivitet as Aktivitet & { historikk: Historikk };
+    const { historikk: _, ...aktivitetUtenHistorikk } = aktivitet as Aktivitet & { historikk: Historikk };
     return aktivitetUtenHistorikk as unknown as Aktivitet;
 };
 
@@ -16,8 +21,12 @@ export const hentAktiviteter = createAsyncThunk('aktiviteter/hent', async () => 
     return await hentAktiviteterGraphql();
 });
 
-export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: string) => {
+export const hentAktivitet = createAsyncThunk('aktivitet/hent', async (aktivitetId: AktivitetsId) => {
     return await hentAktivitetGraphql(aktivitetId);
+});
+
+export const hentAktivitetHistorikk = createAsyncThunk('aktivitetHistorikk/hent', async (aktivitetId: AktivitetsId) => {
+    return await hentAktivitetsHistorikkGraphql(aktivitetId);
 });
 
 export const oppdaterAktivitetEtikett = createAsyncThunk(
@@ -67,8 +76,8 @@ export function flyttAktivitetMedBegrunnelse(
     return flyttAktivitet({ aktivitet: nyAktivitet, status });
 }
 
-export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string) {
-    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
+export function avbrytAktivitet(aktivitet: VeilarbAktivitet, avsluttetKommentar: string | undefined) {
+    const nyAktivitet: VeilarbAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet({ aktivitet: nyAktivitet, status: AktivitetStatus.AVBRUTT });
 }
 

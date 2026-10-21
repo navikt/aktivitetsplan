@@ -6,10 +6,10 @@ interface Props {
     slettFilter(): void;
 }
 
-const FiltreringLabel = ({ label, slettFilter }: Props) => (
+const FiltreringLabelChip = ({ label, slettFilter }: Props) => (
     <Chips.Removable data-color="neutral" aria-label="slett-filter" onClick={slettFilter}>
         {label as any}
     </Chips.Removable>
 );
 
-export default FiltreringLabel;
+export default FiltreringLabelChip;

@@ -4,7 +4,7 @@ import { MoteAktivitet, SamtalereferatAktivitet, VeilarbAktivitet } from '../dat
 import { AKTIVITET_BASE_URL } from '../environment';
 import { postAsJson, putAsJson } from './utils';
 import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localStorage';
-import { ArkivFilter } from '../moduler/verktoylinje/arkivering/arkiv-slice';
+import { ArkivFilter } from '../moduler/journalforing/journalforingFilter';
 
 export const lagNyAktivitet = (aktivitet: VeilarbAktivitet, oppfolgingsperiodeId: string): Promise<VeilarbAktivitet> =>
     postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${oppfolgingsperiodeId}/ny`, aktivitet, 'Opprett aktivitet');

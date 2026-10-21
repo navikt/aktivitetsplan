@@ -1,3 +1,4 @@
+import { TZDate } from '@date-fns/tz';
 import {
     addMinutes,
     differenceInMinutes,
@@ -8,8 +9,6 @@ import {
     isValid,
     minutesToHours,
     parseISO,
-    setHours,
-    setMinutes,
     startOfDay,
     subMonths,
 } from 'date-fns';
@@ -25,6 +24,7 @@ import {
 } from '../../datatypes/internAktivitetTypes';
 import { Lest } from '../../datatypes/lestTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
+import { NORSK_TIDSSONE } from '../../utils/dateUtils';
 
 interface MoteTid {
     dato: Date;
@@ -33,8 +33,8 @@ interface MoteTid {
 }
 
 interface FraTil {
-    fraDato?: string;
-    tilDato?: string;
+    fraDato: string;
+    tilDato: string;
 }
 
 interface NoeSomKanHaEnEndretdato {
@@ -108,13 +108,13 @@ export function erNyEndringIAktivitet(aktivitet: VeilarbAktivitet, lestInformasj
     return false;
 }
 
-export function beregnKlokkeslettVarighet(aktivitet: MoteAktivitet): MoteTid | undefined {
+export function beregnKlokkeslettVarighet(aktivitet: { fraDato: string; tilDato: string }): MoteTid | undefined {
     const { fraDato, tilDato } = aktivitet;
     if (fraDato && tilDato) {
-        const fra = new Date(fraDato);
-        const til = new Date(tilDato);
+        const fra = new TZDate(new Date(fraDato), NORSK_TIDSSONE);
+        const til = new TZDate(new Date(tilDato), NORSK_TIDSSONE);
         const varighet = differenceInMinutes(til, fra);
-        const klokkeslett = format(fra, 'HH.mm');
+        const klokkeslett = format(fra, 'HH:mm');
         return {
             dato: startOfDay(fra),
             klokkeslett,
@@ -164,14 +164,27 @@ export function beregnFraTil(data: MoteTid): FraTil {
 
     if (dato && klokkeslett && validKlokkeslett(klokkeslett) && varighet !== undefined && varighet !== null) {
         const { hour, minute } = toHourAndMinutes(klokkeslett);
-        const fraDato = setMinutes(setHours(startOfDay(toDate(dato)), hour), minute);
+        const valgtDato = toDate(dato);
+        const fraDato = new TZDate(
+            valgtDato.getFullYear(),
+            valgtDato.getMonth(),
+            valgtDato.getDate(),
+            hour,
+            minute,
+            0,
+            0,
+            NORSK_TIDSSONE,
+        );
         const tilDato = addMinutes(fraDato, varighet);
         return {
-            fraDato: fraDato.toISOString(),
-            tilDato: tilDato.toISOString(),
+            fraDato: new Date(fraDato.getTime()).toISOString(),
+            tilDato: new Date(tilDato.getTime()).toISOString(),
         };
     }
-    return {};
+    return {
+        fraDato: '',
+        tilDato: '',
+    };
 }
 
 export function formatterVarighet(varighet?: string | number): string | undefined {
@@ -198,7 +211,7 @@ const prefixMed0 = (val: string) => (val.length === 1 ? '0' + val : val);
 export function formatterKlokkeslett(klokkeslett?: string): string | undefined {
     if (!klokkeslett || !validKlokkeslett(klokkeslett)) return undefined;
     const { hour, minute } = toHourAndMinutes(klokkeslett);
-    return `${prefixMed0(hour.toString())}.${prefixMed0(minute.toString())}`;
+    return `${prefixMed0(hour.toString())}:${prefixMed0(minute.toString())}`;
 }
 
 function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {
@@ -210,9 +223,9 @@ function samtalreferatManglerPublisering(type: AktivitetType, erReferatPublisert
 }
 
 export function manglerPubliseringAvSamtaleReferat(
-    aktivitet: AlleAktiviteter,
+    aktivitet: MoteAktivitet | SamtalereferatAktivitet,
     status: AktivitetStatus,
-): aktivitet is MoteAktivitet | SamtalereferatAktivitet {
+) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) && status !== AktivitetStatus.AVBRUTT) ||
@@ -260,7 +273,7 @@ export function sorterAktiviteter(
         .sort(compareAktivitet);
 }
 
-export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & FraTil): boolean {
+export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & Partial<FraTil>): boolean {
     const sorteringsDatoString = [aktivitet.endretDato, aktivitet.tilDato, aktivitet.fraDato]
         .filter((possibleDate) => possibleDate !== undefined && possibleDate !== null)
         .find((possibleDate) => possibleDate && isValid(parseISO(possibleDate)));

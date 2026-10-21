@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/veilederAPI';
-import createGenericSlice from '../../createGenericSlice';
+import createGenericSlice from '../../store/createGenericSlice';
 import { VeilederInfo } from '../../datatypes/types';
 
 const veilederSlice = createGenericSlice<VeilederInfo>({

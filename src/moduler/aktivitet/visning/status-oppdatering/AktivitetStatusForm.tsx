@@ -1,4 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, Button, Radio, RadioGroup, Textarea } from '@navikt/ds-react';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';

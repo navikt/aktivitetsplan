@@ -1,4 +1,4 @@
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 import { Feature, Features } from './feature';
 
 export const selectFeatureSlice = (state: RootState) => state.data.feature;

@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
@@ -15,17 +15,17 @@ import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selecto
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
-import { RootState } from '../../store';
 import useIsVisible from '../../utils/useIsVisible';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
 import { Tavleadvarsel } from './Tavleadvarsel';
 import { erDroppbar } from './tavleUtils';
-import { Await, useRouteLoaderData } from 'react-router-dom';
+import { Await, useRouteLoaderData } from 'react-router';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
 import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
+import { RootState } from '../../store/rootReducer';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
     useEffect(() => {
@@ -94,7 +94,7 @@ const Aktivitetstavle = () => {
                         erVeileder={erVeileder}
                     />
                     <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
-                    <Tavle dragging={dragging}>
+                    <Tavle>
                         <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
                         <Kolonne status={AktivitetStatus.PLANLAGT} />
                         <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
@@ -111,7 +111,7 @@ const Aktivitetstavle = () => {
 const TavleFallback = () => {
     return (
         <div className="flex m-auto w-full mt-8 flex-col">
-            <Tavle dragging={false}>
+            <Tavle>
                 <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
                 <Kolonne status={AktivitetStatus.PLANLAGT} />
                 <Kolonne status={AktivitetStatus.GJENNOMFOERT} />

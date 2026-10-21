@@ -1,17 +1,17 @@
 import { DatePicker } from '@navikt/ds-react';
 import { format, isValid } from 'date-fns';
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
 import { preventCloseOnInsideClick, useOutsideClick } from './common';
 import { FieldSettings } from './DateRangePicker';
 import { isValidDate } from '../../../utils/dateUtils';
 import { parseDate } from '../../../utils/dateParser';
-import { DatePickerDefaultProps } from '@navikt/ds-react/src/date/datepicker/DatePicker.types';
+import { Matcher } from './Matcher';
 
 interface Props {
     field: FieldSettings;
-    disabledDays?: DatePickerDefaultProps['disabled'];
+    disabledDays?: Matcher[] | undefined;
 }
 
 const ControlledDatePicker = ({
@@ -22,7 +22,13 @@ const ControlledDatePicker = ({
     const closePopover = () => setIsPopoverOpen(false);
     useOutsideClick(isPopoverOpen, closePopover);
 
-    const { trigger: triggerFormValidation, control, setValue, clearErrors, watch } = useFormContext();
+    const {
+        trigger: triggerFormValidation,
+        control,
+        setValue,
+        clearErrors,
+        watch,
+    } = useFormContext<{ [name: string]: Date | undefined }>();
     const {
         field,
         fieldState: { error },
@@ -35,6 +41,12 @@ const ControlledDatePicker = ({
 
     const [displayValue, setDisplayValue] = useState<string>(defaultValue ? format(defaultValue, 'dd.M.y') : '');
 
+    /* Når man bytter mal i Egenaktivitet-skjemaet skal datoer fylles ut automatisk (defaultValue settes på nytt) */
+    useEffect(() => {
+        setValue(name, defaultValue);
+        setDisplayValue(defaultValue ? format(defaultValue, 'dd.M.y') : '');
+    }, [defaultValue]);
+
     const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const day = parseDate(event.target.value, new Date(), 'date', true);
         if (isValidDate(day)) {
@@ -43,7 +55,7 @@ const ControlledDatePicker = ({
             if (event.target.value === '') {
                 setValue(name, undefined);
             } else {
-                setValue(name, event.target.value);
+                setValue(name, new Date('Invalid date'));
             }
         }
         setDisplayValue(event.target.value);
@@ -65,7 +77,9 @@ const ControlledDatePicker = ({
     const onBlur = () => {
         field.onBlur();
         triggerFormValidation(name);
-        if (!isValid(fieldValue) || fieldValue === '') return;
+        if (!isValid(fieldValue) || fieldValue === undefined) return;
+        const parsed = parseDate(displayValue, new Date(), 'date', true);
+        if (!isValid(parsed)) return;
         setDisplayValue(format(fieldValue, 'dd.M.y'));
     };
     const togglePopover = () => {

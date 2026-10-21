@@ -1,7 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Textarea, Select } from '@navikt/ds-react';
 import { addDays, isAfter, startOfDay } from 'date-fns';
-import React, { ChangeEventHandler, MutableRefObject, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, RefObject, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -11,7 +11,8 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import { dateOrUndefined } from '../ijobb/AktivitetIjobbForm';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { InnsynsrettInfo } from '../../innsynsrett/InnsynsrettInfo';
-import DateRangePicker from '../../../../felles-komponenter/skjema/datovelger/DateRangePicker';
+import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
+import { useErVeileder } from '../../../../Provider';
 
 const schema = z
     .object({
@@ -46,7 +47,7 @@ export type EgenAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: EgenAktivitetFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: EgenAktivitet;
 }
 
@@ -90,6 +91,7 @@ const getDefaultValues = (
 
 const EgenAktivitetForm = (props: Props) => {
     const { onSubmit, dirtyRef, aktivitet } = props;
+    const erVeileder = useErVeileder();
 
     const [template, setTemplate] = useState<EgenaktivitetTemplate>('ingen');
     const defaultValues = useMemo(() => {
@@ -101,7 +103,7 @@ const EgenAktivitetForm = (props: Props) => {
     const formHandlers = useForm<EgenAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,
@@ -115,6 +117,7 @@ const EgenAktivitetForm = (props: Props) => {
         dirtyRef.current = isDirty;
     }
 
+    const fraDato = watch('fraDato');
     const beskrivelseValue = watch('beskrivelse'); // for <Textarea /> character-count to work
 
     useEffect(() => {
@@ -135,7 +138,7 @@ const EgenAktivitetForm = (props: Props) => {
                     <InnsynsrettInfo />
                     {
                         /* Ikke tillat bruk av template når man endrer en aktivitet */
-                        aktivitet ? null : (
+                        aktivitet || !erVeileder ? null : (
                             <Select
                                 id="malverk"
                                 name={'malverk'}
@@ -156,10 +159,26 @@ const EgenAktivitetForm = (props: Props) => {
                         {...register('tittel')}
                         error={errors.tittel && errors.tittel.message}
                     />
-                    <DateRangePicker
-                        from={{ name: 'fraDato', required: true, defaultValue: defaultValues.fraDato }}
-                        to={{ name: 'tilDato', required: true, defaultValue: defaultValues.tilDato }}
-                    />
+                    <div className="flex flex-row gap-4">
+                        <ControlledDatePicker
+                            field={{
+                                disabled: avtalt,
+                                label: 'Fra dato (obligatorisk)',
+                                name: 'fraDato',
+                                required: true,
+                                defaultValue: defaultValues?.fraDato,
+                            }}
+                        />
+                        <ControlledDatePicker
+                            field={{
+                                label: 'Til dato (obligatorisk)',
+                                name: 'tilDato',
+                                required: true,
+                                defaultValue: defaultValues?.tilDato,
+                            }}
+                            disabledDays={fraDato ? [{ before: fraDato }] : []}
+                        />
+                    </div>
                     <TextField
                         disabled={avtalt}
                         label="Mål med aktiviteten (valgfri)"

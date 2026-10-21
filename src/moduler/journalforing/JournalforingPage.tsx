@@ -3,19 +3,24 @@ import {
     hentPdfTilForhaandsvisning,
     selectForhaandsvisningStatus,
     selectJournalføringstatus,
-    selectPdfForhaandsvisning
+    selectPdfForhaandsvisning,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { defer, LoaderFunctionArgs } from 'react-router-dom';
-import { Dispatch } from '../../store';
+import { LoaderFunction, useNavigate, useParams } from 'react-router';
+import { Dispatch } from '../../store/store';
 import Sidebar from './Sidebar';
 import { createBlob, PdfViewer } from './PdfViewer';
 import { StatusErrorBoundry } from './StatusErrorBoundry';
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
+import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
+import { hovedsideRoute } from '../../routing/useRoutes';
 
 export const JournalforingPage = () => {
+    const navigate = useNavigate();
+    const { oppfolgingsperiodeId } = useParams();
     const pdf = useSelector(selectPdfForhaandsvisning);
     const journalførtStatus = useSelector(selectJournalføringstatus);
+    const oppfolgingsperioder = useSelector(selectOppfolgingsPerioder);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
 
     const blob = useMemo(() => {
@@ -23,17 +28,32 @@ export const JournalforingPage = () => {
         return createBlob(pdf);
     }, [pdf]);
 
+    const brukersOppfolgingsperiodeErIUrl = useMemo(() => {
+        return oppfolgingsperioder.map((periode) => periode.id.toLowerCase()).includes(oppfolgingsperiodeId?.toLowerCase() || '')
+    }, [oppfolgingsperioder, oppfolgingsperiodeId]);
+
+    if (!brukersOppfolgingsperiodeErIUrl) {
+        void navigate(hovedsideRoute(true), { replace: true });
+        return;
+    }
+
     const visSuksessmelding = journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK;
 
     return (
         <div className="flex flex-col grow">
             <section className="flex md:flex-row flex-col relative">
                 <Sidebar />
-                <StatusErrorBoundry statuser={[forhaandsvisningStatus, journalførtStatus]}
-                                    errorMessage="Noe gikk galt med journalføringen">
+                <StatusErrorBoundry
+                    statuser={[forhaandsvisningStatus, journalførtStatus]}
+                    errorMessage="Noe gikk galt med journalføringen"
+                >
                     <div className="h-full grow bg-ax-bg-neutral-soft max-h-100vh overflow-x-scroll overflow-y-hidden pb-4">
-                        <PdfViewer pdf={blob} visSuksessmelding={visSuksessmelding}
-                                   suksessmelding={'Aktivitetsplanen ble journalført.'} forhaandsvisningStatus={forhaandsvisningStatus} />
+                        <PdfViewer
+                            pdf={blob}
+                            visSuksessmelding={visSuksessmelding}
+                            suksessmelding={'Aktivitetsplanen ble journalført.'}
+                            forhaandsvisningStatus={forhaandsvisningStatus}
+                        />
                     </div>
                 </StatusErrorBoundry>
             </section>
@@ -42,23 +62,21 @@ export const JournalforingPage = () => {
 };
 
 export const arkivLoader =
-    (dispatch: Dispatch, aktivEnhet: string) =>
-        ({
-             params: { oppfolgingsperiodeId }
-         }: LoaderFunctionArgs<{
-            oppfolgingsperiodeId: string;
-            aktivEnhet: string;
-        }>) => {
-            if (!oppfolgingsperiodeId) {
-                throw Error('path param is not set, this should never happen');
-            }
-            const forhaandsvisning = dispatch(
-                hentPdfTilForhaandsvisning({
-                    oppfolgingsperiodeId,
-                    journalførendeEnhetId: aktivEnhet
-                })
-            );
-            return defer({
-                forhaandsvisning
-            });
+    (dispatch: Dispatch, aktivEnhet: string | undefined): LoaderFunction =>
+    ({ params: { oppfolgingsperiodeId } }) => {
+        if (!oppfolgingsperiodeId) {
+            throw Error('path param is not set, this should never happen');
+        }
+        if (!aktivEnhet) {
+            throw Error('trenger journalførende enhet for å forhåndsvise');
+        }
+        const forhaandsvisning = dispatch(
+            hentPdfTilForhaandsvisning({
+                oppfolgingsperiodeId,
+                journalførendeEnhetId: aktivEnhet,
+            }),
+        );
+        return {
+            forhaandsvisning,
         };
+    };

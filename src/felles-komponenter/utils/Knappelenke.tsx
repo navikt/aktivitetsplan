@@ -5,14 +5,13 @@ import visibleIfHOC from '../../hocs/visible-if';
 
 interface Props {
     className?: string;
-    role?: string;
     tabIndex?: number;
     hidden?: boolean;
     onClick(e: React.MouseEvent): void;
 }
 
 const Knappelenke = (props: Props) => {
-    const { onClick, role, className, ...rest } = props;
+    const { onClick, className, ...rest } = props;
 
     const click = (e: React.MouseEvent) => {
         e.preventDefault();

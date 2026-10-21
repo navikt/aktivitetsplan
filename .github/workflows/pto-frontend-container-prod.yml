@@ -7,26 +7,28 @@ on:
     paths:
       - '.github/workflows/pto-frontend-container-prod.yml'
       - 'nais/prod-ekstern.yaml'
+  workflow_dispatch:
 
 concurrency:
-  group: pto_frontend_container_prod
+  group: dab_frontend_container_prod
   cancel-in-progress: true
 
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7
       - name: deploy gcp prod ekstern
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@7ad7c2b833e1db74a80954e3ee6bb6ac060a8ae7 # ratchet:nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-gcp
           RESOURCE: nais/prod-ekstern.yaml
       - name: Slack Notification (deploy failure)
         if: failure()
-        uses: rtCamp/action-slack-notify@v2
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # ratchet:rtCamp/action-slack-notify@v2
         env:
           SLACK_COLOR: danger
           SLACK_USERNAME: Github Actions

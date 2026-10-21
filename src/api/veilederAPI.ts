@@ -1,6 +1,6 @@
 import { VeilederInfo } from '../datatypes/types';
 import { VEILEDER_BASE_URL } from '../environment';
-import { fetchToJson } from './utils';
+import { getAsJson } from './utils';
 
 export const fetchVeilederInfo = (): Promise<VeilederInfo> =>
-    fetchToJson(`${VEILEDER_BASE_URL}/veileder/me`, {}, 'fetchVeilederInfo');
+    getAsJson(`${VEILEDER_BASE_URL}/veileder/me`, 'fetchVeilederInfo');

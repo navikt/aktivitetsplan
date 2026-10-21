@@ -1,4 +1,4 @@
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 import { selectMalListe } from './malliste-selector';
 import { selectViserAktivPeriode } from '../oppfolging-status/oppfolging-selector';
 

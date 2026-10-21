@@ -2,6 +2,7 @@ import { ArenaAktivitet, ArenaAktivitetType } from './arenaAktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
 import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from './brandedTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
@@ -54,8 +55,8 @@ export enum JobbStatusType {
 export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' | 'SYSTEM' | 'ARENAIDENT';
 
 export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
-    id: string;
-    versjon: string;
+    id: AktivitetsId;
+    versjon: AktivitetsVersjon;
     tittel: string;
     opprettetDato: string;
     status: AktivitetStatus;
@@ -72,7 +73,7 @@ export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     avsluttetKommentar?: string;
     beskrivelse?: string;
     lenke?: string;
-    oppfolgingsperiodeId: string;
+    oppfolgingsperiodeId: OppfolgingsPeriodeId;
 }
 
 export type AlleAktiviteter = VeilarbAktivitet | ArenaAktivitet;

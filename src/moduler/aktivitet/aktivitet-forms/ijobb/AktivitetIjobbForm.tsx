@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Radio, RadioGroup, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useMemo } from 'react';
+import React, { RefObject, useMemo } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -40,7 +40,7 @@ export type IJobbAktivitetFormValues = z.infer<typeof schema>;
 
 interface Props {
     onSubmit: (values: IJobbAktivitetFormValues) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: IJobbAktivitet;
 }
 
@@ -70,7 +70,7 @@ const IJobbAktivitetForm = (props: Props) => {
     const methods = useForm<IJobbAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,

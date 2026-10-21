@@ -1,4 +1,4 @@
-import { Status } from '../createGenericSlice';
+import { Status } from '../store/createGenericSlice';
 
 /* eslint-env browser */
 
@@ -32,7 +32,7 @@ export interface SerializedError {
 const getPath = (response: Response) => {
     try {
         return new URL(response.url).pathname;
-    } catch (e) {
+    } catch {
         return response.url;
     }
 };
@@ -118,25 +118,27 @@ type HttpMethod = 'post' | 'put' | 'get' | 'patch';
 function methodToJson(
     method: HttpMethod,
     url: string,
-    data: Record<any, any>,
+    data: Record<string, any> | undefined,
     config: RequestInit,
     operation?: string,
 ) {
     // prettier-ignore
-    return fetchToJson(url, {
-        ...{
-            method,
-            headers: defaultHeaders,
-            body: Object.keys(data).length === 0 ? undefined : JSON.stringify(data)
-        },
-        ...config
-    }, operation);
+    return fetchToJson(url, ({
+	method,
+	headers: defaultHeaders,
+	body: data && Object.keys(data).length !== 0 ? JSON.stringify(data) : undefined,
+	...config
+}), operation);
 }
 
-export function postAsJson(url: string, data = {}, operation?: string) {
+export function postAsJson(url: string, data: Record<string, any> = {}, operation?: string) {
     return methodToJson('post', url, data, {}, operation);
 }
 
-export function putAsJson(url: string, data = {}, operation?: string) {
+export function putAsJson(url: string, data: Record<string, any> = {}, operation?: string) {
     return methodToJson('put', url, data, {}, operation);
+}
+
+export function getAsJson(url: string, operation: string) {
+    return methodToJson('get', url, undefined, {}, operation);
 }

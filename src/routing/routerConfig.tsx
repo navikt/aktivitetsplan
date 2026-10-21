@@ -1,16 +1,6 @@
-import {
-    createBrowserRouter,
-    createHashRouter,
-    Navigate,
-    Outlet,
-    RouteObject,
-    useLocation,
-    useParams,
-} from 'react-router-dom';
-import useAppDispatch from '../felles-komponenter/hooks/useAppDispatch';
-import React, { useEffect } from 'react';
-import { fjernDismissableErrors } from '../moduler/feilmelding/feil-slice';
-import { Dispatch } from '../store';
+import { createBrowserRouter, createHashRouter, Navigate, RouteObject, useParams } from 'react-router';
+import React from 'react';
+import { Dispatch } from '../store/store';
 import Hovedside from '../hovedside/Hovedside';
 import { aktivitetsVisningLoader, initialPageLoader, malLoader } from './loaders';
 import LeggTilNyttAktivitetsKort from '../moduler/aktivitet/ny-aktivitet/LeggTilNyttAktivitetsKort';
@@ -25,6 +15,10 @@ import Mal from '../moduler/mal/mal';
 import { arkivLoader, JournalforingPage } from '../moduler/journalforing/JournalforingPage';
 import { BasePage } from '../BasePage';
 import { useErVeileder } from '../Provider';
+import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
+import { AktivitetsVersjonVisningContainer } from '../moduler/aktivitet/visning/versjoner/AktivitetsVersjonVisningContainer';
+import { aktivitetsVersjonVisningLoader } from '../moduler/aktivitet/visning/versjoner/aktivitet-versjon-slice';
+import { ModalRoute } from './ModalRoute';
 
 const baseName = 'aktivitetsplan';
 
@@ -34,19 +28,14 @@ const RedirectToAktivitetWithoutFnr = () => {
     return <Navigate replace to={`${erVeileder ? '/' + baseName : ''}/aktivitet/vis/` + params.id} />;
 };
 
-export const ErrorCleanerOnRouteChange = () => {
-    const location = useLocation();
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(fjernDismissableErrors());
-    }, [location]);
-    return <Outlet />;
-};
-
 // Sentry need to wrap createBrowserRouter to understand routes
 export const createRouterWithWrapper =
     (wrapper?: typeof createBrowserRouter) =>
-    (dispatch: Dispatch, isVeileder: boolean, aktivEnhet: string): ReturnType<typeof createBrowserRouter> => {
+    (
+        dispatch: Dispatch,
+        isVeileder: boolean,
+        aktivEnhet: string | undefined,
+    ): ReturnType<typeof createBrowserRouter> => {
         if (import.meta.env.VITE_USE_HASH_ROUTER === 'true') {
             return createHashRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
         }
@@ -55,16 +44,29 @@ export const createRouterWithWrapper =
             : createBrowserRouter(routingConfig(dispatch, isVeileder, aktivEnhet));
     };
 
-export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet: string) => RouteObject[] = (
-    dispatch,
-    isVeileder,
-    aktivEnhet,
-) => [
+const OnlyNavigasjonsLinjeSkeleton = () => {
+    return (
+        <main id="main" className="hovedside">
+            <div className="flex items-center flex-col w-full h-full">
+                <div className="container flex flex-col gap-y-6">
+                    <Navigasjonslinje />
+                </div>
+            </div>
+        </main>
+    );
+};
+
+export const routingConfig: (
+    dispatch: Dispatch,
+    isVeileder: boolean,
+    aktivEnhet: string | undefined,
+) => RouteObject[] = (dispatch, isVeileder, aktivEnhet) => [
     {
         path: isVeileder ? `/${baseName}` : '/',
-        element: <BasePage />, // Dont reload essential data on every page navigation
+        element: <BasePage />, // Don't reload essential data on every page navigation
         loader: initialPageLoader(dispatch, isVeileder),
         id: 'root',
+        HydrateFallback: OnlyNavigasjonsLinjeSkeleton,
         children: [
             {
                 path: '',
@@ -78,10 +80,22 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
                             { path: 'ny', element: <LeggTilNyttAktivitetsKort /> },
                             { path: 'ny/*', element: <NyAktivitetForm /> },
                             {
-                                id: 'aktivitetsVisning',
-                                path: 'vis/:id',
-                                element: <AktivitetvisningContainer />,
-                                loader: aktivitetsVisningLoader(dispatch),
+                                path: 'vis',
+                                element: <ModalRoute />,
+                                children: [
+                                    {
+                                        id: 'aktivitetsVisning',
+                                        path: ':id',
+                                        element: <AktivitetvisningContainer />,
+                                        loader: aktivitetsVisningLoader(dispatch),
+                                    },
+                                    {
+                                        id: 'aktivitetsVersjonVisning',
+                                        path: ':id/versjon/:versjon',
+                                        element: <AktivitetsVersjonVisningContainer />,
+                                        loader: aktivitetsVersjonVisningLoader(dispatch),
+                                    },
+                                ],
                             },
                             { path: 'endre/:id', element: <EndreAktivitet /> },
                             { path: 'avbryt/:id', element: <AvbrytAktivitet /> },
@@ -93,7 +107,7 @@ export const routingConfig: (dispatch: Dispatch, isVeileder: boolean, aktivEnhet
             {
                 path: 'utskrift/:oppfolgingsperiodeId',
                 loader: aktivitetsplanPrintLoader(dispatch, isVeileder, aktivEnhet),
-                element: <AktivitetsplanPrint />
+                element: <AktivitetsplanPrint />,
             },
             {
                 path: 'journalforing/:oppfolgingsperiodeId',

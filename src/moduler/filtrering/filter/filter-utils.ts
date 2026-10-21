@@ -3,7 +3,7 @@ import { isBefore, isWithinInterval } from 'date-fns';
 import { AlleAktiviteter, isArenaAktivitet, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { isEksternAktivitet } from '../../../datatypes/internAktivitetTypes';
 import { HistoriskOppfolgingsperiode } from '../../../datatypes/oppfolgingTypes';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 import { selectValgtPeriode } from '../../oppfolging-status/oppfolging-selector';
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './TiltakstatusFilter';
@@ -12,15 +12,15 @@ import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
-    selectArenaAktivitetEtiketterFilter
+    selectArenaAktivitetEtiketterFilter,
 } from './filter-selector';
 import { FilterState } from './filter-slice';
 
 export const filterErAktivt = (filter: FilterState): boolean =>
-        erAktivtFilter(filter.aktivitetEtiketter) ||
-        erAktivtFilter(filter.aktivitetTyper) ||
-        erAktivtFilter(filter.arenaAktivitetEtiketter) ||
-        erAktivtFilter(filter.aktivitetAvtaltMedNav);
+    erAktivtFilter(filter.aktivitetEtiketter) ||
+    erAktivtFilter(filter.aktivitetTyper) ||
+    erAktivtFilter(filter.arenaAktivitetEtiketter) ||
+    erAktivtFilter(filter.aktivitetAvtaltMedNav);
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
@@ -40,15 +40,15 @@ const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, date
 
 export function datoErIPeriode(
     dato: string,
-    valgtHistoriskPeriode?: HistoriskOppfolgingsperiode | null,
+    valgtHistoriskPeriode?: (HistoriskOppfolgingsperiode & { startTidspunkt: string }) | null,
     sistePeriodeSluttDato?: string,
 ) {
     const datoDate = new Date(dato);
 
     if (valgtHistoriskPeriode) {
         const intervall = {
-            start: new Date(valgtHistoriskPeriode.startDato),
-            end: new Date(valgtHistoriskPeriode.sluttDato),
+            start: new Date(valgtHistoriskPeriode.startTidspunkt),
+            end: new Date(valgtHistoriskPeriode.sluttTidspunkt),
         };
 
         return isWithinInterval(datoDate, intervall);
@@ -62,8 +62,8 @@ const hasNoOverlap = (a: string[], b: string[]): boolean => {
 
 const activeFilters = (filterMap: Record<string, true | false>): string[] =>
     Object.entries(filterMap)
-        .filter(([key, value]) => value)
-        .map(([key, _]) => key);
+        .filter(([_key, value]) => value)
+        .map(([key]) => key);
 
 const getTiltakstatusEtiketter = (aktivitet: AlleAktiviteter) => {
     if (isArenaAktivitet(aktivitet)) {
@@ -95,8 +95,8 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any):
     const arenaEtikettFilter = selectArenaAktivitetEtiketterFilter(state);
     if (erAktivtFilter(arenaEtikettFilter)) {
         const aktiveFilters = Object.entries(arenaEtikettFilter)
-            .filter(([_, val]: [string, unknown]) => !!val)
-            .map(([key, _]: [string, unknown]) => key);
+            .filter(([, val]: [string, unknown]) => !!val)
+            .map(([key]: [string, unknown]) => key);
         const etiketter = getTiltakstatusEtiketter(aktivitet);
         if (hasNoOverlap(etiketter, aktiveFilters)) {
             return false;

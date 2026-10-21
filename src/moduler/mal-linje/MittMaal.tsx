@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { Suspense } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Await, useRouteLoaderData } from 'react-router-dom';
+import { Await, useRouteLoaderData } from 'react-router';
 
 import { Lest } from '../../datatypes/lestTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
@@ -33,7 +33,7 @@ function MittMaal() {
         ) && readOnly;
 
     const noeHarFeilet = avhengigheter === 'ERROR';
-    const { mal: malPromise, oppfolging: oppfolgingPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
+    const { mal: malPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
     if (noeHarFeilet) return <Alert variant={'error'}>Kunne ikke hente mål</Alert>;
     return (
         <>
@@ -53,7 +53,7 @@ function MittMaal() {
                             </Heading>
                         </div>
                         <Suspense fallback={<MalFallback />}>
-                            <Await resolve={Promise.all([oppfolgingPromise, malPromise])}>
+                            <Await resolve={malPromise}>
                                 <MalContent disabled={disabled} mal={mal} />
                             </Await>
                         </Suspense>

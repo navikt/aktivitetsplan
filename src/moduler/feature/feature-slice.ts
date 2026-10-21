@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import * as Api from '../../api/featureAPI';
-import createGenericSlice, { GenericState, Status } from '../../createGenericSlice';
+import createGenericSlice, { GenericState, Status } from '../../store/createGenericSlice';
 import { Features } from './feature';
 
 const initialFeatures: Features = {
     'aktivitetsplan.tryggtekst': false,
+    'aktivitetsplan.journalforing': false,
 };
 
 const featureSlice = createGenericSlice({

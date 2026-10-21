@@ -8,6 +8,7 @@ interface Props {
     autoHeight: boolean;
     autoHeightMax: number;
     onScrollFrame: (values: { scrollLeft: number; left: number }) => void;
+    children?: React.ReactNode;
 }
 
 class SprettendeScrollbars extends Component<Props, {}> {

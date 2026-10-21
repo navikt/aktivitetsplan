@@ -26,7 +26,7 @@ const DetaljvisningLenke = (props: Props) => {
         const pathSegments = url.pathname.split('/').filter(Boolean);
         const firstSegment = pathSegments.length > 0 ? '/' + pathSegments[0] : '';
         shortenedUrl = hostname + firstSegment;
-    } catch (e) {
+    } catch {
         shortenedUrl = lenke;
     }
 

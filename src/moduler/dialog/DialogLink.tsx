@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { useErVeileder } from '../../Provider';
 import { useRoutes } from '../../routing/useRoutes';
@@ -33,7 +33,11 @@ const LenkeTilDialog = (props: Props) => {
     }
 
     return (
-        <Link href={getDialogLenke({ erVeileder, aktivitetId, dialogId })} onClick={internalOnClick} className={className}>
+        <Link
+            href={getDialogLenke({ erVeileder, aktivitetId, dialogId })}
+            onClick={internalOnClick}
+            className={className}
+        >
             {children}
         </Link>
     );

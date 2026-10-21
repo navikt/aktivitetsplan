@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "strictNullChecks": true,
@@ -12,13 +12,13 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "types": ["vitest/globals", "@navikt/ds-react/esm/types/theme"]
+    "types": ["vitest/globals", "vite/client", "@navikt/ds-react/types/theme"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 
 interface State {
     dragging: boolean;

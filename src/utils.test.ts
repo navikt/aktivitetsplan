@@ -4,8 +4,9 @@ import {
     formaterDatoKortManed,
     formaterDatoKortManedTid,
     formaterTid,
+    norskTidSuffix,
 } from './utils/dateUtils';
-import { autobind, erInternlenke, fn, guid, storeForbokstaver } from './utils/utils';
+import { autobind, fn, storeForbokstaver } from './utils/utils';
 import { describe } from 'vitest';
 
 describe('app utils', () => {
@@ -20,22 +21,6 @@ describe('app utils', () => {
         });
     });
 
-    describe('guid', () => {
-        it('GUID skal følge standard format', () => {
-            const id = guid();
-            const guidParts = id.split('-');
-
-            expect(guidParts.length).toEqual(5);
-        });
-
-        it('GUID skal være forskjellige', () => {
-            const guid1 = guid();
-            const guid2 = guid();
-
-            expect(guid1 === guid2).toEqual(false);
-        });
-    });
-
     describe('autobind', () => {
         it('Skal kalle rebinde alle funksjoner på prototypen', () => {
             class Mock {
@@ -44,11 +29,11 @@ describe('app utils', () => {
                 }
 
                 fn1() {
-                    this.a = 1;
+                    (this as any).a = 1;
                 }
 
                 fn2() {
-                    this.b = 1;
+                    (this as any).b = 1;
                 }
             }
 
@@ -65,28 +50,15 @@ describe('app utils', () => {
                 }
 
                 fn3() {
-                    this.c = 1;
+                    (this as any).c = 1;
                 }
             }
 
-            Mock.prototype.val1 = 'abba';
+            (Mock.prototype as any).val1 = 'abba';
 
             new Mock(); // eslint-disable-line no-new
 
             expect(true).toEqual(true); // Skal ikke kaste error
-        });
-    });
-
-    describe('erInternlenke', () => {
-        it('Skal kjenne igjen en ekstern lenke', () => {
-            const httpsHref = 'https://www.nrk.no/';
-            const httpHref = 'http://www.nrk.no/';
-
-            expect(erInternlenke(httpsHref)).toEqual(false);
-            expect(erInternlenke(httpHref)).toEqual(false);
-            expect(erInternlenke('/a/b/c')).toEqual(true);
-            expect(erInternlenke(null)).toEqual(false);
-            expect(erInternlenke(undefined)).toEqual(false);
         });
     });
 
@@ -111,22 +83,38 @@ describe('app utils', () => {
     });
 
     describe('formaterDatoKortManedTid', () => {
-        it('Formater datoer riktig', () => {
+        it('Formater datoer riktig i norsk tid med suffiks', () => {
             expect(formaterDatoKortManedTid(null)).toBeUndefined();
             expect(formaterDatoKortManedTid(undefined)).toBeUndefined();
-            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
-            expect(formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')).toEqual(
-                `13. feb. 2014 kl ${zuluDate.getHours()}.${zuluDate.getMinutes()}`,
-            ); // NB zulu-time != paris-time
+            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1). Suffikset vises bare
+            // når maskinens lokale tid avviker fra norsk tid.
+            const iso = '2014-02-13T14:23:21.123Z';
+            expect(formaterDatoKortManedTid(iso)).toEqual(`13. feb. 2014 kl 15.23${norskTidSuffix(iso)}`);
         });
     });
 
     describe('formaterTid', () => {
-        it('Formater datoer riktig', () => {
+        it('Formater klokkeslett i norsk tid med suffiks', () => {
             expect(formaterTid(null)).toBeUndefined();
             expect(formaterTid(undefined)).toBeUndefined();
-            const zuluDate = new Date('2014-02-13T14:23:21.123Z');
-            expect(formaterTid('2014-02-13T14:23:21.123Z')).toEqual(`${zuluDate.getHours()}.${zuluDate.getMinutes()}`); // NB zulu-time != paris-time
+            // 14:23 UTC tilsvarer 15:23 norsk tid (vintertid, UTC+1). Suffikset vises bare
+            // når maskinens lokale tid avviker fra norsk tid.
+            const iso = '2014-02-13T14:23:21.123Z';
+            expect(formaterTid(iso)).toEqual(`15.23${norskTidSuffix(iso)}`);
+        });
+    });
+
+    describe('norskTidSuffix', () => {
+        it('Gir enten tomt suffiks eller " (norsk tid)"', () => {
+            // I norsk tidssone er suffikset tomt, ellers " (norsk tid)". Begge er gyldige
+            // avhengig av hvilken tidssone testen kjøres i.
+            expect(['', ' (norsk tid)']).toContain(norskTidSuffix('2014-02-13T14:23:21.123Z'));
+        });
+
+        it('Håndterer tomme og ugyldige verdier', () => {
+            expect(norskTidSuffix(null)).toEqual('');
+            expect(norskTidSuffix(undefined)).toEqual('');
+            expect(norskTidSuffix('ikke en dato')).toEqual('');
         });
     });
 

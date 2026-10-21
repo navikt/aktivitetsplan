@@ -1,4 +1,4 @@
-import { RootState } from '../../../store';
+import { RootState } from '../../../store/rootReducer';
 import { FilterState } from './filter-slice';
 import { AktivitetFilterType, ArenaEtikettFilterType, AvtaltFilterType, EtikettFilterType } from './FilterVisning';
 

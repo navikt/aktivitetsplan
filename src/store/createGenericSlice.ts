@@ -1,4 +1,4 @@
-import { SliceCaseReducers, ValidateSliceCaseReducers, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, SliceCaseReducers, ValidateSliceCaseReducers, createSlice, Draft } from '@reduxjs/toolkit';
 
 export enum Status {
     NOT_STARTED = 'NOT_STARTED',
@@ -14,8 +14,9 @@ export interface GenericState<T> {
 }
 
 const createGenericSlice = <
-    T,
-    Reducers extends SliceCaseReducers<GenericState<T>> = SliceCaseReducers<GenericState<T>>
+    // WTF??
+    T extends (T | undefined extends infer V ? (V extends object ? Draft<V> : V) : never) | undefined,
+    Reducers extends SliceCaseReducers<GenericState<T>> = SliceCaseReducers<GenericState<T>>,
 >({
     name,
     initialState = { status: Status.NOT_STARTED },
@@ -37,20 +38,20 @@ const createGenericSlice = <
                 (action) => action.type.startsWith(`${name}/`) && action.type.endsWith('/pending'),
                 (state) => {
                     state.status = state.status === Status.NOT_STARTED ? Status.PENDING : Status.RELOADING;
-                }
+                },
             );
             builder.addMatcher(
                 (action) => action.type.startsWith(`${name}/`) && action.type.endsWith('/fulfilled'),
-                (state, action) => {
+                (state, action: PayloadAction<T>) => {
                     state.data = action.payload || initialState.data;
                     state.status = Status.OK;
-                }
+                },
             );
             builder.addMatcher(
                 (action) => action.type.startsWith(`${name}/`) && action.type.endsWith('/rejected'),
                 (state) => {
                     state.status = Status.ERROR;
-                }
+                },
             );
         },
     });

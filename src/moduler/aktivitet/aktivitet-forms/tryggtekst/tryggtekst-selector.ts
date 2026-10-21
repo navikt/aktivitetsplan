@@ -1,4 +1,4 @@
-import { RootState } from '../../../../store';
+import { RootState } from '../../../../store/rootReducer';
 import { createSelector } from '@reduxjs/toolkit';
 
 const selectTryggTekst = (state: RootState) => state.data.tryggTekst;

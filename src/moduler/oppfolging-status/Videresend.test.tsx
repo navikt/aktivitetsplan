@@ -1,103 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit';
-import reducer from '../../reducer';
-import { aktiviteterState, initialLoadedEmptyState } from '../../testUtils/defaultInitialStore';
+import { aktivVeilarbOppfolgingMockPeriode } from '../../testUtils/store/defaultInitialStore';
 import { render, waitFor } from '@testing-library/react';
 import { WrappedHovedside } from '../../testUtils/WrappedHovedside';
 import { mockfnr } from '../../mocks/utils';
 import React from 'react';
-import { afterAll, beforeAll, describe, expect } from 'vitest';
-import { Status } from '../../createGenericSlice';
-import { mockOppfolging } from '../../mocks/data/oppfolging';
-import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
-import { RootState } from '../../store';
+import { afterAll, beforeAll, describe } from 'vitest';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../mocks/handlers';
 import { mockTestAktiviteter } from '../../mocks/aktivitet';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
-import { MinimalPeriode } from './oppfolging-selector';
+import { gitt } from '../../testUtils/store/mockStoreBuilder';
 
-const defaultOppfolging = mockOppfolging;
 const aktivitetTittel = 'Videresend aktivitet';
-const periode: MinimalPeriode = {
-    id: 1,
-    start: new Date().toISOString(),
-    slutt: undefined,
-};
 const aktivitet: VeilarbAktivitet = {
     ...mockTestAktiviteter[0],
     tittel: aktivitetTittel,
-    oppfolgingsperiodeId: periode.id,
-};
-const stateMedAktiviteter = aktiviteterState({ aktiviteter: [aktivitet], oppfolgingsPerioder: [periode] });
-
-const storeMedOppfolging = (oppfolging: OppfolgingStatus = defaultOppfolging): RootState => {
-    return {
-        ...initialLoadedEmptyState,
-        data: {
-            ...initialLoadedEmptyState.data,
-            aktiviteter: stateMedAktiviteter,
-            oppfolging: {
-                status: Status.OK,
-                data: oppfolging,
-            },
-        },
-    };
+    oppfolgingsperiodeId: aktivVeilarbOppfolgingMockPeriode.id,
 };
 
-const lagStore = (initialStore: RootState) =>
-    configureStore({
-        reducer,
-        preloadedState: initialStore,
-    });
-
-const gitt = {
-    hentStatus: {
-        utdatertIKrr: () => {
-            return lagStore(
-                storeMedOppfolging({
-                    ...defaultOppfolging,
-                    kanVarsles: false,
-                    registrertKRR: true,
-                    reservasjonKRR: false,
-                    manuell: false,
-                }),
-            );
-        },
-        ikkeRegistrertIKrr: () => {
-            return lagStore(
-                storeMedOppfolging({
-                    ...defaultOppfolging,
-                    kanVarsles: true,
-                    registrertKRR: false,
-                    reservasjonKRR: false,
-                    manuell: false,
-                }),
-            );
-        },
-        reserverIKrr: () => {
-            return lagStore(
-                storeMedOppfolging({
-                    ...defaultOppfolging,
-                    kanVarsles: true,
-                    registrertKRR: true,
-                    reservasjonKRR: true,
-                    manuell: false,
-                }),
-            );
-        },
-        manuell: () => {
-            return lagStore(
-                storeMedOppfolging({
-                    ...defaultOppfolging,
-                    kanVarsles: true,
-                    registrertKRR: true,
-                    reservasjonKRR: false,
-                    manuell: true,
-                }),
-            );
-        },
-    },
-};
+const defaultStore = gitt().aktiviteter.medAktiviteter([aktivitet]);
 
 const server = setupServer(...handlers);
 
@@ -111,25 +31,25 @@ describe('Videresend brukere eller render children', () => {
 
     describe('Veiledere:', () => {
         it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
-            const store = gitt.hentStatus.ikkeRegistrertIKrr();
+            const store = defaultStore.oppfolging.ikkeRegistrertIKrr().createStore();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Brukeren har ikke registrert kontaktinformasjon i KRR'));
             getByText(aktivitetTittel);
         });
         it('skal vise varsel når bruker har reservert seg mot digital kommunikasjon i KRR', async () => {
-            const store = gitt.hentStatus.reserverIKrr();
+            const store = defaultStore.oppfolging.reserverIKrr().createStore();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Brukeren er reservert i KRR'));
             getByText(aktivitetTittel);
         });
         it('skal vise aktivitetsplan når bruker er manuell', async () => {
-            const store = gitt.hentStatus.manuell();
+            const store = defaultStore.oppfolging.manuell().createStore();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText(aktivitetTittel));
             getByText(aktivitetTittel);
         });
         it('skal vise varsel når bruker er utdatert i KRR', async () => {
-            const store = gitt.hentStatus.utdatertIKrr();
+            const store = defaultStore.oppfolging.utdatertIKrr().createStore();
             const { getByText } = render(<WrappedHovedside fnr={mockfnr} store={store} />);
             await waitFor(() => getByText('Brukerens kontaktinformasjon i KRR er utdatert'));
             getByText(aktivitetTittel);
@@ -137,19 +57,19 @@ describe('Videresend brukere eller render children', () => {
     });
     describe('Brukere:', () => {
         it('skal vise varsel når bruker ikke har registrert informasjon i KRR', async () => {
-            const store = gitt.hentStatus.ikkeRegistrertIKrr();
+            const store = defaultStore.oppfolging.ikkeRegistrertIKrr().createStore();
             const { getByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() => getByText('Vi har ikke din kontaktinformasjon'));
             getByText(aktivitetTittel);
         });
         it('skal vise varsel når bruker har reservert seg mot digital kommunikasjon i KRR', async () => {
-            const store = gitt.hentStatus.reserverIKrr();
+            const store = defaultStore.oppfolging.reserverIKrr().createStore();
             const { getByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() => getByText('Du har reservert deg mot digital kommunikasjon'));
             getByText(aktivitetTittel);
         });
         it('skal vise dårlig feilmelding når bruker er manuell', async () => {
-            const store = gitt.hentStatus.manuell();
+            const store = defaultStore.oppfolging.manuell().createStore();
             const { getByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() =>
                 getByText('Du har ikke digital oppfølging fra Nav. Du har derfor ikke en digital aktivitetsplan.'),
@@ -157,7 +77,7 @@ describe('Videresend brukere eller render children', () => {
             getByText(aktivitetTittel);
         });
         it('skal vise varsel når bruker er utdatert i KRR', async () => {
-            const store = gitt.hentStatus.utdatertIKrr();
+            const store = defaultStore.oppfolging.utdatertIKrr().createStore();
             const { getByText } = render(<WrappedHovedside store={store} />);
             await waitFor(() => getByText('Kontaktinformasjonen din er utdatert'));
             getByText(aktivitetTittel);

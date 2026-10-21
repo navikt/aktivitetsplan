@@ -3,17 +3,17 @@ import classNames from 'classnames';
 import React, { ReactElement, useRef, useState } from 'react';
 
 import SprettendeScrollbars from './sprettende-scrollbars';
+import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
 
 const KOLONNEBREDDE = 325;
 const KOLONNEMARGIN = 10;
 
 interface Props {
-    children: ReactElement[];
-    dragging: boolean;
+    children: ReactElement<{ status: AktivitetStatus }>[];
 }
 
 const Tavle = (props: Props) => {
-    const { children, dragging } = props;
+    const { children } = props;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickIndex, setClickIndex] = useState(0);

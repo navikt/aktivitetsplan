@@ -1,4 +1,4 @@
-import createGenericSlice, { Status } from '../../../createGenericSlice';
+import createGenericSlice, { Status } from '../../../store/createGenericSlice';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as Api from '../../../api/aktivitetAPI';
 

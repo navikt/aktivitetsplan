@@ -17,7 +17,7 @@ async function postRequest(referatTekst: string, tryggTekstReferatId?: string): 
         method: 'POST',
         body: JSON.stringify({
             payload: referatTekst,
-            ...(tryggTekstReferatId && { trackingID: tryggTekstReferatId })
+            ...(tryggTekstReferatId && { trackingID: tryggTekstReferatId }),
         }),
         headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache', 'Content-Type': 'application/json' },
     })
@@ -44,7 +44,6 @@ export const postSjekkForPersonopplysninger = async (verdi: string, tryggTekstRe
     }
     const response: LLMResponse = await postRequest(verdi, tryggTekstReferatId);
     const containsSensitive: OpplysningSjekkContent = JSON.parse(response.content);
-    console.log('containsSensitive', containsSensitive);
 
     let feil = '';
     let kategorier: { kategori: string; trigger: string }[] = [];

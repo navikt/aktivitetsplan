@@ -1,0 +1,5 @@
+allowBuilds:
+  msw: true
+minimumReleaseAgeExclude:
+  - '@navikt/*'
+  - lint-staged@17.1.1

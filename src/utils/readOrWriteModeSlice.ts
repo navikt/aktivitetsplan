@@ -1,18 +1,12 @@
-import {
-    createListenerMiddleware,
-    createSelector,
-    createSlice,
-    ListenerEffectAPI,
-    PayloadAction,
-    ThunkDispatch,
-} from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { createListenerMiddleware, createSelector, createSlice, ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from '../store/rootReducer';
 import { velgPeriode } from '../moduler/filtrering/filter/valgt-periode-slice';
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
 import {
     selectErBrukerManuell,
     selectErRegisrertIKRR,
     selectErUnderOppfolging,
+    selectHarVeilederTilgangTilBrukerMedKVP,
     selectKanVarsles,
     selectReservasjonKRR,
     selectValgtPeriode,
@@ -30,10 +24,10 @@ const readOrWriteModeSlice = createSlice({
         mode: ReadWriteMode.READ,
     },
     reducers: {
-        setWriteMode(state, action: PayloadAction) {
+        setWriteMode(state) {
             state.mode = ReadWriteMode.WRITE;
         },
-        setReadMode(state, action: PayloadAction) {
+        setReadMode(state) {
             state.mode = ReadWriteMode.READ;
         },
     },
@@ -54,7 +48,7 @@ export const readWriteModeMiddleware = createListenerMiddleware();
 
 const oppdaterSkriveLeseTilgang = (
     action: any,
-    listenerApi: ListenerEffectAPI<RootState, ThunkDispatch<any, any, any>>,
+    listenerApi: { getState: () => RootState; dispatch: ThunkDispatch<any, any, any> },
 ) => {
     const state = listenerApi.getState();
     const valgtPeriode = selectValgtPeriode(state);
@@ -64,9 +58,12 @@ const oppdaterSkriveLeseTilgang = (
     const kanVarsles = selectKanVarsles(state);
     const erBrukerManuell = selectErBrukerManuell(state);
     const erVeileder = ER_INTERN_FLATE;
-    const utdatertIKRR = !kanVarsles
+    const utdatertIKRR = !kanVarsles;
+    const veilederHarTilgangTilBrukerSomKanHaKVP = selectHarVeilederTilgangTilBrukerMedKVP(state);
 
-    const harSkriveTilgang = erVeileder || (!reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
+    const harSkriveTilgang =
+        (erVeileder && veilederHarTilgangTilBrukerSomKanHaKVP) ||
+        (!erVeileder && !reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
 
     if (harSkriveTilgang && erUnderOppfolging && valgtPeriode && !valgtPeriode.slutt) {
         listenerApi.dispatch(setWriteMode());
@@ -78,13 +75,13 @@ const oppdaterSkriveLeseTilgang = (
 // If user and not reserved in KRR, set write mode
 readWriteModeMiddleware.startListening({
     actionCreator: hentOppfolging.fulfilled,
-    effect: oppdaterSkriveLeseTilgang,
+    effect: oppdaterSkriveLeseTilgang as any,
 });
 
 // If closed periode selected, set read mode
 readWriteModeMiddleware.startListening({
     actionCreator: velgPeriode,
-    effect: oppdaterSkriveLeseTilgang,
+    effect: oppdaterSkriveLeseTilgang as any,
 });
 
 export default readOrWriteModeSlice.reducer;

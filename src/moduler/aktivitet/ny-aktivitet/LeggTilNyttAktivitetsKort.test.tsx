@@ -4,17 +4,17 @@ import { ErVeilederContext } from '../../../Provider';
 import LeggTilNyttAktivitetsKort from './LeggTilNyttAktivitetsKort';
 import { WrappedComponent } from '../../../testUtils/WrappedHovedside';
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from '../../../reducer';
+import rootReducer from '../../../store/rootReducer';
 import { hovedsideRoute } from '../../../routing/useRoutes';
 
 const emptyStore = {};
 const initialStore = {};
-const store = configureStore({ reducer, preloadedState: initialStore as any });
+const store = configureStore({ reducer: rootReducer, preloadedState: initialStore as any });
 const erVeileder = true;
 
 describe('LeggTilNyttAktivitetsKort', () => {
     it('Legg til aktivitet knapp skal være disabled før data har lastet inn', () => {
-        const empty = configureStore({ reducer, preloadedState: emptyStore as any });
+        const empty = configureStore({ reducer: rootReducer, preloadedState: emptyStore as any });
         const { queryByRole } = render(
             <WrappedComponent initialEntries={[hovedsideRoute(erVeileder)]} store={empty}>
                 <ErVeilederContext.Provider value={erVeileder}>

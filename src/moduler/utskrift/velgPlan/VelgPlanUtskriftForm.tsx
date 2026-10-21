@@ -1,4 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Radio, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import KvpPlanValg from './KvpPlanValg';
-import UtskriftValg from './utskriftValg';
+import UtskriftValg from './UtskriftValg';
 
 interface Props {
     kvpPerioder?: KvpPeriode[];

@@ -10,8 +10,6 @@ on:
         required: true
         type: string
     secrets:
-      SENTRY_AUTH_TOKEN:
-        required: false
       READER_TOKEN:
         required: true
       SLACK_WEBHOOK:
@@ -22,7 +20,7 @@ jobs:
     name: Deploy to GCP-bucket
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Install pnpm - setup node - install deps
         uses: ./.github/actions/setup-pnpm
         with:
@@ -38,19 +36,6 @@ jobs:
           source: ./build/
           destination: /${{ inputs.bucket }}/
           no_cache_paths: ${{ inputs.bucket }}/build/index.html
-      - name: Create sentry release
-        uses: getsentry/action-release@v1
-        if: inputs.bucket == 'aktivitetsplan-prod'
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: nav
-          SENTRY_PROJECT: aktivitetsplan
-          SENTRY_URL: https://sentry.gc.nav.no/
-        with:
-          environment: prod
-          sourcemaps: './build'
-          url_prefix: '~'
-
       - name: Slack Notification (deploy failure)
         if: failure() && inputs.bucket == 'aktivitetsplan-prod'
         uses: rtCamp/action-slack-notify@v2

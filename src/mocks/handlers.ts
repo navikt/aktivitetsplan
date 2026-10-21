@@ -4,6 +4,8 @@ import {
     aktiviteterData,
     endreReferat,
     getAktivitet,
+    getAktivitetHistorikk,
+    getAktivitetVersjon,
     getAktivitetVersjoner,
     oppdaterAktivitet,
     oppdaterAktivitetStatus,
@@ -13,7 +15,7 @@ import {
     oppdaterLestFho,
     oppdaterStillingFraNavSoknadsstatus,
     opprettAktivitet,
-    publiserReferat
+    publiserReferat,
 } from './aktivitet';
 import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './data/arena';
 import { auth } from './data/auth';
@@ -23,7 +25,7 @@ import { features } from './data/feature';
 import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { me } from './data/me';
-import getOppfolging, { mockOppfolging, settDigital } from './data/oppfolging';
+import getOppfolging, { defaultMockOppfolgingsPerioder, settDigital } from './data/oppfolging';
 import { getPerson, getPostadresse } from './data/person';
 import { veilederMe } from './data/Veileder';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
@@ -37,12 +39,12 @@ import {
     maalFeilet,
     oppdateringKunFeiler,
     oppfFeilet,
-    sendTilBrukerFeiler
+    sendTilBrukerFeiler,
 } from './demo/localStorage';
 import { failOrGetResponse, failOrGrahpqlResponse, jsonResponse } from './utils';
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { journalføring } from './data/journalføring';
-import { subDays, subMinutes } from 'date-fns';
+import { addHours } from 'date-fns';
 import { AktivitetsplanResponse } from '../api/aktivitetsplanGraphql';
 import { sjekkTryggTekst } from './data/tryggtekst';
 
@@ -55,19 +57,19 @@ export const handlers = [
 
     // veilarboppfolging
     http.get('/veilarboppfolging/api/v3/oppfolging/me', failOrGetResponse(getOppfFeiler, me)),
-    http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', failOrGetResponse(getOppfFeiler, getOppfolging)),
+    http.post('/veilarboppfolging/api/graphql', failOrGetResponse(getOppfFeiler, getOppfolging)),
     http.post('/veilarboppfolging/api/v3/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true)),
     http.post('/veilarboppfolging/api/v3/hent-maal', failOrGetResponse(getMaalFeiler, sisteMal)),
     http.post('/veilarboppfolging/api/v3/maal/hent-alle', failOrGetResponse(getMaalFeiler, malListe)),
     http.post('/veilarboppfolging/api/v3/maal', failOrGetResponse(maalFeilet, opprettMal)),
     http.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () => {
         return new HttpResponse(null, {
-            status: 204
+            status: 204,
         });
     }),
     http.post('/veilarboppfolging/api/v3/veileder/lest-aktivitetsplan', () => {
         return new HttpResponse(null, {
-            status: 204
+            status: 204,
         });
     }),
     http.post('/veilarboppfolging/api/v3/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital)),
@@ -80,101 +82,122 @@ export const handlers = [
         failOrGrahpqlResponse(dialogFeilet, () => ({
             data: {
                 dialoger,
-                stansVarsel: eskaleringsvarsel
-            }
-        }))
+                stansVarsel: eskaleringsvarsel,
+            },
+        })),
     ),
 
     // veilarbaktivitet
-    http.post('/veilarbaktivitet/api/logger/event', (_, res, ctx) => res(ctx.status(200))),
+    http.post('/veilarbaktivitet/api/logger/event', () => new Response(null, { status: 200 })),
     http.get(
         '/veilarbaktivitet/api/aktivitet',
-        failOrGetResponse(getAktivitetFeiler, () => aktiviteterData)
+        failOrGetResponse(getAktivitetFeiler, () => aktiviteterData),
     ),
     http.post(
         '/veilarbaktivitet/graphql',
         failOrGrahpqlResponse(getAktivitetFeiler, async (req) => {
             const body = (await req.json()) as { query: string; variables: Record<string, any> };
             const aktivitetId = body.variables.aktivitetId;
+            const versjon = body.variables.versjon;
             if (aktivitetId) {
+                if (versjon) {
+                    const aktivitet = getAktivitetVersjon(aktivitetId, versjon);
+                    if (!aktivitet) {
+                        throw new Error(
+                            `Aktivitet med id ${aktivitetId} og versjon ${versjon} ble ikke funnet når test skulle svare på graphql kall`,
+                        );
+                    }
+                    return {
+                        data: {
+                            aktivitet,
+                        },
+                        errors: null,
+                    };
+                }
+
                 const aktivitet = aktiviteterData.aktiviteter.find((it) => it.id === aktivitetId);
                 await new Promise((resolve) => {
-                    setTimeout(resolve, 2000);
+                    setTimeout(resolve, 1000);
                 });
-                return aktivitetResponse(aktivitet);
+                if (!aktivitet)
+                    throw new Error(
+                        `Aktivitet med id ${aktivitetId} ble ikke funnnet når test skulle svare på graphql kall`,
+                    );
+                return aktivitetResponse(aktivitetId, aktivitet);
             } else {
                 return aktivitestplanResponse(); // Default aktiviteter
             }
-        })
+        }),
     ),
     http.post(
         '/veilarbaktivitet/api/arena/tiltak',
         failOrGetResponse(
             () => arenaFeilet() && !oppdateringKunFeiler(),
-            () => arena
-        )
+            () => arena,
+        ),
     ),
     http.get(
         '/veilarbaktivitet/api/aktivitet/kanaler',
-        failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON'])
+        failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON']),
     ),
     http.put(
         '/veilarbaktivitet/api/arena/:oppfolgingsperiode/forhaandsorientering',
-        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterArenaaktivitet)
+        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterArenaaktivitet),
     ),
     http.put(
         '/veilarbaktivitet/api/arena/forhaandsorientering/lest',
-        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterLestFhoArenaaktivitet)
+        failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterLestFhoArenaaktivitet),
     ),
     http.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet)),
     http.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet)),
     http.post(
         '/veilarbaktivitet/api/aktivitet/:oppfolgingsperiode/ny',
-        failOrGetResponse(aktivitetFeilet, opprettAktivitet)
+        failOrGetResponse(aktivitetFeilet, opprettAktivitet),
     ),
     http.get(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner',
-        failOrGetResponse(getAktivitetFeiler, getAktivitetVersjoner)
+        failOrGetResponse(getAktivitetFeiler, getAktivitetVersjoner),
     ),
     http.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/status',
-        failOrGetResponse(aktivitetFeilet, oppdaterAktivitetStatus)
+        failOrGetResponse(aktivitetFeilet, oppdaterAktivitetStatus),
     ),
     // todo sjekk ut denne, tror ikke det kun er stillingsaktivitet
     http.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett',
-        failOrGetResponse(aktivitetFeilet, oppdaterEtikett)
+        failOrGetResponse(aktivitetFeilet, oppdaterEtikett),
     ),
     http.put(
         '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser',
-        failOrGetResponse(aktivitetFeilet, publiserReferat)
+        failOrGetResponse(aktivitetFeilet, publiserReferat),
     ),
     http.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetResponse(aktivitetFeilet, endreReferat)),
     http.put('/veilarbaktivitet/api/avtaltMedNav', failOrGetResponse(aktivitetFeilet, oppdaterAvtaltMedNav)),
     http.put('/veilarbaktivitet/api/avtaltMedNav/lest', failOrGetResponse(aktivitetFeilet, oppdaterLestFho)),
     http.put(
         '/veilarbaktivitet/api/stillingFraNav/kanDeleCV',
-        failOrGetResponse(aktivitetFeilet, oppdaterCVKanDelesSvar)
+        failOrGetResponse(aktivitetFeilet, oppdaterCVKanDelesSvar),
     ),
     http.put(
         '/veilarbaktivitet/api/stillingFraNav/soknadStatus',
-        failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
+        failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus),
     ),
     http.get('/veilarbaktivitet/api/feature', jsonResponse(features)),
     http.post(
         '/veilarbaktivitet/api/arkivering/forhaandsvisning',
-        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 2000)
+        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 2000),
     ),
     http.post(
         '/veilarbaktivitet/api/arkivering/forhaandsvisning-send-til-bruker',
-        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 2000)
+        failOrGetResponse(forhaandsvisningFeiler, () => pdfForhaandsvisning, 2000),
     ),
     http.post(
         '/veilarbaktivitet/api/arkivering/journalfor',
-        failOrGetResponse(journalforingFeiler, () => journalføring, 2000)
+        failOrGetResponse(journalforingFeiler, () => journalføring, 2000),
     ),
     http.post(
-        '/veilarbaktivitet/api/arkivering/send-til-bruker', failOrGetResponse(sendTilBrukerFeiler, () => undefined, 2000, 204)
+        '/veilarbaktivitet/api/arkivering/send-til-bruker',
+        failOrGetResponse(sendTilBrukerFeiler, () => undefined, 2000, 204),
     ),
     http.post('/veilarbaktivitet/api/innsynsrett', jsonResponse({ foresatteHarInnsynsrett: erUnder18() })),
     // veilarblest
@@ -206,59 +229,81 @@ export const handlers = [
     http.get('/site.webmanifest', () => new HttpResponse()),
 
     // Dekoratoren login
-    http.get('https://login.ekstern.dev.nav.no/oauth2/session', () => new HttpResponse())
+    http.get(
+        'https://login.ekstern.dev.nav.no/oauth2/session',
+        () =>
+            new HttpResponse(
+                JSON.stringify({
+                    session: {
+                        created_at: new Date().toISOString(),
+                        ends_at: addHours(new Date(), 1).toISOString(),
+                        timeout_at: addHours(new Date(), 1).toISOString(),
+                        ends_in_seconds: 21597,
+                        active: true,
+                        timeout_in_seconds: 3597,
+                    },
+                    tokens: {
+                        expire_at: addHours(new Date(), 1).toISOString(),
+                        refreshed_at: new Date().toISOString(),
+                        expire_in_seconds: 3597,
+                        next_auto_refresh_in_seconds: 10000,
+                        refresh_cooldown: true,
+                        refresh_cooldown_seconds: 57,
+                    },
+                }),
+            ),
+    ),
+    http.get(
+        'https://login.ekstern.dev.nav.no/oauth2/session/refresh',
+        () =>
+            new HttpResponse(
+                JSON.stringify({
+                    session: {
+                        created_at: '2026-06-29T13:03:07.124903467Z',
+                        ends_at: '2026-06-29T19:03:07.124903467Z',
+                        timeout_at: '2026-06-29T14:03:07.124904147Z',
+                        ends_in_seconds: 21596,
+                        active: true,
+                        timeout_in_seconds: 3596,
+                    },
+                    tokens: {
+                        expire_at: '2026-06-29T14:03:07.124174778Z',
+                        refreshed_at: '2026-06-29T13:03:07.124903467Z',
+                        expire_in_seconds: 3596,
+                        next_auto_refresh_in_seconds: -1,
+                        refresh_cooldown: true,
+                        refresh_cooldown_seconds: 56,
+                    },
+                }),
+            ),
+    ),
 ];
 
 export const aktivitestplanResponse = (
-    { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter }
+    { aktiviteter }: { aktiviteter: VeilarbAktivitet[] } = { aktiviteter: aktiviteterData.aktiviteter },
 ): AktivitetsplanResponse => {
     return {
         data: {
-            perioder: mockOppfolging.oppfolgingsPerioder.map((periode) => ({
-                id: periode.uuid,
-                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.uuid),
-                start: periode.startDato,
-                slutt: periode.sluttDato ?? undefined
-            }))
-        }
+            perioder: defaultMockOppfolgingsPerioder.map((periode) => ({
+                id: periode.id,
+                aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.id),
+                start: periode.startTidspunkt,
+                slutt: periode.sluttTidspunkt ?? undefined,
+            })),
+        },
     };
 };
 
-export const aktivitetResponse = (aktivitet: VeilarbAktivitet) => {
-    const now = new Date();
+export const aktivitetResponse = (aktivitetId: string, aktivitet: VeilarbAktivitet) => {
     return {
         data: {
             eier: {
-                fnr: '13837597573'
+                fnr: '13837597573',
             },
             aktivitet: {
                 ...aktivitet,
-                historikk: {
-                    endringer: [
-                        {
-                            endretAvType: 'BRUKER',
-                            endretAv: '2121212121212',
-                            tidspunkt: now,
-                            beskrivelseForVeileder: 'Bruker endret detaljer på aktiviteten',
-                            beskrivelseForBruker: 'Du endret detaljer på aktiviteten'
-                        },
-                        {
-                            endretAvType: 'NAV',
-                            endretAv: 'R121212',
-                            tidspunkt: subMinutes(new Date(), 30),
-                            beskrivelseForVeileder: 'R121212 merket aktiviteten "Avtalt med Nav"',
-                            beskrivelseForBruker: 'Nav merket aktiviteten "Avtalt med Nav"'
-                        },
-                        {
-                            endretAvType: 'BRUKER',
-                            endretAv: '2121212121212',
-                            tidspunkt: subDays(new Date(), 2),
-                            beskrivelseForVeileder: 'Bruker flyttet aktiviteten fra Planlegger til Forslag',
-                            beskrivelseForBruker: 'Du flyttet aktiviteten fra Planlegger til Forslag'
-                        }
-                    ]
-                }
-            }
-        }
+                historikk: getAktivitetHistorikk(aktivitetId),
+            },
+        },
     };
 };

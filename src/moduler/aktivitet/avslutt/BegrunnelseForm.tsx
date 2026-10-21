@@ -4,10 +4,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import CustomErrorSummary from '../aktivitet-forms/CustomErrorSummary';
-
 const schema = z.object({
-    begrunnelse: z.string().min(1, 'Du må fylle ut tema begrunnelse').max(255, 'Du må korte ned teksten til 255 tegn'),
+    begrunnelse: z.string().min(1, 'Du må fylle ut begrunnelse').max(255, 'Du må korte ned teksten til 255 tegn'),
 });
 
 type BegrunnelseFormValues = z.infer<typeof schema>;
@@ -34,7 +32,7 @@ const BegrunnelseForm = (props: Props) => {
     } = useForm<BegrunnelseFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
 
     const begrunnelseValue = watch('begrunnelse'); // for <Textarea /> character-count to work
@@ -51,7 +49,6 @@ const BegrunnelseForm = (props: Props) => {
                     error={errors.begrunnelse && errors.begrunnelse.message}
                     value={begrunnelseValue}
                 />
-                <CustomErrorSummary errors={errors} />
                 <Button className="mt-4" loading={lagrer}>
                     Lagre
                 </Button>

@@ -1,6 +1,6 @@
 import { Locale, isBefore, parse, sub } from 'date-fns';
 import { isValidDate } from './dateUtils';
-import nb from 'date-fns/locale/nb';
+import { nb } from 'date-fns/locale/nb';
 
 // har kopiert denne fra aksel da den ikke lenger er tilgjengelig etter v. 6
 
@@ -33,7 +33,7 @@ export const parseDate = (date: string, today: Date, type: 'date' | 'month', all
             }
         }
 
-        for (const format of [...ALLOWED_FORMATS.map((x) => x.replace('yyyy', 'yy'))]) {
+        for (const format of ALLOWED_FORMATS.map((x) => x.replace('yyyy', 'yy'))) {
             parsed = parse(date, format, today, { locale });
             if (isValidDate(parsed) && isTwoDigitYear(date, today, locale, ALLOWED_FORMATS)) {
                 const convertedDate = assignCenturyToDate(date, format, today, locale);

@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
+import { Link } from 'react-router';
 
-import { Status } from '../../../createGenericSlice';
+import { Status } from '../../../store/createGenericSlice';
 import { AlleAktiviteter, isVeilarbAktivitet } from '../../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
-import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { useRoutes } from '../../../routing/useRoutes';
 import { getAktivitetType } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
@@ -49,6 +49,8 @@ const Aktivitetskort = (props: Props) => {
     const harEndringerIAktivitet =
         lestStatus === Status.OK &&
         isVeilarbAktivitet(aktivitet) &&
+        !!lest &&
+        !!me &&
         erNyEndringIAktivitet(aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
 
@@ -58,14 +60,15 @@ const Aktivitetskort = (props: Props) => {
     const ariaLabel = `${getAktivitetType(aktivitet)}: ${aktivitet.tittel}`;
 
     return (
-        <LinkAsDiv
-            id={prefixAktivtetskortId(aktivitet)}
+        <Link
+            key={id}
+            id={`/${prefixAktivtetskortId(aktivitet)}`}
             className={classNames('rounded-md bg-ax-bg-default', styles.aktivitetskort, className, {
                 [styles.sistVist]: aktivitetBleVistSist,
                 'border border-ax-border-neutral': !aktivitetBleVistSist,
             })}
             to={aktivitetRoute(id)}
-            ariaLabel={ariaLabel}
+            aria-label={ariaLabel}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
         >
             <article>
@@ -78,7 +81,7 @@ const Aktivitetskort = (props: Props) => {
                 ) : null}
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
-        </LinkAsDiv>
+        </Link>
     );
 };
 

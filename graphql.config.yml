@@ -1,1 +1,3 @@
-schema: graphql/schema.graphql
+schema:
+  - graphql/schema.graphql
+  - graphql/schema.veilarboppfolging.graphqls

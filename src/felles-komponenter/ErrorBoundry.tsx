@@ -1,7 +1,9 @@
 import { BodyLong, Heading } from '@navikt/ds-react';
 import React from 'react';
 
-interface Props {}
+interface Props {
+    children?: React.ReactNode;
+}
 interface State {
     hasError: boolean;
     errorMessage?: string;
@@ -17,7 +19,7 @@ class ErrorBoundry extends React.Component<Props, State> {
         return { hasError: true, errorMessage: error };
     }
 
-    componentDidCatch(error: any, errorInfo: any) {
+    componentDidCatch(_error: any, _errorInfo: any) {
         // You can also log the error to an error reporting service
         // logErrorToMyService(error, errorInfo);
     }

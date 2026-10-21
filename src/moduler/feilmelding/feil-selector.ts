@@ -18,12 +18,12 @@ import { hentMal, oppdaterMal } from '../mal/aktivitetsmal-slice';
 import { hentMalListe } from '../mal/malliste-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 
 export const selectFeil = (errors: RootState['data']['errors'], ...types: string[]): SerializedError[] => {
     return Object.entries(errors)
-        .filter(([type, _]) => types.includes(type))
-        .map(([_, val]) => val);
+        .filter(([type]) => types.includes(type))
+        .map(([, val]) => val);
 };
 
 export const selectErrors = (state: RootState) => state.data.errors;

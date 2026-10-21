@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Status } from '../../../../../createGenericSlice';
+import { Status } from '../../../../../store/createGenericSlice';
 import { ForhaandsorienteringType } from '../../../../../datatypes/forhaandsorienteringTypes';
 import { isEksternAktivitet, VeilarbAktivitet } from '../../../../../datatypes/internAktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils/dateUtils';
@@ -46,6 +46,7 @@ const AvtaltFormContainer = (props: Props) => {
                 lasterData={nettverksStatus !== Status.OK}
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 {...props}
+                aktivitet={aktivitet}
             />
         );
     }

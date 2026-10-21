@@ -2,8 +2,8 @@ import { PlusIcon } from '@navikt/aksel-icons';
 import { Button, Dropdown } from '@navikt/ds-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Status } from '../../../createGenericSlice';
+import { useNavigate } from 'react-router';
+import { Status } from '../../../store/createGenericSlice';
 import { useErVeileder } from '../../../Provider';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { useRoutes } from '../../../routing/useRoutes';
@@ -74,6 +74,7 @@ const LeggTilNyttAktivitetsKort = () => {
                                 {item.groupedItems.map((subItem) => (
                                     <Dropdown.Menu.GroupedList.Item
                                         key={subItem.tittle}
+                                        /* After enabling react-router startTrasition flag this is needed to avoid re-render loops in tests */
                                         onClick={() => navigate(subItem.link)}
                                         className="text-ax-text-neutral"
                                     >

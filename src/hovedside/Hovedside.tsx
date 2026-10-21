@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router';
 
 import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';

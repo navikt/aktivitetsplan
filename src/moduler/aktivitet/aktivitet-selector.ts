@@ -1,6 +1,6 @@
 import { SerializedError } from '../../api/utils';
-import { Status } from '../../createGenericSlice';
-import { RootState } from '../../store';
+import { Status } from '../../store/createGenericSlice';
+import { RootState } from '../../store/rootReducer';
 import { selectErrors, selectFeil } from '../feilmelding/feil-selector';
 import {
     flyttAktivitet,
@@ -10,8 +10,8 @@ import {
     oppdaterStillingFraNavSoknadsstatus,
 } from './aktivitet-actions';
 import { createSelector } from '@reduxjs/toolkit';
-import { Historikk } from '../../datatypes/Historikk';
 import { selectAktivitet, selectAktiviteterSlice } from './aktivitet-slice';
+import { AktivitetsId } from '../../datatypes/brandedTypes';
 
 export function selectAktivitetStatus(state: RootState) {
     return selectAktiviteterSlice(state).status;
@@ -41,9 +41,9 @@ export const selecteEndreAktivitetFeilmeldinger: (state: RootState) => Serialize
 );
 
 export const selectAktivitetHistorikk = createSelector(
-    [selectAktivitet, (_, aktivitetId: string | undefined) => aktivitetId],
+    [selectAktivitet, (_, aktivitetId: AktivitetsId | undefined) => aktivitetId],
     (aktivitet, aktivitetId) => {
         if (!aktivitetId) return undefined;
-        return (aktivitet as { historikk?: Historikk }).historikk;
+        return aktivitet?.historikk;
     },
 );

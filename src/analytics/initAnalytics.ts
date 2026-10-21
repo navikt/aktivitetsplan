@@ -5,7 +5,7 @@ import { startWaitingForUmamiToAppearOnWindow, umamiTrack } from './umamiFromScr
 export type EventDataValue = string | boolean | number | null | undefined;
 export type EventData = Record<string, EventDataValue>;
 export type TrackingFunction = (eventName: string, eventData: EventData) => void;
-let trackingFunction: TrackingFunction = (name, data) => {};
+let trackingFunction: TrackingFunction = (_name, _data) => {};
 let isInitialized = false;
 
 declare global {
@@ -20,6 +20,7 @@ declare global {
 
 const env = getEnv();
 export const initAnalytics = () => {
+    if (env == Env.Test) return;
     if (env == Env.Local) {
         trackingFunction = (eventName, eventData) => {
             console.log('[AnalyticsEvent]', eventName, eventData);

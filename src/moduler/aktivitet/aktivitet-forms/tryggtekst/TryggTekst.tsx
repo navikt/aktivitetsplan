@@ -1,14 +1,14 @@
 import { selectPersonopplusningSjekk } from './tryggtekst-selector';
 import { useSelector } from 'react-redux';
 import { BodyLong, BodyShort, ExpansionCard, Heading, List, Loader, Box, Button } from '@navikt/ds-react';
-import { Status } from '../../../../createGenericSlice';
+import { Status } from '../../../../store/createGenericSlice';
 import { sjekkForPersonopplysninger, nullstillTryggTekst } from './tryggtekst-slice';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
 import { useEffect, useRef, useState } from 'react';
 import { hentFeatures } from '../../../feature/feature-slice';
 import { selectFeatureSlice } from '../../../feature/feature-selector';
 import KISymbol from '../../../../Ikoner/KI_symbol';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 const TryggTekst = ({ value }: { value: string }) => {
     const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ const TryggTekst = ({ value }: { value: string }) => {
     useEffect(() => {
         const prevAktivitetId = prevAktivitetIdRef.current;
         if (prevAktivitetId && prevAktivitetId !== aktivitetId) {
-            dispatch(nullstillTryggTekst());
+            dispatch(nullstillTryggTekst(undefined));
             setLastCheckedValue(null);
         }
         prevAktivitetIdRef.current = aktivitetId;
@@ -31,10 +31,12 @@ const TryggTekst = ({ value }: { value: string }) => {
     const sjekkPersonopplysninger = (isOpen?: boolean) => {
         if (isOpen === false) return;
         setLastCheckedValue(value);
-        dispatch(sjekkForPersonopplysninger({
-            tekst: value,
-            tryggTekstReferatId: data?.tryggTekstReferatId
-        }));
+        dispatch(
+            sjekkForPersonopplysninger({
+                tekst: value,
+                tryggTekstReferatId: data?.tryggTekstReferatId,
+            }),
+        );
     };
 
     return (
@@ -57,28 +59,32 @@ const TryggTekst = ({ value }: { value: string }) => {
                     </div>
                 ) : status === Status.OK ? (
                     (() => {
-                        const kategorier = (data?.kategorier || []).filter(
-                            (k) => k.kategori.toLowerCase() !== 'ingen'
-                        );
+                        const kategorier = (data?.kategorier || []).filter((k) => k.kategori.toLowerCase() !== 'ingen');
                         return kategorier.length > 0 ? (
                             <Box marginBlock="space-16" asChild>
                                 <List data-aksel-migrated-v8>
                                     {kategorier.map((kategori) => (
                                         <List.Item key={kategori.kategori}>
-                                            <BodyShort><b>{capitalize(kategori.kategori)}</b></BodyShort>
+                                            <BodyShort>
+                                                <b>{capitalize(kategori.kategori)}</b>
+                                            </BodyShort>
                                             <BodyLong>{kategori.trigger}</BodyLong>
                                         </List.Item>
                                     ))}
                                 </List>
                             </Box>
                         ) : (
-                            <BodyShort className="mt-4">Ingen sensitive personopplysninger ble funnet i teksten.</BodyShort>
+                            <BodyShort className="mt-4">
+                                Ingen sensitive personopplysninger ble funnet i teksten.
+                            </BodyShort>
                         );
                     })()
                 ) : null}
                 {hasTextChanged && (
                     <div className="mt-4">
-                        <Button variant="secondary" onClick={() => sjekkPersonopplysninger()}>Sjekk teksten igjen</Button>
+                        <Button variant="secondary" onClick={() => sjekkPersonopplysninger()}>
+                            Sjekk teksten igjen
+                        </Button>
                     </div>
                 )}
             </ExpansionCard.Content>

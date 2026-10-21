@@ -1,5 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 import CustomBodyLong from './CustomBodyLong';
@@ -27,7 +27,7 @@ const InnholdsWrapper = (props: ChildProps) => {
             </CustomBodyLong>
         );
     } else if (typeof children !== 'string') {
-        return children as JSX.Element;
+        return children as React.ReactElement;
     } else {
         return <BodyShort>{children}</BodyShort>;
     }

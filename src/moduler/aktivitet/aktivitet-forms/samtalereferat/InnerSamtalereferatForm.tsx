@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Spraksjekk, checkText } from '@navikt/dab-spraksjekk';
 import { Button, Select, Switch, TextField, Textarea } from '@navikt/ds-react';
-import React, { MutableRefObject, useEffect, useMemo, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
@@ -18,13 +18,21 @@ import { notifiserTryggTekstVedLagring } from '../tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from './useSamtalereferatKladd';
 import { useSelector } from 'react-redux';
 import { selectValgtPeriodeId } from '../../../filtrering/filter/valgt-periode-slice';
+import { isValid } from 'date-fns';
 
 const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
     fraDato: z
         .date({
-            required_error: 'Fra dato må fylles ut',
-            invalid_type_error: 'Ikke en gyldig dato',
+            errorMap: (issue) => {
+                if (issue.code === 'invalid_type') {
+                    return { message: 'Fra dato må fylles ut' };
+                }
+                if (issue.code === 'invalid_date') {
+                    return { message: 'Ikke en gyldig dato' };
+                }
+                return { message: issue.message || 'Ikke en gyldig dato' };
+            },
         })
         .refine((date) => date.getTime() < new Date().getTime(), {
             message: 'Dato kan ikke være etter dagens dato',
@@ -43,7 +51,7 @@ interface Props {
             erReferatPublisert?: boolean;
         },
     ) => Promise<void>;
-    dirtyRef: MutableRefObject<boolean>;
+    dirtyRef: RefObject<boolean>;
     aktivitet?: SamtalereferatAktivitet;
 }
 
@@ -55,20 +63,24 @@ const InnerSamtalereferatForm = (props: Props) => {
     const dispatch = useAppDispatch();
     const oppfolgingsperiodeId = useSelector(selectValgtPeriodeId);
     const { lagreSamtalereferatKladd, hentSamtaleReferatKladd, slettSamtaleReferatKladd } = useSamtalereferatKladd({
-        oppfolgingsperiodeId: oppfolgingsperiodeId!!,
+        oppfolgingsperiodeId: oppfolgingsperiodeId!,
     });
     const kladd = useMemo(() => hentSamtaleReferatKladd(), []);
 
-    const defaultValues: Partial<SamtalereferatAktivitetFormValues> = {
-        tittel: kladd?.tittel || aktivitet?.tittel || '',
-        fraDato: dateOrUndefined(kladd?.fraDato) || dateOrUndefined(aktivitet?.fraDato),
-        kanal: kladd?.kanal || aktivitet?.kanal || Kanal.TELEFON,
-        referat: kladd?.referat || aktivitet?.referat || startTekst,
-    };
+    const defaultValues: Partial<SamtalereferatAktivitetFormValues> = useMemo(
+        () => ({
+            tittel: kladd?.tittel || aktivitet?.tittel || '',
+            fraDato: dateOrUndefined(kladd?.fraDato) || dateOrUndefined(aktivitet?.fraDato),
+            kanal: kladd?.kanal || aktivitet?.kanal || Kanal.TELEFON,
+            referat: kladd?.referat || aktivitet?.referat || startTekst,
+        }),
+        [kladd, aktivitet],
+    );
+
     const formHandlers = useForm<SamtalereferatAktivitetFormValues>({
         defaultValues,
         resolver: zodResolver(schema),
-        shouldFocusError: false,
+        shouldFocusError: true,
     });
     const {
         register,
@@ -87,7 +99,12 @@ const InnerSamtalereferatForm = (props: Props) => {
     const kanalValue = watch('kanal');
 
     useEffect(() => {
-        lagreSamtalereferatKladd({ tittel: tittelValue, referat: referatValue, fraDato: datoValue, kanal: kanalValue });
+        lagreSamtalereferatKladd({
+            tittel: tittelValue,
+            referat: referatValue,
+            fraDato: isValid(datoValue) ? datoValue.toISOString() : null,
+            kanal: kanalValue,
+        });
     }, [tittelValue, referatValue, datoValue, kanalValue]);
 
     const lagreOgDel = (erReferatPublisert: boolean) => {
@@ -97,12 +114,17 @@ const InnerSamtalereferatForm = (props: Props) => {
                 status: AktivitetStatus.GJENNOMFOERT,
                 avtalt: false,
                 erReferatPublisert,
-            }).then(() => {
-                const analysis = checkText(data.referat);
-                logReferatFullfort(analysis, erReferatPublisert, open);
-                slettSamtaleReferatKladd();
-                dispatch(notifiserTryggTekstVedLagring(data.referat));
-            });
+            }).then(
+                () => {
+                    const analysis = checkText(data.referat);
+                    logReferatFullfort(analysis, erReferatPublisert, open);
+                    slettSamtaleReferatKladd();
+                    dispatch(notifiserTryggTekstVedLagring(data.referat));
+                },
+                (...args) => {
+                    console.log('Invalid: args', args);
+                },
+            );
         });
     };
 

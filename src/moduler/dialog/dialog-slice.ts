@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { Status } from '../../createGenericSlice';
+import { Status } from '../../store/createGenericSlice';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { hentDialogerGraphql } from '../../api/dialogGraphql';
 import { setForhaandsVarselOmStans } from '../varslinger/eskaleringsvarsel-slice';
@@ -27,7 +27,7 @@ const dialogSlice = createSlice({
             state.status = Status.OK;
             state.sistOppdatert = new Date().toISOString();
         });
-        builder.addCase(hentDialoger.rejected, (state, action) => {
+        builder.addCase(hentDialoger.rejected, (state, _action) => {
             state.status = Status.ERROR;
         });
     },

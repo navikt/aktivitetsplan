@@ -14,7 +14,7 @@ interface Props {
 const UlestAvtaltMarkering = (props: Props) => {
     const { aktivitet } = props;
     const erBruker = useSelector(selectErBruker);
-    const skalMarkereSomLest = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
+    const skalMarkereSomLest = skalMarkereForhaandsorienteringSomLest(erBruker ?? false, aktivitet);
 
     if (!skalMarkereSomLest && !aktivitet.avtalt) return null;
 

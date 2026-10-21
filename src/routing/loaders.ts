@@ -1,16 +1,20 @@
-import { Dispatch } from '../store';
-import { defer, LoaderFunction, useRouteLoaderData } from 'react-router-dom';
+import { Dispatch } from '../store/store';
+import { LoaderFunction, LoaderFunctionArgs, useRouteLoaderData } from 'react-router';
 import { hentMal } from '../moduler/mal/aktivitetsmal-slice';
 import { hentMalListe } from '../moduler/mal/malliste-slice';
 import { initialPageLoadThunks } from './initialPageLoadThunk';
 import { hentAktivitet } from '../moduler/aktivitet/aktivitet-actions';
 import { erArenaId, hentArenaAktiviteter } from '../moduler/aktivitet/arena-aktiviteter-slice';
+import { AktivitetsId } from '../datatypes/brandedTypes';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
+import { GraphqlResponse } from '../api/graphql/graphqlResult';
 
 export const initialPageLoader =
     (dispatch: Dispatch, isVeileder: boolean): LoaderFunction =>
     async () => {
         const thunks = initialPageLoadThunks;
-        return defer({
+        return {
             oppfolging: dispatch(thunks.oppfolging(isVeileder)),
             identitet: dispatch(thunks.identitet(isVeileder)),
             veileder: dispatch(thunks.veileder(isVeileder)),
@@ -20,7 +24,7 @@ export const initialPageLoader =
             arenaAktiviteter: dispatch(thunks.arenaAktiviteter(isVeileder)),
             lest: dispatch(thunks.lest(isVeileder)),
             innsynsrett: dispatch(thunks.innsynsrett()),
-        });
+        };
     };
 
 export interface InitialPageLoadResult {
@@ -36,21 +40,22 @@ export interface InitialPageLoadResult {
 }
 
 export const malLoader = (dispatch: Dispatch) => {
-    return () =>
-        defer({
-            data: Promise.all([dispatch(hentMal()), dispatch(hentMalListe())]),
-        });
+    return () => ({
+        data: Promise.all([dispatch(hentMal()), dispatch(hentMalListe())]),
+    });
 };
 
 export const aktivitetsVisningLoader =
-    (dispatch: Dispatch): LoaderFunction =>
-    ({ params }) => {
+    (dispatch: Dispatch) =>
+    ({ params }: LoaderFunctionArgs) => {
         if (!params.id) return {};
         const arenaId = erArenaId(params.id);
-        return defer({
-            aktivitet: arenaId ? dispatch(hentArenaAktiviteter()) : dispatch(hentAktivitet(params.id)),
-        });
+        return {
+            aktivitet: arenaId ? dispatch(hentArenaAktiviteter()) : dispatch(hentAktivitet(params.id as AktivitetsId)),
+        };
     };
 
 export const useAktivitetsVisningLoaderData = () =>
-    useRouteLoaderData('aktivitetsVisning') as { aktivitet: Promise<any> };
+    useRouteLoaderData('aktivitetsVisning') as {
+        aktivitet: Promise<PayloadAction<GraphqlResponse<{ aktivitet: VeilarbAktivitet; eier: { fnr: string } }>>>;
+    };

@@ -9,7 +9,7 @@ export const SkalDelCvIkkeSvartVises = (aktivitet: StillingFraNavAktivitet): boo
     const erBruker = useSelector(selectErBruker);
     const markeringSkalVises = delCvikkeSvartSkalVises(aktivitet);
 
-    return erBruker && markeringSkalVises;
+    return !!(erBruker && markeringSkalVises);
 };
 
 const DelCvIkkeSvart = () => {

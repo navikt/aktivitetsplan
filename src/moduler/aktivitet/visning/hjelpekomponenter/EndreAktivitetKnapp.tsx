@@ -1,7 +1,7 @@
 import { PencilIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { useRoutes } from '../../../../routing/useRoutes';

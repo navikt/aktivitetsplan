@@ -1,4 +1,4 @@
 import { AuthInfoResponse } from '../datatypes/types';
-import { fetchToJson } from './utils';
+import { getAsJson } from './utils';
 
-export const fetchAuthInfo = (): Promise<AuthInfoResponse> => fetchToJson('/auth/info', {}, 'fetchAuthInfo');
+export const fetchAuthInfo = (): Promise<AuthInfoResponse> => getAsJson('/auth/info', 'fetchAuthInfo');

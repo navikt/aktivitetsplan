@@ -33,7 +33,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const dispatch = useAppDispatch();
 
-    const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
+    const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(erBruker ?? false, aktivitet);
 
     const [erEkspandert, setErEkspandert] = useState(startAapen);
 
@@ -46,15 +46,15 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     const onMarkerSomLest = () => {
         setLaster(true);
         if (erArenaAktivitet) {
-            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet)).then((_) => setLaster(false));
+            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet)).then(() => setLaster(false));
         } else {
-            dispatch(markerForhaandsorienteringSomLest(aktivitet)).then((_) => setLaster(false));
+            dispatch(markerForhaandsorienteringSomLest(aktivitet)).then(() => setLaster(false));
         }
         loggForhaandsorienteringLest(aktivitet.type, true);
     };
 
     const onClickLestKnapp = () => {
-        onMarkerSomLest && onMarkerSomLest();
+        onMarkerSomLest();
         setErEkspandert(false);
     };
 

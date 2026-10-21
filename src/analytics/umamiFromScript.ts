@@ -1,13 +1,13 @@
 // Generator function to process events from the queue
-import { EventDataValue, TrackingFunction } from './initAnalytics';
+import { TrackingFunction } from './initAnalytics';
 
 const timeoutMs = 5000;
 
 let umamiLoadedPromise: Promise<void> | undefined;
 export const startWaitingForUmamiToAppearOnWindow = () => {
     umamiLoadedPromise = new Promise((resolve, reject) => {
-        let timeout: NodeJS.Timeout | undefined;
-        let interval: NodeJS.Timeout | undefined;
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        let interval: ReturnType<typeof setTimeout> | undefined;
 
         timeout = setTimeout(() => {
             clearTimeout(timeout);
@@ -28,19 +28,13 @@ export const startWaitingForUmamiToAppearOnWindow = () => {
 declare global {
     interface Window {
         umami: {
-            track: (
-                eventName: string,
-                data: {
-                    origin: string;
-                    eventName: string;
-                    eventData: Record<string, EventDataValue>;
-                },
-            ) => Promise<void>;
+            track: TrackingFunction;
         } | null;
     }
 }
 
 export const umamiTrack: TrackingFunction = (eventName, eventData) => {
+    // @ts-ignore
     if (globalThis.window === 'undefined') {
         console.warn('[umamiTrack] Window is undefined (SSR context)');
         return;
@@ -57,7 +51,7 @@ export const umamiTrack: TrackingFunction = (eventName, eventData) => {
 
         // Wait for Umami to load, then retry
         umamiLoadedPromise
-            .then(() => {
+            ?.then(() => {
                 console.log('[umamiTrack] Umami now available, tracking event:', eventName, eventData);
                 globalThis.window.umami!.track(eventName, eventData);
             })

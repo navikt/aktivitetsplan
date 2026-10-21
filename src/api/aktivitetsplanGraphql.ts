@@ -4,6 +4,7 @@ import { hentFraSessionStorage, LocalStorageElement } from '../mocks/demo/localS
 import { VeilarbAktivitet } from '../datatypes/internAktivitetTypes';
 import { GraphqlResponse, sjekkGraphqlFeil } from './graphql/graphqlResult';
 import { Historikk } from '../datatypes/Historikk';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from '../datatypes/brandedTypes';
 
 const allAktivitetFields = `
     id,
@@ -124,7 +125,7 @@ const allAktivitetFields = `
     }
 `;
 
-const query: string = `
+const alleAktiviteterQuery: string = `
     query($fnr: String!) {
         perioder(fnr: $fnr) {
             id,
@@ -137,6 +138,27 @@ const query: string = `
     }
 `;
 
+const historikkFields = `
+    endringer {
+        endretAvType,
+        endretAv,
+        tidspunkt,
+        beskrivelseForVeileder,
+        beskrivelseForBruker,
+        versjonsId
+    }
+`;
+
+const historikkQuery = `
+    query($aktivitetId: String!) {
+        aktivitet(aktivitetId: $aktivitetId) {
+            historikk {
+                ${historikkFields}
+            }
+        }
+    }
+`;
+
 const aktivitetQuery = `
     query($aktivitetId: String!) {
         eier(aktivitetId: $aktivitetId) {
@@ -145,21 +167,25 @@ const aktivitetQuery = `
         aktivitet(aktivitetId: $aktivitetId) {
             ${allAktivitetFields}
             historikk {
-                endringer {
-                    endretAvType,
-                    endretAv,
-                    tidspunkt,
-                    beskrivelseForVeileder,
-                    beskrivelseForBruker,
-                }
+                ${historikkFields}
             }
         }
 
     }
 `;
 
-const queryBody = (fnr: string) => ({
-    query,
+const gammeltReferatQuery = `
+    query($aktivitetId: String!, $versjon: String!) {
+        aktivitet(aktivitetId: $aktivitetId, versjon: $versjon) {
+            tittel
+            id
+            referat
+        }
+    }
+`;
+
+const alleAktiviteterQueryBody = (fnr: string) => ({
+    query: alleAktiviteterQuery,
     variables: {
         fnr,
     },
@@ -172,8 +198,23 @@ const aktivitetQueryBody = (aktivitetId: string) => ({
     },
 });
 
+const aktivitetHistorikkQueryBody = (aktivitetId: AktivitetsId) => ({
+    query: historikkQuery,
+    variables: {
+        aktivitetId,
+    },
+});
+
+const gammelReferatQueryBody = (aktivitetId: AktivitetsId, versjon: AktivitetsVersjon) => ({
+    query: gammeltReferatQuery,
+    variables: {
+        aktivitetId,
+        versjon,
+    },
+});
+
 interface OppfolgingsPerioder {
-    id: string;
+    id: OppfolgingsPeriodeId;
     aktiviteter: VeilarbAktivitet[];
     start: string;
     slutt: string | undefined;
@@ -181,45 +222,65 @@ interface OppfolgingsPerioder {
 
 export type AktivitetsplanResponse = GraphqlResponse<{ perioder: OppfolgingsPerioder[] }>;
 
-export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
-    const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';
-    return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
+const fetchFromGraphql = (body: string) =>
+    fetch(AKTIVITET_GRAPHQL_BASE_URL, {
         ...DEFAULT_CONFIG,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Nav-Consumer-Id': 'aktivitetsplan',
         },
-        body: JSON.stringify(queryBody(fnr)),
-    })
+        body: body,
+    });
+
+export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> => {
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';
+    return fetchFromGraphql(JSON.stringify(alleAktiviteterQueryBody(fnr)))
         .then((response) => sjekkStatuskode(response, 'hentAktiviteterGraphql'))
         .then(toJson)
         .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
 };
 
-export const hentAktivitetGraphql = (aktivitetId: string) => {
-    return fetch(AKTIVITET_GRAPHQL_BASE_URL, {
-        ...DEFAULT_CONFIG,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Nav-Consumer-Id': 'aktivitetsplan',
-        },
-        body: JSON.stringify(aktivitetQueryBody(aktivitetId)),
-    })
+export type AktivitetMedHistorikk = VeilarbAktivitet & {
+    historikk: Historikk;
+    id: AktivitetsId;
+    oppfolgingsperiodeId: OppfolgingsPeriodeId;
+};
+
+export const hentAktivitetGraphql = (aktivitetId: AktivitetsId) => {
+    return fetchFromGraphql(JSON.stringify(aktivitetQueryBody(aktivitetId)))
         .then((response) => sjekkStatuskode(response, 'hentAktivitetGraphql'))
         .then(toJson)
         .then(
             sjekkGraphqlFeil<{
-                aktivitet: VeilarbAktivitet & { historikk: Historikk; id: string; oppfolgingsperiodeId: string };
+                aktivitet: AktivitetMedHistorikk;
                 eier: { fnr: string };
             }>,
         )
         .then((it) => ({
             ...it,
             data: {
-                aktivitet: { ...it.data.aktivitet, id: aktivitetId },
+                aktivitet: { ...it.data.aktivitet, id: aktivitetId as AktivitetsId },
                 eier: { fnr: it.data.eier.fnr },
             },
         }));
+};
+
+export interface TidligereReferatAktivitet {
+    tittel: string;
+    id: AktivitetsId;
+    referat: string | null;
+}
+
+export const hentAktivitetsHistorikkGraphql = (aktivitetId: AktivitetsId) => {
+    return fetchFromGraphql(JSON.stringify(aktivitetHistorikkQueryBody(aktivitetId)))
+        .then((response) => sjekkStatuskode(response, 'hentAktivitetHistorikkGraphql'))
+        .then(toJson)
+        .then(sjekkGraphqlFeil<{ aktivitet: { historikk: Historikk; id: AktivitetsId } }>);
+};
+export const hentAktivitetsVersjonGraphql = (aktivitetId: AktivitetsId, versjon: AktivitetsVersjon) => {
+    return fetchFromGraphql(JSON.stringify(gammelReferatQueryBody(aktivitetId, versjon)))
+        .then((response) => sjekkStatuskode(response, 'hentAktivitetVersjonGraphql'))
+        .then(toJson)
+        .then(sjekkGraphqlFeil<{ aktivitet: TidligereReferatAktivitet }>);
 };

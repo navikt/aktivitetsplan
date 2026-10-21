@@ -9,6 +9,34 @@ export interface FilterState {
     aktivitetAvtaltMedNav: AvtaltFilterType;
 }
 
+export const filterTypes = [
+    'aktivitetTyper',
+    'aktivitetEtiketter',
+    'arenaAktivitetEtiketter',
+    'aktivitetAvtaltMedNav',
+] as const;
+
+export type FilterStateEntry =
+    | { category: 'aktivitetTyper'; subFilter: AktivitetFilterType }
+    | { category: 'aktivitetEtiketter'; subFilter: EtikettFilterType }
+    | { category: 'arenaAktivitetEtiketter'; subFilter: ArenaEtikettFilterType }
+    | { category: 'aktivitetAvtaltMedNav'; subFilter: AvtaltFilterType };
+
+export type FilterStateEntryKey =
+    | { category: 'aktivitetTyper'; keyActiveOnFilterCategory: keyof AktivitetFilterType }
+    | {
+          category: 'aktivitetEtiketter';
+          keyActiveOnFilterCategory: keyof EtikettFilterType;
+      }
+    | {
+          category: 'arenaAktivitetEtiketter';
+          keyActiveOnFilterCategory: keyof ArenaEtikettFilterType;
+      }
+    | {
+          category: 'aktivitetAvtaltMedNav';
+          keyActiveOnFilterCategory: keyof AvtaltFilterType;
+      };
+
 const initialState: FilterState = {
     aktivitetTyper: {
         ARENA_TILTAK: false,
@@ -32,10 +60,30 @@ const initialState: FilterState = {
         ENKELAMO: false,
         ENKFAGYRKE: false,
         HOYEREUTD: false,
+        FIREARIG_LONNSTILSKUDD: false,
+        SOMMERJOBB: false,
+        TILRETTELAGT_ARBEID_ORDINAER: false,
+        INDOPPFAG: false,
+        ARBFORB: false,
+        AVKLARAG: false,
+        VASV: false,
+        ARBRRHDAG: false,
+        DIGIOPPARB: false,
+        JOBBK: false,
+        GRUPPEAMO: false,
+        GRUFAGYRKE: false,
+        ARBEIDSMARKEDSOPPLAERING: false,
+        NORSKOPPLAERING_GRUNNLEGGENDE_FERDIGHETER_FOV: false,
+        STUDIESPESIALISERING: false,
+        FAG_OG_YRKESOPPLAERING: false,
+        HOYERE_YRKESFAGLIG_UTDANNING: false,
+        WORKOP: false,
+        DELE_CV_MED_ARBEIDSGIVER: false,
     },
     aktivitetEtiketter: {
         AVSLAG: false,
         CV_DELT: false,
+        FATT_JOBBEN: false,
         IKKE_FATT_JOBBEN: false,
         INGEN_VALGT: false,
         INNKALT_TIL_INTERVJU: false,

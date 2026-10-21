@@ -1,9 +1,8 @@
-import PT from 'prop-types';
 import React, { useCallback, useMemo, useState } from 'react';
 
 export const DirtyContext = React.createContext({
     isDirty: false,
-    setFormIsDirty: (name: string, dirty: boolean) => {},
+    setFormIsDirty: (_name: string, _dirty: boolean) => {},
 });
 
 function isFormsDirty(forms: { [key: string]: boolean | undefined }) {
@@ -19,20 +18,16 @@ export function DirtyProvider(props: Children) {
     const [, setDirtyForms] = useState({});
 
     const setFormIsDirty = useCallback(
-        (name, dirty) => {
+        (name: string, dirty: boolean) => {
             setDirtyForms((forms) => {
                 const newForm = { ...forms, [name]: dirty };
                 setIsDirty(isFormsDirty(newForm));
                 return newForm;
             });
         },
-        [setDirtyForms, setIsDirty]
+        [setDirtyForms, setIsDirty],
     );
 
     const value = useMemo(() => ({ isDirty, setFormIsDirty }), [isDirty, setFormIsDirty]);
     return <DirtyContext.Provider value={value}>{props.children}</DirtyContext.Provider>;
 }
-
-DirtyProvider.propTypes = {
-    children: PT.object.isRequired,
-};

@@ -1,6 +1,6 @@
-import { GenericState } from '../../createGenericSlice';
+import { GenericState } from '../../store/createGenericSlice';
 import { Me } from '../../datatypes/oppfolgingTypes';
-import { RootState } from '../../store';
+import { RootState } from '../../store/rootReducer';
 
 function selectIdentitetSlice(state: RootState): GenericState<Me> {
     return state.data.identitet;
@@ -11,11 +11,7 @@ export function selectIdentitetData(state: RootState) {
 }
 
 export function selectErBruker(state: RootState) {
-    return selectIdentitetData(state).erBruker;
-}
-
-export function selectIdentitetId(state: RootState) {
-    return selectIdentitetData(state).id;
+    return selectIdentitetData(state)?.erBruker;
 }
 
 export function selectIdentitetStatus(state: RootState) {

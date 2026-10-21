@@ -32,6 +32,10 @@ const ensureMemoryStorage = (storageName) => {
 ensureMemoryStorage('localStorage');
 ensureMemoryStorage('sessionStorage');
 
+afterEach(() => {
+    vi.clearAllTimers();
+});
+
 import.meta.env.VITE_API_URL_BASE = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom
 
 HTMLDialogElement.prototype.showModal = () => {};
@@ -70,15 +74,15 @@ vi.mock('./felles-komponenter/utils/logging', async (importOriginal) => {
     };
 });
 
-/* Mock fetchHarFlereAktorId,
-   its run on-mount and has no side-effects visible for this app
-   so it cant be tested
-*/
-vi.mock('./api/oppfolgingAPI', async (importOriginal) => {
-    const actual = await importOriginal();
+vi.mock('react-pdf', () => {
     return {
-        ...actual,
-        fetchHarFlereAktorId: vi.fn(() => Promise.resolve()),
+        pdfjs: {
+            GlobalWorkerOptions: {
+                workerSrc: '',
+            },
+        },
+        Document: () => null,
+        Page: () => null,
     };
 });
 
@@ -97,16 +101,16 @@ global.DOMMatrix = class DOMMatrix {
         }
     }
 
-    multiply(other) {
+    multiply(_other) {
         return this;
     }
-    translate(x, y) {
+    translate(_x, _y) {
         return this;
     }
-    scale(scaleX, scaleY) {
+    scale(_scaleX, _scaleY) {
         return this;
     }
-    rotate(angle) {
+    rotate(_angle) {
         return this;
     }
     inverse() {
