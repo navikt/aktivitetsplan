@@ -1,5 +1,3 @@
-import { DefaultBodyType, StrictRequest } from 'msw';
-
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import {
     erIkkeRegistrertIKRR,
@@ -74,6 +72,9 @@ export const oppfolgingGraphql: OppfolgingStatusResponse = {
                 sluttTidspunkt: kvpPeriode.sluttTidspunkt,
             })) || [],
     })),
+    veilederTilgang: {
+        harVeilederLeseTilgangTilBrukersKontorsperre: true,
+    },
 };
 
 const oppfolging = {
@@ -100,7 +101,7 @@ const oppfolging = {
 
 export const mockOppfolging = { ...oppfolgingGraphql };
 
-export const getOppfolging = (_: StrictRequest<DefaultBodyType>) => {
+export const getOppfolging = () => {
     return { data: oppfolgingGraphql, errors: undefined };
 };
 

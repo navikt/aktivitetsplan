@@ -1,4 +1,4 @@
-import { createListenerMiddleware, createSelector, createSlice, PayloadAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { createListenerMiddleware, createSelector, createSlice, ThunkDispatch } from '@reduxjs/toolkit';
 import { RootState } from '../store/rootReducer';
 import { velgPeriode } from '../moduler/filtrering/filter/valgt-periode-slice';
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-slice';
@@ -6,6 +6,7 @@ import {
     selectErBrukerManuell,
     selectErRegisrertIKRR,
     selectErUnderOppfolging,
+    selectHarVeilederTilgangTilBrukerMedKVP,
     selectKanVarsles,
     selectReservasjonKRR,
     selectValgtPeriode,
@@ -23,10 +24,10 @@ const readOrWriteModeSlice = createSlice({
         mode: ReadWriteMode.READ,
     },
     reducers: {
-        setWriteMode(state, _: PayloadAction) {
+        setWriteMode(state) {
             state.mode = ReadWriteMode.WRITE;
         },
-        setReadMode(state, _: PayloadAction) {
+        setReadMode(state) {
             state.mode = ReadWriteMode.READ;
         },
     },
@@ -58,9 +59,11 @@ const oppdaterSkriveLeseTilgang = (
     const erBrukerManuell = selectErBrukerManuell(state);
     const erVeileder = ER_INTERN_FLATE;
     const utdatertIKRR = !kanVarsles;
+    const veilederHarTilgangTilBrukerSomKanHaKVP = selectHarVeilederTilgangTilBrukerMedKVP(state);
 
     const harSkriveTilgang =
-        erVeileder || (!reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
+        (erVeileder && veilederHarTilgangTilBrukerSomKanHaKVP) ||
+        (!erVeileder && !reservertMotDigitalKommunikasjonIKrr && registrertIKrr && !utdatertIKRR && !erBrukerManuell);
 
     if (harSkriveTilgang && erUnderOppfolging && valgtPeriode && !valgtPeriode.slutt) {
         listenerApi.dispatch(setWriteMode());
