@@ -23,36 +23,41 @@ import {
 // Cache is only supposed to be used when "jumping" between apps in veilarbpersonflate
 clearReduxCache();
 
+const FNR_ATTRIBUTE = 'data-fnr';
+const AKTIV_ENHET_ATTRIBUTE = 'data-aktivenhet';
+
 export class DabAktivitetsplan extends HTMLElement {
     setFnr?: (fnr: string) => void;
     setAktivEnhet?: (enhet: string) => void;
     root: Root | undefined;
+    appRoot: HTMLDivElement | undefined;
 
-    disconnectedCallback() {
-        saveReduxStateToSessionStorage();
-        this.root?.unmount();
+    private getComponentProps() {
+        return {
+            fnr: this.getAttribute(FNR_ATTRIBUTE) ?? undefined,
+            aktivEnhet: this.getAttribute(AKTIV_ENHET_ATTRIBUTE) ?? undefined,
+        };
     }
 
-    connectedCallback() {
-        // This will be app entry point, need to be outside modal-mount node
-        const appRoot = document.createElement('div');
-        appRoot.id = 'aktivitetsplan-root';
-        const shadowRoot = this.attachShadow({ mode: 'closed' });
-        shadowRoot.appendChild(appRoot);
-
-        // Load styles under this shadowDom-node, not root element
-        const styleElem = document.createElement('style');
-        styleElem.innerHTML = baseCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
-        shadowRoot.appendChild(styleElem);
-
-        const fnr = this.getAttribute('data-fnr') ?? undefined;
-        const aktivEnhet = this.getAttribute('data-aktivEnhet') ?? undefined;
-        let preloadedState: RootState | undefined = undefined;
-        if (fnr) {
-            settSessionStorage(LocalStorageElement.FNR, fnr);
-            preloadedState = getPreloadedStateFromSessionStorage(fnr);
+    private getPreloadedState(fnr: string | undefined): RootState | undefined {
+        if (!fnr) {
+            return undefined;
         }
-        slettGamleSamtalereferatKladder();
+        settSessionStorage(LocalStorageElement.FNR, fnr);
+        return getPreloadedStateFromSessionStorage(fnr);
+    }
+
+    private mountReactApp({
+        appRoot,
+        fnr,
+        aktivEnhet,
+        preloadedState,
+    }: {
+        appRoot: HTMLDivElement;
+        fnr: string | undefined;
+        aktivEnhet: string | undefined;
+        preloadedState: RootState | undefined;
+    }) {
         this.root = createRoot(appRoot);
         this.root.render(
             <AkselProvider rootElement={appRoot}>
@@ -70,18 +75,60 @@ export class DabAktivitetsplan extends HTMLElement {
         );
     }
 
+    private getOrCreateAppRoot() {
+        if (this.appRoot) {
+            return this.appRoot;
+        }
+
+        const appRoot = document.createElement('div');
+        appRoot.id = 'aktivitetsplan-root';
+        const shadowRootNode = this.attachShadow({ mode: 'closed' });
+        shadowRootNode.appendChild(appRoot);
+
+        // Load styles under this shadowDom-node, not root element
+        const styleElem = document.createElement('style');
+        styleElem.innerHTML = baseCss + lessCss + modulesCss + pdfCssAnnotationCss + pdfCssTextCss;
+        shadowRootNode.appendChild(styleElem);
+
+        this.appRoot = appRoot;
+        return appRoot;
+    }
+
+    disconnectedCallback() {
+        try {
+            saveReduxStateToSessionStorage();
+        } catch (e) {
+            console.warn(`Failed to save redux state to session storage when unmounting web-component`, e);
+        }
+        this.root?.unmount();
+        this.root = undefined;
+        this.setFnr = undefined;
+        this.setAktivEnhet = undefined;
+    }
+
+    connectedCallback() {
+        if (this.root) {
+            return;
+        }
+        const appRoot = this.getOrCreateAppRoot();
+        const { fnr, aktivEnhet } = this.getComponentProps();
+        const preloadedState = this.getPreloadedState(fnr);
+        slettGamleSamtalereferatKladder();
+        this.mountReactApp({ appRoot, fnr, aktivEnhet, preloadedState });
+    }
+
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        if (name === 'data-fnr' && this.setFnr) {
+        if (name === FNR_ATTRIBUTE && this.setFnr) {
             settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setFnr(newValue);
         }
-        if (name === 'data-aktivEnhet' && this.setAktivEnhet) {
+        if (name === AKTIV_ENHET_ATTRIBUTE && this.setAktivEnhet) {
             settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setAktivEnhet(newValue);
         }
     }
 
     static get observedAttributes() {
-        return ['data-fnr', 'data-aktivEnhet'];
+        return [FNR_ATTRIBUTE, AKTIV_ENHET_ATTRIBUTE];
     }
 }

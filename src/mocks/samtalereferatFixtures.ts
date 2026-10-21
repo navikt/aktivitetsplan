@@ -1,7 +1,7 @@
 import { AktivitetStatus, Kanal } from '../datatypes/aktivitetTypes';
 import { SamtalereferatAktivitet, VeilarbAktivitetType } from '../datatypes/internAktivitetTypes';
 import { FellesTransaksjonsTyper } from '../datatypes/transaksjonstyperTypes';
-import { AktivitetsId } from '../datatypes/brandedTypes';
+import { AktivitetsId, AktivitetsVersjon } from '../datatypes/brandedTypes';
 import { aktivPeriodeId } from './data/oppfolging';
 
 let id = 1002;
@@ -14,7 +14,7 @@ export function etSamtalereferat({ tittel }: { tittel: string }): Samtalereferat
     return {
         oppfolgingsperiodeId: aktivPeriodeId,
         id: `${id}` as AktivitetsId,
-        versjon: `${versjon}`,
+        versjon: `${versjon}` as AktivitetsVersjon,
         tittel,
         referat:
             'Dette er et referat\n\nMed flere avsnitt.\nOg linjeskift. https://www.nav.no asdasdasdads 123 https://www.google.com',

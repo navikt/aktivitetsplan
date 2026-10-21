@@ -6,3 +6,4 @@ export type Brand<T, TBrand extends string> = T & {
 
 export type OppfolgingsPeriodeId = Brand<string, 'OppfolgingsPeriodeId'>;
 export type AktivitetsId = Brand<string, 'AktivitetsId'>;
+export type AktivitetsVersjon = Brand<string, 'AktivitetsVersjon'>;

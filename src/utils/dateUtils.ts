@@ -1,3 +1,4 @@
+import { tz, TZDate } from '@date-fns/tz';
 import {
     addDays,
     differenceInDays,
@@ -14,6 +15,19 @@ import {
 } from 'date-fns';
 import { nb } from 'date-fns/locale/nb';
 
+export const NORSK_TIDSSONE = 'Europe/Oslo';
+
+export const NORSK_TID_SUFFIX = ' (norsk tid)';
+
+export function norskTidSuffix(dato: string | Date | null | undefined): string {
+    if (!dato) return '';
+    const datoVerdi = typeof dato === 'string' ? parseISO(dato) : dato;
+    if (!isValid(datoVerdi)) return '';
+    const osloOffset = new TZDate(datoVerdi.getTime(), NORSK_TIDSSONE).getTimezoneOffset();
+    const lokalOffset = new Date(datoVerdi.getTime()).getTimezoneOffset();
+    return osloOffset === lokalOffset ? '' : NORSK_TID_SUFFIX;
+}
+
 export const erGyldigISODato = (isoDato: string | undefined | null) => {
     return !!(isoDato && isValid(parseISO(isoDato)));
 };
@@ -28,7 +42,9 @@ export const toLocalISODateString = (date: Date): string => {
 function formatter(dato: string | null | Date | undefined, format: string) {
     if (dato) {
         const datoVerdi = typeof dato === 'string' ? parseISO(dato) : dato;
-        return isValid(datoVerdi) ? formatDate(datoVerdi, format, { locale: nb }) : undefined;
+        return isValid(datoVerdi)
+            ? formatDate(datoVerdi, format, { locale: nb, in: tz(NORSK_TIDSSONE) })
+            : undefined;
     }
     return undefined;
 }
@@ -42,11 +58,13 @@ export function formaterDatoKortManed(dato: string | Date | undefined | null) {
 }
 
 export function formaterDatoKortManedTid(dato: string | Date | undefined | null) {
-    return formatter(dato, "PP 'kl' HH.mm");
+    const formatert = formatter(dato, "PP 'kl' HH.mm");
+    return formatert ? `${formatert}${norskTidSuffix(dato)}` : undefined;
 }
 
 export function formaterTid(dato: string | undefined | null | Date) {
-    return formatter(dato, 'HH.mm');
+    const formatert = formatter(dato, 'HH.mm');
+    return formatert ? `${formatert}${norskTidSuffix(dato)}` : undefined;
 }
 
 export function formaterDatoTidSiden(dato: string) {

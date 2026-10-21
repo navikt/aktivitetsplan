@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MOTE_TYPE } from '../../../../constant';
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
-import { formaterDatoManed } from '../../../../utils/dateUtils';
+import { formaterDatoManed, norskTidSuffix } from '../../../../utils/dateUtils';
 import { kanalMap } from '../../../../utils/textMappers';
 import { beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
@@ -23,7 +23,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
             <Informasjonsfelt key="dato" tittel="Dato" innhold={formaterDatoManed(aktivitet.fraDato)} />
             <Informasjonsfelt
                 key="klokkeslett"
-                tittel="Klokkeslett"
+                tittel={`Klokkeslett${norskTidSuffix(aktivitet.fraDato)}`}
                 innhold={formatterKlokkeslett(moteTid?.klokkeslett)}
             />
             <Informasjonsfelt key="kanal" tittel="Møteform" innhold={aktivitet.kanal && kanalMap[aktivitet.kanal]} />

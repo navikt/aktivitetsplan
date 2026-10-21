@@ -113,7 +113,7 @@ export const eksterneAktiviteter: EksternAktivitet[] = !visEksterneAktiviteter()
                           { label: 'Arbeidsgiver', verdi: 'Biggen Blues og Bensin' },
                           { label: 'Stillingsprosent', verdi: '100%' },
                       ],
-                      etiketter: undefined,
+                      etiketter: [{ kode: 'lol', sentiment: 'NEUTRAL', tekst: 'Ikke svart' }],
                   },
               }),
           }),

@@ -2,12 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { checkText, Spraksjekk } from '@navikt/dab-spraksjekk';
 import { Button, Switch, Textarea } from '@navikt/ds-react';
 import { isFulfilled } from '@reduxjs/toolkit';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
 
-import { logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
+import { logKlikkKnapp, logReferatFullfort, logToggleSpraksjekkToggle } from '../../../../analytics/analytics';
 import { Status } from '../../../../store/createGenericSlice';
 import { MoteAktivitet, SamtalereferatAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
@@ -20,6 +20,7 @@ import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { TryggTekstBakFeatureToggle } from '../../aktivitet-forms/tryggtekst/TryggTekst';
 import { notifiserTryggTekstVedLagring } from '../../aktivitet-forms/tryggtekst/tryggtekst-slice';
 import { useSamtalereferatKladd } from '../../aktivitet-forms/samtalereferat/useSamtalereferatKladd';
+import { KladdOverlay } from './KladdOverlay';
 
 const schema = z.object({
     referat: z.string().min(0).max(5000),
@@ -44,19 +45,21 @@ const OppdaterReferatForm = (props: Props) => {
         hentSamtaleReferatKladdLagretAktivitet,
         slettSamtaleReferatKladd,
     } = useSamtalereferatKladd({ aktivitetId: aktivitet.id });
-    const kladd = useMemo(() => hentSamtaleReferatKladdLagretAktivitet(), []);
+    const initialReferatValue = aktivitet.referat || startTekst;
+    const [kladd, setKladd] = useState(hentSamtaleReferatKladdLagretAktivitet(initialReferatValue));
 
     const {
         watch,
+        setValue,
         formState: { isDirty, isSubmitting },
         register,
+        resetDefaultValues,
         handleSubmit,
     } = useForm<ReferatInputProps>({
         resolver: zodResolver(schema),
-        defaultValues: {
-            referat: kladd || aktivitet.referat || startTekst,
-        },
+        defaultValues: { referat: initialReferatValue },
     });
+
     const oppdaterer = isSubmitting || aktivitetsStatus === Status.PENDING || aktivitetsStatus === Status.RELOADING;
 
     const { setFormIsDirty } = useContext(DirtyContext);
@@ -103,58 +106,101 @@ const OppdaterReferatForm = (props: Props) => {
     const referatValue = watch('referat');
 
     useEffect(() => {
+        if (kladd) return;
         lagreSamtalereferatKladdLagretAktivitet(referatValue);
-    }, [referatValue]);
+    }, [referatValue, kladd]);
+
+    const slettKladd = () => {
+        slettSamtaleReferatKladd();
+        setKladd(null);
+        logKlikkKnapp('behold lagret');
+    };
+
+    const onBeholdKladd = () => {
+        if (!kladd) return;
+        setKladd(null);
+        setValue('referat', kladd.samtalereferat, { shouldDirty: true });
+
+        const aktivitetMedOppdatertReferat = {
+            ...aktivitet,
+            referat: kladd.samtalereferat,
+        };
+        dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((action) => {
+            if (isFulfilled(action)) {
+                resetDefaultValues({ referat: kladd.samtalereferat });
+            }
+        });
+        logKlikkKnapp('behold kladd');
+    };
 
     return (
-        <form
-            onSubmit={handleSubmit((values) => updateReferat(values))}
-            className="space-y-4 bg-ax-bg-brand-blue-soft p-4 border border-ax-border-brand-blue rounded-md"
-        >
-            <Textarea
-                label={`Samtalereferat`}
-                disabled={oppdaterer}
-                maxLength={5000}
-                placeholder="Skriv samtalereferatet her"
-                {...register('referat')}
-                value={referatValue}
-            />
-            <>
-                <Switch
-                    checked={open}
-                    onChange={() => {
-                        setOpen(!open);
-                        logToggleSpraksjekkToggle(!open);
-                    }}
+        <div className="relative">
+            <KladdOverlay
+                kladd={
+                    kladd ? { value: kladd.samtalereferat, sistEndret: new Date(kladd.tidspunkt).toISOString() } : null
+                }
+                referat={{ value: referatValue, sistEndret: aktivitet.endretDato }}
+                onBeholdKladd={onBeholdKladd}
+                onBeholdLagret={slettKladd}
+            >
+                <form
+                    onSubmit={handleSubmit((values) => updateReferat(values))}
+                    className="space-y-4 bg-ax-bg-brand-blue-soft p-4 border border-ax-border-brand-blue rounded-md"
                 >
-                    Klarspråkhjelpen
-                </Switch>
-                <TryggTekstBakFeatureToggle value={referatValue} />
-                <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
-            </>
-            <Feilmelding feilmeldinger={feil} />
-            <div className="flex gap-4">
-                {erReferatPublisert ? null : (
-                    <Button loading={oppdaterer} disabled={oppdaterer} onClick={updateAndPubliser}>
-                        Del med bruker
-                    </Button>
-                )}
+                    <div className="relative">
+                        <Textarea
+                            label={`Samtalereferat`}
+                            disabled={oppdaterer}
+                            maxLength={5000}
+                            placeholder="Skriv samtalereferatet her"
+                            {...register('referat')}
+                            value={referatValue}
+                        />
+                    </div>
+                    <>
+                        <Switch
+                            checked={open}
+                            onChange={() => {
+                                setOpen(!open);
+                                logToggleSpraksjekkToggle(!open);
+                            }}
+                        >
+                            Klarspråkhjelpen
+                        </Switch>
+                        <TryggTekstBakFeatureToggle value={referatValue} />
+                        <Spraksjekk value={referatValue} open={open} options={{ tools: false, longWords: false }} />
+                    </>
+                    <Feilmelding feilmeldinger={feil} />
+                    <div className="flex gap-4">
+                        {erReferatPublisert ? null : (
+                            <Button loading={oppdaterer} disabled={oppdaterer} onClick={updateAndPubliser}>
+                                Del med bruker
+                            </Button>
+                        )}
 
-                <Button
-                    variant={erReferatPublisert ? 'primary' : 'secondary'}
-                    loading={oppdaterer}
-                    disabled={oppdaterer}
-                >
-                    {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
-                </Button>
+                        <Button
+                            variant={erReferatPublisert ? 'primary' : 'secondary'}
+                            loading={oppdaterer}
+                            disabled={oppdaterer || !isDirty}
+                        >
+                            {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
+                        </Button>
 
-                {aktivitet.referat && (
-                    <Button variant="tertiary" onClick={onFerdig}>
-                        Avbryt
-                    </Button>
-                )}
-            </div>
-        </form>
+                        {aktivitet.referat && (
+                            <Button
+                                variant="tertiary"
+                                onClick={() => {
+                                    slettSamtaleReferatKladd();
+                                    onFerdig();
+                                }}
+                            >
+                                Avbryt
+                            </Button>
+                        )}
+                    </div>
+                </form>
+            </KladdOverlay>
+        </div>
     );
 };
 

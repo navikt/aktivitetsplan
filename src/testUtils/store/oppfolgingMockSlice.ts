@@ -9,10 +9,6 @@ const defaultOppfolgingData: OppfolgingStatusResponse = {
     },
     oppfolgingsPerioder: [aktivVeilarbOppfolgingMockPeriode],
     brukerStatus: {
-        arena: {
-            inaktiveringsdato: undefined,
-            kanReaktiveres: false,
-        },
         manuell: {
             erManuell: false,
         },
@@ -21,6 +17,9 @@ const defaultOppfolgingData: OppfolgingStatusResponse = {
             reservertIKrr: false,
             kanVarsles: true,
         },
+    },
+    veilederTilgang: {
+        harVeilederLeseTilgangTilBrukersKontorsperre: true,
     },
 };
 

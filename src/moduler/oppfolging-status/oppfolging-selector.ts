@@ -102,10 +102,6 @@ export function selectErUnderKvp(state: RootState) {
     return !!nåværendeKvpPeriode;
 }
 
-export function selectKanReaktiveres(state: RootState) {
-    return selectOppfolgingData(state)?.brukerStatus?.arena?.kanReaktiveres;
-}
-
-export function selectInaktiveringsDato(state: RootState) {
-    return selectOppfolgingData(state)?.brukerStatus?.arena?.inaktiveringsdato;
+export function selectHarVeilederTilgangTilBrukerMedKVP(state: RootState): boolean {
+    return selectOppfolgingData(state)?.veilederTilgang?.harVeilederLeseTilgangTilBrukersKontorsperre || false;
 }

@@ -1,5 +1,3 @@
-import { DefaultBodyType, StrictRequest } from 'msw';
-
 import { OppfolgingStatus } from '../../datatypes/oppfolgingTypes';
 import {
     erIkkeRegistrertIKRR,
@@ -52,10 +50,6 @@ export const defaultMockOppfolgingsPerioder: (OppfolgingsPeriode & { startTidspu
 
 export const oppfolgingGraphql: OppfolgingStatusResponse = {
     brukerStatus: {
-        arena: {
-            inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
-            kanReaktiveres: false,
-        },
         krr: {
             reservertIKrr: erKRRBruker(),
             registrertIKrr: !erIkkeRegistrertIKRR(),
@@ -78,6 +72,9 @@ export const oppfolgingGraphql: OppfolgingStatusResponse = {
                 sluttTidspunkt: kvpPeriode.sluttTidspunkt,
             })) || [],
     })),
+    veilederTilgang: {
+        harVeilederLeseTilgangTilBrukersKontorsperre: true,
+    },
 };
 
 const oppfolging = {
@@ -104,7 +101,7 @@ const oppfolging = {
 
 export const mockOppfolging = { ...oppfolgingGraphql };
 
-export const getOppfolging = (_: StrictRequest<DefaultBodyType>) => {
+export const getOppfolging = () => {
     return { data: oppfolgingGraphql, errors: undefined };
 };
 

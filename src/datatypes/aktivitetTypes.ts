@@ -2,7 +2,7 @@ import { ArenaAktivitet, ArenaAktivitetType } from './arenaAktivitetTypes';
 import { Forhaandsorientering } from './forhaandsorienteringTypes';
 import { VeilarbAktivitet, VeilarbAktivitetType } from './internAktivitetTypes';
 import { FellesTransaksjonsTyper } from './transaksjonstyperTypes';
-import { AktivitetsId, OppfolgingsPeriodeId } from './brandedTypes';
+import { AktivitetsId, AktivitetsVersjon, OppfolgingsPeriodeId } from './brandedTypes';
 
 export type AktivitetType = VeilarbAktivitetType | ArenaAktivitetType;
 
@@ -56,7 +56,7 @@ export type BrukerType = 'BRUKER' | 'ARBEIDSGIVER' | 'TILTAKSARRANGOER' | 'NAV' 
 
 export interface AktivitetBaseProps<T = FellesTransaksjonsTyper> {
     id: AktivitetsId;
-    versjon: string;
+    versjon: AktivitetsVersjon;
     tittel: string;
     opprettetDato: string;
     status: AktivitetStatus;

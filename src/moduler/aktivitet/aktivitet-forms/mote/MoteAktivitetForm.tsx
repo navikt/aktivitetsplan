@@ -15,6 +15,8 @@ import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
 import { endOfDay, format, subDays } from 'date-fns';
+import { TZDate } from '@date-fns/tz';
+import { NORSK_TIDSSONE } from '../../../../utils/dateUtils';
 import { useHilsenVeilederTekst } from '../samtalereferat/useHilsenVeilederTekst';
 import { FeltEndret } from '../../../../analytics/analytics-taxonomy-events';
 import { logEndringAvtaltMote } from '../../../../analytics/analytics';
@@ -235,7 +237,7 @@ const loggEndringer = (
 
     const str = (val: string | number | null | undefined) => (val == null ? '' : String(val).trim());
     const origMoteTid = beregnKlokkeslettVarighet(aktivitet);
-    const nyFraDato = typeof moteForm.fraDato === 'string' ? new Date(moteForm.fraDato) : undefined;
+    const nyFraDato = typeof moteForm.fraDato === 'string' ? new TZDate(moteForm.fraDato, NORSK_TIDSSONE) : undefined;
 
     const felter: [FeltEndret, () => boolean][] = [
         [FeltEndret.TITTEL, () => str(moteForm.tittel) !== str(aktivitet.tittel)],

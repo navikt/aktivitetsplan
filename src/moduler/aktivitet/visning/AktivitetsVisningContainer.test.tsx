@@ -61,7 +61,7 @@ describe('Aktivitetsvisning', () => {
         getByText(aktivitet.beskrivelse!);
     });
 
-    it('skal advarsel på avtalt-med-nav form når bruker er under KVP', async () => {
+    it('skal vise advarsel på avtalt-med-nav form når bruker er under KVP', async () => {
         const store = gitt().aktiviteter.medAktivitet(aktivitet).oppfolging.medKvpAktivPeriode().createStore();
         const { getByText } = render(<AktivitetsVisningContainerWrapper store={store} erVeileder={true} />);
         await act(() => getByText('Avtalt med Nav').click());

@@ -1,6 +1,9 @@
 import { useErVeileder } from '../Provider';
+import { AktivitetsId, AktivitetsVersjon } from '../datatypes/brandedTypes';
 
 const basename = '/aktivitetsplan';
+const aktivitetsVersjonRoute = (aktivitetId: AktivitetsId, aktivitetsVersjon: AktivitetsVersjon, erVeileder: boolean) =>
+    `${erVeileder ? basename : ''}/aktivitet/vis/${aktivitetId}/versjon/${aktivitetsVersjon}`;
 const aktivitetRoute = (aktivitetId: string, erVeileder: boolean) =>
     `${erVeileder ? basename : ''}/aktivitet/vis/${aktivitetId}`;
 export const nyAktivitetRoute = (erVeileder: boolean) => `${erVeileder ? basename : ''}/aktivitet/ny`;
@@ -19,6 +22,8 @@ export const useRoutes = () => {
 
     return {
         aktivitetRoute: (aktivitetId: string) => aktivitetRoute(aktivitetId, erVeileder),
+        aktivitetsVersjonRoute: (aktivitetId: AktivitetsId, versjon: AktivitetsVersjon) =>
+            aktivitetsVersjonRoute(aktivitetId, versjon, erVeileder),
         nyAktivitetRoute: () => nyAktivitetRoute(erVeileder),
         endreAktivitetRoute: (aktivitetId: string) => endreAktivitetRoute(aktivitetId, erVeileder),
         fullforAktivitetRoute: (aktivitetId: string) => fullforAktivitetRoute(aktivitetId, erVeileder),

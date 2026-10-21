@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, EntityState, isAnyOf, createSelector } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, EntityState, isAnyOf, createSelector, Update } from '@reduxjs/toolkit';
 
 import { Status } from '../../store/createGenericSlice';
 import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
@@ -7,6 +7,7 @@ import {
     flyttAktivitet,
     hentAktivitet,
     hentAktiviteter,
+    hentAktivitetHistorikk,
     lagNyAktivitet,
     markerForhaandsorienteringSomLest,
     oppdaterAktivitetEtikett,
@@ -20,15 +21,19 @@ import { lastAltPaaNyttMedNyBruker } from '../../api/modiaContextHolder';
 import { loggDyplenkingTilAnnenBruker } from '../../analytics/analytics';
 import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
 import { RootState } from '../../store/rootReducer';
+import { GraphqlResponse } from '../../api/graphql/graphqlResult';
+import { Historikk } from '../../datatypes/Historikk';
 
 type PerioderMedAktiviteter = {
     id: OppfolgingsPeriodeId;
     aktiviteter: VeilarbAktivitet[];
 };
 
+export type AktivitetMedHistorikk = VeilarbAktivitet & { historikk?: Historikk };
+
 export interface PeriodeEntityState {
     id: OppfolgingsPeriodeId;
-    aktiviteter: EntityState<VeilarbAktivitet, AktivitetsId>;
+    aktiviteter: EntityState<AktivitetMedHistorikk, AktivitetsId>;
     start: string;
     slutt: string | undefined | null;
 }
@@ -45,7 +50,7 @@ export const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOpp
 const { selectById: selectAktivitetById, selectAll: selectAlleAktiviter } = aktivitetAdapter.getSelectors();
 
 export const selectAktiviteterSlice = (state: RootState): AktivitetState => state.data.aktiviteter;
-export const selectAktivitet = (state: RootState, aktivitetId: AktivitetsId): VeilarbAktivitet | undefined => {
+export const selectAktivitet = (state: RootState, aktivitetId: AktivitetsId): AktivitetMedHistorikk | undefined => {
     const perioder = selectAllOppfolgingsperioder(selectAktiviteterSlice(state));
     return perioder
         .map((periode) => selectAktivitetById(periode.aktiviteter, aktivitetId))
@@ -79,8 +84,27 @@ const initialState = oppfolgingsdperiodeAdapter.getInitialState({
 
 export type AktivitetState = typeof initialState;
 
-function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbAktivitet): AktivitetState {
+const findAktivitetInPeriode = (
+    state: AktivitetState,
+    aktivitetId: AktivitetsId,
+): { aktivitet: VeilarbAktivitet; periode: PeriodeEntityState } | undefined => {
+    return selectAllOppfolgingsperioder(state)
+        .map((periode) => ({
+            aktivitet: selectAktivitetById(periode.aktiviteter, aktivitetId),
+            periode,
+        }))
+        .find((match) => match.aktivitet !== undefined);
+};
+
+function nyStateMedOppdatertAktivitet(
+    state: AktivitetState,
+    aktivitet: VeilarbAktivitet & { historikk?: Historikk },
+): AktivitetState {
     const oppfolgingsperiode = getOrCreatePeriode(state, aktivitet.oppfolgingsperiodeId);
+    // Hvis feltet historikk ikke finnes skal det ikke overskrive
+    if (!aktivitet.historikk) {
+        delete aktivitet.historikk;
+    }
     return oppfolgingsdperiodeAdapter.upsertOne(state, {
         id: oppfolgingsperiode.id,
         aktiviteter: aktivitetAdapter.upsertOne(oppfolgingsperiode.aktiviteter, aktivitet),
@@ -88,6 +112,32 @@ function nyStateMedOppdatertAktivitet(state: AktivitetState, aktivitet: VeilarbA
         slutt: oppfolgingsperiode.slutt,
     });
 }
+
+const oppdaterAktivitetHistorikk = (
+    state: AktivitetState,
+    aktivitetId: AktivitetsId,
+    payload: GraphqlResponse<{
+        aktivitet: { historikk: Historikk; id: AktivitetsId };
+    }>,
+) => {
+    const aktivitetInPeriode = findAktivitetInPeriode(state, aktivitetId);
+    if (!aktivitetInPeriode) {
+        console.warn('Klarte ikke finne periode som inneholdt aktivitet som historikk skulle oppdateres på');
+        return state;
+    }
+    const { periode } = aktivitetInPeriode;
+    const aktivitetUpdate: Update<VeilarbAktivitet & { historikk: Historikk }, AktivitetsId> = {
+        id: aktivitetId,
+        changes: { historikk: payload.data.aktivitet.historikk },
+    };
+    const periodeUpdate: Update<PeriodeEntityState, OppfolgingsPeriodeId> = {
+        id: periode.id,
+        changes: {
+            aktiviteter: aktivitetAdapter.updateOne(periode.aktiviteter, aktivitetUpdate),
+        },
+    };
+    return oppfolgingsdperiodeAdapter.updateOne(state, periodeUpdate);
+};
 
 // Exported only for testing setup
 export const getOrCreatePeriode = (
@@ -124,7 +174,7 @@ const aktivitetSlice = createSlice({
             oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
-            const aktivitet = action.payload.data.aktivitet;
+            const aktivitet = action.payload.data.aktivitet as AktivitetMedHistorikk;
             const eier = action.payload.data.eier;
             const aktivitetIDer = selectAllOppfolgingsperioder(state)
                 .map((periode) => selectAlleAktiviter(periode.aktiviteter).map((aktivitet) => aktivitet.id))
@@ -170,6 +220,10 @@ const aktivitetSlice = createSlice({
         );
         builder.addMatcher(isAnyOf(hentAktiviteter.rejected, hentAktivitet.rejected), (state) => {
             state.status = Status.ERROR;
+        });
+        builder.addMatcher(isAnyOf(hentAktivitetHistorikk.fulfilled), (state, action) => {
+            const aktivitetId = action.payload.data.aktivitet.id;
+            return oppdaterAktivitetHistorikk(state, aktivitetId, action.payload);
         });
     },
 });

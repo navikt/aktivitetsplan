@@ -18,11 +18,10 @@ spec:
             ) > 0.05
           for: 5m
           annotations:
-            summary: "High log error rate detected"
+            summary: "High log error rate detected in aktivitetsplan"
             consequence: "Users may be experiencing errors when using the application."
             action: "Check logs for error messages and investigate affected services."
             message: "Service {{ $labels.service_name }} has {{ $value | humanizePercentage }} error logs over the last 10 minutes."
-            runbook_url: "https://github.com/navikt/my-app-runbook/blob/main/HighErrorLogRate.md"
           labels:
             severity: warning
             namespace: dab

@@ -6,22 +6,36 @@ import {
     selectPdfForhaandsvisning,
 } from '../verktoylinje/arkivering/arkiv-slice';
 import { useSelector } from 'react-redux';
-import { LoaderFunction } from 'react-router';
+import { LoaderFunction, useNavigate, useParams } from 'react-router';
 import { Dispatch } from '../../store/store';
 import Sidebar from './Sidebar';
 import { createBlob, PdfViewer } from './PdfViewer';
 import { StatusErrorBoundry } from './StatusErrorBoundry';
 import { Status } from '../../store/createGenericSlice';
+import { selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
+import { hovedsideRoute } from '../../routing/useRoutes';
 
 export const JournalforingPage = () => {
+    const navigate = useNavigate();
+    const { oppfolgingsperiodeId } = useParams();
     const pdf = useSelector(selectPdfForhaandsvisning);
     const journalførtStatus = useSelector(selectJournalføringstatus);
+    const oppfolgingsperioder = useSelector(selectOppfolgingsPerioder);
     const forhaandsvisningStatus = useSelector(selectForhaandsvisningStatus);
 
     const blob = useMemo(() => {
         if (!pdf) return undefined;
         return createBlob(pdf);
     }, [pdf]);
+
+    const brukersOppfolgingsperiodeErIUrl = useMemo(() => {
+        return oppfolgingsperioder.map((periode) => periode.id.toLowerCase()).includes(oppfolgingsperiodeId?.toLowerCase() || '')
+    }, [oppfolgingsperioder, oppfolgingsperiodeId]);
+
+    if (!brukersOppfolgingsperiodeErIUrl) {
+        void navigate(hovedsideRoute(true), { replace: true });
+        return;
+    }
 
     const visSuksessmelding = journalførtStatus === Status.OK && forhaandsvisningStatus == Status.OK;
 
