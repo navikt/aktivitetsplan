@@ -26,6 +26,12 @@ export const getPreloadedStateFromSessionStorage = (fnr: string | undefined): Ro
 
 export const saveReduxStateToSessionStorage = () => {
     const state = storeRef?.getState();
+    if (!state) {
+        return;
+    }
+    if (Object.keys(state.data.errors).length > 0) {
+        return;
+    }
     sessionStorage.setItem(key, JSON.stringify(state));
     const fnr = sessionStorage.getItem('aktivitetsplan_fnr');
     if (fnr) sessionStorage.setItem(fnrKey, fnr);

@@ -7,6 +7,8 @@ import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
 import { selectSorterteOppfolgingsperioder } from '../../oppfolging-status/oppfolging-selector';
 import { selectValgtPeriodeId, velgPeriode } from './valgt-periode-slice';
 import { OppfolgingsPeriodeId } from '../../../datatypes/brandedTypes';
+import { selectAktivitetStatus } from '../../aktivitet/aktivitet-selector';
+import { Status } from '../../../store/createGenericSlice';
 
 const PeriodeFilter = () => {
     const perioder = useSelector(selectSorterteOppfolgingsperioder);
@@ -17,6 +19,9 @@ const PeriodeFilter = () => {
 
     const nyestePeriode = perioder.length > 0 ? perioder[0] : null;
     const valgtPeriodeId = useSelector(selectValgtPeriodeId);
+    const aktivitetStatus = useSelector(selectAktivitetStatus);
+    const perioderErLastet = aktivitetStatus === Status.OK;
+    const perioderForSelect = perioderErLastet ? perioder : [];
 
     useEffect(() => {
         if (!!nyestePeriode && !valgtPeriodeId) {
@@ -45,8 +50,9 @@ const PeriodeFilter = () => {
                 label="Periode"
                 value={valgtPeriodeId || undefined}
                 onChange={onPeriodeChange}
+                disabled={!perioderErLastet}
             >
-                {perioder.map(({ start, slutt, id }) => {
+                {perioderForSelect.map(({ start, slutt, id }) => {
                     let fraDato = undefined;
                     try {
                         fraDato = format(parseISO(start), 'dd. MMM yyyy');

@@ -6,6 +6,8 @@ type Query {
 
 type OppfolgingsPeriode {
     id: String
+    start: Date!
+    slutt: Date
     aktiviteter: [AktivitetDTO]
 }
 
