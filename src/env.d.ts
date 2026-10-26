@@ -8,6 +8,7 @@ interface ImportMetaEnv {
     readonly VITE_STILLING_FRA_NAV_BASE_URL: string;
     readonly VITE_MINSIDE_URL: string;
     readonly VITE_REGISTRERINGSINFORMASJON_URL: string;
+    readonly VITE_AVSLUTT_OPPFOLGING_URL: string;
     readonly VITE_ARBEIDSRETTET_DIALOG_URL: string;
     readonly VITE_API_URL_BASE: string;
     readonly VITE_RELEASE: string;
