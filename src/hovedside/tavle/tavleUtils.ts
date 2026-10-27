@@ -15,11 +15,11 @@ export function aktivitetDropTargetStatus({
 }
 
 export function erDroppbar(
-    aktivitet: AlleAktiviteter & { nesteStatus?: string },
+    aktivitet: AlleAktiviteter & { pendingStatus?: string },
     erBruker: boolean,
     erReadMode: boolean,
 ) {
-    const { type, status, nesteStatus } = aktivitet;
+    const { type, status, pendingStatus } = aktivitet;
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
     const erEksternAktivitet = type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
     const historisk = !erArenaAktivitet ? aktivitet.historisk : false;
@@ -27,7 +27,7 @@ export function erDroppbar(
     const brukerKanOppdatere = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
     return (
         !erReadMode &&
-        !nesteStatus &&
+        !pendingStatus &&
         !historisk &&
         !erFerdig &&
         !erArenaAktivitet &&

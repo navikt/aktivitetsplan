@@ -1,13 +1,14 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DragDropProvider } from '@dnd-kit/react';
-import { useSelector, useStore } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { AktivitetStatus, AlleAktiviteter, isVeilarbAktivitet } from '../../datatypes/aktivitetTypes';
+import { VeilarbAktivitet } from '../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../felles-komponenter/hooks/useAppDispatch';
 import { flyttetAktivitetMetrikk } from '../../felles-komponenter/utils/logging';
 import { flyttAktivitet } from '../../moduler/aktivitet/aktivitet-actions';
-import { compareAktivitet, sorterAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
+import { sorterAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetlisteSelector';
 import AktivitetskortDragOverlay from '../../moduler/aktivitet/aktivitet-kort/AktivitetskortDragOverlay';
 import {
@@ -18,60 +19,73 @@ import {
 } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { useErVeileder } from '../../Provider';
 import { useRoutes } from '../../routing/useRoutes';
-import { RootState } from '../../store/rootReducer';
 import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
 import { aktivitetDropTargetStatus, erDroppbar } from './tavleUtils';
 
-export type TavleAktivitet = AlleAktiviteter & { nesteStatus?: AktivitetStatus };
-type Kolonner = Record<AktivitetStatus, TavleAktivitet[]>;
+export type TavleAktivitet = AlleAktiviteter & { pendingStatus?: AktivitetStatus };
+type AktiviteterByStatus = Record<AktivitetStatus, TavleAktivitet[]>;
+type Flytting = {
+    aktivitetId: AlleAktiviteter['id'];
+    tilStatus: AktivitetStatus;
+    fase:
+        | 'PREVIEW' /* brukes ved onDragOver */
+        | 'PENDING_BACKEND_SYNC' /* pågående http requset til backend */
+        | 'DONE' /* http-request ok, venter på redux skal synces */;
+};
 const statuser = Object.values(AktivitetStatus);
 
-function grupper(aktiviteter: AlleAktiviteter[]): Kolonner {
-    return Object.fromEntries(statuser.map((status) => [status, sorterAktiviteter(aktiviteter, status)])) as Kolonner;
-}
-
-function flyttTilToppen(kolonner: Kolonner, aktivitet: TavleAktivitet, status: AktivitetStatus): Kolonner {
+function grupperPåStatus(aktiviteter: AlleAktiviteter[]): AktiviteterByStatus {
     return Object.fromEntries(
-        statuser.map((gruppe) => [
-            gruppe,
-            gruppe === status
-                ? [aktivitet, ...kolonner[gruppe].filter((kort) => kort.id !== aktivitet.id)]
-                : kolonner[gruppe].filter((kort) => kort.id !== aktivitet.id),
-        ]),
-    ) as Kolonner;
+        statuser.map((status) => [status, sorterAktiviteter(aktiviteter, status)]),
+    ) as AktiviteterByStatus;
 }
 
-function beholdVentende(kanoniske: Kolonner, lokale: Kolonner): Kolonner {
-    const aktiviteter = Object.values(kanoniske).flat();
-    return Object.values(lokale)
-        .flat()
-        .reduceRight((kolonner, aktivitet) => {
-            if (!aktivitet.nesteStatus) return kolonner;
-            const oppdatert = aktiviteter.find((kort) => kort.id === aktivitet.id);
-            return oppdatert
-                ? flyttTilToppen(kolonner, { ...oppdatert, nesteStatus: aktivitet.nesteStatus }, aktivitet.nesteStatus)
-                : kolonner;
-        }, kanoniske);
-}
+const flyttetAktivitetErIPreview = ({ fase }: Flytting) => fase === 'PREVIEW';
+const flyttetAktivitetErIkkeIPreview = ({ fase }: Flytting) => fase !== 'PREVIEW';
 
-function avklarFlytting(lokale: Kolonner, kanoniske: Kolonner, id: string): Kolonner {
-    const kolonner = Object.fromEntries(
-        statuser.map((status) => [status, lokale[status].filter((kort) => kort.id !== id)]),
-    ) as Kolonner;
-    for (const status of statuser) {
-        const aktivitet = kanoniske[status].find((kort) => kort.id === id);
-        if (!aktivitet) continue;
-        kolonner[status] = [...kolonner[status], aktivitet].sort((a, b) => {
-            const aFlyttet = !!a.nesteStatus || a.status !== status;
-            const bFlyttet = !!b.nesteStatus || b.status !== status;
-            if (aFlyttet || bFlyttet) return Number(bFlyttet) - Number(aFlyttet);
-            return compareAktivitet(a, b);
-        });
+type ResultatAvDragning =
+    | {
+          type:
+              | 'DRAGNING_AVBRUTT'
+              | 'SLUPPET_UTENFOR_KOLONNE'
+              | 'SLUPPET_I_OPPRINNELIG_KOLONNE'
+              | 'STATUSENDRING_IKKE_TILLATT';
+      }
+    | {
+          type: 'FULLFORING_KREVER_BEKREFTELSE';
+          aktivitet: VeilarbAktivitet;
+          status: AktivitetStatus.FULLFOERT;
+      }
+    | {
+          type: 'AVBRYTING_AV_AKTIVITET_KREVER_BEKREFTELSE';
+          aktivitet: VeilarbAktivitet;
+          status: AktivitetStatus.AVBRUTT;
+      }
+    | { type: 'STATUSENDRING_KAN_LAGRES_DIREKTE'; aktivitet: VeilarbAktivitet; status: AktivitetStatus };
+
+function finnResultatAvDragning(
+    aktivitet: TavleAktivitet,
+    status: AktivitetStatus | undefined,
+    canceled: boolean,
+    erVeileder: boolean,
+    readOnly: boolean,
+): ResultatAvDragning {
+    if (canceled) return { type: 'DRAGNING_AVBRUTT' };
+    if (!status) return { type: 'SLUPPET_UTENFOR_KOLONNE' };
+    if (status === aktivitet.status) return { type: 'SLUPPET_I_OPPRINNELIG_KOLONNE' };
+    if (!erDroppbar(aktivitet, !erVeileder, readOnly) || !isVeilarbAktivitet(aktivitet)) {
+        return { type: 'STATUSENDRING_IKKE_TILLATT' };
     }
-    return kolonner;
+    if (status === AktivitetStatus.FULLFOERT) {
+        return { type: 'FULLFORING_KREVER_BEKREFTELSE', aktivitet, status };
+    }
+    if (status === AktivitetStatus.AVBRUTT) {
+        return { type: 'AVBRYTING_AV_AKTIVITET_KREVER_BEKREFTELSE', aktivitet, status };
+    }
+    return { type: 'STATUSENDRING_KAN_LAGRES_DIREKTE', aktivitet, status };
 }
 
 export default function Aktivitetskolonner({
@@ -79,31 +93,69 @@ export default function Aktivitetskolonner({
     ...options
 }: React.PropsWithChildren<Pick<React.ComponentProps<typeof DragDropProvider>, 'plugins' | 'sensors'>>) {
     const dispatch = useAppDispatch();
-    const store = useStore<RootState>();
     const navigate = useNavigate();
     const { fullforAktivitetRoute, avbrytAktivitetRoute } = useRoutes();
     const erVeileder = useErVeileder();
     const readOnly = useSelector(selectReadWriteMode) === ReadWriteMode.READ;
     const aktiviteter = useSelector(selectAktivitetListe);
-    const kanoniske = useMemo(() => grupper(aktiviteter), [aktiviteter]);
-    const [kolonner, setKolonner] = useState(kanoniske);
-    const snapshot = useRef<Kolonner | null>(null);
-    const dragStartedAt = useRef<number | null>(null);
+    const kolonnerFraStore = useMemo(() => grupperPåStatus(aktiviteter), [aktiviteter]);
+    const [flyttinger, setFlyttinger] = useState<Flytting[]>([]);
+
+    const kolonnerMedFlyttinger = useMemo(() => {
+        if (flyttinger.length === 0) return kolonnerFraStore;
+        const aktivitetsIderMedFlytting = new Set(flyttinger.map(({ aktivitetId }) => aktivitetId));
+        const synligeAktiviteterEtterId = new Map(aktiviteter.map((aktivitet) => [aktivitet.id, aktivitet]));
+
+        return Object.fromEntries(
+            statuser.map((kolonneStatus) => {
+                const aktiviteterFlyttetTilKolonnen = flyttinger
+                    .filter((flytting) => flytting.tilStatus === kolonneStatus)
+                    .flatMap((flytting) => {
+                        const aktivitetFraStore = synligeAktiviteterEtterId.get(flytting.aktivitetId);
+                        if (!aktivitetFraStore) return [];
+                        return [
+                            flytting.fase === 'PREVIEW'
+                                ? aktivitetFraStore
+                                : { ...aktivitetFraStore, pendingStatus: kolonneStatus },
+                        ];
+                    });
+                const aktiviteterSomBeholderPlassering = kolonnerFraStore[kolonneStatus].filter(
+                    ({ id }) => !aktivitetsIderMedFlytting.has(id),
+                );
+                return [kolonneStatus, [...aktiviteterFlyttetTilKolonnen, ...aktiviteterSomBeholderPlassering]];
+            }),
+        ) as AktiviteterByStatus;
+    }, [aktiviteter, kolonnerFraStore, flyttinger]);
 
     useEffect(() => {
-        if (!snapshot.current) setKolonner((lokale) => beholdVentende(kanoniske, lokale));
-    }, [kanoniske]);
+        // Keep placement until a render has read the Redux snapshot after request settlement.
+        if (flyttinger.some(({ fase }) => fase === 'DONE')) {
+            setFlyttinger((flyttinger) => flyttinger.filter(({ fase }) => fase !== 'DONE'));
+        }
+    }, [flyttinger]);
+
+    function lagreStatusendring(aktivitet: VeilarbAktivitet, status: AktivitetStatus) {
+        flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
+        setFlyttinger((flyttinger) => [
+            { aktivitetId: aktivitet.id, tilStatus: status, fase: 'PENDING_BACKEND_SYNC' },
+            ...flyttinger,
+        ]);
+        dispatch(flyttAktivitet({ aktivitet, status })).then(() => {
+            setFlyttinger((flyttinger) =>
+                flyttinger.map((flytting) =>
+                    flytting.aktivitetId === aktivitet.id && flytting.fase === 'PENDING_BACKEND_SYNC'
+                        ? { ...flytting, fase: 'DONE' }
+                        : flytting,
+                ),
+            );
+        });
+    }
 
     return (
         <DragDropProvider<AktivitetskortDragData>
             {...options}
             onDragStart={({ operation }) => {
                 if (operation.source?.type !== DROP_TYPE_AKTIVITETSKORT) return;
-                snapshot.current = kolonner;
-                const started = performance.now();
-                if (import.meta.env.DEV) {
-                    dragStartedAt.current = started;
-                }
                 dispatch(startDragging(operation.source.data.aktivitet));
             }}
             onDragOver={({ operation }) => {
@@ -112,51 +164,52 @@ export default function Aktivitetskolonner({
                 if (source?.type !== DROP_TYPE_AKTIVITETSKORT || !status) return;
                 const aktivitet = source.data.aktivitet;
                 if (!erDroppbar(aktivitet, !erVeileder, readOnly)) return;
-                setKolonner((lokale) => {
-                    if (lokale[status].some((kort) => kort.id === aktivitet.id)) return lokale;
-                    return status === aktivitet.status && snapshot.current
-                        ? snapshot.current
-                        : flyttTilToppen(lokale, aktivitet, status);
+                setFlyttinger((flyttinger) => {
+                    const preview = flyttinger.find(({ fase }) => fase === 'PREVIEW');
+                    if (status === aktivitet.status) {
+                        return preview ? flyttinger.filter(({ fase }) => fase !== 'PREVIEW') : flyttinger;
+                    }
+                    if (preview?.aktivitetId === aktivitet.id && preview.tilStatus === status) return flyttinger;
+                    return [
+                        { aktivitetId: aktivitet.id, tilStatus: status, fase: 'PREVIEW' },
+                        ...flyttinger.filter(({ fase }) => fase !== 'PREVIEW'),
+                    ];
                 });
             }}
             onDragEnd={({ operation, canceled }) => {
                 const source = operation.source;
                 if (source?.type !== DROP_TYPE_AKTIVITETSKORT) return;
-                const aktivitet = source.data.aktivitet;
-                const status = aktivitetDropTargetStatus(operation);
-                const tidligere = snapshot.current ?? kolonner;
-                snapshot.current = null;
+                const resultat = finnResultatAvDragning(
+                    source.data.aktivitet,
+                    aktivitetDropTargetStatus(operation),
+                    canceled,
+                    erVeileder,
+                    readOnly,
+                );
+                setFlyttinger((flyttinger) =>
+                    flyttinger.some(flyttetAktivitetErIPreview)
+                        ? flyttinger.filter(flyttetAktivitetErIkkeIPreview)
+                        : flyttinger,
+                );
                 dispatch(stopDragging());
-                if (
-                    canceled ||
-                    !status ||
-                    status === aktivitet.status ||
-                    !erDroppbar(aktivitet, !erVeileder, readOnly) ||
-                    !isVeilarbAktivitet(aktivitet)
-                ) {
-                    setKolonner(beholdVentende(kanoniske, tidligere));
-                    return;
+                switch (resultat.type) {
+                    case 'DRAGNING_AVBRUTT':
+                    case 'SLUPPET_UTENFOR_KOLONNE':
+                    case 'SLUPPET_I_OPPRINNELIG_KOLONNE':
+                    case 'STATUSENDRING_IKKE_TILLATT':
+                        break;
+                    case 'FULLFORING_KREVER_BEKREFTELSE':
+                        flyttetAktivitetMetrikk('dragAndDrop', resultat.aktivitet, resultat.status);
+                        navigate(fullforAktivitetRoute(resultat.aktivitet.id));
+                        break;
+                    case 'AVBRYTING_AV_AKTIVITET_KREVER_BEKREFTELSE':
+                        flyttetAktivitetMetrikk('dragAndDrop', resultat.aktivitet, resultat.status);
+                        navigate(avbrytAktivitetRoute(resultat.aktivitet.id));
+                        break;
+                    case 'STATUSENDRING_KAN_LAGRES_DIREKTE':
+                        lagreStatusendring(resultat.aktivitet, resultat.status);
+                        break;
                 }
-                flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
-                if (status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT) {
-                    setKolonner(beholdVentende(kanoniske, tidligere));
-                    navigate(
-                        status === AktivitetStatus.FULLFOERT
-                            ? fullforAktivitetRoute(aktivitet.id)
-                            : avbrytAktivitetRoute(aktivitet.id),
-                    );
-                    return;
-                }
-                setKolonner((lokale) => flyttTilToppen(lokale, { ...aktivitet, nesteStatus: status }, status));
-                void dispatch(flyttAktivitet({ aktivitet, status })).then(() => {
-                    const oppdatert = grupper(selectAktivitetListe(store.getState()));
-                    // A different card may be dragging when this request settles.
-                    if (snapshot.current) snapshot.current = avklarFlytting(snapshot.current, oppdatert, aktivitet.id);
-                    setKolonner((lokale) => {
-                        const avklart = avklarFlytting(lokale, oppdatert, aktivitet.id);
-                        return snapshot.current ? avklart : beholdVentende(oppdatert, avklart);
-                    });
-                });
             }}
         >
             <AktivitetskortDragOverlay />
@@ -167,10 +220,10 @@ export default function Aktivitetskolonner({
                         <KolonneSomSkjulerEldreAktiviteter
                             key={status}
                             status={status}
-                            aktiviteter={kolonner[status]}
+                            aktiviteter={kolonnerMedFlyttinger[status]}
                         />
                     ) : (
-                        <Kolonne key={status} status={status} aktiviteter={kolonner[status]} />
+                        <Kolonne key={status} status={status} aktiviteter={kolonnerMedFlyttinger[status]} />
                     ),
                 )}
             </Tavle>

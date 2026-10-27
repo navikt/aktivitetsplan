@@ -35,7 +35,7 @@ function DragbartAktivitetskort(props: Props) {
         data: { aktivitet },
         sensors,
         // Columns own the drop position; cards cannot be arbitrarily reordered.
-        disabled: { draggable: !!aktivitet.nesteStatus, droppable: true },
+        disabled: { draggable: !!aktivitet.pendingStatus, droppable: true },
         transition: { idle: true },
     });
 

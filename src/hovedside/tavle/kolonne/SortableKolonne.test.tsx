@@ -40,7 +40,7 @@ function Capture({ managerRef }: { managerRef: { current?: DragDropManager } }) 
     return <output aria-label="Location">{useLocation().pathname}</output>;
 }
 
-async function renderBoard(aktiviteter = [kort, destination]) {
+async function renderBoard(aktiviteter = [kort, destination], onRender: React.ProfilerOnRenderCallback = () => {}) {
     const store = gitt().aktiviteter.medAktiviteter(aktiviteter).createStore();
     store.dispatch(velgPeriode(defaultAktivPeriode.id));
     const managerRef: { current?: DragDropManager } = {};
@@ -53,9 +53,11 @@ async function renderBoard(aktiviteter = [kort, destination]) {
                             <Route
                                 path="*"
                                 element={
-                                    <Aktivitetskolonner>
-                                        <Capture managerRef={managerRef} />
-                                    </Aktivitetskolonner>
+                                    <React.Profiler id="board" onRender={onRender}>
+                                        <Aktivitetskolonner>
+                                            <Capture managerRef={managerRef} />
+                                        </Aktivitetskolonner>
+                                    </React.Profiler>
                                 }
                             />
                         </Route>
@@ -203,6 +205,53 @@ describe('Controlled sortable columns', () => {
         expect(manager.registry.draggables.get(`aktivitetskort-${kort.id}`)?.disabled).toBe(false);
     });
 
+    it('never renders the source column during the handoff from pending placement to Redux', async () => {
+        let resolveRequest!: (updated: typeof kort) => void;
+        vi.mocked(aktivitetAPI.oppdaterAktivitetStatus).mockImplementation(
+            () =>
+                new Promise((resolve) => {
+                    resolveRequest = resolve;
+                }),
+        );
+        const placements: AktivitetStatus[][] = [];
+        const { start, hover, stop, manager } = await renderBoard(undefined, () => {
+            placements.push(
+                Object.values(AktivitetStatus).filter((status) =>
+                    screen.queryByTestId(`aktivitetstavle.${status}`)?.textContent?.includes(kort.tittel),
+                ),
+            );
+        });
+        await start();
+        await hover(`aktivitetskolonne-${destination.status}`);
+        await stop();
+        placements.length = 0;
+        await act(async () => resolveRequest({ ...kort, status: destination.status }));
+        expect(placements.length).toBeGreaterThan(0);
+        for (const placement of placements) expect(placement).toEqual([destination.status]);
+        expect(manager.registry.draggables.get(`aktivitetskort-${kort.id}`)?.disabled).toBe(false);
+    });
+
+    it('uses the latest Redux activity data during preview and after cancellation', async () => {
+        const { store, start, hover, stop, titles } = await renderBoard();
+        await start();
+        await hover(`aktivitetskolonne-${destination.status}`);
+        const updated = { ...kort, tittel: 'Updated source' };
+        await act(async () => {
+            store.dispatch(
+                flyttAktivitet.fulfilled(updated, 'external-update', {
+                    aktivitet: kort,
+                    status: kort.status,
+                }),
+            );
+        });
+        expect(titles(destination.status)[0]).toContain(updated.tittel);
+        expect(titles(kort.status)).toHaveLength(0);
+        await stop(true);
+        expect(titles(kort.status)[0]).toContain(updated.tittel);
+        expect(titles(destination.status)).toHaveLength(1);
+        expect(aktivitetAPI.oppdaterAktivitetStatus).not.toHaveBeenCalled();
+    });
+
     it('accepts the source as target after a keyboard-driven column change', async () => {
         const { start, hover, stop, titles } = await renderBoard();
         await start();
@@ -261,7 +310,7 @@ describe('Controlled sortable columns', () => {
     });
 
     it.each(['resolve', 'reject'])(
-        'preserves another active drag and its cancellation snapshot when an earlier request %ss',
+        'preserves another active preview and restores its original placement when an earlier request %ss',
         async (outcome) => {
             let resolveRequest!: (updated: typeof kort) => void;
             let rejectRequest!: (error: Error) => void;

@@ -259,14 +259,14 @@ export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, a
 }
 
 export function sorterAktiviteter(
-    aktiviteter: (AlleAktiviteter & { nesteStatus?: string })[],
+    aktiviteter: (AlleAktiviteter & { pendingStatus?: string })[],
     status: AktivitetStatus,
 ): AlleAktiviteter[] {
     return aktiviteter
         .filter((a) => {
             // TODO: Look into this
-            if (a.nesteStatus) {
-                return a.nesteStatus === status;
+            if (a.pendingStatus) {
+                return a.pendingStatus === status;
             }
             return a.status === status;
         })
