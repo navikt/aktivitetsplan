@@ -1,4 +1,4 @@
-import React, { Profiler, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DragDropProvider } from '@dnd-kit/react';
 import { useSelector, useStore } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -94,26 +94,6 @@ export default function Aktivitetskolonner({
         if (!snapshot.current) setKolonner((lokale) => beholdVentende(kanoniske, lokale));
     }, [kanoniske]);
 
-    const logDragRender: React.ProfilerOnRenderCallback = (
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        _startTime,
-        commitTime,
-    ) => {
-        if (!import.meta.env.DEV || dragStartedAt.current === null) return;
-        const elapsed = commitTime - dragStartedAt.current;
-        if (elapsed > 500) return;
-        console.log('drag-start React render:', {
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            millisecondsSinceDragStart: elapsed,
-        });
-    };
-
     return (
         <DragDropProvider<AktivitetskortDragData>
             {...options}
@@ -123,37 +103,8 @@ export default function Aktivitetskolonner({
                 const started = performance.now();
                 if (import.meta.env.DEV) {
                     dragStartedAt.current = started;
-                    performance.mark('activity-drag:start');
                 }
                 dispatch(startDragging(operation.source.data.aktivitet));
-
-                if (import.meta.env.DEV) {
-                    console.log('startDragging dispatch:', performance.now() - started, 'ms');
-                    performance.mark('activity-drag:dispatch-returned');
-                    performance.measure(
-                        'activity-drag:dispatch',
-                        'activity-drag:start',
-                        'activity-drag:dispatch-returned',
-                    );
-                    requestAnimationFrame(() => {
-                        console.log('drag start → next frame callback:', performance.now() - started, 'ms');
-                        performance.mark('activity-drag:next-frame');
-                        performance.measure(
-                            'activity-drag:until-next-frame',
-                            'activity-drag:start',
-                            'activity-drag:next-frame',
-                        );
-                        requestAnimationFrame(() => {
-                            console.log('drag start → following frame callback:', performance.now() - started, 'ms');
-                            performance.mark('activity-drag:following-frame');
-                            performance.measure(
-                                'activity-drag:until-following-frame',
-                                'activity-drag:start',
-                                'activity-drag:following-frame',
-                            );
-                        });
-                    });
-                }
             }}
             onDragOver={({ operation }) => {
                 const source = operation.source;
@@ -208,25 +159,21 @@ export default function Aktivitetskolonner({
                 });
             }}
         >
-            <Profiler id="activity-drag-overlay" onRender={logDragRender}>
-                <AktivitetskortDragOverlay />
-            </Profiler>
-            <Profiler id="activity-drag-board" onRender={logDragRender}>
-                {children}
-                <Tavle>
-                    {statuser.map((status) =>
-                        status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT ? (
-                            <KolonneSomSkjulerEldreAktiviteter
-                                key={status}
-                                status={status}
-                                aktiviteter={kolonner[status]}
-                            />
-                        ) : (
-                            <Kolonne key={status} status={status} aktiviteter={kolonner[status]} />
-                        ),
-                    )}
-                </Tavle>
-            </Profiler>
+            <AktivitetskortDragOverlay />
+            {children}
+            <Tavle>
+                {statuser.map((status) =>
+                    status === AktivitetStatus.FULLFOERT || status === AktivitetStatus.AVBRUTT ? (
+                        <KolonneSomSkjulerEldreAktiviteter
+                            key={status}
+                            status={status}
+                            aktiviteter={kolonner[status]}
+                        />
+                    ) : (
+                        <Kolonne key={status} status={status} aktiviteter={kolonner[status]} />
+                    ),
+                )}
+            </Tavle>
         </DragDropProvider>
     );
 }

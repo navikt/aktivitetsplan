@@ -100,8 +100,6 @@ beforeEach(() => {
     vi.stubGlobal('IntersectionObserver', Observer);
     vi.stubGlobal('ResizeObserver', Observer);
     Object.defineProperty(document, 'elementFromPoint', { configurable: true, value: () => null });
-    Object.defineProperty(document, 'getAnimations', { configurable: true, value: () => [] });
-    Object.defineProperty(Element.prototype, 'getAnimations', { configurable: true, value: () => [] });
     Object.defineProperty(Element.prototype, 'animate', {
         configurable: true,
         value: vi.fn(() => ({
@@ -116,9 +114,7 @@ beforeEach(() => {
 
 afterEach(() => {
     vi.useRealTimers();
-    Reflect.deleteProperty(document, 'getAnimations');
     Reflect.deleteProperty(document, 'elementFromPoint');
-    Reflect.deleteProperty(Element.prototype, 'getAnimations');
     Reflect.deleteProperty(Element.prototype, 'animate');
     vi.unstubAllGlobals();
     vi.restoreAllMocks();

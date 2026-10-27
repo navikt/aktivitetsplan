@@ -41,6 +41,11 @@ import.meta.env.VITE_API_URL_BASE = 'http://localhost:3000'; // Dette er det som
 HTMLDialogElement.prototype.showModal = () => {};
 window.IntersectionObserver = vi.fn();
 window.matchMedia = () => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() });
+
+// jsdom has no Web Animations API; dnd-kit queries animations when measuring cards.
+Object.defineProperty(Document.prototype, 'getAnimations', { configurable: true, value: () => [] });
+Object.defineProperty(Element.prototype, 'getAnimations', { configurable: true, value: () => [] });
+
 // FAIL LOUDLY on unhandled promise rejections / errors
 process.on('unhandledRejection', (reason) => {
     // eslint-disable-next-line no-console

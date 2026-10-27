@@ -92,8 +92,6 @@ beforeEach(() => {
     }
     vi.stubGlobal('IntersectionObserver', Observer);
     vi.stubGlobal('ResizeObserver', Observer);
-    Object.defineProperty(document, 'getAnimations', { configurable: true, value: () => [] });
-    Object.defineProperty(Element.prototype, 'getAnimations', { configurable: true, value: () => [] });
     Object.defineProperty(Element.prototype, 'setPointerCapture', { configurable: true, value: vi.fn() });
     Object.defineProperty(Element.prototype, 'animate', {
         configurable: true,
@@ -104,8 +102,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-    Reflect.deleteProperty(document, 'getAnimations');
-    Reflect.deleteProperty(Element.prototype, 'getAnimations');
     Reflect.deleteProperty(Element.prototype, 'setPointerCapture');
     Reflect.deleteProperty(Element.prototype, 'animate');
     vi.unstubAllGlobals();
