@@ -1,5 +1,5 @@
 import { BodyShort, GuidePanel } from '@navikt/ds-react';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import {
     GRUPPE_AKTIVITET_TYPE,
@@ -62,13 +62,25 @@ export const Tavleadvarsel = () => {
     const dragging = !!draggingAktivitet;
     const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, erReadMode);
     const skjulAdvarsel = !dragging || droppable;
+    const warningRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (skjulAdvarsel) return;
+        // Enter the top layer after dnd-kit opens its drag-feedback popover.
+        const frame = requestAnimationFrame(() => warningRef.current?.showPopover());
+        return () => cancelAnimationFrame(frame);
+    }, [skjulAdvarsel]);
 
     if (skjulAdvarsel || !draggingAktivitet) {
         return null;
     }
 
     return (
-        <div className="fixed z-50 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg">
+        <div
+            ref={warningRef}
+            popover="manual"
+            className="fixed inset-auto z-50 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg m-0 border-0 p-0 bg-transparent overflow-visible"
+        >
             <GuidePanel illustration={<ObsSVG />} poster>
                 <BodyShort>{getAdvarseltekst(draggingAktivitet, erVeileder)}</BodyShort>
             </GuidePanel>

@@ -18,6 +18,7 @@ import { ErVeilederContext } from '../../../Provider';
 import { gitt } from '../../../testUtils/store/mockStoreBuilder';
 import { defaultAktivPeriode } from '../../../testUtils/store/defaultInitialStore';
 import { setReadMode } from '../../../utils/readOrWriteModeSlice';
+import { Tavleadvarsel } from '../Tavleadvarsel';
 
 const aktivitet = enEgenAktivitet({
     id: 'drag-test' as AktivitetsId,
@@ -54,6 +55,7 @@ async function renderBoard({
                     <Aktivitetskolonner plugins={[]} sensors={[]}>
                         <CaptureManager managerRef={managerRef} />
                     </Aktivitetskolonner>
+                    <Tavleadvarsel />
                     <Location />
                 </MemoryRouter>
             </Provider>
@@ -92,6 +94,7 @@ beforeEach(() => {
     }
     vi.stubGlobal('IntersectionObserver', Observer);
     vi.stubGlobal('ResizeObserver', Observer);
+    Object.defineProperty(HTMLElement.prototype, 'showPopover', { configurable: true, value: vi.fn() });
     Object.defineProperty(Element.prototype, 'setPointerCapture', { configurable: true, value: vi.fn() });
     Object.defineProperty(Element.prototype, 'animate', {
         configurable: true,
@@ -102,6 +105,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+    Reflect.deleteProperty(HTMLElement.prototype, 'showPopover');
     Reflect.deleteProperty(Element.prototype, 'setPointerCapture');
     Reflect.deleteProperty(Element.prototype, 'animate');
     vi.unstubAllGlobals();
@@ -144,6 +148,20 @@ describe('Activity drag and drop', () => {
             aktivitet,
             AktivitetStatus.GJENNOMFOERT,
         );
+    });
+
+    it('opens the drag warning in the top layer above the card and removes it when dragging stops', async () => {
+        const showPopover = vi.mocked(HTMLElement.prototype.showPopover);
+        const { start, drop } = await renderBoard({ kort: { ...aktivitet, status: AktivitetStatus.FULLFOERT } });
+        await start();
+        const warning = await screen.findByText('Aktiviteten er fullført og kan ikke endres.');
+        const popover = warning.closest('[popover]');
+        if (!popover) throw new Error('Expected the warning to be a popover');
+        expect(popover).toHaveAttribute('popover', 'manual');
+        expect(popover).toHaveClass('fixed', 'inset-auto', 'm-0');
+        await waitFor(() => expect(showPopover).toHaveBeenCalledOnce());
+        await drop(undefined, true);
+        expect(screen.queryByText('Aktiviteten er fullført og kan ikke endres.')).not.toBeInTheDocument();
     });
 
     it.each([
