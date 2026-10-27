@@ -1,30 +1,24 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { AKTIVITETSPLAN_ROOT_NODE_ID, TabId } from '../../constant';
 import { Status } from '../../store/createGenericSlice';
-import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
+import { AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { TabChangeEvent } from '../../datatypes/types';
 import { useEventListener } from '../../felles-komponenter/hooks/useEventListner';
 import { logTimeToAktivitestavlePaint } from '../../felles-komponenter/utils/logging';
-// import UxSignalsWidget from '../../felles-komponenter/UxSignalsWidget';
 import { prefixAktivtetskortId } from '../../moduler/aktivitet/aktivitet-kort/Aktivitetskort';
-import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectSistVisteAktivitet } from '../../moduler/aktivitet/aktivitetview-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
 import useIsVisible from '../../utils/useIsVisible';
-import Kolonne from './kolonne/Kolonne';
-import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
-import Tavle from './Tavle';
+import Aktivitetskolonner from './Aktivitetskolonner';
 import { Tavleadvarsel } from './Tavleadvarsel';
-import { erDroppbar } from './tavleUtils';
 import { Await, useRouteLoaderData } from 'react-router';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
-import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 import { RootState } from '../../store/rootReducer';
 
 function LogTimeToAktivitestavlePaint(props: { erVeileder: boolean }) {
@@ -41,8 +35,6 @@ const Aktivitetstavle = () => {
     const statusAktiviteter = useSelector(selectAktivitetStatus);
     const statusArenaAktiviteter = useSelector(selectArenaAktivitetStatus);
     const erVeileder = useErVeileder();
-    const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
-    const erReadMode = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
 
     const aktivitetNotStarted =
         statusAktiviteter === Status.NOT_STARTED && statusArenaAktiviteter === Status.NOT_STARTED;
@@ -54,10 +46,6 @@ const Aktivitetstavle = () => {
             }
         }
     }, [aktivitetNotStarted, erVeileder, fnr]);
-
-    const dragging = !!draggingAktivitet;
-    const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, erReadMode);
-    const skjulAdvarsel = !dragging || droppable;
 
     // SCROLLING //
     const sistVisteAktivitetId: string = useSelector((state: RootState) => {
@@ -88,20 +76,9 @@ const Aktivitetstavle = () => {
         <Suspense fallback={<TavleFallback />}>
             <Await resolve={oppfolging}>
                 <div className="flex w-full m-auto mt-8">
-                    <Tavleadvarsel
-                        hidden={skjulAdvarsel}
-                        draggingAktivitet={draggingAktivitet}
-                        erVeileder={erVeileder}
-                    />
+                    <Tavleadvarsel />
                     <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
-                    <Tavle>
-                        <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
-                        <Kolonne status={AktivitetStatus.PLANLAGT} />
-                        <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
-                        <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
-                        <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
-                    </Tavle>
-                    {/*<UxSignalsWidget />*/}
+                    <Aktivitetskolonner />
                 </div>
             </Await>
         </Suspense>
@@ -111,13 +88,7 @@ const Aktivitetstavle = () => {
 const TavleFallback = () => {
     return (
         <div className="flex m-auto w-full mt-8 flex-col">
-            <Tavle>
-                <Kolonne status={AktivitetStatus.BRUKER_ER_INTRESSERT} />
-                <Kolonne status={AktivitetStatus.PLANLAGT} />
-                <Kolonne status={AktivitetStatus.GJENNOMFOERT} />
-                <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.FULLFOERT} />
-                <KolonneSomSkjulerEldreAktiviteter status={AktivitetStatus.AVBRUTT} />
-            </Tavle>
+            <Aktivitetskolonner />
             <Loader size="large" className="self-center mb-32" />
         </div>
     );

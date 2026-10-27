@@ -1,7 +1,15 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 
-import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import { RootState } from '../../../store/rootReducer';
+import { selectAktivitetListe } from '../aktivitetlisteSelector';
+import { sorterAktiviteter } from '../aktivitet-util';
+
+export const DROP_TYPE_AKTIVITETSKORT = 'AktivitetsKort';
+
+export interface AktivitetskortDragData {
+    aktivitet: AlleAktiviteter;
+}
 
 interface State {
     dragging: boolean;
@@ -31,6 +39,11 @@ const aktivitetsviewSlice = createSlice({
 const selectDragAndDropSlice = (state: RootState) => state.view.dragAndDrop;
 
 export const selectDraggingAktivitet = (state: RootState) => selectDragAndDropSlice(state).aktivitet;
+
+export const selectSorterteKolonneAktiviteter = createSelector(
+    [selectAktivitetListe, (_state: RootState, status: AktivitetStatus) => status],
+    (aktiviteter, status) => sorterAktiviteter(aktiviteter, status),
+);
 
 export const { startDragging, stopDragging } = aktivitetsviewSlice.actions;
 

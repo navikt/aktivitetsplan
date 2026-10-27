@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { Ref } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link } from 'react-router';
 
@@ -25,12 +25,13 @@ import SokeAvtaleAntall from './SokeAvtaleAntall';
 interface Props {
     aktivitet: AlleAktiviteter;
     className: string;
+    ref?: Ref<HTMLAnchorElement>;
 }
 
 export const prefixAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
 
 const Aktivitetskort = (props: Props) => {
-    const { aktivitet, className } = props;
+    const { aktivitet, className, ref } = props;
     const { id, type } = aktivitet;
     const dispatch = useAppDispatch();
 
@@ -61,6 +62,8 @@ const Aktivitetskort = (props: Props) => {
 
     return (
         <Link
+            ref={ref}
+            role="link"
             key={id}
             id={`/${prefixAktivtetskortId(aktivitet)}`}
             className={classNames('rounded-md bg-ax-bg-default', styles.aktivitetskort, className, {

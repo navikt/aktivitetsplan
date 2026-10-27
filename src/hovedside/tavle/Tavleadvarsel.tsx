@@ -6,11 +6,16 @@ import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE
+    UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import ObsSVG from './obs.svg?react';
+import { erDroppbar } from './tavleUtils';
+import { shallowEqual, useSelector } from 'react-redux';
+import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
+import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
+import { useErVeileder } from '../../Provider';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     if (aktivitet.status === AktivitetStatus.FULLFOERT) {
@@ -40,7 +45,7 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
                 case EksternAktivitetType.REKRUTTERINGSTREFF:
                 case EksternAktivitetType.WORKOP:
                 case EksternAktivitetType.DELE_CV_MED_ARBEIDSGIVER:
-                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til rekrutteringsbistand for å endre status.'
+                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til rekrutteringsbistand for å endre status.';
             }
             return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til det aktuelle fagsystemet for å endre aktiviteten.';
         }
@@ -49,16 +54,16 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     return 'Du kan ikke endre status på denne aktiviteten. Ta kontakt med veilederen din for å gjøre endringer.';
 };
 
-interface Props {
-    hidden: boolean;
-    draggingAktivitet: AlleAktiviteter | undefined;
-    erVeileder: boolean;
-}
+export const Tavleadvarsel = () => {
+    const erVeileder = useErVeileder();
+    const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
+    const erReadMode = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
 
-export const Tavleadvarsel = (props: Props) => {
-    const { hidden, draggingAktivitet, erVeileder } = props;
+    const dragging = !!draggingAktivitet;
+    const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, erReadMode);
+    const skjulAdvarsel = !dragging || droppable;
 
-    if (hidden || !draggingAktivitet) {
+    if (skjulAdvarsel || !draggingAktivitet) {
         return null;
     }
 
