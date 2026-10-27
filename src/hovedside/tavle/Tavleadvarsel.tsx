@@ -81,7 +81,7 @@ export const Tavleadvarsel = () => {
             popover="manual"
             className="fixed inset-auto z-50 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg m-0 border-0 p-0 bg-transparent overflow-visible"
         >
-            <GuidePanel illustration={<ObsSVG />} poster>
+            <GuidePanel illustration={<ObsSVG className={'bg-white'} />} poster>
                 <BodyShort>{getAdvarseltekst(draggingAktivitet, erVeileder)}</BodyShort>
             </GuidePanel>
         </div>
