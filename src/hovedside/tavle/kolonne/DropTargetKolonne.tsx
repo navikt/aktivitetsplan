@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import { useDroppable, useDragOperation } from '@dnd-kit/react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import {
+    AktivitetskortDragData,
     DROP_TYPE_AKTIVITETSKORT,
-    selectDraggingAktivitet,
 } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { aktivitetDropTargetStatus, erDroppbar } from '../tavleUtils';
 import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';
@@ -20,8 +20,9 @@ interface Props {
 function DropTargetKolonne({ status, children }: Props) {
     const erVeileder = useErVeileder();
     const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
-    const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
-    const operation = useDragOperation();
+    const operation = useDragOperation<AktivitetskortDragData>();
+    const draggingAktivitet =
+        operation.source?.type === DROP_TYPE_AKTIVITETSKORT ? operation.source.data.aktivitet : undefined;
 
     const canDrop = (aktivitet: AlleAktiviteter) =>
         status !== aktivitet.status && erDroppbar(aktivitet, !erVeileder, readOnly);

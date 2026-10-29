@@ -12,10 +12,14 @@ import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes
 import { EksternAktivitetType, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import ObsSVG from './obs.svg?react';
 import { erDroppbar } from './tavleUtils';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
-import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
+import {
+    AktivitetskortDragData,
+    DROP_TYPE_AKTIVITETSKORT,
+} from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { useErVeileder } from '../../Provider';
+import { useDragOperation } from '@dnd-kit/react';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     if (aktivitet.status === AktivitetStatus.FULLFOERT) {
@@ -56,7 +60,8 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
 
 export const Tavleadvarsel = () => {
     const erVeileder = useErVeileder();
-    const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
+    const { source } = useDragOperation<AktivitetskortDragData>();
+    const draggingAktivitet = source?.type === DROP_TYPE_AKTIVITETSKORT ? source.data.aktivitet : undefined;
     const erReadMode = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
 
     const dragging = !!draggingAktivitet;

@@ -15,7 +15,6 @@ import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivi
 import { useErVeileder, useFnrOgEnhetContext } from '../../Provider';
 import useIsVisible from '../../utils/useIsVisible';
 import Aktivitetskolonner from './Aktivitetskolonner';
-import { Tavleadvarsel } from './Tavleadvarsel';
 import { Await, useRouteLoaderData } from 'react-router';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import { Loader } from '@navikt/ds-react';
@@ -76,7 +75,6 @@ const Aktivitetstavle = () => {
         <Suspense fallback={<TavleFallback />}>
             <Await resolve={oppfolging}>
                 <div className="flex w-full m-auto mt-8">
-                    <Tavleadvarsel />
                     <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
                     <Aktivitetskolonner />
                 </div>

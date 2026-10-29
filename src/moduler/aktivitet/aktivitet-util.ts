@@ -65,7 +65,7 @@ function sammenlignDato(a?: string, b?: string): number {
     return b.localeCompare(a);
 }
 
-export function compareAktivitet(a: AlleAktiviteter, b: AlleAktiviteter): number {
+export function compareAktivitetPåDato(a: AlleAktiviteter, b: AlleAktiviteter): number {
     const aDato = isArenaAktivitet(a) ? a.fraDato : a.endretDato;
     const bDato = isArenaAktivitet(b) ? b.fraDato : b.endretDato;
     return sammenlignDato(aDato, bDato);
@@ -258,19 +258,20 @@ export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, a
     );
 }
 
+export const harStatus = (status: AktivitetStatus) => (a: AlleAktiviteter & { pendingStatus?: string }) => {
+    /* A card with a pending-status means its awaiting for backend sync
+     *  we want to display the card in the pending column for optimistic updates */
+    if (a.pendingStatus) {
+        return a.pendingStatus === status;
+    }
+    return a.status === status;
+};
+
 export function sorterAktiviteter(
     aktiviteter: (AlleAktiviteter & { pendingStatus?: string })[],
     status: AktivitetStatus,
 ): AlleAktiviteter[] {
-    return aktiviteter
-        .filter((a) => {
-            // TODO: Look into this
-            if (a.pendingStatus) {
-                return a.pendingStatus === status;
-            }
-            return a.status === status;
-        })
-        .sort(compareAktivitet);
+    return aktiviteter.filter(harStatus(status)).sort(compareAktivitetPåDato);
 }
 
 export function endretNyereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato & Partial<FraTil>): boolean {

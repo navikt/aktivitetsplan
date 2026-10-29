@@ -14,24 +14,12 @@ export function aktivitetDropTargetStatus({
     return Object.values(AktivitetStatus).find((status) => group === `aktivitetskolonne-${status}` || group === status);
 }
 
-export function erDroppbar(
-    aktivitet: AlleAktiviteter & { pendingStatus?: string },
-    erBruker: boolean,
-    erReadMode: boolean,
-) {
-    const { type, status, pendingStatus } = aktivitet;
+export function erDroppbar(aktivitet: AlleAktiviteter, erBruker: boolean, erReadMode: boolean) {
+    const { type, status } = aktivitet;
     const erArenaAktivitet = isArenaAktivitet(aktivitet);
     const erEksternAktivitet = type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE;
     const historisk = !erArenaAktivitet ? aktivitet.historisk : false;
     const erFerdig = [AktivitetStatus.FULLFOERT, AktivitetStatus.AVBRUTT].includes(status);
     const brukerKanOppdatere = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
-    return (
-        !erReadMode &&
-        !pendingStatus &&
-        !historisk &&
-        !erFerdig &&
-        !erArenaAktivitet &&
-        !brukerKanOppdatere &&
-        !erEksternAktivitet
-    );
+    return !erReadMode && !historisk && !erFerdig && !erArenaAktivitet && !brukerKanOppdatere && !erEksternAktivitet;
 }

@@ -14,8 +14,6 @@ import AktivitetskortDragOverlay from '../../moduler/aktivitet/aktivitet-kort/Ak
 import {
     AktivitetskortDragData,
     DROP_TYPE_AKTIVITETSKORT,
-    startDragging,
-    stopDragging,
 } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import { useErVeileder } from '../../Provider';
 import { useRoutes } from '../../routing/useRoutes';
@@ -24,6 +22,7 @@ import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
 import { aktivitetDropTargetStatus, erDroppbar } from './tavleUtils';
+import { Tavleadvarsel } from './Tavleadvarsel';
 
 export type TavleAktivitet = AlleAktiviteter & { pendingStatus?: AktivitetStatus };
 type AktiviteterByStatus = Record<AktivitetStatus, TavleAktivitet[]>;
@@ -101,7 +100,7 @@ export default function Aktivitetskolonner({
     const kolonnerFraStore = useMemo(() => grupperPåStatus(aktiviteter), [aktiviteter]);
     const [flyttinger, setFlyttinger] = useState<Flytting[]>([]);
 
-    const kolonnerMedFlyttinger = useMemo(() => {
+    const kolonnerMedPågåendeFlyttinger = useMemo(() => {
         if (flyttinger.length === 0) return kolonnerFraStore;
         const aktivitetsIderMedFlytting = new Set(flyttinger.map(({ aktivitetId }) => aktivitetId));
         const synligeAktiviteterEtterId = new Map(aktiviteter.map((aktivitet) => [aktivitet.id, aktivitet]));
@@ -154,10 +153,6 @@ export default function Aktivitetskolonner({
     return (
         <DragDropProvider<AktivitetskortDragData>
             {...options}
-            onDragStart={({ operation }) => {
-                if (operation.source?.type !== DROP_TYPE_AKTIVITETSKORT) return;
-                dispatch(startDragging(operation.source.data.aktivitet));
-            }}
             onDragOver={({ operation }) => {
                 const source = operation.source;
                 const status = aktivitetDropTargetStatus(operation);
@@ -191,7 +186,6 @@ export default function Aktivitetskolonner({
                         ? flyttinger.filter(flyttetAktivitetErIkkeIPreview)
                         : flyttinger,
                 );
-                dispatch(stopDragging());
                 switch (resultat.type) {
                     case 'DRAGNING_AVBRUTT':
                     case 'SLUPPET_UTENFOR_KOLONNE':
@@ -212,6 +206,7 @@ export default function Aktivitetskolonner({
                 }
             }}
         >
+            <Tavleadvarsel />
             <AktivitetskortDragOverlay />
             {children}
             <Tavle>
@@ -220,10 +215,10 @@ export default function Aktivitetskolonner({
                         <KolonneSomSkjulerEldreAktiviteter
                             key={status}
                             status={status}
-                            aktiviteter={kolonnerMedFlyttinger[status]}
+                            aktiviteter={kolonnerMedPågåendeFlyttinger[status]}
                         />
                     ) : (
-                        <Kolonne key={status} status={status} aktiviteter={kolonnerMedFlyttinger[status]} />
+                        <Kolonne key={status} status={status} aktiviteter={kolonnerMedPågåendeFlyttinger[status]} />
                     ),
                 )}
             </Tavle>

@@ -78,13 +78,13 @@ async function renderBoard(aktiviteter = [kort, destination], onRender: React.Pr
         await act(async () => {
             manager.actions.start({ source: `aktivitetskort-${aktivitet.id}`, coordinates: { x: 0, y: 0 } });
         });
-        await waitFor(() => expect(store.getState().view.dragAndDrop.dragging).toBe(true));
+        await waitFor(() => expect(manager.dragOperation.status.dragging).toBe(true));
     };
     const stop = async (canceled = false) => {
         await act(async () => {
             manager.actions.stop({ canceled });
         });
-        await waitFor(() => expect(store.getState().view.dragAndDrop.dragging).toBe(false));
+        await waitFor(() => expect(manager.dragOperation.status.idle).toBe(true));
     };
     const titles = (status: AktivitetStatus) =>
         within(screen.getByTestId(`aktivitetstavle.${status}`))

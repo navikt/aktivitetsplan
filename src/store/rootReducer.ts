@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 
-import dragAndDropSlice from '../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
 import aktiviteterReducer from '../moduler/aktivitet/aktivitet-slice';
 import aktivitetViewReducer from '../moduler/aktivitet/aktivitetview-slice';
 import arenaAktiviteterReducer from '../moduler/aktivitet/arena-aktiviteter-slice';
@@ -45,7 +44,6 @@ const rootReducer = combineReducers({
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
-        dragAndDrop: dragAndDropSlice,
         readOrWriteMode: readOrWriteModeReducer,
     }),
 });

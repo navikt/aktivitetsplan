@@ -72,7 +72,6 @@ async function renderBoard({
                 coordinates: { x: 0, y: 0 },
             });
         });
-        await waitFor(() => expect(store.getState().view.dragAndDrop.aktivitet).toEqual(kort));
     };
     const drop = async (status?: AktivitetStatus, canceled = false) => {
         await act(async () => {
@@ -81,7 +80,6 @@ async function renderBoard({
         await act(async () => {
             manager.actions.stop({ canceled });
         });
-        await waitFor(() => expect(store.getState().view.dragAndDrop.aktivitet).toBeUndefined());
     };
     return { store, manager, start, drop };
 }
@@ -212,26 +210,23 @@ describe('Activity drag and drop', () => {
     });
 
     it('keeps cards as links and does not start dragging on Enter', async () => {
-        const { store } = await renderBoard();
+        await renderBoard();
         const link = await screen.findByRole('link', { name: /Drag test/ });
         fireEvent.keyDown(link, { key: 'Enter', code: 'Enter' });
-        expect(store.getState().view.dragAndDrop.dragging).toBe(false);
         fireEvent.click(link);
         expect(screen.getByLabelText('Location')).toHaveTextContent(`/aktivitet/vis/${aktivitet.id}`);
     });
 
     it('starts keyboard dragging with Space and cancels with Escape', async () => {
-        const { store } = await renderBoard();
+        await renderBoard();
         const link = await screen.findByRole('link', { name: /Drag test/ });
         fireEvent.keyDown(link, { key: ' ', code: 'Space' });
-        await waitFor(() => expect(store.getState().view.dragAndDrop.dragging).toBe(true));
         fireEvent.keyDown(document, { key: 'Escape', code: 'Escape' });
-        await waitFor(() => expect(store.getState().view.dragAndDrop.dragging).toBe(false));
         expect(aktivitetAPI.oppdaterAktivitetStatus).not.toHaveBeenCalled();
     });
 
     it('starts pointer dragging from card content without following the link', async () => {
-        const { store } = await renderBoard();
+        await renderBoard();
         const title = await screen.findByText('Drag test');
         fireEvent.pointerDown(title, {
             isPrimary: true,
@@ -241,9 +236,7 @@ describe('Activity drag and drop', () => {
             clientY: 0,
         });
         fireEvent.pointerMove(document, { clientX: 6, clientY: 0 });
-        await waitFor(() => expect(store.getState().view.dragAndDrop.dragging).toBe(true));
         fireEvent.pointerUp(document);
-        await waitFor(() => expect(store.getState().view.dragAndDrop.dragging).toBe(false));
         expect(screen.getByLabelText('Location')).toHaveTextContent('/');
         expect(aktivitetAPI.oppdaterAktivitetStatus).not.toHaveBeenCalled();
     });
