@@ -72,6 +72,7 @@ async function renderBoard({
                 coordinates: { x: 0, y: 0 },
             });
         });
+        await waitFor(() => expect(manager.dragOperation.status.dragging).toBe(true));
     };
     const drop = async (status?: AktivitetStatus, canceled = false) => {
         await act(async () => {
@@ -80,6 +81,7 @@ async function renderBoard({
         await act(async () => {
             manager.actions.stop({ canceled });
         });
+        await waitFor(() => expect(manager.dragOperation.status.idle).toBe(true));
     };
     return { store, manager, start, drop };
 }
@@ -218,15 +220,17 @@ describe('Activity drag and drop', () => {
     });
 
     it('starts keyboard dragging with Space and cancels with Escape', async () => {
-        await renderBoard();
+        const { manager } = await renderBoard();
         const link = await screen.findByRole('link', { name: /Drag test/ });
         fireEvent.keyDown(link, { key: ' ', code: 'Space' });
+        await waitFor(() => expect(manager.dragOperation.status.dragging).toBe(true));
         fireEvent.keyDown(document, { key: 'Escape', code: 'Escape' });
+        await waitFor(() => expect(manager.dragOperation.status.idle).toBe(true));
         expect(aktivitetAPI.oppdaterAktivitetStatus).not.toHaveBeenCalled();
     });
 
     it('starts pointer dragging from card content without following the link', async () => {
-        await renderBoard();
+        const { manager } = await renderBoard();
         const title = await screen.findByText('Drag test');
         fireEvent.pointerDown(title, {
             isPrimary: true,
@@ -236,7 +240,9 @@ describe('Activity drag and drop', () => {
             clientY: 0,
         });
         fireEvent.pointerMove(document, { clientX: 6, clientY: 0 });
+        await waitFor(() => expect(manager.dragOperation.status.dragging).toBe(true));
         fireEvent.pointerUp(document);
+        await waitFor(() => expect(manager.dragOperation.status.idle).toBe(true));
         expect(screen.getByLabelText('Location')).toHaveTextContent('/');
         expect(aktivitetAPI.oppdaterAktivitetStatus).not.toHaveBeenCalled();
     });
