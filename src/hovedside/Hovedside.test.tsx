@@ -40,7 +40,7 @@ const server = setupServer(
 );
 
 describe('Hovedside.tsx', () => {
-    beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+    beforeAll(() => server.listen({ onUnhandledFrame: 'error' }));
 
     //  Close server after all tests
     afterAll(() => server.close());

@@ -57,7 +57,7 @@ const server = setupServer(
 
 describe('hent aktiviteter via graphql', () => {
     // Start server before all tests
-    beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+    beforeAll(() => server.listen({ onUnhandledFrame: 'error' }));
 
     //  Close server after all tests
     afterAll(() => server.close());

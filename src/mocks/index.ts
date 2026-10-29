@@ -10,11 +10,17 @@ export default () =>
         serviceWorker: {
             url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
         },
-        onUnhandledRequest: (req, print) => {
+        onUnhandledFrame: ({ frame, defaults }) => {
+            if (frame.protocol !== 'http') {
+                defaults.warn();
+                return;
+            }
+
+            const { request } = frame.data as { request: Request };
             const hostBlacklist = ['nav.psplugin.com', 'dekoratoren.ekstern.dev.nav.no'];
             const ignoredFileExtensions = ['.ts', '.js', '.tsx', '.jsx', 'css', 'svg', 'png', '.less'];
 
-            const url = new URL(req.url);
+            const url = new URL(request.url);
 
             const ignore =
                 hostBlacklist.some((route) => url.host.includes(route)) ||
@@ -23,7 +29,7 @@ export default () =>
                 return;
             }
 
-            print.warning();
+            defaults.warn();
         },
     });
 
