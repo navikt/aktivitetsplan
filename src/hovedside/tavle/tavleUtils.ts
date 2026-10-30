@@ -5,12 +5,9 @@ import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter, isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import { VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 
-export function aktivitetDropTargetStatus({
-    source,
-    target,
-}: Partial<Pick<DragEndEvent['operation'], 'source' | 'target'>>) {
-    // Keyboard sorting can target the source itself after its group changes.
-    const group = source && target?.id === source.id && isSortable(source) ? source.sortable.group : target?.id;
+export function aktivitetDropTargetStatus({ target }: Partial<Pick<DragEndEvent['operation'], 'source' | 'target'>>) {
+    // Use the rendered group, which can differ from the activity's persisted status during preview.
+    const group = target && isSortable(target) ? target.sortable.group : target?.id;
     return Object.values(AktivitetStatus).find((status) => group === `aktivitetskolonne-${status}` || group === status);
 }
 

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { KeyboardSensor, PointerSensor } from '@dnd-kit/react';
 import { useSortable } from '@dnd-kit/react/sortable';
+import { SortableKeyboardPlugin } from '@dnd-kit/dom/sortable';
 
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import Aktivitetskort, { prefixAktivtetskortId } from './Aktivitetskort';
@@ -22,6 +23,7 @@ const sensors = [
         preventActivation: (event, source) => event.key === 'Enter' || event.target !== source.element,
     }),
 ];
+const plugins = [SortableKeyboardPlugin];
 
 function DragbartAktivitetskort(props: Props) {
     const { aktivitet, group, index } = props;
@@ -34,8 +36,9 @@ function DragbartAktivitetskort(props: Props) {
         accept: DROP_TYPE_AKTIVITETSKORT,
         data: { aktivitet },
         sensors,
-        // Columns own the drop position; cards cannot be arbitrarily reordered.
-        disabled: { draggable: !!aktivitet.pendingStatus, droppable: true },
+        // React state controls placement; keep measurement and animation without optimistic DOM sorting.
+        plugins,
+        disabled: { draggable: !!aktivitet.pendingStatus },
         transition: { idle: true },
     });
 

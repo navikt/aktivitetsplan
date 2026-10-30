@@ -123,7 +123,7 @@ afterEach(() => {
 });
 
 describe('Controlled sortable columns', () => {
-    it('renders the drag feedback inside the routed page with the default plugins enabled', async () => {
+    it('renders the drag feedback inside the routed page', async () => {
         const { manager, start, hover, stop, titles } = await renderBoard();
         await start();
         await hover(`aktivitetskolonne-${destination.status}`);
@@ -265,6 +265,87 @@ describe('Controlled sortable columns', () => {
         expect(aktivitetAPI.oppdaterAktivitetStatus).toHaveBeenCalledTimes(1);
     });
 
+    it.each([true, false])('moves to the top using the keyboard (empty destination=%s)', async (empty) => {
+        const { manager, stop, titles } = await renderBoard(empty ? [kort] : [kort, destination]);
+        const columns = Object.values(AktivitetStatus).map((status) => screen.getByTestId(`aktivitetstavle.${status}`));
+        const sourceLeft = columns.indexOf(screen.getByTestId(`aktivitetstavle.${kort.status}`)) * 300;
+        vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
+            if (this.closest('[data-dnd-overlay]')) {
+                return new DOMRect(sourceLeft, 0, 200, 80);
+            }
+            const columnIndex = columns.findIndex((column) => column.contains(this));
+            return columnIndex < 0 ? new DOMRect(0, 0, 1800, 800) : new DOMRect(columnIndex * 300, 0, 200, 80);
+        });
+        const link = screen.getByRole('link', { name: new RegExp(kort.tittel) });
+        fireEvent.keyDown(link, { key: ' ', code: 'Space' });
+        await waitFor(() => expect(manager.dragOperation.status.dragging).toBe(true));
+        fireEvent.keyDown(document, { key: 'ArrowRight', code: 'ArrowRight' });
+        await waitFor(() => expect(titles(destination.status)[0]).toContain(kort.tittel));
+        if (!empty) expect(titles(destination.status)[1]).toContain(destination.tittel);
+        await stop();
+        expect(aktivitetAPI.oppdaterAktivitetStatus).toHaveBeenCalledExactlyOnceWith({
+            ...kort,
+            status: destination.status,
+        });
+    });
+
+    it('keeps the preview at the top when hovering different cards in the destination column', async () => {
+        const secondDestination = {
+            ...destination,
+            id: 'second-destination' as AktivitetsId,
+            tittel: 'Second destination',
+        };
+        const { start, hover, stop, titles } = await renderBoard([kort, destination, secondDestination]);
+        const originalOrder = titles(destination.status);
+        await start();
+        for (const target of [destination, secondDestination, destination]) {
+            await hover(`aktivitetskort-${target.id}`);
+            expect(titles(destination.status)[0]).toContain(kort.tittel);
+            expect(titles(destination.status).slice(1)).toEqual(originalOrder);
+        }
+        await stop();
+        expect(titles(destination.status)[0]).toContain(kort.tittel);
+        expect(aktivitetAPI.oppdaterAktivitetStatus).toHaveBeenCalledExactlyOnceWith({
+            ...kort,
+            status: destination.status,
+        });
+    });
+
+    it('restores business sorting when hovering a card in the original column', async () => {
+        const originalNeighbour = {
+            ...kort,
+            id: 'original-neighbour' as AktivitetsId,
+            tittel: 'Original neighbour',
+        };
+        const { start, hover, stop, titles } = await renderBoard([kort, originalNeighbour, destination]);
+        const originalOrder = titles(kort.status);
+        await start();
+        await hover(`aktivitetskort-${destination.id}`);
+        expect(titles(destination.status)[0]).toContain(kort.tittel);
+        await hover(`aktivitetskort-${originalNeighbour.id}`);
+        expect(titles(kort.status)).toEqual(originalOrder);
+        await stop();
+        expect(aktivitetAPI.oppdaterAktivitetStatus).not.toHaveBeenCalled();
+    });
+
+    it('animates an existing card when a preview pushes it down', async () => {
+        const { manager, start, hover, stop } = await renderBoard();
+        const destinationCard = manager.registry.droppables.get(`aktivitetskort-${destination.id}`);
+        const element = destinationCard?.element;
+        if (!element) throw new Error('Missing destination card element');
+        vi.spyOn(element, 'getBoundingClientRect').mockImplementation(() => {
+            const column = screen.getByTestId(`aktivitetstavle.${destination.status}`);
+            const index = [...column.querySelectorAll('a')].findIndex((card) => card === element);
+            return new DOMRect(0, index * 100, 200, 80);
+        });
+        const animate = vi.spyOn(element, 'animate');
+        await start();
+        destinationCard.refreshShape();
+        await hover(`aktivitetskort-${destination.id}`);
+        await waitFor(() => expect(animate).toHaveBeenCalled());
+        await stop(true);
+    });
+
     it('preserves newest-first placement for multiple pending moves when Redux data changes', async () => {
         const second = { ...kort, id: 'second-source' as AktivitetsId, tittel: 'Second source' };
         const third = {
@@ -347,7 +428,7 @@ describe('Controlled sortable columns', () => {
 
     it('does not dispatch Redux actions or remount cards when repeatedly hovering the same column', async () => {
         const { store, manager, start, hover, stop } = await renderBoard();
-        expect(manager.registry.droppables.get(`aktivitetskort-${destination.id}`)?.disabled).toBe(true);
+        expect(manager.registry.droppables.get(`aktivitetskort-${destination.id}`)?.disabled).toBe(false);
         await start();
         await hover(`aktivitetskolonne-${destination.status}`);
         const link = screen.getByTestId(`aktivitetstavle.${destination.status}`).querySelector('a');
