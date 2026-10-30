@@ -123,7 +123,6 @@ export class DabAktivitetsplan extends HTMLElement {
             this.setFnr(newValue);
         }
         if (name === AKTIV_ENHET_ATTRIBUTE && this.setAktivEnhet) {
-            settSessionStorage(LocalStorageElement.FNR, newValue);
             this.setAktivEnhet(newValue);
         }
     }
