@@ -3,7 +3,7 @@ import React from 'react';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
-import { compareAktivitet } from '../../../aktivitet/aktivitet-util';
+import { compareAktivitetPåDato } from '../../../aktivitet/aktivitet-util';
 import AktivitetPrint from './AktivitetPrint';
 
 interface Props {
@@ -19,7 +19,7 @@ const Gruppe = (props: Props) => {
         return null;
     }
 
-    const sorterteAktiviteter = [...aktiviteter].sort(compareAktivitet);
+    const sorterteAktiviteter = [...aktiviteter].sort(compareAktivitetPåDato);
 
     return (
         <section className="mt-12">

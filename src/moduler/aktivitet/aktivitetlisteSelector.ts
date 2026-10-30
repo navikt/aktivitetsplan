@@ -12,6 +12,7 @@ import { selectAktivitetStatus } from './aktivitet-selector';
 import { selectArenaAktiviteterData } from './arena-aktivitet-selector';
 import { selectAktiviteterByPeriode, selectAktiviteterData } from './aktivitet-slice';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
+import { selectFilterSlice } from '../filtrering/filter/filter-selector';
 
 export const selectAlleAktiviter: (state: RootState) => AlleAktiviteter[] = createSelector(
     [selectAktiviteterData, selectArenaAktiviteterData],
@@ -30,8 +31,10 @@ export const selectAktiviterForAktuellePerioden = createSelector(
     },
 );
 
-export const selectAktivitetListe = (state: RootState) =>
-    selectAktiviterForAktuellePerioden(state).filter((a: AlleAktiviteter) => aktivitetMatchesFilters(a, state));
+export const selectAktivitetListe = createSelector(
+    [selectAktiviterForAktuellePerioden, selectFilterSlice],
+    (aktiviteter, filter) => aktiviteter.filter((aktivitet) => aktivitetMatchesFilters(aktivitet, filter)),
+);
 
 export const selectAktivitetMedId = (state: RootState, aktivitetId: string) =>
     selectAlleAktiviter(state).find((aktivitet: AlleAktiviteter) => {

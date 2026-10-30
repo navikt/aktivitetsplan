@@ -1,6 +1,4 @@
 import React, { Dispatch, useContext, useEffect, useMemo, useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import { ER_INTERN_FLATE } from './constant';
@@ -61,9 +59,7 @@ const Provider = ({
         <FnrOgEnhetContext.Provider value={{ fnr, aktivEnhet }}>
             <ErVeilederContext.Provider value={ER_INTERN_FLATE}>
                 <ReduxProvider store={store}>
-                    <DndProvider backend={HTML5Backend}>
-                        <FeatureToggle>{children}</FeatureToggle>
-                    </DndProvider>
+                    <FeatureToggle>{children}</FeatureToggle>
                 </ReduxProvider>
             </ErVeilederContext.Provider>
         </FnrOgEnhetContext.Provider>

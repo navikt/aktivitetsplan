@@ -1,17 +1,14 @@
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
-import { useDrop } from 'react-dnd';
-import { shallowEqual, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useDroppable, useDragOperation } from '@dnd-kit/react';
+import { useSelector } from 'react-redux';
 
-import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
-import { VeilarbAktivitet } from '../../../datatypes/internAktivitetTypes';
-import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
-import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
-import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
-import { selectDraggingAktivitet } from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
-import { useRoutes } from '../../../routing/useRoutes';
-import { erDroppbar } from '../tavleUtils';
+import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import {
+    AktivitetskortDragData,
+    DROP_TYPE_AKTIVITETSKORT,
+} from '../../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
+import { aktivitetDropTargetStatus, erDroppbar } from '../tavleUtils';
 import { ReadWriteMode, selectReadWriteMode } from '../../../utils/readOrWriteModeSlice';
 import { useErVeileder } from '../../../Provider';
 
@@ -20,47 +17,27 @@ interface Props {
     children: ReactNode;
 }
 
-interface DragItem<AktivitetsType> {
-    aktivitet: AktivitetsType;
-    type: string;
-}
-
-export const DROP_TYPE = 'AktivitetsKort';
-
 function DropTargetKolonne({ status, children }: Props) {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
     const erVeileder = useErVeileder();
     const readOnly = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
-    const draggingAktivitet = useSelector(selectDraggingAktivitet, shallowEqual);
-    const { avbrytAktivitetRoute, fullforAktivitetRoute } = useRoutes();
+    const operation = useDragOperation<AktivitetskortDragData>();
+    const draggingAktivitet =
+        operation.source?.type === DROP_TYPE_AKTIVITETSKORT ? operation.source.data.aktivitet : undefined;
 
-    const [collectedProps, dropRef] = useDrop({
-        accept: DROP_TYPE,
-        canDrop: ({ aktivitet }: DragItem<VeilarbAktivitet>) =>
-            status !== aktivitet.status && erDroppbar(aktivitet, !erVeileder, readOnly),
-        drop: ({ aktivitet }: DragItem<VeilarbAktivitet>) => {
-            flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
-            if (status === AktivitetStatus.FULLFOERT) {
-                navigate(fullforAktivitetRoute(aktivitet.id));
-            } else if (status === AktivitetStatus.AVBRUTT) {
-                navigate(avbrytAktivitetRoute(aktivitet.id));
-            } else {
-                dispatch(flyttAktivitet({ aktivitet, status }));
-            }
-        },
-        collect: (monitor) => ({
-            canDrop: monitor.canDrop(),
-            isOver: monitor.isOver(),
-        }),
+    const canDrop = (aktivitet: AlleAktiviteter) =>
+        status !== aktivitet.status && erDroppbar(aktivitet, !erVeileder, readOnly);
+
+    const { ref: dropRef } = useDroppable({
+        id: `aktivitetskolonne-${status}`,
+        accept: DROP_TYPE_AKTIVITETSKORT,
+        disabled: !draggingAktivitet || !erDroppbar(draggingAktivitet, !erVeileder, readOnly),
     });
 
     const isDragging = !!draggingAktivitet;
-    const isOverAndCanDrop = collectedProps.canDrop && collectedProps.isOver;
+    const isOverAndCanDrop =
+        aktivitetDropTargetStatus(operation) === status && !!draggingAktivitet && canDrop(draggingAktivitet);
 
     return (
-        // @ts-ignore
         <div ref={dropRef} className="z-50 h-full">
             <div
                 className={classNames(
