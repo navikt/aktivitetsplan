@@ -408,6 +408,11 @@ describe('Controlled sortable columns', () => {
             await stop();
             await start(destination);
             await hover(`aktivitetskolonne-${AktivitetStatus.BRUKER_ER_INTRESSERT}`);
+            await hover(null);
+            expect(titles(AktivitetStatus.BRUKER_ER_INTRESSERT)).toHaveLength(0);
+            expect(titles(destination.status)[0]).toContain(kort.tittel);
+            expect(manager.registry.draggables.get(`aktivitetskort-${kort.id}`)?.disabled).toBe(true);
+            await hover(`aktivitetskolonne-${AktivitetStatus.BRUKER_ER_INTRESSERT}`);
             await act(async () => {
                 if (outcome === 'resolve') resolveRequest({ ...kort, status: destination.status });
                 else rejectRequest(new Error('HTTP failed'));
@@ -434,11 +439,30 @@ describe('Controlled sortable columns', () => {
         const link = screen.getByTestId(`aktivitetstavle.${destination.status}`).querySelector('a');
         const dispatch = vi.spyOn(store, 'dispatch');
         for (let i = 0; i < 3; i++) {
-            await hover(null);
             await hover(`aktivitetskolonne-${destination.status}`);
         }
         expect(dispatch).not.toHaveBeenCalled();
         expect(screen.getByTestId(`aktivitetstavle.${destination.status}`).querySelector('a')).toBe(link);
+        await stop(true);
+    });
+
+    it('clears the preview immediately outside drop zones and restores it on re-entry', async () => {
+        const { manager, start, hover, stop, titles } = await renderBoard();
+        await start();
+        await hover(`aktivitetskort-${destination.id}`);
+        expect(titles(destination.status)[0]).toContain(kort.tittel);
+        await hover(null);
+        expect(manager.dragOperation.status.dragging).toBe(true);
+        expect(titles(kort.status)[0]).toContain(kort.tittel);
+        expect(titles(destination.status)).toHaveLength(1);
+        expect(titles(destination.status)[0]).toContain(destination.tittel);
+        expect(
+            screen.getByTestId(`aktivitetstavle.${destination.status}`).firstElementChild?.firstElementChild,
+        ).toHaveClass('opacity-50');
+        expect(aktivitetAPI.oppdaterAktivitetStatus).not.toHaveBeenCalled();
+        await hover(`aktivitetskort-${destination.id}`);
+        expect(titles(destination.status)[0]).toContain(kort.tittel);
+        expect(titles(kort.status)).toHaveLength(0);
         await stop(true);
     });
 

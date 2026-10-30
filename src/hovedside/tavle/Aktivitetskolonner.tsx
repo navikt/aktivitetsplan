@@ -156,12 +156,12 @@ export default function Aktivitetskolonner({
             onDragOver={({ operation }) => {
                 const source = operation.source;
                 const status = aktivitetDropTargetStatus(operation);
-                if (source?.type !== DROP_TYPE_AKTIVITETSKORT || !status) return;
+                if (source?.type !== DROP_TYPE_AKTIVITETSKORT) return;
                 const aktivitet = source.data.aktivitet;
                 if (!erDroppbar(aktivitet, !erVeileder, readOnly)) return;
                 setFlyttinger((flyttinger) => {
                     const preview = flyttinger.find(({ fase }) => fase === 'PREVIEW');
-                    if (status === aktivitet.status) {
+                    if (!status || status === aktivitet.status) {
                         return preview ? flyttinger.filter(({ fase }) => fase !== 'PREVIEW') : flyttinger;
                     }
                     if (preview?.aktivitetId === aktivitet.id && preview.tilStatus === status) return flyttinger;
