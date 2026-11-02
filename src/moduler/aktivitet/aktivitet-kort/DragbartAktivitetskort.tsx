@@ -9,6 +9,7 @@ import Aktivitetskort, { prefixAktivtetskortId } from './Aktivitetskort';
 import styles from './Aktivitetskort.module.less';
 import { AktivitetskortDragData, DROP_TYPE_AKTIVITETSKORT } from './dragAndDropSlice';
 import type { TavleAktivitet } from '../../../hovedside/tavle/Aktivitetskolonner';
+import { PointerActivationConstraints } from '@dnd-kit/dom';
 
 interface Props {
     aktivitet: TavleAktivitet;
@@ -17,7 +18,19 @@ interface Props {
 }
 
 const sensors = [
-    PointerSensor,
+    PointerSensor.configure({
+        activationConstraints(event, _) {
+            if (event.pointerType === 'touch') {
+                // Longer delay for touch to avoid hijacking scroll gestures
+                return [new PointerActivationConstraints.Delay({ value: 250, tolerance: 5 })];
+            }
+
+            return [
+                // Drag starts after the pointer moves 10px
+                new PointerActivationConstraints.Distance({ value: 10 }),
+            ];
+        },
+    }),
     KeyboardSensor.configure({
         // Enter opens the activity link; Space starts keyboard dragging.
         preventActivation: (event, source) => event.key === 'Enter' || event.target !== source.element,
