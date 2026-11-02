@@ -239,7 +239,7 @@ describe('Activity drag and drop', () => {
             clientX: 0,
             clientY: 0,
         });
-        fireEvent.pointerMove(document, { clientX: 6, clientY: 0 });
+        fireEvent.pointerMove(document, { clientX: 11, clientY: 0 });
         await waitFor(() => expect(manager.dragOperation.status.dragging).toBe(true));
         fireEvent.pointerUp(document);
         await waitFor(() => expect(manager.dragOperation.status.idle).toBe(true));
