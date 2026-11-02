@@ -57,7 +57,8 @@ const PeriodeFilter = () => {
                     try {
                         fraDato = format(parseISO(start), 'dd. MMM yyyy');
                     } catch (error) {
-                        throw Error(`Error parsing date: ${start}`, { cause: error });
+                        console.warn(`Error parsing date: ${start}`);
+                        fraDato = '??';
                     }
                     const navn =
                         slutt === undefined || slutt === null
