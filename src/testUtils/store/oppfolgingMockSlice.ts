@@ -6,6 +6,7 @@ import { RootState } from '../../store/rootReducer';
 const defaultOppfolgingData: OppfolgingStatusResponse = {
     oppfolging: {
         erUnderOppfolging: true,
+        kanAvslutteOppfolging: true,
     },
     oppfolgingsPerioder: [aktivVeilarbOppfolgingMockPeriode],
     brukerStatus: {

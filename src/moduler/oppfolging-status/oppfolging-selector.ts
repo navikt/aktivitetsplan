@@ -5,6 +5,7 @@ import { RootState } from '../../store/rootReducer';
 import { selectAktiviteterSlice, selectAllOppfolgingsperioder } from '../aktivitet/aktivitet-slice';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
+import { Status } from '../../store/createGenericSlice';
 
 export function selectOppfolgingSlice(state: RootState) {
     return state.data.oppfolging;
@@ -17,6 +18,10 @@ function selectOppfolgingData(state: RootState) {
 export function selectOppfolgingStatus(state: RootState) {
     return selectOppfolgingSlice(state).status;
 }
+
+export const selectKanAvslutteOppfolging = (state: RootState): boolean =>
+    selectOppfolgingStatus(state) === Status.OK &&
+    selectOppfolgingData(state)?.oppfolging?.kanAvslutteOppfolging === true;
 
 export const selectReservasjonKRR = (state: RootState) =>
     selectOppfolgingData(state)?.brukerStatus?.krr?.reservertIKrr || false;
