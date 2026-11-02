@@ -1,19 +1,22 @@
 import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
-import type { TavleAktivitet } from '../Aktivitetskolonner';
+import { sorterAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
+import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
 import DropTargetKolonne from './DropTargetKolonne';
 import KolonneHeader from './KolonneHeader';
 
 interface Props {
     status: Exclude<AktivitetStatus, AktivitetStatus.FULLFOERT | AktivitetStatus.AVBRUTT>;
-    aktiviteter: TavleAktivitet[];
 }
 
-const Kolonne = ({ status, aktiviteter }: Props) => {
-    const aktivitetsListe = aktiviteter.map((aktivitet, index) => (
-        <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} group={status} index={index} />
+const Kolonne = ({ status }: Props) => {
+    const aktiviteter = useSelector(selectAktivitetListe, shallowEqual);
+    const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
+    const aktivitetsListe = sorterteAktiviter.map((aktivitet) => (
+        <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
     ));
 
     return (

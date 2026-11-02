@@ -1,50 +1,42 @@
 import classNames from 'classnames';
-import React from 'react';
-import { KeyboardSensor, PointerSensor } from '@dnd-kit/react';
-import { useSortable } from '@dnd-kit/react/sortable';
-import { SortableKeyboardPlugin } from '@dnd-kit/dom/sortable';
+import React, { RefObject } from 'react';
+import { DragSourceMonitor, useDrag } from 'react-dnd';
 
-import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
-import Aktivitetskort, { prefixAktivtetskortId } from './Aktivitetskort';
+import { AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
+import useAppDispatch from '../../../felles-komponenter/hooks/useAppDispatch';
+import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
+import Aktivitetskort from './Aktivitetskort';
 import styles from './Aktivitetskort.module.less';
-import { AktivitetskortDragData, DROP_TYPE_AKTIVITETSKORT } from './dragAndDropSlice';
-import type { TavleAktivitet } from '../../../hovedside/tavle/Aktivitetskolonner';
+import { startDragging, stopDragging } from './dragAndDropSlice';
 
 interface Props {
-    aktivitet: TavleAktivitet;
-    group: AktivitetStatus;
-    index: number;
+    aktivitet: AlleAktiviteter;
 }
 
-const sensors = [
-    PointerSensor,
-    KeyboardSensor.configure({
-        // Enter opens the activity link; Space starts keyboard dragging.
-        preventActivation: (event, source) => event.key === 'Enter' || event.target !== source.element,
-    }),
-];
-const plugins = [SortableKeyboardPlugin];
-
 function DragbartAktivitetskort(props: Props) {
-    const { aktivitet, group, index } = props;
+    const { aktivitet } = props;
+    const dispatch = useAppDispatch();
 
-    const { ref, isDragSource } = useSortable<AktivitetskortDragData>({
-        id: prefixAktivtetskortId(aktivitet),
-        group,
-        index,
-        type: DROP_TYPE_AKTIVITETSKORT,
-        accept: DROP_TYPE_AKTIVITETSKORT,
-        data: { aktivitet },
-        sensors,
-        // React state controls placement; keep measurement and animation without optimistic DOM sorting.
-        plugins,
-        disabled: { draggable: !!aktivitet.pendingStatus },
-        transition: { idle: true },
+    const [collectedProps, drag] = useDrag({
+        type: DROP_TYPE,
+        item: () => {
+            // Trenger dette fordi uten så går det ikke å dra noe bak advarsel-popup
+            setTimeout(() => dispatch(startDragging(aktivitet)));
+            return { aktivitet, type: DROP_TYPE };
+        },
+        end: () => dispatch(stopDragging()),
+        collect: (monitor: DragSourceMonitor<unknown, unknown>) => ({
+            isDragging: monitor.isDragging(),
+        }),
     });
 
-    const className = classNames(isDragSource && styles.drag, styles.flyttbar, isDragSource && 'opacity-30');
+    const className = classNames(collectedProps.isDragging && styles.drag, styles.flyttbar);
 
-    return <Aktivitetskort ref={ref} aktivitet={aktivitet} className={className} />;
+    return (
+        <div ref={drag as unknown as RefObject<HTMLDivElement>}>
+            <Aktivitetskort aktivitet={aktivitet} className={className} />
+        </div>
+    );
 }
 
 export default DragbartAktivitetskort;

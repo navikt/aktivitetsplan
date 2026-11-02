@@ -1,25 +1,16 @@
 import { BodyShort, GuidePanel } from '@navikt/ds-react';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import {
     GRUPPE_AKTIVITET_TYPE,
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE
 } from '../../constant';
 import { AktivitetStatus, AlleAktiviteter } from '../../datatypes/aktivitetTypes';
 import { EksternAktivitetType, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
 import ObsSVG from './obs.svg?react';
-import { erDroppbar } from './tavleUtils';
-import { useSelector } from 'react-redux';
-import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
-import {
-    AktivitetskortDragData,
-    DROP_TYPE_AKTIVITETSKORT,
-} from '../../moduler/aktivitet/aktivitet-kort/dragAndDropSlice';
-import { useErVeileder } from '../../Provider';
-import { useDragOperation } from '@dnd-kit/react';
 
 const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     if (aktivitet.status === AktivitetStatus.FULLFOERT) {
@@ -49,7 +40,7 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
                 case EksternAktivitetType.REKRUTTERINGSTREFF:
                 case EksternAktivitetType.WORKOP:
                 case EksternAktivitetType.DELE_CV_MED_ARBEIDSGIVER:
-                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til rekrutteringsbistand for å endre status.';
+                    return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til rekrutteringsbistand for å endre status.'
             }
             return 'Denne aktiviteten kan ikke endres fra aktivitetsplanen. Gå til det aktuelle fagsystemet for å endre aktiviteten.';
         }
@@ -58,35 +49,22 @@ const getAdvarseltekst = (aktivitet: AlleAktiviteter, erVeileder: boolean) => {
     return 'Du kan ikke endre status på denne aktiviteten. Ta kontakt med veilederen din for å gjøre endringer.';
 };
 
-export const Tavleadvarsel = () => {
-    const erVeileder = useErVeileder();
-    const { source } = useDragOperation<AktivitetskortDragData>();
-    const draggingAktivitet = source?.type === DROP_TYPE_AKTIVITETSKORT ? source.data.aktivitet : undefined;
-    const erReadMode = useSelector(selectReadWriteMode) == ReadWriteMode.READ;
+interface Props {
+    hidden: boolean;
+    draggingAktivitet: AlleAktiviteter | undefined;
+    erVeileder: boolean;
+}
 
-    const dragging = !!draggingAktivitet;
-    const droppable = !!draggingAktivitet && erDroppbar(draggingAktivitet, !erVeileder, erReadMode);
-    const skjulAdvarsel = !dragging || droppable;
-    const warningRef = useRef<HTMLDivElement>(null);
+export const Tavleadvarsel = (props: Props) => {
+    const { hidden, draggingAktivitet, erVeileder } = props;
 
-    useEffect(() => {
-        if (skjulAdvarsel) return;
-        // Enter the top layer after dnd-kit opens its drag-feedback popover.
-        const frame = requestAnimationFrame(() => warningRef.current?.showPopover());
-        return () => cancelAnimationFrame(frame);
-    }, [skjulAdvarsel]);
-
-    if (skjulAdvarsel || !draggingAktivitet) {
+    if (hidden || !draggingAktivitet) {
         return null;
     }
 
     return (
-        <div
-            ref={warningRef}
-            popover="manual"
-            className="fixed inset-auto z-50 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg m-0 border-0 p-0 bg-transparent overflow-visible"
-        >
-            <GuidePanel illustration={<ObsSVG className={'bg-white'} />} poster>
+        <div className="fixed z-50 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg">
+            <GuidePanel illustration={<ObsSVG />} poster>
                 <BodyShort>{getAdvarseltekst(draggingAktivitet, erVeileder)}</BodyShort>
             </GuidePanel>
         </div>

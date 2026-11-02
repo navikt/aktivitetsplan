@@ -8,6 +8,12 @@ import { selectValgtPeriode } from '../../oppfolging-status/oppfolging-selector'
 import { getType } from './AktivitetTypeFilter';
 import { getArenaFilterableFields, getEksternFilterableFields } from './TiltakstatusFilter';
 import { getStillingStatusFilterValue } from './EtikettFilter';
+import {
+    selectAktivitetAvtaltMedNavFilter,
+    selectAktivitetEtiketterFilter,
+    selectAktivitetTyperFilter,
+    selectArenaAktivitetEtiketterFilter,
+} from './filter-selector';
 import { FilterState } from './filter-slice';
 
 export const filterErAktivt = (filter: FilterState): boolean =>
@@ -68,14 +74,14 @@ const getTiltakstatusEtiketter = (aktivitet: AlleAktiviteter) => {
     return [];
 };
 
-export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, filter: FilterState): boolean {
-    const aktivitetTypeFilter = filter.aktivitetTyper;
+export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, state: any): boolean {
+    const aktivitetTypeFilter = selectAktivitetTyperFilter(state);
     const aktivitetType = getType(aktivitet);
     if (erAktivtFilter(aktivitetTypeFilter) && !aktivitetTypeFilter[aktivitetType]) {
         return false;
     }
 
-    const etikettFilter = filter.aktivitetEtiketter;
+    const etikettFilter = selectAktivitetEtiketterFilter(state);
     if (erAktivtFilter(etikettFilter)) {
         if (
             !isVeilarbAktivitet(aktivitet) ||
@@ -86,7 +92,7 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, filter: Filt
         return true;
     }
 
-    const arenaEtikettFilter = filter.arenaAktivitetEtiketter;
+    const arenaEtikettFilter = selectArenaAktivitetEtiketterFilter(state);
     if (erAktivtFilter(arenaEtikettFilter)) {
         const aktiveFilters = Object.entries(arenaEtikettFilter)
             .filter(([, val]: [string, unknown]) => !!val)
@@ -97,7 +103,7 @@ export function aktivitetMatchesFilters(aktivitet: AlleAktiviteter, filter: Filt
         }
     }
 
-    const aktivitetAvtaltMedNavFilter = filter.aktivitetAvtaltMedNav;
+    const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
     const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.AVTALT_MED_NAV;
     const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.IKKE_AVTALT_MED_NAV;
     const { avtalt } = aktivitet;

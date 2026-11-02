@@ -23,6 +23,10 @@ const defaultStore: RootState = {
         readOrWriteMode: {
             mode: ReadWriteMode.WRITE,
         },
+        dragAndDrop: {
+            dragging: false,
+            aktivitet: undefined,
+        },
         visteAktiviteterMedEndringer: {
             data: [],
         },

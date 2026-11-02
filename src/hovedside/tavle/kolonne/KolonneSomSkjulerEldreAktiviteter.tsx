@@ -1,27 +1,27 @@
 import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 
 import { AktivitetStatus, AlleAktiviteter } from '../../../datatypes/aktivitetTypes';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
-import { splitIEldreOgNyereAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
-import type { TavleAktivitet } from '../Aktivitetskolonner';
+import { sorterAktiviteter, splitIEldreOgNyereAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
+import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
 import DropTargetKolonne from './DropTargetKolonne';
 import KolonneHeader from './KolonneHeader';
 import SkjulEldreAktiviteterFraKolonne from './SkjulEldreAktiviteterFraKolonne';
 
 interface Props {
     status: AktivitetStatus.FULLFOERT | AktivitetStatus.AVBRUTT;
-    aktiviteter: TavleAktivitet[];
 }
 
-const KolonneSomSkjulerEldreAktiviteter = ({ status, aktiviteter }: Props) => {
-    const previewAktiviteter = aktiviteter.filter((aktivitet) => aktivitet.status !== status);
-    const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(
-        aktiviteter.filter((aktivitet) => aktivitet.status === status),
-    );
-    const synligeAktiviteter = [...previewAktiviteter, ...nyereAktiviteter];
+const KolonneSomSkjulerEldreAktiviteter = ({ status }: Props) => {
+    const aktiviteter = useSelector(selectAktivitetListe, shallowEqual);
 
-    const aktivitetsListe = synligeAktiviteter.map((aktivitet: AlleAktiviteter, index) => (
-        <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} group={status} index={index} />
+    const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
+
+    const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(sorterteAktiviter);
+
+    const aktivitetsListe = nyereAktiviteter.map((aktivitet: AlleAktiviteter) => (
+        <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
     ));
 
     const aktivitetTekst =
@@ -35,8 +35,6 @@ const KolonneSomSkjulerEldreAktiviteter = ({ status, aktiviteter }: Props) => {
                 <SkjulEldreAktiviteterFraKolonne
                     aktivitetTekst={aktivitetTekst}
                     aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter}
-                    status={status}
-                    startIndex={synligeAktiviteter.length}
                 />
             </div>
         </DropTargetKolonne>
