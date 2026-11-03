@@ -19,7 +19,7 @@ interface Props {
 
 const sensors = [
     PointerSensor.configure({
-        activationConstraints(event, _) {
+        activationConstraints(event) {
             if (event.pointerType === 'touch') {
                 // Longer delay for touch to avoid hijacking scroll gestures
                 return [new PointerActivationConstraints.Delay({ value: 250, tolerance: 5 })];
