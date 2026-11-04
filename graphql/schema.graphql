@@ -72,10 +72,27 @@ type AktivitetDTO {
     kanal: KanalDTO
     referat: String
     erReferatPublisert: Boolean
+    motedeltakere: [Motedeltaker]
 
     stillingFraNavData: StillingFraNavData
 
     eksternAktivitet: EksternAktivitetDTO
+}
+
+type Motedeltaker {
+    navn: String!
+    roller: [MotedeltakerRolle!]!
+    opprettet: String
+    deltakerId: String
+}
+
+enum MotedeltakerRolle {
+    ARBEIDSGIVER
+    MENTOR_FADDER
+    VEILEDER
+    TOLK
+    BRUKER
+    ANNET
 }
 
 type EksternAktivitetDTO {

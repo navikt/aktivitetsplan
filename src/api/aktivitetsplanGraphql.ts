@@ -67,6 +67,12 @@ const allAktivitetFields = `
     kanal,
     referat,
     erReferatPublisert,
+    motedeltakere {
+        navn,
+        roller,
+        opprettet,
+        deltakerId,
+    }
 
     stillingFraNavData {
         cvKanDelesData {

@@ -23,7 +23,7 @@ import { expect, Mock } from 'vitest';
 import { Kanal } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingStatusResponse } from '../../../../api/veilarboppfolging';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
-import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { MotedeltakerRolle, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 
 const initialState: any = {
     data: {
@@ -93,7 +93,7 @@ describe('MoteAktivitetForm', () => {
 
     it('Skal legge til deltakere med flere roller og sende dem med skjemaet', async () => {
         const user = userEvent.setup();
-        const onSubmit = vi.fn(() => Promise.resolve());
+        const onSubmit = vi.fn((_data: unknown) => Promise.resolve());
         mountWithIntl(<MoteAktivitetForm onSubmit={onSubmit} dirtyRef={dirtyRef} />);
         fillForm();
         await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');
@@ -102,18 +102,22 @@ describe('MoteAktivitetForm', () => {
         await user.type(screen.getByLabelText('Deltakers navn'), '  Test Deltaker  ');
         await user.click(screen.getByRole('button', { name: /Deltakers rolle/ }));
         await user.click(screen.getByRole('menuitemcheckbox', { name: 'Arbeidsgiver' }));
-        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Fadder/Mentor' }));
+        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Mentor/Fadder' }));
         await user.keyboard('{Escape}');
         await user.click(screen.getByRole('button', { name: 'Lagre' }));
 
         expect(onSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
-                deltakere: [
-                    { navn: 'Test Veileder', roller: ['Veileder'] },
-                    { navn: 'Test Deltaker', roller: ['Arbeidsgiver', 'Fadder/Mentor'] },
+                motedeltakere: [
+                    { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
+                    {
+                        navn: 'Test Deltaker',
+                        roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER],
+                    },
                 ],
             }),
         );
+        expect(onSubmit.mock.calls[0][0]).not.toHaveProperty('deltakere');
     });
 
     it('Skal kreve rolle når navn er fylt ut og lenke til rollefeltet fra feiloppsummeringen', async () => {
@@ -163,15 +167,17 @@ describe('MoteAktivitetForm', () => {
         await user.click(screen.getByRole('button', { name: 'Lagre' }));
 
         expect(onSubmit).toHaveBeenCalledWith(
-            expect.objectContaining({ deltakere: [{ navn: 'Test Veileder', roller: ['Veileder'] }] }),
+            expect.objectContaining({
+                motedeltakere: [{ navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] }],
+            }),
         );
     });
 
     it('Skal hente eksisterende deltakere og bevare veilederens roller ved redigering', () => {
         const aktivitet = enMoteAktivitet({
-            deltakere: [
-                { navn: 'Test Arbeidsgiver', roller: ['Arbeidsgiver'] },
-                { navn: 'Opprinnelig Veileder', roller: ['Veileder', 'Annet'] },
+            motedeltakere: [
+                { navn: 'Test Arbeidsgiver', roller: [MotedeltakerRolle.ARBEIDSGIVER] },
+                { navn: 'Opprinnelig Veileder', roller: [MotedeltakerRolle.VEILEDER, MotedeltakerRolle.ANNET] },
             ],
         });
         mountWithIntl(
@@ -181,6 +187,42 @@ describe('MoteAktivitetForm', () => {
         expect(screen.getByLabelText('Deltakers navn')).toHaveValue('Test Arbeidsgiver');
         expect(screen.getByRole('button', { name: /Deltakers rolle Arbeidsgiver/ })).toBeInTheDocument();
         expect(dirtyRef.current).toBe(false);
+    });
+
+    it('Skal bevare metadata og bruker fra backend ved innsending av endringer', async () => {
+        const user = userEvent.setup();
+        const onSubmit = vi.fn((_data: unknown) => Promise.resolve());
+        const veileder = {
+            navn: 'Lagret Veileder',
+            roller: [MotedeltakerRolle.VEILEDER, MotedeltakerRolle.ANNET],
+            opprettet: '2026-11-04T12:00:00+01:00',
+            deltakerId: '01234567-89ab-4cde-8f01-234567890abc',
+        };
+        const bruker = {
+            navn: 'Test Bruker',
+            roller: [MotedeltakerRolle.BRUKER],
+            opprettet: '2026-11-04T12:00:00+01:00',
+            deltakerId: '01234567-89ab-4cde-8f01-234567890def',
+        };
+        mountWithIntl(
+            <MoteAktivitetForm
+                onSubmit={onSubmit}
+                dirtyRef={dirtyRef}
+                aktivitet={enMoteAktivitet({ motedeltakere: [bruker, veileder] })}
+            />,
+        );
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
+        expect(screen.queryByLabelText('Deltakers navn')).not.toBeInTheDocument();
+        fillForm();
+        await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');
+        await user.clear(screen.getByRole('textbox', { name: 'Veileder' }));
+        await user.type(screen.getByRole('textbox', { name: 'Veileder' }), 'Endret Veileder');
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+
+        expect(onSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({ motedeltakere: [{ ...veileder, navn: 'Endret Veileder' }, bruker] }),
+        );
+        expect(onSubmit.mock.calls[0][0]).not.toHaveProperty('deltakere');
     });
 
     it('Skal markere deltakerendringer som ulagret og kreve navn på veilederen', async () => {

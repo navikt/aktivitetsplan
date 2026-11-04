@@ -8,7 +8,7 @@ import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import {
     MoteAktivitet,
     Motedeltaker,
-    motedeltakerRoller,
+    MotedeltakerRolle,
     VeilarbAktivitetType,
 } from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
@@ -61,7 +61,14 @@ const schema = (startTekst: string) =>
             .refine((val) => val.replace(startTekst, '').trim().length > 0, 'Du må fylle ut hensikten med møtet'),
         forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
         deltakere: z
-            .array(z.object({ navn: z.string().trim(), roller: z.array(z.enum(motedeltakerRoller)) }))
+            .array(
+                z.object({
+                    navn: z.string().trim(),
+                    roller: z.array(z.nativeEnum(MotedeltakerRolle)),
+                    opprettet: z.string().nullish(),
+                    deltakerId: z.string().nullish(),
+                }),
+            )
             .superRefine((deltakere, ctx) => {
                 deltakere.forEach((deltaker, index) => {
                     if (index === 0 || deltaker.navn || deltaker.roller.length > 0) {
@@ -119,7 +126,7 @@ export type MoteAktivitetFormValuesOuter = {
     tilDato: string;
     status: string | undefined;
     avtalt: boolean;
-    deltakere: Motedeltaker[];
+    motedeltakere: Motedeltaker[];
 };
 
 interface Props {
@@ -138,10 +145,12 @@ const MoteAktivitetForm = (props: Props) => {
     /* Bruker useMemo fordi dateOrUndefined lager en ny verdi hver render så datepicker kan tro at defaultValue
     endrer seg mellom renders selvom det er samme dato */
     const defaultValues: Partial<MoteAktivitetFormValuesInner> = useMemo(() => {
-        const deltakere = aktivitet?.deltakere ?? [];
-        const veilederIndex = deltakere.findIndex((deltaker) => deltaker.roller.includes('Veileder'));
+        const deltakere = aktivitet?.motedeltakere ?? [];
+        const veilederIndex = deltakere.findIndex((deltaker) => deltaker.roller.includes(MotedeltakerRolle.VEILEDER));
         const veileder: Motedeltaker =
-            veilederIndex >= 0 ? deltakere[veilederIndex] : { navn: veilederNavn ?? '', roller: ['Veileder'] };
+            veilederIndex >= 0
+                ? deltakere[veilederIndex]
+                : { navn: veilederNavn ?? '', roller: [MotedeltakerRolle.VEILEDER] };
         return {
             tittel: aktivitet?.tittel,
             klokkeslett: moteTid?.klokkeslett?.replace('.', ':'),
@@ -182,13 +191,13 @@ const MoteAktivitetForm = (props: Props) => {
             noValidate
             onSubmit={handleSubmit((data) => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { klokkeslett, ...rest } = data;
+                const { klokkeslett, deltakere, ...rest } = data;
                 const dto: MoteAktivitetFormValuesOuter = {
                     ...rest,
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt,
-                    deltakere: data.deltakere.filter((deltaker) => deltaker.navn && deltaker.roller.length > 0),
+                    motedeltakere: deltakere.filter((deltaker) => deltaker.navn && deltaker.roller.length > 0),
                 };
                 return onSubmit(dto).then(() => loggEndringer(aktivitet, { ...dto, varighet: data.varighet }));
             })}

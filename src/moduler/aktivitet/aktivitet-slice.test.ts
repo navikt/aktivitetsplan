@@ -9,7 +9,12 @@ import aktivitetReducer, {
 } from './aktivitet-slice';
 import { hentAktivitet, hentAktivitetHistorikk, lagNyAktivitet, oppdaterReferat } from './aktivitet-actions';
 import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
-import { SamtalereferatAktivitet, VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import {
+    MotedeltakerRolle,
+    SamtalereferatAktivitet,
+    VeilarbAktivitet,
+    VeilarbAktivitetType,
+} from '../../datatypes/internAktivitetTypes';
 import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
 import { Historikk } from '../../datatypes/Historikk';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
@@ -92,9 +97,9 @@ describe('aktivitet-slice', () => {
         const aktivitet = enMoteAktivitet({
             id: aktivitetId,
             oppfolgingsperiodeId: periodeId,
-            deltakere: [
-                { navn: 'Test Veileder', roller: ['Veileder'] },
-                { navn: 'Test Deltaker', roller: ['Arbeidsgiver', 'Fadder/Mentor'] },
+            motedeltakere: [
+                { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
+                { navn: 'Test Deltaker', roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER] },
             ],
         });
         const state = aktivitetReducer(
@@ -110,7 +115,7 @@ describe('aktivitet-slice', () => {
         if (lagretAktivitet?.type !== VeilarbAktivitetType.MOTE_TYPE) {
             throw new Error('Forventet en møteaktivitet i state');
         }
-        expect(lagretAktivitet.deltakere).toEqual(aktivitet.deltakere);
+        expect(lagretAktivitet.motedeltakere).toEqual(aktivitet.motedeltakere);
     });
 
     describe('oppdaterReferat.fulfilled', () => {

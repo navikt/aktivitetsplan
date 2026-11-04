@@ -79,11 +79,37 @@ export interface SamtalereferatAktivitet extends AktivitetBaseProps<
     erReferatPublisert: boolean;
 }
 
-export const motedeltakerRoller = ['Veileder', 'Arbeidsgiver', 'Fadder/Mentor', 'Tolk', 'Annet'] as const;
+export enum MotedeltakerRolle {
+    ARBEIDSGIVER = 'ARBEIDSGIVER',
+    MENTOR_FADDER = 'MENTOR_FADDER',
+    VEILEDER = 'VEILEDER',
+    TOLK = 'TOLK',
+    BRUKER = 'BRUKER',
+    ANNET = 'ANNET',
+}
+
+export const motedeltakerRoller = [
+    MotedeltakerRolle.VEILEDER,
+    MotedeltakerRolle.ARBEIDSGIVER,
+    MotedeltakerRolle.MENTOR_FADDER,
+    MotedeltakerRolle.TOLK,
+    MotedeltakerRolle.ANNET,
+];
+
+export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
+    ARBEIDSGIVER: 'Arbeidsgiver',
+    MENTOR_FADDER: 'Mentor/Fadder',
+    VEILEDER: 'Veileder',
+    TOLK: 'Tolk',
+    BRUKER: 'Bruker',
+    ANNET: 'Annet',
+};
 
 export interface Motedeltaker {
     navn: string;
-    roller: (typeof motedeltakerRoller)[number][];
+    roller: MotedeltakerRolle[];
+    opprettet?: string | null;
+    deltakerId?: string | null;
 }
 
 export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsTyper | MoteTransaksjonsType> {
@@ -98,7 +124,7 @@ export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsType
     forberedelser: string;
     referat: string;
     erReferatPublisert: boolean;
-    deltakere?: Motedeltaker[];
+    motedeltakere?: Motedeltaker[] | null;
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetBaseProps {

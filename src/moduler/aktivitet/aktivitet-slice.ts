@@ -10,6 +10,7 @@ import {
     hentAktivitetHistorikk,
     lagNyAktivitet,
     markerForhaandsorienteringSomLest,
+    oppdaterAktivitet,
     oppdaterAktivitetEtikett,
     oppdaterCVSvar,
     oppdaterReferat,
@@ -212,7 +213,12 @@ const aktivitetSlice = createSlice({
             },
         );
         builder.addMatcher(
-            isAnyOf(flyttAktivitet.fulfilled, oppdaterReferat.fulfilled, publiserReferat.fulfilled),
+            isAnyOf(
+                oppdaterAktivitet.fulfilled,
+                flyttAktivitet.fulfilled,
+                oppdaterReferat.fulfilled,
+                publiserReferat.fulfilled,
+            ),
             (state, action) => {
                 windowEvent(UpdateTypes.Aktivitet);
                 return nyStateMedOppdatertAktivitet(state, action.payload);
