@@ -79,6 +79,13 @@ export interface SamtalereferatAktivitet extends AktivitetBaseProps<
     erReferatPublisert: boolean;
 }
 
+export const motedeltakerRoller = ['Veileder', 'Arbeidsgiver', 'Fadder/Mentor', 'Tolk', 'Annet'] as const;
+
+export interface Motedeltaker {
+    navn: string;
+    roller: (typeof motedeltakerRoller)[number][];
+}
+
 export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsTyper | MoteTransaksjonsType> {
     type: VeilarbAktivitetType.MOTE_TYPE;
     fraDato: string;
@@ -91,6 +98,7 @@ export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsType
     forberedelser: string;
     referat: string;
     erReferatPublisert: boolean;
+    deltakere?: Motedeltaker[];
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetBaseProps {
