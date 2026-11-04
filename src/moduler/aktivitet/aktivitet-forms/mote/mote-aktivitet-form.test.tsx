@@ -45,9 +45,9 @@ const initialState: any = {
 const dirtyRef = { current: false };
 const store = configureStore({ reducer: rootReducer, preloadedState: initialState as any });
 
-function mountWithIntl(node: any): RenderResult {
+function mountWithIntl(node: any, erVeileder = true): RenderResult {
     return render(
-        <ErVeilederContext.Provider value={true}>
+        <ErVeilederContext.Provider value={erVeileder}>
             <ReduxProvider store={store}>{node}</ReduxProvider>
         </ErVeilederContext.Provider>,
     );
@@ -88,6 +88,13 @@ const getFormErrorsContainer = (
 };
 
 describe('MoteAktivitetForm', () => {
+    it('Skal vise Du når brukeren selv er innlogget', () => {
+        mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />, false);
+
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Du');
+        expect(screen.getByLabelText('Bruker')).toHaveAttribute('readonly');
+    });
+
     it('Skal vise bruker og innlogget veileder som faste deltakere', () => {
         mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />);
 

@@ -19,8 +19,10 @@ import {
     motedeltakerRolleTekst,
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
+import { useErVeileder } from '../../../../Provider';
 
 const Deltakere = () => {
+    const erVeileder = useErVeileder();
     const {
         control,
         register,
@@ -36,7 +38,11 @@ const Deltakere = () => {
         <Fieldset legend="Deltakere">
             <VStack gap="space-16">
                 <HGrid columns={{ xs: 1, sm: 'minmax(0, 2fr) minmax(0, 1fr) auto' }} gap="space-16">
-                    <TextField label={<BodyShort as="span">Bruker</BodyShort>} value="Bruker" readOnly />
+                    <TextField
+                        label={<BodyShort as="span">Bruker</BodyShort>}
+                        value={erVeileder ? 'Bruker' : 'Du'}
+                        readOnly
+                    />
                 </HGrid>
                 {fields.map((field, index) => {
                     const navnId = `deltaker-navn-${field.id}`;

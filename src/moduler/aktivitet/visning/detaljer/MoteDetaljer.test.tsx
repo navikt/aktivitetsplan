@@ -12,7 +12,10 @@ const render = (node: React.ReactNode, erVeileder = true) => {
 };
 
 describe('MoteDetaljer', () => {
-    it.each([true, false])('viser Bruker som fast deltaker uavhengig av flate (erVeileder=%s)', (erVeileder) => {
+    it.each([
+        { erVeileder: true, navn: 'Bruker' },
+        { erVeileder: false, navn: 'Du' },
+    ])('viser $navn som fast deltaker (erVeileder=$erVeileder)', ({ erVeileder, navn }) => {
         render(
             <MoteDetaljer
                 aktivitet={enMoteAktivitet({
@@ -22,7 +25,7 @@ describe('MoteDetaljer', () => {
             erVeileder,
         );
 
-        expect(screen.getAllByRole('listitem')[0]).toHaveTextContent(/^Bruker$/);
+        expect(screen.getAllByRole('listitem')[0].textContent).toBe(navn);
     });
 
     it('viser deltakerne under en seksjonstittel, uten kulepunkt eller innrykk', () => {

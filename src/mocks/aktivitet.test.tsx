@@ -69,6 +69,6 @@ describe('Møtedeltakere i mockdata', () => {
             within(screen.getByRole('list'))
                 .getAllByRole('listitem')
                 .map((rad) => rad.textContent),
-        ).toEqual(['Bruker', 'Test Veileder (Veileder)', 'Test Tolk (Tolk)']);
+        ).toEqual(['Du', 'Test Veileder (Veileder)', 'Test Tolk (Tolk)']);
     });
 });
