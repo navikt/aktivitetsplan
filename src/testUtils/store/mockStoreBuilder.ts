@@ -50,6 +50,10 @@ const defaultStore: RootState = {
             status: Status.OK,
             data: { ident: 'A123123', navn: 'Navn', fornavn: 'Fornavn', etternavn: 'Etternavn' },
         } as GenericState<VeilederInfo>,
+        person: {
+            status: Status.OK,
+            data: { navn: 'Test Bruker' },
+        },
         mal: {
             status: Status.OK,
             data: {} as Mal,

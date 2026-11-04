@@ -1,3 +1,8 @@
+export const getPersonNavn = () => {
+    const { fornavn, mellomnavn, etternavn } = getPerson();
+    return { fornavn, mellomnavn, etternavn };
+};
+
 export const getPerson = () => {
     return {
         fornavn: 'Bruce',

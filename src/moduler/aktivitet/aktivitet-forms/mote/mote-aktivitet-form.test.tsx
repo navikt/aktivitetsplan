@@ -24,6 +24,8 @@ import { Kanal } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingStatusResponse } from '../../../../api/veilarboppfolging';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
 import { MotedeltakerRolle, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { Status } from '../../../../store/createGenericSlice';
+import { ErVeilederContext } from '../../../../Provider';
 
 const initialState: any = {
     data: {
@@ -38,6 +40,10 @@ const initialState: any = {
         veileder: {
             data: { fornavn: 'Test', etternavn: 'Veileder' },
         },
+        person: {
+            data: { navn: 'Test Bruker' },
+            status: Status.OK,
+        },
     },
 };
 
@@ -45,7 +51,11 @@ const dirtyRef = { current: false };
 const store = configureStore({ reducer: rootReducer, preloadedState: initialState as any });
 
 function mountWithIntl(node: any): RenderResult {
-    return render(<ReduxProvider store={store}>{node}</ReduxProvider>);
+    return render(
+        <ErVeilederContext.Provider value={true}>
+            <ReduxProvider store={store}>{node}</ReduxProvider>
+        </ErVeilederContext.Provider>,
+    );
 }
 
 const fillForm = () => {
@@ -87,6 +97,7 @@ describe('MoteAktivitetForm', () => {
         mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />);
 
         expect(screen.getByLabelText('Bruker')).toHaveAttribute('readonly');
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
         expect(screen.getByRole('textbox', { name: 'Veileder' })).toHaveValue('Test Veileder');
         expect(screen.queryByRole('button', { name: /Fjern/ })).not.toBeInTheDocument();
     });
@@ -189,7 +200,7 @@ describe('MoteAktivitetForm', () => {
         expect(dirtyRef.current).toBe(false);
     });
 
-    it('Skal bevare metadata og bruker fra backend ved innsending av endringer', async () => {
+    it('Skal bevare metadata, men ikke sende bruker fra en eldre backend-respons', async () => {
         const user = userEvent.setup();
         const onSubmit = vi.fn((_data: unknown) => Promise.resolve());
         const veileder = {
@@ -199,7 +210,7 @@ describe('MoteAktivitetForm', () => {
             deltakerId: '01234567-89ab-4cde-8f01-234567890abc',
         };
         const bruker = {
-            navn: 'Test Bruker',
+            navn: 'Navn fra eldre respons',
             roller: [MotedeltakerRolle.BRUKER],
             opprettet: '2026-11-04T12:00:00+01:00',
             deltakerId: '01234567-89ab-4cde-8f01-234567890def',
@@ -220,7 +231,7 @@ describe('MoteAktivitetForm', () => {
         await user.click(screen.getByRole('button', { name: 'Lagre' }));
 
         expect(onSubmit).toHaveBeenCalledWith(
-            expect.objectContaining({ motedeltakere: [{ ...veileder, navn: 'Endret Veileder' }, bruker] }),
+            expect.objectContaining({ motedeltakere: [{ ...veileder, navn: 'Endret Veileder' }] }),
         );
         expect(onSubmit.mock.calls[0][0]).not.toHaveProperty('deltakere');
     });

@@ -7,12 +7,14 @@ import { hentDialoger } from '../dialog/dialog-slice';
 import { hentIdentitet } from '../identitet/identitet-slice';
 import { hentLest } from '../lest/lest-slice';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-slice';
+import { hentPersonNavn } from '../person/person-slice';
 
 interface PropTypes {
     feil: SerializedError & { type: string };
 }
 
 const feilmeldingMap: Record<string, any> = {
+    [hentPersonNavn.rejected.type]: 'Kunne ikke hente brukerens navn',
     [hentOppfolging.rejected.type]: 'Kunne ikke hente oppfolgings-status',
     [hentIdentitet.rejected.type]: 'Kunne ikke hente identitet',
     [hentAktiviteter.rejected.type]: 'Kunne ikke hente aktivteter',

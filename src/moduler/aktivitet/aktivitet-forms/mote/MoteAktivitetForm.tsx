@@ -145,7 +145,9 @@ const MoteAktivitetForm = (props: Props) => {
     /* Bruker useMemo fordi dateOrUndefined lager en ny verdi hver render så datepicker kan tro at defaultValue
     endrer seg mellom renders selvom det er samme dato */
     const defaultValues: Partial<MoteAktivitetFormValuesInner> = useMemo(() => {
-        const deltakere = aktivitet?.motedeltakere ?? [];
+        const deltakere = (aktivitet?.motedeltakere ?? []).filter(
+            (deltaker) => !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+        );
         const veilederIndex = deltakere.findIndex((deltaker) => deltaker.roller.includes(MotedeltakerRolle.VEILEDER));
         const veileder: Motedeltaker =
             veilederIndex >= 0
@@ -197,7 +199,12 @@ const MoteAktivitetForm = (props: Props) => {
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt,
-                    motedeltakere: deltakere.filter((deltaker) => deltaker.navn && deltaker.roller.length > 0),
+                    motedeltakere: deltakere.filter(
+                        (deltaker) =>
+                            deltaker.navn &&
+                            deltaker.roller.length > 0 &&
+                            !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+                    ),
                 };
                 return onSubmit(dto).then(() => loggEndringer(aktivitet, { ...dto, varighet: data.varighet }));
             })}

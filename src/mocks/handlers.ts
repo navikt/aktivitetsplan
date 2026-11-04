@@ -26,7 +26,7 @@ import { lest } from './data/lest';
 import { malListe, opprettMal, sisteMal } from './data/mal';
 import { me } from './data/me';
 import getOppfolging, { defaultMockOppfolgingsPerioder, settDigital } from './data/oppfolging';
-import { getPerson, getPostadresse } from './data/person';
+import { getPerson, getPersonNavn, getPostadresse } from './data/person';
 import { veilederMe } from './data/Veileder';
 import pdfForhaandsvisning from './fixtures/pdfForhaandsvisning.json';
 import {
@@ -206,6 +206,7 @@ export const handlers = [
 
     // veilarbperson
     http.post('/veilarbperson/api/v3/hent-person', jsonResponse(getPerson)),
+    http.post('/veilarbperson/api/v3/person/hent-navn', jsonResponse(getPersonNavn)),
     http.post('/veilarbperson/api/v3/person/hent-postadresse', jsonResponse(getPostadresse)),
 
     // veilarbveileder

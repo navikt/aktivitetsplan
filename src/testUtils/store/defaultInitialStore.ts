@@ -48,6 +48,10 @@ export const initialLoadedAktiviteterState = ({ aktiviteter }: { aktiviteter?: V
 
 export const emptyHalfLoadedVeilederState = {
     data: {
+        person: {
+            status: Status.OK,
+            data: { navn: 'Test Bruker' },
+        },
         aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({
             status: Status.NOT_STARTED,
         }),
@@ -87,6 +91,10 @@ export const initialLoadedEmptyState = {
         veileder: {
             status: Status.OK,
             data: { ident: 'A123123', navn: 'Navn', fornavn: 'Fornavn', etternavn: 'Etternavn' } as VeilederInfo,
+        },
+        person: {
+            status: Status.OK,
+            data: { navn: 'Test Bruker' },
         },
         mal: {
             status: Status.OK,

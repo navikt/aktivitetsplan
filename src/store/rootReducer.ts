@@ -14,6 +14,7 @@ import malListeReducer from '../moduler/mal/malliste-slice';
 import oppfolgingReducer from '../moduler/oppfolging-status/oppfolging-slice';
 import eskaleringsvarselReducer from '../moduler/varslinger/eskaleringsvarsel-slice';
 import veilederReducer from '../moduler/veileder/veileder-slice';
+import personReducer from '../moduler/person/person-slice';
 import { arkivReducer } from '../moduler/verktoylinje/arkivering/arkiv-slice';
 import { innsynsrettReducer } from '../moduler/aktivitet/innsynsrett/innsynsrett-slice';
 import valgtPeriodeReducer from '../moduler/filtrering/filter/valgt-periode-slice';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
         arkiv: arkivReducer,
         lest: lestReducer,
         veileder: veilederReducer,
+        person: personReducer,
         eskaleringsvarsel: eskaleringsvarselReducer,
         feature: featureReducer,
         errors: errorReducer,
