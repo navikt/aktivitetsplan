@@ -108,8 +108,6 @@ export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
 export interface Motedeltaker {
     navn: string;
     roller: MotedeltakerRolle[];
-    opprettet?: string | null;
-    deltakerId?: string | null;
 }
 
 export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsTyper | MoteTransaksjonsType> {

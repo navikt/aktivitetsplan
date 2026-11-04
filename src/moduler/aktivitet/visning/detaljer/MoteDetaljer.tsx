@@ -45,7 +45,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
                                 const roller = deltaker.roller.map((rolle) => motedeltakerRolleTekst[rolle]).join(', ');
                                 const visRoller = !erBruker && roller.length > 0;
                                 return (
-                                    <BodyShort as="li" key={deltaker.deltakerId ?? index}>
+                                    <BodyShort as="li" key={`${deltaker.navn + deltaker.roller}`}>
                                         {navn ? `${navn}${visRoller ? ` (${roller})` : ''}` : roller}
                                     </BodyShort>
                                 );

@@ -26,8 +26,6 @@ describe('Møtedeltakere i mockdata', () => {
     it('bevarer deltakere og metadata når aktiviteter pakkes inn', () => {
         const deltakereMedMetadata = motedeltakere.map((deltaker, index) => ({
             ...deltaker,
-            opprettet: '2026-11-04T12:00:00+01:00',
-            deltakerId: `01234567-89ab-4cde-8f01-234567890ab${index}`,
         }));
 
         expect(wrapAktivitet(enMoteAktivitet({ motedeltakere: deltakereMedMetadata })).motedeltakere).toEqual(

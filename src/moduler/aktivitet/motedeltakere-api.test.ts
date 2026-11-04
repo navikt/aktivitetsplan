@@ -13,8 +13,6 @@ const motedeltakere = [
 ];
 const lagredeMotedeltakere = motedeltakere.map((deltaker, index) => ({
     ...deltaker,
-    opprettet: '2026-11-04T12:00:00+01:00',
-    deltakerId: `01234567-89ab-4cde-8f01-234567890ab${index}`,
 }));
 const lagretAktivitet = enMoteAktivitet({ motedeltakere: lagredeMotedeltakere });
 
@@ -47,7 +45,7 @@ describe('Motedeltakere gjennom API og state', () => {
         const oppdatertAktivitet = enMoteAktivitet({
             motedeltakere: [
                 { ...lagredeMotedeltakere[0], navn: 'Endret Veileder' },
-                { navn: 'Ny Deltaker', roller: [MotedeltakerRolle.TOLK], opprettet: null, deltakerId: null },
+                { navn: 'Ny Deltaker', roller: [MotedeltakerRolle.TOLK] },
             ],
         });
         const respons = enMoteAktivitet({
@@ -55,8 +53,6 @@ describe('Motedeltakere gjennom API og state', () => {
                 oppdatertAktivitet.motedeltakere![0],
                 {
                     ...oppdatertAktivitet.motedeltakere![1],
-                    opprettet: '2026-11-04T13:00:00+01:00',
-                    deltakerId: '01234567-89ab-4cde-8f01-234567890abc',
                 },
             ],
         });
@@ -115,7 +111,7 @@ describe('Motedeltakere gjennom API og state', () => {
 
         const requestBody = JSON.parse(String(fetchMock.mock.calls[0][1]?.body));
         expect(requestBody.query.replace(/\s+/g, ' ')).toContain(
-            'motedeltakere { navn, roller, opprettet, deltakerId, }',
+            'motedeltakere { navn, roller, }',
         );
         const aktivitet = selectAktivitet(store.getState(), lagretAktivitet.id);
         expect(aktivitet?.type).toBe(VeilarbAktivitetType.MOTE_TYPE);

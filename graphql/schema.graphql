@@ -87,8 +87,6 @@ type AktivitetDTO {
 type Motedeltaker {
     navn: String!
     roller: [MotedeltakerRolle!]!
-    opprettet: String
-    deltakerId: String
 }
 
 enum MotedeltakerRolle {

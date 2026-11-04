@@ -130,26 +130,18 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
             {
                 navn: 'Bruce Batty Wayne',
                 roller: [MotedeltakerRolle.BRUKER],
-                opprettet: '2018-08-21T11:55:14.044+02:00',
-                deltakerId: '4a77b152-6133-4f4a-9fd0-61401f353001',
             },
             {
                 navn: 'Røde Ruben',
                 roller: [MotedeltakerRolle.VEILEDER],
-                opprettet: '2018-08-21T11:55:14.044+02:00',
-                deltakerId: '4a77b152-6133-4f4a-9fd0-61401f353002',
             },
             {
                 navn: 'Alfred Pennyworth',
                 roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER],
-                opprettet: '2018-08-21T11:55:14.044+02:00',
-                deltakerId: '4a77b152-6133-4f4a-9fd0-61401f353003',
             },
             {
                 navn: 'Test Tolk',
                 roller: [MotedeltakerRolle.TOLK],
-                opprettet: '2018-08-21T11:55:14.044+02:00',
-                deltakerId: '4a77b152-6133-4f4a-9fd0-61401f353004',
             },
         ],
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',

@@ -66,8 +66,6 @@ const schema = (startTekst: string) =>
                 z.object({
                     navn: z.string().trim(),
                     roller: z.array(z.nativeEnum(MotedeltakerRolle)),
-                    opprettet: z.string().nullish(),
-                    deltakerId: z.string().nullish(),
                 }),
             )
             .superRefine((deltakere, ctx) => {

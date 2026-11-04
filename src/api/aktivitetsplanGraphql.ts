@@ -70,8 +70,6 @@ const allAktivitetFields = `
     motedeltakere {
         navn,
         roller,
-        opprettet,
-        deltakerId,
     }
 
     stillingFraNavData {

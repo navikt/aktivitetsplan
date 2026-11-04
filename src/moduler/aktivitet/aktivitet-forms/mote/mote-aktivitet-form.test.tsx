@@ -214,14 +214,10 @@ describe('MoteAktivitetForm', () => {
         const veileder = {
             navn: 'Lagret Veileder',
             roller: [MotedeltakerRolle.VEILEDER, MotedeltakerRolle.ANNET],
-            opprettet: '2026-11-04T12:00:00+01:00',
-            deltakerId: '01234567-89ab-4cde-8f01-234567890abc',
         };
         const bruker = {
             navn: 'Navn fra eldre respons',
             roller: [MotedeltakerRolle.BRUKER],
-            opprettet: '2026-11-04T12:00:00+01:00',
-            deltakerId: '01234567-89ab-4cde-8f01-234567890def',
         };
         mountWithIntl(
             <MoteAktivitetForm
