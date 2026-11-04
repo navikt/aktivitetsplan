@@ -164,7 +164,7 @@ const aktivitetSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(hentAktiviteter.fulfilled, (state, action) => {
             state.status = Status.OK;
-            state.fulltNavn = action.payload.data.fulltNavn ?? null;
+            state.fulltNavn = action.payload.data.brukersNavn?.fulltNavn ?? null;
             const oppfolgingsperioder = action.payload.data.perioder.map((periode) => {
                 const periodeState = getOrCreatePeriode(state, periode.id);
                 return {
@@ -177,7 +177,7 @@ const aktivitetSlice = createSlice({
             oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
-            state.fulltNavn = action.payload.data.fulltNavn ?? null;
+            state.fulltNavn = action.payload.data.brukersNavn?.fulltNavn ?? null;
             const aktivitet = action.payload.data.aktivitet as AktivitetMedHistorikk;
             const eier = action.payload.data.eier;
             const aktivitetIDer = selectAllOppfolgingsperioder(state)

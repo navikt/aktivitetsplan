@@ -288,7 +288,7 @@ export const aktivitestplanResponse = (
 ): AktivitetsplanResponse => {
     return {
         data: {
-            fulltNavn: getFulltNavn(),
+            brukersNavn: { fulltNavn: getFulltNavn() },
             perioder: defaultMockOppfolgingsPerioder.map((periode) => ({
                 id: periode.id,
                 aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.id),
@@ -302,7 +302,7 @@ export const aktivitestplanResponse = (
 export const aktivitetResponse = (aktivitetId: string, aktivitet: VeilarbAktivitet) => {
     return {
         data: {
-            fulltNavn: getFulltNavn(),
+            brukersNavn: { fulltNavn: getFulltNavn() },
             eier: {
                 fnr: '13837597573',
             },

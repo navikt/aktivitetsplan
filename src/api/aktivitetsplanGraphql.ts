@@ -133,7 +133,9 @@ const allAktivitetFields = `
 
 const alleAktiviteterQuery: string = `
     query($fnr: String!) {
-        fulltNavn(fnr: $fnr)
+        brukersNavn(fnr: $fnr) {
+            fulltNavn
+        }
         perioder(fnr: $fnr) {
             id,
             start,
@@ -168,7 +170,9 @@ const historikkQuery = `
 
 const aktivitetQuery = `
     query($aktivitetId: String!, $fnr: String!) {
-        fulltNavn(fnr: $fnr)
+        brukersNavn(fnr: $fnr) {
+            fulltNavn
+        }
         eier(aktivitetId: $aktivitetId) {
             fnr
         },
@@ -229,9 +233,13 @@ interface OppfolgingsPerioder {
     slutt: string | undefined;
 }
 
+interface BrukerNavn {
+    fulltNavn: string | null;
+}
+
 export type AktivitetsplanResponse = GraphqlResponse<{
     perioder: OppfolgingsPerioder[];
-    fulltNavn?: string | null;
+    brukersNavn?: BrukerNavn | null;
 }>;
 
 const fetchFromGraphql = (body: string) =>
@@ -268,7 +276,7 @@ export const hentAktivitetGraphql = (aktivitetId: AktivitetsId) => {
             sjekkGraphqlFeil<{
                 aktivitet: AktivitetMedHistorikk;
                 eier: { fnr: string };
-                fulltNavn?: string | null;
+                brukersNavn?: BrukerNavn | null;
             }>,
         )
         .then((it) => ({

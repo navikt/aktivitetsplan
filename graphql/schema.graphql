@@ -1,8 +1,12 @@
 type Query {
-    fulltNavn(fnr: String!): String
+    brukersNavn(fnr: String!): BrukerNavn
     perioder(fnr: String!): [OppfolgingsPeriode]
     aktivitet(aktivitetId: String!): AktivitetDTO
     eier (aktivitetId: String!): Eier
+}
+
+type BrukerNavn {
+    fulltNavn: String
 }
 
 type OppfolgingsPeriode {
