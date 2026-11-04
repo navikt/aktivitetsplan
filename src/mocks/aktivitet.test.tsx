@@ -1,9 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
 import { setupServer } from 'msw/node';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 
 import { lagNyAktivitet, oppdaterAktivitet } from '../api/aktivitetAPI';
 import { hentAktiviteterGraphql, hentAktivitetGraphql } from '../api/aktivitetsplanGraphql';
@@ -12,10 +10,6 @@ import MoteDetaljer from '../moduler/aktivitet/visning/detaljer/MoteDetaljer';
 import { mockTestAktiviteter, wrapAktivitet } from './aktivitet';
 import { enMoteAktivitet } from './fixtures/moteAktivitetFixtures';
 import { handlers } from './handlers';
-import rootReducer from '../store/rootReducer';
-import { hentPersonNavn } from '../moduler/person/person-slice';
-import { ErVeilederContext } from '../Provider';
-import { LocalStorageElement } from './demo/localStorage';
 
 const server = setupServer(...handlers);
 const motedeltakere = [
@@ -24,16 +18,7 @@ const motedeltakere = [
 ];
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-let opprinneligFnr: string | null;
-beforeEach(() => {
-    opprinneligFnr = sessionStorage.getItem(LocalStorageElement.FNR);
-    sessionStorage.setItem(LocalStorageElement.FNR, 'testperson');
-});
-afterEach(() => {
-    server.resetHandlers();
-    if (opprinneligFnr === null) sessionStorage.removeItem(LocalStorageElement.FNR);
-    else sessionStorage.setItem(LocalStorageElement.FNR, opprinneligFnr);
-});
+afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('Møtedeltakere i mockdata', () => {
@@ -79,19 +64,11 @@ describe('Møtedeltakere i mockdata', () => {
 
         const hentet = await hentAktivitetGraphql(opprettet.id);
         expect(hentet.data.aktivitet).toHaveProperty('motedeltakere', endredeDeltakere);
-        const store = configureStore({ reducer: rootReducer });
-        await store.dispatch(hentPersonNavn()).unwrap();
-        render(
-            <ErVeilederContext.Provider value={true}>
-                <Provider store={store}>
-                    <MoteDetaljer aktivitet={hentet.data.aktivitet} />
-                </Provider>
-            </ErVeilederContext.Provider>,
-        );
+        render(<MoteDetaljer aktivitet={hentet.data.aktivitet} />);
         expect(
             within(screen.getByRole('list'))
                 .getAllByRole('listitem')
                 .map((rad) => rad.textContent),
-        ).toEqual(['Bruce Batty Wayne', 'Test Veileder (Veileder)', 'Test Tolk (Tolk)']);
+        ).toEqual(['Bruker', 'Test Veileder (Veileder)', 'Test Tolk (Tolk)']);
     });
 });

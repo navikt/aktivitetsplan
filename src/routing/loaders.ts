@@ -15,7 +15,6 @@ export const initialPageLoader =
     async () => {
         const thunks = initialPageLoadThunks;
         return {
-            person: dispatch(thunks.person(isVeileder)),
             oppfolging: dispatch(thunks.oppfolging(isVeileder)),
             identitet: dispatch(thunks.identitet(isVeileder)),
             veileder: dispatch(thunks.veileder(isVeileder)),
@@ -29,7 +28,6 @@ export const initialPageLoader =
     };
 
 export interface InitialPageLoadResult {
-    person: Promise<unknown>;
     oppfolging: Promise<any>;
     identitet: Promise<any>;
     veileder: Promise<any>;

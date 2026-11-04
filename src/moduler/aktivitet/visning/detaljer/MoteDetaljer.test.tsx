@@ -1,31 +1,28 @@
-import { configureStore } from '@reduxjs/toolkit';
 import { render as renderWithTestingLibrary, screen, within } from '@testing-library/react';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { describe, expect, it } from 'vitest';
 
 import { MotedeltakerRolle } from '../../../../datatypes/internAktivitetTypes';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
 import MoteDetaljer from './MoteDetaljer';
-import rootReducer from '../../../../store/rootReducer';
-import { hentPersonNavn } from '../../../person/person-slice';
 import { ErVeilederContext } from '../../../../Provider';
 
 const render = (node: React.ReactNode, erVeileder = true) => {
-    const store = configureStore({ reducer: rootReducer });
-    store.dispatch(hentPersonNavn.fulfilled({ navn: 'Test Bruker' }, 'request-id'));
-    return renderWithTestingLibrary(
-        <ErVeilederContext.Provider value={erVeileder}>
-            <Provider store={store}>{node}</Provider>
-        </ErVeilederContext.Provider>,
-    );
+    return renderWithTestingLibrary(<ErVeilederContext.Provider value={erVeileder}>{node}</ErVeilederContext.Provider>);
 };
 
 describe('MoteDetaljer', () => {
-    it('viser Du som fast deltaker i brukerflaten foreløpig', () => {
-        render(<MoteDetaljer aktivitet={enMoteAktivitet()} />, false);
+    it.each([true, false])('viser Bruker som fast deltaker uavhengig av flate (erVeileder=%s)', (erVeileder) => {
+        render(
+            <MoteDetaljer
+                aktivitet={enMoteAktivitet({
+                    motedeltakere: [{ navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] }],
+                })}
+            />,
+            erVeileder,
+        );
 
-        expect(screen.getByRole('listitem')).toHaveTextContent(/^Du$/);
+        expect(screen.getAllByRole('listitem')[0]).toHaveTextContent(/^Bruker$/);
     });
 
     it('viser deltakerne under en seksjonstittel, uten kulepunkt eller innrykk', () => {
@@ -53,7 +50,7 @@ describe('MoteDetaljer', () => {
                 .getAllByRole('listitem')
                 .map((rad) => rad.textContent),
         ).toEqual([
-            'Test Bruker',
+            'Bruker',
             'Test Veileder (Veileder)',
             'Test Arbeidsgiver (Arbeidsgiver, Mentor/Fadder)',
             'Test Tolk (Tolk)',
@@ -69,16 +66,17 @@ describe('MoteDetaljer', () => {
             />,
         );
 
-        expect(screen.getAllByRole('listitem').map((rad) => rad.textContent)).toEqual(['Test Bruker', 'Tolk']);
+        expect(screen.getAllByRole('listitem').map((rad) => rad.textContent)).toEqual(['Bruker', 'Tolk']);
     });
 
-    it.each([undefined, null, []])(
-        'viser alltid bruker uten rolle, også når andre deltakere mangler (%s)',
+    it.each([undefined, null, [], [{ navn: 'Navn fra eldre respons', roller: [MotedeltakerRolle.BRUKER] }]])(
+        'skjuler deltakerseksjonen når andre deltakere mangler (%s)',
         (motedeltakere) => {
             render(<MoteDetaljer aktivitet={enMoteAktivitet({ motedeltakere })} />);
 
-            expect(screen.getByRole('heading', { name: 'Deltakere' })).toBeInTheDocument();
-            expect(screen.getByRole('listitem')).toHaveTextContent(/^Test Bruker$/);
+            expect(screen.queryByRole('heading', { name: 'Deltakere' })).not.toBeInTheDocument();
+            expect(screen.queryByRole('list')).not.toBeInTheDocument();
+            expect(screen.queryByText('Bruker', { exact: true })).not.toBeInTheDocument();
         },
     );
 });

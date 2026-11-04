@@ -12,7 +12,6 @@ import {
 } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 
 import {
     MotedeltakerRolle,
@@ -20,9 +19,6 @@ import {
     motedeltakerRolleTekst,
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
-import { selectPersonNavn, selectPersonStatus } from '../../../person/person-selector';
-import { Status } from '../../../../store/createGenericSlice';
-import { useErVeileder } from '../../../../Provider';
 
 const Deltakere = () => {
     const {
@@ -35,26 +31,12 @@ const Deltakere = () => {
     const { fields, append, remove } = useFieldArray({ control, name: 'deltakere' });
     const [status, setStatus] = useState('');
     const deltakere = watch('deltakere');
-    const brukerNavn = useSelector(selectPersonNavn);
-    const personStatus = useSelector(selectPersonStatus);
-    const erVeileder = useErVeileder();
 
     return (
         <Fieldset legend="Deltakere">
             <VStack gap="space-16">
                 <HGrid columns={{ xs: 1, sm: 'minmax(0, 2fr) minmax(0, 1fr) auto' }} gap="space-16">
-                    <TextField
-                        label={<BodyShort as="span">Bruker</BodyShort>}
-                        value={erVeileder ? (brukerNavn ?? '') : 'Du'}
-                        description={
-                            erVeileder && personStatus === Status.ERROR
-                                ? 'Kunne ikke hente brukerens navn'
-                                : erVeileder && !brukerNavn
-                                  ? 'Henter brukerens navn'
-                                  : undefined
-                        }
-                        readOnly
-                    />
+                    <TextField label={<BodyShort as="span">Bruker</BodyShort>} value="Bruker" readOnly />
                 </HGrid>
                 {fields.map((field, index) => {
                     const navnId = `deltaker-navn-${field.id}`;

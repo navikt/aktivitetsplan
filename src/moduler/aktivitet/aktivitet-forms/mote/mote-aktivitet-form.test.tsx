@@ -24,7 +24,6 @@ import { Kanal } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingStatusResponse } from '../../../../api/veilarboppfolging';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
 import { MotedeltakerRolle, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
-import { Status } from '../../../../store/createGenericSlice';
 import { ErVeilederContext } from '../../../../Provider';
 
 const initialState: any = {
@@ -39,10 +38,6 @@ const initialState: any = {
         aktiviteter: [],
         veileder: {
             data: { fornavn: 'Test', etternavn: 'Veileder' },
-        },
-        person: {
-            data: { navn: 'Test Bruker' },
-            status: Status.OK,
         },
     },
 };
@@ -97,7 +92,7 @@ describe('MoteAktivitetForm', () => {
         mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />);
 
         expect(screen.getByLabelText('Bruker')).toHaveAttribute('readonly');
-        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Bruker');
         expect(screen.getByRole('textbox', { name: 'Veileder' })).toHaveValue('Test Veileder');
         expect(screen.queryByRole('button', { name: /Fjern/ })).not.toBeInTheDocument();
     });
@@ -222,7 +217,7 @@ describe('MoteAktivitetForm', () => {
                 aktivitet={enMoteAktivitet({ motedeltakere: [bruker, veileder] })}
             />,
         );
-        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Bruker');
         expect(screen.queryByLabelText('Deltakers navn')).not.toBeInTheDocument();
         fillForm();
         await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');

@@ -18,8 +18,6 @@ import { selectAktivitetStatus } from '../moduler/aktivitet/aktivitet-selector';
 import { hentLest } from '../moduler/lest/lest-slice';
 import { selectLestStatus } from '../moduler/lest/lest-selector';
 import { hentInnsynsrett } from '../moduler/aktivitet/innsynsrett/innsynsrett-slice';
-import { hentPersonNavn } from '../moduler/person/person-slice';
-import { selectPersonStatus } from '../moduler/person/person-selector';
 
 const createFetchIfNotStartedThunk = (sliceLoader: CacheableSliceLoader) => {
     return createAsyncThunk('initialPageLoad/' + sliceLoader.key, async (isVeileder: boolean, thunkApi) => {
@@ -30,12 +28,6 @@ const createFetchIfNotStartedThunk = (sliceLoader: CacheableSliceLoader) => {
 
 // Re-triggered when switching tabs in veilarbpersonflate, dont need to re-fetch data if recently fetched
 export const initialPageLoadThunks = {
-    person: createFetchIfNotStartedThunk({
-        fetchAction: hentPersonNavn,
-        statusSelector: selectPersonStatus,
-        key: 'person',
-        veilederOnly: true,
-    }),
     oppfolging: createFetchIfNotStartedThunk({
         fetchAction: hentOppfolging,
         statusSelector: selectOppfolgingStatus,
