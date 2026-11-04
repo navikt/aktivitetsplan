@@ -11,7 +11,7 @@ const motedeltakere = [
     { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
     { navn: 'Test Deltaker', roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER] },
 ];
-const lagredeMotedeltakere = motedeltakere.map((deltaker, index) => ({
+const lagredeMotedeltakere = motedeltakere.map((deltaker) => ({
     ...deltaker,
 }));
 const lagretAktivitet = enMoteAktivitet({ motedeltakere: lagredeMotedeltakere });

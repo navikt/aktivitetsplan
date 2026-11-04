@@ -39,7 +39,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
                     fullbredde
                     innhold={
                         <ul role="list" className="list-none p-0 m-0">
-                            {motedeltakere.map((deltaker, index) => {
+                            {motedeltakere.map((deltaker) => {
                                 const erBruker = deltaker.roller.includes(MotedeltakerRolle.BRUKER);
                                 const navn = erBruker && !erVeileder ? 'Du' : deltaker.navn.trim();
                                 const roller = deltaker.roller.map((rolle) => motedeltakerRolleTekst[rolle]).join(', ');

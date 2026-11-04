@@ -24,7 +24,7 @@ afterAll(() => server.close());
 
 describe('Møtedeltakere i mockdata', () => {
     it('bevarer deltakere og metadata når aktiviteter pakkes inn', () => {
-        const deltakereMedMetadata = motedeltakere.map((deltaker, index) => ({
+        const deltakereMedMetadata = motedeltakere.map((deltaker) => ({
             ...deltaker,
         }));
 
