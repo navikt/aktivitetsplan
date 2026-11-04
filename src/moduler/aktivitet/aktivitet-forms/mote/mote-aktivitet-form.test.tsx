@@ -25,6 +25,8 @@ import { OppfolgingStatusResponse } from '../../../../api/veilarboppfolging';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
 import { MotedeltakerRolle, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
 import { ErVeilederContext } from '../../../../Provider';
+import { oppfolgingsdperiodeAdapter } from '../../aktivitet-slice';
+import { Status } from '../../../../store/createGenericSlice';
 
 const initialState: any = {
     data: {
@@ -35,7 +37,7 @@ const initialState: any = {
                 },
             } as Partial<OppfolgingStatusResponse>,
         },
-        aktiviteter: [],
+        aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK, fulltNavn: 'Test Bruker' }),
         veileder: {
             data: { fornavn: 'Test', etternavn: 'Veileder' },
         },
@@ -99,7 +101,7 @@ describe('MoteAktivitetForm', () => {
         mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />);
 
         expect(screen.getByLabelText('Bruker')).toHaveAttribute('readonly');
-        expect(screen.getByLabelText('Bruker')).toHaveValue('Bruker');
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
         expect(screen.getByRole('textbox', { name: 'Veileder' })).toHaveValue('Test Veileder');
         expect(screen.queryByRole('button', { name: /Fjern/ })).not.toBeInTheDocument();
     });
@@ -122,6 +124,7 @@ describe('MoteAktivitetForm', () => {
         expect(onSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
                 motedeltakere: [
+                    { navn: 'Test Bruker', roller: [MotedeltakerRolle.BRUKER] },
                     { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
                     {
                         navn: 'Test Deltaker',
@@ -181,7 +184,10 @@ describe('MoteAktivitetForm', () => {
 
         expect(onSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
-                motedeltakere: [{ navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] }],
+                motedeltakere: [
+                    { navn: 'Test Bruker', roller: [MotedeltakerRolle.BRUKER] },
+                    { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
+                ],
             }),
         );
     });
@@ -202,7 +208,7 @@ describe('MoteAktivitetForm', () => {
         expect(dirtyRef.current).toBe(false);
     });
 
-    it('Skal bevare metadata, men ikke sende bruker fra en eldre backend-respons', async () => {
+    it('Skal bevare metadata for bruker og veileder ved innsending av endringer', async () => {
         const user = userEvent.setup();
         const onSubmit = vi.fn((_data: unknown) => Promise.resolve());
         const veileder = {
@@ -224,7 +230,7 @@ describe('MoteAktivitetForm', () => {
                 aktivitet={enMoteAktivitet({ motedeltakere: [bruker, veileder] })}
             />,
         );
-        expect(screen.getByLabelText('Bruker')).toHaveValue('Bruker');
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
         expect(screen.queryByLabelText('Deltakers navn')).not.toBeInTheDocument();
         fillForm();
         await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');
@@ -233,7 +239,12 @@ describe('MoteAktivitetForm', () => {
         await user.click(screen.getByRole('button', { name: 'Lagre' }));
 
         expect(onSubmit).toHaveBeenCalledWith(
-            expect.objectContaining({ motedeltakere: [{ ...veileder, navn: 'Endret Veileder' }] }),
+            expect.objectContaining({
+                motedeltakere: [
+                    { ...bruker, navn: 'Test Bruker' },
+                    { ...veileder, navn: 'Endret Veileder' },
+                ],
+            }),
         );
         expect(onSubmit.mock.calls[0][0]).not.toHaveProperty('deltakere');
     });

@@ -13,13 +13,13 @@ const render = (node: React.ReactNode, erVeileder = true) => {
 
 describe('MoteDetaljer', () => {
     it.each([
-        { erVeileder: true, navn: 'Bruker' },
+        { erVeileder: true, navn: 'Lagret Bruker' },
         { erVeileder: false, navn: 'Du' },
-    ])('viser $navn som fast deltaker (erVeileder=$erVeileder)', ({ erVeileder, navn }) => {
+    ])('viser $navn fra lagret brukerdeltaker (erVeileder=$erVeileder)', ({ erVeileder, navn }) => {
         render(
             <MoteDetaljer
                 aktivitet={enMoteAktivitet({
-                    motedeltakere: [{ navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] }],
+                    motedeltakere: [{ navn: 'Lagret Bruker', roller: [MotedeltakerRolle.BRUKER] }],
                 })}
             />,
             erVeileder,
@@ -33,7 +33,7 @@ describe('MoteDetaljer', () => {
             <MoteDetaljer
                 aktivitet={enMoteAktivitet({
                     motedeltakere: [
-                        { navn: 'Navn fra eldre respons', roller: [MotedeltakerRolle.BRUKER] },
+                        { navn: 'Lagret Bruker', roller: [MotedeltakerRolle.BRUKER] },
                         { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
                         {
                             navn: 'Test Arbeidsgiver',
@@ -53,7 +53,7 @@ describe('MoteDetaljer', () => {
                 .getAllByRole('listitem')
                 .map((rad) => rad.textContent),
         ).toEqual([
-            'Bruker',
+            'Lagret Bruker',
             'Test Veileder (Veileder)',
             'Test Arbeidsgiver (Arbeidsgiver, Mentor/Fadder)',
             'Test Tolk (Tolk)',
@@ -69,11 +69,11 @@ describe('MoteDetaljer', () => {
             />,
         );
 
-        expect(screen.getAllByRole('listitem').map((rad) => rad.textContent)).toEqual(['Bruker', 'Tolk']);
+        expect(screen.getAllByRole('listitem').map((rad) => rad.textContent)).toEqual(['Tolk']);
     });
 
-    it.each([undefined, null, [], [{ navn: 'Navn fra eldre respons', roller: [MotedeltakerRolle.BRUKER] }]])(
-        'skjuler deltakerseksjonen når andre deltakere mangler (%s)',
+    it.each([undefined, null, []])(
+        'skjuler deltakerseksjonen når deltakerlisten er tom eller mangler (%s)',
         (motedeltakere) => {
             render(<MoteDetaljer aktivitet={enMoteAktivitet({ motedeltakere })} />);
 

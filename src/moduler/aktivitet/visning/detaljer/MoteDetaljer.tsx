@@ -12,19 +12,16 @@ import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 
 interface Props {
     aktivitet: AlleAktiviteter;
-    fulltNavn?: string | null;
 }
 
-const MoteDetaljer = ({ aktivitet, fulltNavn }: Props) => {
+const MoteDetaljer = ({ aktivitet }: Props) => {
     const erVeileder = useErVeileder();
     if (aktivitet.type !== MOTE_TYPE) {
         return null;
     }
 
     const moteTid = beregnKlokkeslettVarighet(aktivitet);
-    const motedeltakere = (aktivitet.motedeltakere ?? []).filter(
-        (deltaker) => !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
-    );
+    const motedeltakere = aktivitet.motedeltakere ?? [];
 
     return (
         <>
@@ -42,11 +39,11 @@ const MoteDetaljer = ({ aktivitet, fulltNavn }: Props) => {
                     fullbredde
                     innhold={
                         <ul role="list" className="list-none p-0 m-0">
-                            <BodyShort as="li">{erVeileder ? (fulltNavn ?? 'Bruker') : 'Du'}</BodyShort>
                             {motedeltakere.map((deltaker, index) => {
-                                const navn = deltaker.navn.trim();
+                                const erBruker = deltaker.roller.includes(MotedeltakerRolle.BRUKER);
+                                const navn = erBruker && !erVeileder ? 'Du' : deltaker.navn.trim();
                                 const roller = deltaker.roller.map((rolle) => motedeltakerRolleTekst[rolle]).join(', ');
-                                const visRoller = roller.length > 0;
+                                const visRoller = !erBruker && roller.length > 0;
                                 return (
                                     <BodyShort as="li" key={deltaker.deltakerId ?? index}>
                                         {navn ? `${navn}${visRoller ? ` (${roller})` : ''}` : roller}

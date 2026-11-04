@@ -27,6 +27,7 @@ import { FeltEndret } from '../../../../analytics/analytics-taxonomy-events';
 import { logEndringAvtaltMote } from '../../../../analytics/analytics';
 import { useSelector } from 'react-redux';
 import { selectVeilederNavn } from '../../../veileder/veileder-selector';
+import { selectBrukerFulltNavn } from '../../aktivitet-slice';
 import Deltakere from './Deltakere';
 
 const schema = (startTekst: string) =>
@@ -139,6 +140,11 @@ const MoteAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
     const startTekst = useHilsenVeilederTekst();
     const veilederNavn = useSelector(selectVeilederNavn);
+    const fulltNavn = useSelector(selectBrukerFulltNavn);
+    const lagretBruker = aktivitet?.motedeltakere?.find((deltaker) =>
+        deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+    );
+    const brukerNavn = fulltNavn?.trim() || lagretBruker?.navn.trim();
 
     const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
@@ -176,6 +182,7 @@ const MoteAktivitetForm = (props: Props) => {
     const {
         register,
         handleSubmit,
+        setError,
         watch,
         formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
@@ -192,6 +199,12 @@ const MoteAktivitetForm = (props: Props) => {
             autoComplete="off"
             noValidate
             onSubmit={handleSubmit((data) => {
+                if (!brukerNavn) {
+                    setError('root.brukerNavn', {
+                        message: 'Kunne ikke hente brukerens navn. Last siden på nytt og prøv igjen.',
+                    });
+                    return;
+                }
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { klokkeslett, deltakere, ...rest } = data;
                 const dto: MoteAktivitetFormValuesOuter = {
@@ -199,12 +212,19 @@ const MoteAktivitetForm = (props: Props) => {
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt,
-                    motedeltakere: deltakere.filter(
-                        (deltaker) =>
-                            deltaker.navn &&
-                            deltaker.roller.length > 0 &&
-                            !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
-                    ),
+                    motedeltakere: [
+                        {
+                            ...lagretBruker,
+                            navn: brukerNavn,
+                            roller: lagretBruker?.roller ?? [MotedeltakerRolle.BRUKER],
+                        },
+                        ...deltakere.filter(
+                            (deltaker) =>
+                                deltaker.navn &&
+                                deltaker.roller.length > 0 &&
+                                !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+                        ),
+                    ],
                 };
                 return onSubmit(dto).then(() => loggEndringer(aktivitet, { ...dto, varighet: data.varighet }));
             })}
@@ -233,7 +253,7 @@ const MoteAktivitetForm = (props: Props) => {
                             error={errors.klokkeslett && errors.klokkeslett.message}
                         />
                     </div>
-                    <Deltakere />
+                    <Deltakere brukerNavn={brukerNavn} />
                     <Select
                         label="Varighet (obligatorisk)"
                         {...register('varighet', { valueAsNumber: true })}

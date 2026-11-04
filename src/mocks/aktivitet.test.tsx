@@ -13,6 +13,7 @@ import { handlers } from './handlers';
 
 const server = setupServer(...handlers);
 const motedeltakere = [
+    { navn: 'Test Bruker', roller: [MotedeltakerRolle.BRUKER] },
     { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
     { navn: 'Test Arbeidsgiver', roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER] },
 ];
@@ -40,9 +41,9 @@ describe('Møtedeltakere i mockdata', () => {
         expect(aktivitet?.type).toBe(VeilarbAktivitetType.MOTE_TYPE);
         if (aktivitet?.type !== VeilarbAktivitetType.MOTE_TYPE) throw new Error('Forventet en møteaktivitet');
 
-        expect(aktivitet.motedeltakere).toHaveLength(3);
+        expect(aktivitet.motedeltakere).toHaveLength(4);
         expect(aktivitet.motedeltakere?.some((deltaker) => deltaker.roller.includes(MotedeltakerRolle.BRUKER))).toBe(
-            false,
+            true,
         );
     });
 
@@ -51,7 +52,11 @@ describe('Møtedeltakere i mockdata', () => {
         const opprettet = await lagNyAktivitet(aktivitet, aktivitet.oppfolgingsperiodeId);
         expect(opprettet).toHaveProperty('motedeltakere', motedeltakere);
 
-        const endredeDeltakere = [motedeltakere[0], { navn: 'Test Tolk', roller: [MotedeltakerRolle.TOLK] }];
+        const endredeDeltakere = [
+            motedeltakere[0],
+            motedeltakere[1],
+            { navn: 'Test Tolk', roller: [MotedeltakerRolle.TOLK] },
+        ];
         if (opprettet.type !== VeilarbAktivitetType.MOTE_TYPE) throw new Error('Forventet en møteaktivitet');
         const oppdatert = await oppdaterAktivitet({ ...opprettet, motedeltakere: endredeDeltakere });
         expect(oppdatert).toHaveProperty('motedeltakere', endredeDeltakere);

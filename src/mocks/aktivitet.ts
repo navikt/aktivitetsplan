@@ -128,6 +128,12 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         erReferatPublisert: false,
         motedeltakere: [
             {
+                navn: 'Bruce Batty Wayne',
+                roller: [MotedeltakerRolle.BRUKER],
+                opprettet: '2018-08-21T11:55:14.044+02:00',
+                deltakerId: '4a77b152-6133-4f4a-9fd0-61401f353001',
+            },
+            {
                 navn: 'Røde Ruben',
                 roller: [MotedeltakerRolle.VEILEDER],
                 opprettet: '2018-08-21T11:55:14.044+02:00',
