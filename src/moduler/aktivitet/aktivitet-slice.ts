@@ -51,6 +51,7 @@ export const { selectById: selectOppfolgingsperiodeById, selectAll: selectAllOpp
 const { selectById: selectAktivitetById, selectAll: selectAlleAktiviter } = aktivitetAdapter.getSelectors();
 
 export const selectAktiviteterSlice = (state: RootState): AktivitetState => state.data.aktiviteter;
+export const selectBrukerFulltNavn = (state: RootState) => selectAktiviteterSlice(state).fulltNavn;
 export const selectAktivitet = (state: RootState, aktivitetId: AktivitetsId): AktivitetMedHistorikk | undefined => {
     const perioder = selectAllOppfolgingsperioder(selectAktiviteterSlice(state));
     return perioder
@@ -79,7 +80,7 @@ export const selectAktiviteterByPeriode: (state: RootState) => PerioderMedAktivi
     },
 );
 
-const initialState = oppfolgingsdperiodeAdapter.getInitialState({
+const initialState = oppfolgingsdperiodeAdapter.getInitialState<{ status: Status; fulltNavn?: string | null }>({
     status: Status.NOT_STARTED,
 });
 
@@ -163,6 +164,7 @@ const aktivitetSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(hentAktiviteter.fulfilled, (state, action) => {
             state.status = Status.OK;
+            state.fulltNavn = action.payload.data.fulltNavn ?? null;
             const oppfolgingsperioder = action.payload.data.perioder.map((periode) => {
                 const periodeState = getOrCreatePeriode(state, periode.id);
                 return {
@@ -175,6 +177,7 @@ const aktivitetSlice = createSlice({
             oppfolgingsdperiodeAdapter.upsertMany(state, oppfolgingsperioder);
         });
         builder.addCase(hentAktivitet.fulfilled, (state, action) => {
+            state.fulltNavn = action.payload.data.fulltNavn ?? null;
             const aktivitet = action.payload.data.aktivitet as AktivitetMedHistorikk;
             const eier = action.payload.data.eier;
             const aktivitetIDer = selectAllOppfolgingsperioder(state)

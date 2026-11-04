@@ -12,6 +12,7 @@ import {
 } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import {
     MotedeltakerRolle,
@@ -20,9 +21,11 @@ import {
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
 import { useErVeileder } from '../../../../Provider';
+import { selectBrukerFulltNavn } from '../../aktivitet-slice';
 
 const Deltakere = () => {
     const erVeileder = useErVeileder();
+    const fulltNavn = useSelector(selectBrukerFulltNavn);
     const {
         control,
         register,
@@ -40,7 +43,7 @@ const Deltakere = () => {
                 <HGrid columns={{ xs: 1, sm: 'minmax(0, 2fr) minmax(0, 1fr) auto' }} gap="space-16">
                     <TextField
                         label={<BodyShort as="span">Bruker</BodyShort>}
-                        value={erVeileder ? 'Bruker' : 'Du'}
+                        value={erVeileder ? (fulltNavn ?? 'Bruker') : 'Du'}
                         readOnly
                     />
                 </HGrid>

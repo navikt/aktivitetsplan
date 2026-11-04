@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { AlleAktiviteter } from '../../../../datatypes/aktivitetTypes';
 import BehandlingsDetaljer from './BehandlingsDetaljer';
@@ -15,12 +16,14 @@ import TiltakDetaljer from './TiltakDetaljer';
 import UtdanningDetaljer from './UtdanningDetaljer';
 import OppgaveBoks from '../eksternaktivitet/OppgaveBoks';
 import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { selectBrukerFulltNavn } from '../../aktivitet-slice';
 
 interface Props {
     valgtAktivitet: AlleAktiviteter;
 }
 
 const Aktivitetsdetaljer = ({ valgtAktivitet }: Props) => {
+    const fulltNavn = useSelector(selectBrukerFulltNavn);
     return (
         <section className="space-y-4">
             {valgtAktivitet.type === VeilarbAktivitetType.EKSTERN_AKTIVITET_TYPE ? (
@@ -32,7 +35,7 @@ const Aktivitetsdetaljer = ({ valgtAktivitet }: Props) => {
                 <EgenAktivitetDetaljer aktivitet={valgtAktivitet} />
                 <GruppeDetaljer aktivitet={valgtAktivitet} />
                 <IJobbDetaljer aktivitet={valgtAktivitet} />
-                <MoteDetaljer aktivitet={valgtAktivitet} />
+                <MoteDetaljer aktivitet={valgtAktivitet} fulltNavn={fulltNavn} />
                 <SamtalereferatDetaljer aktivitet={valgtAktivitet} />
                 <SokeDetaljer aktivitet={valgtAktivitet} />
                 <StillingDetaljer aktivitet={valgtAktivitet} />

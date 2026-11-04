@@ -133,6 +133,7 @@ const allAktivitetFields = `
 
 const alleAktiviteterQuery: string = `
     query($fnr: String!) {
+        fulltNavn(fnr: $fnr)
         perioder(fnr: $fnr) {
             id,
             start,
@@ -166,7 +167,8 @@ const historikkQuery = `
 `;
 
 const aktivitetQuery = `
-    query($aktivitetId: String!) {
+    query($aktivitetId: String!, $fnr: String!) {
+        fulltNavn(fnr: $fnr)
         eier(aktivitetId: $aktivitetId) {
             fnr
         },
@@ -197,10 +199,11 @@ const alleAktiviteterQueryBody = (fnr: string) => ({
     },
 });
 
-const aktivitetQueryBody = (aktivitetId: string) => ({
+const aktivitetQueryBody = (aktivitetId: string, fnr: string) => ({
     query: aktivitetQuery,
     variables: {
         aktivitetId,
+        fnr,
     },
 });
 
@@ -226,7 +229,10 @@ interface OppfolgingsPerioder {
     slutt: string | undefined;
 }
 
-export type AktivitetsplanResponse = GraphqlResponse<{ perioder: OppfolgingsPerioder[] }>;
+export type AktivitetsplanResponse = GraphqlResponse<{
+    perioder: OppfolgingsPerioder[];
+    fulltNavn?: string | null;
+}>;
 
 const fetchFromGraphql = (body: string) =>
     fetch(AKTIVITET_GRAPHQL_BASE_URL, {
@@ -244,7 +250,7 @@ export const hentAktiviteterGraphql = async (): Promise<AktivitetsplanResponse> 
     return fetchFromGraphql(JSON.stringify(alleAktiviteterQueryBody(fnr)))
         .then((response) => sjekkStatuskode(response, 'hentAktiviteterGraphql'))
         .then(toJson)
-        .then(sjekkGraphqlFeil<{ perioder: OppfolgingsPerioder[] }>);
+        .then(sjekkGraphqlFeil<AktivitetsplanResponse['data']>);
 };
 
 export type AktivitetMedHistorikk = VeilarbAktivitet & {
@@ -254,20 +260,22 @@ export type AktivitetMedHistorikk = VeilarbAktivitet & {
 };
 
 export const hentAktivitetGraphql = (aktivitetId: AktivitetsId) => {
-    return fetchFromGraphql(JSON.stringify(aktivitetQueryBody(aktivitetId)))
+    const fnr = hentFraSessionStorage(LocalStorageElement.FNR) || '';
+    return fetchFromGraphql(JSON.stringify(aktivitetQueryBody(aktivitetId, fnr)))
         .then((response) => sjekkStatuskode(response, 'hentAktivitetGraphql'))
         .then(toJson)
         .then(
             sjekkGraphqlFeil<{
                 aktivitet: AktivitetMedHistorikk;
                 eier: { fnr: string };
+                fulltNavn?: string | null;
             }>,
         )
         .then((it) => ({
             ...it,
             data: {
+                ...it.data,
                 aktivitet: { ...it.data.aktivitet, id: aktivitetId as AktivitetsId },
-                eier: { fnr: it.data.eier.fnr },
             },
         }));
 };
