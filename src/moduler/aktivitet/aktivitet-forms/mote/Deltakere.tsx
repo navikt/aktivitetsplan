@@ -5,8 +5,8 @@ import {
     Button,
     ErrorMessage,
     Fieldset,
-    HelpText,
     HGrid,
+    ReadMore,
     TextField,
     VStack,
 } from '@navikt/ds-react';
@@ -106,9 +106,11 @@ const Deltakere = ({ brukerNavn }: Props) => {
                                                             onBlur={rolleField.onBlur}
                                                             className="w-full justify-between"
                                                         >
-                                                            {rolleField.value
-                                                                .map((rolle) => motedeltakerRolleTekst[rolle])
-                                                                .join(', ') || 'Velg'}
+                                                            <BodyShort as="span" size="small">
+                                                                {rolleField.value
+                                                                    .map((rolle) => motedeltakerRolleTekst[rolle])
+                                                                    .join(', ') || 'Velg'}
+                                                            </BodyShort>
                                                         </Button>
                                                     </ActionMenu.Trigger>
                                                     <ActionMenu.Content>
@@ -146,15 +148,14 @@ const Deltakere = ({ brukerNavn }: Props) => {
                                         variant="tertiary"
                                         data-color="danger"
                                         icon={<TrashIcon aria-hidden />}
+                                        aria-label={`Fjern deltaker ${index + 1}`}
                                         className="sm:mt-8"
                                         onClick={() => {
                                             remove(index);
                                             setFocus(`deltakere.${index - 1}.navn`);
                                             setStatus(`Deltaker ${index + 1} fjernet`);
                                         }}
-                                    >
-                                        Fjern <span className="sr-only">deltaker {index + 1}</span>
-                                    </Button>
+                                    />
                                 </>
                             )}
                         </HGrid>
@@ -173,9 +174,9 @@ const Deltakere = ({ brukerNavn }: Props) => {
                         Legg til flere deltakere
                     </Button>
                 </div>
-                <HelpText title="Om tolk som deltaker">
+                <ReadMore header="Om tolk som deltaker" size="small">
                     Du kan trygt legge til tolk. Navnet på tolk vises ikke for andre enn Nav.
-                </HelpText>
+                </ReadMore>
                 <div className="sr-only" role="status">
                     {status}
                 </div>

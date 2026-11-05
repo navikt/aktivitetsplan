@@ -156,6 +156,15 @@ describe('MoteAktivitetForm', () => {
     it('Skal kreve navn når rolle er valgt og vise informasjon om tolk', async () => {
         const user = userEvent.setup();
         mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />);
+        const tolkInformasjon = screen.getByRole('button', { name: 'Om tolk som deltaker' });
+        expect(tolkInformasjon).toHaveAttribute('aria-expanded', 'false');
+        await user.click(tolkInformasjon);
+        expect(tolkInformasjon).toHaveAttribute('aria-expanded', 'true');
+        expect(
+            screen.getByText('Du kan trygt legge til tolk. Navnet på tolk vises ikke for andre enn Nav.'),
+        ).toBeVisible();
+        await user.click(tolkInformasjon);
+        expect(tolkInformasjon).toHaveAttribute('aria-expanded', 'false');
         await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
         await user.click(screen.getByRole('button', { name: /Deltakers rolle/ }));
         await user.click(screen.getByRole('menuitemcheckbox', { name: 'Tolk' }));
