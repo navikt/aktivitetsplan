@@ -104,7 +104,7 @@ const Deltakere = ({ brukerNavn }: Props) => {
                                                                 fieldState.error ? `${rolleId}-error` : undefined
                                                             }
                                                             onBlur={rolleField.onBlur}
-                                                            className="w-full justify-between gap-1 px-2"
+                                                            className="w-full justify-between gap-1 px-2 text-left"
                                                         >
                                                             <BodyShort as="span" size="small">
                                                                 {rolleField.value.length > 0
