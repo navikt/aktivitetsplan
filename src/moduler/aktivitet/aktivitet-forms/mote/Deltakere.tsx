@@ -104,12 +104,19 @@ const Deltakere = ({ brukerNavn }: Props) => {
                                                                 fieldState.error ? `${rolleId}-error` : undefined
                                                             }
                                                             onBlur={rolleField.onBlur}
-                                                            className="w-full justify-between"
+                                                            className="w-full justify-between gap-1 px-2"
                                                         >
                                                             <BodyShort as="span" size="small">
-                                                                {rolleField.value
-                                                                    .map((rolle) => motedeltakerRolleTekst[rolle])
-                                                                    .join(', ') || 'Velg'}
+                                                                {rolleField.value.length > 0
+                                                                    ? rolleField.value.map((rolle, index) => (
+                                                                          <React.Fragment key={rolle}>
+                                                                              {index > 0 && ', '}
+                                                                              <span className="whitespace-nowrap">
+                                                                                  {motedeltakerRolleTekst[rolle]}
+                                                                              </span>
+                                                                          </React.Fragment>
+                                                                      ))
+                                                                    : 'Velg'}
                                                             </BodyShort>
                                                         </Button>
                                                     </ActionMenu.Trigger>
