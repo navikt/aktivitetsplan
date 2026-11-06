@@ -1,4 +1,4 @@
-interface RequiredLenkeProps {
+export interface Lenke {
     tekst: string;
     subtekst?: string;
     url: string;
