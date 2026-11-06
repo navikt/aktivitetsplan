@@ -23,7 +23,10 @@ import { expect, Mock } from 'vitest';
 import { Kanal } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingStatusResponse } from '../../../../api/veilarboppfolging';
 import { enMoteAktivitet } from '../../../../mocks/fixtures/moteAktivitetFixtures';
-import { VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { MotedeltakerRolle, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import { ErVeilederContext } from '../../../../Provider';
+import { oppfolgingsdperiodeAdapter } from '../../aktivitet-slice';
+import { Status } from '../../../../store/createGenericSlice';
 
 const initialState: any = {
     data: {
@@ -34,15 +37,27 @@ const initialState: any = {
                 },
             } as Partial<OppfolgingStatusResponse>,
         },
-        aktiviteter: [],
+        aktiviteter: oppfolgingsdperiodeAdapter.getInitialState({ status: Status.OK, fulltNavn: 'Test Bruker' }),
+        veileder: {
+            data: { fornavn: 'Test', etternavn: 'Veileder' },
+        },
+        feature: {
+            data: {
+                'aktivitetsplan.enableMotedeltakere': true,
+            },
+        },
     },
 };
 
 const dirtyRef = { current: false };
 const store = configureStore({ reducer: rootReducer, preloadedState: initialState as any });
 
-function mountWithIntl(node: any): RenderResult {
-    return render(<ReduxProvider store={store}>{node}</ReduxProvider>);
+function mountWithIntl(node: any, erVeileder = true): RenderResult {
+    return render(
+        <ErVeilederContext.Provider value={erVeileder}>
+            <ReduxProvider store={store}>{node}</ReduxProvider>
+        </ErVeilederContext.Provider>,
+    );
 }
 
 const fillForm = () => {
@@ -80,6 +95,185 @@ const getFormErrorsContainer = (
 };
 
 describe('MoteAktivitetForm', () => {
+    it('Skal vise Du når brukeren selv er innlogget', () => {
+        mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />, false);
+
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Du');
+        expect(screen.getByLabelText('Bruker')).toHaveAttribute('readonly');
+    });
+
+    it('Skal vise bruker og innlogget veileder som faste deltakere', () => {
+        mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />);
+
+        expect(screen.getByLabelText('Bruker')).toHaveAttribute('readonly');
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
+        expect(screen.getByRole('textbox', { name: 'Veileder' })).toHaveValue('Test Veileder');
+        expect(screen.queryByRole('button', { name: /Fjern/ })).not.toBeInTheDocument();
+    });
+
+    it('Skal legge til deltakere med flere roller og sende dem med skjemaet', async () => {
+        const user = userEvent.setup();
+        const onSubmit = vi.fn((_data: unknown) => Promise.resolve());
+        mountWithIntl(<MoteAktivitetForm onSubmit={onSubmit} dirtyRef={dirtyRef} />);
+        fillForm();
+        await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');
+        await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
+        expect(screen.getByLabelText('Deltakers navn')).toHaveFocus();
+        await user.type(screen.getByLabelText('Deltakers navn'), '  Test Deltaker  ');
+        await user.click(screen.getByRole('button', { name: /Deltakers rolle/ }));
+        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Arbeidsgiver' }));
+        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Mentor/Fadder' }));
+        await user.keyboard('{Escape}');
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+
+        expect(onSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+                motedeltakere: [
+                    { navn: 'Test Bruker', roller: [MotedeltakerRolle.BRUKER] },
+                    { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
+                    {
+                        navn: 'Test Deltaker',
+                        roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER],
+                    },
+                ],
+            }),
+        );
+        expect(onSubmit.mock.calls[0][0]).not.toHaveProperty('deltakere');
+    });
+
+    it('Skal kreve rolle når navn er fylt ut og lenke til rollefeltet fra feiloppsummeringen', async () => {
+        const user = userEvent.setup();
+        const onSubmit = vi.fn(() => Promise.resolve());
+        mountWithIntl(<MoteAktivitetForm onSubmit={onSubmit} dirtyRef={dirtyRef} />);
+        fillForm();
+        await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');
+        await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
+        await user.type(screen.getByLabelText('Deltakers navn'), 'Test Deltaker');
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+
+        expect(onSubmit).not.toHaveBeenCalled();
+        expect(screen.getByRole('link', { name: 'Du må velge minst én rolle for deltakeren' })).toHaveAttribute(
+            'href',
+            `#${screen.getByRole('button', { name: /Deltakers rolle/ }).id}`,
+        );
+    });
+
+    it('Skal kreve navn når rolle er valgt og vise informasjon om tolk', async () => {
+        const user = userEvent.setup();
+        mountWithIntl(<MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />);
+        const tolkInformasjon = screen.getByRole('button', { name: 'Om tolk som deltaker' });
+        expect(tolkInformasjon).toHaveAttribute('aria-expanded', 'false');
+        await user.click(tolkInformasjon);
+        expect(tolkInformasjon).toHaveAttribute('aria-expanded', 'true');
+        expect(
+            screen.getByText('Du kan trygt legge til tolk. Navnet på tolk vises ikke for andre enn Nav.'),
+        ).toBeVisible();
+        await user.click(tolkInformasjon);
+        expect(tolkInformasjon).toHaveAttribute('aria-expanded', 'false');
+        await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
+        await user.click(screen.getByRole('button', { name: /Deltakers rolle/ }));
+        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Tolk' }));
+        await user.keyboard('{Escape}');
+        expect(screen.getByText('Navnet på tolk vises ikke for andre enn Nav.')).toBeInTheDocument();
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+        expect(screen.getByRole('link', { name: 'Du må fylle ut navn på deltakeren' })).toHaveAttribute(
+            'href',
+            `#${screen.getByLabelText('Deltakers navn').id}`,
+        );
+    });
+
+    it('Skal fjerne deltakere og utelate tomme rader fra innsendte verdier', async () => {
+        const user = userEvent.setup();
+        const onSubmit = vi.fn(() => Promise.resolve());
+        mountWithIntl(<MoteAktivitetForm onSubmit={onSubmit} dirtyRef={dirtyRef} />);
+        fillForm();
+        await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');
+        await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
+        await user.type(screen.getByLabelText('Deltakers navn'), 'Skal fjernes');
+        await user.click(screen.getByRole('button', { name: 'Fjern deltaker 2' }));
+        expect(screen.queryByDisplayValue('Skal fjernes')).not.toBeInTheDocument();
+        expect(screen.getByRole('textbox', { name: 'Veileder' })).toHaveFocus();
+        await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+
+        expect(onSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+                motedeltakere: [
+                    { navn: 'Test Bruker', roller: [MotedeltakerRolle.BRUKER] },
+                    { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
+                ],
+            }),
+        );
+    });
+
+    it('Skal hente eksisterende deltakere og bevare veilederens roller ved redigering', () => {
+        const aktivitet = enMoteAktivitet({
+            motedeltakere: [
+                { navn: 'Test Arbeidsgiver', roller: [MotedeltakerRolle.ARBEIDSGIVER] },
+                { navn: 'Opprinnelig Veileder', roller: [MotedeltakerRolle.VEILEDER, MotedeltakerRolle.ANNET] },
+            ],
+        });
+        mountWithIntl(
+            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+        );
+        expect(screen.getByRole('textbox', { name: 'Veileder' })).toHaveValue('Opprinnelig Veileder');
+        expect(screen.getByLabelText('Deltakers navn')).toHaveValue('Test Arbeidsgiver');
+        expect(screen.getByRole('button', { name: /Deltakers rolle Arbeidsgiver/ })).toBeInTheDocument();
+        expect(dirtyRef.current).toBe(false);
+    });
+
+    it('Skal bevare metadata for bruker og veileder ved innsending av endringer', async () => {
+        const user = userEvent.setup();
+        const onSubmit = vi.fn((_data: unknown) => Promise.resolve());
+        const veileder = {
+            navn: 'Lagret Veileder',
+            roller: [MotedeltakerRolle.VEILEDER, MotedeltakerRolle.ANNET],
+        };
+        const bruker = {
+            navn: 'Navn fra eldre respons',
+            roller: [MotedeltakerRolle.BRUKER],
+        };
+        mountWithIntl(
+            <MoteAktivitetForm
+                onSubmit={onSubmit}
+                dirtyRef={dirtyRef}
+                aktivitet={enMoteAktivitet({ motedeltakere: [bruker, veileder] })}
+            />,
+        );
+        expect(screen.getByLabelText('Bruker')).toHaveValue('Test Bruker');
+        expect(screen.queryByLabelText('Deltakers navn')).not.toBeInTheDocument();
+        fillForm();
+        await user.selectOptions(screen.getByLabelText('Varighet (obligatorisk)'), '30');
+        await user.clear(screen.getByRole('textbox', { name: 'Veileder' }));
+        await user.type(screen.getByRole('textbox', { name: 'Veileder' }), 'Endret Veileder');
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+
+        expect(onSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+                motedeltakere: [
+                    { ...bruker, navn: 'Test Bruker' },
+                    { ...veileder, navn: 'Endret Veileder' },
+                ],
+            }),
+        );
+        expect(onSubmit.mock.calls[0][0]).not.toHaveProperty('deltakere');
+    });
+
+    it('Skal markere deltakerendringer som ulagret og kreve navn på veilederen', async () => {
+        const user = userEvent.setup();
+        const onSubmit = vi.fn(() => Promise.resolve());
+        mountWithIntl(<MoteAktivitetForm onSubmit={onSubmit} dirtyRef={dirtyRef} />);
+        expect(dirtyRef.current).toBe(false);
+        await user.clear(screen.getByRole('textbox', { name: 'Veileder' }));
+        expect(dirtyRef.current).toBe(true);
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+        expect(onSubmit).not.toHaveBeenCalled();
+        expect(screen.getByRole('link', { name: 'Du må fylle ut navn på veilederen' })).toHaveAttribute(
+            'href',
+            `#${screen.getByRole('textbox', { name: 'Veileder' }).id}`,
+        );
+    });
+
     it('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', async () => {
         const { queryByText, getByText, getByRole } = mountWithIntl(
             <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} />,

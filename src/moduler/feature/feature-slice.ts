@@ -7,6 +7,7 @@ import { Features } from './feature';
 const initialFeatures: Features = {
     'aktivitetsplan.tryggtekst': false,
     'aktivitetsplan.journalforing': false,
+    'aktivitetsplan.enableMotedeltakere': false,
 };
 
 const featureSlice = createGenericSlice({

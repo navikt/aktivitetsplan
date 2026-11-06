@@ -79,6 +79,37 @@ export interface SamtalereferatAktivitet extends AktivitetBaseProps<
     erReferatPublisert: boolean;
 }
 
+export enum MotedeltakerRolle {
+    ARBEIDSGIVER = 'ARBEIDSGIVER',
+    MENTOR_FADDER = 'MENTOR_FADDER',
+    VEILEDER = 'VEILEDER',
+    TOLK = 'TOLK',
+    BRUKER = 'BRUKER',
+    ANNET = 'ANNET',
+}
+
+export const motedeltakerRoller = [
+    MotedeltakerRolle.VEILEDER,
+    MotedeltakerRolle.ARBEIDSGIVER,
+    MotedeltakerRolle.MENTOR_FADDER,
+    MotedeltakerRolle.TOLK,
+    MotedeltakerRolle.ANNET,
+];
+
+export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
+    ARBEIDSGIVER: 'Arbeidsgiver',
+    MENTOR_FADDER: 'Mentor/Fadder',
+    VEILEDER: 'Veileder',
+    TOLK: 'Tolk',
+    BRUKER: 'Bruker',
+    ANNET: 'Annet',
+};
+
+export interface Motedeltaker {
+    navn: string;
+    roller: MotedeltakerRolle[];
+}
+
 export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsTyper | MoteTransaksjonsType> {
     type: VeilarbAktivitetType.MOTE_TYPE;
     fraDato: string;
@@ -91,6 +122,7 @@ export interface MoteAktivitet extends AktivitetBaseProps<FellesTransaksjonsType
     forberedelser: string;
     referat: string;
     erReferatPublisert: boolean;
+    motedeltakere?: Motedeltaker[] | null;
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetBaseProps {

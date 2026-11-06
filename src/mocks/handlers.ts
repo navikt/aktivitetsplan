@@ -51,6 +51,10 @@ import { sjekkTryggTekst } from './data/tryggtekst';
 const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
 const getAktivitetFeiler = () => aktivitetFeilet() && !oppdateringKunFeiler();
+const getFulltNavn = () => {
+    const { fornavn, mellomnavn, etternavn } = getPerson();
+    return [fornavn, mellomnavn, etternavn].filter(Boolean).join(' ');
+};
 
 export const handlers = [
     http.get('/auth/info', jsonResponse(auth)),
@@ -284,6 +288,7 @@ export const aktivitestplanResponse = (
 ): AktivitetsplanResponse => {
     return {
         data: {
+            brukersNavn: { fulltNavn: getFulltNavn() },
             perioder: defaultMockOppfolgingsPerioder.map((periode) => ({
                 id: periode.id,
                 aktiviteter: aktiviteter.filter((aktivitet) => aktivitet.oppfolgingsperiodeId === periode.id),
@@ -297,6 +302,7 @@ export const aktivitestplanResponse = (
 export const aktivitetResponse = (aktivitetId: string, aktivitet: VeilarbAktivitet) => {
     return {
         data: {
+            brukersNavn: { fulltNavn: getFulltNavn() },
             eier: {
                 fnr: '13837597573',
             },
