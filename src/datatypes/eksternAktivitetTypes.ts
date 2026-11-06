@@ -6,22 +6,17 @@ interface RequiredLenkeProps {
 
 type LenkeType = 'EKSTERN' | 'INTERN' | 'FELLES';
 
-type Lenke = RequiredLenkeProps;
-
 type SentimentType = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE';
 
-export interface Oppgave extends Lenke {
-    // TODO: Få denne fra backend, den finnes ikke der idag (desverre :( )
-    knapptekst?: string;
-}
+export type Lenke = RequiredLenkeProps;
 
 export interface LenkeMedType extends RequiredLenkeProps {
     lenkeType: LenkeType;
 }
 
 export interface OppgaveLenke {
-    ekstern?: Oppgave;
-    intern?: Oppgave;
+    ekstern?: Lenke;
+    intern?: Lenke;
 }
 
 export interface Etikett {

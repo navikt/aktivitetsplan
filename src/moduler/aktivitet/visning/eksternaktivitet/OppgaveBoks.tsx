@@ -1,14 +1,14 @@
 import { Button, InfoCard } from '@navikt/ds-react';
 import React from 'react';
 
-import { Oppgave, OppgaveLenke } from '../../../../datatypes/eksternAktivitetTypes';
+import { Lenke, OppgaveLenke } from '../../../../datatypes/eksternAktivitetTypes';
 import { useErVeileder } from '../../../../Provider';
 
 interface Props {
     oppgave?: OppgaveLenke;
 }
 
-const customAlertStripe = (oppgave: Oppgave) => (
+const customAlertStripe = (oppgave: Lenke) => (
     <InfoCard data-color="info">
         <InfoCard.Header>
             <InfoCard.Title>{oppgave.tekst}</InfoCard.Title>
@@ -16,9 +16,7 @@ const customAlertStripe = (oppgave: Oppgave) => (
         <InfoCard.Content className="flex flex-col">
             {oppgave.subtekst}
 
-            <Button variant={'primary'} as="a" href={oppgave.url} className="flex w-fit mt-4">
-                {oppgave.knapptekst || 'Gå videre'}
-            </Button>
+            <Button variant={'primary'} as="a" href={oppgave.url} className="flex w-fit mt-4">Gå videre</Button>
         </InfoCard.Content>
     </InfoCard>
 );

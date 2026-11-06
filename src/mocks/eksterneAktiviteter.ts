@@ -44,13 +44,11 @@ export const eksterneAktiviteter: EksternAktivitet[] = !visEksterneAktiviteter()
                       oppgave: {
                           ekstern: {
                               tekst: 'Evaluer deltakelsen',
-                              knapptekst: 'Gi din evaluering',
                               url: 'http://localhost:8080/ekstern',
                               subtekst: 'Du har vært hos muligheter i 5 måneder',
                           },
                           intern: {
                               tekst: 'Evaluer deltakelsen',
-                              knapptekst: 'Gi din evaluering',
                               url: 'http://localhost:8080/ekstern',
                               subtekst: 'Du har vært hos muligheter i 5 måneder',
                           },
@@ -179,7 +177,6 @@ export const eksterneAktiviteter: EksternAktivitet[] = !visEksterneAktiviteter()
                               subtekst:
                                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet justo sit amet turpis eleifend bibendum nec ac ipsum. Mauris et hendrerit justo. Nulla varius tristique magna at pellentesque.',
                               url: 'https://www.nav.no/',
-                              knapptekst: 'Lorem ipsum',
                           },
                           intern: undefined,
                       },
@@ -251,7 +248,6 @@ export const eksterneAktiviteter: EksternAktivitet[] = !visEksterneAktiviteter()
                               subtekst:
                                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet justo sit amet turpis eleifend bibendum nec ac ipsum. Mauris et hendrerit justo. Nulla varius tristique magna at pellentesque.',
                               url: 'https://www.nav.no/',
-                              knapptekst: 'Lorem ipsum',
                           },
                           intern: undefined,
                       },
