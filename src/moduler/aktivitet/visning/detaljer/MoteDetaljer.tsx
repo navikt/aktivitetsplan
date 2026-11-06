@@ -9,6 +9,8 @@ import { formaterDatoManed, norskTidSuffix } from '../../../../utils/dateUtils';
 import { kanalMap } from '../../../../utils/textMappers';
 import { beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
+import { useSelector } from 'react-redux';
+import { selectFeature } from '../../../feature/feature-selector';
 
 interface Props {
     aktivitet: AlleAktiviteter;
@@ -16,6 +18,7 @@ interface Props {
 
 const MoteDetaljer = ({ aktivitet }: Props) => {
     const erVeileder = useErVeileder();
+    const erMotedeltakereEnabled = useSelector(selectFeature('aktivitetsplan.enableMotedeltakere'));
     if (aktivitet.type !== MOTE_TYPE) {
         return null;
     }
@@ -33,7 +36,7 @@ const MoteDetaljer = ({ aktivitet }: Props) => {
             />
             <Informasjonsfelt key="kanal" tittel="Møteform" innhold={aktivitet.kanal && kanalMap[aktivitet.kanal]} />
             <Informasjonsfelt key="varighet" tittel="Varighet" innhold={formatterVarighet(moteTid?.varighet)} />
-            {motedeltakere.length > 0 && (
+            {erMotedeltakereEnabled && motedeltakere.length > 0 && (
                 <Informasjonsfelt
                     tittel="Deltakere"
                     fullbredde
