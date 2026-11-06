@@ -20,16 +20,13 @@ import {
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
 import { useErVeileder } from '../../../../Provider';
-import { useSelector } from 'react-redux';
-import { selectFeature } from '../../../feature/feature-selector';
 
 interface Props {
     brukerNavn?: string;
+    erMotedeltakereEnabled: boolean;
 }
 
-const Deltakere = ({ brukerNavn }: Props) => {
-    const erMotedeltakereEnabled = useSelector(selectFeature('aktivitetsplan.enableMotedeltakere'));
-
+const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
     const erVeileder = useErVeileder();
     const {
         control,

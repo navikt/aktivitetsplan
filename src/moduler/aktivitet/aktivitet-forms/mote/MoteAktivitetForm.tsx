@@ -3,6 +3,7 @@ import { Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { RefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { selectFeature } from '../../../feature/feature-selector';
 
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import {
@@ -143,6 +144,7 @@ const MoteAktivitetForm = (props: Props) => {
         deltaker.roller.includes(MotedeltakerRolle.BRUKER),
     );
     const brukerNavn = fulltNavn?.trim() || lagretBruker?.navn.trim();
+    const erMotedeltakereEnabled = useSelector(selectFeature('aktivitetsplan.enableMotedeltakere'));
 
     const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
@@ -210,19 +212,22 @@ const MoteAktivitetForm = (props: Props) => {
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt,
-                    motedeltakere: [
-                        {
-                            ...lagretBruker,
-                            navn: brukerNavn,
-                            roller: lagretBruker?.roller ?? [MotedeltakerRolle.BRUKER],
-                        },
-                        ...deltakere.filter(
-                            (deltaker) =>
-                                deltaker.navn &&
-                                deltaker.roller.length > 0 &&
-                                !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
-                        ),
-                    ],
+                    motedeltakere: erMotedeltakereEnabled
+                        ? [
+                              {
+                                  ...lagretBruker,
+                                  navn: brukerNavn,
+                                  roller: lagretBruker?.roller ?? [MotedeltakerRolle.BRUKER],
+                              },
+
+                              ...deltakere.filter(
+                                  (deltaker) =>
+                                      deltaker.navn &&
+                                      deltaker.roller.length > 0 &&
+                                      !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+                              ),
+                          ]
+                        : [],
                 };
                 return onSubmit(dto).then(() => loggEndringer(aktivitet, { ...dto, varighet: data.varighet }));
             })}
@@ -251,7 +256,7 @@ const MoteAktivitetForm = (props: Props) => {
                             error={errors.klokkeslett && errors.klokkeslett.message}
                         />
                     </div>
-                    <Deltakere brukerNavn={brukerNavn} />
+                    <Deltakere erMotedeltakereEnabled={erMotedeltakereEnabled} brukerNavn={brukerNavn} />
                     <Select
                         label="Varighet (obligatorisk)"
                         {...register('varighet', { valueAsNumber: true })}
