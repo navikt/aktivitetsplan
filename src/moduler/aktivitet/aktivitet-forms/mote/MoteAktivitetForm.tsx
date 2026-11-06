@@ -3,9 +3,15 @@ import { Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { RefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { selectFeature } from '../../../feature/feature-selector';
 
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
-import { MoteAktivitet, VeilarbAktivitetType } from '../../../../datatypes/internAktivitetTypes';
+import {
+    MoteAktivitet,
+    Motedeltaker,
+    MotedeltakerRolle,
+    VeilarbAktivitetType,
+} from '../../../../datatypes/internAktivitetTypes';
 import { coerceToUndefined } from '../../../../felles-komponenter/skjema/datovelger/common';
 import ControlledDatePicker from '../../../../felles-komponenter/skjema/datovelger/ControlledDatePicker';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
@@ -20,6 +26,10 @@ import { NORSK_TIDSSONE } from '../../../../utils/dateUtils';
 import { useHilsenVeilederTekst } from '../samtalereferat/useHilsenVeilederTekst';
 import { FeltEndret } from '../../../../analytics/analytics-taxonomy-events';
 import { logEndringAvtaltMote } from '../../../../analytics/analytics';
+import { useSelector } from 'react-redux';
+import { selectVeilederNavn } from '../../../veileder/veileder-selector';
+import { selectBrukerFulltNavn } from '../../aktivitet-slice';
+import Deltakere from './Deltakere';
 
 const schema = (startTekst: string) =>
     z.object({
@@ -52,6 +62,36 @@ const schema = (startTekst: string) =>
             .max(5000, 'Du må korte ned teksten til 5000 tegn')
             .refine((val) => val.replace(startTekst, '').trim().length > 0, 'Du må fylle ut hensikten med møtet'),
         forberedelser: z.string().max(500, 'Du må korte ned teksten til 500 tegn').optional(),
+        deltakere: z
+            .array(
+                z.object({
+                    navn: z.string().trim(),
+                    roller: z.array(z.nativeEnum(MotedeltakerRolle)),
+                }),
+            )
+            .superRefine((deltakere, ctx) => {
+                deltakere.forEach((deltaker, index) => {
+                    if (index === 0 || deltaker.navn || deltaker.roller.length > 0) {
+                        if (!deltaker.navn) {
+                            ctx.addIssue({
+                                code: z.ZodIssueCode.custom,
+                                path: [index, 'navn'],
+                                message:
+                                    index === 0
+                                        ? 'Du må fylle ut navn på veilederen'
+                                        : 'Du må fylle ut navn på deltakeren',
+                            });
+                        }
+                        if (deltaker.roller.length === 0) {
+                            ctx.addIssue({
+                                code: z.ZodIssueCode.custom,
+                                path: [index, 'roller'],
+                                message: 'Du må velge minst én rolle for deltakeren',
+                            });
+                        }
+                    }
+                });
+            }),
     });
 
 const varighet = [
@@ -86,6 +126,7 @@ export type MoteAktivitetFormValuesOuter = {
     tilDato: string;
     status: string | undefined;
     avtalt: boolean;
+    motedeltakere: Motedeltaker[];
 };
 
 interface Props {
@@ -97,13 +138,28 @@ interface Props {
 const MoteAktivitetForm = (props: Props) => {
     const { aktivitet, dirtyRef, onSubmit } = props;
     const startTekst = useHilsenVeilederTekst();
+    const veilederNavn = useSelector(selectVeilederNavn);
+    const fulltNavn = useSelector(selectBrukerFulltNavn);
+    const lagretBruker = aktivitet?.motedeltakere?.find((deltaker) =>
+        deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+    );
+    const brukerNavn = fulltNavn?.trim() || lagretBruker?.navn.trim();
+    const erMotedeltakereEnabled = useSelector(selectFeature('aktivitetsplan.enableMotedeltakere'));
 
     const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
     /* Bruker useMemo fordi dateOrUndefined lager en ny verdi hver render så datepicker kan tro at defaultValue
     endrer seg mellom renders selvom det er samme dato */
-    const defaultValues: Partial<MoteAktivitetFormValuesInner> = useMemo(
-        () => ({
+    const defaultValues: Partial<MoteAktivitetFormValuesInner> = useMemo(() => {
+        const deltakere = (aktivitet?.motedeltakere ?? []).filter(
+            (deltaker) => !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+        );
+        const veilederIndex = deltakere.findIndex((deltaker) => deltaker.roller.includes(MotedeltakerRolle.VEILEDER));
+        const veileder: Motedeltaker =
+            veilederIndex >= 0
+                ? deltakere[veilederIndex]
+                : { navn: veilederNavn ?? '', roller: [MotedeltakerRolle.VEILEDER] };
+        return {
             tittel: aktivitet?.tittel,
             klokkeslett: moteTid?.klokkeslett?.replace('.', ':'),
             // Keep field as string since input natively returns string
@@ -113,9 +169,9 @@ const MoteAktivitetForm = (props: Props) => {
             beskrivelse: aktivitet?.beskrivelse || startTekst,
             forberedelser: aktivitet?.forberedelser ?? undefined,
             dato: coerceToUndefined(aktivitet?.fraDato),
-        }),
-        [aktivitet],
-    );
+            deltakere: [veileder, ...deltakere.filter((_, index) => index !== veilederIndex)],
+        };
+    }, [aktivitet, veilederNavn]);
     const avtalt = aktivitet?.avtalt || false;
 
     const formHandlers = useForm<MoteAktivitetFormValuesInner>({
@@ -126,6 +182,7 @@ const MoteAktivitetForm = (props: Props) => {
     const {
         register,
         handleSubmit,
+        setError,
         watch,
         formState: { errors, isDirty, isSubmitting },
     } = formHandlers;
@@ -142,13 +199,35 @@ const MoteAktivitetForm = (props: Props) => {
             autoComplete="off"
             noValidate
             onSubmit={handleSubmit((data) => {
+                if (!brukerNavn) {
+                    setError('root.brukerNavn', {
+                        message: 'Kunne ikke hente brukerens navn. Last siden på nytt og prøv igjen.',
+                    });
+                    return;
+                }
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { klokkeslett, ...rest } = data;
+                const { klokkeslett, deltakere, ...rest } = data;
                 const dto: MoteAktivitetFormValuesOuter = {
                     ...rest,
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt,
+                    motedeltakere: erMotedeltakereEnabled
+                        ? [
+                              {
+                                  ...lagretBruker,
+                                  navn: brukerNavn,
+                                  roller: lagretBruker?.roller ?? [MotedeltakerRolle.BRUKER],
+                              },
+
+                              ...deltakere.filter(
+                                  (deltaker) =>
+                                      deltaker.navn &&
+                                      deltaker.roller.length > 0 &&
+                                      !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+                              ),
+                          ]
+                        : [],
                 };
                 return onSubmit(dto).then(() => loggEndringer(aktivitet, { ...dto, varighet: data.varighet }));
             })}
@@ -177,6 +256,7 @@ const MoteAktivitetForm = (props: Props) => {
                             error={errors.klokkeslett && errors.klokkeslett.message}
                         />
                     </div>
+                    <Deltakere erMotedeltakereEnabled={erMotedeltakereEnabled} brukerNavn={brukerNavn} />
                     <Select
                         label="Varighet (obligatorisk)"
                         {...register('varighet', { valueAsNumber: true })}

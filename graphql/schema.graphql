@@ -1,7 +1,12 @@
 type Query {
+    brukersNavn(fnr: String!): BrukerNavn
     perioder(fnr: String!): [OppfolgingsPeriode]
     aktivitet(aktivitetId: String!): AktivitetDTO
     eier (aktivitetId: String!): Eier
+}
+
+type BrukerNavn {
+    fulltNavn: String
 }
 
 type OppfolgingsPeriode {
@@ -72,10 +77,25 @@ type AktivitetDTO {
     kanal: KanalDTO
     referat: String
     erReferatPublisert: Boolean
+    motedeltakere: [Motedeltaker]
 
     stillingFraNavData: StillingFraNavData
 
     eksternAktivitet: EksternAktivitetDTO
+}
+
+type Motedeltaker {
+    navn: String!
+    roller: [MotedeltakerRolle!]!
+}
+
+enum MotedeltakerRolle {
+    ARBEIDSGIVER
+    MENTOR_FADDER
+    VEILEDER
+    TOLK
+    BRUKER
+    ANNET
 }
 
 type EksternAktivitetDTO {

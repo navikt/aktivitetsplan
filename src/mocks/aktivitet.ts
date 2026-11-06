@@ -14,6 +14,7 @@ import {
     EgenAktivitet,
     MedisinskBehandlingAktivitet,
     MoteAktivitet,
+    MotedeltakerRolle,
     SokeavtaleAktivitet,
     StillingAktivitet,
     StillingFraNavAktivitet,
@@ -125,6 +126,24 @@ export const mockTestAktiviteter: VeilarbAktivitet[] = [
         kanal: Kanal.TELEFON,
         adresse: 'Ditt nærmeste Nav kontor',
         erReferatPublisert: false,
+        motedeltakere: [
+            {
+                navn: 'Bruce Batty Wayne',
+                roller: [MotedeltakerRolle.BRUKER],
+            },
+            {
+                navn: 'Røde Ruben',
+                roller: [MotedeltakerRolle.VEILEDER],
+            },
+            {
+                navn: 'Alfred Pennyworth',
+                roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER],
+            },
+            {
+                navn: 'Test Tolk',
+                roller: [MotedeltakerRolle.TOLK],
+            },
+        ],
         oppfolgingsperiodeId: 'a2aa22a2-2aa2-4e02-8cc2-d44ef605fa33',
     } as MoteAktivitet),
     wrapAktivitet({
@@ -440,6 +459,7 @@ export function wrapAktivitet<T extends AlleAktiviteter>(a: T): T {
         kanal: valueOrNull(aktivitet.kanal),
         referat: valueOrNull(aktivitet.referat),
         erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
+        motedeltakere: valueOrNull(aktivitet.motedeltakere),
         forhaandsorientering: valueOrNull(aktivitet.forhaandsorientering),
         stillingFraNavData: valueOrNull(aktivitet.stillingFraNavData),
         eksternAktivitet: valueOrNull(aktivitet.eksternAktivitet),

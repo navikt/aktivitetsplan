@@ -7,15 +7,21 @@ import aktivitetReducer, {
     oppfolgingsdperiodeAdapter,
     PeriodeEntityState,
 } from './aktivitet-slice';
-import { hentAktivitet, hentAktivitetHistorikk, oppdaterReferat } from './aktivitet-actions';
+import { hentAktivitet, hentAktivitetHistorikk, lagNyAktivitet, oppdaterReferat } from './aktivitet-actions';
 import { AktivitetsId, OppfolgingsPeriodeId } from '../../datatypes/brandedTypes';
-import { SamtalereferatAktivitet, VeilarbAktivitet, VeilarbAktivitetType } from '../../datatypes/internAktivitetTypes';
+import {
+    MotedeltakerRolle,
+    SamtalereferatAktivitet,
+    VeilarbAktivitet,
+    VeilarbAktivitetType,
+} from '../../datatypes/internAktivitetTypes';
 import { AktivitetStatus, Kanal } from '../../datatypes/aktivitetTypes';
 import { Historikk } from '../../datatypes/Historikk';
 import { FellesTransaksjonsTyper } from '../../datatypes/transaksjonstyperTypes';
 import { EntityState, PayloadAction } from '@reduxjs/toolkit';
 import { Status } from '../../store/createGenericSlice';
 import { GraphqlResponse } from '../../api/graphql/graphqlResult';
+import { enMoteAktivitet } from '../../mocks/fixtures/moteAktivitetFixtures';
 
 const periodeId = 'periode-1' as OppfolgingsPeriodeId;
 const aktivitetId = 'aktivitet-1' as AktivitetsId;
@@ -87,6 +93,31 @@ const getAktivitetAfterUpdate = (
 };
 
 describe('aktivitet-slice', () => {
+    it('bevarer deltakere i state når en møteaktivitet opprettes', () => {
+        const aktivitet = enMoteAktivitet({
+            id: aktivitetId,
+            oppfolgingsperiodeId: periodeId,
+            motedeltakere: [
+                { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
+                { navn: 'Test Deltaker', roller: [MotedeltakerRolle.ARBEIDSGIVER, MotedeltakerRolle.MENTOR_FADDER] },
+            ],
+        });
+        const state = aktivitetReducer(
+            undefined,
+            lagNyAktivitet.fulfilled(aktivitet, 'request-id', {
+                aktivitet,
+                oppfolgingsPeriodeId: periodeId,
+            }),
+        );
+        const lagretAktivitet = state.entities[periodeId]?.aktiviteter.entities[aktivitetId];
+
+        expect(lagretAktivitet?.type).toBe(VeilarbAktivitetType.MOTE_TYPE);
+        if (lagretAktivitet?.type !== VeilarbAktivitetType.MOTE_TYPE) {
+            throw new Error('Forventet en møteaktivitet i state');
+        }
+        expect(lagretAktivitet.motedeltakere).toEqual(aktivitet.motedeltakere);
+    });
+
     describe('oppdaterReferat.fulfilled', () => {
         it('skal ikke overskrive historikk med null hvis response inneholder historikk: null', () => {
             const stateWithHistorikk = buildStateWithAktivitet(baseAktivitet);
