@@ -8,15 +8,15 @@ interface Props {
     oppgave?: OppgaveLenke;
 }
 
-const customAlertStripe = (oppgave: Lenke) => (
+const customAlertStripe = (lenke: Lenke) => (
     <InfoCard data-color="info">
         <InfoCard.Header>
-            <InfoCard.Title>{oppgave.tekst}</InfoCard.Title>
+            <InfoCard.Title>{lenke.tekst}</InfoCard.Title>
         </InfoCard.Header>
         <InfoCard.Content className="flex flex-col">
-            {oppgave.subtekst}
+            {lenke.subtekst}
 
-            <Button variant={'primary'} as="a" href={oppgave.url} className="flex w-fit mt-4">Gå videre</Button>
+            <Button variant={'primary'} as="a" href={lenke.url} className="flex w-fit mt-4">Gå videre</Button>
         </InfoCard.Content>
     </InfoCard>
 );
