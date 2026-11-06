@@ -20,12 +20,16 @@ import {
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
 import { useErVeileder } from '../../../../Provider';
+import { useSelector } from 'react-redux';
+import { selectFeature } from '../../../feature/feature-selector';
 
 interface Props {
     brukerNavn?: string;
 }
 
 const Deltakere = ({ brukerNavn }: Props) => {
+    const erMotedeltakereEnabled = useSelector(selectFeature('aktivitetsplan.enableMotedeltakere'));
+
     const erVeileder = useErVeileder();
     const {
         control,
@@ -38,6 +42,7 @@ const Deltakere = ({ brukerNavn }: Props) => {
     const [status, setStatus] = useState('');
     const deltakere = watch('deltakere');
 
+    if (!erMotedeltakereEnabled) return undefined;
     return (
         <Fieldset legend="Deltakere">
             <VStack gap="space-16">

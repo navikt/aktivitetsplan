@@ -41,6 +41,11 @@ const initialState: any = {
         veileder: {
             data: { fornavn: 'Test', etternavn: 'Veileder' },
         },
+        feature: {
+            data: {
+                'aktivitetsplan.enableMotedeltakere': true,
+            },
+        },
     },
 };
 
