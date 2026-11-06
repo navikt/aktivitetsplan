@@ -9,7 +9,7 @@ type LenkeType = 'EKSTERN' | 'INTERN' | 'FELLES';
 type SentimentType = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE';
 
 
-export interface LenkeMedType extends RequiredLenkeProps {
+export interface LenkeMedType extends Lenke {
     lenkeType: LenkeType;
 }
 
