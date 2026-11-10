@@ -174,7 +174,6 @@ describe('MoteAktivitetForm', () => {
         await user.click(screen.getByRole('combobox', { name: 'Deltakers rolle' }));
         await user.click(screen.getByRole('option', { name: 'Tolk' }));
         await user.keyboard('{Escape}');
-        expect(screen.getByText('Navnet på tolk vises ikke for andre enn Nav.')).toBeInTheDocument();
         await user.click(screen.getByRole('button', { name: 'Lagre' }));
         expect(screen.getByRole('link', { name: 'Du må fylle ut navn på deltakeren' })).toHaveAttribute(
             'href',

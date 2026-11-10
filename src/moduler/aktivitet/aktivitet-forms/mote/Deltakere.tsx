@@ -77,11 +77,6 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                     error={errors.deltakere?.[index]?.navn?.message}
                                     aria-describedby={erTolk ? `${navnId}-info` : undefined}
                                 />
-                                <div id={`${navnId}-info`} aria-live="polite">
-                                    {erTolk && (
-                                        <BodyShort size="small">Navnet på tolk vises ikke for andre enn Nav.</BodyShort>
-                                    )}
-                                </div>
                             </div>
                             {!erVeileder && (
                             <>
