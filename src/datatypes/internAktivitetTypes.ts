@@ -88,22 +88,6 @@ export enum MotedeltakerRolle {
     ANNET = 'ANNET',
 }
 
-export const motedeltakerRoller = [
-    MotedeltakerRolle.VEILEDER,
-    MotedeltakerRolle.ARBEIDSGIVER,
-    MotedeltakerRolle.MENTOR_FADDER,
-    MotedeltakerRolle.TOLK,
-    MotedeltakerRolle.ANNET,
-];
-
-export const motedeltakerRollerTest = [
-    { label: "Veileder", value: MotedeltakerRolle.VEILEDER },
-    { label: "Arbeidsgiver", value: MotedeltakerRolle.ARBEIDSGIVER },
-    { label: "Mentor/Fadder", value: MotedeltakerRolle.MENTOR_FADDER },
-    { label: "Tolk", value: MotedeltakerRolle.TOLK },
-    { label: "Annet", value: MotedeltakerRolle.ANNET },
-]     ;
-
 export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
     ARBEIDSGIVER: 'Arbeidsgiver',
     MENTOR_FADDER: 'Mentor/Fadder',
@@ -112,6 +96,15 @@ export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
     BRUKER: 'Bruker',
     ANNET: 'Annet',
 };
+
+/* Roller som kan velges i skjemaet */
+export const motedeltakerRoller = [
+    { label: motedeltakerRolleTekst[MotedeltakerRolle.VEILEDER], value: MotedeltakerRolle.VEILEDER },
+    { label: motedeltakerRolleTekst[MotedeltakerRolle.ARBEIDSGIVER], value: MotedeltakerRolle.ARBEIDSGIVER },
+    { label: motedeltakerRolleTekst[MotedeltakerRolle.MENTOR_FADDER], value: MotedeltakerRolle.MENTOR_FADDER },
+    { label: motedeltakerRolleTekst[MotedeltakerRolle.TOLK], value: MotedeltakerRolle.TOLK },
+    { label: motedeltakerRolleTekst[MotedeltakerRolle.ANNET], value: MotedeltakerRolle.ANNET },
+];
 
 export interface Motedeltaker {
     navn: string;

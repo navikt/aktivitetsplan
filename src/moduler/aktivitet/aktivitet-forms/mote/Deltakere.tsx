@@ -20,7 +20,7 @@ import {
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
 import { useErVeileder } from '../../../../Provider';
-import Combobox from '@navikt/ds-react/src/form/combobox/Combobox';
+import { UNSAFE_Combobox as Combobox } from '@navikt/ds-react';
 
 interface Props {
     brukerNavn?: string;
@@ -83,42 +83,37 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                     )}
                                 </div>
                             </div>
-                                <>
-                                    <Combobox
-                                        label="Deltakers rolle"
-                                        description="Velg en eller flere roller"
-                                        options={motedeltakerRoller.map((rolle) => ({ label: rolle, value: rolle }))}
-                                    >
-
-                                    </Combobox>
-
-                                    <Controller
-                                        control={control}
-                                        name={`deltakere.${index}.roller`}
-                                        render={({ field: rolleField, fieldState }) => (
-                                            <VStack gap="space-8">
-                                                {fieldState.error && (
-                                                    <ErrorMessage id={`${rolleId}-error`}>
-                                                        {fieldState.error.message}
-                                                    </ErrorMessage>
-                                                )}
-                                            </VStack>
-                                        )}
-                                    />
-                                    <Button
-                                        type="button"
-                                        variant="tertiary"
-                                        data-color="danger"
-                                        icon={<TrashIcon aria-hidden />}
-                                        aria-label={`Fjern deltaker ${index + 1}`}
-                                        className="sm:mt-8"
-                                        onClick={() => {
-                                            remove(index);
-                                            setFocus(`deltakere.${index - 1}.navn`);
-                                            setStatus(`Deltaker ${index + 1} fjernet`);
-                                        }}
-                                    />
-                                </>
+                            <>
+                                <Controller
+                                    control={control}
+                                    name={`deltakere.${index}.roller`}
+                                    render={({ field: rolleField, fieldState }) => (
+                                        <VStack gap="space-8">
+                                            <Combobox
+                                                size={'small'}
+                                                error={fieldState.error?.message}
+                                                label="Deltakers rolle"
+                                                isMultiSelect
+                                                description="Velg en eller flere roller"
+                                                options={motedeltakerRoller}
+                                            />
+                                        </VStack>
+                                    )}
+                                />
+                                <Button
+                                    type="button"
+                                    variant="tertiary"
+                                    data-color="danger"
+                                    icon={<TrashIcon aria-hidden />}
+                                    aria-label={`Fjern deltaker ${index + 1}`}
+                                    className="sm:mt-8"
+                                    onClick={() => {
+                                        remove(index);
+                                        setFocus(`deltakere.${index - 1}.navn`);
+                                        setStatus(`Deltaker ${index + 1} fjernet`);
+                                    }}
+                                />
+                            </>
                             )
                         </HGrid>
                     );
