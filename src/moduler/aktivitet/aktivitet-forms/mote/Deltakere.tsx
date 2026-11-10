@@ -1,9 +1,7 @@
-import { ChevronDownIcon, PlusIcon, TrashIcon } from '@navikt/aksel-icons';
+import { PlusIcon, TrashIcon } from '@navikt/aksel-icons';
 import {
-    ActionMenu,
     BodyShort,
     Button,
-    ErrorMessage,
     Fieldset,
     HGrid,
     ReadMore,
@@ -16,7 +14,6 @@ import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import {
     MotedeltakerRolle,
     motedeltakerRoller,
-    motedeltakerRolleTekst,
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
 import { useErVeileder } from '../../../../Provider';
