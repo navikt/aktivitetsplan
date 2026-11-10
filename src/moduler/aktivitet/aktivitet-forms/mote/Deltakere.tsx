@@ -65,7 +65,6 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                             aria-label={erVeileder ? 'Veileder' : `Deltaker ${index + 1}`}
                             columns={{ xs: 1, sm: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.2fr)' }}
                             gap="space-16"
-                            align="end"
                         >
                             <div>
                                 <TextField
