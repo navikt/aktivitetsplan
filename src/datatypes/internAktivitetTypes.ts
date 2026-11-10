@@ -98,13 +98,9 @@ export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
 };
 
 /* Roller som kan velges i skjemaet */
-export const motedeltakerRoller = [
-    { label: motedeltakerRolleTekst[MotedeltakerRolle.VEILEDER], value: MotedeltakerRolle.VEILEDER },
-    { label: motedeltakerRolleTekst[MotedeltakerRolle.ARBEIDSGIVER], value: MotedeltakerRolle.ARBEIDSGIVER },
-    { label: motedeltakerRolleTekst[MotedeltakerRolle.MENTOR_FADDER], value: MotedeltakerRolle.MENTOR_FADDER },
-    { label: motedeltakerRolleTekst[MotedeltakerRolle.TOLK], value: MotedeltakerRolle.TOLK },
-    { label: motedeltakerRolleTekst[MotedeltakerRolle.ANNET], value: MotedeltakerRolle.ANNET },
-];
+export const motedeltakerRoller = Object.values(MotedeltakerRolle)
+    .filter((rolle) => rolle !== MotedeltakerRolle.BRUKER)
+    .map((rolle) => ({ label: motedeltakerRolleTekst[rolle], value: rolle }));
 
 export interface Motedeltaker {
     navn: string;

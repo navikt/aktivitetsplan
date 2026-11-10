@@ -69,9 +69,12 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                             <div>
                                 <TextField
                                     id={navnId}
-                                    description="Fornavn Etternavn"
+                                    size="small"
                                     label={
                                         <BodyShort as="span">{erVeileder ? 'Veileder' : 'Deltakers navn'}</BodyShort>
+                                    }
+                                    description={
+                                        <BodyShort as="span" size="small">Fornavn Etternavn</BodyShort>
                                     }
                                     {...register(`deltakere.${index}.navn`)}
                                     error={errors.deltakere?.[index]?.navn?.message}
@@ -90,12 +93,32 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                     render={({ field: rolleField, fieldState }) => (
                                         <VStack gap="space-8">
                                             <Combobox
-                                                size={'small'}
                                                 error={fieldState.error?.message}
-                                                label="Deltakers rolle"
+                                                size="small"
+                                                label={
+                                                    <BodyShort as="span">Deltakers rolle</BodyShort>
+                                                }
                                                 isMultiSelect
-                                                description="Velg en eller flere roller"
+                                                description={
+                                                    <BodyShort as="span" size="small">Velg en eller flere</BodyShort>
+                                                }
                                                 options={motedeltakerRoller}
+                                                selectedOptions={motedeltakerRoller.filter((option) =>
+                                                    rolleField.value.includes(option.value),
+                                                )}
+                                                onToggleSelected={(value, isSelected) => {
+                                                    const rolle = motedeltakerRoller.find(
+                                                        (option) => option.value === value,
+                                                    )?.value;
+                                                    if (!rolle) return;
+                                                    rolleField.onChange(
+                                                        isSelected
+                                                            ? [...rolleField.value, value]
+                                                            : rolleField.value.filter((r) => r !== value),
+                                                    );
+                                                }}
+                                                onBlur={rolleField.onBlur}
+                                                ref={rolleField.ref}
                                             />
                                         </VStack>
                                     )}
@@ -103,6 +126,7 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                 <Button
                                     type="button"
                                     variant="tertiary"
+                                    size="small"
                                     data-color="danger"
                                     icon={<TrashIcon aria-hidden />}
                                     aria-label={`Fjern deltaker ${index + 1}`}
@@ -112,15 +136,17 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                         setFocus(`deltakere.${index - 1}.navn`);
                                         setStatus(`Deltaker ${index + 1} fjernet`);
                                     }}
-                                />
+                                >
+                                Fjern
+                                </Button>
                             </>
-                            )
                         </HGrid>
                     );
                 })}
                 <div>
                     <Button
                         type="button"
+                        size="small"
                         variant="secondary"
                         icon={<PlusIcon aria-hidden />}
                         onClick={() => {
