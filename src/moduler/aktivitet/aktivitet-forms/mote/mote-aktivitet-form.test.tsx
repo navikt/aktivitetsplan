@@ -120,9 +120,9 @@ describe('MoteAktivitetForm', () => {
         await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
         expect(screen.getByLabelText('Deltakers navn')).toHaveFocus();
         await user.type(screen.getByLabelText('Deltakers navn'), '  Test Deltaker  ');
-        await user.click(screen.getByRole('button', { name: /Deltakers rolle/ }));
-        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Arbeidsgiver' }));
-        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Mentor/Fadder' }));
+        await user.click(screen.getByRole('combobox', { name: 'Deltakers rolle' }));
+        await user.click(screen.getByRole('option', { name: 'Arbeidsgiver' }));
+        await user.click(screen.getByRole('option', { name: 'Mentor/Fadder' }));
         await user.keyboard('{Escape}');
         await user.click(screen.getByRole('button', { name: 'Lagre' }));
 
@@ -154,7 +154,7 @@ describe('MoteAktivitetForm', () => {
         expect(onSubmit).not.toHaveBeenCalled();
         expect(screen.getByRole('link', { name: 'Du må velge minst én rolle for deltakeren' })).toHaveAttribute(
             'href',
-            `#${screen.getByRole('button', { name: /Deltakers rolle/ }).id}`,
+            `#${screen.getByRole('combobox', { name: 'Deltakers rolle' }).id}`,
         );
     });
 
@@ -171,10 +171,9 @@ describe('MoteAktivitetForm', () => {
         await user.click(tolkInformasjon);
         expect(tolkInformasjon).toHaveAttribute('aria-expanded', 'false');
         await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
-        await user.click(screen.getByRole('button', { name: /Deltakers rolle/ }));
-        await user.click(screen.getByRole('menuitemcheckbox', { name: 'Tolk' }));
+        await user.click(screen.getByRole('combobox', { name: 'Deltakers rolle' }));
+        await user.click(screen.getByRole('option', { name: 'Tolk' }));
         await user.keyboard('{Escape}');
-        expect(screen.getByText('Navnet på tolk vises ikke for andre enn Nav.')).toBeInTheDocument();
         await user.click(screen.getByRole('button', { name: 'Lagre' }));
         expect(screen.getByRole('link', { name: 'Du må fylle ut navn på deltakeren' })).toHaveAttribute(
             'href',
@@ -218,7 +217,7 @@ describe('MoteAktivitetForm', () => {
         );
         expect(screen.getByRole('textbox', { name: 'Veileder' })).toHaveValue('Opprinnelig Veileder');
         expect(screen.getByLabelText('Deltakers navn')).toHaveValue('Test Arbeidsgiver');
-        expect(screen.getByRole('button', { name: /Deltakers rolle Arbeidsgiver/ })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /Arbeidsgiver/ })).toBeInTheDocument();
         expect(dirtyRef.current).toBe(false);
     });
 

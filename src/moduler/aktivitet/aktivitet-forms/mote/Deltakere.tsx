@@ -1,9 +1,7 @@
-import { ChevronDownIcon, PlusIcon, TrashIcon } from '@navikt/aksel-icons';
+import { PlusIcon, TrashIcon } from '@navikt/aksel-icons';
 import {
-    ActionMenu,
     BodyShort,
     Button,
-    ErrorMessage,
     Fieldset,
     HGrid,
     ReadMore,
@@ -16,10 +14,10 @@ import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import {
     MotedeltakerRolle,
     motedeltakerRoller,
-    motedeltakerRolleTekst,
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
 import { useErVeileder } from '../../../../Provider';
+import { UNSAFE_Combobox as Combobox } from '@navikt/ds-react';
 
 interface Props {
     brukerNavn?: string;
@@ -43,8 +41,9 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
     return (
         <Fieldset legend="Deltakere">
             <VStack gap="space-16">
-                <HGrid columns={{ xs: 1, sm: 'minmax(0, 2fr) minmax(0, 1fr) auto' }} gap="space-16">
+                <HGrid columns={{ xs: 1, sm: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.2fr)' }} gap="space-16">
                     <TextField
+                        size="small"
                         label={<BodyShort as="span">Bruker</BodyShort>}
                         value={erVeileder ? (brukerNavn ?? 'Bruker') : 'Du'}
                         error={errors.root?.brukerNavn?.message}
@@ -61,111 +60,78 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                             key={field.id}
                             role="group"
                             aria-label={erVeileder ? 'Veileder' : `Deltaker ${index + 1}`}
-                            columns={{ xs: 1, sm: 'minmax(0, 2fr) minmax(0, 1fr) auto' }}
+                            columns={{ xs: 1, sm: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.2fr)' }}
                             gap="space-16"
-                            align="start"
                         >
                             <div>
                                 <TextField
                                     id={navnId}
+                                    size="small"
                                     label={
                                         <BodyShort as="span">{erVeileder ? 'Veileder' : 'Deltakers navn'}</BodyShort>
+                                    }
+                                    description={
+                                        <BodyShort as="span" size="small">Fornavn Etternavn</BodyShort>
                                     }
                                     {...register(`deltakere.${index}.navn`)}
                                     error={errors.deltakere?.[index]?.navn?.message}
                                     aria-describedby={erTolk ? `${navnId}-info` : undefined}
                                 />
-                                <div id={`${navnId}-info`} aria-live="polite">
-                                    {erTolk && (
-                                        <BodyShort size="small">Navnet på tolk vises ikke for andre enn Nav.</BodyShort>
-                                    )}
-                                </div>
                             </div>
                             {!erVeileder && (
-                                <>
-                                    <Controller
-                                        control={control}
-                                        name={`deltakere.${index}.roller`}
-                                        render={({ field: rolleField, fieldState }) => (
-                                            <VStack gap="space-8">
-                                                <BodyShort as="span" id={`${rolleId}-label`}>
-                                                    Deltakers rolle
-                                                </BodyShort>
-                                                <ActionMenu>
-                                                    <ActionMenu.Trigger>
-                                                        <Button
-                                                            ref={rolleField.ref}
-                                                            id={rolleId}
-                                                            type="button"
-                                                            variant="secondary"
-                                                            icon={<ChevronDownIcon aria-hidden />}
-                                                            iconPosition="right"
-                                                            aria-labelledby={`${rolleId}-label ${rolleId}`}
-                                                            aria-invalid={!!fieldState.error}
-                                                            aria-describedby={
-                                                                fieldState.error ? `${rolleId}-error` : undefined
-                                                            }
-                                                            onBlur={rolleField.onBlur}
-                                                            className="w-full justify-between gap-1 px-2 text-left"
-                                                        >
-                                                            <BodyShort as="span" size="small">
-                                                                {rolleField.value.length > 0
-                                                                    ? rolleField.value.map((rolle, index) => (
-                                                                          <React.Fragment key={rolle}>
-                                                                              {index > 0 && ', '}
-                                                                              <span className="whitespace-nowrap">
-                                                                                  {motedeltakerRolleTekst[rolle]}
-                                                                              </span>
-                                                                          </React.Fragment>
-                                                                      ))
-                                                                    : 'Velg'}
-                                                            </BodyShort>
-                                                        </Button>
-                                                    </ActionMenu.Trigger>
-                                                    <ActionMenu.Content>
-                                                        <ActionMenu.Group aria-label="Deltakers rolle">
-                                                            {motedeltakerRoller.map((rolle) => (
-                                                                <ActionMenu.CheckboxItem
-                                                                    key={rolle}
-                                                                    checked={rolleField.value.includes(rolle)}
-                                                                    onCheckedChange={(checked) =>
-                                                                        rolleField.onChange(
-                                                                            motedeltakerRoller.filter((valg) =>
-                                                                                valg === rolle
-                                                                                    ? checked
-                                                                                    : rolleField.value.includes(valg),
-                                                                            ),
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    {motedeltakerRolleTekst[rolle]}
-                                                                </ActionMenu.CheckboxItem>
-                                                            ))}
-                                                        </ActionMenu.Group>
-                                                    </ActionMenu.Content>
-                                                </ActionMenu>
-                                                {fieldState.error && (
-                                                    <ErrorMessage id={`${rolleId}-error`}>
-                                                        {fieldState.error.message}
-                                                    </ErrorMessage>
+                            <>
+                                <Controller
+                                    control={control}
+                                    name={`deltakere.${index}.roller`}
+                                    render={({ field: rolleField, fieldState }) => (
+                                        <VStack gap="space-8">
+                                            <Combobox
+                                                id={rolleId}
+                                                error={fieldState.error?.message}
+                                                size="small"
+                                                label={
+                                                    <BodyShort as="span">Deltakers rolle</BodyShort>
+                                                }
+                                                isMultiSelect
+                                                description={
+                                                    <BodyShort as="span" size="small">Velg en eller flere</BodyShort>
+                                                }
+                                                options={motedeltakerRoller}
+                                                selectedOptions={motedeltakerRoller.filter((option) =>
+                                                    rolleField.value.includes(option.value),
                                                 )}
-                                            </VStack>
-                                        )}
-                                    />
-                                    <Button
-                                        type="button"
-                                        variant="tertiary"
-                                        data-color="danger"
-                                        icon={<TrashIcon aria-hidden />}
-                                        aria-label={`Fjern deltaker ${index + 1}`}
-                                        className="sm:mt-8"
-                                        onClick={() => {
-                                            remove(index);
-                                            setFocus(`deltakere.${index - 1}.navn`);
-                                            setStatus(`Deltaker ${index + 1} fjernet`);
-                                        }}
-                                    />
-                                </>
+                                                onToggleSelected={(value, isSelected) => {
+                                                    const rolle = motedeltakerRoller.find(
+                                                        (option) => option.value === value,
+                                                    )?.value;
+                                                    if (!rolle) return;
+                                                    rolleField.onChange(
+                                                        isSelected
+                                                            ? [...rolleField.value, rolle]
+                                                            : rolleField.value.filter((r) => r !== rolle),
+                                                    );
+                                                }}
+                                                onBlur={rolleField.onBlur}
+                                                ref={rolleField.ref}
+                                            />
+                                        </VStack>
+                                    )}
+                                />
+                                <Button
+                                    type="button"
+                                    variant="tertiary"
+                                    size="small"
+                                    data-color="danger"
+                                    icon={<TrashIcon aria-hidden />}
+                                    aria-label={`Fjern deltaker ${index + 1}`}
+                                    className="sm:mt-8"
+                                    onClick={() => {
+                                        remove(index);
+                                        setFocus(`deltakere.${index - 1}.navn`);
+                                        setStatus(`Deltaker ${index + 1} fjernet`);
+                                    }}
+                                />
+                            </>
                             )}
                         </HGrid>
                     );
@@ -173,6 +139,7 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                 <div>
                     <Button
                         type="button"
+                        size="small"
                         variant="secondary"
                         icon={<PlusIcon aria-hidden />}
                         onClick={() => {

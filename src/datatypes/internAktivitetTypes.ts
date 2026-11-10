@@ -88,14 +88,6 @@ export enum MotedeltakerRolle {
     ANNET = 'ANNET',
 }
 
-export const motedeltakerRoller = [
-    MotedeltakerRolle.VEILEDER,
-    MotedeltakerRolle.ARBEIDSGIVER,
-    MotedeltakerRolle.MENTOR_FADDER,
-    MotedeltakerRolle.TOLK,
-    MotedeltakerRolle.ANNET,
-];
-
 export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
     ARBEIDSGIVER: 'Arbeidsgiver',
     MENTOR_FADDER: 'Mentor/Fadder',
@@ -104,6 +96,11 @@ export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
     BRUKER: 'Bruker',
     ANNET: 'Annet',
 };
+
+/* Roller som kan velges i skjemaet */
+export const motedeltakerRoller = Object.values(MotedeltakerRolle)
+    .filter((rolle) => rolle !== MotedeltakerRolle.BRUKER)
+    .map((rolle) => ({ label: motedeltakerRolleTekst[rolle], value: rolle }));
 
 export interface Motedeltaker {
     navn: string;
