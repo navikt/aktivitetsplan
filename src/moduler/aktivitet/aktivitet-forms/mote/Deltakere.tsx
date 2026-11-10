@@ -20,6 +20,7 @@ import {
 } from '../../../../datatypes/internAktivitetTypes';
 import type { MoteAktivitetFormValuesInner } from './MoteAktivitetForm';
 import { useErVeileder } from '../../../../Provider';
+import Combobox from '@navikt/ds-react/src/form/combobox/Combobox';
 
 interface Props {
     brukerNavn?: string;
@@ -68,6 +69,7 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                             <div>
                                 <TextField
                                     id={navnId}
+                                    description="Fornavn Etternavn"
                                     label={
                                         <BodyShort as="span">{erVeileder ? 'Veileder' : 'Deltakers navn'}</BodyShort>
                                     }
@@ -81,69 +83,20 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                     )}
                                 </div>
                             </div>
-                            {!erVeileder && (
                                 <>
+                                    <Combobox
+                                        label="Deltakers rolle"
+                                        description="Velg en eller flere roller"
+                                        options={motedeltakerRoller.map((rolle) => ({ label: rolle, value: rolle }))}
+                                    >
+
+                                    </Combobox>
+
                                     <Controller
                                         control={control}
                                         name={`deltakere.${index}.roller`}
                                         render={({ field: rolleField, fieldState }) => (
                                             <VStack gap="space-8">
-                                                <BodyShort as="span" id={`${rolleId}-label`}>
-                                                    Deltakers rolle
-                                                </BodyShort>
-                                                <ActionMenu>
-                                                    <ActionMenu.Trigger>
-                                                        <Button
-                                                            ref={rolleField.ref}
-                                                            id={rolleId}
-                                                            type="button"
-                                                            variant="secondary"
-                                                            icon={<ChevronDownIcon aria-hidden />}
-                                                            iconPosition="right"
-                                                            aria-labelledby={`${rolleId}-label ${rolleId}`}
-                                                            aria-invalid={!!fieldState.error}
-                                                            aria-describedby={
-                                                                fieldState.error ? `${rolleId}-error` : undefined
-                                                            }
-                                                            onBlur={rolleField.onBlur}
-                                                            className="w-full justify-between gap-1 px-2 text-left"
-                                                        >
-                                                            <BodyShort as="span" size="small">
-                                                                {rolleField.value.length > 0
-                                                                    ? rolleField.value.map((rolle, index) => (
-                                                                          <React.Fragment key={rolle}>
-                                                                              {index > 0 && ', '}
-                                                                              <span className="whitespace-nowrap">
-                                                                                  {motedeltakerRolleTekst[rolle]}
-                                                                              </span>
-                                                                          </React.Fragment>
-                                                                      ))
-                                                                    : 'Velg'}
-                                                            </BodyShort>
-                                                        </Button>
-                                                    </ActionMenu.Trigger>
-                                                    <ActionMenu.Content>
-                                                        <ActionMenu.Group aria-label="Deltakers rolle">
-                                                            {motedeltakerRoller.map((rolle) => (
-                                                                <ActionMenu.CheckboxItem
-                                                                    key={rolle}
-                                                                    checked={rolleField.value.includes(rolle)}
-                                                                    onCheckedChange={(checked) =>
-                                                                        rolleField.onChange(
-                                                                            motedeltakerRoller.filter((valg) =>
-                                                                                valg === rolle
-                                                                                    ? checked
-                                                                                    : rolleField.value.includes(valg),
-                                                                            ),
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    {motedeltakerRolleTekst[rolle]}
-                                                                </ActionMenu.CheckboxItem>
-                                                            ))}
-                                                        </ActionMenu.Group>
-                                                    </ActionMenu.Content>
-                                                </ActionMenu>
                                                 {fieldState.error && (
                                                     <ErrorMessage id={`${rolleId}-error`}>
                                                         {fieldState.error.message}
@@ -166,7 +119,7 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                         }}
                                     />
                                 </>
-                            )}
+                            )
                         </HGrid>
                     );
                 })}

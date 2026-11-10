@@ -96,6 +96,14 @@ export const motedeltakerRoller = [
     MotedeltakerRolle.ANNET,
 ];
 
+export const motedeltakerRollerTest = [
+    { label: "Veileder", value: MotedeltakerRolle.VEILEDER },
+    { label: "Arbeidsgiver", value: MotedeltakerRolle.ARBEIDSGIVER },
+    { label: "Mentor/Fadder", value: MotedeltakerRolle.MENTOR_FADDER },
+    { label: "Tolk", value: MotedeltakerRolle.TOLK },
+    { label: "Annet", value: MotedeltakerRolle.ANNET },
+]     ;
+
 export const motedeltakerRolleTekst: Record<MotedeltakerRolle, string> = {
     ARBEIDSGIVER: 'Arbeidsgiver',
     MENTOR_FADDER: 'Mentor/Fadder',
