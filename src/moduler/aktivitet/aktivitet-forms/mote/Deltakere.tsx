@@ -95,6 +95,7 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                     render={({ field: rolleField, fieldState }) => (
                                         <VStack gap="space-8">
                                             <Combobox
+                                                id={rolleId}
                                                 error={fieldState.error?.message}
                                                 size="small"
                                                 label={
@@ -115,8 +116,8 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                                     if (!rolle) return;
                                                     rolleField.onChange(
                                                         isSelected
-                                                            ? [...rolleField.value, value]
-                                                            : rolleField.value.filter((r) => r !== value),
+                                                            ? [...rolleField.value, rolle]
+                                                            : rolleField.value.filter((r) => r !== rolle),
                                                     );
                                                 }}
                                                 onBlur={rolleField.onBlur}
