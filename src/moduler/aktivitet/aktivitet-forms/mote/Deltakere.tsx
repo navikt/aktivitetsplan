@@ -44,8 +44,9 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
     return (
         <Fieldset legend="Deltakere">
             <VStack gap="space-16">
-                <HGrid columns={{ xs: 1, sm: 'minmax(0, 2fr) minmax(0, 1fr) auto' }} gap="space-16">
+                <HGrid columns={{ xs: 1, sm: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.2fr)' }} gap="space-16">
                     <TextField
+                        size="small"
                         label={<BodyShort as="span">Bruker</BodyShort>}
                         value={erVeileder ? (brukerNavn ?? 'Bruker') : 'Du'}
                         error={errors.root?.brukerNavn?.message}
@@ -62,9 +63,9 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                             key={field.id}
                             role="group"
                             aria-label={erVeileder ? 'Veileder' : `Deltaker ${index + 1}`}
-                            columns={{ xs: 1, sm: 'minmax(0, 2fr) minmax(0, 1fr) auto' }}
+                            columns={{ xs: 1, sm: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.2fr)' }}
                             gap="space-16"
-                            align="start"
+                            align="end"
                         >
                             <div>
                                 <TextField
@@ -86,6 +87,7 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                     )}
                                 </div>
                             </div>
+                            {!erVeileder && (
                             <>
                                 <Controller
                                     control={control}
@@ -136,10 +138,9 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
                                         setFocus(`deltakere.${index - 1}.navn`);
                                         setStatus(`Deltaker ${index + 1} fjernet`);
                                     }}
-                                >
-                                Fjern
-                                </Button>
+                                />
                             </>
+                            )}
                         </HGrid>
                     );
                 })}
