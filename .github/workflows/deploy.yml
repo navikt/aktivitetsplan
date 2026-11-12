@@ -15,8 +15,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install pnpm - setup node - install deps
+        uses: ./.github/actions/setup-pnpm
+        with:
+          READER_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Run tests
+        run: pnpm run test
+
   dev-ekstern:
     name: Deploy to dev extern
+    needs: test
     uses: ./.github/workflows/deploy-ekstern.yml
     with:
       kommando: pnpm run build:dev-ekstern
@@ -26,6 +39,7 @@ jobs:
 
   dev-intern:
     name: Deploy application to dev intern
+    needs: test
     uses: ./.github/workflows/deploy-intern.yml
     with:
       kommando: pnpm run build:dev-intern
