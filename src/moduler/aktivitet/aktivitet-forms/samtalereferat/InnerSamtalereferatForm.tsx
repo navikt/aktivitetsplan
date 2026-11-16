@@ -24,14 +24,11 @@ const schema = z.object({
     tittel: z.string().min(1, 'Du må fylle ut tema for samtalen').max(100, 'Du må korte ned teksten til 100 tegn'),
     fraDato: z
         .date({
-            errorMap: (issue) => {
-                if (issue.code === 'invalid_type') {
-                    return { message: 'Fra dato må fylles ut' };
+            error: (issue) => {
+                if (issue.input === undefined) {
+                    return 'Fra dato må fylles ut';
                 }
-                if (issue.code === 'invalid_date') {
-                    return { message: 'Ikke en gyldig dato' };
-                }
-                return { message: issue.message || 'Ikke en gyldig dato' };
+                return 'Ikke en gyldig dato';
             },
         })
         .refine((date) => date.getTime() < new Date().getTime(), {

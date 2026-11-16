@@ -97,7 +97,7 @@ export const oppdaterCVSvar = createAsyncThunk(
         aktivitetId: string;
         aktivitetVersjon: string;
         kanDeles: boolean;
-        avtaltDato: string;
+        avtaltDato?: string;
     }) => {
         return await Api.oppdaterCvKanDelesSvar(aktivitetId, aktivitetVersjon, kanDeles, avtaltDato);
     },

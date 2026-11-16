@@ -43,7 +43,7 @@ const createGenericSlice = <
             builder.addMatcher(
                 (action) => action.type.startsWith(`${name}/`) && action.type.endsWith('/fulfilled'),
                 (state, action: PayloadAction<T>) => {
-                    state.data = action.payload || initialState.data;
+                    state.data = (action.payload || initialState.data) as typeof state.data;
                     state.status = Status.OK;
                 },
             );

@@ -34,6 +34,8 @@ ensureMemoryStorage('sessionStorage');
 
 afterEach(() => {
     vi.clearAllTimers();
+    window.localStorage?.clear();
+    window.sessionStorage?.clear();
 });
 
 import.meta.env.VITE_API_URL_BASE = 'http://localhost:3000'; // Dette er det som ligger på window.location i jsdom

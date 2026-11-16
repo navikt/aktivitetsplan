@@ -21,12 +21,10 @@ const schema = z
             .min(1, 'Du må fylle ut navn på aktiviteten')
             .max(100, 'Du må korte ned teksten til 100 tegn'),
         fraDato: z.date({
-            required_error: 'Fra dato må fylles ut',
-            invalid_type_error: 'Ikke en gyldig dato',
+            error: (issue) => (issue.input === undefined ? 'Fra dato må fylles ut' : 'Ikke en gyldig dato'),
         }),
         tilDato: z.date({
-            required_error: 'Til dato må fylles ut',
-            invalid_type_error: 'Ikke en gyldig dato',
+            error: (issue) => (issue.input === undefined ? 'Til dato må fylles ut' : 'Ikke en gyldig dato'),
         }),
         hensikt: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
         beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),

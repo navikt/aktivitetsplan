@@ -12,8 +12,7 @@ import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { addMonths } from 'date-fns';
 
 const numberErrorMessage = {
-    required_error: 'Antall stillinger må fylles ut',
-    invalid_type_error: 'Antall stillinger må fylles ut',
+    error: 'Antall stillinger må fylles ut',
 };
 
 enum Template {
@@ -23,8 +22,8 @@ enum Template {
 
 const commonFields = {
     tittel: z.string(),
-    fraDato: z.date({ required_error: 'Fra dato må fylles ut' }),
-    tilDato: z.date({ required_error: 'Til dato må fylles ut' }),
+    fraDato: z.date({ error: 'Fra dato må fylles ut' }),
+    tilDato: z.date({ error: 'Til dato må fylles ut' }),
     avtaleOppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
 };

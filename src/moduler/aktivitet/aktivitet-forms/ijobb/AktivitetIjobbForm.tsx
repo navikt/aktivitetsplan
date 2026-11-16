@@ -17,11 +17,10 @@ const schema = z
     .object({
         tittel: z.string().min(1, 'Du må fylle ut stillingstittel').max(100, 'Du må korte ned teksten til 100 tegn'),
         fraDato: z.date({
-            required_error: 'Fra dato må være en gyldig dato',
-            invalid_type_error: 'Ikke en gyldig dato',
+            error: (issue) => (issue.input === undefined ? 'Fra dato må være en gyldig dato' : 'Ikke en gyldig dato'),
         }),
-        tilDato: z.date({ invalid_type_error: 'Ikke en gyldig dato' }).optional().nullable(),
-        jobbStatus: z.nativeEnum(JobbStatusType, { required_error: 'Du må velge heltid eller deltid' }),
+        tilDato: z.date({ error: 'Ikke en gyldig dato' }).optional().nullable(),
+        jobbStatus: z.nativeEnum(JobbStatusType, { error: 'Du må velge heltid eller deltid' }),
         ansettelsesforhold: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
         arbeidstid: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional().nullable(),
         beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional().nullable(),

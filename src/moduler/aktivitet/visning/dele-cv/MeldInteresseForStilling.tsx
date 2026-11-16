@@ -2,9 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, BodyShort, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { endOfToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { FormProvider, useController, useForm } from 'react-hook-form';
+import { FormProvider, Resolver, useController, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { z, ZodErrorMap } from 'zod';
+import { z } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
@@ -29,24 +29,12 @@ interface PropTypes {
 }
 
 type KanDeles = {
-    kanDeles: string;
-    avtaltDato: string;
-};
-
-const dateErrorMap: Record<string, string> = {
-    invalid_type: 'Du må fylle ut datoen for når du var i dialog med brukeren',
-    invalid_date: 'Ikke en gyldig dato',
-};
-
-const getDateErrorMessage: ZodErrorMap = (issue) => {
-    return {
-        message: dateErrorMap[issue.code] || `Noe gikk galt: ${issue.message}`,
-    };
+    kanDeles: SvarType;
+    avtaltDato?: Date;
 };
 
 const kanDelesField = z.nativeEnum(SvarType, {
-    required_error: 'Du må svare ja eller nei',
-    invalid_type_error: 'Ikke en gyldig dato',
+    error: 'Du må svare ja eller nei',
 });
 const getSchema = ({ after: disabledAfter }: { after: Date }, erVeileder: boolean) => {
     if (erVeileder) {
@@ -54,7 +42,10 @@ const getSchema = ({ after: disabledAfter }: { after: Date }, erVeileder: boolea
             kanDeles: kanDelesField,
             avtaltDato: z
                 .date({
-                    errorMap: getDateErrorMessage,
+                    error: (issue) =>
+                        issue.input === undefined
+                            ? 'Du må fylle ut datoen for når du var i dialog med brukeren'
+                            : 'Ikke en gyldig dato',
                 })
                 .max(disabledAfter, { message: 'Dato for dialog kan ikke være frem i tid' }),
         });
@@ -75,7 +66,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     };
 
     const handlers = useForm<KanDeles>({
-        resolver: zodResolver(getSchema(datobegrensninger, erVeileder)),
+        resolver: zodResolver(getSchema(datobegrensninger, erVeileder)) as Resolver<KanDeles>,
         defaultValues: { kanDeles: undefined },
     });
     const {
@@ -104,7 +95,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 aktivitetId: aktivitet.id,
                 aktivitetVersjon: aktivitet.versjon,
                 kanDeles: data.kanDeles === SvarType.JA,
-                avtaltDato: data.avtaltDato,
+                avtaltDato: data.avtaltDato?.toISOString(),
             }),
         );
         return Promise.resolve();

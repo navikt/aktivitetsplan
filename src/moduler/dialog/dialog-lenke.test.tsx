@@ -40,7 +40,7 @@ const store = gitt().aktiviteter.medAktiviteter(testAktiviteter).createStore();
 describe('Send melding knapp (Dialog lenker)', () => {
     // Start server before all tests
     beforeAll(() => {
-        server.listen({ onUnhandledRequest: 'error' });
+        server.listen({ onUnhandledFrame: 'error' });
     });
     //  Close server after all tests
     afterAll(() => server.close());

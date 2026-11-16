@@ -18,12 +18,10 @@ const schema = z
     .object({
         tittel: z.string(),
         fraDato: z.date({
-            required_error: 'Fra dato må fylles ut',
-            invalid_type_error: 'Ikke en gyldig dato',
+            error: (issue) => (issue.input === undefined ? 'Fra dato må fylles ut' : 'Ikke en gyldig dato'),
         }),
         tilDato: z.date({
-            required_error: 'Til dato må fylles ut',
-            invalid_type_error: 'Ikke en gyldig dato',
+            error: (issue) => (issue.input === undefined ? 'Til dato må fylles ut' : 'Ikke en gyldig dato'),
         }),
         behandlingType: z
             .string()
