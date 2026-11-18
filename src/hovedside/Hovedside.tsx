@@ -30,7 +30,7 @@ const Hovedside = () => {
                 <div className="container flex flex-col gap-y-4">
                     <Navigasjonslinje />
                     <Maal />
-                    <div className="mt-2">
+                    <div className="mt-6">
                         <Verktoylinje />
                     </div>
                 </div>
