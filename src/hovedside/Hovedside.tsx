@@ -27,10 +27,12 @@ const Hovedside = () => {
                 <HovedsideFeilmelding />
                 <InformasjonsHenting />
                 <Varslinger />
-                <div className="container flex flex-col gap-y-6">
+                <div className="container flex flex-col gap-y-4">
                     <Navigasjonslinje />
                     <Maal />
-                    <Verktoylinje />
+                    <div className="mt-2">
+                        <Verktoylinje />
+                    </div>
                 </div>
                 <Aktivitetstavle />
                 <Outlet />
