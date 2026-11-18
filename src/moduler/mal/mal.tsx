@@ -30,7 +30,7 @@ const Mal = () => {
     return (
         <MalModal
             onRequestClosed={onModalRequestClosed}
-            heading={readOnly ? 'Mitt mål fra en tidligere periode' : 'Mitt mål'}
+            heading={readOnly ? 'Mitt mål fra en tidligere periode' : 'Rediger mitt mål'}
         >
             <div>
                 <ReadMore className="mb-8" header="Tips til mål" defaultOpen={historiskeMal.length === 0}>

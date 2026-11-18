@@ -1,6 +1,5 @@
-import './mitt-maal.less';
-
-import { Alert, Button, Heading, Skeleton } from '@navikt/ds-react';
+import { Alert, Heading, Skeleton } from '@navikt/ds-react';
+import { CompassIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import { isAfter, parseISO } from 'date-fns';
 import React, { Suspense } from 'react';
@@ -13,7 +12,6 @@ import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMa
 import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
-import MaalIkon from './Aktivitetsplan_maal.svg?react';
 import { InitialPageLoadResult } from '../../routing/loaders';
 import MalContent from './MalContent';
 import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
@@ -36,44 +34,42 @@ function MittMaal() {
     const { mal: malPromise } = useRouteLoaderData('root') as InitialPageLoadResult;
     if (noeHarFeilet) return <Alert variant={'error'}>Kunne ikke hente mål</Alert>;
     return (
-        <>
-            <div
-                className={classNames('flex rounded-md p-4 border-2 border-ax-border-neutral-subtle', {
-                    'border-dashed': !mal && !disabled,
-                    'border-solid': mal || disabled,
-                })}
-            >
-                <div className="flex sm:flex-row items-center gap-6">
-                    <MaalIkon aria-hidden={true} role="img" className="hidden sm:block mx-4 min-w-fit" />
-                    <div>
-                        <div className="flex mb-2 items-center">
-                            <NotifikasjonMarkering visible={nyEndring} />
-                            <Heading level="2" size="medium" className={'flex'}>
-                                Mitt mål
-                            </Heading>
-                        </div>
-                        <Suspense fallback={<MalFallback />}>
-                            <Await resolve={malPromise}>
-                                <MalContent disabled={disabled} mal={mal} />
-                            </Await>
-                        </Suspense>
-                    </div>
-                </div>
+        <div
+            className={classNames(
+                'flex w-full flex-col items-start gap-2 rounded-lg border-2 bg-ax-bg-default px-4 sm:flex-row sm:items-center sm:px-4',
+                {
+                    'border-dashed border-ax-border-neutral-subtle': !mal && !disabled,
+                    'border-solid border-ax-border-neutral-subtle': mal || disabled,
+                },
+            )}
+        >
+            <div className="shrink-0" aria-hidden="true">
+                <CompassIcon className="h-5 w-5" />
             </div>
-        </>
+
+            <div className="flex min-w-0 flex-1 flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2">
+                <div className="flex shrink-0 items-center">
+                    <NotifikasjonMarkering visible={nyEndring} />
+                    <Heading level="2" size="small">
+                        Mitt mål:
+                    </Heading>
+                </div>
+
+                <Suspense fallback={<MalFallback />}>
+                    <Await resolve={malPromise}>
+                        <MalContent disabled={disabled} mal={mal} />
+                    </Await>
+                </Suspense>
+            </div>
+        </div>
     );
 }
 
-const MalFallback = () => {
-    return (
-        <div className="flex flex-col items-start gap-4">
-            <Skeleton variant="text" className="-mb-1" width="100%" />
-            <Button size="small" variant="secondary" disabled={true}>
-                Endre målet
-            </Button>
-        </div>
-    );
-};
+const MalFallback = () => (
+    <div className="flex flex-1 items-center sm:justify-end">
+        <Skeleton variant="text" width="12rem" />
+    </div>
+);
 
 function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boolean {
     if (!maal?.mal || !maal.dato) {
