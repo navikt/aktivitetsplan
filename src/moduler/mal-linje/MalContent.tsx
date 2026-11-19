@@ -49,7 +49,7 @@ function MalContent(props: MalContentProps) {
     const knappTekst = viserInnevaerendePeriode ? 'Rediger' : 'Se tidligere mål';
 
     return (
-        <div className="flex min-w-0 w-full flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+        <div className="flex min-w-0 w-full py-2 flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
             <div className="min-w-0 flex-1 text-left">
                 <MalText disabled={disabled} mal={mal} />
             </div>
