@@ -5,6 +5,7 @@ import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { logKlikkKnapp } from '../../analytics/analytics';
 import { shallowEqual, useSelector } from 'react-redux';
 import { BodyShort, Button } from '@navikt/ds-react';
+import { PencilIcon } from '@navikt/aksel-icons';
 import React from 'react';
 import MalText from './MalTekst';
 import { selectViserAktivPeriode } from '../oppfolging-status/oppfolging-selector';
@@ -29,28 +30,38 @@ function MalContent(props: MalContentProps) {
 
     if (!mal && !disabled) {
         return (
-            <div>
-                <BodyShort>Skriv litt om hva som er målet ditt slik at vi kan hjelpe deg bedre.</BodyShort>
-                <ul className="list-disc ml-6 mb-4">
-                    <li>
-                        <BodyShort>Hva er målet på kort og på lang sikt?</BodyShort>
-                    </li>
-                    <li>
-                        <BodyShort>Hva slags jobb ønsker du deg?</BodyShort>
-                    </li>
-                </ul>
-                <Button onClick={() => endreMal('Sett et mål')} variant="secondary" size="small">
-                    Sett et mål
+            <div className="flex w-full flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+                <BodyShort>Skriv litt om hva som er målet ditt.</BodyShort>
+                <Button
+                    onClick={() => endreMal('Sett et mål')}
+                    variant="tertiary"
+                    size="medium"
+                >
+                    <span className="flex items-center gap-2">
+                        <PencilIcon aria-hidden />
+                        Sett et mål
+                    </span>
                 </Button>
             </div>
         );
     }
 
+    const knappTekst = viserInnevaerendePeriode ? 'Rediger' : 'Se tidligere mål';
+
     return (
-        <div className="flex flex-col items-start gap-4">
-            <MalText disabled={disabled} mal={mal} />
-            <Button onClick={() => endreMal('Endre målet')} variant="secondary" size="small">
-                {viserInnevaerendePeriode ? 'Endre målet' : 'Se tidligere mål'}
+        <div className="flex min-w-0 w-full py-2 flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+            <div className="min-w-0 flex-1 text-left">
+                <MalText disabled={disabled} mal={mal} />
+            </div>
+            <Button
+                onClick={() => endreMal(knappTekst)}
+                variant="tertiary"
+                size="medium"
+            >
+                <span className="flex items-center gap-2">
+                    <PencilIcon aria-hidden />
+                    {knappTekst}
+                </span>
             </Button>
         </div>
     );
