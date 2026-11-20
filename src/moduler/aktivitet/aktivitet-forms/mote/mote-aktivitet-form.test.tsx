@@ -12,7 +12,7 @@ import {
     Matcher,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { addDays, addMinutes, differenceInMinutes, subYears } from 'date-fns';
+import { addDays, addMinutes, differenceInMinutes, format, subYears } from 'date-fns';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
@@ -314,17 +314,57 @@ describe('MoteAktivitetForm', () => {
         expect(screen.queryByText('Feiloppsummering')).toBeNull();
     });
 
-    it('Skal vise feil når dato er tidligere enn i dag', async () => {
-        const aktivitet = {
-            tittel: 'Anakromisme',
-            fraDato: subYears(new Date(), 1).toISOString(),
-            tilDato: addMinutes(subYears(new Date(), 1), 45).toISOString(),
-            adresse: 'Fortiden',
-            erAvtalt: false,
-        };
-        const { getByText } = mountWithIntl(
-            <MoteAktivitetForm onSubmit={() => Promise.resolve()} dirtyRef={dirtyRef} aktivitet={aktivitet as any} />,
+    it('Skal kunne legge til deltakere på et tidligere møte uten å endre møtetidspunktet', async () => {
+        const user = userEvent.setup();
+        const onSubmit = vi.fn(() => Promise.resolve());
+        const fraDato = subYears(new Date(), 1);
+        fraDato.setHours(12, 0, 0, 0);
+        const aktivitet = enMoteAktivitet({
+            fraDato: fraDato.toISOString(),
+            tilDato: addMinutes(fraDato, 45).toISOString(),
+        });
+        mountWithIntl(<MoteAktivitetForm onSubmit={onSubmit} dirtyRef={dirtyRef} aktivitet={aktivitet} />);
+
+        await user.click(screen.getByRole('button', { name: 'Legg til flere deltakere' }));
+        await user.type(screen.getByLabelText('Deltakers navn'), 'Ny Deltaker');
+        await user.click(screen.getByRole('combobox', { name: 'Deltakers rolle' }));
+        await user.click(screen.getByRole('option', { name: 'Arbeidsgiver' }));
+        await user.keyboard('{Escape}');
+        await user.click(screen.getByRole('button', { name: 'Lagre' }));
+
+        expect(onSubmit).toHaveBeenCalledWith(
+            expect.objectContaining({
+                fraDato: aktivitet.fraDato,
+                tilDato: aktivitet.tilDato,
+                motedeltakere: [
+                    { navn: 'Test Bruker', roller: [MotedeltakerRolle.BRUKER] },
+                    { navn: 'Test Veileder', roller: [MotedeltakerRolle.VEILEDER] },
+                    { navn: 'Ny Deltaker', roller: [MotedeltakerRolle.ARBEIDSGIVER] },
+                ],
+            }),
         );
+    });
+
+    it.each([
+        ['nye møter', undefined],
+        ['fremtidige møter', addDays(new Date(), 1)],
+        ['tidligere møter', subYears(new Date(), 2)],
+    ])('Skal avvise en ny dato i fortiden for %s', async (_, opprinneligDato) => {
+        const onSubmit = vi.fn(() => Promise.resolve());
+        const aktivitet = opprinneligDato
+            ? enMoteAktivitet({
+                  fraDato: opprinneligDato.toISOString(),
+                  tilDato: addMinutes(opprinneligDato, 45).toISOString(),
+              })
+            : undefined;
+        const { getByText } = mountWithIntl(
+            <MoteAktivitetForm onSubmit={onSubmit} dirtyRef={dirtyRef} aktivitet={aktivitet} />,
+        );
+        fillForm();
+        fireEvent.change(screen.getByLabelText('Varighet (obligatorisk)'), { target: { value: '45' } });
+        fireEvent.change(screen.getByLabelText('Dato (obligatorisk)'), {
+            target: { value: format(subYears(new Date(), 1), 'dd.MM.yyyy') },
+        });
 
         await act(async () => {
             fireEvent.click(screen.getByText('Lagre'));
@@ -332,6 +372,7 @@ describe('MoteAktivitetForm', () => {
 
         const errorBoxContainer = getFormErrorsContainer(getByText);
         within(errorBoxContainer).getByText('Dato kan ikke være tilbake i tid');
+        expect(onSubmit).not.toHaveBeenCalled();
     });
 
     it('Skal populere felter når aktivitet er satt', () => {
