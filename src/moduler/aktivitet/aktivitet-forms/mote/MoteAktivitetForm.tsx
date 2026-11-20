@@ -3,7 +3,6 @@ import { Select, TextField, Textarea } from '@navikt/ds-react';
 import React, { RefObject, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { selectFeature } from '../../../feature/feature-selector';
 
 import { AktivitetStatus, Kanal } from '../../../../datatypes/aktivitetTypes';
 import {
@@ -20,7 +19,7 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import HuskVarsleBruker from './HuskVarsleBruker';
 import VideoInfo from './VideoInfo';
-import { endOfDay, format, subDays } from 'date-fns';
+import { format, isBefore, isSameDay, startOfDay } from 'date-fns';
 import { TZDate } from '@date-fns/tz';
 import { NORSK_TIDSSONE } from '../../../../utils/dateUtils';
 import { useHilsenVeilederTekst } from '../samtalereferat/useHilsenVeilederTekst';
@@ -31,7 +30,10 @@ import { selectVeilederNavn } from '../../../veileder/veileder-selector';
 import { selectBrukerFulltNavn } from '../../aktivitet-slice';
 import Deltakere from './Deltakere';
 
-const schema = (startTekst: string) =>
+const erGyldigMotedato = (dato: Date, opprinneligDato?: Date) =>
+    !isBefore(dato, startOfDay(new Date())) || (!!opprinneligDato && isSameDay(dato, opprinneligDato));
+
+const schema = (startTekst: string, opprinneligDato?: Date) =>
     z.object({
         tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
         dato: z
@@ -39,7 +41,7 @@ const schema = (startTekst: string) =>
                 required_error: 'Dato må fylles ut',
                 invalid_type_error: 'Ikke en gyldig dato',
             })
-            .min(endOfDay(subDays(new Date(), 1)), 'Dato kan ikke være tilbake i tid'),
+            .refine((dato) => erGyldigMotedato(dato, opprinneligDato), 'Dato kan ikke være tilbake i tid'),
         klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
         varighet: z.number({ invalid_type_error: 'Du må velge varighet' }), // Blir NaN på default value
         kanal: z.nativeEnum(Kanal, {
@@ -144,7 +146,6 @@ const MoteAktivitetForm = (props: Props) => {
         deltaker.roller.includes(MotedeltakerRolle.BRUKER),
     );
     const brukerNavn = fulltNavn?.trim() || lagretBruker?.navn.trim();
-    const erMotedeltakereEnabled = useSelector(selectFeature('aktivitetsplan.enableMotedeltakere'));
 
     const moteTid = aktivitet ? beregnKlokkeslettVarighet(aktivitet) : undefined;
 
@@ -176,7 +177,7 @@ const MoteAktivitetForm = (props: Props) => {
 
     const formHandlers = useForm<MoteAktivitetFormValuesInner>({
         defaultValues,
-        resolver: zodResolver(schema(startTekst)),
+        resolver: zodResolver(schema(startTekst, defaultValues.dato)),
         shouldFocusError: true,
     });
     const {
@@ -212,22 +213,20 @@ const MoteAktivitetForm = (props: Props) => {
                     ...beregnFraTil(data),
                     status: aktivitet?.status ?? AktivitetStatus.PLANLAGT,
                     avtalt,
-                    motedeltakere: erMotedeltakereEnabled
-                        ? [
-                              {
-                                  ...lagretBruker,
-                                  navn: brukerNavn,
-                                  roller: lagretBruker?.roller ?? [MotedeltakerRolle.BRUKER],
-                              },
+                    motedeltakere: [
+                          {
+                              ...lagretBruker,
+                              navn: brukerNavn,
+                              roller: lagretBruker?.roller ?? [MotedeltakerRolle.BRUKER],
+                          },
 
-                              ...deltakere.filter(
-                                  (deltaker) =>
-                                      deltaker.navn &&
-                                      deltaker.roller.length > 0 &&
-                                      !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
-                              ),
-                          ]
-                        : [],
+                          ...deltakere.filter(
+                              (deltaker) =>
+                                  deltaker.navn &&
+                                  deltaker.roller.length > 0 &&
+                                  !deltaker.roller.includes(MotedeltakerRolle.BRUKER),
+                          ),
+                      ],
                 };
                 return onSubmit(dto).then(() => loggEndringer(aktivitet, { ...dto, varighet: data.varighet }));
             })}
@@ -246,7 +245,7 @@ const MoteAktivitetForm = (props: Props) => {
 
                     <div className="flex sm:flex-row flex-col gap-4">
                         <ControlledDatePicker
-                            disabledDays={[{ before: new Date() }]}
+                            disabledDays={[(dato) => !erGyldigMotedato(dato, defaultValues.dato)]}
                             field={{ name: 'dato', required: true, defaultValue: defaultValues?.dato }}
                         />
                         <TextField
@@ -256,7 +255,7 @@ const MoteAktivitetForm = (props: Props) => {
                             error={errors.klokkeslett && errors.klokkeslett.message}
                         />
                     </div>
-                    <Deltakere erMotedeltakereEnabled={erMotedeltakereEnabled} brukerNavn={brukerNavn} />
+                    <Deltakere brukerNavn={brukerNavn} />
                     <Select
                         label="Varighet (obligatorisk)"
                         {...register('varighet', { valueAsNumber: true })}
