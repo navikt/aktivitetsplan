@@ -21,10 +21,9 @@ import { UNSAFE_Combobox as Combobox } from '@navikt/ds-react';
 
 interface Props {
     brukerNavn?: string;
-    erMotedeltakereEnabled: boolean;
 }
 
-const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
+const Deltakere = ({ brukerNavn }: Props) => {
     const erVeileder = useErVeileder();
     const {
         control,
@@ -37,7 +36,6 @@ const Deltakere = ({ brukerNavn, erMotedeltakereEnabled }: Props) => {
     const [status, setStatus] = useState('');
     const deltakere = watch('deltakere');
 
-    if (!erMotedeltakereEnabled) return undefined;
     return (
         <Fieldset legend="Deltakere">
             <VStack gap="space-16">

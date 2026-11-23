@@ -24,8 +24,8 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.5.0",
-    "@dnd-kit/react": "^0.5.1",
     "@dnd-kit/dom": "^0.5.1",
+    "@dnd-kit/react": "^0.5.1",
     "@hookform/resolvers": "^3.10.0",
     "@nais/apm": "^0.7.3",
     "@navikt/aksel-icons": "^8.19.1",
@@ -80,7 +80,7 @@
     ]
   },
   "devDependencies": {
-    "@navikt/nav-dekoratoren-moduler": "^4.5.0",
+    "@navikt/nav-dekoratoren-moduler": "^1.6.10",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -114,5 +114,5 @@
   "msw": {
     "workerDirectory": "public"
   },
-  "packageManager": "pnpm@11.20.0+sha512.9a6f330a95b66446ea088faf1521405a8a01f07fde7124cc9958dfed52d4bb436737e65b08f85f37b46fcba375092558ac51262b816844b22f63406ed166bfee"
+  "packageManager": "pnpm@12.21.0"
 }

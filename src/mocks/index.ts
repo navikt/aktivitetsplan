@@ -29,8 +29,6 @@ export default () =>
 
 injectDecoratorClientSide({
     env: 'dev',
-    params: {
-        simple: false,
-        chatbot: true,
-    },
+    simple: false,
+    chatbot: true,
 });
