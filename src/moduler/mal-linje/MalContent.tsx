@@ -30,17 +30,15 @@ function MalContent(props: MalContentProps) {
 
     if (!mal && !disabled) {
         return (
-            <div className="flex w-full flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-                <BodyShort>Skriv litt om hva som er målet ditt.</BodyShort>
+            <div className="flex min-w-0 flex-1 flex-row items-center justify-between gap-2">
+                <BodyShort className="truncate">Skriv litt om hva som er målet ditt.</BodyShort>
                 <Button
                     onClick={() => endreMal('Sett et mål')}
                     variant="tertiary"
-                    size="medium"
+                    size="small"
+                    icon={<PencilIcon aria-hidden />}
                 >
-                    <span className="flex items-center gap-2">
-                        <PencilIcon aria-hidden />
-                        Sett et mål
-                    </span>
+                    <span className="hidden sm:inline">Sett et mål</span>
                 </Button>
             </div>
         );
@@ -49,19 +47,20 @@ function MalContent(props: MalContentProps) {
     const knappTekst = viserInnevaerendePeriode ? 'Rediger' : 'Se tidligere mål';
 
     return (
-        <div className="flex min-w-0 w-full py-2 flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-            <div className="min-w-0 flex-1 text-left">
-                <MalText disabled={disabled} mal={mal} />
+        <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
+            <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">
+                <div className="truncate">
+                    <MalText disabled={disabled} mal={mal} />
+                </div>
             </div>
             <Button
                 onClick={() => endreMal(knappTekst)}
                 variant="tertiary"
-                size="medium"
+                size="small"
+                icon={<PencilIcon aria-hidden />}
+                className="shrink-0"
             >
-                <span className="flex items-center gap-2">
-                    <PencilIcon aria-hidden />
-                    {knappTekst}
-                </span>
+                <span className="hidden sm:inline">{knappTekst}</span>
             </Button>
         </div>
     );

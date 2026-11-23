@@ -36,20 +36,17 @@ function MittMaal() {
     return (
         <div
             className={classNames(
-                'flex w-full flex-col items-start gap-2 rounded-lg border-2 bg-ax-bg-default px-4 sm:flex-row sm:items-center sm:px-4',
+                'flex w-full flex-row items-start gap-3 rounded-lg border-2 bg-ax-bg-default px-4 py-3 sm:items-center sm:px-4 sm:py-2',
                 {
                     'border-dashed border-ax-border-neutral-subtle': !mal && !disabled,
                     'border-solid border-ax-border-neutral-subtle': mal || disabled,
                 },
             )}
         >
-            <div className="shrink-0" aria-hidden="true">
-                <CompassIcon className="h-5 w-5" />
-            </div>
-
-            <div className="flex min-w-0 flex-1 flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2">
-                <div className="flex shrink-0 items-center">
+            <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
+                <div className="flex shrink-0 items-center gap-2">
                     <NotifikasjonMarkering visible={nyEndring} />
+                    <CompassIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
                     <Heading level="2" size="small">
                         Mitt mål:
                     </Heading>

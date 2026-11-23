@@ -14,7 +14,6 @@ import { selectCanPrint } from '../feilmelding/feil-selector';
 import { logKlikkKnapp, logLenkeKlikket } from '../../analytics/analytics';
 import { selectValgtPeriodeId } from '../filtrering/filter/valgt-periode-slice';
 import { useToggle } from '../feature/feature';
-import AktivitetsplanSvg from './aktivitetsplan_svg.svg?react';
 
 function Navigasjonslinje() {
     const erVeileder = useErVeileder();
@@ -54,11 +53,8 @@ function Navigasjonslinje() {
     }
 
     return (
-        <div className="relative mt-16 mb-4">
-            <div className="absolute inset-y-0 right-full mr-4 hidden w-20 shrink-0 sm:block">
-                <AktivitetsplanSvg className="h-full w-full" aria-hidden="true" />
-            </div>
-            <div className="flex flex-col gap-y-2">
+        <div className="relative mt-8 mb-4 flex items-start gap-4">
+            <div className="flex min-w-0 flex-1 flex-col gap-y-2">
                 <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row">
                     <Heading level="1" size="xlarge">
                         Aktivitetsplan
