@@ -35,23 +35,12 @@ const schema = (startTekst: string) =>
     z.object({
         tittel: z.string().min(1, 'Du må fylle ut tema for møtet').max(100, 'Du må korte ned teksten til 100 tegn'),
         dato: z
-            .date({
-                required_error: 'Dato må fylles ut',
-                invalid_type_error: 'Ikke en gyldig dato',
-            })
+            .date({ error: (issue) => (issue.input == null ? 'Dato må fylles ut' : 'Ikke en gyldig dato') })
             .min(endOfDay(subDays(new Date(), 1)), 'Dato kan ikke være tilbake i tid'),
         klokkeslett: z.string().min(1, 'Du må fylle ut klokkeslett'),
-        varighet: z.number({ invalid_type_error: 'Du må velge varighet' }), // Blir NaN på default value
-        kanal: z.nativeEnum(Kanal, {
-            errorMap: (issue) => {
-                switch (issue.code) {
-                    case 'invalid_enum_value':
-                        return { message: 'Du må velge møteform' };
-                    default:
-                        return { message: 'Noe har gått galt' };
-                }
-            },
-        }),
+        varighet: z.number({ error: () => 'Du må velge varighet' }), // Blir NaN på default value
+        kanal: z.nativeEnum(Kanal, { error: () => 'Du må velge møteform' }),
+
         adresse: z
             .string()
             .min(1, 'Du må fylle ut møtested eller annen praktisk informasjon')
