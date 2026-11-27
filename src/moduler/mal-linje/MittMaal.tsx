@@ -13,7 +13,7 @@ import { selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-selector';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-selector';
 import { InitialPageLoadResult } from '../../routing/loaders';
-import MalContent from './MalContent';
+import MalContent, { MalRedigerKnapp } from './MalContent';
 import { ReadWriteMode, selectReadWriteMode } from '../../utils/readOrWriteModeSlice';
 
 function MittMaal() {
@@ -36,19 +36,22 @@ function MittMaal() {
     return (
         <div
             className={classNames(
-                'flex w-full flex-row items-start gap-2 rounded-lg border-2 bg-ax-bg-default px-4 py-3 sm:px-4',
+                'flex w-full flex-col items-start gap-2 rounded-lg border-2 bg-ax-bg-default px-4 py-3 sm:flex-row sm:gap-6 sm:px-4',
                 {
                     'border-dashed border-ax-border-neutral-subtle': !mal && !disabled,
                     'border-solid border-ax-border-neutral-subtle': mal || disabled,
                 },
             )}
         >
-            <div className="flex shrink-0 items-center gap-2">
-                <NotifikasjonMarkering visible={nyEndring} />
-                <CompassIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
-                <Heading level="2" size="small">
-                    Mitt mål:
-                </Heading>
+            <div className="flex w-full items-center justify-between sm:w-auto sm:shrink-0">
+                <div className="flex shrink-0 items-center gap-2">
+                    <NotifikasjonMarkering visible={nyEndring} />
+                    <CompassIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                    <Heading level="2" size="small">
+                        Mitt mål:
+                    </Heading>
+                </div>
+                <MalRedigerKnapp mal={mal} disabled={disabled} className="sm:hidden" />
             </div>
 
             <div className="min-w-0 flex-1">
