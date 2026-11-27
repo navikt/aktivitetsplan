@@ -11,12 +11,10 @@ import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
 import AktivitetsplanSvg from '../moduler/verktoylinje/aktivitetsplan_svg.svg?react';
-import { useErVeileder } from '../Provider';
 
 const Hovedside = () => {
     const navigate = useNavigate();
     const { aktivitetRoute } = useRoutes();
-    const erVeileder = useErVeileder();
 
     useEventListener('visAktivitetsplan', (event) => {
         const aktivitetId = event.detail as string | undefined;
@@ -31,11 +29,9 @@ const Hovedside = () => {
                 <InformasjonsHenting />
                 <Varslinger />
                 <div className="container relative flex flex-col items-center gap-y-4">
-                    {!erVeileder && (
-                        <div className="absolute hidden h-20 w-20 shrink-0 lg:-left-24 lg:mt-8 lg:block">
-                            <AktivitetsplanSvg className="h-20 w-20" aria-hidden="true" />
-                        </div>
-                    )}
+                    <div className="absolute hidden h-20 w-20 shrink-0 lg:-left-24 lg:mt-8 lg:block">
+                        <AktivitetsplanSvg className="h-20 w-20" aria-hidden="true" />
+                    </div>
                     <div className="flex w-full flex-col items-center gap-y-4">
                         <Navigasjonslinje />
                         <Maal />

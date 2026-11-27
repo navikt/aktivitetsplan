@@ -56,11 +56,9 @@ function Navigasjonslinje() {
         <div className="relative mt-8 mb-4 flex w-full items-start gap-4">
             <div className="flex min-w-0 flex-1 flex-col gap-y-2">
                 <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row">
-                    {!erVeileder && (
-                        <Heading level="1" size="xlarge">
-                            Aktivitetsplan
-                        </Heading>
-                    )}
+                    <Heading level="1" size="xlarge">
+                        Aktivitetsplan
+                    </Heading>
                 </div>
                 <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row">
                     {!erVeileder ? (
