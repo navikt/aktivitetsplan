@@ -53,47 +53,51 @@ function Navigasjonslinje() {
     }
 
     return (
-        <div className="flex flex-col gap-y-2">
-            <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row mt-8 mb-4">
-                {!erVeileder ? (
-                    <>
-                        <Link href={MINSIDE_URL}>Min side</Link>
-                        <Link href={ARBEIDSRETTET_DIALOG_URL}>
-                            <span>Min dialog med veileder</span>
-                        </Link>
-                    </>
-                ) : null}
-                <ReactRouterLink
-                    to="informasjon"
-                    className="text-ax-text-accent-subtle underline hover:no-underline"
-                    onClick={handleClick}
-                >
-                    Hva er aktivitetsplanen?
-                </ReactRouterLink>
-                {canPrint && (
+        <div className="relative mt-8 mb-4 flex w-full items-start gap-4">
+            <div className="flex min-w-0 flex-1 flex-col gap-y-2">
+                <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row">
+                    <Heading level="1" size="xlarge">
+                        Aktivitetsplan
+                    </Heading>
+                </div>
+                <div className="flex gap-y-2 gap-x-8 flex-col sm:flex-row">
+                    {!erVeileder ? (
+                        <>
+                            <Link href={MINSIDE_URL}>Min side</Link>
+                            <Link href={ARBEIDSRETTET_DIALOG_URL}>
+                                <span>Min dialog med veileder</span>
+                            </Link>
+                        </>
+                    ) : null}
                     <ReactRouterLink
-                        to={`utskrift/${vistOppfolgingsperiode}`}
+                        to="informasjon"
                         className="text-ax-text-accent-subtle underline hover:no-underline"
-                        onClick={() => logLenkeKlikket('Skriv ut')}
+                        onClick={handleClick}
                     >
-                        Skriv ut
+                        Hva er aktivitetsplanen?
                     </ReactRouterLink>
-                )}
-                {erJournalforingAktiv
-                    ? erVeileder && (
-                          <ReactRouterLink
-                              to={`journalforing/${vistOppfolgingsperiode}`}
-                              className="text-ax-text-accent-subtle underline hover:no-underline"
-                              onClick={() => logLenkeKlikket('Journalføring')}
-                          >
-                              Journalføring
-                          </ReactRouterLink>
-                      )
-                    : null}
+                    {canPrint && (
+                        <ReactRouterLink
+                            to={`utskrift/${vistOppfolgingsperiode}`}
+                            className="text-ax-text-accent-subtle underline hover:no-underline"
+                            onClick={() => logLenkeKlikket('Skriv ut')}
+                        >
+                            Skriv ut
+                        </ReactRouterLink>
+                    )}
+                    {erJournalforingAktiv
+                        ? erVeileder && (
+                              <ReactRouterLink
+                                  to={`journalforing/${vistOppfolgingsperiode}`}
+                                  className="text-ax-text-accent-subtle underline hover:no-underline"
+                                  onClick={() => logLenkeKlikket('Journalføring')}
+                              >
+                                  Journalføring
+                              </ReactRouterLink>
+                          )
+                        : null}
+                </div>
             </div>
-            <Heading level="1" size="xlarge">
-                Aktivitetsplan
-            </Heading>
         </div>
     );
 }

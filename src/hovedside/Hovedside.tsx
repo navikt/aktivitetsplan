@@ -10,6 +10,7 @@ import Navigasjonslinje from '../moduler/verktoylinje/Navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import { useRoutes } from '../routing/useRoutes';
 import Aktivitetstavle from './tavle/Aktivitetstavle';
+import AktivitetsplanSvg from '../moduler/verktoylinje/aktivitetsplan_svg.svg?react';
 
 const Hovedside = () => {
     const navigate = useNavigate();
@@ -27,10 +28,17 @@ const Hovedside = () => {
                 <HovedsideFeilmelding />
                 <InformasjonsHenting />
                 <Varslinger />
-                <div className="container flex flex-col gap-y-6">
-                    <Navigasjonslinje />
-                    <Maal />
-                    <Verktoylinje />
+                <div className="container relative flex flex-col items-center gap-y-4">
+                    <div className="absolute hidden h-20 w-20 shrink-0 lg:-left-24 lg:mt-8 lg:block">
+                        <AktivitetsplanSvg className="h-20 w-20" aria-hidden="true" />
+                    </div>
+                    <div className="flex w-full flex-col items-center gap-y-4">
+                        <Navigasjonslinje />
+                        <Maal />
+                        <div className="mt-6 w-full">
+                            <Verktoylinje />
+                        </div>
+                    </div>
                 </div>
                 <Aktivitetstavle />
                 <Outlet />

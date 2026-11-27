@@ -74,7 +74,7 @@ const Aktivitetstavle = () => {
     return (
         <Suspense fallback={<TavleFallback />}>
             <Await resolve={oppfolging}>
-                <div className="flex w-full m-auto mt-8">
+                <div className="flex w-full m-auto mt-2">
                     <LogTimeToAktivitestavlePaint erVeileder={erVeileder} />
                     <Aktivitetskolonner />
                 </div>
@@ -85,7 +85,7 @@ const Aktivitetstavle = () => {
 
 const TavleFallback = () => {
     return (
-        <div className="flex m-auto w-full mt-8 flex-col">
+        <div className="flex m-auto w-full mt-4 flex-col">
             <Aktivitetskolonner />
             <Loader size="large" className="self-center mb-32" />
         </div>
