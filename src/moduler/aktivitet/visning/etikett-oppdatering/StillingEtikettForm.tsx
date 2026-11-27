@@ -18,7 +18,7 @@ interface Props {
 }
 
 const schema = z.object({
-    etikettstatus: z.nativeEnum(StillingStatus),
+    etikettstatus: z.enum(StillingStatus),
 });
 
 export type StillingEtikettFormValues = z.infer<typeof schema>;

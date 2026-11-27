@@ -51,7 +51,7 @@ const kladdSchemaIkkeLagretAktivitet = z.object({
     samtalereferat: z.object({
         tittel: z.string().nullable(),
         fraDato: z.string().nullable(),
-        kanal: z.nativeEnum(Kanal),
+        kanal: z.enum(Kanal),
         referat: z.string(),
     }),
     tidspunkt: z.number(),
