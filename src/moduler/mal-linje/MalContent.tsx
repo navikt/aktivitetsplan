@@ -30,8 +30,8 @@ function MalContent(props: MalContentProps) {
 
     if (!mal && !disabled) {
         return (
-            <div className="flex min-w-0 flex-1 flex-row items-center justify-between gap-2">
-                <BodyShort className="truncate">Skriv litt om hva som er målet ditt.</BodyShort>
+            <div className="flex w-full min-w-0 flex-row items-start justify-between gap-2">
+                <BodyShort className="min-w-0 flex-1">Skriv litt om hva som er målet ditt.</BodyShort>
                 <Button
                     onClick={() => endreMal('Sett et mål')}
                     variant="tertiary"
@@ -47,11 +47,9 @@ function MalContent(props: MalContentProps) {
     const knappTekst = viserInnevaerendePeriode ? 'Rediger' : 'Se tidligere mål';
 
     return (
-        <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
-            <div className="min-w-0 flex-1 overflow-hidden whitespace-nowrap">
-                <div className="truncate">
-                    <MalText disabled={disabled} mal={mal} />
-                </div>
+        <div className="flex w-full min-w-0 flex-row items-start gap-2">
+            <div className="min-w-0 flex-1">
+                <MalText disabled={disabled} mal={mal} />
             </div>
             <Button
                 onClick={() => endreMal(knappTekst)}

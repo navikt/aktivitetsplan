@@ -36,22 +36,22 @@ function MittMaal() {
     return (
         <div
             className={classNames(
-                'flex w-full flex-row items-start gap-3 rounded-lg border-2 bg-ax-bg-default px-4 py-3 sm:items-center sm:px-4 sm:py-2',
+                'flex w-full flex-row items-start gap-2 rounded-lg border-2 bg-ax-bg-default px-4 py-3 sm:px-4',
                 {
                     'border-dashed border-ax-border-neutral-subtle': !mal && !disabled,
                     'border-solid border-ax-border-neutral-subtle': mal || disabled,
                 },
             )}
         >
-            <div className="flex min-w-0 flex-1 flex-row items-center gap-2">
-                <div className="flex shrink-0 items-center gap-2">
-                    <NotifikasjonMarkering visible={nyEndring} />
-                    <CompassIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
-                    <Heading level="2" size="small">
-                        Mitt mål:
-                    </Heading>
-                </div>
+            <div className="flex shrink-0 items-center gap-2">
+                <NotifikasjonMarkering visible={nyEndring} />
+                <CompassIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <Heading level="2" size="small">
+                    Mitt mål:
+                </Heading>
+            </div>
 
+            <div className="min-w-0 flex-1">
                 <Suspense fallback={<MalFallback />}>
                     <Await resolve={malPromise}>
                         <MalContent disabled={disabled} mal={mal} />
@@ -63,7 +63,7 @@ function MittMaal() {
 }
 
 const MalFallback = () => (
-    <div className="flex flex-1 items-center sm:justify-end">
+    <div className="flex w-full flex-1 items-center">
         <Skeleton variant="text" width="12rem" />
     </div>
 );
