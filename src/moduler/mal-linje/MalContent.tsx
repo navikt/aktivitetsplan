@@ -30,7 +30,7 @@ function MalContent(props: MalContentProps) {
 
     if (!mal && !disabled) {
         return (
-            <div className="flex w-full min-w-0 flex-row items-start justify-between gap-2">
+            <div className="flex w-full min-w-0 flex-row items-center justify-between gap-2">
                 <BodyShort className="min-w-0 flex-1">Skriv litt om hva som er målet ditt.</BodyShort>
                 <Button
                     onClick={() => endreMal('Sett et mål')}

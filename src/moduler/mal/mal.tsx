@@ -34,10 +34,10 @@ const Mal = () => {
         >
             <div>
                 <ReadMore className="mb-8" header="Tips til mål" defaultOpen={historiskeMal.length === 0}>
-                    Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
+                    Skriv noen ord om hva som er målet ditt slik at vi kan hjelpe deg bedre.
                     <ul className="list-disc mt-4 pl-8">
-                        <li>Hva er målet på kort sikt? Hva er målet på lengre sikt?</li>
-                        <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
+                        <li>Hva er målet på kort og på lang sikt?</li>
+                        <li>Hva slags jobb ønsker du deg?</li>
                     </ul>
                 </ReadMore>
                 <section>
