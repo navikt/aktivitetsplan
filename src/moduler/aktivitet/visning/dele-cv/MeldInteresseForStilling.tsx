@@ -4,7 +4,7 @@ import { endOfToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useController, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { z, ZodErrorMap } from 'zod';
+import { z } from 'zod';
 
 import { StillingFraNavAktivitet } from '../../../../datatypes/internAktivitetTypes';
 import useAppDispatch from '../../../../felles-komponenter/hooks/useAppDispatch';
@@ -29,38 +29,31 @@ interface PropTypes {
 }
 
 type KanDeles = {
-    kanDeles: string;
-    avtaltDato: string;
+    kanDeles: SvarType;
+    avtaltDato?: Date;
 };
 
-const dateErrorMap: Record<string, string> = {
-    invalid_type: 'Du må fylle ut datoen for når du var i dialog med brukeren',
-    invalid_date: 'Ikke en gyldig dato',
-};
-
-const getDateErrorMessage: ZodErrorMap = (issue) => {
-    return {
-        message: dateErrorMap[issue.code] || `Noe gikk galt: ${issue.message}`,
-    };
-};
-
-const kanDelesField = z.nativeEnum(SvarType, {
-    required_error: 'Du må svare ja eller nei',
-    invalid_type_error: 'Ikke en gyldig dato',
+const kanDelesField = z.enum(SvarType, {
+    error: 'Du må svare ja eller nei',
 });
+
 const getSchema = ({ after: disabledAfter }: { after: Date }, erVeileder: boolean) => {
     if (erVeileder) {
         return z.object({
             kanDeles: kanDelesField,
             avtaltDato: z
                 .date({
-                    errorMap: getDateErrorMessage,
+                    error: (issue) =>
+                        issue.input === undefined
+                            ? 'Du må fylle ut datoen for når du var i dialog med brukeren'
+                            : 'Ikke en gyldig dato',
                 })
                 .max(disabledAfter, { message: 'Dato for dialog kan ikke være frem i tid' }),
         });
     }
     return z.object({
         kanDeles: kanDelesField,
+        avtaltDato: z.date().optional(),
     });
 };
 
@@ -104,7 +97,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 aktivitetId: aktivitet.id,
                 aktivitetVersjon: aktivitet.versjon,
                 kanDeles: data.kanDeles === SvarType.JA,
-                avtaltDato: data.avtaltDato,
+                avtaltDato: data.avtaltDato?.toISOString(),
             }),
         );
         return Promise.resolve();

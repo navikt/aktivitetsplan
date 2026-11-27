@@ -39,12 +39,12 @@ const schema = z
     .discriminatedUnion('should_validate_begrunnelse', [
         z.object({
             should_validate_begrunnelse: z.literal(false),
-            aktivitetstatus: z.nativeEnum(AktivitetStatus),
+            aktivitetstatus: z.enum(AktivitetStatus),
             aktivitet: z.any(),
         }),
         z.object({
             should_validate_begrunnelse: z.literal(true),
-            aktivitetstatus: z.nativeEnum(AktivitetStatus),
+            aktivitetstatus: z.enum(AktivitetStatus),
             begrunnelse: z
                 .string()
                 .min(1, 'Du må fylle ut en begrunnelse')
