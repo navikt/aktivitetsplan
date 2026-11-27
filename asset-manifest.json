@@ -1,0 +1,211 @@
+{
+  "_RadioGroup-Bo5928DI.js": {
+    "file": "assets/RadioGroup-Bo5928DI.js",
+    "name": "RadioGroup",
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "_match-CHEgnexx.js",
+      "_localStorage-hnH2LPqQ.js",
+      "index.html"
+    ]
+  },
+  "_forhaandsorienteringTypes-B1CvbWBM.js": {
+    "file": "assets/forhaandsorienteringTypes-B1CvbWBM.js",
+    "name": "forhaandsorienteringTypes",
+    "imports": [
+      "_match-CHEgnexx.js",
+      "_localStorage-hnH2LPqQ.js",
+      "index.html"
+    ]
+  },
+  "_hash-BI9JGeRt.js": {
+    "file": "assets/hash-BI9JGeRt.js",
+    "name": "hash"
+  },
+  "_localStorage-hnH2LPqQ.js": {
+    "file": "assets/localStorage-hnH2LPqQ.js",
+    "name": "localStorage"
+  },
+  "_match-CHEgnexx.js": {
+    "file": "assets/match-CHEgnexx.js",
+    "name": "match",
+    "imports": [
+      "_localStorage-hnH2LPqQ.js"
+    ]
+  },
+  "_rolldown-runtime-BWaJ3C7D.js": {
+    "file": "assets/rolldown-runtime-BWaJ3C7D.js",
+    "name": "rolldown-runtime"
+  },
+  "_routerConfig-JKKHk9Jq.js": {
+    "file": "assets/routerConfig-JKKHk9Jq.js",
+    "name": "routerConfig",
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "_forhaandsorienteringTypes-B1CvbWBM.js",
+      "_localStorage-hnH2LPqQ.js",
+      "index.html",
+      "_RadioGroup-Bo5928DI.js"
+    ],
+    "css": [
+      "assets/routerConfig-fLYMJav8.css"
+    ],
+    "assets": [
+      "assets/pdf.worker.entry-DYgRmeQU.js"
+    ]
+  },
+  "_routerConfig-fLYMJav8.css": {
+    "file": "assets/routerConfig-fLYMJav8.css",
+    "src": "_routerConfig-fLYMJav8.css"
+  },
+  "_src-BUuPyFqc.js": {
+    "file": "assets/src-BUuPyFqc.js",
+    "name": "src"
+  },
+  "_transport-DwROsLs6.js": {
+    "file": "assets/transport-DwROsLs6.js",
+    "name": "transport",
+    "imports": [
+      "src/rootWrapper.tsx"
+    ]
+  },
+  "index.html": {
+    "file": "assets/index-Bpjv9cLL.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "_localStorage-hnH2LPqQ.js"
+    ],
+    "dynamicImports": [
+      "src/webcomponentWrapper.tsx",
+      "src/rootWrapper.tsx",
+      "src/mocks/index.ts",
+      "src/mocks/demo/DemoBanner.tsx"
+    ]
+  },
+  "node_modules/.pnpm/@grafana+rrweb-snapshot@2.0.0-grafana.2/node_modules/@grafana/rrweb-snapshot/dist/rrweb-snapshot.js": {
+    "file": "assets/rrweb-snapshot-nPbE-1pB.js",
+    "name": "rrweb-snapshot",
+    "src": "node_modules/.pnpm/@grafana+rrweb-snapshot@2.0.0-grafana.2/node_modules/@grafana/rrweb-snapshot/dist/rrweb-snapshot.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/.pnpm/@grafana+rrweb@2.0.0-grafana.2/node_modules/@grafana/rrweb/dist/rrweb.js": {
+    "file": "assets/rrweb-DDqNu1Me.js",
+    "name": "rrweb",
+    "src": "node_modules/.pnpm/@grafana+rrweb@2.0.0-grafana.2/node_modules/@grafana/rrweb/dist/rrweb.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/events.js": {
+    "file": "assets/events-D-3SeyGl.js",
+    "name": "events",
+    "src": "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/events.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/rootWrapper.tsx",
+      "_hash-BI9JGeRt.js"
+    ]
+  },
+  "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/recording.js": {
+    "file": "assets/recording-BYxNNZNK.js",
+    "name": "recording",
+    "src": "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/recording.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_hash-BI9JGeRt.js",
+      "_transport-DwROsLs6.js",
+      "index.html"
+    ],
+    "dynamicImports": [
+      "node_modules/.pnpm/@grafana+rrweb@2.0.0-grafana.2/node_modules/@grafana/rrweb/dist/rrweb.js"
+    ]
+  },
+  "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/snapshot.js": {
+    "file": "assets/snapshot-8OxCNfvz.js",
+    "name": "snapshot",
+    "src": "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/snapshot.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/rootWrapper.tsx",
+      "_hash-BI9JGeRt.js",
+      "_transport-DwROsLs6.js",
+      "index.html"
+    ],
+    "dynamicImports": [
+      "node_modules/.pnpm/@grafana+rrweb-snapshot@2.0.0-grafana.2/node_modules/@grafana/rrweb-snapshot/dist/rrweb-snapshot.js"
+    ]
+  },
+  "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/tracing.js": {
+    "file": "assets/tracing-FqosOGRU.js",
+    "name": "tracing",
+    "src": "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/tracing.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "src/rootWrapper.tsx"
+    ]
+  },
+  "src/mocks/demo/DemoBanner.tsx": {
+    "file": "assets/DemoBanner-CxkKu2Wj.js",
+    "name": "DemoBanner",
+    "src": "src/mocks/demo/DemoBanner.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "_RadioGroup-Bo5928DI.js",
+      "index.html",
+      "_src-BUuPyFqc.js",
+      "_localStorage-hnH2LPqQ.js"
+    ],
+    "css": [
+      "assets/DemoBanner-CwnhfkBO.css"
+    ]
+  },
+  "src/mocks/index.ts": {
+    "file": "assets/mocks-DCVo8Kam.js",
+    "name": "mocks",
+    "src": "src/mocks/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "index.html",
+      "_forhaandsorienteringTypes-B1CvbWBM.js",
+      "_localStorage-hnH2LPqQ.js"
+    ]
+  },
+  "src/rootWrapper.tsx": {
+    "file": "assets/rootWrapper-DqN4F01X.js",
+    "name": "rootWrapper",
+    "src": "src/rootWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "_routerConfig-JKKHk9Jq.js",
+      "index.html"
+    ],
+    "dynamicImports": [
+      "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/tracing.js",
+      "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/recording.js",
+      "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/events.js",
+      "node_modules/.pnpm/@nais+apm@0.7.3_@grafana+faro-react@2.8.2_react-dom@19.3.1_react@19.3.1__react-router-d_a6911aa589f8debda46bef650d177dad/node_modules/@nais/apm/dist/replay/snapshot.js"
+    ],
+    "css": [
+      "assets/rootWrapper-CTrHQ4xm.css"
+    ]
+  },
+  "src/webcomponentWrapper.tsx": {
+    "file": "assets/webcomponentWrapper-DJIMwHOv.js",
+    "name": "webcomponentWrapper",
+    "src": "src/webcomponentWrapper.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-BWaJ3C7D.js",
+      "index.html",
+      "_RadioGroup-Bo5928DI.js",
+      "_routerConfig-JKKHk9Jq.js",
+      "_src-BUuPyFqc.js",
+      "_localStorage-hnH2LPqQ.js"
+    ]
+  }
+}
