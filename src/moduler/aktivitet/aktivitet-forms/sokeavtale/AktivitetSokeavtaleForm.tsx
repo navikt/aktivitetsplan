@@ -11,10 +11,7 @@ import CustomErrorSummary from '../CustomErrorSummary';
 import LagreAktivitetKnapp from '../LagreAktivitetKnapp';
 import { addMonths } from 'date-fns';
 
-const numberErrorMessage = {
-    required_error: 'Antall stillinger må fylles ut',
-    invalid_type_error: 'Antall stillinger må fylles ut',
-};
+const numberErrorMessage = 'Antall stillinger må fylles ut';
 
 enum Template {
     SØKEAVTALE = 'SOKEAVTALE',
@@ -23,8 +20,8 @@ enum Template {
 
 const commonFields = {
     tittel: z.string(),
-    fraDato: z.date({ required_error: 'Fra dato må fylles ut' }),
-    tilDato: z.date({ required_error: 'Til dato må fylles ut' }),
+    fraDato: z.date({ error: 'Fra dato må fylles ut' }),
+    tilDato: z.date({ error: 'Til dato må fylles ut' }),
     avtaleOppfolging: z.string().max(255, 'Du må korte ned teksten til 255 tegn').optional(),
     beskrivelse: z.string().max(5000, 'Du må korte ned teksten til 5000 tegn').optional(),
 };
@@ -32,14 +29,14 @@ const commonFields = {
 const GammelSokeAvtaleFormValues = z.object({
     ...commonFields,
     skjemaVersjon: z.literal('gammel' as const),
-    antallStillingerSokes: z.number(numberErrorMessage).lt(100, 'Antall søknader må ikke være høyere enn 99'),
+    antallStillingerSokes: z.number({ error: numberErrorMessage }).lt(100, 'Antall søknader må ikke være høyere enn 99'),
 });
 type GammelSokeavtaleAktivitetFormValues = z.infer<typeof GammelSokeAvtaleFormValues>;
 const NySokeAvtaleFormValues = z.object({
     ...commonFields,
     skjemaVersjon: z.literal('ny' as const),
     antallStillingerIUken: z
-        .number(numberErrorMessage)
+        .number({ error: numberErrorMessage })
         .lt(100, 'Antall søknader må ikke være høyere enn 99')
         .min(1, 'Antall søknader må være minst 1'),
 });
